@@ -1,0 +1,44 @@
+\section{Proof Sketch}
+\label{sec:proof-sketch}
+
+The proof first controls the exact protocol-selected gradient on the whole
+static coordinate ball.  Lemma~\ref{lem:p1-i3-step001-forward} bounds all
+forward coordinates, and Proposition~\ref{prop:p1-i3-step001-gradient} uses
+the fixed selector only through $0\leq\rho_\kappa\leq1$ to show that
+$G_r(\theta^{(0)})$ is finite.  Given an initialization in $E_r$,
+Lemma~\ref{lem:p1-i3-step002-one-step} and
+Proposition~\ref{prop:p1-i3-step002-closed-tube} then induct over every
+possible labeled history and prove
+$\|\theta^{(t)}-\theta^{(0)}\|_\infty\leq t\eta G_r\leq r$ through time $T$.
+
+The positive static margin $M_r$ is converted into an exact structural
+statement, rather than a perturbative error.  Lemma
+\ref{lem:p1-i3-step003-continuous-preactivation} gives continuous
+preactivation paths inside the convex ball, and Proposition
+\ref{prop:p1-i3-step003-ball-gates} rules out sign crossings.  Proposition
+\ref{prop:p1-i3-step003-history-gates} transfers the resulting initialization
+gate signature to every generated state.  Lemma
+\ref{lem:p1-i3-step004-path-expansion} expands each network output exactly in
+the single feature map $\varphi_{\theta^{(0)}}$, while Proposition
+\ref{prop:p1-i3-step004-aggregate} sums the moving-weight coefficients over
+the prescribed latter half of the trajectory and preserves zero-score ties.
+
+For fixed $\mathcal D,h$, and a stable initialization, Lemma
+\ref{lem:p1-i3-step005-pathwise-risk} identifies the path-linear and learner
+risks for every training tuple.  Proposition
+\ref{prop:p1-i3-step005-conditional-comparison} compares the fixed-feature
+infimum with each history-dependent feasible coefficient before averaging,
+so there is no interchange of an infimum and an expectation.  Lemma
+\ref{lem:p1-i3-step006-gate-pushforward} proves that the gate map has finite
+support and gives the exact pushforward expectation identity.  Proposition
+\ref{prop:p1-i3-step006-event-split} applies the stable comparison on $E_r$,
+charges $E_r^c$ by its unit risk and mass $\delta_0$, and invokes universal
+expected success.  Proposition~\ref{prop:p1-i3-step006-dc-witness} records
+that the law was fixed before the arbitrary distribution and target.
+
+Finally, Lemma~\ref{lem:p1-i3-step007-path-count} proves
+$d_{\rm path}\leq S^L\leq S^{L_0}$ factor by factor, and Proposition
+\ref{prop:p1-i3-step007-public-specialization} reuses the same law after the
+exact threshold comparison $\varepsilon+\delta_0\leq2\varepsilon$.
+The final appendix proof combines these named results and no additional
+lemma.

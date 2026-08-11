@@ -1,0 +1,59 @@
+Perform the fresh /proof-review-aggregate stage for perspective_3/idea_1, accepted sketch attempt 3, contract-fixed assembly attempt 2, in the interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning and work only in the current run root.
+
+Read <CODEX_SKILLS_ROOT>/proof-review-aggregate/SKILL.md completely, <CODEX_SKILLS_ROOT>/_shared/checklists/artifact-contracts.md, and <CODEX_SKILLS_ROOT>/_shared/templates/proof-review.md. Apply the installed aggregate skill exactly. Aggregate the four contract-valid specialized diagnostics; do not redo them, vote over them, ignore a blocking finding, or repair any producer. Independently run every aggregate contract check, including exhaustive all-used-step source-to-appendix comparison rather than sampling. Write only perspective_3/idea_1/proof_review.md. Do not modify any proof, bundle/support file, report, specialized review, sketch/global artifact, step artifact, tracker, worker log, controller prompt, history, result, or other file.
+
+Run configuration: RUN_MODE=interactive; model=gpt-5.6-sol; reasoning=max; idea attempt 1 of 30; sketch attempt 3 of 10; assembly attempt 2 of 100; global and step producer budgets 100; progress_type=material_partial; declared boundary=no polynomial general-instance or presentation-format bound on Gamma_piv.
+
+Binding controller inputs:
+
+- setting.md: 91119d2600ee2f787eb873796569ab53e35201e499bf81658d8a0bc1a8e7c79e
+- proof_sketch.md: 32023800de7b27eca85577e615139a5658106b35406627061879396bb35bf906
+- proof_sketch_review.md: 3b626916a9e03b7539ee88961ad973ee2bbe2d6c3649a5bac51e8028cac5335e
+- global_proof.md: 80b090266336b304ff4ca0184709b45eff448c3f1758efdaa09d923c8dbfaee8
+- global_proof_review.md: 24ad84083a200f89cc8c7973ee168783bca0c81c3432ac73e24f50e4606184dd
+- assembly_report.md: 9536ceb646680654731147269e66b0a4ff087eeb873545cb3fb36f49fc1194b7
+- controller-open proof_tracker.md: 33a19711ee77a1a4b7c5fd4ea95320fe9e1fcd011bc383dec5e504cb8010ede0
+
+Canonical bundle hashes:
+
+- main.tex: 7da04270a71317186f6b353305dded9e5e90b9fe1722b74102d2b61567351250
+- arxiv.sty: 6a083ef347ecbe390f101460ab4ff90b34cd14cae33665a8595f34a53d3b85ab
+- ims.bst: c1f6e420970d0c72b3c0d184a14c4223fe8c373055eb4c43692a72b660a9ca5f
+- reference.bib: b4fda424b383835f8018541b907ae705b9f9f0fc75dda4ea8d0558178c334e80
+- 1_intro.tex: 9764e9f2766e504098685e1243494d92d7186c67fbf8b26b7acc265d42b16818
+- 2_preliminary.tex: 45df1f73e34587a2f8f39e592c74787d482d38b9047c543ac5879c93a3eeac99
+- 3_main.tex: b67f0db5bf7c53909426eb9bcb426b5c51d38ecf4b4630a309cc8668c64e6a5b
+- 4_proof_sketch.tex: d7eaf0b14c4d007f35d8606c1ba6580fe1cc0657699917053fcde64b4b8090f9
+- 5_appendix.tex: 71b59d3b14444dbc5ee55a88448f2f6618a60a4153d3749c496eb5fc5b42cad6
+
+The six required accepted proof/review pairs are:
+
+- step_001: proof 6047515d7ff08ed24d827795e182670e99406e9a704427ecd3a659b3729fd838; review c046344169b935f169d7651e50289927fdd01c48ae14c054386fbd09af779aa0; unit attempt 1
+- step_002: proof 4cd4c582971538e2b91f59cd34e028b50f42db4eb0f244eb85cf0bbfe2f5b512; review 810be823d71c36ef3b7214beee367f298e34175c1e6e183ba7da54a2ef18c3f7; unit attempt 1
+- step_003: proof 9dc61d50827f3e217dec04dca87907d1053ab0b3170253952b65d40efe5071dd; review b5c44676d15e9043ad74c2943e2f42d3ea2e87a3ccb5f7efc38712f1a8986087; unit attempt 1
+- step_004: proof ef99e98a57f58c58b2354c87d7a179ca79f108854ee0b0049c4ed194a4d12b57; review 2aa2def5be97c2452007dc829582c926641992beede69e37ef86f5e04fd38351; unit attempt 1
+- step_005: proof 486f35b55b9e48112412d23d46e097ce6ab032a495fc92c08997241fc610739e; review b306ec8fcae8b36d2994ad0ef78eb767814b5c71014c9e7627dba7f867ca9ab7; unit attempt 1
+- step_006: proof 4edc04230dde38ca7a7ff7c04475b38512ed6aea89bfe7bf6b430ad3f016c2a8; review 38d1ae9813240119b29810342f08b5cfc778aa025a5ce0a1bd31a1855550cd6f; unit attempt 1
+
+Fail closed if any binding digest differs or any review fails to bind sketch attempt 3, its exact Step ID, unit attempt 1, the matching current proof digest, and raw ACCEPTED status. Treat global_proof.md, global_proof_review.md, assembly_report.md, and all specialized reviews as diagnostic context only, never proof authority.
+
+Current contract-valid specialized diagnostics:
+
+- structural: 547ca5875fa2b2ff92346e092c6cc8b1a71d392592942c5baa11603b47ecc94c
+- rigor: 0eb721e006557a8d8ff0c3eb5707d6a7d9cd24707e3891df8ecb513673582829
+- citation: 9c44cd5f9ad45b1682c169d0e1b6cd6f94ebfb1da0a9792973a4d0d4309b16c1
+- adversarial: 43d275ace05a561db7befa579a70dcdd01251223840f333460f02a7b9148f6a4
+
+Validate their exact machine-readable contracts before aggregation. Each currently reports raw PASS, Blocking Issues=None, Suggested Repair Depth=None, and Smallest Candidate Repair Target=None. These PASS tokens are diagnostic only and cannot substitute for independent aggregate checks.
+
+The live proof_review.md is the consumed assembly-attempt-1 aggregate with SHA-256 ac22121ba3d1f4bdbd48146090a9790890bc121a06a6df210e14c95cec55b0e7. It is archived byte-identically at perspective_3/idea_1/proof_history/sketch_003/final_reviews/assembly_attempt_001/proof_review.md with the same SHA-256. Ignore both as evidence. Verify the archive by hash only and overwrite only the live output path. Do not otherwise read proof_history. The contract-invalid attempt-2 rigor artifact is separately archived and is not a diagnostic input.
+
+The formalized theorem is an exact unconditional material_partial fixed-family result. It proves strict finiteness of Gamma_piv for each declared finite family, the exact pairwise and capacity bounds with ordinary probability and arbitrary correlated joint densities, the 1/delta scale certificate, and exact affine-monic recovery. It deliberately leaves polynomial general-instance control of Gamma_piv from Pfaffian descriptors unresolved. Acceptance must preserve that classification and state the remaining source gap without implying a full general-instance solution.
+
+Independently audit setting-goal/attempted-claim identity, all six producer interfaces, dependencies and assumption provenance, all source-to-appendix proof obligations, quantifiers/constants/modes, public theorem self-containedness/readability, explicit-rate and baseline bridges, empty-index and boundary semantics, equation and theorem reference binding, citation object mapping, compile/support status, byte and template hygiene, and assembly discipline. Exhaustively compare every used Local Derivation, every invoked Cited Result Application, and every Target-Step Assembly from all six accepted proofs with the public appendix. Do not accept from counts, labels, compilation, or reviewer assertions.
+
+Stress N=1, d=1, d=2, d=6, empty K_R, A<1, zero-length Theta, empty and singleton intervals, theta=0 and +/-1, negative outer-chart values, delta=1, tangent/multiple/identically-zero fibers, near-zero pivots, cube faces, upper bounds above one, arbitrary coefficient correlation, and every literal -infinity empty-supremum convention. Verify the repaired Kechris Proposition 14.4 mappings, 76 compiler-bound T1--T5/A1--A71 displays, 115 bound equation references, and absence of raw control bytes.
+
+Write proof_review.md using the exact shared aggregate template with Review Mode=split. Emit controlled fields Score, Failure Type, Suggested Next Action, and Retry Mode. Acceptance requires score at least 7, Failure Type=ACCEPTED, Critical Issues=None, Suggested Next Action=None, and Retry Mode=none. Any nonempty Critical Issues caps Score at 6. Otherwise route exactly by the aggregate skill table. Include a substantive Failure-Type Rationale and an Audit Summary explicitly stating whether all used steps, not a sample, passed source-to-appendix coverage.
+
+Before returning, recheck every protected input hash, stale aggregate/archive identity, ASCII/control-byte and required-field integrity of the output, final LF, and single-output-file scope. Concurrent perspective_1 and perspective_2 changes are outside the protected branch scope. Report score, failure type, critical-issue count, next action, retry mode, output SHA-256, all-six-step coverage completion, and protected-input verification.

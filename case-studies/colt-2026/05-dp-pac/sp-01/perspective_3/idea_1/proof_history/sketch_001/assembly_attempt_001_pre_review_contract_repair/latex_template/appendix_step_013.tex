@@ -1,0 +1,139 @@
+\begin{proposition}[Hard-prior loss of the certified simulator]\label{prop:step-013-simulator-hardness}
+Under Proposition~\ref{prop:step-004-finite-hard-prior} and
+Proposition~\ref{prop:step-012-source-membership}, if the total
+simulator \(B=B_{\mu_{N,M},A}\) is instantiated at their identical
+admissible \(N,M\) and public prior \(\mu_{N,M}\), then
+
+\[
+\mathbb E_{\substack{(T,Q)\sim\mu_{N,M}\\
+                      Z\sim(Q^{\tau_T})^M\\ B}}
+R_Q(B(Z),\tau_T)>\eta=2^{-8}.
+\tag{9}
+\]
+
+The expectation includes the prior draw, exactly \(M\) i.i.d. realizable
+one-block input rows conditional on that draw, all simulator preprocessing,
+and any internal coins of \(A\) used by the simulator.
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:step-012-source-membership} gives every
+membership clause needed by the universal learner quantifier in Proposition~\ref{prop:step-004-finite-hard-prior}: \(B\) is total on the
+entire arbitrary labeled input space of exact size \(M\), its output is an
+arbitrary member of \(\{0,1\}^{[N]}\), and it satisfies every event-level
+one-row replacement inequality at privacy parameters
+
+\[
+\left(0.1,\frac{d_*}{M^2\log M}\right).
+\tag{10}
+\]
+
+Both propositions use the same finite ordered domain \([N]\),
+thresholds \(\tau_t\), population-risk convention, source constants, and
+integers \(N,M\). Thus no convention, object, sample-size, or privacy bridge
+remains to prove.
+
+The prior in Proposition~\ref{prop:step-004-finite-hard-prior} was selected
+before the universal learner
+quantifier. Although the code of \(B\) uses the public
+\(\mu_{N,M}\), it is therefore one of the prior-aware kernels already
+covered by that quantifier. Substituting this exact \(B\) into (5) yields
+(9) directly. The substitution neither conditions on overflow nor changes
+the simulator on any input, so it introduces no residual. \end{proof}
+
+\begin{proposition}[Prior-averaged product-risk transfer]\label{prop:step-013-product-lower-bound}
+Under Proposition \ref{prop:step-013-simulator-hardness}, Propositions
+\ref{prop:step-008-selected-risk-identity},
+\ref{prop:step-009-overflow}, and
+\ref{prop:step-011-risk-transfer}, the ideal experiment (3) obeys the exact
+product-risk lower bound (4).
+\end{proposition}
+
+\begin{proof}
+Define only for this proof
+
+\[
+\mathcal L_{\mathrm{act}}
+:=
+\mathbb E_{\substack{(T,Q)\sim\mu_{N,M}\\
+                      Z\sim(Q^{\tau_T})^M\\ B}}
+R_Q(B(Z),\tau_T)
+\tag{11}
+\]
+
+and
+
+\[
+\mathcal L_{\mathrm{id}}
+:=
+\mathbb E_{\mathrm{ideal}}
+R_{Q_J}(D_JH^{\mathrm{id}},\tau_{T_J}).
+\tag{12}
+\]
+
+These are proof-local names for the two exact quantities already typed by
+the dependencies. Proposition~\ref{prop:step-013-simulator-hardness}
+gives
+
+\[
+\mathcal L_{\mathrm{act}}>2^{-8}.
+\tag{13}
+\]
+
+Proposition~\ref{prop:step-011-risk-transfer} and the notation
+\(p_{\mathrm{ov}}=\Pr(U>M)\) from (7) give
+
+\[
+\mathcal L_{\mathrm{id}}
+\ge \mathcal L_{\mathrm{act}}-p_{\mathrm{ov}}.
+\tag{14}
+\]
+
+Combining (13) with the weak inequality (14) preserves strictness:
+
+\[
+\mathcal L_{\mathrm{id}}
+>2^{-8}-p_{\mathrm{ov}}.
+\tag{15}
+\]
+
+Proposition~\ref{prop:step-009-overflow} gives the strict upper
+bound \(p_{\mathrm{ov}}<2^{-9}\). Since subtraction reverses the comparison
+in the subtracted term,
+
+\[
+2^{-8}-p_{\mathrm{ov}}
+>2^{-8}-2^{-9}
+=2\cdot2^{-9}-2^{-9}
+=2^{-9}.
+\tag{16}
+\]
+
+Equations (15)--(16) therefore yield
+
+\[
+\mathcal L_{\mathrm{id}}>2^{-9}.
+\tag{17}
+\]
+
+The overflow event has been charged exactly once: it occurs only in (14),
+and no later equality or bound adds another copy.
+
+Finally, Proposition~\ref{prop:step-008-selected-risk-identity}
+identifies (12), with no residual, as
+
+\[
+\mathcal L_{\mathrm{id}}
+=
+\mathbb E_{\substack{\boldsymbol\Xi\sim\mu_{N,M}^{\otimes k}\\
+                      S^{\mathrm{id}}\sim
+                      (P_{\boldsymbol Q}^{c_{\boldsymbol T}})^n\\
+                      H^{\mathrm{id}}\sim A(S^{\mathrm{id}})}}
+R_{P_{\boldsymbol Q}}(H^{\mathrm{id}},c_{\boldsymbol T}).
+\tag{18}
+\]
+
+Substituting (18) into (17) proves (4). The equality in (18) is taken under
+the unconditional ideal experiment; the conditional i.i.d. sample law is
+invoked only after fixing \(\boldsymbol\Xi\), and no conditioning on
+\(U\le M\) appears. \end{proof}

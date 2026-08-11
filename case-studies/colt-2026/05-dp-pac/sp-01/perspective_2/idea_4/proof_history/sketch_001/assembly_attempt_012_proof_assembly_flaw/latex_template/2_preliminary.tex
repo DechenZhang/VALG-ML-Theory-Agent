@@ -1,0 +1,264 @@
+\section{Preliminaries}
+
+The quotient map $\kappa$ and its recordwise extension $T_N$ are the common
+input interface for all three learners.  Every learner releases an element of
+$(H_C,\mathcal H_C)$ and applies $\operatorname{Dec}_C$ only after release.
+Fix once and for all a deterministic $\bar c_0\in\bar C$ for every fallback
+path.  When $d=0$, $\bar C=\{\bar c_0\}$ and both Littlestone-based laws use
+$N=N_{\rm old}=0$ and release $\bar c_0$ deterministically.
+
+We next give complete positive-dimensional definitions.  Fix once and for
+all a universal constant $c_{\rm AT}\ge1$ large enough that the
+AboveThreshold privacy estimate in Lyu~\citep[Lemma~3.2]{lyu2025} holds,
+and fix the admissible universal block constants
+
+\[
+ C_{\rm blk}:=144000,
+ \qquad C_{\rm o}:=2^{20}.
+\]
+
+For $d\ge1$, put
+
+\[
+ \gamma:=\alpha/16,
+ \qquad
+ \rho:=1-\frac{1}{2d},
+\]
+\[
+ \beta_{\rm tr}=\beta_{\rm AT}=\beta_{\rm SS}=\beta_{\rm gen}:=\beta/4,
+ \qquad
+ \delta_{\rm AT}=\delta_{\rm SS}:=\delta/2,
+ \qquad \varepsilon_{\rm SS}:=\varepsilon/8,
+\]
+\[
+ g_\delta:=\log(4/\delta),
+ \qquad
+ \eta:=\frac{\varepsilon}
+ {4c_{\rm AT}(\sqrt{g_\delta}+g_\delta)},
+ \qquad
+ \tau_{\rm AT}:=\eta^{-1}\log\frac{d+1}{\beta_{\rm AT}}.
+\]
+
+For any nonempty labeled quotient block
+$\bar B=((q_j,y_j))_{j=1}^{\ell}$, write
+\[
+ \operatorname{err}_{\bar B}(\bar h)
+ :=\frac1\ell\sum_{j=1}^{\ell}
+ \mathbf1\{\bar h(q_j)\ne y_j\}.
+\]
+
+For each integer $t\ge2$, define the VC-sensitive candidate tuple
+
+\[
+ a(t):=v+\log(4t/\beta),
+ \qquad
+ Q(t):=e+\frac{etd^2a(t)}{\alpha v},
+\]
+\[
+ m(t):=\left\lceil C_{\rm blk}\frac{d^2}{\alpha}
+ a(t)\log Q(t)\right\rceil,
+ \qquad n(t):=tm(t),
+ \qquad p_r(t):=2^rn(t)d\quad(0\le r\le d),
+\]
+\[
+ L(t):=p_d(t)^d2^{d^2},
+ \qquad
+ B(t):=\left\lceil
+ \frac{10\log(L(t)/\delta_{\rm SS})}{\varepsilon_{\rm SS}}
+ \right\rceil,
+ \qquad
+ \tau_{\rm SS}(t):=\varepsilon_{\rm SS}^{-1}
+ \log\frac{tL(t)+1}{\beta_{\rm SS}}.
+\]
+
+The teacher count is the exact least feasible integer
+
+\[
+ k:=\min\left\{t\in\mathbb Z:t\ge2,
+ \ \frac t2-\tau_{\rm AT}\ge B(t)+\tau_{\rm SS}(t)+2\right\}.
+\]
+
+The existence of this minimum is part of the theorem proved below.  After
+the minimization, set
+
+\[
+ a:=a(k),\quad Q_{\rm blk}:=Q(k),\quad
+ m:=m(k),\quad n_0:=km,\quad N:=n_0,
+\]
+\[
+ p_r:=2^rn_0d\ (0\le r\le d),\quad
+ L:=p_d^d2^{d^2},\quad B:=B(k),\quad
+ \tau_{\rm SS}:=\tau_{\rm SS}(k).
+\]
+
+Thus, in particular,
+
+\[
+ a=v+\log(4k/\beta),\qquad
+ Q_{\rm blk}=e+\frac{ekd^2a}{\alpha v},\qquad
+ m=\left\lceil C_{\rm blk}\frac{d^2}{\alpha}
+ a\log Q_{\rm blk}\right\rceil,\qquad N=km.
+\]
+
+These scalars define $K_C^{\mathrm{VC\text{-}Lyu}}$ as follows.  Draw one
+uniform labeled partition of the quotient master sample into fixed blocks
+$\bar S_1,\ldots,\bar S_k$ of size $m$, and reuse it at every stage.  For
+$i\in[k]$ and every endpoint-complete stage $r\in\{0,\ldots,d\}$, set
+\[
+ H_i^r:=\left\{\bar h\in\bar C:
+ \operatorname{err}_{\bar S_i}(\bar h)
+ \le\rho^{r+1}\gamma\right\},
+ \qquad p_r=2^rNd.
+\]
+Thus the corresponding source index is
+$s=r+1\in\{1,\ldots,d+1\}$, including its final endpoint.  At stage
+$r$, use exactly the restriction $H_i^r$, a valid
+$(p_r,d)$-decomposition, and the essential-SOA list conventions of
+Lyu~\citep[Definitions~4.2--4.3, Lemmas~4.1 and~4.3, Corollary~4.1,
+and the construction in Theorem~3]{lyu2025}.  Empty restrictions receive
+the empty list; deterministic tie-breaking fixes every valid decomposition
+and list ordering before the sample is seen.  Invalid, nonfinite,
+non-$H_C$, or oversized lists are replaced by the empty list.
+
+For the resulting stage lists $\mathcal L_1^r,\ldots,\mathcal L_k^r$, set
+
+\[
+ q_r:=\max_{\bar h\in H_C}
+ |\{i\in[k]:\bar h\in\mathcal L_i^r\}|,
+\]
+
+with $q_r=0$ when all lists are empty.  Run one stopped AboveThreshold
+transcript, drawing independent $Z_r\sim\operatorname{Lap}(1/\eta)$ and
+reporting Above exactly when $q_r+Z_r\ge k/2$.  At the first Above stage,
+make one Sparse Sample call on the selected lists: each actual union item
+$u$ has score $s(u)=|\{i:u\in\mathcal L_i^r\}|$, the distinct failure
+symbol $\perp$ has score $B$, and the output mass is proportional to
+$\exp(\varepsilon_{\rm SS}s(u))$, exactly as in
+Lyu~\citep[Algorithm~1 and Lemma~3.1]{lyu2025}.  An actual union item is
+released.  Every empty, invalid, failed, no-success, exhausted, or residual
+path releases $\bar c_0$.  This fixes a pointwise law on every quotient
+input before sampling; its measurable-kernel realization is the law denoted
+$K_C^{\mathrm{VC\text{-}Lyu}}$.
+
+The old comparison arm is independently calibrated.  Set
+
+\[
+ \gamma_{\rm o}:=\alpha/16,
+ \qquad
+ \beta_{\rm tr,o}=\beta_{\rm AT,o}=\beta_{\rm SS,o}
+ =\beta_{\rm gen,o}:=\beta/4,
+ \qquad
+ \delta_{\rm AT,o}=\delta_{\rm SS,o}:=\delta/2,
+\]
+\[
+ \varepsilon_{\rm SS,o}:=\varepsilon/8,
+ \qquad
+ \eta_{\rm o}:=\frac{\varepsilon}
+ {4c_{\rm AT}(\sqrt{g_\delta}+g_\delta)},
+ \qquad
+ \tau_{\rm AT,o}:=\eta_{\rm o}^{-1}
+ \log\frac{d+1}{\beta_{\rm AT,o}}.
+\]
+
+For every integer $t\ge2$, define
+
+\[
+ a_{\rm o}(t):=d+\log(4t/\beta),
+ \qquad
+ Q_{\rm o}(t):=e+\frac{etd^2a_{\rm o}(t)}{\alpha d},
+\]
+\[
+ m_{\rm o}(t):=\left\lceil C_{\rm o}\frac{d^2}{\alpha}
+ a_{\rm o}(t)\log Q_{\rm o}(t)\right\rceil,
+ \quad n_{\rm o}(t):=tm_{\rm o}(t),
+ \quad p_{\rm o,r}(t):=2^rn_{\rm o}(t)d,
+\]
+\[
+ L_{\rm o}(t):=p_{\rm o,d}(t)^d2^{d^2},
+ \quad
+ B_{\rm o}(t):=\left\lceil
+ \frac{10\log(L_{\rm o}(t)/\delta_{\rm SS,o})}
+ {\varepsilon_{\rm SS,o}}
+ \right\rceil,
+ \quad
+ \tau_{\rm SS,o}(t):=\varepsilon_{\rm SS,o}^{-1}
+ \log\frac{tL_{\rm o}(t)+1}{\beta_{\rm SS,o}}.
+\]
+
+Its least feasible teacher count and exact horizon are
+
+\[
+ k_{\rm o}:=\min\left\{t\in\mathbb Z:t\ge2,
+ \ \frac t2-\tau_{\rm AT,o}
+ \ge B_{\rm o}(t)+\tau_{\rm SS,o}(t)+2\right\},
+\]
+\[
+ a_{\rm o}:=a_{\rm o}(k_{\rm o}),\quad
+ Q_{\rm o}:=Q_{\rm o}(k_{\rm o}),\quad
+ m_{\rm o}:=m_{\rm o}(k_{\rm o}),\quad
+ N_{\rm old}:=n_{\rm o}:=k_{\rm o}m_{\rm o},
+\]
+\[
+ p_{\rm o,r}:=2^rn_{\rm o}d\quad(0\le r\le d),\quad
+ L_{\rm o}:=L_{\rm o}(k_{\rm o}),\quad
+ B_{\rm o}:=B_{\rm o}(k_{\rm o}),\quad
+ \tau_{\rm SS,o}:=\tau_{\rm SS,o}(k_{\rm o}).
+\]
+
+The law $K_C^{\mathrm{old\text{-}Lyu}}$ is the same quotient-first,
+fixed-block procedure using this old tuple.  Its quotient master sample is
+partitioned into fixed blocks $\bar S_{\rm o,1},\ldots,
+\bar S_{\rm o,k_{\rm o}}$ of size $m_{\rm o}$.  For
+$i\in[k_{\rm o}]$ and every endpoint-complete stage
+$r\in\{0,\ldots,d\}$, its exact old-indexed restriction is
+\[
+ H_{\rm o,i}^r:=\left\{\bar h\in\bar C:
+ \operatorname{err}_{\bar S_{\rm o,i}}(\bar h)
+ \le\rho^{r+1}\gamma_{\rm o}\right\},
+ \qquad p_{\rm o,r}=2^rN_{\rm old}d.
+\]
+The corresponding source index is again $s=r+1\in\{1,\ldots,d+1\}$.
+At each stage it uses the exact restriction $H_{\rm o,i}^r$, a valid
+$(p_{\rm o,r},d)$-decomposition, and the original $d$-based essential-SOA
+list construction of Lyu~\citep[Definitions~4.2--4.3, Lemmas~4.1
+and~4.3, Corollary~4.1, and Theorem~3]{lyu2025}.  Empty restrictions receive the empty
+list, and every invalid, nonfinite, non-$H_C$, oversized, failure-symbol,
+no-success, exhausted, or residual path is totalized to $\bar c_0$.  The
+law uses one stopped AboveThreshold transcript and one selected-stage Sparse
+Sample call. Its scores, Laplace scale, threshold, and categorical weights
+are the preceding VC-arm formulas with
+$(k,p_r,L,B,\eta,\varepsilon_{\rm SS},\tau_{\rm SS})$ replaced by
+$(k_{\rm o},p_{\rm o,r},L_{\rm o},B_{\rm o},\eta_{\rm o},
+\varepsilon_{\rm SS,o},\tau_{\rm SS,o})$.
+Hence both named laws are exact pointwise procedures rather than aliases
+for appendix conclusions.
+
+When $M:=|C|<\infty$, the finite comparison law is the everywhere-defined
+quotient exponential-weights kernel
+
+\[
+K^{\mathrm{fin}}_{C,N}(\bar s,E)=
+\frac{\displaystyle\sum_{\bar h\in\bar C\cap E}
+ \exp\!\left[-\frac{\varepsilon}{2}\sum_{r=1}^N
+ \mathbf1\{\bar h(q_r)\ne y_r\}\right]}
+ {\displaystyle\sum_{\bar g\in\bar C}
+ \exp\!\left[-\frac{\varepsilon}{2}\sum_{r=1}^N
+ \mathbf1\{\bar g(q_r)\ne y_r\}\right]}.
+\]
+
+Its certified horizon is
+\[
+ N_{\rm fin}:=
+ \begin{cases}
+ 0,&d=0,\\[2pt]
+ \displaystyle\left\lceil
+ \frac{4(\log M+\log(1/\beta))}{\varepsilon\alpha}
+ \right\rceil,&d\ge1.
+ \end{cases}
+\]
+It is defined for every quotient input, including $N=0$, and its raw
+pullback is its composition with $T_N$.  If $|C|=\infty$, set
+$R_{\mathrm{fin}}=+\infty$ and construct no finite surrogate.  All three
+arms therefore share the output space, decoder, privacy quantifier, and
+realizable iid population-risk mode; the minimum theorem selects one whole
+law before observing the data.

@@ -1,0 +1,27 @@
+You are the distinct step-scoped proof producer for perspective_1/idea_1, step_002, unit attempt 1, sketch attempt 2, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+First read <CODEX_SKILLS_ROOT>/proof-step/SKILL.md completely and every directly required shared contract/template it names. Then run /proof-step step_002.
+
+Binding controller artifacts and hashes:
+- setting.md: f77d11e1a559e22a96b14de1936d50c691c79d5a4a15e5806ddf4e6d119ada83
+- accepted proof_sketch.md: 2fa48ee16cca9a8d0379071f448d1e72ce98ae46d624482d772e74b97649c74a
+- accepted proof_sketch_review.md: 40b66331aa50a66607d068e266c545a865044bd175a56d81f012542e6d17d6f8, status ACCEPTED
+- optional diagnostic global_proof.md: 45e93d102aa948c0d80886e5f21cf3bdaa412dfaa25611684eb363d48fa1f5b9
+- paired global_proof_review.md: cd86cc68e3982c55aeb16fcafbda0759bb71464aee405c4a158bd41a308463db, status ACCEPTED
+- current proof_tracker.md after accepted step_001 review: bf992d237a53b0169df012b0e29a45f329edd5021ed2bab9ddabc09d8baf8483
+- accepted dependency step_001 proof.md: 6c4e3048df8a590bd8c24f6f6b1d6be157c7fe8895af38bd8736ea1c419ac939, sketch attempt 2, unit attempt 1, status COMPLETE
+- accepted dependency step_001 review.md: cd4bc2cee3dabe3638d749cf6996ab6a3bcf6d2a69743bfafcf78b44ad88c3a7, status ACCEPTED, reviewed proof digest 6c4e3048df8a590bd8c24f6f6b1d6be157c7fe8895af38bd8736ea1c419ac939
+
+Prove exactly the attempt-2 sketch row:
+
+For G_1=1, prove ||G||_2 >= 1, the exact derivative identity for gamma_G=G/||G||_2, the exact coordinate relation gamma_F(theta)=gamma_G((theta-c)/h), and
+
+Gamma_proj(F) <= sqrt(N) D_*/h,
+
+where the accepted dependency exports D_* = Delta B_Q(1+qB_P) and |G_i'| <= D_* on [-1,1]. Use only primitive assump:parameter-regime and assump:anchored-unit-range plus the accepted step_001 output. Preserve the exact sqrt(N)/h factor, ordinary deterministic pointwise mode on all Theta, Euclidean norm mode, q=0 and N=1 cases, endpoints, stationary curves, and the Counter-example 1 scale B_Q=1/delta. Do not introduce an unrecorded norm margin, hidden constant, monomial count, probability assumption, or theorem-facing generated invariant.
+
+The attempt-1 live step_002 proof is stale and may be read only as latest same-step diagnostic material. Its consumed binding copy is archived under perspective_1/idea_1/proof_history/sketch_001/proof_steps/step_002/attempt_001/. It identifies the likely two-unit decomposition: a generic normalized Euclidean curve lemma and an exact branch application. Re-prove all claims freshly against the attempt-2 dependency digests. Do not cite the stale proof or proof_history as evidence. The accepted global diagnostic is planning context only, not proof authority.
+
+Write only perspective_1/idea_1/proof_steps/step_002/proof.md. Do not edit the setting, sketch or sketch review, dependency artifacts, global artifacts, trackers, worker_log.md, downstream steps, assembly/final artifacts, archives, or another branch. Set Sketch attempt 2, Step ID step_002, Unit attempt 1. Use every required proof-step section; expose every independent nontrivial local unit with theorem-style titles and stable labels; restate and discharge the accepted dependency and standard differentiation tools in current notation; use theorem-style references in the target-step assembly; classify all helper objects and provenance; and set COMPLETE only if the exact target closes.
+
+Before reporting, validate every binding hash, accepted dependency identity, required heading and table arity, stable assumption IDs, ASCII/control bytes, balanced TeX delimiters/braces/environments, exact target and rate preservation, and file scope. Report status, output path, local-unit count, blockers, and final SHA-256.

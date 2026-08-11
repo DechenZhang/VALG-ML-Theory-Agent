@@ -1,0 +1,77 @@
+P2 AGGREGATE INPUT MANIFEST - SKETCH 2, ASSEMBLY ATTEMPT 3
+
+Run root: <WORKSPACE_ROOT>/colt_2026_v336_piecewise_lipschitz_open_problem/colt_2026_v336_002_invited-open-problem-online-optimization-of-piecewise-lipschitz-functi/subproblem_002
+Branch: perspective_2/idea_1
+Run mode: interactive
+Model: gpt-5.6-sol
+Reasoning effort: max
+Idea attempt: 1 of 30
+Accepted sketch attempt: 2 of 10
+Assembly attempt: 3 of 100
+Global producer budget: 100
+Step producer budget: 100
+Progress type: full
+
+Frozen common proof input manifest:
+
+5599f4bcb6836bc7281f799656f09d4c17ef5171bbbea513ffe94e770d572449  .controller_tmp/p2_final_review_common_manifest_assembly3.txt
+
+Fresh contract-valid specialized diagnostics:
+
+535b9cc3cc806b9cd23bbd25e4a945d31739c11bc28b570be346d38cb7d1a79d  perspective_2/idea_1/proof_review_structural.md
+3d3b6e61456c3646720acace7875234bb4df5174dfa0658e585da37d3e746998  perspective_2/idea_1/proof_review_rigor.md
+0f2267e3709d79aa8a5bca13baaa4037459a65a5a6e92be0fa203bc480173368  perspective_2/idea_1/proof_review_citation.md
+f0fccc65c416959f991e2fc96357469d6da5908c70b821c0d87df47c786f0bfc  perspective_2/idea_1/proof_review_adversarial.md
+
+Every specialized review has exact required headings, raw Reviewer Verdict PASS,
+Blocking Issues None, Nonblocking Concerns None, Suggested Repair Depth None, and
+Smallest Candidate Repair Target None. All four are ASCII/control-byte clean, end in
+a line feed, contain no aggregate-only controlled field, and passed controller parsing.
+This is controller context only; the aggregate reviewer must validate the contracts.
+
+Citation-process caveat:
+
+The citation worker completed its independent current-input audit and provisional verdict,
+then a broad read-only search accidentally surfaced stale review and proof_history lines.
+The worker disclosed that isolation breach. The final citation artifact contains no archival
+authority or archive-derived claim, its 41 protected current inputs match, and its contract is
+valid. Do not read proof_history or any stale aggregate. Do not treat the citation PASS as proof
+evidence. Independently recheck every citation mapping and every aggregate contract gate.
+
+Stale live aggregate output at dispatch:
+
+db8f8d69c8ee86bdba3617d339596c9f7397dc27ccc4586127e9b966009e560e  perspective_2/idea_1/proof_review.md
+
+The stale live aggregate is the assembly-attempt-2 routing artifact and is byte-identical to
+perspective_2/idea_1/proof_history/sketch_002/final_reviews/assembly_attempt_002/proof_review.md.
+It is not evidence. Verify only its pre-dispatch digest, without consuming its contents, and
+replace only the live proof_review.md output. Do not read any proof_history artifact.
+
+The common manifest binds 41 protected current inputs: eight controller/diagnostic artifacts,
+the exact nine-file public bundle, and twelve accepted proof/review pairs. It records the current
+producer-attempt vector and accepted-review identities. All 41 hashes matched after all four
+specialized reviewers completed. The aggregate reviewer must reverify them before and after write.
+
+Assembly-attempt-3 repair boundary:
+
+- The contract-valid assembly-attempt-2 aggregate, SHA-256
+  db8f8d69c8ee86bdba3617d339596c9f7397dc27ccc4586127e9b966009e560e,
+  routed exactly two public-TeX token defects in 3_main.tex at lines 98 and 145.
+- Assembly attempt 3 changed only assembly_report.md and latex_template/3_main.tex.
+- Both bare qquad fragments became literal backslashed \qquad commands. No theorem statement,
+  constant, assumption, label, citation, dependency, or accepted producer interface changed.
+- The repaired 3_main.tex digest is
+  c6d2ea732b7ac929929c57951bafd7b50c21929967e0c23b822e335ebdfae9c9.
+- The repaired assembly_report.md digest is
+  917caba90dfc05766c51d907d5fa20353249106d532def5c4e31b46bb963fa92.
+- An isolated cache-only Tectonic build of the exact attempt-3 sources produced a nonempty
+  65-page PDF at <TEMP_ROOT>/proof-assembly.attempt3.Pfp3cb/main.pdf. The citation reviewer also
+  completed a fresh isolated offline build of the exact protected sources.
+
+Required independent aggregate checks include exact setting-goal identity, all 49 local units,
+all 12 Target-Step Assemblies, every used cited-result application, assumption provenance,
+explicit-rate and baseline bridges, public theorem readability and self-containedness, all
+boundary cases, citation/reference integrity, clean compilation or exact-hash build verification,
+current accepted-sketch worker provenance, producer budgets, and single-output-file scope.
+Specialized PASS tokens, counts, labels, compilation, and assembly claims are diagnostic context
+only, never proof evidence.

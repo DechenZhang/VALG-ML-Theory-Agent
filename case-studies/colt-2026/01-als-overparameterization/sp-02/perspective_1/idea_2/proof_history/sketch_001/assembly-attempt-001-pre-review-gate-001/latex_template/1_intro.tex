@@ -1,0 +1,176 @@
+\section{Theoretical Setup}
+
+\subsection{Smoothed CP target and objective}
+
+Let $r,n,k$ be positive integers and let $q>0$ be fixed.  For arbitrary
+deterministic matrices
+$\bar A=[\bar a_1,\ldots,\bar a_r]$,
+$\bar B=[\bar b_1,\ldots,\bar b_r]$, and
+$\bar C=[\bar c_1,\ldots,\bar c_r]$ in $\mathbb R^{n\times r}$, set
+$\rho=r^{-q}$.  Independently draw
+\[
+ \xi_j^a,\xi_j^b,\xi_j^c\sim
+ \mathcal N\!\left(0,\frac{\rho^2}{n}I_n\right),
+ \qquad 1\le j\le r,
+\]
+and define
+\[
+ a_j=\bar a_j+\xi_j^a,\qquad
+ b_j=\bar b_j+\xi_j^b,\qquad
+ c_j=\bar c_j+\xi_j^c,
+ \qquad
+ T=\sum_{j=1}^r a_j\otimes b_j\otimes c_j.
+\]
+No conditioning, incoherence, or random-base restriction is imposed on the
+deterministic matrices.
+
+For $X=[x_1,\ldots,x_k]$, $Y=[y_1,\ldots,y_k]$, and
+$Z=[z_1,\ldots,z_k]$ in $\mathbb R^{n\times k}$, write
+\[
+ S(X,Y,Z)=\sum_{i=1}^k x_i\otimes y_i\otimes z_i,
+ \qquad
+ F(X,Y,Z)=\frac12\|T-S(X,Y,Z)\|_F^2.
+\]
+The symbol $T_{(m)}$ denotes the mode-$m$ matricization, and $\odot$
+denotes the Khatri--Rao product in one fixed standard ordering.
+
+\subsection{Method-specific fixed initialization spans}
+
+For each $M\in\{\mathrm{cALS},\mathrm{cGD}\}$, independently draw
+$G_x^M,G_y^M,G_z^M\in\mathbb R^{n\times k}$ with iid
+$\mathcal N(0,1/n)$ entries.  Let
+\[
+ \mathcal S_M=\operatorname{range}(G_x^M),
+ \qquad
+ Q_M=\operatorname{orth}(G_x^M),
+\]
+where $\operatorname{orth}$ is a fixed measurable choice of an orthonormal
+basis on the full-column-rank set.  Define
+\[
+ \mathcal H_M=\mathcal S_M\otimes\mathbb R^n\otimes\mathbb R^n,
+ \qquad
+ P_{\mathcal S_M}=Q_MQ_M^{\mathsf T},
+ \qquad
+ P_{\mathcal H_M}=P_{\mathcal S_M}\otimes I_n\otimes I_n.
+\]
+The two initialization triples are independent of one another and of the
+smoothing variables.  Both methods use the same realization of $T$.
+
+The constrained sequential alternating least-squares method initializes
+\[
+ (X_0,Y_0,Z_0)=
+ (G_x^{\mathrm{cALS}},G_y^{\mathrm{cALS}},G_z^{\mathrm{cALS}}).
+\]
+At sweep $t$, it updates in the order $X,Y,Z$.
+With
+\[
+ K_t^x=Z_t\odot Y_t,
+\]
+the constrained block is
+\[
+ X_{t+1}=Q_{\mathrm{cALS}}
+ \left[Q_{\mathrm{cALS}}^{\mathsf T}T_{(1)}K_t^x
+ \bigl((K_t^x)^{\mathsf T}K_t^x\bigr)^\dagger\right].
+\]
+It is followed by
+\[
+ K_t^y=Z_t\odot X_{t+1},
+ \qquad
+ Y_{t+1}=T_{(2)}K_t^y
+ \bigl((K_t^y)^{\mathsf T}K_t^y\bigr)^\dagger,
+\]
+and
+\[
+ K_t^z=Y_{t+1}\odot X_{t+1},
+ \qquad
+ Z_{t+1}=T_{(3)}K_t^z
+ \bigl((K_t^z)^{\mathsf T}K_t^z\bigr)^\dagger.
+\]
+The displayed choices are the minimum-Frobenius-norm exact block
+least-squares solutions, including at singular Gram matrices.  The method has
+no restart or early stopping.
+
+The constrained gradient method writes $X_t=Q_{\mathrm{cGD}}C_t$ and uses
+\[
+ f_{Q_{\mathrm{cGD}}}(C,Y,Z)=F(Q_{\mathrm{cGD}}C,Y,Z).
+\]
+It initializes
+\[
+ C_0=Q_{\mathrm{cGD}}^{\mathsf T}G_x^{\mathrm{cGD}},
+ \qquad Y_0=G_y^{\mathrm{cGD}},
+ \qquad Z_0=G_z^{\mathrm{cGD}}.
+\]
+At a current state $u_t=(C_t,Y_t,Z_t)$, it tests the dyadic step sizes
+$\eta=2^{-j}$, $j=0,1,2,\ldots$, in order, and chooses the first one for
+which, with $V_t=u_t-\eta\nabla f_{Q_{\mathrm{cGD}}}(u_t)$,
+\[
+ f_{Q_{\mathrm{cGD}}}(V_t)
+ \le f_{Q_{\mathrm{cGD}}}(u_t)
+ -\frac{\eta}{2}\|\nabla f_{Q_{\mathrm{cGD}}}(u_t)\|_F^2.
+\]
+Here the squared gradient norm is the sum of the squared Frobenius norms of
+the $C,Y,Z$ blocks.  The accepted value is denoted $\eta_t$, and
+$u_{t+1}=V_t$, $X_{t+1}=Q_{\mathrm{cGD}}C_{t+1}$.  This method also has no
+restart.
+
+For either method, set
+\[
+ S_t^M=S(X_t^M,Y_t^M,Z_t^M),
+ \qquad
+ F_M(t)=F(X_t^M,Y_t^M,Z_t^M).
+\]
+When $\|(I-P_{\mathcal H_M})T\|_F>0$, define the fixed normalized tensor
+\[
+ W_M=\frac{(I-P_{\mathcal H_M})T}
+ {\|(I-P_{\mathcal H_M})T\|_F}.
+\]
+No value is assigned to $W_M$ when the denominator is zero.
+
+\subsection{Assumptions}
+
+\begin{assumption}[Fixed ambient dimension]\label{assump:dimension}
+$r$ and $n$ are positive integers and $n\ge 8r^{5/4}$.
+\end{assumption}
+
+\begin{assumption}[Superlinear algorithmic rank]\label{assump:rank_window}
+$k$ is an integer satisfying
+\[
+ r<k\le r^{1+c}=r^{5/4},
+ \qquad c=\frac14.
+\]
+\end{assumption}
+
+\begin{assumption}[Uniform arbitrary deterministic bases]\label{assump:arbitrary_base}
+$\bar A,\bar B,\bar C\in\mathbb R^{n\times r}$ are deterministic and
+unrestricted.  In particular, no conditioning or incoherence hypothesis is
+imposed, and the theorem is pointwise uniform over all such triples.
+\end{assumption}
+
+\begin{assumption}[Independent Gaussian smoothing]\label{assump:gaussian_smoothing}
+$q>0$ is fixed, $\rho=r^{-q}$, and all $3r$ perturbation vectors used above
+are mutually independent with covariance $(\rho^2/n)I_n$.
+\end{assumption}
+
+\begin{assumption}[Shared target and independent starts]\label{assump:joint_initialization}
+The two method-specific Gaussian initialization triples are mutually
+independent and independent of the smoothing variables.  Both methods use the
+same realized tensor $T$ when their events are intersected.
+\end{assumption}
+
+\subsection{Formalized goal}
+
+The objective is to prove that one may take $r_0=1$ and that, for every
+admissible $r,n,k$ and every unrestricted deterministic base triple, the joint
+smoothing-and-initialization law satisfies
+\[
+ \mathbb P\!\left[
+ \bigcap_{M\in\{\mathrm{cALS},\mathrm{cGD}\}}
+ \left\{
+ \lim_{t\to\infty}F_M(t)\text{ exists and }
+ \lim_{t\to\infty}F_M(t)\ge\frac38\|T\|_F^2
+ \right\}
+ \right]\ge\frac14.
+\]
+This is a material-partial result for the one-mode fixed-span constrained
+class.  Replacing the fixed initialization span by the endogenous moving span
+of ordinary unconstrained ALS or full-variable gradient descent remains open.

@@ -1,0 +1,195 @@
+We use the following explicit convention. A complete binary instance tree of depth \(D\) over a domain \(\mathcal X\) has an instance \(x_\sigma\in\mathcal X\) at every node \(\sigma\in\{0,1\}^{<D}\). A binary class \(H\subseteq\{0,1\}^{\mathcal X}\) shatters the tree if, for every \(b=(b_1,\ldots,b_D)\in\{0,1\}^D\), there is \(h_b\in H\) such that
+
+\[
+h_b(x_{b_{<r}})=b_r\qquad(1\le r\le D),
+\]
+
+where \(b_{<r}=(b_1,\ldots,b_{r-1})\). The Littlestone dimension is the largest shattered depth. This is the convention used throughout the proof; no tree/mistake equivalence is assumed without proof.
+
+\begin{lemma}[Distinct tagged cuts and exact cardinality]\label{lem:step-001-cardinality}
+Under the primitive tagged-threshold definitions with integers \(k\ge2\) and \(N\ge2\), the functions \(\tau_t\), \(t\in[N+1]\), are pairwise distinct, the parameterization \(\boldsymbol t\mapsto c_{\boldsymbol t}\) is injective, and
+
+\[
+\lvert C_{k,N}\rvert=(N+1)^k.
+\]
+\end{lemma}
+
+\begin{proof}
+If \(t<s\) in \([N+1]\), then \(t\le N\), so \(x=t\) is a valid point of \([N]\). At that point,
+
+\[
+\tau_t(t)=1,\qquad \tau_s(t)=0.
+\]
+
+Thus all \(N+1\) cuts are distinct. This comparison includes the endpoints: \(\tau_1\equiv1\) and \(\tau_{N+1}\equiv0\) on \([N]\), and they disagree at every point.
+
+If \(\boldsymbol t\ne\boldsymbol s\), choose a tag \(i\) for which \(t_i\ne s_i\). The preceding one-tag argument supplies an \(x\in[N]\) with \(\tau_{t_i}(x)\ne\tau_{s_i}(x)\), hence
+
+\[
+c_{\boldsymbol t}(i,x)\ne c_{\boldsymbol s}(i,x).
+\]
+
+The parameter map is therefore injective. It is surjective onto \(C_{k,N}\) by the class definition, and its domain has size \((N+1)^k\), proving the formula. \end{proof}
+
+\begin{lemma}[VC dimension of the tagged threshold product]\label{lem:step-001-vc}
+Under the primitive tagged-threshold definitions with integers \(k\ge2\) and \(N\ge2\),
+
+\[
+\operatorname{VC}(C_{k,N})=k.
+\]
+\end{lemma}
+
+\begin{proof}
+For the lower bound, consider
+
+\[
+S=\{(i,1):i\in[k]\}.
+\]
+
+Given arbitrary desired labels \(b_1,\ldots,b_k\in\{0,1\}\), set
+
+\[
+t_i=\begin{cases}
+1,&b_i=1,\\
+2,&b_i=0.
+\end{cases}
+\]
+
+Both choices lie in \([N+1]\) because \(N\ge2\), and \(\tau_{t_i}(1)=b_i\). Hence \(S\) is shattered and \(\operatorname{VC}(C_{k,N})\ge k\).
+
+For the upper bound, any set of \(k+1\) distinct points of \([k]\times[N]\) contains two points \((i,x)\) and \((i,y)\) on the same tag. Relabel them so that \(x<y\). For every threshold \(t_i\),
+
+\[
+\tau_{t_i}(x)=1\quad\Longrightarrow\quad x\ge t_i
+\quad\Longrightarrow\quad y\ge t_i
+\quad\Longrightarrow\quad \tau_{t_i}(y)=1.
+\]
+
+Thus the labeling \((1,0)\) on these two points cannot be realized by any member of \(C_{k,N}\). No \((k+1)\)-point set is shattered, so \(\operatorname{VC}(C_{k,N})\le k\). \end{proof}
+
+\begin{lemma}[Exact one-tag Littlestone dimension and halving budget]\label{lem:step-001-one-tag-ld}
+Under the primitive one-tag definition
+
+\[
+T_N=\{\tau_t:t\in[N+1]\}\subseteq\{0,1\}^{[N]},
+\]
+
+with \(N\ge2\), and Lemma~\ref{lem:step-001-cardinality}, define
+
+\[
+q=N+1,\qquad d_N=\lfloor\log_2 q\rfloor.
+\]
+
+Then \(T_N\) shatters a complete binary instance tree of depth \(d_N\), shatters no tree of depth greater than \(d_N\), and admits a deterministic online prediction rule that makes at most \(d_N\) mistakes on every finite labeled sequence realizable by \(T_N\). Consequently,
+
+\[
+\operatorname{LD}(T_N)=d_N.
+\]
+\end{lemma}
+
+\begin{proof}
+First, suppose \(T_N\) shatters a tree of depth \(D\). Choose one witnessing concept for each of the \(2^D\) root-to-leaf label sequences. Two different label sequences first diverge at some common node and prescribe opposite labels to the same queried point there. Their witnessing concepts must therefore be different. Lemma~\ref{lem:step-001-cardinality} gives exactly \(q\) distinct one-tag concepts, so
+
+\[
+2^D\le q,
+\]
+
+and hence \(D\le\lfloor\log_2q\rfloor=d_N\).
+
+For the matching lower bound, put \(m=2^{d_N}\), so \(m\le q=N+1\) and \(m-1\le N\). We construct a depth-\(d_N\) tree using only the thresholds \(t\in[m]\). At a node whose surviving threshold set is a consecutive interval
+
+\[
+I=\{a,a+1,\ldots,a+2^s-1\}
+\]
+
+of size \(2^s\), where \(s\ge1\), query
+
+\[
+x_I=a+2^{s-1}-1.
+\]
+
+This is a valid point of \([N]\): throughout the construction \(1\le x_I\le m-1\le N\). On the edge labeled \(1\), retain the lower half \(\{a,\ldots,x_I\}\); on the edge labeled \(0\), retain the upper half \(\{x_I+1,\ldots,a+2^s-1\}\). In the first case every retained threshold obeys \(t\le x_I\) and therefore \(\tau_t(x_I)=1\); in the second case every retained threshold obeys \(t>x_I\) and therefore \(\tau_t(x_I)=0\). Starting from \(I=[m]\), every root-to-leaf path leaves a singleton after exactly \(d_N\) splits, and that singleton threshold realizes every edge label on the path. The constructed tree is therefore shattered.
+
+It remains to record the online interface needed for the product upper bound. Maintain the version space \(V\subseteq T_N\) of concepts consistent with all previously revealed examples, starting from \(V=T_N\). At a query \(x\), predict a label having the larger number of concepts in
+
+\[
+V_y(x)=\{\tau\in V:\tau(x)=y\},\qquad y\in\{0,1\},
+\]
+
+with an arbitrary fixed tie rule. After the true label \(y\) is revealed, replace \(V\) by \(V_y(x)\). On a realizable sequence, the realizing threshold remains in \(V\), so \(V\) never becomes empty. Whenever the prediction is wrong, the surviving side has cardinality at most half the previous cardinality. If \(r\) mistakes occur, then
+
+\[
+1\le \lvert V\rvert\le q\,2^{-r},
+\]
+
+so \(2^r\le q\) and therefore \(r\le d_N\). This also covers the endpoint targets \(t=1\) and \(t=N+1\): each belongs to the initial version space and remains present whenever it is the realizing target. \end{proof}
+
+\begin{lemma}[Concatenated tagged trees give the product lower bound]\label{lem:step-001-product-lower}
+Under the primitive definition of \(C_{k,N}\), with \(k\ge2,N\ge2\), and the depth-\(d_N\) one-tag tree from Lemma~\ref{lem:step-001-one-tag-ld}, the product class shatters a complete tree of depth \(kd_N\). Hence
+
+\[
+\operatorname{LD}(C_{k,N})\ge kd_N.
+\]
+\end{lemma}
+
+\begin{proof}
+Attach a copy of the one-tag tree on tag \(1\) first. Below every leaf attach a copy on tag \(2\), and continue through tag \(k\). Equivalently, split any path label vector \(b\in\{0,1\}^{kd_N}\) into consecutive blocks
+
+\[
+b=(b^{(1)},\ldots,b^{(k)}),\qquad b^{(i)}\in\{0,1\}^{d_N}.
+\]
+
+During block \(i\), if the corresponding one-tag copy queries \(x\in[N]\), the product tree queries \((i,x)\). By Lemma~\ref{lem:step-001-one-tag-ld}, for each block \(b^{(i)}\) there is a threshold \(t_i\in[N+1]\) whose one-tag labels realize that entire block. Because the coordinates \(t_1,\ldots,t_k\) are independent in the defining parameter set \([N+1]^k\), the single product concept \(c_{(t_1,\ldots,t_k)}\) realizes all \(k\) blocks of the chosen path. Every length-\(kd_N\) path is therefore realized, proving the stated lower bound. \end{proof}
+
+\begin{lemma}[Summed per-tag realizable mistake budget]\label{lem:step-001-product-budget}
+Under the primitive definition of \(C_{k,N}\), with \(k\ge2,N\ge2\), and the one-tag online rule of Lemma~\ref{lem:step-001-one-tag-ld}, there is a deterministic online rule that makes at most \(kd_N\) mistakes on every finite sequence realizable by \(C_{k,N}\).
+\end{lemma}
+
+\begin{proof}
+Maintain \(k\) independent one-tag version spaces \(V_1,\ldots,V_k\), each initialized to \(T_N\). When the current instance is \((i,x)\), use the one-tag halving rule based only on \(V_i\), reveal the resulting prediction, and update only \(V_i\) after observing the label.
+
+If the full sequence is realized by \(c_{\boldsymbol t}\), then the subsequence on tag \(i\) is realized by \(\tau_{t_i}\). Lemma~\ref{lem:step-001-one-tag-ld} therefore bounds the number \(M_i\) of mistakes charged to tag \(i\) by \(d_N\). Each global mistake occurs on exactly one tag and is charged exactly once, so
+
+\[
+M_{\mathrm{total}}=\sum_{i=1}^k M_i
+\le\sum_{i=1}^k d_N
+=kd_N.
+\]
+
+There is no cross-tag condition to maintain: observations on tag \(i\) constrain only \(t_i\). The same argument includes \(k=2\) and includes any coordinate whose realizing threshold is either endpoint. \end{proof}
+
+\begin{lemma}[A realizable mistake budget upper-bounds Littlestone dimension]\label{lem:step-001-mistake-to-ld}
+Let \(H\subseteq\{0,1\}^{\mathcal X}\) be any binary class and let \(B\in\mathbb Z_{\ge0}\). If a deterministic online prediction rule makes at most \(B\) mistakes on every finite labeled sequence realizable by \(H\), then
+
+\[
+\operatorname{LD}(H)\le B.
+\]
+\end{lemma}
+
+\begin{proof}
+Suppose instead that \(H\) shatters a complete tree of depth \(B+1\). Starting at its root, present the instance at the current node to the rule. If the rule predicts \(p\in\{0,1\}\), reveal the label \(1-p\) and descend along that edge. Repeat for all \(B+1\) levels. By construction the rule makes a mistake at every level. By shattering, the resulting root-to-leaf labeled sequence is realized by some single member of \(H\). This is a realizable sequence with \(B+1\) mistakes, contradicting the assumed budget. \end{proof}
+
+\begin{proposition}[Exact Littlestone dimension of the tagged product]\label{prop:step-001-product-ld}
+Under the primitive tagged-threshold definitions with integers \(k\ge2,N\ge2\), and Lemmas~\ref{lem:step-001-product-lower}, \ref{lem:step-001-product-budget}, and \ref{lem:step-001-mistake-to-ld},
+
+\[
+\operatorname{LD}(C_{k,N})
+=k\lfloor\log_2(N+1)\rfloor.
+\]
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:step-001-product-lower} gives
+
+\[
+\operatorname{LD}(C_{k,N})\ge kd_N.
+\]
+
+Lemma~\ref{lem:step-001-product-budget} constructs a deterministic rule with realizable mistake budget \(kd_N\). Applying Lemma~\ref{lem:step-001-mistake-to-ld} with \(H=C_{k,N}\) and \(B=kd_N\) gives
+
+\[
+\operatorname{LD}(C_{k,N})\le kd_N.
+\]
+
+The bounds agree, and \(d_N=\lfloor\log_2(N+1)\rfloor\). \end{proof}
+

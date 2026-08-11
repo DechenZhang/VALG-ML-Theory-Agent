@@ -1,0 +1,17 @@
+Perform the fresh independent /proof-review-rigor stage for perspective_2/idea_1, accepted sketch attempt 2, assembly attempt 2.
+
+Read <CODEX_SKILLS_ROOT>/proof-review-rigor/SKILL.md completely, <CODEX_SKILLS_ROOT>/_shared/checklists/artifact-contracts.md completely, and <CODEX_SKILLS_ROOT>/_shared/templates/proof-review-rigor.md completely. Then read .controller_tmp/p2_final_review_common_manifest_assembly2.txt completely and verify that its SHA-256 is 2a63bc5e9892bb46cbff15ab2c8e754917874d80693ee835feaf7805db92afee.
+
+Write only perspective_2/idea_1/proof_review_rigor.md, replacing the stale attempt-1 live file without reading it. Do not read proof_review.md, sibling specialized reviews, proof_history, or any archived final review. Do not write or modify any other file.
+
+Build a line-by-line derivation map from all 12 accepted source proofs into the public appendix. Independently compare all 49 local derivations, every used cited-result application, boundary argument, and Target-Step Assembly against the actual appendix proof body. Do not PASS from theorem counts, labels, compilation, assembly_report.md, or high-level correspondence.
+
+Audit the attempt-2 repair in particular. Verify the new injective affine area formula for arbitrary measurable D and nonnegative Borel h, the sqrt(det(L^T L)) factor, extended-real scope, and k=0 convention. Verify the Step 004 instantiation k=N-1, n=N, D=B_{j,theta}, Xi=Psi_j(theta,.), including Borel measurability, injectivity, exact-section bijection, Gram determinant, nonnegative square root, weak boundaries, empty sections, and N=1. Check that the use yields exactly the accepted Hausdorff pullback without orientation, multiplicity, or boundary-deletion factors.
+
+Also audit the literal coefficient-height certificate, operator/Frobenius bounds, normalized-projector identity, completed measurability and finite-pivot exhaustion, area/coarea multiplicity, persistent-root affine-subspace nullity, arbitrary full-joint density conversion, translated cube-section constants, affine and homogeneous probability coefficients, ordered suprema, original-coordinate monic charts, d=1/d=2 and zero-length interval branches, and Counter-example equality epsilon/(4 delta). Stress all constants, equality-to-inequality transitions, interchanges and monotone limits, no-pivot-margin/tangent/multiple-root regimes, and the distinct 1/(4 delta), 1/delta, and sqrt(2)/delta scales. Preserve ordinary probability, arbitrary coefficient correlation, Euclidean conventions, and the exact supplied-certificate boundary.
+
+Independently audit public-source hygiene, labels/references, citation validity, and fresh standalone compilation. Compilation is not proof evidence. Classify every real defect at the shallowest valid repair depth.
+
+Use exactly the shared rigor-review template and preserve its heading order. Controlled field bodies must be raw tokens. PASS requires Blocking Issues=None, Suggested Repair Depth=None, and Smallest Candidate Repair Target=None. BLOCKING requires numbered blockers and aligned depth/target. Do not emit a score, aggregate Failure Type, Retry Mode, or controller route.
+
+Before returning, reverify all protected inputs, complete the all-12-step derivation comparison, output SHA-256, ASCII/control-byte cleanliness, final LF, and single-output-file scope. Report the verdict, blocker/concern state, repair depth/target, comparison completion, output hash, and protected-input verification in your final message.

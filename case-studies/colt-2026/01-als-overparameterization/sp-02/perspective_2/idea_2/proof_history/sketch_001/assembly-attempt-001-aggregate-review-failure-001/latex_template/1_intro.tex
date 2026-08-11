@@ -1,0 +1,147 @@
+\section{Theoretical Setup}\label{sec:setup}
+
+\subsection{Tensor model and objective}
+
+Fix constants $\kappa\geq 1$ and $q>0$, and let $r,n,k$ be positive
+integers.  For each mode, let
+$\bar A=[\bar a_1,\ldots,\bar a_r]\in\mathbb R^{n\times r}$, with
+analogous matrices $\bar B$ and $\bar C$.  For
+$\bar M\in\{\bar A,\bar B,\bar C\}$, write
+\[
+D_{\bar M}=\operatorname{diag}(\|\bar m_1\|_2,\ldots,
+\|\bar m_r\|_2),
+\qquad
+\widetilde M=\bar M D_{\bar M}^{-1}.
+\]
+Set $\rho=r^{-q}$.  Independently over $j\in[r]$ and the three modes,
+draw
+\[
+\xi_j^a,\xi_j^b,\xi_j^c
+\sim \mathcal N\!\left(0,\frac{\rho^2}{n}I_n\right),
+\]
+and define
+\[
+a_j=\bar a_j+\xi_j^a,
+\qquad b_j=\bar b_j+\xi_j^b,
+\qquad c_j=\bar c_j+\xi_j^c.
+\]
+The realized target tensor is
+\[
+T=\sum_{j=1}^r a_j\otimes b_j\otimes c_j
+\in\mathbb R^{n\times n\times n}.
+\]
+
+For factor matrices $X=[x_1,\ldots,x_k]$, $Y=[y_1,\ldots,y_k]$, and
+$Z=[z_1,\ldots,z_k]$, define
+\[
+\widehat T(X,Y,Z)=\sum_{i=1}^k x_i\otimes y_i\otimes z_i,
+\qquad
+\mathcal L(X,Y,Z)=\|T-\widehat T(X,Y,Z)\|_F^2.
+\]
+At time $t$, abbreviate
+$\widehat T_t=\widehat T(X_t,Y_t,Z_t)$.  Fix one componentwise
+Khatri--Rao ordering, put
+\[
+U_t^x=Z_t\odot Y_t,
+\qquad U_t^y=Z_t\odot X_t,
+\qquad U_t^z=Y_t\odot X_t,
+\]
+and let $T_{(1)},T_{(2)},T_{(3)}$ be the corresponding matricizations.
+
+\subsection{Half-relaxed parallel ALS and product gauge}
+
+All three least-squares candidates use the old iterate and are computed in
+parallel:
+\[
+\begin{aligned}
+X_{t+1}^{\mathrm{ls}}
+ &=T_{(1)}U_t^x\big((U_t^x)^{\mathsf T}U_t^x\big)^\dagger,\\
+Y_{t+1}^{\mathrm{ls}}
+ &=T_{(2)}U_t^y\big((U_t^y)^{\mathsf T}U_t^y\big)^\dagger,\\
+Z_{t+1}^{\mathrm{ls}}
+ &=T_{(3)}U_t^z\big((U_t^z)^{\mathsf T}U_t^z\big)^\dagger.
+\end{aligned}
+\]
+The Moore--Penrose pseudoinverse selects the minimum-Frobenius-norm
+least-squares candidate.  With relaxation parameter $\eta=1/2$, form
+\[
+X_{t+1}^{\mathrm{raw}}=\tfrac12(X_t+X_{t+1}^{\mathrm{ls}}),
+\quad
+Y_{t+1}^{\mathrm{raw}}=\tfrac12(Y_t+Y_{t+1}^{\mathrm{ls}}),
+\quad
+Z_{t+1}^{\mathrm{raw}}=\tfrac12(Z_t+Z_{t+1}^{\mathrm{ls}}).
+\]
+There is no fixed-subspace constraint, clipping, regularizer, adaptive
+preconditioner, restart, or early stopping.  Sequential Gauss--Seidel ALS
+and unrelaxed simultaneous ALS are not covered.
+
+After each relaxed sweep, apply the following deterministic gauge to every
+component.  If $u=\|x_i\|_2$, $v=\|y_i\|_2$, and $w=\|z_i\|_2$ are
+positive, let $g=(uvw)^{1/3}$ and replace
+\[
+(x_i,y_i,z_i)
+\quad\text{by}\quad
+(gx_i/u,gy_i/v,gz_i/w).
+\]
+The three scale factors have product one.  If $uvw=0$, replace the component
+triple by $(0,0,0)$.  The resulting factors are denoted
+$(X_{t+1},Y_{t+1},Z_{t+1})$.  The initial state is the raw Gaussian draw
+specified below; the gauge is first applied after the first sweep.
+
+\subsection{Primitive assumptions}
+
+\begin{assumption}[Ambient dimension]\label{assump:dimension}
+The integers $r,n$ are positive and
+\[
+n\geq C_{\mathrm{dim}}(\kappa,q)r^4\log r,
+\]
+where $C_{\mathrm{dim}}(\kappa,q)>0$ is independent of $r,n,k$ and of
+the deterministic base triple.
+\end{assumption}
+
+\begin{assumption}[Full superlinear rank window]\label{assump:rank_window}
+The integer $k$ satisfies
+\[
+r<k\leq r^{5/4}.
+\]
+Thus the universal overparameterization exponent is $1/4$.
+\end{assumption}
+
+\begin{assumption}[Well-conditioned deterministic bases]\label{assump:base_conditioning}
+For every $\bar M\in\{\bar A,\bar B,\bar C\}$ and every $j\in[r]$,
+\[
+\kappa^{-1}\leq\|\bar m_j\|_2\leq\kappa,
+\]
+and every singular value of $\widetilde M$ lies in
+$[\kappa^{-1},\kappa]$.
+\end{assumption}
+
+\begin{assumption}[Independent Gaussian smoothing]\label{assump:gaussian_smoothing}
+The exponent $q>0$ is fixed, $\rho=r^{-q}$, and the $3r$ perturbation
+vectors have the mutually independent Gaussian law specified above.
+\end{assumption}
+
+\begin{assumption}[Independent Gaussian initialization]\label{assump:independent_initialization}
+All $3nk$ entries of $X_0,Y_0,Z_0$ are mutually independent
+$\mathcal N(0,1/n)$ variables and are independent of all smoothing
+variables.
+\end{assumption}
+
+All probabilities below refer to this joint smoothing-and-initialization law,
+conditional on the deterministic base triple.
+
+\subsection{Formalized goal}
+
+The goal is an explicitly conditional theorem.  We seek constants depending
+only on $(\kappa,q)$ for which membership in the four-clause certificate
+defined in Section~\ref{sec:preliminaries} implies that the objective has a
+finite limit and that this limit is a positive constant fraction of
+$\|T\|_F^2$.  The target fraction is
+\[
+\epsilon=
+\left(\frac{\delta-L_P-\zeta}{\kappa^6C_T}\right)^2.
+\]
+The theorem does not assert that the certificate is nonempty, and it does not
+assert any positive lower bound on the probability of the certificate.
+Establishing such a uniform probability bound is the residual source-level
+gap.

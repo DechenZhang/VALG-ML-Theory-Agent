@@ -1,0 +1,35 @@
+# Theory Tracker
+
+## Attempted Ideas
+
+| Perspective | Idea attempt | Setting | Goal | Setting Signature | Goal Signature | Status | Best Score | Reasons |
+|-------------|--------------|---------|------|-------------------|----------------|--------|------------|---------|
+| Perspective 1 | 1 | N/A | N/A | N/A | N/A | Fail | 0 | NO_VIABLE_IDEA: no supported source-faithful full candidate; exact adaptive response-tree compression, common-witness charging, deterministic exactification, and arbitrary-domain bridge all failed hard gates |
+| Perspective 1 | 2 | Universal adaptive randomized unrestricted-SQ learner over an arbitrary domain with a tie-penalized probabilistic response-grid embedding | Bound tie-penalized probabilistic dimension by `(ceil(1/tau)+1)^m` at expected error `epsilon` | binary class; all distribution-target pairs; adversarial tolerance; adaptive randomized SQ; arbitrary domain; response-grid map law | material-partial unconditional exponential upper bound on tie-penalized probabilistic dimension | Fail | 2 | IDEA_FAIL: the setting does not guarantee joint measurability on tolerance-invalid synthetic transcripts, so the feature-law risk can be undefined; branch artifacts are preserved pending interactive idea-level routing. |
+| Perspective 2 | 1 | Universal adaptive randomized unrestricted-SQ learner over an arbitrary domain with a response-complete transcript operator | Construct one deterministic exact feature map of dimension at most `C m/tau^2` | binary class; all distribution-target pairs; adversarial tolerance; randomized transcript construction; arbitrary domain; deterministic exactification | full unconditional deterministic exact dimension upper bound with linear `m/tau^2` dependence | Fail | 0 | IDEA_FAIL: pathwise query energy supplies no branch-uniform common rank or common separator kernel, and finite strict separators have no coherent arbitrary-domain real exactification bridge. |
+| Perspective 2 | 2 | Universal adaptive randomized unrestricted-SQ learner over an arbitrary domain with static polynomial-rank seed-averaged terminal responses | Conditional exactification with `dc(H) <= r_A <= B(1+m/tau^2)^k` | binary class; all distribution-target pairs and valid replies; randomized adaptive unrestricted SQ; arbitrary domain; finite static mean-response rank | conditional deterministic exact polynomial dimension via fixed-space minimax | Accept | 9 | ACCEPTED: fixed-space minimax and compact finite-intersection exactification prove the conditional deterministic polynomial dimension bound; accepted artifacts copied and verified. |
+| Perspective 3 | 1 | Universal adaptive randomized unrestricted-SQ learner represented as a continuous adversarial response tree | Compress overlap-failure pivots into exact sign rank at most `C m/tau^2` | binary class; all distribution-target pairs; tolerance-adversarial response tree; overlap coupling; arbitrary domain | full unconditional adversarial-response-tree exact sign-rank bound with linear `m/tau^2` dependence | Fail | 0 | IDEA_FAIL: the rate is false on allowed singleton boundaries, exact annihilating-probability separation fails on an allowed countable domain, and branch-uniform energy has no source. |
+| Perspective 3 | 2 | Universal adaptive randomized unrestricted-SQ learner over an arbitrary domain with one instance-independent polynomial-size terminal-output catalog | Exactify the catalog by finite minimax into one deterministic map and prove `dc(H) <= L <= B(1+m/tau^2)^k` | binary class; all distribution-target pairs and valid replies; unrestricted adaptive randomized SQ; arbitrary domain; finite terminal catalog of polynomial size | conditional deterministic exact polynomial dimension bound via finite-simplex minimax | Accept | 10 | ACCEPTED: finite catalog correlation, exact finite minimax, and compact finite-intersection exactification prove the conditional deterministic polynomial dimension bound; accepted artifacts copied and verified. |
+| Perspective 1 | 3 | Universal adaptive randomized unrestricted-SQ learner over an arbitrary domain with a polynomial catalog covering only nearest-grid exact-center canonical-policy outputs | Prove `dc(H) <= L <= B(1+m/tau^2)^k` by exactifying the canonical valid-output catalog | binary class; all distribution-target pairs and valid reply policies; unrestricted adaptive randomized SQ; arbitrary domain; polynomial catalog only for rounded exact-center canonical outputs | conditional deterministic exact polynomial dimension bound via canonical-policy catalog minimax | Accept | 10 | ACCEPTED: canonical valid-policy legality, selector-free correlation extraction, finite minimax, compact finite-intersection exactification, and coordinate closure prove the conditional deterministic polynomial dimension bound; accepted artifacts copied and verified. |
+
+Allowed `Status` values:
+
+- `In_progress`
+- `Accept`
+- `Fail`
+
+When the controller appends a new approved idea row, it should write `Perspective`, `Idea attempt`, `Setting`, `Goal`, `Setting Signature`, and `Goal Signature`, initialize `Status = In_progress`, leave `Reasons` empty, and initialize `Best Score` as empty or `0` until the first proof review is recorded.
+
+When `/subagent-idea-generator` returns `NO_VIABLE_IDEA`, append one failed row for the consumed `idea_N` slot even though no `idea.md` was finalized. Use `Setting = N/A`, `Goal = N/A`, `Setting Signature = N/A`, `Goal Signature = N/A`, `Status = Fail`, `Best Score` empty or `0`, and `Reasons = NO_VIABLE_IDEA: <compact gate-failure reasons>`.
+
+When an approved `idea.md` fails the cross-perspective duplicate gate, append one failed row for the consumed `idea_N` slot. Fill `Setting`, `Goal`, `Setting Signature`, and `Goal Signature` from the generated `idea.md` using the same normalized summaries used for viable idea rows, set `Status = Fail`, set `Best Score` empty or `0`, and set `Reasons = DUPLICATE_IDEA: matches <perspective_M/idea_N>; <compact duplicate reason>`.
+
+If a filled tracker row needs to record a failure reason, keep the controlled status label as `Fail` and record the reason in `Reasons` rather than inventing a new status value.
+
+When `Status = Fail`, `Reasons` should store a one-line summary of the abandonment reason.
+
+`Setting Signature` should store a normalized summary of the concrete setting, including model, data, algorithm, regime, and theorem-critical refinements.
+
+`Goal Signature` should store a normalized summary of the theorem target, including theorem type, target metric, and claim shape.
+
+The signature fields are controller-written fast filters for duplicate and branch-memory lookup; the corresponding branch-local `idea.md` artifacts remain the source of truth. Rows with `NO_VIABLE_IDEA` reasons and `N/A` signatures are budget and failure-memory rows only; do not treat their signatures as duplicate-detection keys. Rows with `DUPLICATE_IDEA` reasons keep real signatures and should be used as duplicate-avoidance memory while still counting as failed consumed slots.

@@ -1,0 +1,198 @@
+\section{Theoretical Setup}\label{sec:setup}
+
+\subsection{Problem Setting}
+
+Let $X$ be an arbitrary domain, possibly empty, equipped with its power-set
+sigma algebra, and let $H\subseteq\{+1,-1\}^{X}$ be nonempty.  All random
+variables and protocol selectors below are measurable.  Since the functions
+being integrated are bounded, every displayed expectation is well defined.
+For a distribution $D$ on $X$, a target $h\in H$, and a binary predictor
+$g:X\to\{+1,-1\}$, define
+\begin{equation}\label{eq:loss-definition}
+\mathcal L_{D,h}(g)
+:=D\{x:g(x)\ne h(x)\}
+=\frac{1-\mathbb E_{x\sim D}[h(x)g(x)]}{2}.
+\end{equation}
+The deterministic dimension complexity is
+\begin{equation}\label{eq:dc-definition}
+\operatorname{dc}(H):=
+\inf\left\{d\in\mathbb N_0:
+\begin{array}{l}
+\exists\phi:X\to\mathbb R^d,\quad
+\forall h\in H\ \exists w_h\in\mathbb R^d,\\[-1mm]
+\forall x\in X,\quad h(x)\langle w_h,\phi(x)\rangle>0
+\end{array}\right\},
+\end{equation}
+where $\inf\varnothing:=+\infty$.  Thus one deterministic map must work for
+the entire class, and its signs must be strict at every point of the original
+domain.  This is neither an average nor a probabilistic,
+distribution-dependent, or approximate representation.
+
+Fix
+\[
+m\in\mathbb N_0,\qquad \tau>0,\qquad
+0\le\varepsilon<\frac14,\qquad
+\rho:=1-2\varepsilon\in\left(\frac12,1\right],
+\]
+together with catalog-family constants $B\ge1$ and
+$k\in\mathbb N$, $k\ge1$.  A randomized learner $A$ has a random tape
+$U$ with fixed law $\nu$ and is deterministic conditional on $U=u$.  At a
+nonterminal round $t\le m$, after the full real reply transcript
+$v_{<t}\in\mathbb R^{t-1}$, it issues a query
+\[
+q_{u,v_{<t}}:X\times\{+1,-1\}\longrightarrow[-1,1]
+\]
+that may depend arbitrarily on $u$ and $v_{<t}$.  It may stop at any depth
+$T\le m$, including $T=0$, and then returns a binary predictor.  Every query
+has the canonical decomposition
+\[
+a_q(x):=\frac{q(x,+1)+q(x,-1)}2,\qquad
+b_q(x):=\frac{q(x,+1)-q(x,-1)}2,
+\]
+so that $q(x,y)=a_q(x)+yb_q(x)$ and
+$|a_q(x)|+|b_q(x)|\le1$.  Neither component is restricted; in particular,
+label-independent query components are allowed.
+
+For $D,h,q$, define the population center and full tolerance interval by
+\[
+\mu_q(D,h):=\mathbb E_{x\sim D}q(x,h(x)),\qquad
+I_q(D,h):=[\mu_q(D,h)-\tau,\mu_q(D,h)+\tau].
+\]
+A valid adaptive policy $\pi\in\Pi(D,h)$ is nonanticipating.  After observing
+all preceding query-response pairs and the currently issued query $q_t$, it
+may choose any real response
+\[
+\begin{aligned}
+v_t&=\pi_t(q_1,v_1,\ldots,q_{t-1},v_{t-1},q_t),\\
+v_t&\in I_{q_t}(D,h).
+\end{aligned}
+\]
+The policy may react to every revealed randomized query but not to unrevealed
+future learner coins.  A randomized oracle is covered tape by tape after its
+own seed is fixed, so the accuracy premise below averages only over learner
+coins.  No response alphabet, grid, exact-expectation response, or favorable
+policy is imposed.  Write $e(u;D,h,\pi)$ for the complete execution and
+$\widehat h_{u;D,h,\pi}$ for its terminal predictor.
+
+\subsection{Assumptions}
+
+\begin{assumption}[Boundary-inclusive source regime]
+\label{assump:source-parameter-regime}
+The parameters satisfy $m\in\mathbb N_0$, every finite $\tau>0$ is allowed,
+and $0\le\varepsilon<1/4$.  In particular, zero-query protocols, exact
+learning $(\varepsilon=0)$, and large tolerances are included; no condition
+$m\ge1$, $\tau\le1$, or $\varepsilon>0$ is imposed.
+\end{assumption}
+
+\begin{assumption}[One randomized adaptive learner]
+\label{assump:finite-horizon-randomized-adaptivity}
+The same learner $A$, fixed before $D$ and $h$, uses $U\sim\nu$, may choose
+each query from the random tape and the entire preceding real-valued reply
+transcript, and terminates after at most $m$ queries.  It is not changed after
+observing the distribution, target, or oracle policy.
+\end{assumption}
+
+\begin{assumption}[Bounded unrestricted SQ access]
+\label{assump:bounded-unrestricted-queries}
+Every issued query is an arbitrary map
+$q:X\times\{+1,-1\}\to[-1,1]$.  No correlational-SQ, label-linearity,
+finite-dictionary, nonadaptivity, deterministic-query, finite-encoding, or
+response-tree-size restriction is imposed.
+\end{assumption}
+
+\begin{assumption}[All continuous tolerance-valid replies]
+\label{assump:full-adversarial-tolerance}
+For every $D$ and $h$, the learner is evaluated against every
+nonanticipating policy in $\Pi(D,h)$, with every response chosen arbitrarily
+from the full real interval $I_q(D,h)$.  Exact population responses and
+favorable response selection are not assumed.
+\end{assumption}
+
+\begin{assumption}[Static terminal-output factorization]
+\label{assump:finite-terminal-catalog}
+The learner specification exposes one finite catalog
+$G=\{g_1,\ldots,g_L\}\subseteq\{+1,-1\}^{X}$ with $L\ge1$, fixed before
+$D,h$, the reply policy, all replies, and the sampled learner tape.  On every
+complete tolerance-valid execution there is an explicit measurable selector
+$J$ such that
+\[
+\widehat h_{u;D,h,\pi}=g_{J(e(u;D,h,\pi))}
+\qquad\text{for every }D,h,\pi,u.
+\]
+The selector may factor an uncountable continuous transcript tree through
+$[L]$; neither a finite response alphabet nor finitely many transcript leaves
+is required.  The indexed members $g_1,\ldots,g_L$ are distinct functions.
+\end{assumption}
+
+\begin{assumption}[Distribution-target-policy uniform accuracy]
+\label{assump:universal-expected-accuracy}
+For every distribution $D$ on $X$, every $h\in H$, and every
+$\pi\in\Pi(D,h)$,
+\[
+\mathbb E_{u\sim\nu}
+\mathcal L_{D,h}(\widehat h_{u;D,h,\pi})\le\varepsilon.
+\]
+The displayed expectation is only over the learner tape; distributions,
+targets, and tolerance-valid adversarial reply policies are universally
+quantified.
+\end{assumption}
+
+\begin{assumption}[Boundary-corrected polynomial output budget]
+\label{assump:polynomial-catalog-budget}
+The catalog size obeys
+\[
+1\le L\le B\left(1+\frac{m}{\tau^2}\right)^k.
+\]
+The constants $B\ge1$ and integer $k\ge1$ are fixed for the designated
+learner family and are independent of
+$X,H,m,\tau,\varepsilon,D,h$, the reply policy and replies, and the learner
+coins.  The bound has no hidden constants or suppressed parameter dependence.
+\end{assumption}
+
+The catalog may contain functions outside $H$; it constrains terminal outputs
+and is not itself a representation hypothesis about $H$.  The proof will
+derive, rather than assume, two facts.  First, for every $D,h,\pi$, the output
+law on $G$ has probabilities
+\[
+p_i(D,h,\pi):=\nu\{u:\widehat h_{u;D,h,\pi}=g_i\}
+\]
+whose mixture correlation is at least $\rho$, and hence some catalog
+coordinate has correlation at least $\rho$.  Second, for every finite
+$F\subseteq X$, the set
+\[
+K_{h,F}:=\left\{w\in\Delta_L:
+h(x)\sum_{i=1}^Lw_i g_i(x)\ge\rho\ \text{for every }x\in F\right\}
+\]
+is nonempty, and these sets have the finite-intersection property in the one
+fixed simplex $\Delta_L$.  These are proof obligations, not additional
+theorem-facing assumptions.
+
+\subsection{Formalized Goal}
+
+The goal is the following exact conditional conclusion.  The one deterministic
+catalog map
+\[
+\phi_G:X\to\mathbb R^L,\qquad
+\phi_G(x)=(g_1(x),\ldots,g_L(x)),
+\]
+must satisfy
+\[
+\forall h\in H\ \exists w_h\in\Delta_L\ \forall x\in X,\qquad
+h(x)\langle w_h,\phi_G(x)\rangle
+\ge\rho=1-2\varepsilon>\frac12.
+\]
+The map is independent of $D,h$, every valid reply policy and transcript, and
+the learner tape.  The weight $w_h$ may depend only on $h$, the fixed catalog,
+and the fixed accuracy parameter.  Exact pointwise signs and
+\[
+\operatorname{dc}(H)\le L
+\le B\left(1+\frac{m}{\tau^2}\right)^k
+\]
+must follow deterministically on every domain.  The conclusion includes
+$m=0$, every finite $\tau>0$, $L=1$, $B=1$, $\varepsilon=0$, and the empty
+domain.  Its progress type is conditional: it depends on
+Assumptions~\ref{assump:finite-terminal-catalog} and
+\ref{assump:polynomial-catalog-budget}.  It neither asserts the
+boundary-invalid rate $Cm/\tau^2$ nor derives a finite catalog for an arbitrary
+unrestricted response tree.  Removing the catalog condition while proving a
+boundary-corrected catalog-free linear bound remains open.

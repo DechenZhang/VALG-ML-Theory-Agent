@@ -1,0 +1,26 @@
+# Operating-system and editor metadata
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Controller scratch files. Curated prompt traces belong under audit/.
+.controller_tmp/
+
+# LaTeX build products. Source, bibliography, style, and final PDFs are kept.
+*.aux
+*.bbl
+*.blg
+*.brf
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.xdv
+
+# Local environment files
+.env
+.env.*
+!.env.example

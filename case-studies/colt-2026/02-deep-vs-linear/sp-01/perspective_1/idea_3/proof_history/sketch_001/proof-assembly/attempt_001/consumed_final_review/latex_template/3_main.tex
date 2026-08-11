@@ -1,0 +1,47 @@
+\section{Main Theorem}
+\label{sec:main-theorem}
+
+\begin{theorem}[Conditional polynomial probabilistic dimension]
+\label{thm:main}
+Under Assumptions~\ref{assump:fixed-source-witnesses},
+\ref{assump:universal-expected-success},
+\ref{assump:constant-depth}, and~\ref{assump:robust-tube}, the unconditional
+initialization-gate law $\mathcal P_{\rm gate}$, selected before every
+$\mathcal D\in\Delta(\mathcal X)$ and $h\in\mathcal H$, satisfies
+\[
+\mathbb E_{\varphi\sim\mathcal P_{\rm gate}}\!\left[
+\inf_{w\in\mathbb R^{d_{\rm path}}}
+R_{\mathcal D,h}(w,\varphi)
+\right]\leq\varepsilon+\delta_0.
+\tag{18}
+\]
+Consequently,
+\[
+\operatorname{dc}_{\varepsilon+\delta_0}(\mathcal H)
+\leq d_{\rm path}
+\leq S^L
+\leq S^{L_0},
+\tag{19}
+\]
+and the same law is admissible at the larger threshold $2\varepsilon$, so
+\[
+\operatorname{dc}_{2\varepsilon}(\mathcal H)\leq S^{L_0}.
+\tag{20}
+\]
+These bounds are nonasymptotic and have no hidden multiplicative constant.
+The exposed quantitative variables are
+$S,L,L_0,\varepsilon,\delta_0,T,\eta,r$ through the assumptions and the exact
+conclusions above; $L_0$ is universally fixed.  The learner premise is an
+expectation over initialization and the fixed finite sample horizon, the tube
+premise is an initialization probability, and (18) is an expectation over the
+unconditional law $\mathcal P_{\rm gate}$.  The metric is the exact
+tie-resolved classification risk, and no coefficient norm or positive score
+margin is required.
+\end{theorem}
+
+For $L=1$, the feature map is the gate-free map $x\mapsto x$ and
+$d_{\rm path}=S$.  If $\delta_0=0$, the complement penalty disappears and
+(18) has right-hand side $\varepsilon$.  If
+$\varepsilon=\delta_0=0$, both public error thresholds remain exactly zero.
+These reductions are part of the theorem rather than asymptotic limiting
+claims.

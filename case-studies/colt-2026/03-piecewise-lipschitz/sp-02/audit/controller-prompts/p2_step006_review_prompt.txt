@@ -1,0 +1,21 @@
+You are the distinct step-scoped reviewer for perspective_2/idea_1, step_006, unit attempt 1, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+First read <CODEX_SKILLS_ROOT>/proof-step-review/SKILL.md completely and every directly required shared contract/template it names. Then review the current proof using the proof-step-review contract.
+
+Binding artifacts and hashes:
+- setting.md: 6955a2723694ff60af8d5d40329ff0ad056f9b54780ff02744d8985456222b7e
+- proof_sketch.md: 8b5b22e5000e1c5641e2b5baf0c4d48244ce3389941b0cc9857b47510bbf6c93
+- proof_sketch_review.md: 4288579fa3b8583b31faa2c220f5071879da72f06ac3a1dd3d1889cb1096cb7c, status ACCEPTED
+- dependency step_001 proof.md: d55b8e0455d2b2d38b3d72339557df4b1366b5e2cd81cc145fd537dca1e75c11
+- dependency step_001 review.md: dd04491bf12d076e4482faa9dcfb484d671d601a35cf64405f9d2afa4e535899, status ACCEPTED
+- target proof.md: 5795f2ed4685bc1f60ea1f02206d64fd14dc344a6634b9506c7e8aa8d0715da0
+
+Audit all three local units against the exact accepted target. For every theta and every a in H_theta intersect [-R,R]^N, the proof must derive |F_0|<=R sqrt(N)||F|| from the actual root equation and cube support, then derive ||tilde F||<=sqrt(1+NR^2)||F|| and ||(1,a)||<=sqrt(1+NR^2). It must use the exact closure identity tilde F'=B tilde F and the accepted step_001 operator bound to prove
+
+|F_0'+<a,F'>|/||F|| <= (1+NR^2) widehat Lambda_{B,T}.
+
+Check that the denominator is justified by the primitive anchor, the vector dimensions and inner-product identity are exact, a is held fixed rather than differentiated, both square-root factors are visibly sourced, and no term or constant is hidden. Reject any global amplitude assumption on F_0, use of step_004/step_005 or a swept-area theorem, law assumption, projective-speed premise, transversality condition, or other unaccepted dependency.
+
+Stress-test empty sections, N=1, F_0(theta)=0 and F_0 identically zero, a=0, and widehat Lambda_{B,T}=0. In the zero-certificate case, verify that the accepted norm bound forces B(theta)=0 on Theta and exact closure forces tilde F'=0; distinguish a static nonempty section from an empty event. Check deterministic pointwise mode, exact N,R dependence, degree-zero additional Pfaffian-format dependence after the certificate is fixed, assumption provenance, notation surface, and the exact target-step assembly.
+
+Progress type is full. Write only perspective_2/idea_1/proof_steps/step_006/review.md. Do not edit proof.md, trackers, worker log, dependencies, or another branch. Include every required review section and exactly one audit for unit_001 through unit_003. Use a controlled Step-Review Status and aligned Smallest Retry Target. Recompute and record the reviewed proof SHA. Validate ASCII/control bytes, structurally balanced TeX delimiters and braces, Markdown table arity while ignoring escaped pipes, three-unit correspondence, required headings, and file scope before reporting status, path, and final SHA-256.

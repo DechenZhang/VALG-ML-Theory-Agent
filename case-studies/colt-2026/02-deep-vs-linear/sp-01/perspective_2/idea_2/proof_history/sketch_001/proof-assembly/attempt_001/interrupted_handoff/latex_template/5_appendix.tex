@@ -1,0 +1,145 @@
+\appendix
+
+\section{Proof Details}
+\label{sec:proof-details}
+
+\subsection{Boundary cases and the architecture count}
+\label{app:step-001}
+
+\begin{proposition}[Exact empty-class closure]
+\label{prop:step-001-empty}
+Under Assumption~\ref{assump:source-regime} and the convention
+$\operatorname{dc}(\varnothing)=0$, if $\mathcal H=\varnothing$, then
+\[
+\operatorname{dc}(\mathcal H)=0\leq7TSd.
+\]
+\end{proposition}
+
+\begin{proof}
+The convention gives
+$\operatorname{dc}(\mathcal H)=\operatorname{dc}(\varnothing)=0$.
+Assumption~\ref{assump:source-regime} gives $T\geq1$, $d\geq0$, and a
+nonempty sum $S=\sum_{i=1}^L n_i n_{i-1}$ of positive integer products.
+Hence $7TSd\geq0$.
+\end{proof}
+
+\begin{lemma}[Zero-dimensional tie-resolved closure]
+\label{lem:step-001-zero}
+Under Assumptions~\ref{assump:source-regime} and
+\ref{assump:tie-resolved-confident-map} and the conventions
+$\mathbb R^0=\{0\}$, $\langle0,0\rangle=0$, and
+$\operatorname{sgn}_{\tau}(0)=\tau$, if $\mathcal H\neq\varnothing$ and
+$d=0$, then every $h\in\mathcal H$ satisfies $h(x)=\tau$ for all
+$x\in\mathcal X$, and
+\[
+\operatorname{dc}(\mathcal H)=0=7TSd.
+\]
+\end{lemma}
+
+\begin{proof}
+Since $\mathbb R^0$ is the singleton $\{0\}$, there is exactly one map from
+$\mathcal X$ to $\mathbb R^0$, namely $\phi_0(x)=0$ for every $x$.
+Consequently every probability law on these maps, including $\mathcal P$ in
+Assumption~\ref{assump:tie-resolved-confident-map}, assigns probability one
+to $\phi_0$.  There is also exactly one separator in $\mathbb R^0$, namely
+$w=0$.
+
+Fix $h\in\mathcal H$.  Because $n\geq1$, the domain
+$\mathcal X=\{-1,+1\}^n$ is nonempty, so the universal distribution
+quantifier in Assumption~\ref{assump:tie-resolved-confident-map} may be
+instantiated at a point mass.  For this fixed target define
+\[
+E_h:=\left\{\phi:\ \exists w\in\mathbb R^0\ \forall x\in\mathcal X,
+\ \operatorname{sgn}_{\tau}(\langle w,\phi(x)\rangle)=h(x)\right\}.
+\]
+For the sole possible map and separator,
+\[
+\begin{aligned}
+\phi_0\in E_h
+&\iff
+\forall x\in\mathcal X,
+\ \operatorname{sgn}_{\tau}(\langle0,0\rangle)=h(x)\\
+&\iff
+\forall x\in\mathcal X,
+\ h(x)=\tau.
+\end{aligned}
+\]
+Thus $E_h$ is deterministic: its $\mathcal P$-probability is either zero or
+one.  Assumption~\ref{assump:tie-resolved-confident-map} gives
+$\mathcal P(E_h)\geq1/2$, so $\mathcal P(E_h)=1$ and $h(x)=\tau$ for every
+$x$.  Since $h$ was arbitrary, every member of $\mathcal H$ is the constant
+$\tau$ classifier.
+
+The same map $\phi_0$, together with $u_h=0$ for every target, satisfies
+\[
+\operatorname{sgn}_{\tau}(\langle u_h,\phi_0(x)\rangle)
+=\operatorname{sgn}_{\tau}(0)
+=\tau
+=h(x)
+\qquad
+\text{for all }h\in\mathcal H,
+\ x\in\mathcal X.
+\]
+Dimension zero is therefore feasible in the definition of
+$\operatorname{dc}(\mathcal H)$.  Since the minimum is over nonnegative
+integer dimensions, $\operatorname{dc}(\mathcal H)=0$.  Finally $d=0$
+gives $7TSd=0$.
+\end{proof}
+
+\begin{proposition}[First-layer structural bound]
+\label{prop:step-001-architecture}
+Under Assumption~\ref{assump:source-regime}, if
+$\mathcal H\neq\varnothing$ and $d\neq0$, then
+\[
+d\geq1,
+\qquad
+S\geq n\geq1,
+\qquad
+T\geq1,
+\qquad
+S\geq1.
+\]
+Moreover, if $L=1$, then $S=n$.
+\end{proposition}
+
+\begin{proof}
+Assumption~\ref{assump:source-regime} states that
+$d\in\mathbb Z_{\geq0}$, so $d\neq0$ implies $d\geq1$.  It also gives
+$n,L,T\in\mathbb Z_{\geq1}$, hence $n,T\geq1$.
+
+For every allowed depth, $n_1\geq1$.  When $L\geq2$, $n_1$ is a positive
+hidden width, while when $L=1$, it is the output width $n_1=n_L=1$.  Thus
+the first summand in the parameter count satisfies
+\[
+n_1n_0=n_1n\geq n.
+\]
+Every summand in $S=\sum_{i=1}^L n_i n_{i-1}$ is positive, so
+\[
+S\geq n_1n_0\geq n\geq1.
+\]
+If $L=1$, the sum consists only of this first term and $n_1=1$, whence
+\[
+S=n_1n_0=1\cdot n=n.
+\]
+This includes the depth-one boundary without positing a hidden layer.
+\end{proof}
+
+\begin{proof}[Boundary reduction]
+The case split is exhaustive.  If $\mathcal H=\varnothing$, Proposition
+\ref{prop:step-001-empty} proves the desired inequality exactly.  Otherwise
+$\mathcal H\neq\varnothing$.  If $d=0$, Lemma
+\ref{lem:step-001-zero} proves
+$\operatorname{dc}(\mathcal H)=0=7TSd$ with the fixed tie convention.  If
+$d\neq0$, Proposition~\ref{prop:step-001-architecture} gives
+\[
+\mathcal H\neq\varnothing,
+\qquad
+d\geq1,
+\qquad
+S\geq n\geq1,
+\qquad
+T,S\geq1,
+\]
+including $L=1$.  These are the structural controls used in the remaining
+proof.
+\end{proof}

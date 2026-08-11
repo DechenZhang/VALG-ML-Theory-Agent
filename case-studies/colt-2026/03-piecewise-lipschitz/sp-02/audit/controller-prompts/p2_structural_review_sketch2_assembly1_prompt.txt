@@ -1,0 +1,13 @@
+Perform the fresh independent /proof-review-structural stage for perspective_2/idea_1.
+
+Read <CODEX_SKILLS_ROOT>/proof-review-structural/SKILL.md completely, <CODEX_SKILLS_ROOT>/_shared/checklists/artifact-contracts.md, and <CODEX_SKILLS_ROOT>/_shared/templates/proof-review-structural.md. Then read .controller_tmp/p2_final_review_common_manifest.txt completely and verify that its SHA-256 is 44cd4521cbf811bd053d8c579c837c7f49b918e9659548c67a9e60ef59c7e6ec.
+
+Write only perspective_2/idea_1/proof_review_structural.md. That output is absent at dispatch. Do not write or modify any other file.
+
+Independently audit exact-goal alignment, all 12 current accepted producer interfaces, acyclic dependency closure, theorem-block mapping, all five inseparable theorem clauses, assembly discipline, main-theorem standalone readability, assumption provenance, notation surface, explicit-rate and baseline bridges, theorem-style statement shape, public reference discipline, and exact nine-file self-containment. Verify that the final wrapper uses only accepted producer conclusions and direct composition and that no unreviewed lemma or changed step statement entered assembly.
+
+Perform an exhaustive source-to-appendix structural comparison for all 49 accepted local units, every used cited-result application, and all 12 Target-Step Assembly sections. Directly account for any apparent compression as non-proof cleanup or valid precisely cross-referenced repetition. Do not PASS from counts, labels, compilation, assembly_report.md, or accepted review tokens. Pay particular attention to the pivot-exhaustion/area chain, root-section geometry, homogeneous projective bridge, original-coordinate monic wrapper, the deterministic leading coefficient, the Counter-example scale chain, every null/endpoint/dimension branch, and the final six-producer conjunction.
+
+Use exactly the shared structural-review template and preserve its heading order. The controlled field bodies must be raw tokens. PASS requires Blocking Issues=None, Suggested Repair Depth=None, and Smallest Candidate Repair Target=None. BLOCKING requires numbered blockers and an aligned smallest depth/target. Do not emit a score, aggregate Failure Type, Retry Mode, or controller route.
+
+Before returning, reverify all protected inputs, complete all-12-step comparison, output SHA-256, ASCII/control-byte cleanliness, final LF, and single-output-file scope. Report the verdict, blocker/concern state, repair depth/target, comparison completion, output hash, and protected-input verification in your final message.

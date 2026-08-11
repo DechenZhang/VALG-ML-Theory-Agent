@@ -1,0 +1,82 @@
+\begin{lemma}[Legality of arbitrary block restriction]\label{lem:step-007-restriction-legality}
+Under the tagged-domain and output-space definitions in
+Sections~\ref{sec:setup}--\ref{sec:preliminaries}, if
+\(h\in\mathcal H_{k,N}\) and \(j\in[k]\), then the map
+\(D_jh:[N]\to\{0,1\}\) defined by \((D_jh)(x)=h(j,x)\) belongs to the full
+one-block improper output space \(\{0,1\}^{[N]}\). No monotonicity or
+threshold-representation condition on \(h\) or \(D_jh\) is required.
+\end{lemma}
+
+\begin{proof}
+Fix arbitrary \(h\in\mathcal H_{k,N}\), \(j\in[k]\), and \(x\in[N]\).
+Then \((j,x)\in X_{k,N}\). Because
+\(h\in\{0,1\}^{X_{k,N}}\), its value \(h(j,x)\) lies in \(\{0,1\}\).
+Consequently \(x\mapsto h(j,x)\) is a binary-valued function on all of
+\([N]\), hence an element of \(\{0,1\}^{[N]}\).
+
+An improper learner of the threshold targets \(\{\tau_t:t\in[N+1]\}\)
+may output any element of this full binary-function space. Thus legality
+does not require \(D_jh\) to equal any threshold \(\tau_s\), and the argument
+applies unchanged to constant, oscillating, or otherwise nonmonotone \(h\).
+\end{proof}
+
+\begin{proposition}[Exact restriction-risk identity]\label{prop:step-007-risk-identity}
+Under the primitive threshold and population 0-1 risk definitions and
+Lemma~\ref{lem:step-007-restriction-legality}, if
+\(h\in\mathcal H_{k,N}\), \(j\in[k]\), and
+\((\boldsymbol t,\boldsymbol Q)=((t_i,Q_i))_{i=1}^k\) has
+\(t_i\in[N+1]\) and each \(Q_i\) a probability distribution on \([N]\),
+then
+
+\[
+  \Pr_{Y\sim Q_j}\!\left[(D_jh)(Y)\ne\tau_{t_j}(Y)\right]
+  =e_j(h;\boldsymbol t,\boldsymbol Q).
+\]
+
+This equality remains valid for \(t_j=1\), for \(t_j=N+1\), and for every
+degenerate or non-full-support \(Q_j\).
+\end{proposition}
+
+\begin{proof}
+For every \(x\in[N]\), the restriction definition and the target definition
+give the pointwise identity
+
+\[
+  \mathbf1\!\left\{(D_jh)(x)\ne\tau_{t_j}(x)\right\}
+  =\mathbf1\!\left\{h(j,x)\ne\tau_{t_j}(x)\right\}
+  =\mathbf1\!\left\{h(j,x)\ne c_{\boldsymbol t}(j,x)\right\}.
+\]
+
+Taking the finite \(Q_j\)-weighted sum of this pointwise equality yields
+
+\[
+\begin{aligned}
+  \Pr_{Y\sim Q_j}\!\left[(D_jh)(Y)\ne\tau_{t_j}(Y)\right]
+  &=\sum_{x\in[N]}Q_j(x)
+       \mathbf1\!\left\{(D_jh)(x)\ne\tau_{t_j}(x)\right\}\\
+  &=\sum_{x\in[N]}Q_j(x)
+       \mathbf1\!\left\{h(j,x)\ne c_{\boldsymbol t}(j,x)\right\}\\
+  &=e_j(h;\boldsymbol t,\boldsymbol Q).
+\end{aligned}
+\]
+
+There is no inequality or approximation in this calculation. When
+\(t_j=1\), the target is the all-one function; when \(t_j=N+1\), it is the
+all-zero function. The same pointwise equality still holds. If \(Q_j\) is a
+point mass, or has zero mass on part of \([N]\), the finite weighted sum
+simply discards the zero-mass coordinates and remains exact.
+
+Finally, let \(J\) be any \([k]\)-valued random variable and let \(H\) be any
+random element of \(\mathcal H_{k,N}\), with arbitrary dependence between
+them. Lemma~\ref{lem:step-007-restriction-legality} and the displayed risk
+identity apply separately to every realization \((J,H)=(j,h)\). Therefore
+\(D_JH\) is almost surely a legal improper one-block output and
+
+\[
+  \sum_{x\in[N]}Q_J(x)
+    \mathbf1\!\left\{(D_JH)(x)\ne\tau_{t_J}(x)\right\}
+  =e_J(H;\boldsymbol t,\boldsymbol Q)
+\]
+
+holds pathwise. No independence, learner symmetry, or monotonicity premise
+is used. \end{proof}

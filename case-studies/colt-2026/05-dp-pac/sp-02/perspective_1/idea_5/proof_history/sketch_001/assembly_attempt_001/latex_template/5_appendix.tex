@@ -1,0 +1,1734 @@
+\appendix
+
+\section{Proof Details}\label{sec:proof-details}
+
+\subsection{Stable Selection Under Binary Recoding}\label{app:stable-selection}
+
+\begin{lemma}[Exact measurable binary recoding]\label{lem:step-001-binary-recoding}
+Let \(r\geq 1\), let \(C\subseteq\mathcal H_X\), let \(Q\) be a
+distribution on \(Z_X=X\times\{0,1\}\), let \(h\in\mathcal H_X\), and
+let \(G:Z_X^r\rightsquigarrow\mathcal H_X\) be a randomized kernel.
+Then the pointwise bijection between the labels \(\{0,1\}\) and
+\(\{-1,+1\}\), equipped with the transported output sigma-algebra,
+preserves realizability, population zero-one risk, iid product laws,
+exact output-atom probabilities, and ordered replacement adjacency in
+both directions.
+\end{lemma}
+
+\begin{proof}
+Define
+\[
+\lambda(0)=-1,\qquad \lambda(1)=+1,\qquad
+\lambda^{-1}(t)=\frac{t+1}{2},
+\]
+and
+\[
+\Phi_Z(x,y)=(x,\lambda(y)),\qquad
+\Phi_H(h)(x)=\lambda(h(x)).
+\]
+Both maps are pointwise bijections.  If \(\Sigma_X\) is the output
+sigma-algebra on \(\mathcal H_X\), equip
+\(\mathcal H_X^\pm=\{-1,+1\}^X\) with
+\[
+\Sigma_X^\pm=\{\Phi_H(E):E\in\Sigma_X\}.
+\]
+Because \(\Phi_H\) is bijective, \(\Sigma_X^\pm\) is a sigma-algebra
+and both \(\Phi_H\) and \(\Phi_H^{-1}\) are measurable.  In particular,
+measurable singleton hypotheses remain measurable.  On labeled
+records we use the finite discrete label sigma-algebras and the
+corresponding recordwise transport.  The standing measurability
+convention therefore covers the equality, histogram, singleton, and
+output events used below.
+
+Set
+\[
+Q^\pm=(\Phi_Z)_\#Q,\qquad
+G^\pm(S^\pm)=
+\Phi_H\!\left(
+G\bigl((\Phi_Z^{-1})^{\otimes r}(S^\pm)\bigr)
+\right).
+\tag{A.1}
+\]
+The transported structures make \(G^\pm\) a kernel.  If \(Q\) is
+realizable by \(c\in C\), then for \(Q^\pm\)-almost every \((x,t)\),
+\[
+t=\lambda(c(x))=\Phi_H(c)(x),
+\]
+so \(Q^\pm\) is realizable by
+\(\Phi_H(c)\in C^\pm:=\Phi_H(C)\).
+
+For every \(h\in\mathcal H_X\), pointwise bijectivity gives
+\[
+\begin{aligned}
+\operatorname{loss}_{Q^\pm}(\Phi_H(h))
+&=\Pr_{(x,t)\sim Q^\pm}[\Phi_H(h)(x)\neq t]\\
+&=\Pr_{(x,y)\sim Q}[\lambda(h(x))\neq\lambda(y)]\\
+&=\Pr_{(x,y)\sim Q}[h(x)\neq y]
+=R_Q(h).
+\end{aligned}
+\tag{A.2}
+\]
+The recordwise map gives the exact product-law identity
+\[
+(Q^\pm)^r=(\Phi_Z^{\otimes r})_\#Q^r.
+\tag{A.3}
+\]
+Combining (A.1), (A.3), and bijectivity of \(\Phi_H\), including all
+internal randomness of \(G\), yields
+\[
+\Pr_{S^\pm\sim(Q^\pm)^r,G^\pm}
+[G^\pm(S^\pm)=\Phi_H(h)]
+=
+\Pr_{S\sim Q^r,G}[G(S)=h].
+\tag{A.4}
+\]
+
+Finally, \(\Phi_Z\) is a bijection on individual records.  Hence for
+ordered samples \(S,S'\) of the same length,
+\[
+\#\{i:S_i\neq S_i'\}
+=
+\#\{i:\Phi_Z(S_i)\neq\Phi_Z(S_i')\}.
+\tag{A.5}
+\]
+Thus replacement of an instance, a label, or both components of one
+record is carried to exactly one source-record replacement, and
+conversely.  Equations (A.2)--(A.5) establish all asserted
+zero-residual correspondences.
+\end{proof}
+
+\begin{theorem}[Stable selection from a frequent accurate hypothesis]
+\label{thm:step-001-blm-selection}
+Let \(\mathcal F\subseteq\{-1,+1\}^X\), let \(D\) be realizable by
+\(\mathcal F\), let \(m\geq1\), let \(\eta\in(0,1]\), and let
+\[
+G:(X\times\{-1,+1\})^m
+\rightsquigarrow\{-1,+1\}^X
+\]
+be randomized.  Suppose that some \(h\in\{-1,+1\}^X\) satisfies
+\[
+\Pr_{S\sim D^m,G}[G(S)=h]\geq\eta,
+\qquad
+\operatorname{loss}_D(h)\leq\frac{\alpha}{2}.
+\]
+For every \(\alpha,\beta,\varepsilon,\delta\in(0,1)\), there is an
+arbitrary-output \((\varepsilon,\delta)\)-differentially private
+kernel \(M:(X\times\{-1,+1\})^n
+\rightsquigarrow\{-1,+1\}^X\) such that
+\[
+\Pr_{S\sim D^n,M}
+[\operatorname{loss}_D(M(S))>\alpha]\leq\beta
+\]
+and
+\[
+n\leq C_{\mathrm{BLM}}
+\left[
+\frac{m}{\eta\varepsilon}
+\log\!\left(\frac1{\eta\beta\delta}\right)
++
+\frac1{\alpha\varepsilon}
+\log\!\left(\frac1{\eta\beta}\right)
+\right]
+\tag{A.6}
+\]
+for a universal numerical constant \(C_{\mathrm{BLM}}>0\).
+\end{theorem}
+
+\begin{proof}[Source justification]
+This is Theorem 17 in Section 5.2 of
+\citet{bun2021equivalence}.  Its stable-histogram and private
+selection construction partitions the input into disjoint
+\(m\)-record batches, applies the fixed \(G\) to each batch, runs a
+stable histogram on the resulting hypotheses, and then runs a generic
+private learner on a fresh labeled subsample using the resulting
+finite list.  The construction depends on
+\(G,m,\eta,\alpha,\beta,\varepsilon,\delta\), but not on \(D\) or the
+witness \(h\); the latter appears only in the utility analysis.  Its
+codomain is the full \(\{-1,+1\}^X\), and its privacy convention is
+symmetric fixed-length one-record replacement.  The source writes
+(A.6) with absolute \(O(\cdot)\) constants.  A single
+\(C_{\mathrm{BLM}}\) absorbs those universal implementation constants
+and integer choices.  In the application below
+\(\beta_0=1/8\), so both logarithms are at least \(\log 8\); any
+additive integer unit is therefore absorbed without introducing a
+parameter-dependent term.
+\end{proof}
+
+\begin{lemma}[Admissibility of stable selection]\label{lem:step-001-blm-admissibility}
+Under Assumption~\ref{assump:polynomial-global-stability}, fix a
+nonempty finite \(C\subseteq\{0,1\}^X\), put \(q=q(C)\) and
+\(L=\log|C|\), and fix \(\varepsilon_0\in(0,1)\).  Let
+\[
+\eta_C=q^{-a},\qquad
+\delta_C=\delta_a(q,L)=e^{-T_a(q,L)}.
+\]
+For every distribution \(Q\) realizable by \(C\), the recoded class
+\(C^\pm\), the fixed producer \(G_C^\pm\), and the recoded witness
+\(h_{C,Q}^\pm\) satisfy the hypotheses of
+Theorem~\ref{thm:step-001-blm-selection} at
+\[
+(m,\eta,\alpha,\beta,\varepsilon,\delta)
+=(m_C,\eta_C,\alpha_0,\beta_0,\varepsilon_0,\delta_C).
+\]
+If \(q=1\), then \(m_C=1\) and \(\eta_C=1\), and the same application
+remains admissible.
+\end{lemma}
+
+\begin{proof}
+Assumption~\ref{assump:polynomial-global-stability} supplies one
+integer \(m_C\) and one randomized kernel \(G_C\), both fixed before
+\(Q\), such that
+\[
+1\leq m_C\leq q^a.
+\tag{A.7}
+\]
+For every realizable \(Q\), it supplies an arbitrary
+\(h_{C,Q}\in\mathcal H_X\) satisfying
+\[
+R_Q(h_{C,Q})\leq\frac{\alpha_0}{2},
+\qquad
+\Pr_{S\sim Q^{m_C},G_C}[G_C(S)=h_{C,Q}]
+\geq q^{-a}=\eta_C.
+\tag{A.8}
+\]
+Apply Lemma~\ref{lem:step-001-binary-recoding} with \(r=m_C\).
+Equations (A.2) and (A.4) turn (A.8) into
+\[
+\operatorname{loss}_{Q^\pm}(h_{C,Q}^\pm)
+\leq\frac{\alpha_0}{2},
+\qquad
+\Pr[G_C^\pm((Q^\pm)^{m_C})=h_{C,Q}^\pm]
+\geq\eta_C.
+\tag{A.9}
+\]
+The same lemma proves that \(Q^\pm\) is realizable by \(C^\pm\).
+Neither the witness nor the producer output is required to lie in
+\(C^\pm\).
+
+Since \(q\geq1\) and \(a\geq1\), \(0<\eta_C\leq1\).
+The values \(\alpha_0,\beta_0,\varepsilon_0\) lie in \((0,1)\).
+Moreover, \(q^b\geq1\) and \(u(L)\geq1\), so
+\[
+T_a(q,L)\geq2,\qquad
+0<\delta_C=e^{-T_a(q,L)}\leq e^{-2}<1.
+\tag{A.10}
+\]
+At \(q=1\), (A.7) forces \(m_C=1\), while
+\(\eta_C=1^{-a}=1\).  The logarithms and denominators in (A.6) remain
+legal because \(\beta_0,\delta_C\in(0,1)\).  Thus no \(q>1\)
+restriction has been introduced.
+\end{proof}
+
+\begin{proposition}[A distribution-free source-label learner]
+\label{prop:step-001-uniform-blm}
+Under Assumption~\ref{assump:polynomial-global-stability},
+Lemma~\ref{lem:step-001-binary-recoding},
+Lemma~\ref{lem:step-001-blm-admissibility}, and
+Theorem~\ref{thm:step-001-blm-selection}, fix a nonempty finite \(C\),
+put \(q=q(C)\), \(L=\log|C|\), and fix
+\(\varepsilon_0\in(0,1)\).  Then there are one integer \(n_C\) and one
+kernel
+\[
+A_C^\pm:(X\times\{-1,+1\})^{n_C}
+\rightsquigarrow\{-1,+1\}^X,
+\]
+both independent of the realizable distribution, such that for every
+realizable \(Q\),
+\[
+\Pr_{S^\pm\sim(Q^\pm)^{n_C},A_C^\pm}
+\!\left[
+\operatorname{loss}_{Q^\pm}(A_C^\pm(S^\pm))>\alpha_0
+\right]\leq\beta_0,
+\tag{A.11}
+\]
+\(A_C^\pm\) is \((\varepsilon_0,\delta_C)\)-differentially private,
+and
+\[
+n_C\leq C_{\mathrm{BLM}}
+\left[
+\frac{m_C}{q^{-a}\varepsilon_0}
+\log\!\left(\frac1{q^{-a}\beta_0\delta_C}\right)
++
+\frac1{\alpha_0\varepsilon_0}
+\log\!\left(\frac1{q^{-a}\beta_0}\right)
+\right].
+\tag{A.12}
+\]
+The output range is all of \(\{-1,+1\}^X\).
+\end{proposition}
+
+\begin{proof}
+Fix \(C,G_C^\pm,m_C\), and the public parameter tuple from
+Lemma~\ref{lem:step-001-blm-admissibility}.  Fix also the
+stable-histogram and private-selection implementations from
+Theorem~\ref{thm:step-001-blm-selection}.  Their construction invokes
+only the fixed \(G_C^\pm\) and the public tuple
+\[
+(m_C,q^{-a},\alpha_0,\beta_0,\varepsilon_0,\delta_C).
+\]
+Neither \(Q^\pm\) nor \(h_{C,Q}^\pm\) is an algorithm input or
+implementation choice.  Thus the prescription defines one kernel
+\(A_C^\pm\) and one integer \(n_C\), independent of \(Q\).
+For each realizable \(Q\),
+Lemma~\ref{lem:step-001-blm-admissibility} supplies a witness for that
+same fixed kernel.  Applying its utility conclusion
+separately to each \(Q\) gives (A.11), with the quantifier order
+\[
+\exists A_C^\pm\quad
+\forall Q\text{ realizable by }C.
+\]
+
+Its privacy proof is distribution-independent and supplies
+both ordered replacement inequalities for every adjacent input pair.
+Instantiating (A.6) gives (A.12), with the same universal
+\(C_{\mathrm{BLM}}\) for all \(X,C,Q,m_C,q,L\) and all admissible
+\(\varepsilon_0\).  Both terms remain intact: this argument has not
+replaced \(m_C\) by \(q^a\), expanded the logarithms, dominated the
+\(\alpha_0^{-1}\) term, selected \(K_a\), or invoked a sequence
+limit.
+\end{proof}
+
+\begin{proposition}[Decoded arbitrary-output private learner]
+\label{prop:step-001-binary-private-learner}
+Under Assumption~\ref{assump:polynomial-global-stability},
+Lemma~\ref{lem:step-001-binary-recoding}, and
+Proposition~\ref{prop:step-001-uniform-blm}, define, for
+\(S\in Z_X^{n_C}\),
+\[
+A_C(S)=
+\Phi_H^{-1}\!\left(
+A_C^\pm(\Phi_Z^{\otimes n_C}(S))
+\right).
+\tag{A.13}
+\]
+Then \(A_C:Z_X^{n_C}\rightsquigarrow\mathcal H_X\) is one
+arbitrary-output, distribution-free realizable
+\((\alpha_0,\beta_0)\)-PAC learner for \(C\), is
+\((\varepsilon_0,\delta_C)\)-differentially private under ordered
+replacement adjacency, and satisfies the sample bound (A.12).
+\end{proposition}
+
+\begin{proof}
+The maps in (A.13) are bimeasurable by
+Lemma~\ref{lem:step-001-binary-recoding}, so \(A_C\) is a kernel fixed
+independently of \(Q\).  If \(Q\) is realizable by \(C\) and
+\(S\sim Q^{n_C}\), then
+\(\Phi_Z^{\otimes n_C}(S)\sim(Q^\pm)^{n_C}\).  For every source output
+\(g^\pm\), (A.2) gives
+\[
+R_Q(\Phi_H^{-1}(g^\pm))
+=\operatorname{loss}_{Q^\pm}(g^\pm).
+\]
+Consequently (A.11) implies
+\[
+\Pr_{S\sim Q^{n_C},A_C}
+[R_Q(A_C(S))>\alpha_0]\leq\beta_0.
+\tag{A.14}
+\]
+The same \(A_C\) satisfies (A.14) for every realizable \(Q\), and the
+probability includes both sample and learner randomness.
+
+For privacy, let \(S,S'\in Z_X^{n_C}\) be replacement-adjacent and let
+\(E\subseteq\mathcal H_X\) be measurable.  By
+Lemma~\ref{lem:step-001-binary-recoding},
+\(\Phi_Z^{\otimes n_C}(S)\) and
+\(\Phi_Z^{\otimes n_C}(S')\) are source-adjacent and
+\(E^\pm:=\Phi_H(E)\) is measurable.  Hence
+\[
+\begin{aligned}
+\Pr[A_C(S)\in E]
+&=\Pr[A_C^\pm(\Phi_Z^{\otimes n_C}(S))\in E^\pm]\\
+&\leq e^{\varepsilon_0}
+\Pr[A_C^\pm(\Phi_Z^{\otimes n_C}(S'))\in E^\pm]
++\delta_C\\
+&=e^{\varepsilon_0}\Pr[A_C(S')\in E]+\delta_C.
+\end{aligned}
+\tag{A.15}
+\]
+Interchanging \(S,S'\) gives the reverse inequality.  Identical
+samples are immediate, while (A.5) covers replacement of the
+instance, label, or both components of one record.
+
+The inverse output map is deterministic postprocessing whose image is
+all of \(\mathcal H_X\).  Thus arbitrary improper outputs and the lack
+of representation or computational restrictions are preserved, and
+the sample bound (A.12) is unchanged.  Together,
+Lemma~\ref{lem:step-001-binary-recoding},
+Lemma~\ref{lem:step-001-blm-admissibility},
+Proposition~\ref{prop:step-001-uniform-blm}, and the present argument
+derive the complete stable-selection conclusion without invoking any
+later asymptotic specialization.
+\end{proof}
+\subsection{Explicit Sample Domination and Exact Padding}
+\label{app:sample-domination}
+
+\begin{lemma}[Explicit stable-selection specialization]
+\label{lem:step-002-sc-domination}
+Under Assumption~\ref{assump:polynomial-global-stability} and
+Proposition~\ref{prop:step-001-binary-private-learner}, fix a
+nonempty finite \(C\), put \(q=q(C)\), \(L=\log|C|\), and fix
+\(\varepsilon_0\in(0,1)\).  Define
+\[
+B_0=\log\frac1{\beta_0}=\log 8,
+\qquad
+D_a=1+a+B_0+\alpha_0^{-1}(a+B_0)
+=1+9a+9\log 8,
+\tag{A.16}
+\]
+and choose
+\[
+K_a=\max\{2,C_{\mathrm{BLM}}D_a\}.
+\tag{A.17}
+\]
+If \(n_C\) is the sample size in
+Proposition~\ref{prop:step-001-binary-private-learner}, then
+\[
+\begin{aligned}
+n_C
+&\leq \frac{C_{\mathrm{BLM}}}{\varepsilon_0}
+\left[
+q^{2a}\!\left(
+a\log q+\log\frac1{\beta_0}+T_a(q,L)
+\right)
++\frac1{\alpha_0}
+\left(a\log q+\log\frac1{\beta_0}\right)
+\right]\\
+&\leq K_a\varepsilon_0^{-2}q^b(1+T_a(q,L))
+\leq N_a(q,L,\varepsilon_0).
+\end{aligned}
+\tag{A.18}
+\]
+The constant \(K_a\) depends only on
+\(a,\alpha_0,\beta_0,C_{\mathrm{BLM}}\), and the inequalities remain
+valid at \(q=1\) and uniformly over \(0<\varepsilon_0<1\).
+\end{lemma}
+
+\begin{proof}
+Write \(T=T_a(q,L)\) and
+\(\delta_C=\delta_a(q,L)=e^{-T}\).  From
+Assumption~\ref{assump:polynomial-global-stability},
+\[
+\frac{m_C}{q^{-a}}=m_Cq^a\leq q^{2a}.
+\tag{A.19}
+\]
+The two logarithms in (A.12) expand exactly as
+\[
+\log\!\left(\frac1{q^{-a}\beta_0\delta_C}\right)
+=\log\!\left(\frac{q^ae^T}{\beta_0}\right)
+=a\log q+B_0+T,
+\tag{A.20}
+\]
+\[
+\log\!\left(\frac1{q^{-a}\beta_0}\right)
+=\log\!\left(\frac{q^a}{\beta_0}\right)
+=a\log q+B_0.
+\tag{A.21}
+\]
+Substitution of (A.19)--(A.21) into (A.12) gives the first inequality
+of (A.18), with every confidence and logarithmic term retained.
+
+Since \(q\geq1\), \(b=2a+2\), and
+\(T=q^b+u(L)\),
+\[
+q^{2a}\leq q^b\leq T,\qquad
+a\log q\leq aq^b\leq aT,\qquad
+q^b\geq1.
+\tag{A.22}
+\]
+The five summands are controlled separately:
+\[
+q^{2a}T\leq q^bT\leq q^b(1+T),
+\tag{A.23}
+\]
+\[
+aq^{2a}\log q
+\leq aq^{2a}T
+\leq aq^bT
+\leq aq^b(1+T),
+\tag{A.24}
+\]
+\[
+B_0q^{2a}
+\leq B_0q^b
+\leq B_0q^b(1+T),
+\tag{A.25}
+\]
+\[
+\alpha_0^{-1}a\log q
+\leq\alpha_0^{-1}aq^b
+\leq\alpha_0^{-1}aq^b(1+T),
+\tag{A.26}
+\]
+and
+\[
+\alpha_0^{-1}B_0
+\leq\alpha_0^{-1}B_0q^b
+\leq\alpha_0^{-1}B_0q^b(1+T).
+\tag{A.27}
+\]
+Thus
+\[
+q^{2a}(T+a\log q+B_0)
++\alpha_0^{-1}(a\log q+B_0)
+\leq D_aq^b(1+T).
+\tag{A.28}
+\]
+Using (A.17) and
+\(\varepsilon_0^{-1}\leq\varepsilon_0^{-2}\) gives
+\[
+\frac{C_{\mathrm{BLM}}}{\varepsilon_0}
+D_aq^b(1+T)
+\leq
+K_a\varepsilon_0^{-2}q^b(1+T).
+\tag{A.29}
+\]
+The integer \(n_C\) is at most this real quantity and hence at most
+its ceiling \(N_a(q,L,\varepsilon_0)\).
+
+At \(q=1\), one has \(m_C=1\), \(q^{-a}=1\),
+\(\log q=0\), \(q^{2a}=q^b=1\), and \(T\geq1\), so
+(A.19)--(A.29) remain literal.  No division by \(\log q\) or
+assumption \(q>1\) occurs.  The inequality
+\(\varepsilon_0^{-1}\leq\varepsilon_0^{-2}\) holds throughout
+\((0,1)\) and tends to equality as \(\varepsilon_0\uparrow1\), so
+\(K_a\) has no dependence on a gap from \(1\).
+\end{proof}
+
+\begin{proposition}[Exact-size padding preserves utility and privacy]
+\label{prop:step-002-exact-padding}
+Under Assumption~\ref{assump:polynomial-global-stability},
+Proposition~\ref{prop:step-001-binary-private-learner}, and
+Lemma~\ref{lem:step-002-sc-domination}, put
+\[
+N=N_a(q(C),\log|C|,\varepsilon_0).
+\]
+Then there is a kernel
+\[
+M_C:Z_X^N\rightsquigarrow\mathcal H_X
+\]
+with exact input arity \(N\), arbitrary output, distribution-free
+realizable \((\alpha_0,\beta_0)\)-PAC utility, and
+\((\varepsilon_0,\delta_a(q(C),\log|C|))\)-differential privacy.
+No properness, representation, or computational restriction is
+introduced.
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:step-002-sc-domination} gives \(n_C\leq N\).  Let
+\[
+\pi_{n_C}^N(z_1,\ldots,z_N)=(z_1,\ldots,z_{n_C})
+\tag{A.30}
+\]
+and define
+\[
+M_C=A_C\circ\pi_{n_C}^N.
+\tag{A.31}
+\]
+Thus \(M_C\) accepts exactly \(N\) records and ignores the final
+\(N-n_C\).  If \(N=n_C\), it equals \(A_C\).
+
+For every distribution \(Q\) realizable by \(C\), the prefix of a
+sample \(S\sim Q^N\) has law \(Q^{n_C}\).  Therefore the full output
+laws, including internal randomness, agree and
+\[
+\begin{aligned}
+\Pr_{S\sim Q^N,M_C}[R_Q(M_C(S))>\alpha_0]
+&=
+\Pr_{S_0\sim Q^{n_C},A_C}
+[R_Q(A_C(S_0))>\alpha_0]\\
+&\leq\beta_0.
+\end{aligned}
+\tag{A.32}
+\]
+The kernel, its arity, and the public projection are fixed before
+\(Q\), so this is distribution-free utility.
+
+If \(S,S'\in Z_X^N\) are replacement-adjacent, projection cannot
+increase the number of differing records:
+\[
+\#\{i\leq n_C:S_i\neq S_i'\}
+\leq
+\#\{i\leq N:S_i\neq S_i'\}
+\leq1.
+\tag{A.33}
+\]
+For every measurable \(E\subseteq\mathcal H_X\),
+\[
+\begin{aligned}
+\Pr[M_C(S)\in E]
+&=\Pr[A_C(\pi_{n_C}^N(S))\in E]\\
+&\leq e^{\varepsilon_0}
+\Pr[A_C(\pi_{n_C}^N(S'))\in E]
++\delta_a(q(C),\log|C|)\\
+&=e^{\varepsilon_0}\Pr[M_C(S')\in E]
++\delta_a(q(C),\log|C|).
+\end{aligned}
+\tag{A.34}
+\]
+Interchanging \(S,S'\) gives the reverse inequality.  If the changed
+record is in the ignored suffix, the two prefixes and hence the two
+output laws are identical; if it lies in the prefix, (A.33) invokes
+the original replacement comparison.  Padding therefore has zero
+utility and privacy residual.  Combining (A.18) with this projection
+establishes the exact sample-size and learner interface used below.
+\end{proof}
+
+\subsection{The Exact Privacy Schedule}\label{app:privacy-schedule}
+
+\begin{lemma}[The cardinality correction]\label{lem:step-003-log-correction}
+For every \(L\geq0\), the quantity
+\[
+u(L)=\log\log(e^e+L)
+\]
+is well-defined and satisfies
+\[
+u(L)\geq1,\qquad
+e^{-u(L)}=\frac1{\log(e^e+L)}.
+\tag{A.35}
+\]
+For every \(R>0\),
+\[
+L\geq\exp(\exp R)\quad\Longrightarrow\quad u(L)\geq R.
+\tag{A.36}
+\]
+Consequently \(u(L)\to\infty\) as \(L\to\infty\).  At \(L=0\),
+\(u(0)=1\) and \(e^{-u(0)}=e^{-1}\).
+\end{lemma}
+
+\begin{proof}
+For \(L\geq0\),
+\[
+e^e+L\geq e^e>1,\qquad
+\log(e^e+L)\geq\log(e^e)=e>0.
+\tag{A.37}
+\]
+Thus both logarithms are defined, and monotonicity gives
+\[
+u(L)=\log\log(e^e+L)\geq\log e=1.
+\tag{A.38}
+\]
+Exact exponentiation yields
+\[
+e^{-u(L)}
+=\exp[-\log\log(e^e+L)]
+=\frac1{\log(e^e+L)}.
+\tag{A.39}
+\]
+If \(L\geq\exp(\exp R)\), then
+\[
+u(L)\geq
+\log\log(\exp(\exp R))=R,
+\tag{A.40}
+\]
+which is the quantified divergence statement.  Finally,
+\[
+u(0)=\log\log(e^e)=1,\qquad
+e^{-u(0)}=e^{-1}=\frac1{\log(e^e)}.
+\tag{A.41}
+\]
+\end{proof}
+
+\begin{proposition}[Exact privacy logarithm]\label{prop:step-003-exact-privacy-schedule}
+Under Assumption~\ref{assump:polynomial-global-stability} and
+Lemma~\ref{lem:step-003-log-correction}, fix \(a\geq1\), put
+\(b=2a+2\), and let \(q\geq1\), \(L\geq0\).  Then
+\[
+\delta_a(q,L)
+=\exp[-q^b-\log\log(e^e+L)]
+=\frac{e^{-q^b}}{\log(e^e+L)}
+\in(0,e^{-2}],
+\tag{A.42}
+\]
+and
+\[
+\log\frac1{\delta_a(q,L)}
+=T_a(q,L)
+=q^{2a+2}+\log\log(e^e+L).
+\tag{A.43}
+\]
+For every finite \(C\), the learner in
+Proposition~\ref{prop:step-002-exact-padding} is private at precisely
+this parameter.  At \(L=0\) the privacy logarithm is \(q^b+1\); at
+\(q=1\) it is \(1+\log\log(e^e+L)\); and at \((q,L)=(1,0)\) it is
+\(2\).
+\end{proposition}
+
+\begin{proof}
+Since \(a\geq1\),
+\[
+b=2a+2\geq4>0.
+\tag{A.44}
+\]
+Thus \(q^b\geq1\), while
+Lemma~\ref{lem:step-003-log-correction} gives \(u(L)\geq1\).  Hence
+\[
+T_a(q,L)=q^b+u(L)\geq2
+\tag{A.45}
+\]
+and
+\[
+0<\delta_a(q,L)=e^{-T_a(q,L)}\leq e^{-2}<1.
+\tag{A.46}
+\]
+Using (A.39),
+\[
+\delta_a(q,L)
+=e^{-q^b}e^{-u(L)}
+=\frac{e^{-q^b}}{\log(e^e+L)},
+\tag{A.47}
+\]
+which proves (A.42).  Positivity permits reciprocation, so
+\[
+\begin{aligned}
+\log\frac1{\delta_a(q,L)}
+&=\log(e^{T_a(q,L)})\\
+&=T_a(q,L)
+=q^b+u(L)\\
+&=q^{2a+2}+\log\log(e^e+L).
+\end{aligned}
+\tag{A.48}
+\]
+This is an equality, not an asymptotic simplification.
+
+Proposition~\ref{prop:step-002-exact-padding} gives
+\((\varepsilon_0,\delta_a(q,L))\)-privacy.  Substituting the identical
+quantity from (A.42) changes neither the kernel nor the privacy
+allowance.  At \(L=0\),
+\[
+\delta_a(q,0)=e^{-q^b-1},\qquad
+\log\frac1{\delta_a(q,0)}=q^b+1.
+\tag{A.49}
+\]
+At \(q=1\),
+\[
+\delta_a(1,L)=\frac{e^{-1}}{\log(e^e+L)},\qquad
+\log\frac1{\delta_a(1,L)}
+=1+\log\log(e^e+L).
+\tag{A.50}
+\]
+These yield \(\delta_a(1,0)=e^{-2}\), with no requirement that
+\(q>1\) or \(L>0\).
+\end{proof}
+
+\begin{proposition}[Activation on bounded-complexity sequences]
+\label{prop:step-003-bounded-q-activation}
+Under Proposition~\ref{prop:step-003-exact-privacy-schedule}, let
+\((q_\kappa,L_\kappa)\) satisfy
+\[
+\begin{aligned}
+&L_\kappa\geq0,\qquad L_\kappa\to\infty,\\
+&1\leq q_\kappa\leq\bar q
+\end{aligned}
+\tag{A.51}
+\]
+for a finite \(\bar q\geq1\).  Then
+\[
+\delta_a(q_\kappa,L_\kappa)
+=\frac{e^{-q_\kappa^b}}{\log(e^e+L_\kappa)}
+\longrightarrow0,
+\tag{A.52}
+\]
+even though \(q_\kappa\) need not converge.  More precisely,
+\[
+e^{-\bar q^b}\leq e^{-q_\kappa^b}\leq e^{-1},
+\tag{A.53}
+\]
+so the cardinality factor, rather than the polynomial-in-\(q_\kappa\)
+factor, forces the decay.  In particular,
+\[
+\delta_a(1,L_\kappa)
+=\frac{e^{-1}}{\log(e^e+L_\kappa)}
+\longrightarrow0.
+\tag{A.54}
+\]
+\end{proposition}
+
+\begin{proof}
+From (A.51) and \(b>0\),
+\(1\leq q_\kappa^b\leq\bar q^b\).  Since \(x\mapsto e^{-x}\) is
+decreasing, this proves (A.53).  Thus a schedule containing only
+\(e^{-q_\kappa^b}\) would stay at least
+\(e^{-\bar q^b}>0\) on this sequence.
+
+In contrast, Lemma~\ref{lem:step-003-log-correction} gives
+\[
+u(L_\kappa)\to\infty,\qquad
+e^{-u(L_\kappa)}
+=\frac1{\log(e^e+L_\kappa)}
+\longrightarrow0.
+\tag{A.55}
+\]
+Using (A.47) and the upper bound in (A.53),
+\[
+0<\delta_a(q_\kappa,L_\kappa)
+\leq\frac{e^{-1}}{\log(e^e+L_\kappa)}
+\longrightarrow0.
+\tag{A.56}
+\]
+Equation (A.54) is the exact specialization \(q_\kappa=1\).
+Accordingly, the explicit cardinality correction preserves privacy
+decay in the bounded-\(q_\kappa\) regime without assuming
+\(q_\kappa\to\infty\).
+\end{proof}
+
+\subsection{Subpower Consequences of Superpolynomial Separation}
+\label{app:subpower}
+
+Throughout this subsection, let \(\{C_\kappa\}\) be a sequence of
+nonempty finite classes satisfying \(|C_\kappa|\to\infty\), the
+counting bound
+\[
+0\leq\ell_\kappa\leq\log_2|C_\kappa|
+=\frac{L_\kappa}{\log2},
+\]
+and
+\[
+\forall p\in\mathbb N\ \exists\kappa_0(p)\
+\forall\kappa\geq\kappa_0(p):
+\qquad L_\kappa>d_\kappa^p.
+\tag{A.57}
+\]
+Then \(L_\kappa=\log|C_\kappa|\to\infty\), so all subsequent
+eventual bounds may be restricted to \(L_\kappa\geq1\).
+
+\begin{lemma}[Every-exponent control of the iterated-log term]
+\label{lem:step-004-iterated-log-subpower}
+Under the conditions above, for every \(r>0\) there is
+\(\kappa_s(r)\) such that
+\[
+\kappa\geq\kappa_s(r)
+\quad\Longrightarrow\quad
+s_\kappa=1+\log^*(1+\ell_\kappa)
+\leq L_\kappa^r.
+\tag{A.58}
+\]
+This includes \(\ell_\kappa=0\), for which \(s_\kappa=1\).
+\end{lemma}
+
+\begin{proof}
+The stopping time \(x\mapsto\log^*x\) is nondecreasing on
+\([1,\infty)\).  Indeed, if \(1\leq x\leq y\) and
+\(m=\log^*y\), then either the iterates of \(x\) reach a value at most
+\(1\) before time \(m\), or monotonicity of \(\log_2\) through the
+active iterates gives
+\(\log_2^{(m)}x\leq\log_2^{(m)}y\leq1\).
+
+For each integer \(n\geq1\),
+\[
+\log^*(2^n)=1+\log^*n\leq n.
+\tag{A.59}
+\]
+The claim holds for \(n=1\).  If it holds at \(n-1\) and \(n\geq2\),
+then \(n\leq2^{n-1}\), so monotonicity gives
+\(\log^*n\leq\log^*(2^{n-1})\leq n-1\).  For \(x>1\), taking
+\(n=\lceil\log_2x\rceil\) yields
+\[
+\log^*x
+\leq n
+\leq1+\log_2x.
+\tag{A.60}
+\]
+At \(x=1\), \(\log^*1=0\), so the same inequality holds.
+
+When \(L_\kappa\geq1\),
+\[
+1+\ell_\kappa
+\leq1+\frac{L_\kappa}{\log2}
+\leq c_2L_\kappa,
+\qquad
+c_2=1+\frac1{\log2}.
+\tag{A.61}
+\]
+Using (A.60),
+\[
+\begin{aligned}
+s_\kappa
+&\leq2+\log_2(1+\ell_\kappa)\\
+&\leq2+\log_2(c_2L_\kappa)
+=A_0+\frac{\log L_\kappa}{\log2},
+\end{aligned}
+\qquad
+A_0=2+\frac{\log c_2}{\log2}.
+\tag{A.62}
+\]
+Fix \(r>0\).  For \(L\geq1\),
+\[
+\log L
+=\int_1^L\frac{dx}{x}
+\leq\int_1^Lx^{r/2-1}\,dx
+=\frac2r(L^{r/2}-1)
+\leq\frac2rL^{r/2}.
+\tag{A.63}
+\]
+Thus
+\[
+s_\kappa\leq
+A_rL_\kappa^{r/2},
+\qquad
+A_r=A_0+\frac{2}{r\log2}.
+\tag{A.64}
+\]
+Since \(L_\kappa\to\infty\), eventually
+\(L_\kappa^{r/2}\geq A_r\), and then
+\(A_rL_\kappa^{r/2}\leq L_\kappa^r\).  If
+\(\ell_\kappa=0\), then \(\log^*1=0\) and the same eventual bound
+holds without any division by \(\ell_\kappa\).
+\end{proof}
+
+\begin{proposition}[Superpolynomial separation implies subpower total complexity]
+\label{prop:step-004-q-subpower}
+Under (A.57), the size-divergence and counting conditions, and
+Lemma~\ref{lem:step-004-iterated-log-subpower},
+\[
+\forall t>0\ \exists\kappa_q(t)\
+\forall\kappa\geq\kappa_q(t):
+\qquad q_\kappa\leq L_\kappa^t.
+\tag{A.65}
+\]
+Consequently \(q_\kappa=L_\kappa^{o(1)}\).  The conclusion permits
+\(d_\kappa=0\) and bounded or nonconvergent \(q_\kappa\).
+\end{proposition}
+
+\begin{proof}
+Fix \(t>0\) and choose one integer
+\[
+p=p(t)>\frac2t,\qquad \frac1p<\frac t2.
+\tag{A.66}
+\]
+Condition (A.57) gives, for every sufficiently large \(\kappa\),
+\[
+L_\kappa>d_\kappa^p.
+\tag{A.67}
+\]
+After also requiring \(L_\kappa\geq1\), taking the positive
+\(p\)-th root gives
+\[
+d_\kappa<L_\kappa^{1/p}
+\leq L_\kappa^{t/2}.
+\tag{A.68}
+\]
+This remains valid at \(d_\kappa=0\).  Applying
+Lemma~\ref{lem:step-004-iterated-log-subpower} with exponent \(t/2\)
+gives
+\[
+s_\kappa\leq L_\kappa^{t/2}
+\tag{A.69}
+\]
+on another tail.  After additionally requiring
+\(L_\kappa^{t/2}\geq2\),
+\[
+q_\kappa=d_\kappa+s_\kappa
+<2L_\kappa^{t/2}
+\leq L_\kappa^t.
+\tag{A.70}
+\]
+The threshold is the maximum of finitely many thresholds and
+therefore applies to every later index.  Since \(q_\kappa\geq1\) and
+eventually \(L_\kappa>1\), (A.65) also gives
+\[
+0\leq
+\frac{\log q_\kappa}{\log L_\kappa}
+\leq t
+\quad\text{eventually}.
+\tag{A.71}
+\]
+Letting the arbitrary \(t\) decrease to zero proves the
+\(L_\kappa^{o(1)}\) statement.
+\end{proof}
+
+\begin{lemma}[Subpower growth of the privacy schedule]
+\label{lem:step-004-schedule-subpower}
+Under Assumption~\ref{assump:polynomial-global-stability},
+Lemma~\ref{lem:step-003-log-correction},
+Proposition~\ref{prop:step-003-exact-privacy-schedule}, and
+Proposition~\ref{prop:step-004-q-subpower}, for every \(r>0\) there is
+\(\kappa_T(r)\) such that
+\[
+\kappa\geq\kappa_T(r)
+\quad\Longrightarrow\quad
+u(L_\kappa)\leq L_\kappa^r,\qquad
+T_a(q_\kappa,L_\kappa)\leq L_\kappa^r.
+\tag{A.72}
+\]
+Hence \(u(L_\kappa)=L_\kappa^{o(1)}\) and
+\(T_a(q_\kappa,L_\kappa)=L_\kappa^{o(1)}\), including when
+\(q_\kappa\) is bounded.
+\end{lemma}
+
+\begin{proof}
+For \(L\geq1\), put \(z=\log(e^e+L)>1\).  Then
+\[
+\log z=\int_1^z\frac{dx}{x}\leq z-1\leq z.
+\]
+Also \(e^e+L\leq(e^e+1)L\), so
+\[
+u(L)
+\leq\log(e^e+L)
+\leq\log(e^e+1)+\log L.
+\tag{A.73}
+\]
+Fix \(r>0\).  Applying (A.63) gives
+\[
+u(L_\kappa)
+\leq B_rL_\kappa^{r/2},
+\qquad
+B_r=\log(e^e+1)+\frac2r.
+\tag{A.74}
+\]
+Eventually \(L_\kappa^{r/2}\geq B_r\), hence
+\[
+u(L_\kappa)\leq L_\kappa^r.
+\tag{A.75}
+\]
+
+Now fix a fresh target exponent \(r>0\).
+Proposition~\ref{prop:step-004-q-subpower}, used at
+\(r/(2b)>0\), gives
+\[
+q_\kappa^b\leq L_\kappa^{r/2}
+\tag{A.76}
+\]
+eventually.  The first part, used at exponent \(r/2\), gives
+\[
+u(L_\kappa)\leq L_\kappa^{r/2}
+\tag{A.77}
+\]
+eventually.  On a common tail with \(L_\kappa^{r/2}\geq2\),
+\[
+T_a(q_\kappa,L_\kappa)
+=q_\kappa^b+u(L_\kappa)
+\leq2L_\kappa^{r/2}
+\leq L_\kappa^r.
+\tag{A.78}
+\]
+The lower bounds \(u(L_\kappa)\geq1\) and
+\(T_a(q_\kappa,L_\kappa)\geq2\), together with (A.72), yield
+\[
+\frac{\log u(L_\kappa)}{\log L_\kappa}\to0,\qquad
+\frac{\log T_a(q_\kappa,L_\kappa)}{\log L_\kappa}\to0.
+\tag{A.79}
+\]
+If \(q_\kappa\leq\bar q\) on a tail, then directly
+\[
+T_a(q_\kappa,L_\kappa)
+\leq\bar q^b+u(L_\kappa),
+\tag{A.80}
+\]
+and the fixed first term and (A.75) are absorbed by every positive
+power of \(L_\kappa\).
+\end{proof}
+
+\begin{proposition}[The exact sample size is subpower and sublogarithmic]
+\label{prop:step-004-sample-subpower}
+Under Assumption~\ref{assump:polynomial-global-stability},
+Lemma~\ref{lem:step-002-sc-domination},
+Proposition~\ref{prop:step-004-q-subpower}, and
+Lemma~\ref{lem:step-004-schedule-subpower}, let
+\[
+N_\kappa=N_a(q_\kappa,L_\kappa,\varepsilon_0).
+\]
+Then
+\[
+\forall r>0\ \exists\kappa_N(r)\
+\forall\kappa\geq\kappa_N(r):
+\qquad N_\kappa\leq L_\kappa^r.
+\tag{A.81}
+\]
+Consequently
+\[
+N_\kappa=L_\kappa^{o(1)},\qquad
+N_\kappa=o(L_\kappa).
+\tag{A.82}
+\]
+Both conclusions remain true for bounded \(q_\kappa\), including
+\(q_\kappa\equiv1\).
+\end{proposition}
+
+\begin{proof}
+Set
+\[
+H=K_a\varepsilon_0^{-2}.
+\tag{A.83}
+\]
+By Lemma~\ref{lem:step-002-sc-domination}, \(H\) is finite and fixed
+while \(\kappa\to\infty\), with dependence only on
+\(a,\alpha_0,\beta_0,C_{\mathrm{BLM}},\varepsilon_0\).
+
+Fix \(r>0\).  Proposition~\ref{prop:step-004-q-subpower}, at exponent
+\(r/(4b)\), and Lemma~\ref{lem:step-004-schedule-subpower}, at
+\(r/4\), give
+\[
+q_\kappa^b\leq L_\kappa^{r/4},\qquad
+T_a(q_\kappa,L_\kappa)\leq L_\kappa^{r/4}
+\tag{A.84}
+\]
+on a common tail.  When \(L_\kappa\geq1\),
+\[
+\begin{aligned}
+q_\kappa^b(1+T_a(q_\kappa,L_\kappa))
+&\leq
+L_\kappa^{r/4}(1+L_\kappa^{r/4})\\
+&\leq2L_\kappa^{r/2}.
+\end{aligned}
+\tag{A.85}
+\]
+Using the exact ceiling and \(\lceil x\rceil\leq x+1\),
+\[
+\begin{aligned}
+N_\kappa
+&=\left\lceil
+Hq_\kappa^b(1+T_a(q_\kappa,L_\kappa))
+\right\rceil\\
+&\leq2HL_\kappa^{r/2}+1\\
+&\leq(2H+1)L_\kappa^{r/2}.
+\end{aligned}
+\tag{A.86}
+\]
+Eventually \(L_\kappa^{r/2}\geq2H+1\), so
+\[
+N_\kappa\leq L_\kappa^r.
+\tag{A.87}
+\]
+Thus the fixed power, sum, product, prefactor, additive unit, and
+ceiling have each been explicitly controlled.
+
+Because \(N_\kappa\geq1\) and eventually \(L_\kappa>1\),
+\[
+0\leq\frac{\log N_\kappa}{\log L_\kappa}\leq r
+\tag{A.88}
+\]
+eventually for every \(r>0\), proving the subpower statement.
+Taking \(r=1/2\) in (A.81) gives
+\[
+0\leq\frac{N_\kappa}{L_\kappa}
+\leq L_\kappa^{-1/2}
+\longrightarrow0,
+\tag{A.89}
+\]
+which proves \(N_\kappa=o(L_\kappa)\) directly.
+
+If \(q_\kappa\leq\bar q\) on a tail, (A.80) and the exact sample
+formula yield
+\[
+N_\kappa
+\leq1+H\bar q^b
+(1+\bar q^b+u(L_\kappa)).
+\tag{A.90}
+\]
+Using (A.75) at exponent \(1/2\),
+\[
+\frac{N_\kappa}{L_\kappa}
+\leq
+\frac{1+H\bar q^b(1+\bar q^b)}{L_\kappa}
++H\bar q^bL_\kappa^{-1/2}
+\longrightarrow0.
+\tag{A.91}
+\]
+This retains the bounded-complexity boundary.  Combining
+Proposition~\ref{prop:step-004-q-subpower},
+Lemma~\ref{lem:step-004-schedule-subpower}, and the present result
+gives
+\[
+T_a(q_\kappa,L_\kappa)=L_\kappa^{o(1)},\qquad
+N_\kappa=L_\kappa^{o(1)}=o(L_\kappa).
+\tag{A.92}
+\]
+\end{proof}
+
+\subsection{Uniform Privacy Negligibility}\label{app:privacy-negligibility}
+
+\begin{lemma}[Uniform control of the integer ceiling]
+\label{lem:step-005-ceiling}
+Under Assumption~\ref{assump:polynomial-global-stability} and
+Proposition~\ref{prop:step-004-sample-subpower}, define
+\[
+x_\kappa=q_\kappa^b,\qquad
+u_\kappa=u(L_\kappa),\qquad
+A_\kappa=
+K_a\varepsilon_0^{-2}
+x_\kappa(1+x_\kappa+u_\kappa).
+\]
+Then, for every \(\kappa\),
+\[
+A_\kappa\geq6,\qquad
+N_\kappa=\lceil A_\kappa\rceil\geq1,\qquad
+N_\kappa\leq2A_\kappa.
+\tag{A.93}
+\]
+\end{lemma}
+
+\begin{proof}
+The basic setup gives \(q_\kappa\geq1\), hence
+\(x_\kappa=q_\kappa^b\geq1\).
+Lemma~\ref{lem:step-003-log-correction} gives \(u_\kappa\geq1\), so
+\(1+x_\kappa+u_\kappa\geq3\).
+Lemma~\ref{lem:step-002-sc-domination} gives \(K_a\geq2\), and
+\(\varepsilon_0^{-2}\geq1\).  Therefore
+\[
+A_\kappa
+\geq2\cdot1\cdot1\cdot3=6.
+\]
+The exact sample formula gives \(N_\kappa=\lceil A_\kappa\rceil\).
+Consequently
+\[
+N_\kappa
+\leq A_\kappa+1
+\leq A_\kappa+\frac16A_\kappa
+\leq2A_\kappa.
+\]
+The argument is pointwise and imposes no convergence condition on
+\(q_\kappa\).
+\end{proof}
+
+\begin{lemma}[Two-factor privacy decomposition]
+\label{lem:step-005-factorization}
+Under Proposition~\ref{prop:step-003-exact-privacy-schedule},
+Lemma~\ref{lem:step-005-ceiling}, and a fixed \(\rho>0\), define
+\[
+C_{\rho,\varepsilon_0,K_a}
+=(2K_a\varepsilon_0^{-2})^\rho,
+\]
+\[
+F_\rho(x)=e^{-x}x^\rho(1+x)^\rho,\qquad
+H_\rho(u)=e^{-u}(1+u)^\rho.
+\]
+Then, for every \(\kappa\),
+\[
+\delta_\kappa N_\kappa^\rho
+\leq
+C_{\rho,\varepsilon_0,K_a}
+F_\rho(x_\kappa)H_\rho(u_\kappa).
+\tag{A.94}
+\]
+\end{lemma}
+
+\begin{proof}
+Proposition~\ref{prop:step-003-exact-privacy-schedule} gives
+\(\delta_\kappa=e^{-x_\kappa-u_\kappa}\), while
+Lemma~\ref{lem:step-005-ceiling} gives
+\[
+N_\kappa^\rho
+\leq
+\left[
+2K_a\varepsilon_0^{-2}
+x_\kappa(1+x_\kappa+u_\kappa)
+\right]^\rho.
+\]
+For nonnegative \(x,u\),
+\[
+1+x+u\leq(1+x)(1+u),
+\tag{A.95}
+\]
+because the right side is \(1+x+u+xu\).  Since \(\rho>0\), raising
+positive quantities to \(\rho\) preserves order, and hence
+\[
+\begin{aligned}
+\delta_\kappa N_\kappa^\rho
+&\leq
+(2K_a\varepsilon_0^{-2})^\rho
+e^{-x_\kappa-u_\kappa}
+[x_\kappa(1+x_\kappa+u_\kappa)]^\rho\\
+&\leq
+(2K_a\varepsilon_0^{-2})^\rho
+[e^{-x_\kappa}x_\kappa^\rho(1+x_\kappa)^\rho]
+[e^{-u_\kappa}(1+u_\kappa)^\rho].
+\end{aligned}
+\tag{A.96}
+\]
+This is (A.94) for the exact \(N_\kappa\) and
+\(\delta_\kappa\), with no asymptotic proxy.
+\end{proof}
+
+\begin{lemma}[Uniform exponential-polynomial bound]
+\label{lem:step-005-x-supremum}
+For every fixed \(\rho>0\),
+\[
+\sup_{x\geq1}F_\rho(x)
+\leq
+B_\rho
+:=
+2^\rho e^{-x_\rho}x_\rho^{2\rho}
+<\infty,
+\qquad
+x_\rho=\max\{1,2\rho\}.
+\tag{A.97}
+\]
+\end{lemma}
+
+\begin{proof}
+For \(x\geq1\), \(1+x\leq2x\), so
+\[
+F_\rho(x)\leq2^\rho e^{-x}x^{2\rho}.
+\tag{A.98}
+\]
+Let \(g_\rho(x)=e^{-x}x^{2\rho}\).  On \((0,\infty)\),
+\[
+g_\rho'(x)
+=e^{-x}x^{2\rho-1}(2\rho-x).
+\tag{A.99}
+\]
+If \(2\rho\leq1\), the function is nonincreasing on
+\([1,\infty)\), so its maximum there is \(g_\rho(1)\).  If
+\(2\rho>1\), it increases on \([1,2\rho]\) and decreases afterward,
+so its maximum is \(g_\rho(2\rho)\).  In both cases the maximizer is
+\(x_\rho\), and (A.98) gives (A.97).  The constant depends only on
+the fixed \(\rho\), not on the sequence.
+\end{proof}
+
+\begin{proposition}[Privacy negligibility]
+\label{prop:step-005-privacy-negligibility}
+Under Assumption~\ref{assump:polynomial-global-stability}, let
+\(|C_\kappa|\to\infty\), and let \(N_\kappa,\delta_\kappa\) be the
+quantities defined in Section~\ref{sec:prelim}.  For every fixed
+\(\rho>0\),
+\[
+\begin{gathered}
+\forall\tau>0\ \exists\kappa_0(\rho,\tau)\
+\forall\kappa\geq\kappa_0(\rho,\tau):\\
+\delta_\kappa N_\kappa^\rho\leq\tau.
+\end{gathered}
+\tag{A.100}
+\]
+Equivalently,
+\[
+\delta_\kappa N_\kappa^\rho\longrightarrow0
+\quad\text{for every fixed }\rho>0.
+\tag{A.101}
+\]
+The conclusion is uniform over all possible behavior of
+\(q_\kappa\geq1\), including bounded, constant, oscillatory, and
+unbounded sequences.
+\end{proposition}
+
+\begin{proof}
+Size divergence gives
+\[
+L_\kappa=\log|C_\kappa|\longrightarrow\infty,
+\tag{A.102}
+\]
+and Lemma~\ref{lem:step-003-log-correction} then gives
+\[
+u_\kappa=u(L_\kappa)\longrightarrow\infty.
+\tag{A.103}
+\]
+For \(u\geq1\),
+\[
+\log u
+=\int_1^u\frac{dt}{t}
+\leq\int_1^u\frac{dt}{\sqrt t}
+=2(\sqrt u-1)
+\leq2\sqrt u.
+\]
+Since \(1+u\leq2u\),
+\[
+\log(1+u)\leq\log2+\log u\leq3\sqrt u.
+\tag{A.104}
+\]
+Whenever \(u\geq36\rho^2\),
+\[
+\rho\log(1+u)
+\leq3\rho\sqrt u
+\leq\frac{u}{2},
+\qquad
+H_\rho(u)\leq e^{-u/2}.
+\tag{A.105}
+\]
+Let
+\[
+D_\rho=C_{\rho,\varepsilon_0,K_a}B_\rho.
+\]
+By (A.94) and (A.97),
+\[
+\delta_\kappa N_\kappa^\rho
+\leq D_\rho H_\rho(u_\kappa)
+\leq D_\rho e^{-u_\kappa/2}
+\tag{A.106}
+\]
+whenever \(u_\kappa\geq36\rho^2\).
+For \(\tau>0\), define
+\[
+U_{\rho,\tau}
+=\max\left\{
+1,\ 36\rho^2,\ 2\log\frac{D_\rho}{\tau}
+\right\}.
+\tag{A.107}
+\]
+Because \(u_\kappa\to\infty\), eventually
+\(u_\kappa\geq U_{\rho,\tau}\), and then
+\(D_\rho e^{-u_\kappa/2}\leq\tau\).  If
+\(D_\rho/\tau<1\), the logarithmic entry is negative and the desired
+inequality is already automatic for \(u_\kappa\geq0\).
+
+The factor \(F_\rho(x_\kappa)\) was bounded uniformly on the entire
+domain \(x_\kappa=q_\kappa^b\geq1\).  Thus if \(q_\kappa\) is bounded,
+constant, nonconvergent, or oscillatory, the same bound applies while
+the independent \(u_\kappa\)-factor vanishes.  If
+\(q_\kappa\to\infty\), exponential decay in \(x_\kappa\) can only
+improve the estimate.
+\end{proof}
+
+\begin{proposition}[Standard approximate-privacy allowance]
+\label{prop:step-005-source-allowance}
+Under Proposition~\ref{prop:step-005-privacy-negligibility}, for every
+fixed \(c>0\) there is \(\kappa_c\) such that
+\[
+\kappa\geq\kappa_c
+\quad\Longrightarrow\quad
+\delta_\kappa
+\leq
+\frac{c}{N_\kappa^2\log(eN_\kappa)}.
+\tag{A.108}
+\]
+\end{proposition}
+
+\begin{proof}
+Apply Proposition~\ref{prop:step-005-privacy-negligibility} at the
+fixed exponent \(\rho=3\) and tolerance \(c\).  Eventually,
+\[
+\delta_\kappa N_\kappa^3\leq c.
+\tag{A.109}
+\]
+Lemma~\ref{lem:step-005-ceiling} gives \(N_\kappa\geq1\).  For every
+real \(N\geq1\),
+\[
+\log(eN)=1+\log N\leq N,
+\tag{A.110}
+\]
+because \(f(N)=N-1-\log N\) satisfies \(f(1)=0\) and
+\(f'(N)=1-N^{-1}\geq0\).  Hence, on the tail in (A.109),
+\[
+\delta_\kappa
+\leq\frac{c}{N_\kappa^3}
+\leq\frac{c}{N_\kappa^2\log(eN_\kappa)}.
+\]
+The choice \(\rho=3\) is made only after the every-fixed-\(\rho\)
+result has been proved, and no growth assumption on \(q_\kappa\) is
+used.
+\end{proof}
+
+\subsection{Sequence Assembly and the Lower-Bound Contradiction}
+\label{app:sequence-assembly}
+
+\begin{proposition}[Sequence-wise exact private learner family]
+\label{prop:step-006-sequence-learners}
+Under Assumption~\ref{assump:polynomial-global-stability}, fix
+\(\alpha_0=\beta_0=1/8\), \(\varepsilon_0\in(0,1)\), and any sequence
+\(\{C_\kappa\}\) of nonempty finite binary classes satisfying
+\(|C_\kappa|\to\infty\) and (A.57).  There is one constant \(K_a\),
+depending only on \(a,\alpha_0,\beta_0,C_{\mathrm{BLM}}\), and for
+every \(\kappa\) there is a kernel
+\[
+M_\kappa:
+Z_{X_\kappa}^{N_\kappa}
+\rightsquigarrow\mathcal H_{X_\kappa},
+\qquad
+N_\kappa=N_a(q_\kappa,L_\kappa,\varepsilon_0),
+\tag{A.111}
+\]
+such that:
+\begin{enumerate}[label=(\roman*)]
+\item \(M_\kappa\) has exact input arity \(N_\kappa\), arbitrary
+output, and no representation or computational restriction;
+\item for every \(Q\) realizable by \(C_\kappa\),
+\[
+\Pr_{S\sim Q^{N_\kappa},M_\kappa}
+[R_Q(M_\kappa(S))>\alpha_0]\leq\beta_0;
+\tag{A.112}
+\]
+\item \(M_\kappa\) is
+\((\varepsilon_0,\delta_\kappa)\)-differentially private, where
+\[
+\delta_\kappa
+=\exp[-q_\kappa^{2a+2}
+-\log\log(e^e+L_\kappa)];
+\tag{A.113}
+\]
+\item
+\[
+\log\frac1{\delta_\kappa}
+=q_\kappa^{2a+2}+\log\log(e^e+L_\kappa),
+\tag{A.114}
+\]
+and
+\[
+\begin{aligned}
+N_\kappa
+&=
+\left\lceil
+K_a\varepsilon_0^{-2}q_\kappa^{2a+2}
+\left(
+1+q_\kappa^{2a+2}
++\log\log(e^e+L_\kappa)
+\right)
+\right\rceil\\
+&\leq
+1+K_a\varepsilon_0^{-2}q_\kappa^{2a+2}
+\left(
+1+q_\kappa^{2a+2}
++\log\log(e^e+L_\kappa)
+\right).
+\end{aligned}
+\tag{A.115}
+\]
+\end{enumerate}
+These conclusions hold at every index, including finite prefixes and
+the boundary \(q_\kappa=1\).
+\end{proposition}
+
+\begin{proof}
+Assumption~\ref{assump:polynomial-global-stability} fixes the same
+universal \(a\) before the sequence is considered.
+Lemma~\ref{lem:step-002-sc-domination} fixes
+\[
+K_a=\max\{2,C_{\mathrm{BLM}}D_a\},
+\]
+independently of
+\(\kappa,X_\kappa,C_\kappa,L_\kappa,q_\kappa\), every realizable
+distribution, and \(\varepsilon_0\).  For each \(\kappa\), apply
+Proposition~\ref{prop:step-002-exact-padding} to
+\(C=C_\kappa\), \(X=X_\kappa\), \(q=q_\kappa\),
+\(L=L_\kappa\), and the common \(\varepsilon_0\).  It supplies one
+kernel \(M_{C_\kappa}\) with exact arity
+\(N_a(q_\kappa,L_\kappa,\varepsilon_0)\).  Choose one such kernel at
+each index and set
+\[
+M_\kappa=M_{C_\kappa}.
+\tag{A.116}
+\]
+This indexwise selection does not couple the internal randomness and
+does not make the learner depend on \(Q\).
+
+Equation (A.112) and both ordered privacy inequalities are exactly the
+conclusions of Proposition~\ref{prop:step-002-exact-padding}.
+Proposition~\ref{prop:step-003-exact-privacy-schedule} identifies the
+same privacy parameter with (A.113) and proves (A.114).
+Substituting \(b=2a+2\) and the definition of \(T_a\) into \(N_a\)
+gives the equality in (A.115); \(\lceil x\rceil\leq x+1\) gives its
+upper bound.  Since every class is nonempty and finite,
+\(L_\kappa\geq0\) and \(q_\kappa\geq1\) at every index, so no
+asymptotic tail is needed for this construction.
+\end{proof}
+
+\begin{proposition}[Rate certificates for the same learner family]
+\label{prop:step-006-rate-certificates}
+Under Proposition~\ref{prop:step-006-sequence-learners},
+Proposition~\ref{prop:step-004-q-subpower},
+Lemma~\ref{lem:step-004-schedule-subpower},
+Proposition~\ref{prop:step-004-sample-subpower}, and
+Proposition~\ref{prop:step-005-privacy-negligibility}, the exact
+quantities in (A.111)--(A.115) satisfy
+\[
+q_\kappa=L_\kappa^{o(1)},\qquad
+T_a(q_\kappa,L_\kappa)=L_\kappa^{o(1)},
+\tag{A.117}
+\]
+\[
+N_\kappa=L_\kappa^{o(1)},\qquad
+\frac{N_\kappa}{L_\kappa}\longrightarrow0,
+\tag{A.118}
+\]
+and, for every fixed \(\rho>0\),
+\[
+\delta_\kappa N_\kappa^\rho\longrightarrow0.
+\tag{A.119}
+\]
+The statements include bounded, constant, or oscillatory
+\(q_\kappa\), and finite prefixes do not affect the limits.
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:step-006-sequence-learners} uses exactly the
+quantities \(q_\kappa,L_\kappa,T_a,N_a,\delta_a\) appearing in the
+earlier results, so there is no proxy sample size or privacy
+parameter.  Proposition~\ref{prop:step-004-q-subpower} and
+Lemma~\ref{lem:step-004-schedule-subpower} give (A.117).
+Proposition~\ref{prop:step-004-sample-subpower} gives, for every
+\(r>0\),
+\[
+N_\kappa\leq L_\kappa^r
+\tag{A.120}
+\]
+on an eventual tail.  Taking \(r=1/2\) and using
+\(L_\kappa\to\infty\) gives
+\[
+0\leq\frac{N_\kappa}{L_\kappa}
+\leq L_\kappa^{-1/2}
+\longrightarrow0.
+\tag{A.121}
+\]
+Proposition~\ref{prop:step-005-privacy-negligibility} applies to the
+exact pair (A.113), (A.115) and gives (A.119).
+
+If \(q_\kappa\leq\bar q\) on a tail, the direct bound
+\[
+N_\kappa
+\leq
+1+K_a\varepsilon_0^{-2}\bar q^b
+(1+\bar q^b+u(L_\kappa))
+\]
+has ratio tending to zero by (A.75), while the proof of
+Proposition~\ref{prop:step-005-privacy-negligibility} controls the
+\(q_\kappa\)-factor uniformly and lets \(u(L_\kappa)\to\infty\).
+This includes \(q_\kappa\equiv1\).
+\end{proof}
+
+\begin{lemma}[Privacy relaxation and source-scale eligibility]
+\label{lem:step-006-privacy-relaxation}
+Under Proposition~\ref{prop:step-006-sequence-learners}, fix
+\(\kappa\).  If
+\[
+\bar\delta(N_\kappa)\geq\delta_\kappa,
+\tag{A.122}
+\]
+then the same \(M_\kappa\) is
+\((\varepsilon_0,\bar\delta(N_\kappa))\)-differentially private in
+both ordered replacement directions.  Equality is allowed, and no
+reverse implication is claimed when
+\(\bar\delta(N_\kappa)<\delta_\kappa\).
+
+Moreover, for every fixed \(c>0\), the same learner is eventually
+\[
+\left(
+\varepsilon_0,
+\frac{c}{N_\kappa^2\log(eN_\kappa)}
+\right)\text{-differentially private}.
+\tag{A.123}
+\]
+\end{lemma}
+
+\begin{proof}
+Let \(S,S'\in Z_{X_\kappa}^{N_\kappa}\) be replacement-adjacent and
+let \(E\subseteq\mathcal H_{X_\kappa}\) be measurable.
+Proposition~\ref{prop:step-006-sequence-learners} gives
+\[
+\Pr[M_\kappa(S)\in E]
+\leq e^{\varepsilon_0}\Pr[M_\kappa(S')\in E]
++\delta_\kappa.
+\]
+Using (A.122) in the valid direction gives
+\[
+\Pr[M_\kappa(S)\in E]
+\leq e^{\varepsilon_0}\Pr[M_\kappa(S')\in E]
++\bar\delta(N_\kappa).
+\tag{A.124}
+\]
+The reverse ordered inequality similarly becomes
+\[
+\Pr[M_\kappa(S')\in E]
+\leq e^{\varepsilon_0}\Pr[M_\kappa(S)\in E]
++\bar\delta(N_\kappa).
+\tag{A.125}
+\]
+Thus only the allowed additive slack has increased; the kernel,
+sample count, output space, risk, and adjacency relation are
+unchanged.
+
+Proposition~\ref{prop:step-005-source-allowance} states that, for every
+fixed \(c>0\), eventually
+\[
+\delta_\kappa
+\leq\frac{c}{N_\kappa^2\log(eN_\kappa)}.
+\]
+Substitution into (A.124)--(A.125) gives (A.123).  At the exact
+schedule no tail is needed; if a comparison holds only eventually,
+the relaxed conclusion holds on exactly that tail.
+\end{proof}
+
+\begin{proposition}[No eventual linear lower bound]
+\label{prop:step-006-omega-contradiction}
+Under Proposition~\ref{prop:step-006-sequence-learners},
+Proposition~\ref{prop:step-006-rate-certificates}, and
+Lemma~\ref{lem:step-006-privacy-relaxation}, consider either the exact
+schedule \(\delta_\kappa\), or a schedule \(\bar\delta\) for which
+\[
+\bar\delta(N_\kappa)\geq\delta_\kappa
+\quad\text{eventually}.
+\tag{A.126}
+\]
+There do not exist \(c_*>0\) and \(\kappa_*\) such that, for every
+\(\kappa\geq\kappa_*\), every arbitrary-output, computationally
+unrestricted, distribution-free realizable
+\((\alpha_0,\beta_0)\)-PAC learner for \(C_\kappa\) at the relevant
+privacy schedule must use at least
+\[
+c_*L_\kappa
+\tag{A.127}
+\]
+records.
+\end{proposition}
+
+\begin{proof}
+Fix arbitrary \(c_*>0\) and \(\kappa_*\).  In the exact-schedule case
+there is no privacy tail; otherwise let
+\(\kappa_{\mathrm{priv}}\) be a tail index for (A.126).
+Proposition~\ref{prop:step-006-rate-certificates} gives
+\(N_\kappa/L_\kappa\to0\), so there is
+\(\kappa_{\mathrm{rate}}(c_*)\) such that
+\[
+N_\kappa<c_*L_\kappa
+\qquad
+(\kappa\geq\kappa_{\mathrm{rate}}(c_*)).
+\tag{A.128}
+\]
+The ratio is well-defined there because \(L_\kappa\to\infty\).
+Choose
+\[
+\kappa\geq
+\max\{\kappa_*,\kappa_{\mathrm{priv}},
+\kappa_{\mathrm{rate}}(c_*)\}.
+\tag{A.129}
+\]
+Proposition~\ref{prop:step-006-sequence-learners} supplies an eligible
+learner \(M_\kappa\) using exactly \(N_\kappa\) records.  In the
+comparison-schedule case,
+Lemma~\ref{lem:step-006-privacy-relaxation} makes the same learner
+eligible.  The hypothetical lower bound would give
+\(N_\kappa\geq c_*L_\kappa\), contradicting (A.128).
+Since \(c_*\) and the proposed tail were arbitrary, no positive
+eventual linear lower-bound constant exists.  The standard allowance
+follows by taking
+\(\bar\delta(N_\kappa)=
+c/[N_\kappa^2\log(eN_\kappa)]\) and using (A.123).
+\end{proof}
+
+\subsection{Proof of the Main Theorem}\label{app:main-proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Assumption~\ref{assump:polynomial-global-stability} and
+Proposition~\ref{prop:step-001-binary-private-learner} give the
+arbitrary-output stable-selection learner and its exact two-term raw
+sample bound.  Lemma~\ref{lem:step-002-sc-domination} proves the
+displayed sample specialization and fixes a common \(K_a\) with only
+the allowed dependence; Proposition~\ref{prop:step-002-exact-padding}
+turns the learner into an exact-\(N_a\) kernel without changing
+utility or privacy.  Proposition~\ref{prop:step-003-exact-privacy-schedule}
+proves the displayed value of \(\delta_\kappa\) and its exact
+logarithm.
+
+For an arbitrary admissible sequence,
+Proposition~\ref{prop:step-004-q-subpower},
+Lemma~\ref{lem:step-004-schedule-subpower}, and
+Proposition~\ref{prop:step-004-sample-subpower} prove
+\[
+q_\kappa=L_\kappa^{o(1)},\qquad
+T_a(q_\kappa,L_\kappa)=L_\kappa^{o(1)},\qquad
+N_\kappa=L_\kappa^{o(1)}=o(L_\kappa).
+\]
+Proposition~\ref{prop:step-005-privacy-negligibility} proves
+\(\delta_\kappa N_\kappa^\rho\to0\) for every fixed \(\rho>0\), and
+Proposition~\ref{prop:step-005-source-allowance} gives the stated
+standard approximate-privacy comparison.
+
+Proposition~\ref{prop:step-006-sequence-learners} attaches all
+pointwise guarantees to one learner \(M_\kappa\) for each index, and
+Proposition~\ref{prop:step-006-rate-certificates} attaches the exact
+sequence rates to those same learners.  Lemma~\ref{lem:step-006-privacy-relaxation}
+proves privacy monotonicity only toward a larger allowed additive
+parameter, in both ordered adjacency directions.
+Proposition~\ref{prop:step-006-omega-contradiction} then combines the
+valid learner with \(N_\kappa/L_\kappa\to0\) and rules out every
+eventual positive linear lower bound at the exact, standard, or any
+eventually weaker privacy allowance.  The argument never removes
+Assumption~\ref{assump:polynomial-global-stability}; hence the result
+is conditional exactly as stated.
+\end{proof}

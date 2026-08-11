@@ -1,0 +1,14 @@
+\section{Preliminaries}
+
+The tensor space is equipped with the Frobenius inner product
+$\langle A,B\rangle_F$ and its induced norm.  Matricization only permutes
+entries, so it preserves this norm.  For a first-mode subspace
+$\mathcal S\subseteq\mathbb R^n$, the orthogonal projector onto
+$\mathcal S\otimes\mathbb R^n\otimes\mathbb R^n$ acts on the mode-1
+matricization by left multiplication with $P_{\mathcal S}$.
+
+The symbols $S_t^M$ and $F_M(t)$ retain the method superscript because the two
+methods use independent initialization spans while sharing the same tensor.
+This distinction is essential in the joint probability statement.  All
+objective and residual bounds below use the ambient tensor Frobenius norm, and
+all horizon-uniform assertions refer to integer iterates $t\ge0$.

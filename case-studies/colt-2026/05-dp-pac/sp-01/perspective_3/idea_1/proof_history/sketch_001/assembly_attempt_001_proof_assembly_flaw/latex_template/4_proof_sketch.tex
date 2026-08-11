@@ -1,0 +1,53 @@
+\section{Proof Sketch}\label{sec:roadmap}
+
+The structural calculation is exact.  Distinct cuts give
+$|C_{k,N}|=(N+1)^k$; one point from each tag is shattered, while two points
+from one tag cannot realize the labeling $(1,0)$, so $\VC(C_{k,N})=k$.
+For Littlestone dimension, a one-tag binary-search tree has depth
+$\lfloor\log_2(N+1)\rfloor$.  Concatenating one such tree per tag gives the
+lower bound, and summing the corresponding halving mistake budgets gives the
+matching upper bound; see Lemmas~\ref{lem:step-001-one-tag-ld}--
+\ref{lem:step-001-mistake-to-ld} and
+Proposition~\ref{prop:step-001-product-ld}.
+
+The one-block hard core comes from the unrestricted improper threshold lower
+bound of \citet{AlonLivniMalliarisMoran2019}.  We first transport its ordered
+domain, labels, replacement adjacency, and population-risk convention exactly
+to $[N]$ and extract fixed constants in
+Proposition~\ref{prop:step-002-wrapper}.  Markov's inequality then converts
+the contrapositive high-probability statement into a strict expected-risk
+gap.  The set of all finite source-private kernels is a compact polytope.
+Separating its continuous payoff image from the positive orthant yields the
+finite minimax prior of
+Proposition~\ref{prop:step-004-finite-hard-prior}; the proof includes the
+finite-dimensional separation and exact Caratheodory reduction rather than
+assuming a minimax swap.
+
+We next calibrate the simulated budget
+$M=\max\{8,\lceil4n/k\rceil\}$ under the strict negation of
+\eqref{eq:main-nonasymptotic}.  For a hidden uniform coordinate $J$, the
+ideal product experiment has an independent $k$-fold prior, conditionally
+i.i.d. product data, and an exact selected-risk/product-risk identity even
+for tag-asymmetric improper learners.  The hidden usage count is exactly
+$\operatorname{Bin}(n,1/k)$, and a two-case falling-factorial argument proves
+$\Pr\{U>M\}<2^{-9}$, with zero overflow for $k=2,3$.
+
+The simulator exposes an arbitrary size-$M$ one-block input only through
+successive occurrences of tag $J$.  Lemma~\ref{lem:step-010-one-use} proves
+pathwise that each input record enters at most one synthesized row.  Thus a
+single input replacement changes at most one row passed to $A$.  Keeping the
+learner's coins random, then mixing over one common input-independent seed and
+restricting the output, preserves a single $(\varepsilon,\delta)$ privacy
+charge; this gives Proposition~\ref{prop:step-012-source-membership}.  A
+shared-randomness coupling identifies actual and ideal datasets off overflow
+and loses only $\Pr\{U>M\}$ in expected selected risk.
+
+Applying the finite hard prior to this certified simulator gives actual risk
+strictly above $2^{-8}$.  Coupling, the overflow bound, and the exact
+selected-risk identity yield ideal product risk strictly above $2^{-9}$.
+Finite-support averaging extracts one deterministic product instance.  The
+distribution-free PAC premise bounds the identical fixed-instance expectation
+by $2^{-12}$, a contradiction.  This discharges the strict negation and proves
+Proposition~\ref{prop:step-015-exact-closure}.  Finally, exact tower inversion
+and floor arithmetic give \eqref{eq:main-structure}--
+\eqref{eq:main-remaining-scales}.

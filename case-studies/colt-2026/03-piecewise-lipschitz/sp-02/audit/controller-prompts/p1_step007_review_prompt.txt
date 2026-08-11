@@ -1,0 +1,23 @@
+You are the distinct step-scoped reviewer for perspective_1/idea_1, step_007, unit attempt 1, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+First read <CODEX_SKILLS_ROOT>/proof-step-review/SKILL.md completely and every directly required shared contract/template it names. Then review the current proof using the proof-step-review contract.
+
+Binding artifacts and hashes:
+- setting.md: f77d11e1a559e22a96b14de1936d50c691c79d5a4a15e5806ddf4e6d119ada83
+- proof_sketch.md: e7035d01ff910e55426d09e1add806b49103404582df2cf3e998000a8eebe898
+- proof_sketch_review.md: ccc24fd25cd6ac468831c0cd84f8aea642d7584e7cd402686da3bb6f82a86561, status ACCEPTED
+- dependencies: None
+- target proof.md: 5dba630be80c55c5d786ee7bb622a3da2c9240ef9ac6b0907a9fcd237746d85f
+
+Audit all four local units against the exact accepted step_007 row. Check that every bounded interval J is placed in a valid nondegenerate Theta=[c-h,c+h], that x=(theta-c)/h gives Q_0(x)=(c+hx)^d and Q_{k+1}(x)=(c+hx)^k, and that pullback gives exactly F_0(theta)=theta^d, F_{k+1}(theta)=theta^k, and F_0+<alpha,F>=p_alpha. The deterministic monic coefficient must remain outside the d-dimensional random lower-coefficient vector. Recompute q=0, M=0, N=d, A=(2R)^d kappa, and Delta_aug=d, including exact normalized-coordinate degree d.
+
+For d>=2 verify exactly the disjoint measurable cells E_1=J intersect {|theta|<=1}, E_d=J intersect {|theta|>1}, and all other E_j empty; for d=1 verify E_1=J. Check pivot nonvanishing at theta=0 and |theta|=1 and for empty cells. Re-solve and differentiate both charts:
+
+T_1=-theta^d-sum_{k=1}^{d-1} beta_k theta^k,
+T_d=-theta-sum_{k=0}^{d-2} beta_k theta^(k-d+1).
+
+Verify the exact low-cell bound d+R sum_{k=1}^{d-1}k=d+R d(d-1)/2 and exact high-cell bound 1+R sum_{k=0}^{d-2}(d-1-k)=1+R d(d-1)/2<=d+R d(d-1)/2. Check the derivative sign and exponents, reindexing, coefficient-coordinate correspondence, and that negative powers are used only on |theta|>1. For d=1 verify the zero-dimensional nonpivot tuple, T_1=-theta, and unit speed. Stress-test d=2, theta=0, |theta|=1, empty partition cells, and bounded J at arbitrary location.
+
+Reject any use of step_006, a monic probability baseline, a polynomial-root theorem, a probability/density premise, a random leading coordinate, an assumed pivot cover instead of a derived one, hidden constants, or an exported claim beyond the deterministic object/pivot/velocity certificate. Check exact assumption provenance, full progress type, deterministic pointwise mode, notation surface, and target-step assembly.
+
+Write only perspective_1/idea_1/proof_steps/step_007/review.md. Do not edit proof.md, trackers, worker log, dependencies, or another branch. Include every required review section and exactly one audit for unit_001 through unit_004. Use a controlled Step-Review Status and aligned Smallest Retry Target. Recompute and record the reviewed proof SHA. Validate ASCII/control bytes, structurally balanced TeX delimiters and braces, Markdown table arity while ignoring escaped pipes, four-unit correspondence, required headings, and file scope before reporting status, path, and final SHA-256.

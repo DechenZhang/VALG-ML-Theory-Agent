@@ -1,0 +1,115 @@
+\begin{proposition}[Fixed support point from a strict prior average]\label{prop:step-014-fixed-extraction}
+Under Proposition~\ref{prop:step-013-product-lower-bound}, fix its
+same \(k,N,M,n,A\), finite prior \(\mu_{N,M}\), and ideal experiment. Then
+there exists a deterministic vector
+\[
+\boldsymbol z^*\in\operatorname{supp}(\mu_{N,M}^{\otimes k})
+\subseteq\mathcal I_N^k
+\tag{8}
+\]
+such that
+\[
+\mathbb E_{\substack{S\sim(P_{\boldsymbol Q^*}^{c_{\boldsymbol t^*}})^n\\
+\rho_A}}
+R_{P_{\boldsymbol Q^*}}\bigl(A_{\rho_A}(S),c_{\boldsymbol t^*}\bigr)
+>2^{-9}.
+\tag{9}
+\]
+Once \(\boldsymbol z^*\) is selected, the only randomness in (9) is the
+fixed-instance sample and the learner coins.
+\end{proposition}
+
+\begin{proof}
+Let
+\[
+\mathcal S=\operatorname{supp}(\mu_{N,M}^{\otimes k}).
+\tag{10}
+\]
+Proposition~\ref{prop:step-013-product-lower-bound} supplies a finite
+probability law, so
+\(\mathcal S\) is finite. For each \(\boldsymbol z\in\mathcal S\), put
+\[
+w_{\boldsymbol z}=\mu_{N,M}^{\otimes k}(\{\boldsymbol z\}).
+\tag{11}
+\]
+Then \(w_{\boldsymbol z}>0\) and
+\(\sum_{\boldsymbol z\in\mathcal S}w_{\boldsymbol z}=1\).
+
+Conditional on \(\boldsymbol\Xi=\boldsymbol z\), the sample and output
+experiment in Proposition~\ref{prop:step-013-product-lower-bound}
+is exactly the fixed-instance experiment defining \(\Phi_A(\boldsymbol z)\).
+Finite expansion of the outer prior expectation therefore gives
+\[
+\begin{aligned}
+&\mathbb E_{\substack{
+  \boldsymbol\Xi\sim\mu_{N,M}^{\otimes k}\\
+  S^{\mathrm{id}}\sim(P_{\boldsymbol Q}^{c_{\boldsymbol T}})^n\\
+  H^{\mathrm{id}}\sim A(S^{\mathrm{id}})}}
+  R_{P_{\boldsymbol Q}}(H^{\mathrm{id}},c_{\boldsymbol T})\\
+&\qquad=\sum_{\boldsymbol z\in\mathcal S}
+  w_{\boldsymbol z}\Phi_A(\boldsymbol z).
+\end{aligned}
+\tag{12}
+\]
+This is finite conditional expectation. It does not assert that the
+unconditional prior mixture is iid from one deterministic distribution.
+
+The left side of (12) is strictly greater than \(2^{-9}\) by Proposition~\ref{prop:step-013-product-lower-bound}; hence
+\[
+\sum_{\boldsymbol z\in\mathcal S}w_{\boldsymbol z}\Phi_A(\boldsymbol z)
+>2^{-9}.
+\tag{13}
+\]
+If every \(\boldsymbol z\in\mathcal S\) had
+\(\Phi_A(\boldsymbol z)\le2^{-9}\), then
+\[
+\sum_{\boldsymbol z\in\mathcal S}w_{\boldsymbol z}\Phi_A(\boldsymbol z)
+\le\sum_{\boldsymbol z\in\mathcal S}w_{\boldsymbol z}2^{-9}
+=2^{-9},
+\tag{14}
+\]
+contradicting (13). Thus some \(\boldsymbol z^*\in\mathcal S\) has
+\(\Phi_A(\boldsymbol z^*)>2^{-9}\), which is (9). \end{proof}
+
+\begin{proposition}[Same-instance PAC contradiction]\label{prop:step-014-fixed-contradiction}
+Under Proposition~\ref{prop:step-014-fixed-extraction} and Proposition~\ref{prop:step-006-pointwise-pac-expectation}, fix the
+deterministic vector \(\boldsymbol z^*\) extracted in (8). Then
+\[
+2^{-9}<\Phi_A(\boldsymbol z^*)\le2^{-12},
+\tag{15}
+\]
+which is impossible.
+\end{proposition}
+
+\begin{proof}
+The extraction proposition gives
+\[
+\Phi_A(\boldsymbol z^*)>2^{-9}.
+\tag{16}
+\]
+This lower bound concerns the fixed \(P_{\boldsymbol Q^*}\), fixed target
+\(c_{\boldsymbol t^*}\), exact sample size \(n\), fixed randomized learner
+\(A\), its internal coin law, and the setting-defined population 0-1 risk.
+No component is changed by selecting \(\boldsymbol z^*\).
+
+Because \(\boldsymbol z^*\in\mathcal I_N^k\), Proposition~\ref{prop:step-006-pointwise-pac-expectation}, which is the
+pointwise consequence of Assumption~\ref{assump:distribution-free-realizable-pac},
+applies to this same vector:
+\[
+\begin{aligned}
+\Phi_A(\boldsymbol z^*)
+&=\mathbb E_{\substack{
+  S\sim(P_{\boldsymbol Q^*}^{c_{\boldsymbol t^*}})^n\\ \rho_A}}
+  R_{P_{\boldsymbol Q^*}}\bigl(A_{\rho_A}(S),c_{\boldsymbol t^*}\bigr)\\
+&\le\alpha_0+\beta_0
+=2^{-13}+2^{-13}=2^{-12}.
+\end{aligned}
+\tag{17}
+\]
+Equations (16) and (17) concern literally the same deterministic number;
+neither includes a prior average. Finally,
+\[
+2^{-9}=8\cdot2^{-12}>2^{-12},
+\tag{18}
+\]
+so (16)--(17) contradict one another. \end{proof}

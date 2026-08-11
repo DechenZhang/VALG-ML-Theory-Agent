@@ -1,0 +1,62 @@
+\section{Main Theorem}\label{sec:main}
+
+\begin{theorem}[Conditional positive limiting loss]\label{thm:main}
+Fix $\kappa\geq1$ and $q>0$.  Let
+$r_0,C_{\mathrm{dim}},\delta,L_P,\zeta,C_T$ be positive quantities that
+may depend only on $(\kappa,q)$, with $r_0\in\mathbb N$ and
+\[
+L_P<\delta/4,
+\qquad
+\zeta<\delta/4.
+\]
+Define
+\[
+\epsilon=
+\left(\frac{\delta-L_P-\zeta}{\kappa^6C_T}\right)^2>0.
+\]
+For every $r\geq r_0$, every $n,k$ satisfying
+Assumptions~\ref{assump:dimension} and \ref{assump:rank_window}, every
+deterministic base triple satisfying
+Assumption~\ref{assump:base_conditioning}, and the half-relaxed parallel ALS
+trajectory under Assumptions~\ref{assump:gaussian_smoothing} and
+\ref{assump:independent_initialization}, one has the event inclusion
+\[
+\mathsf C_2(\delta,L_P,\zeta,C_T)
+\subseteq
+\left\{
+\begin{array}{l}
+\displaystyle \lim_{t\to\infty}\mathcal L(X_t,Y_t,Z_t)
+\text{ exists and is finite},\\[2mm]
+\displaystyle \lim_{t\to\infty}\mathcal L(X_t,Y_t,Z_t)
+\geq\epsilon\|T\|_F^2
+\end{array}
+\right\}.
+\]
+This is a deterministic implication on each realization in the displayed
+event.  It makes no assertion that $\mathsf C_2$ is nonempty and no assertion
+that it has positive probability.
+
+There are no hidden constants in the displayed loss fraction.  Its exposed
+dependence is exactly on $\kappa,\delta,L_P,\zeta,C_T$; $r,n,k$ enter only
+through the theorem scope and certificate objects.  The probability mode is
+event inclusion under the joint law, the residual floor used in the proof is
+all-time, the conclusion is asymptotic, and all residuals and objectives use
+the ambient Frobenius norm.
+
+In the exact/noiseless coordinate-orthonormal specialization
+$Q=I$, $E_\rho=0$, and $T=D_r$, the same entry, projector-path, and
+finite-variation clauses give the stronger baseline conclusion
+\[
+\lim_{t\to\infty}\mathcal L(X_t,Y_t,Z_t)
+\geq(\delta-L_P)^2\|T\|_F^2.
+\]
+In particular, because the conditional implication holds for every positive
+choice with the stated margins, it implies the existential constant statement
+in the formalized goal, with all theorem constants depending only on
+$(\kappa,q)$.
+\end{theorem}
+
+The unresolved source-level problem is to prove a uniform bound
+$\mathbb P[\mathsf C_2(\delta,L_P,\zeta,C_T)]\geq p_0(\kappa,q)>0$ for
+some admissible constants.  Theorem~\ref{thm:main} neither proves nor assumes
+such a bound.

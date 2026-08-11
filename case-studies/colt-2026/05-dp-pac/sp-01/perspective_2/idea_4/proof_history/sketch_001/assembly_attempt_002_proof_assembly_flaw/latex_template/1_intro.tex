@@ -1,0 +1,136 @@
+\section{Theoretical Setup}\label{sec:setup}
+
+\subsection{Problem Setting}
+Let $(X,\Sigma)$ be a nonempty measurable space and let
+$C\subseteq\{0,1\}^{X}$ be a nonempty binary concept class.  Define
+\[
+x\equiv_C x'\quad\Longleftrightarrow\quad
+c(x)=c(x')\ \text{for every }c\in C,
+\]
+let $Q_C=X/{\equiv_C}$, and write $\kappa:X\to Q_C$ for the quotient map.
+The quotient carries the discrete sigma-field $2^{Q_C}$.  For $c\in C$,
+write $\bar c(\kappa(x))=c(x)$ and set
+$\bar C=\{\bar c:c\in C\}$.  The released hypothesis space and decoder are
+\[
+ H_C=\{0,1\}^{Q_C},\qquad
+ \mathcal H_C=\bigotimes_{q\in Q_C}2^{\{0,1\}},\qquad
+ \operatorname{Dec}_C(\bar h)=\bar h\circ\kappa .
+\]
+The released object is allowed to be improper: $\bar h$ need not lie in
+$\bar C$.
+
+Write
+\[
+ v=\operatorname{VC}(C),\qquad d=\operatorname{LD}(C),
+\]
+and use natural logarithms.  For $u\ge0$, define $\log^*u=0$ for
+$u\le1$ and, for $u>1$, define
+$\log^*u=\min\{j\ge1:\log^{\circ j}(u)\le1\}$.  For cardinality use
+\[
+\log^+|C|=\begin{cases}\max\{1,\log|C|\},&|C|<\infty,\\
+ +\infty,&|C|=\infty.
+ \end{cases}
+\]
+Put $Z_X=X\times\{0,1\}$ and $Z_Q=Q_C\times\{0,1\}$, with the product
+sigma-fields.  For $N\in\mathbb N_0$, define
+\[
+ T_N((x_r,y_r)_{r=1}^{N})=((\kappa(x_r),y_r))_{r=1}^{N}.
+\]
+Raw labeled datasets use replace-one adjacency.  If $D$ is a probability
+measure on $(X,\Sigma)$ and $c\in C$, let
+\[
+ \bar D=\kappa_\#D,\qquad
+ P_{D,c}=\mathcal L(x,c(x)),\qquad
+ P_{\bar D,\bar c}=\mathcal L(q,\bar c(q)),
+\]
+where $x\sim D$ and $q\sim\bar D$.  For $\bar h\in H_C$, define
+\[
+ \operatorname{err}_D(\operatorname{Dec}_C(\bar h),c)
+ =D\{x:\bar h(\kappa(x))\ne c(x)\},\qquad
+ \operatorname{err}_{\bar D}(\bar h,\bar c)
+ =\bar D\{q:\bar h(q)\ne\bar c(q)\}.
+\]
+
+A learner with sample size $N$ is a Markov kernel
+$A_N:Z_X^N\leadsto H_C$.  It is $(\varepsilon,\delta)$-differentially
+private when, for every neighboring $s\sim s'$ and every
+$E\in\mathcal H_C$,
+\[
+ A_N(s,E)\le e^{\varepsilon}A_N(s',E)+\delta .
+\]
+The conditional-scope realizable private sample complexity is
+\[
+ m_C(\alpha,\beta;\varepsilon,\delta)=\inf\left\{N:
+ \sup_D\sup_{c\in C}\Pr_{S\sim P_{D,c}^{N},\,\bar H\sim A_N(S,\cdot)}
+ [\operatorname{err}_D(\operatorname{Dec}_C(\bar H),c)>\alpha]\le\beta\right\},
+\]
+where the first supremum ranges over all probability measures on $(X,\Sigma)$.
+Learners may be computationally unbounded and need not be proper.
+
+\subsection{Primitive Assumptions}
+\begin{assumption}[Finite Littlestone dimension]\label{assump:finite-littlestone}
+$C$ is nonempty and $d=\operatorname{LD}(C)<\infty$.  No finite-cardinality,
+finite-domain, product, properness, efficiency, or computational assumption
+is imposed.
+\end{assumption}
+
+\begin{assumption}[Finite-or-countable measurable evaluation quotient]\label{assump:countable-evaluation-quotient}
+$Q_C=X/{\equiv_C}$ is finite or countably infinite, and every cell
+$\kappa^{-1}(\{q\})$ belongs to $\Sigma$.  Equivalently,
+$\kappa:(X,\Sigma)\to(Q_C,2^{Q_C})$ is measurable.  This is a static
+pre-sampling condition and does not assume measurability of restrictions,
+lists, selectors, events, or learner kernels.
+\end{assumption}
+
+\begin{assumption}[Realizable iid sampling]\label{assump:realizable-iid}
+For utility, $D$ is arbitrary on $(X,\Sigma)$, $c$ is arbitrary in $C$,
+and the labeled sample is iid from $P_{D,c}$.  Privacy is required on every
+raw neighboring labeled input, including nonrealizable inputs.
+\end{assumption}
+
+\begin{assumption}[Learning, confidence, and approximate-DP parameters]\label{assump:approximate-dp-regime}
+$0<\alpha,\beta<1/4$, $0<\varepsilon\le1$, and $0<\delta<1$.  For the
+positive-dimensional VC-sensitive comparison, the source convention
+$\delta\ll1/N$ means that along the stated asymptotic sequences,
+\[
+ \delta K\Lambda(d,v,\alpha,\beta,\varepsilon,\delta)^q
+ R_{\mathrm{VC}}(d,v,\alpha,\beta,\varepsilon,\delta)\longrightarrow0
+\]
+for the universal constants in the theorem below.  No fixed positive
+$\delta$ is silently absorbed into that source-facing comparison.
+\end{assumption}
+
+\subsection{Formalized Goal}
+The theorem is explicitly conditional on the four assumptions above.  It
+constructs the quotient-first totalized law described in the next section,
+pulls it back through $T_N$, and proves measurability, all-input
+$(\varepsilon,\delta)$-privacy, and realizable population error at most
+$\alpha$ with failure probability at most $\beta$.  The finite-or-countable
+quotient is part of the theorem scope; classes with uncountably many
+evaluation types remain outside the claim.
+
+Define the three source-certified rate expressions
+\[
+ R_{\mathrm{VC}}=
+ \frac{d^4\bigl(v+\log(1/\beta)\bigr)\log(1/(\delta\beta))}
+      {\varepsilon\alpha}
+ +\frac{d+\log(1/\beta)}{\alpha},
+\]
+\[
+ R_{\mathrm{fin}}=
+ \frac{\log^+|C|+\log(1/\beta)}{\varepsilon\alpha}
+ +\frac{\log(1/\beta)}{\alpha},qquad
+ R_{\mathrm{old}}=
+ \frac{d^5\log(1/(\delta\beta))}{\varepsilon\alpha}
+ +\frac{d+\log(1/\beta)}{\alpha}.
+\]
+The logarithmic envelope used for hidden factors is
+\[
+\Lambda=1+\log(e+d)+\log(e+v)+\log(e+\alpha^{-1})
+ +\log(e+\beta^{-1})+\log(e+\varepsilon^{-1})
+ +\log\!\bigl(e+\log(e/\delta)\bigr).
+\]
+The notation $N=\widetilde O(R_{\mathrm{VC}})$ means
+$N\le K\Lambda^qR_{\mathrm{VC}}$ for universal $K\ge1$ and
+$q\in\mathbb N_0$; no positive power of $d$, $v$, or $\log^+|C|$ may be
+hidden in the tilde.

@@ -1,0 +1,149 @@
+\section{Preliminaries}\label{sec:preliminaries}
+
+The rate appearing in the main theorem is
+\[
+r_k(\lambda,\sigma,\epsilon,\delta)
+:=\log\frac{\lambda}{\sigma}+
+\begin{cases}
+\displaystyle \frac{\sigma^2}{\epsilon^2}\log\frac1\delta,
+  & k>2,\\[0.6em]
+\displaystyle \frac{\sigma^2}{\epsilon^2}
+  \log\frac{\sigma}{\epsilon}\log\frac1\delta,
+  & k=2,\\[0.6em]
+\displaystyle \left(\frac{\sigma}{\epsilon}\right)^{k/(k-1)}
+  \log\frac1\delta,
+  & 1<k<2.
+\end{cases}
+\]
+We now specify the fixed protocol whose horizon is bounded by this quantity.
+
+\paragraph{Localization block.}
+Before any response, split the sample indices into disjoint fixed sets
+$I_{\rm loc}$ and $I_{\rm ref}$ of cardinalities $N_{\rm loc}$ and
+$N_{\rm ref}$.  On $I_{\rm loc}$ use the coding-based fully non-adaptive
+localization construction of Lau and Scarlett at confidence
+$\eta=\delta/4$ \citep[Theorem~16 and Appendix~``Two-stage
+estimator'']{lau-scarlett-2026}.  Its public seed is $R_{\rm loc}$, its
+precommitted query sets are $\mathcal B_i(R_{\rm loc})$, and its bits and
+always-defined decoder output are
+\[
+Y_i^{\rm loc}=\mathbf 1\{X_i\in\mathcal B_i(R_{\rm loc})\},\qquad
+c=\mathsf{Dec}_{\rm loc}
+ \bigl(R_{\rm loc},(Y_i^{\rm loc})_{i\in I_{\rm loc}}\bigr).
+\]
+
+\paragraph{Scales and dyadic geometry.}
+For positive constants $a_k,b_k$ depending only on $k$, put
+\[
+h_0=a_k\sigma,\qquad
+H_\star=b_k\sigma\left(\frac\sigma\epsilon\right)^{1/(k-1)},
+\qquad
+S=\left\lceil\log_2\frac{H_\star}{h_0}\right\rceil,
+\qquad h_s=2^sh_0,\quad H=h_S.
+\]
+The theorem chooses $c_k$ so that $S\geq1$.  Define
+\[
+Z_S=\sum_{s=0}^S h_s^{2-k},\qquad
+p_s=\frac{h_s^{2-k}}{Z_S},\quad 0\leq s\leq S.
+\]
+For $j\in\mathbb Z$, let
+\[
+P_{s,j}=[jh_s,(j+1)h_s),\quad
+m_{s,j}=(j+\tfrac12)h_s,\quad
+J_{s,j}=P_{s,j-1}\cup P_{s,j}\cup P_{s,j+1}.
+\]
+For $s\geq1$ and $b\in\{0,1\}$ set
+\[
+\mathcal R_{s,j,b}=J_{s,j}\setminus J_{s-1,2j+b},
+\qquad \mathcal R_{0,j}=J_{0,j},
+\]
+and write $\mathcal J_{s,\ell}=\{j\in\mathbb Z:j\equiv\ell\pmod4\}$.
+The half-open convention fixes every boundary tie.
+
+\paragraph{Precommitted refinement queries.}
+For each $i\in I_{\rm ref}$ draw, before observing any message,
+\[
+L_i\sim(p_0,\ldots,p_S),\qquad
+C_i\sim{\rm Unif}\{0,1,2,3\},\qquad
+U_i\sim{\rm Unif}[-1,1].
+\]
+If $L_i=0$, set $T_i={\rm coord}$.  If $L_i=s\geq1$, also draw
+$T_i\sim{\rm Unif}\{{\rm coord},{\rm mass}\}$ and
+$B_i\sim{\rm Unif}\{0,1\}$.  Independently draw a countable Rademacher
+family $\rho_{i,s,j}\in\{-1,+1\}$ indexed by $0\leq s\leq S$ and
+$j\in\mathbb Z$.  At the selected level $s=L_i$, define
+\[
+F_i(x)=
+\begin{cases}
+\displaystyle
+\sum_{j\in\mathcal J_{0,C_i}}\rho_{i,0,j}
+  \frac{x-m_{0,j}}{2h_0}\mathbf 1_{\mathcal R_{0,j}}(x),&L_i=0,\\[1em]
+\displaystyle
+\sum_{j\in\mathcal J_{s,C_i}}\rho_{i,s,j}
+  \psi_{s,j,T_i}(x)\mathbf 1_{\mathcal R_{s,j,B_i}}(x),&L_i=s\geq1,
+\end{cases}
+\]
+where
+$\psi_{s,j,{\rm coord}}(x)=(x-m_{s,j})/(2h_s)$ and
+$\psi_{s,j,{\rm mass}}(x)=1$.  The sole transmitted refinement bit and
+the decoder-computable baseline are
+\[
+A_i=\{x:F_i(x)\geq U_i\},\qquad
+Y_i=\mathbf 1\{X_i\in A_i\},\qquad
+Y_i^0=\mathbf 1\{0\geq U_i\},\qquad
+\Delta Y_i=Y_i-Y_i^0.
+\]
+
+\paragraph{Decoder path and statistic.}
+Only after both blocks have been collected, define
+\[
+j_0(c)=\min\mathop{\rm argmin}_{j\in\mathbb Z}|c-m_{0,j}|,\qquad
+m_0=m_{0,j_0(c)},
+\]
+and, for $s\geq1$,
+\[
+j_s=\left\lfloor\frac{j_0(c)}{2^s}\right\rfloor,
+\qquad b_s=j_{s-1}-2j_s\in\{0,1\},\qquad
+m_s=m_{s,j_s},\qquad d_s=m_s-m_0.
+\]
+Let $\kappa_s=j_s\bmod4$ and
+\[
+R_0(c)=\mathcal R_{0,j_0(c)},\qquad
+R_s(c)=\mathcal R_{s,j_s,b_s},\quad 1\leq s\leq S.
+\]
+For $i\in I_{\rm ref}$ define
+\[
+W_i(c)=
+\begin{cases}
+\displaystyle
+\frac{16h_0}{p_0}\mathbf 1\{C_i=\kappa_0\}
+ \rho_{i,0,j_0(c)}\Delta Y_i,&L_i=0,\\[1em]
+\displaystyle
+\begin{aligned}
+&\frac{16}{p_s}\mathbf 1\{C_i=\kappa_s\}
+ \mathbf 1\{B_i=b_s\}\rho_{i,s,j_s}\\[-0.2em]
+&\quad{}\times\left[4h_s\mathbf 1\{T_i={\rm coord}\}
+ +2d_s\mathbf 1\{T_i={\rm mass}\}\right]\Delta Y_i
+\end{aligned},
+ &L_i=s\geq1.
+\end{cases}
+\]
+
+\paragraph{Fixed aggregation.}
+For positive $k$-only constants $\alpha_k,\beta_k$, set
+\[
+G_\delta=2\left\lceil\alpha_k\log\frac8\delta\right\rceil+1,
+\qquad
+B_{\rm ref}=\left\lceil\beta_k\frac{\sigma^kZ_S}{\epsilon^2}\right\rceil,
+\qquad N_{\rm ref}=G_\delta B_{\rm ref}.
+\]
+Partition $I_{\rm ref}$ in advance into $G_\delta$ consecutive groups of
+size $B_{\rm ref}$ and write
+\[
+\overline W_g(c)=\frac1{B_{\rm ref}}\sum_{i\in G_g}W_i(c),
+\qquad
+\widehat\mu=m_0+\mathop{\rm median}_{1\leq g\leq G_\delta}
+  \overline W_g(c).
+\]
+Thus the decoder-selected path changes only which already-transmitted bits are
+retained and how they are centered; it does not change a query.

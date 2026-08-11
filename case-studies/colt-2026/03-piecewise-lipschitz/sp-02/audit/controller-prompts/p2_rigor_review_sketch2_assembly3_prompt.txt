@@ -1,0 +1,15 @@
+Perform the fresh independent /proof-review-rigor stage for perspective_2/idea_1, accepted sketch attempt 2, assembly attempt 3.
+
+Read <CODEX_SKILLS_ROOT>/proof-review-rigor/SKILL.md completely, <CODEX_SKILLS_ROOT>/_shared/checklists/artifact-contracts.md completely, and <CODEX_SKILLS_ROOT>/_shared/templates/proof-review-rigor.md completely. Then read .controller_tmp/p2_final_review_common_manifest_assembly3.txt completely and verify SHA-256 5599f4bcb6836bc7281f799656f09d4c17ef5171bbbea513ffe94e770d572449.
+
+Write only perspective_2/idea_1/proof_review_rigor.md, replacing the stale assembly-attempt-2 live file without reading it. Do not read proof_review.md, sibling specialized reviews, proof_history, or archived final reviews. Do not modify any other file.
+
+Build a line-by-line map from all 12 accepted source proofs into the public appendix. Independently compare all 49 local derivations, used cited-result applications, boundary arguments, and Target-Step Assembly sections against the actual appendix. Do not PASS from counts, labels, compilation, assembly_report.md, or high-level correspondence.
+
+Audit the literal coefficient-height certificate, projective identity, measurability and finite-pivot exhaustion, area/coarea multiplicity, persistent-root nullity, joint-density conversion, cube-section constants, affine and homogeneous coefficients, ordered suprema, monic charts including d=1/d=2, zero-length branches, and the exact Counter-example scale chain. Recheck the Federer lower-dimensional area-formula statement and Step 004 instantiation, including k=0/N=1 and boundary retention.
+
+Audit the attempt-3 delta directly: verify the two repaired separators are actual \qquad commands at the exact mathematical joins, no bare qquad remains, and the visible formulas now preserve the accepted equalities without any neighboring token, punctuation, constant, scope, or line-break corruption. Reproduce required source-hygiene and clean standalone compilation checks; compilation is not proof evidence.
+
+Use exactly the shared template and heading order. Controlled field bodies must be raw tokens. PASS requires Blocking Issues=None, Suggested Repair Depth=None, and Smallest Candidate Repair Target=None. BLOCKING requires numbered blockers and aligned depth/target. Emit no score, aggregate Failure Type, Retry Mode, or controller route.
+
+Before returning, reverify all protected inputs, complete the 12-step derivation comparison, output SHA-256, ASCII/control-byte cleanliness, final LF, and single-output-file scope. Report verdict, blockers/concerns, depth/target, comparison completion, output hash, and protected-input verification.

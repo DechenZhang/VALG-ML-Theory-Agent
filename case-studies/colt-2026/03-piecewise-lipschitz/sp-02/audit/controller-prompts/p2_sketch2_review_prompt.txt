@@ -1,0 +1,16 @@
+You are the distinct perspective-scoped proof-sketch reviewer for perspective_2/idea_1, sketch attempt 2, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+First read <CODEX_SKILLS_ROOT>/proof-sketch-review/SKILL.md completely and every directly required shared contract/template it names. Then independently run /proof-sketch-review on the current repaired sketch. Do not repair the sketch inside the review.
+
+Binding artifacts:
+- setting.md SHA-256: 6955a2723694ff60af8d5d40329ff0ad056f9b54780ff02744d8985456222b7e
+- proof_sketch.md SHA-256: 41517943f551814aaf87ff8541d5a81b56123cae7d8533b2bceb302a981bfbc4
+- proof_tracker.md SHA-256: 4aa2ee468fc9e1ee32fbec49274c5da097773d5f0e2f76bb0df33a530a9a114e
+- technical_survey.md SHA-256: 9e72596a398cbd4b63b8785efdfef779edd5c54ef6eebd7b3ae3f44e4aa3eba8
+- triggering step_012 review.md SHA-256: 6aafb0b6f482dedd365d097bf2aeaaa278e0c6643c6b895c0d8728d71d0dfde3, status REVISE_SKETCH, target /proof-sketch
+
+Audit exact preservation of the full formalized target, all assumptions, constants, ordinary-probability and arbitrary-correlation modes, deterministic-leading-coefficient monic baseline, and Counter-example 1 scale. In particular, verify the repaired legal path: named step_009 presentation/certificate outputs -> one named current-notation step_010 wrapper that explicitly re-exports q=M=m=0, Delta=N=d, A=(2R)^d kappa, the exact derivative-shift matrix entries, Lambda_hat=(sum k^2)^(1/2), pivots/velocities, deterministic leading coefficient, and exact monic probability bound -> step_012. Verify step_012 names all consumed theorem-style producers, including the step_007 zero-certificate and step_008 radial-cancellation outputs, with bare step IDs used only as audit metadata.
+
+Independently check all 12 stable steps, acyclic dependencies, theorem-critical mechanism witnesses, exported-interface feasibility, generated-output flow, Gate Evidence rows, source-convention compatibility, baseline invariance, boundary cases, and exact constants. Attempt-1 step artifacts are stale and cannot be current evidence. The old live proof_sketch_review.md is a stale attempt-1 artifact already archived at perspective_2/idea_1/proof_history/sketch_001/proof_sketch/attempt_001/proof_sketch_review.md.
+
+Write only perspective_2/idea_1/proof_sketch_review.md. Use all required controlled fields and sections. ACCEPTED is permitted only with score 8-10, target None, retry mode none, no blockers, no repair bundle, and a complete contract-valid Gate Evidence Table. Before reporting, validate binding hashes, identity, table arity, stable assumption IDs, ASCII/control bytes, balanced TeX, and file scope. Report status, score, target, blockers, and final SHA-256.

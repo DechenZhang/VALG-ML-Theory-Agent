@@ -1,0 +1,161 @@
+\section{Main Theorem}\label{sec:main}
+
+\begin{theorem}[Conditional strictly subquadratic synchronized landing]
+\label{thm:main}
+There are universal choices of
+$C_{\rm rank},C_{\rm burn},C_{\rm cert},C_{\rm stop},C_{\rm rep}>0$ such
+that the following statement holds uniformly over every deterministic base
+triple satisfying Assumptions~\ref{assump:base-scale},
+\ref{assump:cumulative-gram}, and \ref{assump:base-weight-balance}, and
+over every parameter choice satisfying Assumptions~\ref{assump:gaussian-smoothing}
+--\ref{assump:accuracy-confidence}.
+
+With probability at least $1-\delta_{\rm sm}$ over the once-drawn smoothing
+perturbations, there is a generated event $E_{\rm sm}$ on which every realized
+column has norm at least $(2\kappa _0)^{-1}$,
+\[
+ q_{\rm real}\le q_*,\qquad \Gamma\le1.01,qquad
+ \lambda_{\min}\bigl((G_{M'}\odot G_{M''})^\top
+ (G_{M'}\odot G_{M''})\bigr)\ge1-q_*^2
+\]
+for each mode $M$ and its two complementary modes $M',M''$.  The proof of
+this event exposes separately the linear directional, independent quadratic,
+and normalization terms at scales
+$\kappa _0\rho\sqrt{L_{\rm sm}/n}$,
+$\kappa _0^2\rho^2\sqrt{L_{\rm sm}/n}$, and
+$\kappa _0^2\rho^2$, including the row-sum and finite-union factors.
+
+Conditional on any fixed instance in $E_{\rm sm}$, each target and proposal
+slot has a jointly observable window event whose three target raw
+coordinates have absolute values in
+$[\sqrt{a_*\log r},\sqrt{a_*\log r}+1/\sqrt{a_*\log r}]$ and whose
+competing pair products are at most $b_*\log r$.  Its probability lies
+between universal positive multiples of
+$r^{-5/3}(\log r)^{-3/2}$.  Consequently the rank choice in
+Assumption~\ref{assump:subquadratic-rank} gives a universal positive
+one-run probability of simultaneous all-target coverage.  On every covered
+slot the generated ratios satisfy
+\[
+ R_0\le {19\over20},\qquad S_0\le rR_0,
+\]
+and, whenever $\Gamma R_t<1$,
+\[
+ R_{t+1}\le\left({\Gamma R_t+q_{\rm real}\over
+ 1-\Gamma q_{\rm real}R_t}\right)^2,qquad
+ S_{t+1}\le { (\Gamma R_t+q_{\rm real})
+ \{\Gamma(1+q_{\rm real})S_t+q_{\rm real}\}\over
+ (1-\Gamma q_{\rm real}R_t)^2}.
+\]
+The denominator condition persists, the target chart contracts, and the
+finite burn/certification horizons produce a stored state with
+$\zeta\le\tau_r$.  The score graph and minimum-residual rule return one
+representative per target without labels.  After the proof-only permutation
+and product-one sign gauge, the selected state and best-scalar seed satisfy
+\[
+ \max_M\bigl(\|C_M^0\|_{\rm row,1}\vee
+ \|C_M^0\|_{\rm col,1}\bigr)\le48\omega,qquad
+ \max_{M,j}\|N_M^0(:,j)\|_2\le\tau_r,qquad
+ \|s^0\|_\infty\le128\omega.
+\]
+
+Before any landing solve, all three frozen designs formed from the same seed
+simultaneously satisfy the deterministic reserves
+\[
+\delta_L=(1+q_*)48\omega,\quad
+\delta_F=2(1+q_*)48\omega+(1+q_*)(48\omega)^2+r\tau_r^2,
+\]
+\[
+\delta_{FL}=(1+q_*)48\omega+(1+q_*)(48\omega)^2+r\tau_r^2,\quad
+\alpha_0=q_*+\delta_F,\quad \eta_J=\alpha_0^2,\quad
+\eta_{QJ}=2\delta_{FL}+\delta_L^2+\delta_F^2,\quad
+\eta_A={\eta_{QJ}\over1-\eta_J}.
+\]
+In particular, the normalized pair-Gram inverse reserves and the direct
+$Q-J$ cancellation are valid in both induced orientations, and the three
+Moore--Penrose outputs are well defined.  The synchronized joint commit and
+one product-preserving rebalance produce an exact target-span state with
+\[
+ d_Q(e^{\rm land},0)\le4096\omega<\rho_{\rm ALS}/3,
+\]
+where $\rho_{\rm ALS}$ is the explicit chart radius in the cyclic argument.
+More explicitly, for $F_M^0=(P_M^0)^\top P_M^0$,
+$J_M^0=F_{M'}^0\circ F_{M''}^0$,
+$Q_M^0=(G_{M'}^\top P_{M'}^0)\circ(G_{M''}^\top P_{M''}^0)$, and
+$\ell_{M,j}^0=\lambda_j^{1/3}e^{-2s_j^0/3}$, and
+$\widetilde X_M:=T_{(M)}H_M^0((H_M^0)^\top H_M^0)^\dagger$, the generated reserves give
+\[
+ \|J_M^0-I\|_{\rm row,1}\vee\|J_M^0-I\|_{\rm col,1}\le\eta_J\le{1\over64},
+ \quad
+ \|(J_M^0)^{-1}\|_{\rm row,1}\vee\|(J_M^0)^{-1}\|_{\rm col,1}
+ \le{1\over1-\eta_J},
+\]
+\[
+ \|Q_M^0-J_M^0\|_{\rm row,1}\vee\|Q_M^0-J_M^0\|_{\rm col,1}\le\eta_{QJ},qquad
+ (1-\Gamma\eta_A)\ell_{M,j}^0\le\|\widetilde x_{M,j}\|_2
+ \le(1+\Gamma\eta_A)\ell_{M,j}^0.
+\]
+No landing output, post-solve scale, comparator, or reserve is used as an
+input to another landing call.
+
+From this generated exact-span state, every chronological U/V/W cyclic sweep
+is quotient-equivalent to the literal active ALS orbit, remains in the
+$\rho_{\rm ALS}$ chart, and contracts by a universal factor strictly below
+$1/16$.  A good covered run therefore reaches the original stopping test
+\[
+ \left\|T-\sum_{i=1}^k\widehat x_i\otimes\widehat y_i\otimes\widehat z_i
+ \right\|_F\le\epsilon\|T\|_F
+\]
+before the pre-registered cap.  Every tape, including singular
+Moore--Penrose branches, unsuccessful proposals, and nonhitting paths,
+terminates at that cap.  With the independent restart count selected from
+$C_{\rm rep}\log(1/\delta_{\rm init})$, the conditional probability of a
+successful returned run is at least $1-\delta_{\rm init}$.  The returned rank
+is at most $k=U(r)$, and the total arithmetic work is polynomial in
+\[
+ n,r,k,\kappa _0,\rho^{-1},\log(1/\epsilon),
+ \log(1/\delta_{\rm init}),
+\]
+with hidden constants depending only on the fixed universal choices and the
+allowed polynomial envelopes for $\kappa _0$ and $\rho^{-1}$.  In particular,
+the rank and these envelopes make the work polynomial in
+$n,r,\log(1/\epsilon),\log(1/\delta_{\rm init})$.
+
+Under the explicitly scoped deterministic specialization
+$\mathsf{ExactCertifiedSeed}$ from the preliminaries (in particular
+$\rho_{\rm sm}=0$ and the representatives are exact certified components),
+every frozen normalized pair and cross Gram is the identity, the three landing
+outputs equal the target factors, the common-product error and all refreshed
+product logs are zero, the cyclic state is fixed, and the original residual is
+exactly zero for every positive $\epsilon$.  This baseline conclusion is an
+equality statement and is not replaced by the positive-radius bounds above.
+\end{theorem}
+
+The probability statement is nested: the first probability is over the one
+smoothed instance, and the second is conditional on that instance over
+independent proposal and restart tapes.  All displayed rates expose their
+dependence on $n,r,\kappa _0,\rho,\epsilon$ and the two confidence levels;
+no generated comparator, tube, reserve, or condition number is hidden in a
+constant.
+
+\begin{corollary}[Runtime rate specialization bridge]
+\label{cor:rate-specialization-bridge}
+Under Assumptions~\ref{assump:base-scale},
+\ref{assump:subquadratic-rank}, and
+\ref{assump:accuracy-confidence}, choose
+\[
+ k=\left\lceil C_{\rm rank}r^{5/3}(\log r)^{5/2}\right\rceil,
+ \quad m_{\rm cap}=\left\lceil C_{\rm stop}\log\frac{8\kappa _0^2}{\epsilon}\right\rceil,
+ \quad J=\max\left\{1,\left\lceil C_{\rm rep}\log\frac1{\delta_{\rm init}}\right\rceil\right\}.
+\]
+Then the detailed dense-cost bound proved in
+Proposition~\ref{prop:rate-specialization-bridge} implies
+\[
+W_{\rm total}=\operatorname{poly}\!\left(n,r,\kappa _0,\rho^{-1},
+\log(1/\epsilon),\log(1/\delta_{\rm init})\right),
+\]
+with hidden constants depending only on the fixed universal algorithmic
+constants and the declared finite polynomial envelopes for $\kappa _0$ and
+$\rho^{-1}$.  The bridge keeps the one-drawn probability
+$1-\delta_{\rm sm}$ separate from the conditional restart probability
+$1-\delta_{\rm init}$ and uses the original Frobenius residual norm.
+\end{corollary}

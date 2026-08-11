@@ -1,0 +1,49 @@
+\section{Main Theorem}\label{sec:main-theorem}
+
+\begin{theorem}[Conditional positive-loss certificate]
+\label{thm:main}
+Under Assumptions~\ref{assump:base_conditioning}--\ref{assump:gd_step}, there
+exist $r_0(\kappa,q)$ and $C(\kappa,q)$ such that, uniformly for every
+\[
+  r\ge r_0(\kappa,q),\qquad
+  n\ge C(\kappa,q)r^4\log r,\qquad
+  r<k\le\lfloor r^{5/4}\rfloor,
+\]
+and every deterministic base triple satisfying
+Assumption~\ref{assump:base_conditioning},
+\[
+  \mathbb P(\mathcal E_{\rm init\_norm})\ge1-r^{-10}.
+\]
+Define
+\[
+  \epsilon_0(\kappa)
+  =\left(\frac{15}{16}\delta_0\right)^2\kappa_1^{-12}>0.
+\]
+On the explicitly conditional event
+$\mathcal E_{\rm init\_norm}\cap\mathcal C_{\rm path}$, the balanced iterates
+converge in $d_{\rm bal}$ to a finite $\theta_\infty$ and satisfy
+\[
+  \lim_{t\to\infty}F(\theta_t)
+  =F(\theta_\infty)
+  \ge\epsilon_0(\kappa)\|T\|_F^2>0.
+\]
+Consequently, for the event $\mathcal F_+$ defined in Section~\ref{sec:setup},
+\[
+  \mathbb P(\mathcal F_+)
+  \ge(1-r^{-10})
+    \mathbb P(\mathcal C_{\rm path}\mid
+      \mathcal E_{\rm init\_norm}).
+\]
+The last conditional factor is retained exactly and may be zero; no uniform
+positive lower bound for it, and hence no unconditional positive-probability
+failure theorem, is asserted.
+\end{theorem}
+
+The exposed quantities are $n,r,k,\kappa,q$, the confidence $1-r^{-10}$,
+the explicit relative-loss constant $\epsilon_0(\kappa)$, and the displayed
+conditional path probability.  The constants $r_0,C$ may depend only on
+$\kappa,q$.  Probability is under the joint smoothing and initialization law
+conditional on the deterministic base triple; the horizon is all time with an
+asymptotic endpoint; and the norms are precisely $d_{\rm bal}$ and the physical
+tensor Frobenius norm.  At zero path length, the endpoint equals the
+initialization and the proof retains the stronger full initial margin.

@@ -1,0 +1,121 @@
+\section{Main Theorem}
+
+\begin{theorem}[Conditional quotient-first private PAC bound]\label{thm:main}
+Assume Assumptions~\ref{assump:finite-littlestone},
+\ref{assump:countable-evaluation-quotient},
+\ref{assump:realizable-iid}, and
+\ref{assump:approximate-dp-regime}.  Let $K_C^{\mathrm{VC\text{-}Lyu}}$
+be the explicitly calibrated and totalized quotient-first law defined in
+the preliminaries, and let
+\[
+ A_N^{\mathrm{VC}}(s,E):=K_C^{\mathrm{VC\text{-}Lyu}}(T_N(s),E).
+\]
+If $d=0$, then $N=0$, the output is the unique member of $\bar C$, and
+$A_0^{\mathrm{VC}}$ is $(0,0)$-DP with zero decoded population error.  If
+$d\ge1$, the feasibility set defining $k$ is nonempty, the exact horizon is
+$N=km$, and there is a universal constant $K_{\mathrm V}\ge1$ such that
+$A_N^{\mathrm{VC}}$ is a measurable
+Markov kernel, is $(\varepsilon,\delta)$-DP for every raw replace-one pair
+(including nonrealizable labels), and satisfies
+\[
+ \sup_D\sup_{c\in C}
+ \Pr_{S\sim P_{D,c}^{N},\,\bar H\sim K_C^{\mathrm{VC\text{-}Lyu}}(T_N(S),\cdot)}
+ \left[\operatorname{err}_D(\operatorname{Dec}_C(\bar H),c)>\alpha\right]
+ \le\beta,
+\]
+with
+\[
+ N\le K_{\mathrm V}\Lambda^{4}R_{\mathrm{VC}}.
+\]
+Here $(d,v,\alpha,\beta,\varepsilon,\delta)$ are the exposed variables;
+$K_{\mathrm V}$ is universal and may depend on none of
+$(X,\Sigma,C,D,c)$ or on any decomposition, list, partition, event, or
+output.  The probability mode is unconditional iid high probability over
+sampling, partition, and mechanism randomness; the horizon mode is fixed
+sample size $N$; and the norm is the population binary zero-one error.
+
+On the same quotient interface, the totalized old-Lyu~\citep{lyu2025} law
+uses $N_{\mathrm{old}}=0$ on the singleton branch. If $d\ge1$, its
+independently calibrated teacher-feasibility set is nonempty and its exact
+horizon is $N_{\mathrm{old}}=k_{\mathrm o}m_{\mathrm o}$. In either branch
+it has the measurable raw pullback
+\[
+ A_{N_{\mathrm{old}}}^{\mathrm{old}}(s,E)
+ :=K_C^{\mathrm{old\text{-}Lyu}}(T_{N_{\mathrm{old}}}(s),E).
+\]
+It is all-input $(\varepsilon,\delta)$-DP and satisfies
+\[
+ \sup_D\sup_{c\in C}
+ \Pr_{S\sim P_{D,c}^{N_{\mathrm{old}}},\,
+ \bar H\sim K_C^{\mathrm{old\text{-}Lyu}}
+ (T_{N_{\mathrm{old}}}(S),\cdot)}
+ \left[\operatorname{err}_D(\operatorname{Dec}_C(\bar H),c)>\alpha\right]
+ \le\beta,
+\]
+with
+\[
+ N_{\mathrm{old}}\le K_{\mathrm O}\Lambda^{6}R_{\mathrm{old}}
+\]
+for a universal $K_{\mathrm O}\ge1$. When $|C|<\infty$, let
+\[
+ A_{N_{\mathrm{fin}}}^{\mathrm{fin}}(s,E)
+ :=K_{C,N_{\mathrm{fin}}}^{\mathrm{fin}}
+ (T_{N_{\mathrm{fin}}}(s),E).
+\]
+This law has the same output and decoder, is pure $\varepsilon$-DP on all
+raw inputs, and satisfies
+\[
+ \sup_D\sup_{c\in C}
+ \Pr_{S\sim P_{D,c}^{N_{\mathrm{fin}}},\,
+ \bar H\sim K_{C,N_{\mathrm{fin}}}^{\mathrm{fin}}
+ (T_{N_{\mathrm{fin}}}(S),\cdot)}
+ \left[\operatorname{err}_D(\operatorname{Dec}_C(\bar H),c)>\alpha\right]
+ \le\beta,
+\]
+with
+\[
+ N_{\mathrm{fin}}\le 8R_{\mathrm{fin}};
+\]
+when $|C|=\infty$, this arm is assigned cost $+\infty$ and no finite
+surrogate is substituted.  Consequently, choosing the least certified arm
+gives a single learner (not a mixture of laws) satisfying
+\[
+ m_C(\alpha,\beta;\varepsilon,\delta)
+ \le K_*\Lambda^{6}\min\{R_{\mathrm{fin}},R_{\mathrm{old}},R_{\mathrm{VC}}\},
+\]
+where $K_*:=\max\{8,K_{\mathrm O},K_{\mathrm V}\}$ is universal and the minimum uses the
+$+\infty$ convention above.
+\end{theorem}
+
+\begin{corollary}[Rate specialization and baseline frontier]\label{cor:frontier}
+Under Assumptions~\ref{assump:finite-littlestone},
+\ref{assump:countable-evaluation-quotient},
+\ref{assump:realizable-iid}, and
+\ref{assump:approximate-dp-regime}, fix
+$\alpha,\beta,\varepsilon$, specialize the auxiliary teacher and block
+parameters by the least feasible choices specified in the preliminaries,
+and retain all ceiling terms.  For every fixed $0<\delta<1$, the complete
+finite-parameter comparison is valid.  Along the selected-learner schedule
+\[
+ \delta K_{\mathrm V}\Lambda^{4}R_{\mathrm{VC}}\longrightarrow0,
+\]
+the least-threshold choice satisfies $N_*\delta\to0$.  If the standalone
+old arm is studied instead, its separate sufficient schedule is
+\[
+ \delta K_{\mathrm O}\Lambda^{6}R_{\mathrm{old}}\longrightarrow0;
+\]
+the selected-learner schedule is not asserted to imply this standalone
+condition.  With $\alpha,\beta,\varepsilon$ fixed, the resulting
+class-complexity comparison is
+\[
+ m_C=\widetilde O\!\left(\min\{\log^+|C|,d^5,vd^4\}\right).
+\]
+The auxiliary choices, verification of every technical condition, displayed
+term-absorption inequalities, probability conversion, and hidden-constant
+dependence are proved in Proposition~\ref{prop:step-016-frontier}.
+The exact baseline reductions are: $N=0$ when $d=0$; $vd^4=d^5$ when
+$v=d$ (and the same polynomial scale when $v=\Theta(d)$); the finite arm is
+available only for finite $C$. The unrestricted DP--PAC open problem,
+including uncountable evaluation quotients and a universal polynomial in
+$v$ and $\log d$, remains unresolved.
+\end{corollary}

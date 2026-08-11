@@ -1,0 +1,78 @@
+\section{Main Theorem}
+
+\begin{theorem}[Affine coordinate-pivot sweep and exact specializations]
+\label{thm:main}
+Fix $N\geq1$, $R>0$, $\kappa\in(0,\infty)$, a compact interval
+$\Theta\subset\mathbb R$, and a deterministic affine family $(b,F)$.
+Under Assumptions~\ref{assump:shared-pfaffian-chain} and
+\ref{assump:no-forced-root},
+\[
+0\leq\Gamma_{\rm piv}(b,F;R)<\infty.
+\]
+Under Assumption~\ref{assump:joint-density-cap} as well, every
+$\mu\in\mathcal D_{N,R,\kappa}$ and every interval $I\subseteq\Theta$
+with $|I|>0$ satisfy
+\[
+\Pr_{\alpha\sim\mu}\!\left[\exists\theta\in I:
+ b(\theta)+\langle\alpha,F(\theta)\rangle=0\right]
+\leq
+\kappa(2R)^{N-1}\Gamma_{\rm piv}(b,F;R)|I|
+=\frac{A\Gamma_{\rm piv}(b,F;R)}{2R}|I|.
+\tag{T1}\label{eq:t1}
+\]
+With the interval supremum taken before the law supremum and with
+$\sup\varnothing=-\infty$,
+\[
+\sup_{\mu\in\mathcal D_{N,R,\kappa}}
+\sup_{\substack{I\subseteq\Theta,\ I\text{ an interval}\\|I|>0}}
+\frac{\Pr_{\alpha\sim\mu}[\exists\theta\in I:
+ b(\theta)+\langle\alpha,F(\theta)\rangle=0]}{|I|}
+\leq\frac{A\Gamma_{\rm piv}(b,F;R)}{2R}.
+\tag{T2}\label{eq:t2}
+\]
+The left side of \eqref{eq:t2} is a finite nonnegative real precisely in
+the branch in which both index classes are nonempty, namely
+$A\geq1$ and $|\Theta|>0$.  If $A<1$ or $|\Theta|=0$, it is literally
+$-\infty$; in that branch \eqref{eq:t2} is a vacuous extended-real
+inequality and is not a finite nonnegative capacity statement.
+
+For every $0<\delta\leq1$, including $\delta=1$, the scale-stress family
+satisfies the exact identity
+\[
+\Gamma_{\rm piv}(b_\delta,F_\delta;1)=\frac1\delta.
+\tag{T3}\label{eq:t3}
+\]
+
+For every integer $d\geq1$, every $R>0$, and every compact restriction of
+the exact monic family,
+\[
+\Gamma_{\rm piv}(b_d,F_d;R)
+\leq d+\frac{R d(d-1)}2.
+\tag{T4}\label{eq:t4}
+\]
+Consequently, if $\mu\in\mathcal D_{d,R,\kappa}$ is any full joint law of
+the $d$ lower coefficients, with arbitrary correlation, then every bounded
+interval $I\subset\mathbb R$, including $|I|=0$, satisfies
+\[
+\Pr_{\alpha\sim\mu}\!\left[\exists\theta\in I:p_\alpha(\theta)=0\right]
+\leq
+\kappa(2R)^{d-1}
+\left(d+\frac{R d(d-1)}2\right)|I|.
+\tag{T5}\label{eq:t5}
+\]
+The leading coefficient one in \eqref{eq:t5} is deterministic and is not
+part of the random vector.
+
+All displayed rates have no hidden constants.  Their exposed variables are
+$N,R,\kappa,A,\Gamma_{\rm piv},|I|$ and, in the specializations,
+$\delta$ or $d$; the Pfaffian descriptors are fixed family descriptors and
+do not enter as unshown factors.  The probabilities are ordinary
+probabilities for each fixed law, the interval statements are static and
+uniform over their stated interval classes, and there is no confidence or
+horizon parameter.  The norm and measure conventions are the $\ell_1$
+feasibility test defining $K_R$, scalar absolute coordinate-ratio variation,
+one-dimensional interval length, and full-dimensional Lebesgue density.
+No independence or probability conversion is implicit.  The theorem does
+not bound $\Gamma_{\rm piv}$ polynomially in general Pfaffian presentation
+data.
+\end{theorem}

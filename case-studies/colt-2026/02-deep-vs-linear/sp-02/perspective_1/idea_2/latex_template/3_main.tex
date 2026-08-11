@@ -1,0 +1,53 @@
+\section{Main Theorem}\label{sec:main-theorem}
+
+\begin{theorem}[Rounded response-tree representation]
+\label{thm:main}
+Under Assumptions~\ref{assump:sq-parameter-regime}
+and~\ref{assump:universal-adversarial-sq}, let
+\(K=\lceil1/\tau\rceil\),
+\(G=\{-1+2j/K:0\le j\le K\}\), and
+\(N=(K+1)^m\), and let \(\mathsf P_A\) be the pre-instance response-tree
+law defined in \eqref{eq:response-tree-map-law}.  Then the same law works
+simultaneously for every distribution \(\mathcal D\) on \(\mathcal X\)
+and every \(h\in\mathcal H\), and
+\[
+\begin{aligned}
+&\mathbb E_{\Phi\sim\mathsf P_A}
+\left[
+\inf_{w\in\mathbb R^N}
+L_{\mathrm{tie}}\bigl(\mathcal D,h,\langle w,\Phi\rangle\bigr)
+\right]\\
+&\quad\le
+\mathbb E_{R\sim\mu}
+L_{\mathrm{tie}}(\mathcal D,h,g_{R,z^{\mathcal D,h,R}})\\
+&\quad=
+\mathbb E_{R\sim\mu}
+L_{\mathrm{bin}}\bigl(
+\mathcal D,h,
+A_R^{\mathcal O^\rho_{\mathcal D,h}}(\mathcal D,h)
+\bigr)
+\le\varepsilon.
+\end{aligned}
+\tag{11}\label{eq:main-risk-chain}
+\]
+Consequently,
+\[
+\operatorname{dc}^{\mathrm{tie}}_\varepsilon(\mathcal H)
+\le N
+=\bigl(\lceil1/\tau\rceil+1\bigr)^m.
+\tag{12}\label{eq:main-dimension-bound}
+\]
+
+Both bounds are exact and have no hidden constants.  The exposed variables
+are \(m\), \(\tau\), \(\varepsilon\), \(K\), and \(N\); no dependence on
+\(\mathcal X\), \(|\mathcal X|\), \(\mathcal H\), \(\mathcal D\),
+\(h\), a tape, or a transcript is hidden.  The domain, class, learner,
+tape law, rounding rule, coordinate order, and padding convention are fixed
+before the instance.  The outer probability mode is expectation only over
+\(R\sim\mu\), equivalently \(\Phi\sim\mathsf P_A\); the horizon mode is a
+fixed finite budget of at most \(m\) adaptive queries; and the loss mode is
+tie-penalized \(0\)-\(1\) risk, transferred exactly to binary \(0\)-\(1\)
+risk on the selected coordinate.  In particular, \(m=0\) gives \(N=1\),
+\(\varepsilon=0\) gives zero expected tie loss without a rounding
+remainder, and \(\tau\ge1\) gives \(N=2^m\).
+\end{theorem}

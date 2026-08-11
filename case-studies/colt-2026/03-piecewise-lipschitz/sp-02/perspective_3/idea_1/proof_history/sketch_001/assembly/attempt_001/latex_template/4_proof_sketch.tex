@@ -1,0 +1,39 @@
+\section{Proof Sketch}\label{sec:proof-sketch}
+
+First, Lemma~\ref{lem:step-001-root-feasible} restricts every root generated
+by a coefficient in the support cube to the compact set $K_R$.
+Lemma~\ref{lem:step-001-pivot-margin} then turns the no-forced-root condition
+into a positive maximum-coordinate margin on $K_R$, and
+Proposition~\ref{prop:step-001-fixed-family-bound} uses the quotient rule to
+prove fixed-family finiteness of $\Gamma_{\rm piv}$.
+
+Next, Lemma~\ref{lem:step-002-borel-velocities} and
+Proposition~\ref{prop:step-002-selector-partition} construct the Borel
+least-pivot partition.  Lemma~\ref{lem:step-002-chart-exhaustion} exhausts
+each cell away from a zero denominator, and
+Proposition~\ref{prop:step-002-exact-chart} solves the original root equation
+for the selected coefficient with
+$|\partial_\theta T_j|\leq V_j\leq\Gamma_{\rm piv}$.
+
+The coefficient-volume argument uses the Euclidean area formula in its
+multiplicity form.  Lemma~\ref{lem:step-003-measurable-charts} supplies
+measurability and ambient local Lipschitz regularity,
+Proposition~\ref{prop:step-003-area-bound} computes the exact Jacobian and
+controls each exhausted graph image, and
+Lemma~\ref{lem:step-003-exact-coverage} identifies their union with $S_I$.
+Monotone exhaustion and the disjoint parameter cells then give the
+one-copy interval-length budget in
+Proposition~\ref{prop:step-003-volume-certificate}.  The full joint-density
+cap converts this volume bound to probability in
+Proposition~\ref{prop:step-004-density-conversion}, after which
+Proposition~\ref{prop:step-004-uniform-ratio} takes the two suprema.
+
+Finally, Proposition~\ref{prop:step-005-pivot-profile} and
+Proposition~\ref{prop:step-005-wedge-probability} give the exact scale-stress
+values.  For the monic family,
+Proposition~\ref{prop:step-006-family} keeps the leading coefficient outside
+the random vector, Lemma~\ref{lem:step-006-two-pivots} combines the constant
+and top monomial pivots, and
+Proposition~\ref{prop:step-006-monic-bound} specializes the affine theorem
+with the exact constant.  The final subsection combines these authorities
+without adding another estimate.

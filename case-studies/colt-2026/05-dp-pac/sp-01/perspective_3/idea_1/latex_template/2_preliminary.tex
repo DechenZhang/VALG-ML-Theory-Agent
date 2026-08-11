@@ -1,0 +1,47 @@
+\section{Preliminaries}\label{sec:preliminaries}
+
+Let $\Delta([N])$ be the simplex of probability laws on $[N]$, and set
+\[
+\mathcal I_N=[N+1]\times\Delta([N]).
+\]
+For $(t,Q)\in\mathcal I_N$, let $Q^{\tau_t}$ be the law of
+$(X,\tau_t(X))$ for $X\sim Q$, and define the one-block population risk
+\[
+R_Q(g,\tau_t)=\Pr_{X\sim Q}\{g(X)\ne\tau_t(X)\},
+\qquad g\in\{0,1\}^{[N]}.
+\]
+For a deterministic vector
+$((t_i,Q_i))_{i=1}^k\in\mathcal I_N^k$, write
+\[
+P_{\boldsymbol Q}(i,x)=\frac1kQ_i(x),
+\qquad
+c_{\boldsymbol t}(i,x)=\tau_{t_i}(x).
+\]
+This notation is used for fixed product instances; when the vector itself is
+random, every i.i.d. assertion is conditional on its realized value.
+
+For $h\in\mathcal H_{k,N}$ and $j\in[k]$, define the block restriction
+\[
+(D_jh)(x)=h(j,x),\qquad x\in[N],
+\]
+and, for deterministic $\boldsymbol t,\boldsymbol Q$, the block error
+\[
+e_j(h;\boldsymbol t,\boldsymbol Q)
+=\sum_{x=1}^NQ_j(x)\mathbf 1\{h(j,x)\ne\tau_{t_j}(x)\}.
+\]
+
+The finite spaces used in the simulator are
+\[
+\mathsf Z_M=([N]\times\{0,1\})^M,
+\qquad
+\mathsf S_n=(X_{k,N}\times\{0,1\})^n,
+\qquad
+\mathsf G_N=\{0,1\}^{[N]}.
+\]
+A randomized map between any of these finite spaces is identified with its
+stochastic kernel.  All differential-privacy comparisons use ordered
+replacement-adjacent input pairs and arbitrary output events.
+
+Finally, $\VC(C)$ and $\LD(C)$ denote the VC and Littlestone dimensions of a
+binary class $C$.  The proof below uses complete binary instance trees for
+the latter and gives the needed tree and mistake-budget arguments directly.

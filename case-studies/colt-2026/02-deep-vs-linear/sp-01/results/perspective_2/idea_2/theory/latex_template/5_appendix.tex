@@ -1,0 +1,1102 @@
+\appendix
+
+\section{Proof Details}
+\label{sec:proof-details}
+
+\subsection{Boundary cases and the architecture count}
+\label{app:step-001}
+
+\begin{proposition}[Exact empty-class closure]
+\label{prop:step-001-empty}
+Under Assumption~\ref{assump:source-regime} and the convention
+$\operatorname{dc}(\varnothing)=0$, if $\mathcal H=\varnothing$, then
+\[
+\operatorname{dc}(\mathcal H)=0\leq 7TSd.
+\]
+\end{proposition}
+
+\begin{proof}
+The defining convention gives
+$\operatorname{dc}(\mathcal H)=\operatorname{dc}(\varnothing)=0$.
+Assumption~\ref{assump:source-regime} gives $T\geq 1$, $d\geq 0$, and a
+nonempty sum $S=\sum_{i=1}^L n_i n_{i-1}$ of positive integer products.
+Hence $7TSd\geq 0$, which proves the inequality.
+\end{proof}
+
+\begin{lemma}[Zero-dimensional tie-resolved closure]
+\label{lem:step-001-zero}
+Under Assumptions~\ref{assump:source-regime} and
+\ref{assump:tie-resolved-confident-map}, and the conventions
+$\mathbb R^0=\{0\}$, $\langle 0,0\rangle=0$, and
+$\operatorname{sgn}_{\tau}(0)=\tau$, if $\mathcal H\neq\varnothing$ and
+$d=0$, then every $h\in\mathcal H$ satisfies $h(x)=\tau$ for all
+$x\in\mathcal X$, and
+\[
+\operatorname{dc}(\mathcal H)=0=7TSd.
+\]
+\end{lemma}
+
+\begin{proof}
+Since $\mathbb R^0$ is the singleton $\{0\}$, there is exactly one map
+from $\mathcal X$ to $\mathbb R^0$, namely $\phi_0$ with
+$\phi_0(x)=0$ for every $x$.  Therefore every probability law on such maps,
+including the law $\mathcal P$ in Assumption~\ref{assump:tie-resolved-confident-map},
+assigns probability one to $\phi_0$.  There is also exactly one candidate
+separator $w\in\mathbb R^0$, namely $w=0$.
+
+Fix any $h\in\mathcal H$.  Because $n\geq 1$, the domain
+$\mathcal X=\{-1,+1\}^n$ is nonempty, so the confident-map premise may be
+instantiated at any distribution on $\mathcal X$.  Its success event for this
+fixed $h$ is
+\[
+E_h:=\left\{\phi:\ \exists w\in\mathbb R^0\ \forall x\in\mathcal X,
+\operatorname{sgn}_{\tau}(\langle w,\phi(x)\rangle)=h(x)\right\}.
+\]
+For the sole possible map $\phi_0$ and the sole separator,
+\[
+\begin{aligned}
+\phi_0\in E_h
+&\iff \forall x\in\mathcal X,
+\operatorname{sgn}_{\tau}(\langle 0,0\rangle)=h(x)\\
+&\iff \forall x\in\mathcal X,\ h(x)=\tau.
+\end{aligned}
+\]
+Thus $E_h$ is deterministic: its $\mathcal P$-probability is either zero
+or one.  Assumption~\ref{assump:tie-resolved-confident-map} gives
+$\mathcal P(E_h)\geq 1/2$, so $\mathcal P(E_h)=1$ and
+$h(x)=\tau$ for every $x$.  Since $h$ was arbitrary, every member of
+$\mathcal H$ is the constant $\tau$ classifier.
+
+The same map $\phi_0$, together with the separator $u_h=0$ for every
+$h\in\mathcal H$, therefore satisfies
+\[
+\operatorname{sgn}_{\tau}(\langle u_h,\phi_0(x)\rangle)
+=\operatorname{sgn}_{\tau}(0)=\tau=h(x)
+\qquad\text{for all }h\in\mathcal H,\ x\in\mathcal X.
+\]
+Dimension $q=0$ is consequently feasible in the definition of
+$\operatorname{dc}(\mathcal H)$.  Since that definition minimizes over
+$q\in\mathbb Z_{\geq 0}$, it follows that $\operatorname{dc}(\mathcal H)=0$.
+Finally, $d=0$ gives $7TSd=0$, proving exact equality.
+\end{proof}
+
+\begin{proposition}[First-layer structural bound]
+\label{prop:step-001-architecture}
+Under Assumption~\ref{assump:source-regime}, if
+$\mathcal H\neq\varnothing$ and $d\neq 0$, then
+\[
+d\geq 1,\qquad S\geq n\geq 1,\qquad T\geq 1,\qquad S\geq 1.
+\]
+Moreover, if $L=1$, then $S=n$.
+\end{proposition}
+
+\begin{proof}
+Assumption~\ref{assump:source-regime} states that
+$d\in\mathbb Z_{\geq 0}$.  Hence the branch condition $d\neq 0$ implies
+$d\geq 1$.  The same assumption gives $n,L,T\in\mathbb Z_{\geq 1}$, so
+$n\geq 1$ and $T\geq 1$.
+
+For every allowed depth, $n_1\geq 1$: when $L\geq 2$, it is a positive
+hidden width, while when $L=1$, it is the output width $n_1=n_L=1$.
+The first summand in the definition of $S$ therefore obeys
+\[
+n_1n_0=n_1n\geq n.
+\]
+All summands in $S=\sum_{i=1}^L n_i n_{i-1}$ are positive, so
+\[
+S\geq n_1n_0\geq n\geq 1.
+\]
+This proves both $S\geq n$ and $S\geq 1$.  If $L=1$, the sum has only
+its first term and $n_1=n_L=1$; hence
+\[
+S=n_1n_0=1\cdot n=n.
+\]
+Thus the same count covers the depth-one boundary without presupposing a
+hidden layer.
+\end{proof}
+
+\begin{proof}[Boundary reduction]
+The case split is exhaustive.  If $\mathcal H=\varnothing$,
+Proposition~\ref{prop:step-001-empty} proves the target exactly.  Otherwise
+$\mathcal H\neq\varnothing$.  In that branch, if $d=0$,
+Lemma~\ref{lem:step-001-zero} proves
+$\operatorname{dc}(\mathcal H)=0=7TSd$ with the fixed tie convention.  If
+instead $d\neq 0$, Proposition~\ref{prop:step-001-architecture} gives
+\[
+\mathcal H\neq\varnothing,\qquad d\geq 1,\qquad S\geq n\geq 1,
+\qquad T,S\geq 1,
+\]
+and explicitly includes the $L=1$ case.  These are exactly the boundary
+conclusions and remaining-branch structural controls needed below.
+\end{proof}
+
+\subsection{A VC ceiling from the exact learner}
+\label{app:step-002}
+
+\begin{lemma}[Sampled-label measurability of exact SGD]
+\label{lem:step-002-label-access}
+Under Assumption~\ref{assump:source-regime}, suppose $Z\subseteq\mathcal X$
+has $m=2T$ points and, for every $b\in\{-1,+1\}^{Z}$, a fixed target
+$h_b\in\mathcal H$ satisfies $h_b(z)=b(z)$ for every $z\in Z$.  Let
+\[
+B=(B_z)_{z\in Z},\qquad B_z\stackrel{\mathrm{iid}}{\sim}
+\operatorname{Unif}\{-1,+1\},
+\]
+let $X_0,\ldots,X_{T-1}$ be iid uniform on $Z$, let $X$ be an independent
+uniform point of $Z$, and draw the source Gaussian initialization
+$\Theta^{(0)}$ independently of $B,X_0,\ldots,X_{T-1},X$.  Run the exact
+source recursion with target $h_B$.  Then, for every $0\leq t\leq T$,
+\[
+\Theta^{(t)}\text{ is measurable with respect to }
+\mathscr F_t:=\sigma\!\left(\Theta^{(0)},(X_s,B_{X_s})_{0\leq s<t}\right),
+\]
+and the returned prediction at $X$,
+\[
+\widehat g_B(X):=\widehat h_{\mathcal D_Z,h_B}(X),
+\qquad \mathcal D_Z:=\operatorname{Unif}(Z),
+\]
+is measurable with respect to
+\[
+\mathscr F:=\sigma\!\left(X,\Theta^{(0)},(X_s,B_{X_s})_{s=0}^{T-1}\right).
+\]
+\end{lemma}
+
+\begin{proof}
+For a parameter value $\theta$, an input $x\in\mathcal X$, and a label
+$y\in\{-1,+1\}$, define the exact update map
+\[
+U(\theta,x,y):=\theta-\eta\nabla^{\mathrm{src}}_\theta
+\ell\!\left(y f_\theta(x)\right).
+\]
+All conventions in this expression are fixed before the target is selected.
+In particular, the fixed source choice at every ReLU kink makes $U$
+single-valued; it cannot encode an unsampled value of the target.
+
+Because every $X_t$ lies in $Z$, the target label passed to update $t$ is
+exactly $h_B(X_t)=B_{X_t}$.  The recursion therefore has the pathwise form
+\[
+\Theta^{(t+1)}=U\!\left(\Theta^{(t)},X_t,B_{X_t}\right).
+\]
+At $t=0$, $\Theta^{(0)}$ is $\mathscr F_0$-measurable.  If
+$\Theta^{(t)}$ is $\mathscr F_t$-measurable, the displayed update shows that
+$\Theta^{(t+1)}$ is measurable with respect to
+\[
+\sigma(\mathscr F_t,X_t,B_{X_t})=\mathscr F_{t+1}.
+\]
+Induction proves the iterate claim for all $0\leq t\leq T$.  This induction
+is pathwise and permits arbitrary repetitions among the $X_t$'s.
+
+Consequently every term $f_{\Theta^{(t)}}(X)$ in
+\[
+\sum_{t=\lceil T/2\rceil}^{T}f_{\Theta^{(t)}}(X)
+\]
+is $\mathscr F$-measurable.  Applying the fixed map
+$\operatorname{sgn}_{\tau}$ yields an $\mathscr F$-measurable value in
+$\{-1,+1\}$, even when the aggregate is zero, because that case returns the
+fixed label $\tau$.  Thus $\widehat g_B(X)$ is determined by exactly the
+information listed in $\mathscr F$, and no unsampled coordinate of $B$ enters
+the recursion or the output.
+\end{proof}
+
+\begin{lemma}[Fair unseen bit]
+\label{lem:step-002-unseen-label}
+Under Assumption~\ref{assump:source-regime} and the experiment and notation of
+Lemma~\ref{lem:step-002-label-access}, define
+\[
+E:=\{X\notin\{X_0,\ldots,X_{T-1}\}\}.
+\]
+Then, for each $s\in\{-1,+1\}$,
+\[
+\Pr(B_X=s\mid\mathscr F)=\frac12
+\quad\text{almost surely on }E,
+\]
+and
+\[
+\Pr\!\left(\widehat g_B(X)\ne B_X\mid\mathscr F\right)
+=\frac12
+\quad\text{almost surely on }E.
+\]
+\end{lemma}
+
+\begin{proof}
+Condition first on concrete values
+\[
+X=x,\qquad (X_0,\ldots,X_{T-1})=(x_0,\ldots,x_{T-1}).
+\]
+On $E$, $x$ differs from every $x_t$.  Let
+$I=\{x_0,\ldots,x_{T-1}\}$; repetitions merely make $|I|<T$ and do not
+add a new label coordinate.  The observed label vector
+$(B_{x_t})_{t=0}^{T-1}$ is measurable with respect to $(B_z)_{z\in I}$.
+Since the coordinates $(B_z)_{z\in Z}$ are mutually independent fair signs
+and $x\notin I$, the coordinate $B_x$ remains a fair sign after conditioning
+on every observed label.  The initialization $\Theta^{(0)}$ was drawn
+independently of the complete label vector, so conditioning on it does not
+change this conclusion.  Averaging this pointwise conditional statement over
+the conditioned input values gives
+\[
+\Pr(B_X=s\mid\mathscr F)=\frac12
+\quad\text{on }E.
+\]
+The event $E$ itself is $\mathscr F$-measurable because it depends only on
+$X,X_0,\ldots,X_{T-1}$.
+
+By Lemma~\ref{lem:step-002-label-access}, $\widehat g_B(X)$ is
+$\mathscr F$-measurable and takes one fixed value in $\{-1,+1\}$ under this
+conditioning.  Therefore, on $E$,
+\[
+\begin{aligned}
+\Pr\!\left(\widehat g_B(X)\ne B_X\mid\mathscr F\right)
+&=\sum_{s\in\{-1,+1\}}
+\mathbf 1\{\widehat g_B(X)\ne s\}
+\Pr(B_X=s\mid\mathscr F)\\
+&=\frac12.
+\end{aligned}
+\]
+If the aggregate score is zero, the first factor still contains the fixed
+binary value $\tau$, so the same calculation applies without a no-tie or
+margin assumption.
+\end{proof}
+
+\begin{lemma}[Finite-horizon avoidance]
+\label{lem:step-002-avoidance}
+Under Assumption~\ref{assump:source-regime}, if $X,X_0,\ldots,X_{T-1}$ are
+independent and uniform on a set $Z$ of size $2T$, then
+\[
+\Pr\!\left[X\notin\{X_0,\ldots,X_{T-1}\}\right]
+=\left(1-\frac1{2T}\right)^T\geq\frac12.
+\]
+For $T=1$, both the exact probability and the displayed lower bound equal
+$1/2$.
+\end{lemma}
+
+\begin{proof}
+Conditional on any fixed $X=x\in Z$, each $X_t$ avoids $x$ with probability
+\[
+1-\frac1{|Z|}=1-\frac1{2T}.
+\]
+The $T$ training draws are independent, including when their realized values
+repeat, so multiplication gives
+\[
+\Pr(E\mid X=x)=\left(1-\frac1{2T}\right)^T.
+\]
+This expression does not depend on $x$, proving the equality after averaging
+over $X$.
+
+For completeness, for every integer $k\geq 1$ and $u\in[0,1]$,
+\[
+(1-u)^k\geq 1-ku.
+\]
+Indeed, equality holds for $k=1$; if it holds for $k$, multiplication by
+$1-u\geq 0$ gives
+\[
+(1-u)^{k+1}\geq(1-ku)(1-u)
+=1-(k+1)u+ku^2\geq1-(k+1)u.
+\]
+Applying this induction with $k=T$ and $u=1/(2T)\in(0,1]$ yields
+\[
+\left(1-\frac1{2T}\right)^T
+\geq1-\frac{T}{2T}=\frac12.
+\]
+When $T=1$, the exact product is $1-1/2=1/2$, so the boundary case incurs
+no slack.
+\end{proof}
+
+\begin{proposition}[Random-label average-risk lower bound]
+\label{prop:step-002-average-risk}
+Under Assumption~\ref{assump:source-regime} and Lemmas
+\ref{lem:step-002-label-access}, \ref{lem:step-002-unseen-label}, and
+\ref{lem:step-002-avoidance}, if $Z\subseteq\mathcal X$ has $2T$ points and
+every labeling $b\in\{-1,+1\}^{Z}$ has a fixed representative
+$h_b\in\mathcal H$ with $h_b|_Z=b$, then, for
+$\mathcal D_Z=\operatorname{Unif}(Z)$,
+\[
+2^{-2T}\sum_{b\in\{-1,+1\}^{Z}}
+\mathbb E_{\Theta^{(0)},X_{0:T-1}\stackrel{\mathrm{iid}}{\sim}\mathcal D_Z}
+\!\left[\mathcal L_{\mathcal D_Z,h_b}
+(\widehat h_{\mathcal D_Z,h_b})\right]\geq\frac14.
+\]
+\end{proposition}
+
+\begin{proof}
+In the joint experiment of Lemma~\ref{lem:step-002-label-access}, condition
+on $B=b$, the initialization, and the ordered training sample.  The
+independent point $X\sim\mathcal D_Z$ converts the population risk into an
+indicator expectation.  Since $X\in Z$ and $h_b|_Z=b$,
+\[
+\mathcal L_{\mathcal D_Z,h_b}(\widehat h_{\mathcal D_Z,h_b})
+=\mathbb E_X\!\left[
+\mathbf 1\{\widehat h_{\mathcal D_Z,h_b}(X)\ne b(X)\}
+\,\middle|\,b,\Theta^{(0)},X_{0:T-1}\right].
+\]
+Taking expectation over the uniform labeling $B$, initialization, and
+training sample, and using that $B$ has exactly $2^{2T}$ equiprobable values,
+gives the exact identity
+\[
+\begin{aligned}
+&2^{-2T}\sum_{b\in\{-1,+1\}^{Z}}
+\mathbb E_{\Theta^{(0)},X_{0:T-1}}
+\!\left[\mathcal L_{\mathcal D_Z,h_b}
+(\widehat h_{\mathcal D_Z,h_b})\right]\\
+&\hspace{25mm}=\Pr\!\left[\widehat g_B(X)\ne B_X\right].
+\end{aligned}
+\]
+Because $E\in\mathscr F$, the tower property and
+Lemma~\ref{lem:step-002-unseen-label} yield
+\[
+\begin{aligned}
+\Pr\!\left[\widehat g_B(X)\ne B_X\right]
+&\geq\mathbb E\!\left[\mathbf 1_E\mathbf 1\{\widehat g_B(X)\ne B_X\}\right]\\
+&=\mathbb E\!\left[\mathbf 1_E
+\Pr\!\left(\widehat g_B(X)\ne B_X\mid\mathscr F\right)\right]\\
+&=\frac12\Pr(E).
+\end{aligned}
+\]
+Lemma~\ref{lem:step-002-avoidance} gives $\Pr(E)\geq 1/2$, and hence the
+finite average is at least $1/4$.  At $T=1$, $\Pr(E)=1/2$ exactly, so this
+argument still gives the exact lower bound $1/4$.
+\end{proof}
+
+\begin{proposition}[VC ceiling from universal exact-SGD success]
+\label{prop:step-002-vc}
+Under Assumptions~\ref{assump:source-regime} and
+\ref{assump:universal-sgd-success}, and on the remaining branch identified by
+Proposition~\ref{prop:step-001-architecture},
+\[
+\operatorname{VC}(\mathcal H)<2T.
+\]
+\end{proposition}
+
+\begin{proof}
+Suppose instead that $\operatorname{VC}(\mathcal H)\geq 2T$.  Then there is
+a set $Z\subseteq\mathcal X$ of exactly $2T$ points shattered by $\mathcal H$.
+For each of the finitely many $b\in\{-1,+1\}^{Z}$, shattering supplies at
+least one $h\in\mathcal H$ with $h|_Z=b$.  Fix one such representative and
+call it $h_b$.
+
+For each fixed labeling $b$, define
+\[
+R_b:=\mathbb E_{\Theta^{(0)},X_{0:T-1}\stackrel{\mathrm{iid}}{\sim}\mathcal D_Z}
+\!\left[\mathcal L_{\mathcal D_Z,h_b}
+(\widehat h_{\mathcal D_Z,h_b})\right],
+\qquad \mathcal D_Z=\operatorname{Unif}(Z).
+\]
+Proposition~\ref{prop:step-002-average-risk} proves
+\[
+2^{-2T}\sum_{b\in\{-1,+1\}^{Z}}R_b\geq\frac14.
+\]
+This is an average over a finite set, so at least one fixed labeling $b_\star$
+satisfies $R_{b_\star}\geq1/4$.  The auxiliary random labeling used to
+establish the average is now gone: $\mathcal D_Z$ and
+$h_{b_\star}\in\mathcal H$ are fixed, and $R_{b_\star}$ averages only over
+the exact Gaussian initialization and the $T$ iid training draws specified
+in the setting.
+
+The architecture, step size $\eta$, and horizon $T$ were fixed before this
+witness distribution and target were chosen.  Therefore
+Assumption~\ref{assump:universal-sgd-success} applies directly to this same
+fixed pair $(\mathcal D_Z,h_{b_\star})$ and the same exact learner, giving
+\[
+R_{b_\star}\leq\varepsilon<\frac14.
+\]
+This contradicts $R_{b_\star}\geq 1/4$.  Thus no $2T$-point subset of
+$\mathcal X$ is shattered, and $\operatorname{VC}(\mathcal H)<2T$.
+When $T=1$, the lower bound remains $1/4$ and the strict assumption
+$\varepsilon<1/4$ gives the same contradiction.
+\end{proof}
+
+\begin{proof}[VC-dimension conclusion]
+Proposition~\ref{prop:step-001-architecture} places the proof on the
+nondegenerate branch.  Lemma~\ref{lem:step-002-label-access} shows from the
+exact update and fixed kink convention that the learner uses only sampled
+target labels.  Lemma~\ref{lem:step-002-unseen-label} gives conditional error
+$1/2$ on an unsampled test point, including repeated inputs and zero aggregate
+scores.  Lemma~\ref{lem:step-002-avoidance} gives the exact probability
+$(1-1/(2T))^T\geq 1/2$, and Proposition~\ref{prop:step-002-average-risk}
+converts these facts to the finite average risk lower bound.  The finite
+selection and the strict comparison with $\varepsilon<1/4$ in
+Proposition~\ref{prop:step-002-vc} then yield the displayed VC ceiling.
+\end{proof}
+
+\subsection{Finite-class counting and the repetition budget}
+\label{app:step-003}
+
+\begin{lemma}[Finite-domain growth bound]
+\label{lem:step-003-growth}
+Let $A$ be a finite set of cardinality $m$, and let
+$\mathcal G\subseteq\{-1,+1\}^{A}$ be nonempty.  If
+$q=\operatorname{VC}(\mathcal G)$, then $0\leq q\leq m$ and
+\[
+|\mathcal G|\leq\sum_{j=0}^{q}\binom mj.
+\]
+If $q=0$, then in fact $|\mathcal G|=1$.
+\end{lemma}
+
+\begin{proof}
+A shattered set is a subset of $A$, so $0\leq q\leq m$.  We prove the
+cardinality inequality in the slightly more general form that every nonempty
+$\mathcal G\subseteq\{-1,+1\}^{A}$ satisfying
+$\operatorname{VC}(\mathcal G)\leq q$, for an integer $0\leq q\leq m$,
+obeys
+\begin{equation}
+|\mathcal G|\leq\sum_{j=0}^{q}\binom mj.
+\label{eq:step-003-growth-induction}
+\end{equation}
+Use induction on $m$, with the convention $\binom ab=0$ when $b<0$ or
+$b>a$.
+
+If $m=0$, there is exactly one function on $A=\varnothing$, so nonemptiness
+gives $|\mathcal G|=1=\binom00$.  For arbitrary $m$, if $q=0$, two
+distinct functions in $\mathcal G$ would differ at some $a\in A$.  Those two
+functions would realize both labels on $\{a\}$, thereby shattering that
+singleton and contradicting $\operatorname{VC}(\mathcal G)\leq0$.  Hence
+$|\mathcal G|\leq1=\binom m0$.  When $\mathcal G$ is nonempty and its VC
+dimension is exactly zero, this also proves $|\mathcal G|=1$.  If $q=m$,
+then the trivial count of all binary functions gives
+\[
+|\mathcal G|\leq2^m=\sum_{j=0}^{m}\binom mj.
+\]
+
+It remains to prove \eqref{eq:step-003-growth-induction} when $m\geq1$ and
+$1\leq q<m$.  Fix $a\in A$, put $B=A\setminus\{a\}$, and, for
+$s\in\{-1,+1\}$, define the restriction class
+\[
+\mathcal G_s:=\{g|_B:g\in\mathcal G,\ g(a)=s\}
+\subseteq\{-1,+1\}^{B}.
+\]
+Let
+\[
+\mathcal U:=\mathcal G_{+1}\cup\mathcal G_{-1},
+\qquad
+\mathcal P_0:=\mathcal G_{+1}\cap\mathcal G_{-1}.
+\]
+A function in $\mathcal G$ is uniquely determined by its restriction to $B$
+and its value at $a$.  Inclusion--exclusion therefore gives the exact
+decomposition
+\begin{equation}
+|\mathcal G|
+=|\mathcal G_{+1}|+|\mathcal G_{-1}|
+=|\mathcal U|+|\mathcal P_0|.
+\label{eq:step-003-decomposition}
+\end{equation}
+
+If $\mathcal U$ shatters $D\subseteq B$, then each labeling of $D$ has an
+extension in $\mathcal G$, so $\mathcal G$ also shatters $D$.  Thus
+$\operatorname{VC}(\mathcal U)\leq q$.  If $\mathcal P_0$ is nonempty and
+shatters $D\subseteq B$, then for each labeling of $D$ its realizing
+restriction in $\mathcal P_0$ has one extension in $\mathcal G$ with label
+$+1$ at $a$ and another with label $-1$ there.  Hence $\mathcal G$ shatters
+$D\cup\{a\}$, which shows $\operatorname{VC}(\mathcal P_0)\leq q-1$.  If
+$\mathcal P_0$ is empty, the bound below is immediate for it.
+
+Both $\mathcal U$ and $\mathcal P_0$ are classes on the $(m-1)$-point set
+$B$.  Applying the induction hypothesis, and using the zero bound when
+$\mathcal P_0=\varnothing$, gives
+\[
+|\mathcal U|\leq\sum_{j=0}^{q}\binom{m-1}{j},
+\qquad
+|\mathcal P_0|\leq\sum_{j=0}^{q-1}\binom{m-1}{j}.
+\]
+For completeness, partitioning the $j$-element subsets of an $m$-element set
+according to whether they contain one fixed element gives
+\[
+\binom mj=\binom{m-1}{j}+\binom{m-1}{j-1}.
+\]
+Combining this identity with \eqref{eq:step-003-decomposition} yields
+\[
+\begin{aligned}
+|\mathcal G|
+&\leq\sum_{j=0}^{q}\binom{m-1}{j}
++\sum_{j=0}^{q-1}\binom{m-1}{j}\\
+&=\sum_{j=0}^{q}
+\left(\binom{m-1}{j}+\binom{m-1}{j-1}\right)
+=\sum_{j=0}^{q}\binom mj.
+\end{aligned}
+\]
+This closes the induction and proves the lemma.
+\end{proof}
+
+\begin{lemma}[Binomial-sum and numerical logarithm estimates]
+\label{lem:step-003-binomial}
+For integers $m,q$ satisfying $1\leq q\leq m$,
+\[
+\sum_{j=0}^{q}\binom mj\leq\left(\frac{em}{q}\right)^q.
+\]
+Moreover,
+\[
+\log_2 e<\frac32.
+\]
+\end{lemma}
+
+\begin{proof}
+Set $a=q/m\in(0,1]$.  For every $0\leq j\leq q$, one has
+$a^j\geq a^q$.  Expanding the product of $m$ copies of $1+a$, and grouping
+terms by the number $j$ of copies from which $a$ is selected, gives
+\[
+(1+a)^m=\sum_{j=0}^{m}\binom mj a^j.
+\]
+All terms are nonnegative, and hence
+\begin{equation}
+\begin{aligned}
+\sum_{j=0}^{q}\binom mj
+&\leq a^{-q}\sum_{j=0}^{q}\binom mj a^j\\
+&\leq a^{-q}(1+a)^m.
+\end{aligned}
+\label{eq:step-003-binomial-weight}
+\end{equation}
+For $a\geq0$, the exponential series gives
+\[
+e^a=\sum_{k=0}^{\infty}\frac{a^k}{k!}\geq1+a.
+\]
+Consequently $(1+a)^m\leq e^{am}=e^q$.  Substituting this in
+\eqref{eq:step-003-binomial-weight} and using
+$a^{-q}=(m/q)^q$ proves
+\[
+\sum_{j=0}^{q}\binom mj\leq\left(\frac{em}{q}\right)^q.
+\]
+
+It remains to verify the numerical logarithm bound without a decimal
+approximation.  For every $k\geq4$,
+\[
+k!\geq24\,4^{k-4},
+\]
+because $4!=24$ and each subsequent factor is at least $4$.  Hence
+\[
+\begin{aligned}
+e=\sum_{k=0}^{\infty}\frac1{k!}
+&\leq1+1+\frac12+\frac16
++\frac1{24}\sum_{j=0}^{\infty}4^{-j}\\
+&=1+1+\frac12+\frac16+\frac1{18}
+=\frac{49}{18}.
+\end{aligned}
+\]
+Since
+\[
+\left(\frac{49}{18}\right)^2
+=\frac{2401}{324}<\frac{2592}{324}=8,
+\]
+we have $e\leq49/18<\sqrt8=2^{3/2}$.  Monotonicity of the base-two
+logarithm now gives $\log_2e<3/2$.
+\end{proof}
+
+\begin{proposition}[Explicit repetition budget]
+\label{prop:step-003-budget}
+Under Assumption~\ref{assump:source-regime},
+Propositions~\ref{prop:step-001-architecture} and
+\ref{prop:step-002-vc}, and Lemmas~\ref{lem:step-003-growth} and
+\ref{lem:step-003-binomial}, on the nondegenerate branch define
+\[
+N:=|\mathcal X|=2^n,
+\qquad M:=|\mathcal H|,
+\qquad v:=\operatorname{VC}(\mathcal H),
+\qquad r:=\left\lceil\log_2(2M)\right\rceil.
+\]
+Then $r\leq7TS$.
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:step-001-architecture} gives
+$\mathcal H\neq\varnothing$, so $M\geq1$ and $r$ is well-defined.  It also
+gives
+\begin{equation}
+n\geq1,\qquad S\geq n,\qquad T,S\geq1.
+\label{eq:step-003-structural-inputs}
+\end{equation}
+Proposition~\ref{prop:step-002-vc} gives
+\begin{equation}
+v<2T.
+\label{eq:step-003-vc-input}
+\end{equation}
+
+First suppose $v=0$.  Applying Lemma~\ref{lem:step-003-growth} to
+$A=\mathcal X$ and $\mathcal G=\mathcal H$ gives $M=1$.  Therefore
+\[
+r=\left\lceil\log_2 2\right\rceil=1\leq7TS,
+\]
+where the last inequality follows from $T,S\geq1$.  This handles the
+singular case in which $(eN/v)^v$ is unavailable.
+
+Now suppose $v\geq1$.  Lemma~\ref{lem:step-003-growth} gives $v\leq N$ and
+\[
+M\leq\sum_{j=0}^{v}\binom Nj.
+\]
+Lemma~\ref{lem:step-003-binomial} therefore applies, including when $v=N$,
+and yields
+\[
+M\leq\left(\frac{eN}{v}\right)^v.
+\]
+Taking base-two logarithms, using $N=2^n$ and $\log_2v\geq0$, and then
+using \eqref{eq:step-003-vc-input} and $\log_2e<3/2$, gives
+\begin{equation}
+\begin{aligned}
+\log_2M
+&\leq v\log_2\!\left(\frac{eN}{v}\right)\\
+&=v\left(n+\log_2e-\log_2v\right)\\
+&\leq v\left(n+\log_2e\right)\\
+&\leq2T\left(n+\frac32\right)\\
+&\leq5Tn.
+\end{aligned}
+\label{eq:step-003-log-cardinality}
+\end{equation}
+The last inequality is explicit: $n\geq1$ implies
+\[
+n+\frac32\leq\frac52n.
+\]
+
+For every real $y$, $\lceil y\rceil\leq y+1$.  Hence
+\eqref{eq:step-003-log-cardinality} accounts for the ceiling as
+\begin{equation}
+\begin{aligned}
+r
+&=\left\lceil1+\log_2M\right\rceil\\
+&\leq\log_2M+2\\
+&\leq5Tn+2\\
+&\leq5TS+2TS\\
+&=7TS.
+\end{aligned}
+\label{eq:step-003-final-budget}
+\end{equation}
+Here $5Tn\leq5TS$ follows from $n\leq S$, while $2\leq2TS$ follows from
+$T,S\geq1$.  Thus neither $n$ nor the additive ceiling contribution remains
+in the exported bound.
+
+The corner $T=1,n=1$ is included explicitly: then $N=2$ and
+\eqref{eq:step-003-vc-input} forces $v\in\{0,1\}$, so one of the two branches
+above applies.  In the $v\geq1$ branch,
+$n+3/2=(5/2)n$; if also $S=1$, then $2=2TS$.  Thus the two potentially
+tight elementary absorptions in \eqref{eq:step-003-log-cardinality}--
+\eqref{eq:step-003-final-budget} remain valid at the smallest allowed values.
+\end{proof}
+
+\begin{proof}[Derivation of the repetition budget]
+Proposition~\ref{prop:step-001-architecture} supplies nonemptiness,
+$S\geq n\geq1$, and $T,S\geq1$, while
+Proposition~\ref{prop:step-002-vc} supplies $v<2T$.
+Lemma~\ref{lem:step-003-growth} proves both the finite-domain growth bound and
+the exact $v=0\Rightarrow M=1$ boundary.  Lemma~\ref{lem:step-003-binomial}
+proves the binomial estimate and $\log_2e<3/2$.
+Proposition~\ref{prop:step-003-budget} then pays the ceiling by
+$2\leq2TS$ and eliminates $n$ using $n\leq S$, yielding
+\[
+r=\left\lceil\log_2(2|\mathcal H|)\right\rceil\leq7TS.
+\]
+\end{proof}
+
+\subsection{From target-wise confidence to one common tuple}
+\label{app:step-004}
+
+\begin{lemma}[Independent amplification for one target]
+\label{lem:step-004-single-target}
+Under Assumption~\ref{assump:tie-resolved-confident-map} and
+Proposition~\ref{prop:step-003-budget}, fix the single law $\mathcal P$
+supplied before all distributions and targets, and let
+\[
+r=\left\lceil\log_2(2|\mathcal H|)\right\rceil\geq1.
+\]
+If $\phi_1,\ldots,\phi_r$ are iid with law $\mathcal P$, then, for every
+fixed $h\in\mathcal H$,
+\[
+\Pr_{(\phi_1,\ldots,\phi_r)\sim\mathcal P^r}
+\!\left[
+\begin{array}{c}
+\forall i\in\{1,\ldots,r\},\ \nexists w\in\mathbb R^d\ \text{such that}\\
+\forall x\in\mathcal X,\quad
+\operatorname{sgn}_{\tau}(\langle w,\phi_i(x)\rangle)=h(x)
+\end{array}
+\right]
+\leq2^{-r}.
+\]
+\end{lemma}
+
+\begin{proof}
+Choose the one $\mathcal P$ occurring before the universal $\mathcal D$- and
+$h$-quantifiers in Assumption~\ref{assump:tie-resolved-confident-map}.  For a
+fixed $h\in\mathcal H$, define the exact one-map event
+\begin{equation}
+E_h:=\left\{\phi:\mathcal X\to\mathbb R^d:\
+\exists w\in\mathbb R^d\ \forall x\in\mathcal X,\quad
+\operatorname{sgn}_{\tau}(\langle w,\phi(x)\rangle)=h(x)\right\}.
+\label{eq:step-004-success-event}
+\end{equation}
+The probability in the assumption makes $E_h$ measurable.  The event contains
+no $\mathcal D$.  The finite hypercube $\mathcal X$ is nonempty, so
+$\Delta(\mathcal X)$ contains a point mass and the universal distribution
+quantifier is not vacuous.  Consequently, after the single law $\mathcal P$
+has been fixed, that quantifier does not change the event or permit a new law,
+and the premise gives
+\begin{equation}
+\mathcal P(E_h)\geq\frac12,
+\qquad
+\mathcal P(E_h^c)\leq\frac12
+\label{eq:step-004-one-map-probability}
+\end{equation}
+for every fixed $h\in\mathcal H$.
+
+For coordinate $i$, the event that block $i$ fails to represent $h$ is
+$\{\phi_i\in E_h^c\}$.  Since all coordinates have the same law $\mathcal P$
+and are independent, the defining rectangle identity for the product law and
+\eqref{eq:step-004-one-map-probability} give
+\begin{equation}
+\begin{aligned}
+\Pr_{\mathcal P^r}\!\left[\bigcap_{i=1}^{r}
+\{\phi_i\in E_h^c\}\right]
+&=\prod_{i=1}^{r}\mathcal P(E_h^c)\\
+&=\mathcal P(E_h^c)^r\\
+&\leq\left(\frac12\right)^r=2^{-r}.
+\end{aligned}
+\label{eq:step-004-product-failure}
+\end{equation}
+Membership in $E_h$ is exactly the full-domain event in the statement, so
+\eqref{eq:step-004-product-failure} is the claimed failure bound.  In
+particular, the calculation neither requires nor permits a law depending on
+$h$, and it never replaces $\operatorname{sgn}_{\tau}$ by a strict-margin or
+approximate event.
+\end{proof}
+
+\begin{proposition}[Common deterministic exact-cover tuple]
+\label{prop:step-004-covering}
+Under Assumption~\ref{assump:tie-resolved-confident-map},
+Proposition~\ref{prop:step-003-budget}, and
+Lemma~\ref{lem:step-004-single-target}, let
+\[
+M:=|\mathcal H|,
+\qquad
+r:=\left\lceil\log_2(2M)\right\rceil.
+\]
+Then $1\leq r\leq7TS$, and there are deterministic maps
+$\phi_i^*:\mathcal X\to\mathbb R^d$, $1\leq i\leq r$, such that
+\begin{equation}
+\forall h\in\mathcal H\ \exists i\in\{1,\ldots,r\}\
+\exists w\in\mathbb R^d\ \forall x\in\mathcal X,
+\qquad
+\operatorname{sgn}_{\tau}(\langle w,\phi_i^*(x)\rangle)=h(x).
+\label{eq:step-004-common-cover}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:step-003-budget} gives $M\geq1$, the displayed
+definition of the positive integer $r$, and $r\leq7TS$.  Draw one random
+tuple $(\phi_1,\ldots,\phi_r)\sim\mathcal P^r$ from the product of the
+single law fixed by Assumption~\ref{assump:tie-resolved-confident-map}.  For
+each $h\in\mathcal H$, let
+\begin{equation}
+F_h:=\bigcap_{i=1}^{r}\{\phi_i\in E_h^c\},
+\label{eq:step-004-uncovered-event}
+\end{equation}
+where $E_h$ is the exact event \eqref{eq:step-004-success-event}.  Thus $F_h$
+is precisely the event that this tuple leaves $h$ uncovered.  By
+Lemma~\ref{lem:step-004-single-target},
+\begin{equation}
+\Pr_{\mathcal P^r}(F_h)\leq2^{-r}
+\qquad\text{for every }h\in\mathcal H.
+\label{eq:step-004-target-failure}
+\end{equation}
+
+The events $F_h$ may be dependent because they are evaluated on the same
+tuple; no independence across targets is needed.  Since $\mathcal H$ is
+finite, the pointwise indicator inequality
+\[
+\mathbf 1_{\cup_{h\in\mathcal H}F_h}
+\leq\sum_{h\in\mathcal H}\mathbf 1_{F_h}
+\]
+and \eqref{eq:step-004-target-failure} imply
+\begin{equation}
+\Pr_{\mathcal P^r}\!\left[\bigcup_{h\in\mathcal H}F_h\right]
+\leq\sum_{h\in\mathcal H}\Pr_{\mathcal P^r}(F_h)
+\leq M2^{-r}.
+\label{eq:step-004-union-bound}
+\end{equation}
+The definition of $r$ gives
+\begin{equation}
+r\geq\log_2(2M),
+\qquad
+M2^{-r}\leq M2^{-\log_2(2M)}=\frac12<1.
+\label{eq:step-004-ceiling-payment}
+\end{equation}
+Combining \eqref{eq:step-004-union-bound}--
+\eqref{eq:step-004-ceiling-payment}, the complementary simultaneous-coverage
+event
+\[
+G:=\bigcap_{h\in\mathcal H}F_h^c
+\]
+satisfies
+\begin{equation}
+\Pr_{\mathcal P^r}(G)
+=1-\Pr_{\mathcal P^r}\!\left[\bigcup_{h\in\mathcal H}F_h\right]
+\geq\frac12>0.
+\label{eq:step-004-positive-probability}
+\end{equation}
+The empty event has probability zero, so
+\eqref{eq:step-004-positive-probability} proves that $G$ contains at least one
+tuple.  Fix one such realization and call it
+$(\phi_1^*,\ldots,\phi_r^*)$.  This tuple is fixed once, before any target is
+selected from $\mathcal H$.  For every $h\in\mathcal H$, membership in
+$F_h^c$ gives some $i\in\{1,\ldots,r\}$ with $\phi_i^*\in E_h$; by the
+definition \eqref{eq:step-004-success-event} of $E_h$, that membership gives
+some $w\in\mathbb R^d$ satisfying \eqref{eq:step-004-common-cover}.
+
+Thus the final quantifier order is
+\[
+\exists(\phi_1^*,\ldots,\phi_r^*)\ \forall h\in\mathcal H\
+\exists i\in\{1,\ldots,r\}\ \exists w\in\mathbb R^d\
+\forall x\in\mathcal X,
+\]
+not a separate tuple or law chosen after $h$.  No distribution appears in the
+fixed tuple or in \eqref{eq:step-004-common-cover}, because the exact event
+\eqref{eq:step-004-success-event} is independent of $\mathcal D$.
+\end{proof}
+
+\begin{proof}[Derivation of simultaneous deterministic coverage]
+Proposition~\ref{prop:step-003-budget} supplies the positive integer
+\[
+r=\left\lceil\log_2(2|\mathcal H|)\right\rceil\leq7TS.
+\]
+Assumption~\ref{assump:tie-resolved-confident-map} supplies one law before all
+targets, and Lemma~\ref{lem:step-004-single-target} proves that $r$ iid draws
+from this law miss any fixed target with probability at most $2^{-r}$.
+Proposition~\ref{prop:step-004-covering} pays the complete finite union through
+$|\mathcal H|2^{-r}\leq1/2<1$ and fixes a tuple in the positive-probability
+simultaneous-coverage event.  The resulting tuple is deterministic, common to
+all targets, full-domain, and tie-resolved exactly as in the premise.
+When $|\mathcal H|=1$, the definition gives $r=1$, and the construction
+reduces to the primitive success event for the sole target, whose probability
+is at least $1/2$.  Thus success exactly at the stated threshold is sufficient.
+Any successful zero score remains valid because the same
+$\operatorname{sgn}_{\tau}$ is used before and after fixing the tuple.
+\end{proof}
+
+\subsection{Direct-sum representation and dimension closure}
+\label{app:step-005}
+
+\begin{proposition}[Exact boundary routing and nondegenerate controls]
+\label{prop:step-005-routing}
+Under Assumption~\ref{assump:source-regime},
+Propositions~\ref{prop:step-001-empty} and
+\ref{prop:step-001-architecture}, and Lemma~\ref{lem:step-001-zero}, the
+following exhaustive alternatives hold:
+\begin{enumerate}
+\item If $\mathcal H=\varnothing$, then
+$\operatorname{dc}(\mathcal H)=0\leq7TSd$.
+\item If $\mathcal H\neq\varnothing$ and $d=0$, then
+$\operatorname{dc}(\mathcal H)=0=7TSd$.
+\item If $\mathcal H\neq\varnothing$ and $d\neq0$, then
+$d\geq1$, $S\geq n\geq1$, and $T,S\geq1$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The three cases are exhaustive because $\mathcal H$ is either empty or
+nonempty and $d\in\mathbb Z_{\geq0}$.  In the first case,
+Proposition~\ref{prop:step-001-empty} gives the exact dimension-zero
+conclusion.  In the second case, Lemma~\ref{lem:step-001-zero} gives the
+exact common zero-map conclusion with the fixed convention
+$\operatorname{sgn}_{\tau}(0)=\tau$.  In either case the logarithmic quantity
+$r$ and a block tuple are unnecessary, so no undefined expression is
+introduced when $\mathcal H=\varnothing$.  In the third case,
+Proposition~\ref{prop:step-001-architecture} supplies all displayed
+positivity and structural controls.
+\end{proof}
+
+\begin{lemma}[Exact direct-sum score preservation]
+\label{lem:step-005-score}
+Under Assumption~\ref{assump:source-regime},
+Proposition~\ref{prop:step-001-architecture}, and
+Proposition~\ref{prop:step-004-covering}, let
+$r=\lceil\log_2(2|\mathcal H|)\rceil$ and let
+$(\phi_1^*,\ldots,\phi_r^*)$ be the deterministic tuple supplied by
+Proposition~\ref{prop:step-004-covering}.  If
+$\mathcal H\neq\varnothing$ and $d\neq0$, then there are a single map
+$\Phi:\mathcal X\to\mathbb R^{rd}$ and vectors
+$u_h\in\mathbb R^{rd}$, one for each $h\in\mathcal H$, such that for every
+$h$ and $x$,
+\[
+\langle u_h,\Phi(x)\rangle
+=\langle w_h,\phi_{i(h)}^*(x)\rangle,
+\qquad
+\operatorname{sgn}_{\tau}(\langle u_h,\Phi(x)\rangle)=h(x),
+\]
+where $i(h)$ and $w_h$ are one successful block and separator for $h$.
+The map $\Phi$ is independent of $h$.
+\end{lemma}
+
+\begin{proof}
+By Proposition~\ref{prop:step-001-architecture}, the branch has $d\geq1$.
+Proposition~\ref{prop:step-004-covering} supplies a fixed tuple and, for each
+$h$, a nonempty finite set
+\[
+I_h:=\left\{i\in\{1,\ldots,r\}:\exists w\in\mathbb R^d\ \forall x\in\mathcal X,
+\ \operatorname{sgn}_{\tau}(\langle w,\phi_i^*(x)\rangle)=h(x)\right\}.
+\]
+Choose $i(h):=\min I_h$, and choose one witnessing vector
+$w_h\in\mathbb R^d$ for this index.  This is a finite target-by-target
+selection of witnesses; it changes neither the already fixed tuple nor the
+feature map.
+
+Define the concatenated map by
+\[
+\Phi(x):=(\phi_1^*(x),\ldots,\phi_r^*(x))
+\in(\mathbb R^d)^r\cong\mathbb R^{rd}.
+\]
+This definition uses only the deterministic tuple and therefore is one common
+target-independent map.  For each target define the zero-padded vector
+\[
+u_h:=(u_{h,1},\ldots,u_{h,r})\in(\mathbb R^d)^r,
+\qquad
+u_{h,j}:=
+\begin{cases}
+w_h,&j=i(h),\\
+0_d,&j\neq i(h),
+\end{cases}
+\]
+where $0_d$ is the zero vector in $\mathbb R^d$.  The Euclidean product inner
+product gives, for every $x\in\mathcal X$,
+\[
+\begin{aligned}
+\langle u_h,\Phi(x)\rangle
+&=\sum_{j=1}^{r}\langle u_{h,j},\phi_j^*(x)\rangle\\
+&=\langle w_h,\phi_{i(h)}^*(x)\rangle,
+\end{aligned}
+\]
+because every term with $j\neq i(h)$ is
+$\langle0_d,\phi_j^*(x)\rangle=0$.  Thus the score residual is explicitly
+\[
+\langle u_h,\Phi(x)\rangle
+-\langle w_h,\phi_{i(h)}^*(x)\rangle=0.
+\]
+Applying the same fixed $\operatorname{sgn}_{\tau}$ to equal scores preserves
+the successful block's exact label, including when that score is zero.  Hence
+$\operatorname{sgn}_{\tau}(\langle u_h,\Phi(x)\rangle)=h(x)$ for every
+$h\in\mathcal H$ and $x\in\mathcal X$.
+\end{proof}
+
+\begin{proposition}[Common exact representation and dimension bound]
+\label{prop:step-005-dimension}
+Under Assumption~\ref{assump:source-regime},
+Propositions~\ref{prop:step-001-architecture},
+\ref{prop:step-003-budget}, and \ref{prop:step-004-covering}, and
+Lemma~\ref{lem:step-005-score}, if $\mathcal H\neq\varnothing$ and
+$d\neq0$, then
+\[
+\operatorname{dc}(\mathcal H)\leq rd\leq7TSd,
+\qquad
+r=\left\lceil\log_2(2|\mathcal H|)\right\rceil.
+\]
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:step-005-score} supplies one map
+$\Phi:\mathcal X\to\mathbb R^{rd}$ and, for every target, a vector
+$u_h\in\mathbb R^{rd}$ with exact tie-resolved signs on all of $\mathcal X$.
+By the definition of $\operatorname{dc}$, this is a feasible representation
+of dimension $rd$, so $\operatorname{dc}(\mathcal H)\leq rd$.
+Proposition~\ref{prop:step-003-budget} gives $r\leq7TS$.  Since $d\geq1$
+by Proposition~\ref{prop:step-001-architecture},
+\[
+7TSd-rd=(7TS-r)d\geq0,
+\]
+and therefore $rd\leq7TSd$.  The integer product $rd$ is a valid dimension
+because $r,d\in\mathbb Z_{\geq0}$.
+\end{proof}
+
+\begin{corollary}[Conditional polynomial rate specialization]
+\label{cor:step-005-polynomial-bridge}
+Under Assumption~\ref{assump:source-regime},
+Proposition~\ref{prop:step-005-routing}, and
+Proposition~\ref{prop:step-005-dimension} on the nondegenerate branch, suppose
+additionally that a separate result supplies an explicit polynomial expression
+$p(S,T)$ satisfying $d\leq p(S,T)$ at the current setup, with all coefficients
+and auxiliary dependence exposed and with no hidden dependence on $n$ or
+$\eta$.  Then every branch satisfies
+\[
+\operatorname{dc}(\mathcal H)\leq7TSp(S,T),
+\]
+which is polynomial in $S,T$ whenever $p$ is polynomial in those variables.
+\end{corollary}
+
+\begin{proof}
+The additional inequality is a local conditional hypothesis for this
+corollary only; it is not used to establish
+Proposition~\ref{prop:step-005-dimension}.  From
+Assumption~\ref{assump:source-regime}, $T\geq1$, and the positive
+architecture widths imply $S\geq1$; hence $7TS\geq0$.  The supplied
+inequality and $d\geq0$ imply $p(S,T)\geq d\geq0$ at the current parameters.
+Propositions~\ref{prop:step-005-routing} and
+\ref{prop:step-005-dimension}, applied in the nondegenerate alternative,
+jointly give the all-branch main inequality
+\[
+\operatorname{dc}(\mathcal H)\leq7TSd.
+\]
+Indeed, the first proposition closes $\mathcal H=\varnothing$ and $d=0$,
+and the second closes the remaining branch.  The exact absorption relation is
+\[
+7TSp(S,T)-7TSd=7TS\bigl(p(S,T)-d\bigr)\geq0.
+\]
+Combining the all-branch main inequality with this relation gives
+\[
+\operatorname{dc}(\mathcal H)\leq7TSd\leq7TSp(S,T).
+\]
+No representation score, tie, probability, or horizon term is changed: on the
+nondegenerate branch the same deterministic map from
+Lemma~\ref{lem:step-005-score} is used, and on the null branches the exact maps
+remain in force.  Only a scalar upper bound is substituted.  If the separate
+inequality is unavailable, this corollary is not asserted.  When
+$p(S,T)=d$, the bridge is equality; when $d=0$, the exact boundary conclusion
+of Lemma~\ref{lem:step-001-zero} remains the baseline rather than being
+replaced by a positive-dimensional surrogate.
+\end{proof}
+
+\begin{proof}[Derivation of the dimension bound]
+Proposition~\ref{prop:step-005-routing} first handles every boundary branch.
+If $\mathcal H=\varnothing$, the exact convention gives
+$\operatorname{dc}(\mathcal H)=0$, and no logarithmic budget or feature tuple
+is needed.  If $\mathcal H\neq\varnothing$ and $d=0$,
+Lemma~\ref{lem:step-001-zero} gives
+$\operatorname{dc}(\mathcal H)=0=7TSd$ with the original tie label.
+
+On the remaining branch, Proposition~\ref{prop:step-001-architecture}
+supplies $d\geq1$ and $T,S\geq1$.
+Proposition~\ref{prop:step-003-budget} supplies the exact integer
+$r=\lceil\log_2(2|\mathcal H|)\rceil\leq7TS$, while
+Proposition~\ref{prop:step-004-covering} supplies one deterministic tuple that
+works for every target.  Lemma~\ref{lem:step-005-score} concatenates that
+tuple into one map $\Phi$ chosen before any target-specific separator.  Its
+pointwise score identity is exact, so the fixed $\operatorname{sgn}_{\tau}$,
+including zero-score ties, returns each target exactly.
+Proposition~\ref{prop:step-005-dimension} then invokes the definition of
+$\operatorname{dc}$ and the explicit comparison $rd\leq7TSd$.  Thus every
+setup under the three assumptions obeys
+\[
+\operatorname{dc}(\mathcal H)\leq7TSd.
+\]
+The common map is target-independent: the tuple is fixed once, whereas only
+$i(h)$, $w_h$, and $u_h$ depend on $h$, exactly as permitted in the
+definition of $\operatorname{dc}$.  Corollary
+\ref{cor:step-005-polynomial-bridge} performs the optional specialization only
+when a separate explicit inequality $d\leq p(S,T)$ is available.
+When $r=1$, the direct sum is the successful block itself.  When
+$p(S,T)=d$, the polynomial comparison is equality, and when $d=0$ the exact
+zero-dimensional conclusion is retained instead of replaced by a positive
+surrogate.
+\end{proof}
+
+\subsection{Proof of the Main Theorem}
+\label{app:main-proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Under Assumptions~\ref{assump:source-regime},
+\ref{assump:universal-sgd-success}, and
+\ref{assump:tie-resolved-confident-map},
+Proposition~\ref{prop:step-005-routing} gives an exhaustive case split.  Its
+first two alternatives establish the result directly when
+$\mathcal H=\varnothing$ or $d=0$.  In its third alternative,
+Proposition~\ref{prop:step-005-dimension}, whose inputs are supplied by
+Propositions~\ref{prop:step-002-vc}, \ref{prop:step-003-budget}, and
+\ref{prop:step-004-covering}, gives
+\[
+\operatorname{dc}(\mathcal H)\leq rd\leq7TSd.
+\]
+Every branch therefore satisfies the claimed deterministic bound.  The only
+use of Assumption~\ref{assump:universal-sgd-success} is the VC ceiling in
+Proposition~\ref{prop:step-002-vc}; the target-independent confident-map
+premise remains a separate explicit condition and is not derived from SGD.
+\end{proof}

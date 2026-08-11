@@ -1,0 +1,141 @@
+\section{Theoretical Setup}
+
+\subsection{Problem setting}
+
+Fix a source parameter domain $\Theta\subseteq\R$, and let
+\[
+\mathcal I(\Theta)
+:=\{I\subseteq\Theta:I\text{ is an interval and }0<|I|<\infty\},
+\]
+where $|I|$ denotes one-dimensional Lebesgue length and every endpoint
+convention is allowed.  Fix
+$\eta=(\bar\kappa_0,\bar\kappa_\infty)\in[0,\infty)^2$.  For an integer
+$d\geq1$, a radius $R\geq1$, and
+$\alpha=(\alpha_0,\ldots,\alpha_{d-1})\in[-R,R]^d$, define the monic
+polynomial
+\[
+\phi_\alpha(\theta)
+:=\theta^d+\sum_{j=0}^{d-1}\alpha_j\theta^j
+\]
+and the interval root-hitting event
+\[
+H_{d,I}:=\{\alpha\in[-R,R]^d:\text{there is }\theta\in I
+\text{ with }\phi_\alpha(\theta)=0\}.
+\]
+
+For a Borel probability law $\mu$ supported on $[-R,R]^d$, whenever the
+indicated regular conditional laws have Lebesgue densities, set
+\[
+\begin{aligned}
+K_0^\mu
+&:=\left\|f^\mu_{\alpha_0\mid\alpha_{1:d-1}}
+  (\,\cdot\mid\alpha_{1:d-1})\right\|_{L^\infty(\R)},\\
+K_\infty^\mu
+&:=\left\|f^\mu_{\alpha_{d-1}\mid\alpha_{0:d-2}}
+  (\,\cdot\mid\alpha_{0:d-2})\right\|_{L^\infty(\R)}.
+\end{aligned}
+\]
+These are random essential-supremum slice caps, evaluated at the random
+conditioning coordinates.  When $d=1$, both conditioning tuples are empty
+and both symbols denote the $L^\infty$ norm of a density of the sole
+coefficient $\alpha_0$.
+
+Writing $\mathcal P(\R^d)$ for the Borel probability laws on $\R^d$, define
+\[
+\begin{aligned}
+\mathcal D_{d,R,\eta}:=\{\mu\in\mathcal P(\R^d):\;&
+\mu([-R,R]^d)=1;\\
+&\mu(\alpha_0\in\cdot\mid\alpha_{1:d-1})\text{ and }
+\mu(\alpha_{d-1}\in\cdot\mid\alpha_{0:d-2})
+\text{ admit Lebesgue densities a.s.};\\
+&\mathbb E_\mu K_0^\mu\leq\bar\kappa_0,
+\quad \mathbb E_\mu K_\infty^\mu\leq\bar\kappa_\infty\}.
+\end{aligned}
+\]
+This definition imposes two mean conditional-density caps.  It imposes no
+almost-sure uniform slice cap, ambient joint density, independence,
+affine-latent representation, root statistic, or prescribed value of the
+root-hitting constant.  That constant is
+\[
+C_{\mathcal D_{d,R,\eta}}
+:=\sup_{\mu\in\mathcal D_{d,R,\eta}}
+  \sup_{I\in\mathcal I(\Theta)}
+  \frac{\mu(H_{d,I})}{|I|},
+\]
+with value zero when either displayed indexing set is empty.
+
+For a separate nonemptiness statement, define a witness law
+$\mu^{\mathrm{wit}}_{d,R}$ as follows.  If $d=1$, take
+$\alpha_0\sim\operatorname{Unif}[-R,R]$.  If $d=2$, take
+$\alpha_0$ and $\alpha_1$ independently uniform on $[-R,R]$.  If $d\geq3$,
+let $U_0,U_\infty\sim\operatorname{Unif}[-R,R]$ and let $S$ be Rademacher,
+all mutually independent, and set
+\[
+\alpha_0=U_0,\qquad \alpha_{d-1}=U_\infty,
+\qquad \alpha_j=RS\quad(1\leq j\leq d-2).
+\]
+Every witness is supported on $[-R,R]^d$.  The proof below also verifies
+that it is ambiently singular for $d\geq3$ and has dependent middle
+coordinates for $d\geq4$.
+
+\subsection{Assumptions}
+
+\begin{assumption}[Compact parameter domain]
+\label{assump:compact-parameter-domain}
+$\Theta\subseteq\R$ is a fixed compact source parameter domain.  The result
+is uniform over every $I\in\mathcal I(\Theta)$, and its constants do not
+depend on $I$ or on $\Theta$.
+\end{assumption}
+
+\begin{assumption}[Indexed regime]
+\label{assump:indexed-regime}
+$d\in\N$ with $d\geq1$, $R\geq1$, and the finite pair
+$\eta=(\bar\kappa_0,\bar\kappa_\infty)\in[0,\infty)^2$ is fixed
+independently of $d$ and $R$.  No lower bound on either cap parameter is
+assumed for the root-hitting estimate; the threshold $1/2$ is used only in
+the separate witness clause.
+\end{assumption}
+
+\begin{assumption}[Compact cube support and monicity]
+\label{assump:compact-cube-support}
+Every theorem-quantified law $\mu$ satisfies $\mu([-R,R]^d)=1$, and its
+polynomial is exactly the monic $\phi_\alpha$ above.  This is only a support
+condition and does not impose an ambient density.
+\end{assumption}
+
+\begin{assumption}[Mean endpoint conditional-density caps]
+\label{assump:mean-endpoint-conditional-caps}
+The two endpoint regular conditional laws admit Lebesgue densities almost
+surely, and their random essential-supremum norms satisfy exactly
+\[
+\mathbb E_\mu K_0^\mu\leq\bar\kappa_0,
+\qquad
+\mathbb E_\mu K_\infty^\mu\leq\bar\kappa_\infty.
+\]
+These are mean bounds only.  Together with
+Assumption~\ref{assump:compact-cube-support}, they exhaust the membership
+requirements defining $\mathcal D_{d,R,\eta}$.
+\end{assumption}
+
+\subsection{Objective and scope}
+
+The objective is an explicit, class-uniform polynomial upper bound for
+$C_{\mathcal D_{d,R,\eta}}$, together with the sharper interval-piece bound
+from which it follows.  The coefficients may depend on the fixed $\eta$ but
+on no other hidden quantity.  Under the separate condition
+$\bar\kappa_0,\bar\kappa_\infty\geq1/2$, the witness above should certify
+nonemptiness for every $d\geq1$ and $R\geq1$.
+
+This is a material partial result for the source problem.  It gives a
+sufficient coefficient-side condition and an explicit $O_\eta(Rd^2)$ rate
+throughout the restricted regime $R\geq1$.  It neither claims necessity nor
+covers laws without both endpoint mean caps or the regime $0<R<1$.  The
+witness is not claimed to enlarge known affine-latent law coverage; the gain
+is the explicit indexed rate.  In particular, the polynomial bound replaces
+the bounded-joint-density volume factor
+\[
+\kappa(2R)^{d-1}\left(d+\frac{Rd(d-1)}2\right)
+\]
+where $\kappa$ denotes that baseline's ambient joint-density cap, by a rate
+whose coefficients depend only on the fixed endpoint-cap pair.
+No learner or online algorithm is specialized.

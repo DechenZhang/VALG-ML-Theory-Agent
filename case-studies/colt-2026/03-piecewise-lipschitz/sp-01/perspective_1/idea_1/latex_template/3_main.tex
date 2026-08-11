@@ -1,0 +1,176 @@
+\section{Main Theorem}
+
+\begin{theorem}[Averaged-intercept root hitting and a heteroscedastic witness]
+\label{thm:main}
+Fix the basic setting above.
+
+\emph{General averaged-envelope conclusion.}
+Under Assumption~\ref{assump:averaged-intercept-density}, simultaneously
+for every $\mu\in\mathcal D$ and every
+$I\in\mathscr I(\Theta)$,
+\[
+\Pr_\mu(Z_\alpha\cap I\neq\varnothing)
+\leq L_{d,R,\Theta}|I|
+      \int K_\mu(\beta)\,\pi_\mu(d\beta)
+\leq\bar\kappa_{\mathcal D}L_{d,R,\Theta}|I|,
+\]
+and therefore
+\[
+C_{\mathcal D}
+\leq\bar\kappa_{\mathcal D}L_{d,R,\Theta}<\infty,
+\qquad
+L_{d,R,\Theta}
+\leq dB^{d-1}+R\sum_{k=1}^{d-1}kB^{k-1}.
+\]
+The sum is zero and $L_{1,R,\Theta}=1$ when $d=1$.
+
+\emph{Random-intercept conclusion.}
+Separately, under
+Assumption~\ref{assump:random-intercept-witness}, every
+$\mu\in\mathcal D_{\mathrm{RI}}$ is supported on $[-R,R]^d$ and admits
+a jointly measurable conditional-density version for which, for
+$\pi_\mu$-almost every $\beta$,
+\[
+f_\mu(a_0\mid\beta)
+=\frac{\mathbf 1\{|a_0-G_\mu(\beta)|\leq\rho_\mu(\beta)\}}
+       {2\rho_\mu(\beta)},
+\qquad
+K_\mu(\beta)=\frac{1}{2\rho_\mu(\beta)}.
+\]
+Moreover,
+\[
+\int K_\mu\,d\pi_\mu
+=\frac12\int\rho_\mu^{-1}\,d\pi_\mu,
+\qquad
+\bar\kappa_{\mathcal D_{\mathrm{RI}}}
+=\frac12M_{\mathrm{RI}},
+\]
+and, for every $I\in\mathscr I(\Theta)$,
+\[
+\Pr_\mu(Z_\alpha\cap I\neq\varnothing)
+\leq\frac{L_{d,R,\Theta}|I|}{2}
+      \int\rho_\mu^{-1}\,d\pi_\mu,
+\qquad
+C_{\mathcal D_{\mathrm{RI}}}
+\leq\frac12L_{d,R,\Theta}M_{\mathrm{RI}}.
+\]
+If $\rho_\mu=r_\mu>0$ almost surely, then
+$K_\mu=1/(2r_\mu)$ almost surely and
+\[
+\Pr_\mu(Z_\alpha\cap I\neq\varnothing)
+\leq\frac{L_{d,R,\Theta}}{2r_\mu}|I|.
+\]
+More generally, every nonempty class $\mathcal F$ of such fixed-width
+members satisfying the support condition and
+$\sup_{\mu\in\mathcal F}r_\mu^{-1}<\infty$ obeys
+\[
+\bar\kappa_{\mathcal F}
+=\frac12\sup_{\mu\in\mathcal F}r_\mu^{-1},
+\qquad
+C_{\mathcal F}
+\leq\frac{L_{d,R,\Theta}}2
+      \sup_{\mu\in\mathcal F}r_\mu^{-1}<\infty.
+\]
+No density or coordinate-independence condition on the higher-coordinate
+marginal is needed.
+
+\emph{Explicit heteroscedastic witness.}
+For every $d\geq3$, $R>0$, and $q\in(0,1)$, the law $\mu_q$ satisfies
+\[
+\operatorname{supp}(\mu_q)
+=S_q:=\left\{(a_0,z,z^2/R,0,\ldots,0):
+|z|\leq R/2,\ |a_0|\leq\rho_q(z)\right\}
+\subseteq[-R,R]^d
+\]
+and $\Pr(\rho_q(Z)>0)=1$.  One jointly measurable conditional-density
+version satisfies, for every $a_0\in\mathbb R$ and
+$0<|z|\leq R/2$,
+\[
+f_{\mu_q}(a_0\mid\beta_q(z))
+=\frac{\mathbf 1\{|a_0|\leq\rho_q(z)\}}{2\rho_q(z)},
+\qquad
+K_{\mu_q}(\beta_q(z))
+=\frac{1}{R(2|z|/R)^q}.
+\]
+The null conditioning fiber $z=0$ is assigned a genuine fallback density,
+and
+\[
+\operatorname*{ess\,sup}_{\beta\sim\pi_{\mu_q}}
+K_{\mu_q}(\beta)=\infty,
+\qquad
+\int K_{\mu_q}\,d\pi_{\mu_q}=\frac{1}{R(1-q)}.
+\]
+Consequently, for every $I\in\mathscr I(\Theta)$,
+\[
+\Pr_{\mu_q}(Z_\alpha\cap I\neq\varnothing)
+\leq\frac{L_{d,R,\Theta}|I|}{R(1-q)},
+\qquad
+C_{\{\mu_q\}}
+\leq\frac{L_{d,R,\Theta}}{R(1-q)}.
+\]
+
+The affine hull of $S_q$ has dimension three and
+$\mathcal H^3_{\operatorname{aff}(S_q)}(S_q)=0$.  More precisely, define
+the fixed-monic descending-coordinate embedding
+\[
+\iota_d(a_0,a_1,\ldots,a_{d-1})
+=(1,a_{d-1},\ldots,a_0).
+\]
+There do not exist an integer $k\geq1$, a bounded-support random vector
+$X\in\mathbb R^k$ with a bounded Lebesgue density, and an affine map
+$x\mapsto b+Ax$ with $A\in\mathbb R^{(d+1)\times k}$ and
+$\operatorname{rank}(A)=k$ such that $b+AX$ has law
+$(\iota_d)_\#\mu_q$.  This exclusion does not assert anything about
+rank-deficient maps paired with singular latent laws.
+
+Every displayed factor is exact.  The exposed quantities are
+$d,R,\Theta,B,L_{d,R,\Theta},|I|,\bar\kappa_{\mathcal D}$,
+$M_{\mathrm{RI}},\rho_\mu,r_\mu$, and, for the witness, $q$; there are no
+hidden constants.  The setting fixes $d,R,\Theta$ and the relevant class
+before laws and intervals vary, and the witness fixes $d,R,q,\Theta$
+before its singleton calculation.  The probability inequalities are
+deterministic statements about exact probabilities, the conditional
+identities hold on conditioning-marginal full-measure sets, and the width
+statement is almost sure.  There is no temporal horizon.  The norm and
+measure conventions are those stated in the setup and preliminaries.
+
+These are one-way sufficient conclusions.  They assert no necessity,
+converse, indexed uniform polynomial dependence on $(d,R)$, root
+simplicity, root separation, or transversality, and provide neither a
+learner nor an online guarantee.
+\end{theorem}
+
+\begin{corollary}[Bounded-joint-density baseline]
+\label{cor:joint-density-baseline}
+Fix the basic setting and let $\mathcal A$ be a nonempty class of laws on
+$[-R,R]^d$.  Suppose every $\nu\in\mathcal A$ has a Borel joint density
+$h_\nu(a_0,\beta)$, extended by zero outside the cube, satisfying
+$0\leq h_\nu\leq\kappa_{\mathrm{joint}}<\infty$ almost everywhere for
+one common constant $\kappa_{\mathrm{joint}}$.  Then
+\[
+\bar\kappa_{\mathcal A}
+\leq\kappa_{\mathrm{joint}}(2R)^{d-1},
+\]
+and, for every $\nu\in\mathcal A$ and
+$I\in\mathscr I(\Theta)$,
+\[
+\Pr_\nu(Z_\alpha\cap I\neq\varnothing)
+\leq\kappa_{\mathrm{joint}}(2R)^{d-1}
+      L_{d,R,\Theta}|I|,
+\qquad
+C_{\mathcal A}
+\leq\kappa_{\mathrm{joint}}(2R)^{d-1}L_{d,R,\Theta}.
+\]
+If $B=1$, this becomes the exact monic baseline scale
+\[
+C_{\mathcal A}
+\leq\kappa_{\mathrm{joint}}(2R)^{d-1}
+\left(d+\frac{Rd(d-1)}2\right).
+\]
+For $d=1$, $(2R)^0=1$ and the bracket equals one.  The displayed
+variables $\kappa_{\mathrm{joint}},d,R,B,L_{d,R,\Theta}$ and $|I|$ are
+all exposed, and there are no hidden constants.  The statement is a
+static deterministic probability bound, uniform over the fixed class and
+all positive-length intervals, with the same norm and horizon conventions
+as Theorem~\ref{thm:main}.
+\end{corollary}

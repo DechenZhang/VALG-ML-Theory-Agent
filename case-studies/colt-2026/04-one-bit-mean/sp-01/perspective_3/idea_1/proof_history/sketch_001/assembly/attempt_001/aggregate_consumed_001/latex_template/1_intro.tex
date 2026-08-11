@@ -1,0 +1,61 @@
+\section{Theoretical Setup}
+
+\subsection{Problem setting}
+
+For a probability law $D$ on $\mathbb R$, write
+$\mu(D)=\mathbb E_D X$.  For fixed $k>1$ and scales
+$\lambda\geq\sigma>0$, define the unrestricted central-moment class
+\[
+  \mathcal D(k,\lambda,\sigma)
+  :=\left\{D:\ \mu(D)\in[-\lambda,\lambda],\quad
+  \mathbb E_D|X-\mu(D)|^k\leq\sigma^k\right\}.
+\]
+No support, density, symmetry, likelihood, or tail-shape condition is imposed.
+All logarithms are natural.  For $u,v>0$, the notation $u\lesssim_k v$
+means $u\leq C(k)v$ for a finite constant depending only on $k$, and
+$u\asymp_kv$ means both inequalities.
+
+The observations are encoded one at a time into membership bits.  A query is
+a Borel set $A\subseteq\mathbb R$, and the corresponding message is
+$\mathbf 1\{X\in A\}$.  We seek a fixed-horizon protocol in which all queries
+and all public randomness are committed before any message is seen.  The
+performance criterion is unconditional absolute-error probability, jointly
+over the observations and every source of public protocol randomness.
+
+\subsection{Assumptions}
+
+\begin{assumption}[Parameter domain]\label{assump:parameter-domain}
+The number $k>1$ is fixed and known, the scales $\lambda\geq\sigma>0$ are
+known, $\delta\in(0,1/2)$, and $0<\epsilon\leq c_k\sigma$, where the positive
+constant $c_k<1$ is chosen only as a function of $k$.
+\end{assumption}
+
+\begin{assumption}[Unrestricted central-moment class]\label{assump:moment-class}
+The common law satisfies $D\in\mathcal D(k,\lambda,\sigma)$, with no stronger
+support, symmetry, density, or tail condition.
+\end{assumption}
+
+\begin{assumption}[Independent observations and seeds]\label{assump:independent-samples}
+All observations used by the localization and refinement blocks are independent
+and identically distributed with law $D$.  The localization seed and all
+refinement levels, colors, branches, types, masks, and dithers are mutually
+independent and independent of every observation.
+\end{assumption}
+
+\begin{assumption}[Precommitted protocol]\label{assump:precommitted-protocol}
+The sample split, localization seed, refinement variables, countable mask
+families, dithers, and median-of-means groups are sampled or fixed before any
+bit is observed, and all public randomness is available to the decoder.  Every
+query set is Borel measurable and cannot depend on an earlier message.  A
+localization output may be used only after the complete transcript has been
+collected, and then only in decoder-side arithmetic.
+\end{assumption}
+
+\subsection{Objective}
+
+The goal is a constructive non-adaptive protocol which, uniformly over
+$\mathcal D(k,\lambda,\sigma)$, uses one bit per independent observation and
+achieves error at most $\epsilon$ with failure probability at most $\delta$.
+The horizon must have the exact three-regime dependence defined in
+Section~\ref{sec:preliminaries}, including the single logarithmic loss when
+$k=2$ and no hidden dependence outside constants determined by the fixed $k$.

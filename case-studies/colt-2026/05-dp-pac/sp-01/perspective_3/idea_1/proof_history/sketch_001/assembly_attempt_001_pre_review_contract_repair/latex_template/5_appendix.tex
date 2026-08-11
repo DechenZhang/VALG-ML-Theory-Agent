@@ -1,0 +1,296 @@
+\appendix
+
+\section{Proof Details}\label{sec:proof-details}
+
+\subsection{Exact class parameters}\label{app:step-001}
+\input{appendix_step_001.tex}
+Together, Lemmas~\ref{lem:step-001-cardinality} and
+\ref{lem:step-001-vc} and
+Proposition~\ref{prop:step-001-product-ld} establish all three exact
+structural identities used below, including both endpoint cuts.
+
+\subsection{The unrestricted one-block threshold lower bound}\label{app:step-002}
+For a randomized one-block learner
+$B:([N]\times\{0,1\})^M\to\{0,1\}^{[N]}$, write \emph{(W-PAC)} for
+\[
+\Pr_{\substack{S\sim(Q^{\tau_t})^M\\g\sim B(S)}}
+\left\{R_Q(g,\tau_t)\le\frac1{16}\right\}
+\ge\frac{15}{16}
+\quad\text{for every }(t,Q)\in\mathcal I_N,
+\]
+and write \emph{(W-LB)} for $M\ge b_*\log_2^*N$.  The external input is
+the unrestricted improper threshold theorem of
+\citet{AlonLivniMalliarisMoran2019}; all convention and parameter transport
+is proved here.
+\input{appendix_step_002.tex}
+Lemmas~\ref{lem:step-002-almm-constants}--
+\ref{lem:step-002-privacy-monotonicity} yield
+Proposition~\ref{prop:step-002-wrapper}, the precise one-block implication
+used in the remainder of the proof.
+
+\subsection{A strict expected-loss hard instance}\label{app:step-003}
+\input{appendix_step_003.tex}
+The Markov conversion in Lemma~\ref{lem:step-003-markov-bridge} and the
+contrapositive of Proposition~\ref{prop:step-002-wrapper} give
+Proposition~\ref{prop:step-003-expected-hardness} with strict gap
+$\eta=2^{-8}$.
+
+\subsection{A finite public minimax prior}\label{app:step-004}
+In this subsection set $\eta=2^{-8}$.  The objects
+$\mathcal K_{N,M}$, $\mathcal I_N$, and their payoff are all finite
+dimensional, although $\mathcal I_N$ itself contains a continuum of
+distributions.
+\input{appendix_step_004.tex}
+The compact-kernel and separation arguments culminate in
+Proposition~\ref{prop:step-004-finite-hard-prior}: one finite law is chosen
+before the universal private-kernel quantifier, and it gives a strict
+prior-averaged loss gap for every such kernel.
+
+\subsection{Candidate and simulator calibration}\label{app:step-005}
+Fix the constants from Proposition~\ref{prop:step-002-wrapper} and set
+\begin{equation}
+a=\frac{b_*}{16},
+\qquad c_\delta=d_*,
+\qquad \varepsilon_0=0.1,
+\qquad \alpha_0=\beta_0=2^{-13}.
+\tag{C1}\label{eq:calibration}
+\end{equation}
+For local formulas write $L_N=\log_2^*N$ and $M=m_{n,k}$.
+\input{appendix_step_005.tex}
+Proposition~\ref{prop:step-005-certificate} therefore retains both
+candidate-$\delta$ conditions while placing the same exact integer $M$ in
+the strict one-block hard regime under the negated target bound.
+
+\subsection{Pointwise PAC expectation control}\label{app:step-006}
+\input{appendix_step_006.tex}
+Lemma~\ref{lem:step-006-fixed-product-realizable} applies at every fixed
+product vector, including endpoints and degenerate block laws.  The
+success/failure split in
+Proposition~\ref{prop:step-006-pointwise-pac-expectation} then gives the
+pointwise expectation ceiling $2^{-12}$ before any prior averaging.
+
+\subsection{Block restriction and exact risk}\label{app:step-007}
+\input{appendix_step_007.tex}
+The restriction is legal for every improper output, and
+Proposition~\ref{prop:step-007-risk-identity} identifies its one-block risk
+exactly, with no projection or residual.
+
+\subsection{The ideal hidden-coordinate experiment}\label{app:step-008}
+Fix a finite public law $\mu_{N,M}$ and an arbitrary randomized learner
+$A$.  Draw $J\sim\operatorname{Unif}[k]$.  Conditional on every $J=j$,
+draw $\Xi_i=(T_i,Q_i)$ independently from $\mu_{N,M}$ for all $i\in[k]$;
+then draw independent uniform tags $I_1,\ldots,I_n$, features
+$X_\ell\sim Q_{I_\ell}$ conditionally independently, labels
+$Y_\ell=\tau_{T_{I_\ell}}(X_\ell)$, and finally
+$H=A(S^{\mathrm{id}})$ for
+$S^{\mathrm{id}}=(((I_\ell,X_\ell),Y_\ell))_{\ell=1}^n$.
+The conclusions to be proved are
+\begin{align}
+\boldsymbol\Xi&\sim\mu_{N,M}^{\otimes k},
+&J&\perp\!\!\!\perp\boldsymbol\Xi,
+\tag{2}\label{eq:ideal-instance-law}\\
+\mathcal L(S^{\mathrm{id}}\mid\boldsymbol\Xi)
+&=(P_{\boldsymbol Q}^{c_{\boldsymbol T}})^n,
+\tag{3}\label{eq:ideal-sample-law}\\
+\mathbb E e_J(H;\boldsymbol T,\boldsymbol Q)
+&=\mathbb E R_{P_{\boldsymbol Q}}(H,c_{\boldsymbol T}).
+\tag{4}\label{eq:ideal-risk-identity}
+\end{align}
+\input{appendix_step_008.tex}
+Lemmas~\ref{lem:step-008-instance-factorization}--
+\ref{lem:step-008-selector-independence} establish the exact stochastic
+factorization, and
+Proposition~\ref{prop:step-008-selected-risk-identity} proves
+\eqref{eq:ideal-risk-identity} for arbitrary tag-asymmetric learners.
+
+\subsection{Usage and overflow}\label{app:step-009}
+Use
+\begin{equation}
+M=\max\left\{8,\left\lceil\frac{4n}{k}\right\rceil\right\},
+\tag{1}\label{eq:overflow-budget}
+\end{equation}
+and, for the selector and tags above, set
+\begin{equation}
+U=\sum_{\ell=1}^n\mathbf 1\{I_\ell=J\}.
+\tag{2}\label{eq:usage-count}
+\end{equation}
+The desired certificate is
+\begin{equation}
+U\sim\operatorname{Bin}(n,1/k),
+\qquad \Pr\{U>M\}<2^{-9}.
+\tag{3}\label{eq:overflow-certificate}
+\end{equation}
+\input{appendix_step_009.tex}
+The exhaustive small- and large-mean estimates in
+Proposition~\ref{prop:step-009-overflow} prove
+\eqref{eq:overflow-certificate}, including zero overflow for $k=2,3$.
+
+\subsection{The executable one-use simulator}\label{app:step-010}
+Fix a candidate and, locally for contradiction, suppose
+\begin{equation}
+n<ak\log_2^*N.
+\tag{2}\label{eq:local-negation}
+\end{equation}
+With $M=m_{n,k}$, Proposition~\ref{prop:step-004-finite-hard-prior}
+provides the finite public law
+\begin{equation}
+\mu_{N,M}\quad\text{on}\quad\mathcal I_N.
+\tag{3}\label{eq:public-prior}
+\end{equation}
+For an arbitrary $A:\mathsf S_n\to\mathcal H_{k,N}$, the simulator to be
+constructed is
+\begin{equation}
+B_{\mu_{N,M},A}:\mathsf Z_M\longrightarrow\mathsf G_N.
+\tag{5}\label{eq:simulator-type}
+\end{equation}
+\input{appendix_step_010.tex}
+The ordered construction is total on arbitrary labels.  In particular,
+Lemma~\ref{lem:step-010-one-use} proves the pathwise incidence property,
+and Proposition~\ref{prop:step-010-simulator} packages the construction as
+the kernel in \eqref{eq:simulator-type}.
+
+\subsection{Actual-to-ideal coupling}\label{app:step-011}
+Fix $(t,Q)\in\mathcal I_N$ and let
+\begin{equation}
+Z^{\mathrm{in}}\sim(Q^{\tau_t})^M.
+\tag{3}\label{eq:coupling-input-law}
+\end{equation}
+The fixed-hidden and prior-averaged targets are, respectively,
+\begin{align}
+\mathbb E_{\mathrm{id},(t,Q)}R_Q(G^{\mathrm{id}},\tau_t)
+&\ge
+\mathbb E R_Q(B_{\mu_{N,M},A}(Z^{\mathrm{in}}),\tau_t)
+-\Pr\{U>M\},
+\tag{4a}\label{eq:fixed-hidden-transfer}\\
+\mathbb E_{\mathrm{ideal}}R_{Q_J}(D_JH^{\mathrm{id}},\tau_{T_J})
+&\ge
+\mathbb E_{\substack{(T,Q)\sim\mu_{N,M}\\
+Z^{\mathrm{in}}\sim(Q^{\tau_T})^M}}
+R_Q(B_{\mu_{N,M},A}(Z^{\mathrm{in}}),\tau_T)
+-\Pr\{U>M\}.
+\tag{4b}\label{eq:prior-transfer}
+\end{align}
+\input{appendix_step_011.tex}
+The shared realization of $A$ synchronizes outputs whenever the ordered
+datasets agree.  Proposition~\ref{prop:step-011-risk-transfer} proves
+\eqref{eq:fixed-hidden-transfer}--\eqref{eq:prior-transfer} with one and
+only one overflow charge.
+
+\subsection{One-charge privacy of the simulator}\label{app:step-012}
+Continue under \eqref{eq:local-negation}.  For every
+$z\simeq z'$ in $\mathsf Z_M$ and every $E\subseteq\mathsf G_N$, the
+target simulator inequalities are
+\begin{align}
+B_{\mu_{N,M},A}(z,E)
+&\le e^\varepsilon B_{\mu_{N,M},A}(z',E)+\delta,
+\tag{4}\label{eq:simulator-dp}\\
+B_{\mu_{N,M},A}(z,E)
+&\le e^{0.1}B_{\mu_{N,M},A}(z',E)+\Delta_M,
+\qquad
+\Delta_M=\frac{d_*}{M^2\log M}.
+\tag{6}\label{eq:simulator-source-cap}
+\end{align}
+\input{appendix_step_012.tex}
+The fixed-seed adjacency lemma, the single invocation of
+Assumption~\ref{assump:central-dp}, and the common seed mixture prove
+\eqref{eq:simulator-dp}.  Proposition~\ref{prop:step-012-source-membership}
+then verifies the exact source-cap typing and parameters in
+\eqref{eq:simulator-source-cap}.
+
+\subsection{Prior-averaged product risk}\label{app:step-013}
+Set $\eta=2^{-8}$ and $B=B_{\mu_{N,M},A}$.  In the ideal experiment let
+\begin{equation}
+\boldsymbol\Xi\sim\mu_{N,M}^{\otimes k},
+\qquad
+S^{\mathrm{id}}\mid\boldsymbol\Xi
+\sim(P_{\boldsymbol Q}^{c_{\boldsymbol T}})^n,
+\qquad
+H^{\mathrm{id}}\sim A(S^{\mathrm{id}}).
+\tag{3}\label{eq:product-lower-experiment}
+\end{equation}
+The conclusion sought is
+\begin{equation}
+\mathbb E R_{P_{\boldsymbol Q}}(H^{\mathrm{id}},c_{\boldsymbol T})
+>2^{-9}.
+\tag{4}\label{eq:prior-product-lower}
+\end{equation}
+\input{appendix_step_013.tex}
+Proposition~\ref{prop:step-013-simulator-hardness} applies the public prior
+only after source-cap membership is established.  The ledger in
+Proposition~\ref{prop:step-013-product-lower-bound} preserves strictness and
+proves \eqref{eq:prior-product-lower}.
+
+\subsection{A fixed hard product instance}\label{app:step-014}
+For $\boldsymbol z=((t_i,Q_i))_{i=1}^k\in\mathcal I_N^k$, define
+\begin{equation}
+\Phi_A(\boldsymbol z)
+=\mathbb E_{\substack{S\sim(P_{\boldsymbol Q}^{c_{\boldsymbol t}})^n\\
+\rho_A}}
+R_{P_{\boldsymbol Q}}(A_{\rho_A}(S),c_{\boldsymbol t}).
+\tag{3}\label{eq:fixed-instance-functional}
+\end{equation}
+\input{appendix_step_014.tex}
+Finite-support extraction produces one deterministic $\boldsymbol z^*$
+with $\Phi_A(\boldsymbol z^*)>2^{-9}$, while the pointwise PAC result gives
+$\Phi_A(\boldsymbol z^*)\le2^{-12}$.  Proposition~\ref{prop:step-014-fixed-contradiction}
+records this same-instance contradiction.
+
+\subsection{Nonasymptotic closure}\label{app:step-015}
+The constants are those in \eqref{eq:calibration}, fixed before choosing
+\begin{equation}
+k\ge2,
+\qquad N\ge N_0,
+\qquad n\ge1,
+\tag{T2}\label{eq:candidate-order}
+\end{equation}
+the admissible privacy pair, and the arbitrary randomized map
+\begin{equation}
+A:(X_{k,N}\times\{0,1\})^n\longrightarrow\mathcal H_{k,N}.
+\tag{T4}\label{eq:candidate-map}
+\end{equation}
+\input{appendix_step_015.tex}
+Lemma~\ref{lem:step-015-negated-target} excludes the exact strict negation
+for every candidate in this order.  Proposition~\ref{prop:step-015-exact-closure}
+therefore yields the weak nonasymptotic lower bound with no rounding or
+scope change.
+
+\subsection{Tower-diagonal specialization}\label{app:step-016}
+\input{appendix_step_016.tex}
+Proposition~\ref{prop:step-016-rate-bridge} supplies the complete diagonal
+rate bridge, while Proposition~\ref{prop:step-016-scale-comparison}
+separates the proved quadratic expression from both the additive and the
+two unresolved larger expressions.
+
+\subsection{Proof of the Main Theorem}\label{app:main-proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Choose $b_*,d_*,N_*$ from
+Proposition~\ref{prop:step-002-wrapper}, and then choose
+$a,c_\delta,\varepsilon_0,\alpha_0,\beta_0,N_0$ as in
+Lemma~\ref{lem:step-005-calibration} and \eqref{eq:calibration}.  These
+constants are universal and precede every candidate quantifier.
+
+Fix an arbitrary candidate satisfying
+Assumptions~\ref{assump:candidate-regime},
+\ref{assump:central-dp}, and
+\ref{assump:distribution-free-realizable-pac}.  Proposition~\ref{prop:step-015-exact-closure}
+gives
+\[
+n\ge ak\log_2^*N,
+\]
+which proves \eqref{eq:main-nonasymptotic} with the exact fixed-size,
+replacement-private, population-risk, and unrestricted-improper scope.
+
+For $T_s=\operatorname{Tow}_2(s)$, Lemma~\ref{lem:step-016-tower-arithmetic}
+proves $\log_2^*T_r=r$ and the exact floor identity.
+Proposition~\ref{prop:step-016-structural-diagonal} and
+Lemma~\ref{lem:step-016-ld-logstar} then give
+\eqref{eq:main-structure}--\eqref{eq:main-product-scale}.  The tower is
+increasing and unbounded, so the displayed $r_0$ is finite.  For every
+$r\ge r_0$, Proposition~\ref{prop:step-016-rate-bridge} applies the
+nonasymptotic bound to the same admissible diagonal candidate and proves
+\eqref{eq:main-diagonal}.  Finally,
+Proposition~\ref{prop:step-016-scale-comparison} gives
+\eqref{eq:main-additive}--\eqref{eq:main-remaining-scales}.  This proves all
+parts of the theorem.
+\end{proof}

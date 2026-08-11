@@ -1,0 +1,918 @@
+\appendix
+
+\section{Proof Details}\label{sec:proof-details}
+
+\subsection{Coordinate maps, product gauge, and the same-target identity}
+\label{app:step-001}
+
+\begin{lemma}[Conditioned left coordinate maps]
+\label{lem:step-001-base-coordinate}
+Under Assumption~\ref{assump:base_conditioning}, every
+$\bar M\in\{\bar A,\bar B,\bar C\}$ has full column rank, and its
+coordinate map
+\[
+\Lambda_M=(\bar M^{\mathsf T}\bar M)^{-1}\bar M^{\mathsf T}
+\]
+satisfies
+\[
+\sigma_{\min}(\bar M)\geq\kappa^{-2},
+\qquad
+\Lambda_M\bar M=I_r,
+\qquad
+\|\Lambda_M\|_{\mathrm{op}}
+=\sigma_{\min}(\bar M)^{-1}\leq\kappa^2.
+\]
+\end{lemma}
+
+\begin{proof}
+The factorization $\bar M=\widetilde M D_{\bar M}$ and
+Assumption~\ref{assump:base_conditioning} give
+\[
+\sigma_{\min}(\widetilde M)\geq\kappa^{-1},
+\qquad
+\sigma_{\min}(D_{\bar M})
+=\min_{j\in[r]}\|\bar m_j\|_2\geq\kappa^{-1}.
+\]
+Thus, for every $v\in\mathbb R^r$,
+\[
+\begin{aligned}
+\|\bar Mv\|_2
+&=\|\widetilde M D_{\bar M}v\|_2\\
+&\geq\sigma_{\min}(\widetilde M)\|D_{\bar M}v\|_2\\
+&\geq\kappa^{-2}\|v\|_2.
+\end{aligned}
+\]
+Consequently $\sigma_{\min}(\bar M)\geq\kappa^{-2}>0$, so $\bar M$
+has full column rank and $\bar M^{\mathsf T}\bar M$ is invertible.  Direct
+multiplication then gives $\Lambda_M\bar M=I_r$.
+
+For completeness, if
+$\bar M=U\Sigma V^{\mathsf T}$ is an economy singular-value
+decomposition, then $U^{\mathsf T}U=V^{\mathsf T}V=I_r$ and $\Sigma$ is
+positive diagonal.  Hence
+\[
+(\bar M^{\mathsf T}\bar M)^{-1}\bar M^{\mathsf T}
+=V\Sigma^{-1}U^{\mathsf T},
+\]
+so its induced Euclidean operator norm is
+$\sigma_{\min}(\bar M)^{-1}$.  The preceding lower bound therefore yields
+$\|\Lambda_M\|_{\mathrm{op}}\leq\kappa^2$.  This calculation remains
+valid at the non-strict conditioning boundary
+$\sigma_{\min}(\widetilde M)=\min_j\|\bar m_j\|_2=\kappa^{-1}$.
+\end{proof}
+
+\begin{lemma}[Modewise tensor operator in Frobenius geometry]
+\label{lem:step-001-tensor-map}
+Suppose Assumption~\ref{assump:base_conditioning} holds.
+
+For the setting-ordered map
+\[
+Q=\Lambda_A\otimes\Lambda_B\otimes\Lambda_C
+\]
+Lemma~\ref{lem:step-001-base-coordinate} implies
+\[
+Q(x\otimes y\otimes z)
+=(\Lambda_Ax)\otimes(\Lambda_By)\otimes(\Lambda_Cz)
+\]
+for every $x,y,z\in\mathbb R^n$, and
+\[
+0<\|Q\|_{\mathrm{op}}
+=\|\Lambda_A\|_{\mathrm{op}}
+ \|\Lambda_B\|_{\mathrm{op}}
+ \|\Lambda_C\|_{\mathrm{op}}
+\leq\kappa^6.
+\]
+Consequently every $R\in\mathbb R^{n\times n\times n}$ obeys
+\[
+\|QR\|_F\leq\kappa^6\|R\|_F.
+\]
+\end{lemma}
+
+\begin{proof}
+The pure-tensor formula is the defining action of the tensor product in the
+fixed mode order.  To compute its norm, take full singular-value
+decompositions
+\[
+\Lambda_M=U_M\Sigma_MV_M^{\mathsf T},
+\qquad M\in\{A,B,C\},
+\]
+where the outer matrices are square orthogonal and each $\Sigma_M$ is
+rectangular diagonal.  Under the canonical identification of a third-order
+array with the Hilbert tensor product of its mode spaces,
+\[
+Q=(U_A\otimes U_B\otimes U_C)
+  (\Sigma_A\otimes\Sigma_B\otimes\Sigma_C)
+  (V_A^{\mathsf T}\otimes V_B^{\mathsf T}\otimes V_C^{\mathsf T}).
+\]
+The outer maps are Frobenius isometries.  Indeed, on pure tensors this follows
+from
+\[
+\|u\otimes v\otimes w\|_F=\|u\|_2\|v\|_2\|w\|_2,
+\]
+and expansion in orthonormal product bases extends the identity to the whole
+finite-dimensional tensor space.  The middle map is diagonal in product
+singular-vector bases, with diagonal entries
+\[
+\sigma_a(\Lambda_A)\sigma_b(\Lambda_B)\sigma_c(\Lambda_C).
+\]
+Its largest singular value is therefore
+\[
+\max_{a,b,c}
+\sigma_a(\Lambda_A)\sigma_b(\Lambda_B)\sigma_c(\Lambda_C)
+=\prod_{M\in\{A,B,C\}}\|\Lambda_M\|_{\mathrm{op}}.
+\]
+Every $\Lambda_M$ has rank $r\geq1$ by
+Lemma~\ref{lem:step-001-base-coordinate}, so this product is positive.
+The same lemma bounds each factor by $\kappa^2$, giving
+\[
+0<\|Q\|_{\mathrm{op}}\leq(\kappa^2)^3=\kappa^6.
+\]
+The inequality for an arbitrary $R$ is the definition of the induced
+operator norm.  Notice that $Q$ need not be injective on the ambient tensor
+space: a component of $R$ may lie in $\ker Q$.  The upper operator inequality
+remains valid and is exactly the direction used later.
+\end{proof}
+
+\begin{lemma}[Gauge invariance of ambient and coefficient components]
+\label{lem:step-001-gauge}
+Under Assumption~\ref{assump:base_conditioning} and
+Lemma~\ref{lem:step-001-tensor-map}, let $(x,y,z)\in(\mathbb R^n)^3$, put
+\[
+p=(\Lambda_Ax)\otimes(\Lambda_By)\otimes(\Lambda_Cz),
+\]
+and let $(x^+,y^+,z^+)$ be the result of the setting-defined componentwise
+gauge.  Then
+\[
+x^+\otimes y^+\otimes z^+=x\otimes y\otimes z
+\]
+and
+\[
+(\Lambda_Ax^+)\otimes(\Lambda_By^+)\otimes(\Lambda_Cz^+)=p.
+\]
+Both statements hold in the positive-norm branch and in every zero-factor
+branch.
+\end{lemma}
+
+\begin{proof}
+Let $u=\|x\|_2$, $v=\|y\|_2$, and $w=\|z\|_2$.  If all three are
+positive, set $g=(uvw)^{1/3}$ and
+\[
+s_x=g/u,
+\qquad s_y=g/v,
+\qquad s_z=g/w.
+\]
+The gauge gives $(x^+,y^+,z^+)=(s_xx,s_yy,s_zz)$, and
+\[
+s_xs_ys_z=\frac{g^3}{uvw}=1.
+\]
+Multilinearity yields
+\[
+x^+\otimes y^+\otimes z^+
+=(s_xs_ys_z)(x\otimes y\otimes z)=x\otimes y\otimes z.
+\]
+Linearity of the three coordinate maps gives the same calculation in
+coefficient space:
+\[
+(\Lambda_Ax^+)\otimes(\Lambda_By^+)\otimes(\Lambda_Cz^+)
+=(s_xs_ys_z)p=p.
+\]
+
+If $uvw=0$, at least one of $x,y,z$ is the zero vector.  The original
+ambient rank-one tensor is therefore zero, and the corresponding coordinate
+vector is zero by linearity, so $p=0$.  The gauge replaces the triple by
+$(0,0,0)$, and both post-gauge tensors are also zero.  The two cases exhaust
+all possible norm triples.  Arbitrarily small positive norms do not create a
+new case: individual scale factors may be large, but their product remains
+exactly one.
+\end{proof}
+
+\begin{proposition}[Exact coordinate and same-target interface]
+\label{prop:step-001-same-target}
+Under Assumption~\ref{assump:base_conditioning} and
+Lemmas~\ref{lem:step-001-base-coordinate}--\ref{lem:step-001-gauge}, the
+map $Q$ satisfies $0<\|Q\|_{\mathrm{op}}\leq\kappa^6$, the product gauge
+preserves every ambient and coefficient component tensor, and every integer
+$t\geq0$ satisfies
+\[
+Q\widehat T_t=C_t\in\mathcal S_t,
+\qquad
+Q(T-\widehat T_t)=D_r+E_\rho-C_t.
+\]
+These conclusions include the raw initialization, zero components, the zero
+coefficient span, linearly dependent features, and changes in
+$\dim(\mathcal S_t)$.
+\end{proposition}
+
+\begin{proof}
+The operator bound and gauge assertions are
+Lemmas~\ref{lem:step-001-tensor-map} and \ref{lem:step-001-gauge}.  For each
+$i\in[k]$, Lemma~\ref{lem:step-001-tensor-map} gives
+\[
+Q(x_{i,t}\otimes y_{i,t}\otimes z_{i,t})
+=(\Lambda_Ax_{i,t})\otimes(\Lambda_By_{i,t})
+ \otimes(\Lambda_Cz_{i,t})
+=p_{i,t}.
+\]
+Linearity over the finite CP sum therefore gives
+\[
+Q\widehat T_t
+=\sum_{i=1}^kQ(x_{i,t}\otimes y_{i,t}\otimes z_{i,t})
+=\sum_{i=1}^kp_{i,t}
+=C_t.
+\]
+By definition, this finite sum belongs to
+$\mathcal S_t=\operatorname{span}\{p_{i,t}:i\in[k]\}$.  The conclusion
+remains true if some features vanish or are linearly dependent.  If they all
+vanish, then $C_t=0\in\mathcal S_t=\{0\}$.
+
+The definition $E_\rho=QT-D_r$ is equivalent to $QT=D_r+E_\rho$.
+Subtracting the identity for $Q\widehat T_t$ gives
+\[
+Q(T-\widehat T_t)=QT-Q\widehat T_t=D_r+E_\rho-C_t.
+\]
+This is the coefficient image of the same realized ambient residual; no
+projected, whitened, base-only, or fixed-subspace surrogate has replaced it.
+At $t=0$ the calculation applies directly to the ungauged Gaussian factors.
+At later times it applies to the stored factors, while
+Lemma~\ref{lem:step-001-gauge} shows that replacing a raw relaxed component
+by its gauged representative changes neither tensor sum.  The calculation is
+pointwise in $t$ and hence requires neither continuity nor constant rank of
+$\mathcal S_t$.
+
+Thus the three modewise $\kappa^2$ bounds combine with no hidden constant,
+\[
+\|Q\|_{\mathrm{op}}
+=\prod_{M\in\{A,B,C\}}\|\Lambda_M\|_{\mathrm{op}}
+\leq\kappa^6,
+\]
+and the exact same-target identity holds at every time.  In the specialization
+$Q=I$, $E_\rho=0$, and $T=D_r$, it reduces without loss to
+\[
+T-\widehat T_t=D_r-C_t,
+\qquad C_t\in\mathcal S_t.
+\]
+All statements in this subsection are deterministic and pointwise.  No
+certificate clause or probability conversion is used.
+\end{proof}
+
+\subsection{Transport of the coefficient deficit along the projector path}
+\label{app:step-002}
+
+\begin{lemma}[One-step transport under projector motion]
+\label{lem:step-002-one-step-transport}
+For the coefficient Frobenius space and the setting-defined orthogonal
+projectors $P_t=\operatorname{Proj}_{\mathcal S_t}$, every integer $t\geq0$
+satisfies
+\[
+\operatorname{dist}_F(D_r,\mathcal S_{t+1})
+\geq
+\operatorname{dist}_F(D_r,\mathcal S_t)
+-\|P_{t+1}-P_t\|_{\mathrm{op}}\|D_r\|_F.
+\]
+No certificate clause is required for this one-step statement, and it remains
+valid for zero, full, stationary, or rank-changing subspaces.
+\end{lemma}
+
+\begin{proof}
+Let $\mathcal S$ be a coefficient subspace and $P$ its orthogonal projector.
+For every $y\in\mathcal S$, the vectors
+$(I-P)D_r\in\mathcal S^\perp$ and $PD_r-y\in\mathcal S$ are orthogonal.
+Pythagoras therefore gives
+\[
+\|D_r-y\|_F^2
+=\|(I-P)D_r\|_F^2+\|PD_r-y\|_F^2
+\geq\|(I-P)D_r\|_F^2.
+\]
+Equality is attained at $y=PD_r$, so
+\[
+\operatorname{dist}_F(D_r,\mathcal S)=\|(I-P)D_r\|_F.
+\]
+
+Apply this identity at times $t$ and $t+1$.  The exact relation
+\[
+(I-P_t)D_r=(I-P_{t+1})D_r+(P_{t+1}-P_t)D_r
+\]
+and the triangle inequality imply
+\[
+\begin{aligned}
+\operatorname{dist}_F(D_r,\mathcal S_t)
+&=\|(I-P_t)D_r\|_F\\
+&\leq\|(I-P_{t+1})D_r\|_F
+   +\|(P_{t+1}-P_t)D_r\|_F\\
+&\leq\operatorname{dist}_F(D_r,\mathcal S_{t+1})
+   +\|P_{t+1}-P_t\|_{\mathrm{op}}\|D_r\|_F.
+\end{aligned}
+\]
+Rearrangement gives the claimed recurrence.  If $\mathcal S_j=\{0\}$,
+then $P_j=0$ and the distance is $\|D_r\|_F$; if $\mathcal S_j$ is the
+full coefficient space, then $P_j=I$ and the distance is zero.  A stationary
+projector contributes zero charge, while any rank change is charged by its
+actual projector difference.  No rank-continuity premise is used.
+\end{proof}
+
+\begin{proposition}[Finite-path preservation of the coefficient deficit]
+\label{prop:step-002-all-time-deficit}
+Suppose clauses 1 and 2 of
+$\mathsf C_2(\delta,L_P,\zeta,C_T)$ hold, with
+$\delta>0$, $L_P>0$, and $L_P<\delta/4$.  Then, for every integer
+$t\geq0$,
+\[
+\operatorname{dist}_F(D_r,\mathcal S_t)
+\geq
+\Delta_0-\|D_r\|_F
+\sum_{s=0}^{t-1}\|P_{s+1}-P_s\|_{\mathrm{op}}
+\geq(\delta-L_P)\|D_r\|_F.
+\]
+For $t=0$ the sum is empty, and
+\[
+\delta-L_P>\frac{3\delta}{4}>0.
+\]
+\end{proposition}
+
+\begin{proof}
+We first prove the finite-horizon inequality by induction.  At $t=0$, the
+empty-sum convention gives
+\[
+\operatorname{dist}_F(D_r,\mathcal S_0)=\Delta_0,
+\]
+so equality holds.  If the claim holds at time $t$, then
+Lemma~\ref{lem:step-002-one-step-transport} gives
+\[
+\begin{aligned}
+\operatorname{dist}_F(D_r,\mathcal S_{t+1})
+&\geq\operatorname{dist}_F(D_r,\mathcal S_t)
+ -\|P_{t+1}-P_t\|_{\mathrm{op}}\|D_r\|_F\\
+&\geq\Delta_0-\|D_r\|_F
+ \sum_{s=0}^{t}\|P_{s+1}-P_s\|_{\mathrm{op}}.
+\end{aligned}
+\]
+This closes the induction for every finite $t$.
+
+Each projector-motion term is nonnegative.  Clause 2 therefore bounds every
+finite prefix by the full path budget:
+\[
+\sum_{s=0}^{t-1}\|P_{s+1}-P_s\|_{\mathrm{op}}
+\leq
+\sum_{s=0}^{\infty}\|P_{s+1}-P_s\|_{\mathrm{op}}
+\leq L_P.
+\]
+Clause 1 then yields
+\[
+\begin{aligned}
+\operatorname{dist}_F(D_r,\mathcal S_t)
+&\geq\Delta_0-L_P\|D_r\|_F\\
+&\geq(\delta-L_P)\|D_r\|_F.
+\end{aligned}
+\]
+No limit of $P_t$, $\mathcal S_t$, or the distance sequence is taken; the
+infinite series is used only as a finite-prefix budget.  Finally,
+\[
+\delta-L_P>\delta-\delta/4=3\delta/4>0.
+\]
+Since $r\geq1$, $\|D_r\|_F=\sqrt r>0$.  Thus a full coefficient span at
+any time, which would have zero distance, is ruled out as a conclusion of the
+two clauses rather than excluded as an assumption.  Zero spans, stationary
+spans, and rank jumps remain covered by the charged recurrence.  The
+projector defect may have the adversarial sign for a lower bound, but its
+total all-time charge is exactly at most $L_P\|D_r\|_F$; no cancellation or
+decay is invoked.
+The implication is deterministic on clauses 1 and 2.  It does not assert
+that these clauses, or the full certificate, occur with positive probability.
+\end{proof}
+
+\subsection{Transfer to an all-time ambient residual floor}
+\label{app:step-003}
+
+\begin{lemma}[Distance to a subspace is one-Lipschitz]
+\label{lem:step-003-distance-lipschitz}
+In the coefficient Frobenius space, let $\mathcal S$ be any linear subspace
+and let $U,V$ be coefficient tensors.  Then
+\[
+\left|
+\operatorname{dist}_F(U,\mathcal S)
+-\operatorname{dist}_F(V,\mathcal S)
+\right|
+\leq\|U-V\|_F.
+\]
+In particular,
+\[
+\operatorname{dist}_F(U,\mathcal S)
+\geq\operatorname{dist}_F(V,\mathcal S)-\|U-V\|_F.
+\]
+\end{lemma}
+
+\begin{proof}
+For every $S\in\mathcal S$, the triangle inequality gives
+\[
+\|U-S\|_F\leq\|U-V\|_F+\|V-S\|_F.
+\]
+Taking the infimum over $S\in\mathcal S$ yields
+\[
+\operatorname{dist}_F(U,\mathcal S)
+\leq\|U-V\|_F+\operatorname{dist}_F(V,\mathcal S).
+\]
+Interchanging $U$ and $V$ gives the reverse one-sided comparison, and the
+two inequalities prove the claim.  The argument includes the zero subspace,
+the full coefficient space, and every rank-deficient intermediate subspace.
+The constant one is sharp when the perturbation points directly toward or
+away from the subspace.
+\end{proof}
+
+\begin{proposition}[Coefficient residual floor with explicit smoothing loss]
+\label{prop:step-003-coefficient-floor}
+Under Assumption~\ref{assump:base_conditioning},
+Propositions~\ref{prop:step-001-same-target} and
+\ref{prop:step-002-all-time-deficit}, and the clause-4 bound
+\[
+\|E_\rho\|_F\leq\zeta\|D_r\|_F,
+\]
+suppose also that $L_P<\delta/4$ and $\zeta<\delta/4$.  Then every
+integer $t\geq0$ obeys
+\[
+\|Q(T-\widehat T_t)\|_F
+\geq(\delta-L_P-\zeta)\|D_r\|_F,
+\]
+and
+\[
+\delta-L_P-\zeta>\frac{\delta}{2}>0.
+\]
+\end{proposition}
+
+\begin{proof}
+Fix $t\geq0$.  Proposition~\ref{prop:step-001-same-target} gives
+\[
+Q(T-\widehat T_t)=D_r+E_\rho-C_t,
+\qquad C_t\in\mathcal S_t.
+\]
+Because $C_t$ is an admissible point in $\mathcal S_t$,
+\[
+\begin{aligned}
+\|Q(T-\widehat T_t)\|_F
+&=\|D_r+E_\rho-C_t\|_F\\
+&\geq\operatorname{dist}_F(D_r+E_\rho,\mathcal S_t).
+\end{aligned}
+\]
+Lemma~\ref{lem:step-003-distance-lipschitz}, with
+$U=D_r+E_\rho$ and $V=D_r$, gives
+\[
+\operatorname{dist}_F(D_r+E_\rho,\mathcal S_t)
+\geq
+\operatorname{dist}_F(D_r,\mathcal S_t)-\|E_\rho\|_F.
+\]
+Proposition~\ref{prop:step-002-all-time-deficit} and the displayed
+clause-4 bound now yield, without dropping either defect,
+\[
+\begin{aligned}
+\|Q(T-\widehat T_t)\|_F
+&\geq(\delta-L_P)\|D_r\|_F-\zeta\|D_r\|_F\\
+&=(\delta-L_P-\zeta)\|D_r\|_F.
+\end{aligned}
+\]
+The strict restrictions give
+\[
+\delta-L_P-\zeta
+>\delta-\frac{\delta}{4}-\frac{\delta}{4}
+=\frac{\delta}{2}>0.
+\]
+The time was arbitrary.  Thus the floor holds at the raw entry and after
+every update.  The smoothing residual is fixed and subtracted once in each
+pointwise comparison; it is not repeatedly accumulated along the horizon.
+An adversarially oriented $E_\rho$ may consume the full $\zeta$ allowance,
+but no more.
+\end{proof}
+
+\begin{proposition}[Exact same-target ambient residual floor]
+\label{prop:step-003-ambient-floor}
+Under Assumption~\ref{assump:base_conditioning},
+Lemma~\ref{lem:step-001-tensor-map},
+Proposition~\ref{prop:step-003-coefficient-floor}, and the remaining
+clause-4 condition
+\[
+\|T\|_F\leq C_T\|D_r\|_F,
+\qquad C_T>0,
+\]
+every integer $t\geq0$ satisfies
+\[
+\|T-\widehat T_t\|_F
+\geq
+\frac{\delta-L_P-\zeta}{\kappa^6C_T}\|T\|_F.
+\]
+The bound is deterministic, all-time, and has no hidden constant.
+\end{proposition}
+
+\begin{proof}
+Fix $t\geq0$ and abbreviate $R_t=T-\widehat T_t$ within this proof.
+Lemma~\ref{lem:step-001-tensor-map} gives
+\[
+0<\|Q\|_{\mathrm{op}}\leq\kappa^6,
+\qquad
+\|QR_t\|_F\leq\|Q\|_{\mathrm{op}}\|R_t\|_F.
+\]
+Positivity permits division, while the upper bound on the operator norm gives
+the lower-bound direction
+\[
+\|R_t\|_F
+\geq\frac{\|QR_t\|_F}{\|Q\|_{\mathrm{op}}}
+\geq\kappa^{-6}\|QR_t\|_F.
+\]
+This inference needs no injectivity of $Q$ and remains valid when the ambient
+residual has components in $\ker Q$.  Proposition~\ref{prop:step-003-coefficient-floor}
+therefore yields
+\[
+\|T-\widehat T_t\|_F
+\geq\kappa^{-6}(\delta-L_P-\zeta)\|D_r\|_F.
+\]
+Since $C_T>0$, the target-scale clause is equivalent to
+\[
+\|D_r\|_F\geq C_T^{-1}\|T\|_F.
+\]
+Substitution proves the stated bound.  No division by $\|T\|_F$ occurs, so
+$T=0$ is included and gives a zero right-hand side.  Every scale factor is
+visible: $L_P$ is the projector-path charge, $\zeta$ is the fixed smoothing
+loss, $\kappa^6$ is the coordinate distortion, and $C_T$ is the target-scale
+conversion.  There is no probability conversion and no time-dependent
+constant.
+\end{proof}
+
+\begin{proposition}[Exact/noiseless baseline residual floor]
+\label{prop:step-003-baseline-floor}
+Under Assumption~\ref{assump:base_conditioning},
+Propositions~\ref{prop:step-001-same-target} and
+\ref{prop:step-002-all-time-deficit}, suppose the coordinate-orthonormal
+exact/noiseless specialization
+\[
+Q=I,
+\qquad E_\rho=0,
+\qquad T=D_r
+\]
+holds.  Then every $t\geq0$ satisfies the stronger bound
+\[
+\|T-\widehat T_t\|_F\geq(\delta-L_P)\|T\|_F.
+\]
+\end{proposition}
+
+\begin{proof}
+Under the specialization,
+Proposition~\ref{prop:step-001-same-target} becomes
+\[
+T-\widehat T_t=D_r-C_t,
+\qquad C_t\in\mathcal S_t.
+\]
+Consequently
+\[
+\begin{aligned}
+\|T-\widehat T_t\|_F
+&=\|D_r-C_t\|_F\\
+&\geq\operatorname{dist}_F(D_r,\mathcal S_t)\\
+&\geq(\delta-L_P)\|D_r\|_F\\
+&=(\delta-L_P)\|T\|_F,
+\end{aligned}
+\]
+where Proposition~\ref{prop:step-002-all-time-deficit} gives the second
+inequality.  Thus removing smoothing and coordinate distortion strengthens
+the same-target floor instead of replacing it by a conservative remainder,
+a stopped statement, or a vanishing-defect surrogate.
+\end{proof}
+
+\subsection{Finite represented-tensor variation and objective convergence}
+\label{app:step-004}
+
+\begin{lemma}[Finite variation gives ambient convergence]
+\label{lem:step-004-finite-variation}
+If clause 3 of $\mathsf C_2(\delta,L_P,\zeta,C_T)$ holds, then
+$(\widehat T_t)_{t\geq0}$ is Cauchy in ambient Frobenius norm.  Hence there
+exists $\widehat T_\infty\in\mathbb R^{n\times n\times n}$ such that
+\[
+\widehat T_t\longrightarrow\widehat T_\infty
+\qquad\text{in Frobenius norm}.
+\]
+\end{lemma}
+
+\begin{proof}
+Define the increment norms and their tails by
+\[
+v_j=\|\widehat T_{j+1}-\widehat T_j\|_F,
+\qquad
+V_N=\sum_{j=N}^{\infty}v_j.
+\]
+Clause 3 states $V_0<\infty$.  Since the series is nonnegative, every tail
+is finite and $V_N\to0$.  For integers $s>t\geq0$, exact telescoping gives
+\[
+\widehat T_s-\widehat T_t
+=\sum_{j=t}^{s-1}(\widehat T_{j+1}-\widehat T_j),
+\]
+and hence
+\begin{equation}
+\|\widehat T_s-\widehat T_t\|_F
+\leq\sum_{j=t}^{s-1}v_j
+\leq V_t.
+\label{eq:finite-variation-tail}
+\end{equation}
+Given $\varepsilon>0$, choose $N$ with $V_N<\varepsilon$.  The tails are
+nonincreasing, so Equation~\eqref{eq:finite-variation-tail} gives
+\[
+\|\widehat T_s-\widehat T_t\|_F<\varepsilon
+\qquad\text{for all }s>t\geq N.
+\]
+Thus the represented tensors are Cauchy.  The ambient Frobenius space is
+isometric to finite-dimensional Euclidean space $\mathbb R^{n^3}$ and is
+therefore complete, which produces $\widehat T_\infty$ in the same tensor
+space.  Letting $s\to\infty$ in
+Equation~\eqref{eq:finite-variation-tail} also gives the useful tail estimate
+\[
+\|\widehat T_\infty-\widehat T_t\|_F\leq V_t\longrightarrow0.
+\]
+This derivation controls only represented tensors.  It requires no factor
+bound or factor convergence, Gram conditioning, descent inequality,
+design-rank persistence, quotient geometry, or Kurdyka--Lojasiewicz
+property.  The first increment $v_0$ is included.  A stationary trajectory
+has $v_j=0$ for every $j$ and converges immediately; changing factor
+representatives or least-squares ranks does not affect the argument.
+\end{proof}
+
+\begin{proposition}[Finite objective limit]
+\label{prop:step-004-objective-limit}
+Under clause 3 of $\mathsf C_2(\delta,L_P,\zeta,C_T)$ and
+Lemma~\ref{lem:step-004-finite-variation}, the objective satisfies
+\[
+\mathcal L(X_t,Y_t,Z_t)
+\longrightarrow
+\|T-\widehat T_\infty\|_F^2<\infty.
+\]
+\end{proposition}
+
+\begin{proof}
+For fixed ambient tensors $R,S$, the Frobenius polarization identity and
+Cauchy--Schwarz imply
+\[
+\big|\|T-R\|_F^2-\|T-S\|_F^2\big|
+\leq\|R-S\|_F\big(\|T-R\|_F+\|T-S\|_F\big).
+\]
+Indeed, apply
+$\|A\|_F^2-\|B\|_F^2=\langle A-B,A+B\rangle$ to
+$A=T-R$ and $B=T-S$.  Taking $R=\widehat T_t$ and
+$S=\widehat T_\infty$, and then using the triangle inequality, gives
+\[
+\begin{aligned}
+&\left|
+\mathcal L(X_t,Y_t,Z_t)-\|T-\widehat T_\infty\|_F^2
+\right|\\
+&\quad\leq
+\|\widehat T_t-\widehat T_\infty\|_F
+\big(\|T-\widehat T_t\|_F+\|T-\widehat T_\infty\|_F\big)\\
+&\quad\leq
+\|\widehat T_t-\widehat T_\infty\|_F
+\left(2\|T-\widehat T_\infty\|_F
++\|\widehat T_t-\widehat T_\infty\|_F\right).
+\end{aligned}
+\]
+The first factor tends to zero by
+Lemma~\ref{lem:step-004-finite-variation}; the second tends to the finite
+number $2\|T-\widehat T_\infty\|_F$.  This proves convergence to the
+displayed finite value.  The conclusion remains valid if the limiting
+objective is zero, if $T=0$, if factors diverge while their represented
+tensor converges, or if the represented path is stationary.  Mere finiteness
+of the variation series supplies no uniform numerical rate, and none is
+claimed.
+This is a deterministic implication on clause 3; it does not assign a
+probability to that clause or to the full certificate.
+\end{proof}
+
+\subsection{Conditional theorem closure and the probability boundary}
+\label{app:step-005}
+
+\begin{lemma}[Uniform lower bounds pass to a finite limit]
+\label{lem:step-005-limit-order}
+Let $(a_t)_{t\geq0}$ be a real sequence and let $a,b\in\mathbb R$.  If
+\[
+a_t\longrightarrow a,
+\qquad
+a_t\geq b\quad\text{for every }t\geq0,
+\]
+then $a\geq b$.
+\end{lemma}
+
+\begin{proof}
+If instead $a<b$, set $\eta=(b-a)/2>0$.  Convergence gives an integer $N$
+such that $|a_t-a|<\eta$ for every $t\geq N$.  For such $t$,
+\[
+a_t<a+\eta=\frac{a+b}{2}<b,
+\]
+contradicting the pointwise lower bound.  Thus $a\geq b$.  The argument
+allows equality, constant sequences, and arbitrary real values of $a$ and
+$b$; it uses an ordinary finite limit and makes no extended-real or
+convergence-mode upgrade.
+\end{proof}
+
+\begin{proposition}[Pathwise closure of the conditional loss floor]
+\label{prop:step-005-pathwise-closure}
+Under Assumptions~\ref{assump:dimension}, \ref{assump:rank_window},
+\ref{assump:base_conditioning}, \ref{assump:gaussian_smoothing}, and
+\ref{assump:independent_initialization}, suppose a realized trajectory
+belongs to $\mathsf C_2(\delta,L_P,\zeta,C_T)$, where
+$\delta,L_P,\zeta,C_T>0$, $L_P<\delta/4$, and
+$\zeta<\delta/4$.  Define
+\[
+m=\delta-L_P-\zeta,
+\qquad
+\epsilon=\left(\frac{m}{\kappa^6C_T}\right)^2.
+\]
+Then $m>\delta/2>0$, $\epsilon>0$, and
+\[
+\lim_{t\to\infty}\mathcal L(X_t,Y_t,Z_t)
+=\|T-\widehat T_\infty\|_F^2<\infty,
+\]
+with
+\[
+\lim_{t\to\infty}\mathcal L(X_t,Y_t,Z_t)
+\geq\epsilon\|T\|_F^2.
+\]
+\end{proposition}
+
+\begin{proof}
+The strict parameter restrictions give the complete margin calculation
+\begin{equation}
+m
+=\delta-L_P-\zeta
+>\delta-\frac{\delta}{4}-\frac{\delta}{4}
+=\frac{\delta}{2}>0.
+\label{eq:positive-margin}
+\end{equation}
+Since $\kappa\geq1$ and $C_T>0$, this also gives $\epsilon>0$.
+
+Membership in the four-clause certificate supplies the hypotheses of
+Propositions~\ref{prop:step-002-all-time-deficit} and
+\ref{prop:step-003-ambient-floor}.  Therefore, for every integer $t\geq0$,
+\begin{equation}
+\|T-\widehat T_t\|_F
+\geq\frac{m}{\kappa^6C_T}\|T\|_F.
+\label{eq:pathwise-norm-floor}
+\end{equation}
+Both sides of Equation~\eqref{eq:pathwise-norm-floor} are nonnegative: the
+left side is a norm, while the right side is nonnegative by
+Equation~\eqref{eq:positive-margin}, $\kappa\geq1$, $C_T>0$, and
+$\|T\|_F\geq0$.  Squaring only after this sign check and using the exact
+objective definition gives
+\begin{equation}
+\mathcal L(X_t,Y_t,Z_t)
+=\|T-\widehat T_t\|_F^2
+\geq
+\left(\frac{m}{\kappa^6C_T}\right)^2\|T\|_F^2
+=\epsilon\|T\|_F^2
+\quad\text{for every }t\geq0.
+\label{eq:pathwise-objective-floor}
+\end{equation}
+No term is absorbed or dropped in this equality.
+
+The same certificate membership supplies clause 3.
+Lemma~\ref{lem:step-004-finite-variation} and
+Proposition~\ref{prop:step-004-objective-limit} give
+\[
+\mathcal L(X_t,Y_t,Z_t)
+\longrightarrow\|T-\widehat T_\infty\|_F^2<\infty.
+\]
+Apply Lemma~\ref{lem:step-005-limit-order} to this scalar sequence and the
+all-time lower bound in Equation~\eqref{eq:pathwise-objective-floor}.  The
+limiting lower bound follows.
+
+The primitive dimension, rank-window, smoothing, and initialization
+assumptions preserve the exact theorem domain and joint law; they are not
+used to prove certificate membership.  If $T=0$, the proof never divides by
+$\|T\|_F$ and the lower bound has zero right-hand side.  Stationary paths are
+covered by the finite-variation argument.  No Gram conditioning, factor
+boundedness or convergence, descent property, fixed span, basin membership,
+design-rank persistence, quotient geometry, or unstated feature of the ALS
+map enters the closure.
+\end{proof}
+
+\begin{proposition}[Exact conditional event inclusion]
+\label{prop:step-005-event-inclusion}
+Under Assumptions~\ref{assump:dimension}, \ref{assump:rank_window},
+\ref{assump:base_conditioning}, \ref{assump:gaussian_smoothing}, and
+\ref{assump:independent_initialization}, let the positive certificate
+parameters satisfy $L_P<\delta/4$ and $\zeta<\delta/4$, and define
+\[
+\epsilon=
+\left(\frac{\delta-L_P-\zeta}{\kappa^6C_T}\right)^2.
+\]
+Then, under the joint smoothing-and-initialization law,
+\[
+\mathsf C_2(\delta,L_P,\zeta,C_T)
+\subseteq
+\left\{
+\begin{array}{l}
+\displaystyle\lim_{t\to\infty}\mathcal L(X_t,Y_t,Z_t)
+\text{ exists and is finite},\\[2mm]
+\displaystyle\lim_{t\to\infty}\mathcal L(X_t,Y_t,Z_t)
+\geq\epsilon\|T\|_F^2
+\end{array}
+\right\}.
+\]
+The inclusion asserts neither nonemptiness nor positive probability of the
+antecedent event.
+\end{proposition}
+
+\begin{proof}
+Take an arbitrary outcome of the joint experiment that belongs to
+$\mathsf C_2(\delta,L_P,\zeta,C_T)$.  Proposition~\ref{prop:step-005-pathwise-closure}
+applies to the realized target and trajectory and proves both properties
+defining the event on the right.  Thus every element of the left-hand set is
+an element of the right-hand set.
+
+This is an outcome-by-outcome implication inside the primitive probability
+space.  It does not invoke a conditional probability, divide by
+$\mathbb P[\mathsf C_2]$, or infer a lower bound on that probability.  It
+therefore remains valid when the certificate is empty or has probability
+zero.  The probability mode is exactly set inclusion, not high probability,
+expectation, or an unconditional ALS success statement.
+\end{proof}
+
+\begin{proposition}[Exact/noiseless limiting-loss baseline]
+\label{prop:step-005-baseline-limit}
+Suppose the coordinate-orthonormal exact/noiseless specialization
+\[
+Q=I,
+\qquad E_\rho=0,
+\qquad T=D_r
+\]
+holds, $\delta>0$, $L_P<\delta/4$, and the realized trajectory satisfies
+the normalized entry-deficit, finite projector-path, and finite represented-
+tensor-variation clauses.  Then
+\[
+\lim_{t\to\infty}\mathcal L(X_t,Y_t,Z_t)
+=\|T-\widehat T_\infty\|_F^2<\infty
+\]
+and
+\[
+\lim_{t\to\infty}\mathcal L(X_t,Y_t,Z_t)
+\geq(\delta-L_P)^2\|T\|_F^2.
+\]
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:step-003-baseline-floor} gives, for every $t\geq0$,
+\[
+\|T-\widehat T_t\|_F\geq(\delta-L_P)\|T\|_F.
+\]
+The restriction $L_P<\delta/4$ gives
+$\delta-L_P>3\delta/4>0$, so both sides are nonnegative and may be squared:
+\[
+\mathcal L(X_t,Y_t,Z_t)
+\geq(\delta-L_P)^2\|T\|_F^2
+\quad\text{for every }t\geq0.
+\]
+The finite-variation clause and
+Proposition~\ref{prop:step-004-objective-limit} give the displayed finite
+objective limit.  Lemma~\ref{lem:step-005-limit-order} passes the pointwise
+baseline floor to that same limit.  Hence the zero-smoothing, identity-
+coordinate specialization preserves the stronger constant relative floor;
+it is not replaced by an absolute remainder, a stopped statement, or a claim
+that only defect terms vanish.
+\end{proof}
+
+\subsection{Proof of the Main Theorem}\label{app:main-proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Fix $\kappa,q$ and any fixed constants with the dependence and
+strict margins stated in Theorem~\ref{thm:main}.  For arbitrary dimensions,
+base triple, target, and ALS trajectory in the theorem scope,
+Proposition~\ref{prop:step-001-same-target} proves the exact coordinate
+identity and the bound $\|Q\|_{\mathrm{op}}\leq\kappa^6$.
+Proposition~\ref{prop:step-002-all-time-deficit} converts the first two
+certificate clauses into an all-time coefficient deficit.
+Proposition~\ref{prop:step-003-ambient-floor} uses the fourth clause to
+transfer that deficit to the exact ambient residual with factor
+\[
+\frac{\delta-L_P-\zeta}{\kappa^6C_T}.
+\]
+Independently, Proposition~\ref{prop:step-004-objective-limit} uses the third
+clause to produce a finite limit of the same objective sequence.
+Proposition~\ref{prop:step-005-event-inclusion} combines those conclusions
+and gives precisely the event inclusion and the stated value of $\epsilon$.
+
+The displayed constants have no hidden dependence.  The residual inequality
+is valid for every time, while the conclusion concerns the asymptotic
+objective; the scalar passage between these modes is
+Lemma~\ref{lem:step-005-limit-order}.  The argument is deterministic on the
+certificate and performs no probability conversion.
+
+Because the implication holds for every positive constant choice satisfying
+the two strict margins, the existential formulation is nonempty at the scalar
+level.  For example, one may take
+\[
+r_0=1,
+\qquad C_{\mathrm{dim}}=1,
+\qquad \delta=1,
+\qquad L_P=\zeta=\frac18,
+\qquad C_T=1,
+\]
+and define $\epsilon$ by the theorem formula.  These are constant functions
+of $(\kappa,q)$ and hence have the permitted dependence.  This choice only
+discharges the existential quantifiers over scalar constants; it does not
+assert that the resulting certificate event is nonempty or has positive
+probability.
+
+Finally, Proposition~\ref{prop:step-005-baseline-limit} proves the stated
+exact/noiseless baseline conclusion with factor $(\delta-L_P)^2$.  This
+completes every part of Theorem~\ref{thm:main}.
+\end{proof}

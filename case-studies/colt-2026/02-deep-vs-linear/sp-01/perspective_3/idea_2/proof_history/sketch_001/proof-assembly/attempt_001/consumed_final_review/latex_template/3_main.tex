@@ -1,0 +1,41 @@
+\section{Main Theorem}
+\label{sec:main-theorem}
+
+\begin{theorem}[Exact identity representation in the odd high-accuracy regime]
+\label{thm:main}
+Under Assumptions~\ref{assump:antipodal-oddness},
+\ref{assump:high-accuracy}, and~\ref{assump:universal-sgd-success}, the
+identity feature map exactly represents the entire class:
+\[
+\forall h\in\mathcal H\ \exists w_h\in\mathbb R^n\ \forall x\in\mathcal X,
+\qquad
+\operatorname{sign}_{s_0}(\langle w_h,x\rangle)=h(x).
+\]
+Moreover, the law
+$\mathcal P_{\mathrm{id}}:=\delta_{\varphi_{\mathrm{id}}}$ is fixed before
+every distribution and target and satisfies
+\[
+\forall\mathcal D\in\Delta(\mathcal X)\ \forall h\in\mathcal H,
+\quad
+\Pr_{\varphi\sim\mathcal P_{\mathrm{id}}}\!\left[
+\inf_{w\in\mathbb R^n}
+\Pr_{x\sim\mathcal D}\!\left[
+\operatorname{sign}_{s_0}(\langle w,\varphi(x)\rangle)h(x)<0
+\right]=0\right]=1.
+\]
+Consequently,
+\[
+\operatorname{dc}^{1/2}(\mathcal H)
+\leq\operatorname{dc}(\mathcal H)\leq n\leq S\leq TS.
+\]
+These conclusions also hold when $\mathcal H=\varnothing$, with the target
+quantifiers interpreted vacuously.  The result is deterministic after the
+source premise, nonasymptotic, and uses the fixed finite horizon $T$.  The
+displayed constants $1$ and $2$ have no hidden dependence on
+$n,m,S,T,\eta,\varepsilon,\mathcal H,\mathcal D,h$, initialization, or the
+sample path.
+\end{theorem}
+
+The theorem is a depth-two, bias-free, antipodally odd, strict-accuracy
+specialization.  It does not assert the corresponding unrestricted-depth,
+non-odd, or unrestricted-accuracy statement.

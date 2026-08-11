@@ -1,0 +1,45 @@
+\section{Preliminaries}\label{sec:prelim}
+
+For the universal exponent \(a\) in
+Assumption~\ref{assump:polynomial-global-stability}, define
+\[
+b=2a+2,\qquad
+u(L)=\log\log(e^e+L),
+\]
+\[
+T_a(q,L)=q^b+u(L),\qquad
+\delta_a(q,L)=e^{-T_a(q,L)}
+\]
+for \(q\geq1\) and \(L\geq0\).  These quantities expose separately
+the polynomial complexity contribution and the slowly growing
+cardinality correction in the privacy parameter stated below.
+
+For a constant \(K_a\geq2\), to be selected in the proof with
+dependence only on \(a,\alpha_0,\beta_0\) and the universal numerical
+constant in the stable-selection bound, define
+\[
+N_a(q,L,\varepsilon)
+=
+\left\lceil
+K_a\varepsilon^{-2}q^b(1+T_a(q,L))
+\right\rceil.
+\]
+This is the exact fixed input arity used in the main theorem.  No
+class, cardinality, distribution, sequence-index, or
+\(\varepsilon\)-dependence is hidden in \(K_a\).
+
+For a class sequence, abbreviate
+\[
+L_\kappa=\log|C_\kappa|,\quad
+d_\kappa=d(C_\kappa),\quad
+\ell_\kappa=\ell(C_\kappa),\quad
+s_\kappa=s(C_\kappa),\quad
+q_\kappa=q(C_\kappa),
+\]
+\[
+N_\kappa=N_a(q_\kappa,L_\kappa,\varepsilon_0),
+\qquad
+\delta_\kappa=\delta_a(q_\kappa,L_\kappa).
+\]
+These abbreviations are used only to state the exact per-class
+learner parameters and their deterministic sequence limits.

@@ -1,0 +1,52 @@
+You are the fresh handoff perspective-scoped assembler for perspective_2/idea_1, assembly attempt 2 under accepted sketch attempt 2, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+Read <CODEX_SKILLS_ROOT>/proof-assembly/SKILL.md completely and every directly required shared contract, report template, and LaTeX-template resource it names. Use the installed skill exactly. This is a routed repair from the current aggregate proof_review.md, not a new proof attempt. You may modify only perspective_2/idea_1/assembly_report.md and the nine existing canonical files in perspective_2/idea_1/latex_template/. Do not create any other file there. Do not modify idea.md, setting.md, sketch or sketch-review artifacts, global diagnostics, proof-step proofs or reviews, proof_tracker.md, theory_tracker.md, worker_log.md, controller prompts, proof_history, results, specialized reviews, aggregate proof_review.md, or any other file. Do not read proof_history.
+
+Run configuration: RUN_MODE=interactive; model=gpt-5.6-sol; reasoning=max; idea attempt 1 of 30; sketch attempt 2 of 10; assembly attempt 2 of 100; global and step producer budgets 100; progress_type=full.
+
+The sole routing trigger is the current contract-valid aggregate proof_review.md, SHA-256 6ef442c03fea4e4fd08ce44b1588682c836bf9eb229ef2cb3902dccc5cf6793e. It has Score 6, Failure Type PROOF_ASSEMBLY_FLAW, Suggested Next Action /proof-assembly, and Retry Mode repair_assembly. Its one normalized blocker is that the public Step 004 appendix invokes, but neither states nor cites, the lower-dimensional injective affine Hausdorff area formula already fully recorded in the accepted step_004 source. Treat this as an assembly-only citation/exposition defect. Do not repair or change any sketch or step claim.
+
+Binding controller inputs and SHA-256 values:
+- idea.md: 5209aa21929e84604acb2712d8657460a48463901738fd00ebafaa84d5c43596
+- setting.md: 6955a2723694ff60af8d5d40329ff0ad056f9b54780ff02744d8985456222b7e
+- accepted proof_sketch.md: 41517943f551814aaf87ff8541d5a81b56123cae7d8533b2bceb302a981bfbc4
+- accepted proof_sketch_review.md: a80e7f4ffb1ad57991675810dbf7064bc7b482b8f34b61f10a171ebfc97b43c9
+- accepted diagnostic global_proof.md: bb35e66556b216cac02945e249c92fac526b5b021104daa0f32b0ce7691a22fc
+- accepted global_proof_review.md: c990e29c701a493a71e87aef1aa5c099ed26c6f8132a03f15bc0c7e5fb3c0146
+- controller-open proof_tracker.md: 156524623baeabedff0b4c4b42854ce139cbf6252e9214b177f860033436c5de
+
+The twelve required current accepted sketch-attempt-2 proof/review pairs are:
+- step_001: proof 6986e91d1b2a06c451ae6bba842e30747ac507bf3e0eeee09371c1af0b6d4ff8; review 4ec6dfad924606b81aa28203e98ac3989ae15cf573297004efbd7036e4455f55
+- step_002: proof a87b6ac3a6ad433b1b2333739ad1631d0dbc426763125c63f16b87b8a9ae530e; review de2b4a1dfbc918951e5a29b0964724c1089755860403194b80dcc33f5ec81f75
+- step_003: proof e49284222ce24bde4b3ae8b5f8d1434622c09bfd3a39eb512641169e55e2d7a0; review 4d6a93d359e6559d49d306809fe8ad925eb03a262c36446591c846632a6e1ff8
+- step_004: proof 91736da20ac3e8c97693b158e1a528f5ac2ed3bab6ef61b14185ab2beae76ef4; review 45285c72a3ea65948cdd60b0148c44526384f53c9e35bae2a86b9a09d2964389
+- step_005: proof a3c503cdc2b19acb74d9598fe8d674c185715ef20ea11ea28322eee62827ab63; review 3c12da50c102fe5562cec9e3681b80250defa6d4f88a32f05c3b462349f94ad0
+- step_006: proof 130dbada8d3b451575971240d58a54992c32de30eb740707d3184ed9e3deb954; review cfcd012a07f15b84d9b41e50d24eed881dc6ef1a7309154681e5f3228dc03dae
+- step_007: proof 2ba350ac72e62a8d20587d2afc7a5f5c7bbb0ec30aca55764bcea39ad4701037; review 8246228af5c0b30dcd64749f834ff6034239d1788657732eecfd42755097ace9
+- step_008: proof 957f7441096a04d797c31a40b01bdb7bd06e696d79eb5f4439ad535f2d3cc085; review 3bfe1e0e150e31cbff126ba2cbdf735c717506d64bacd73913ebeabc24fd9a19
+- step_009: proof 8da586dbdd81e96baba3d3767b4982caf24ecbe40c3bb7987ba41a06477208e3; review 7c17949e3a8be360e6439d5e1faa11a08e887cd002cc49b32f8031e3cb0c585a
+- step_010: proof d7b9a1cb7fc05eda80c58e08af140f9f56de0c7b2dfc38cf728efee8339e0823; review 1be3eca6900a6bf5a7ffa26820b62f8db5508549b3610b6a2678becc88f3694e
+- step_011: proof 92c41aebfa815704617f0e2e9d898ef5f737a9f4597d712c7512fad345f8d755; review 7b21bf4639338b0a279536ab38ffee583a819b7e4304058ff6e6092155ce48c4
+- step_012: proof 2a3d417db3da923fb01a0f2840f842505780049d7b9b052c676624be16913493; review de5a016b9e2862145d817cd43c9b3447c5deb33ddf2d4f2c3e3285d21f09c89d
+
+Verify that every review binds sketch attempt 2, its exact Step ID and current unit attempt, the matching proof SHA-256, and ACCEPTED status before consuming any proof. The step attempts are step_001 unit attempt 2, step_009 unit attempt 2, and every other step unit attempt 1. Fail closed if any binding differs. Treat global_proof.md and global_proof_review.md as diagnostic context only, never proof evidence or authority to change a claim.
+
+Current consumed assembly-attempt-1 output hashes are:
+- assembly_report.md: 3cba5095198a5bf5eda2d9a9cc9bd30e7f8f553e5d3a49d64fde1464e2bf3467
+- 1_intro.tex: f37539599a316cae3b54c287eac7fdceafb9bc68f3966da824d4acbf91841819
+- 2_preliminary.tex: ef963a6319ff975f14108333e31557a073601d70ebfdfc01378c36e5aa1ac6c8
+- 3_main.tex: 9e5762ef1bea93a8775c0b91a3e62bad0d2b4716b7dd03810e1c069a4c706942
+- 4_proof_sketch.tex: 513955e538c0439a86b883290c2893beb52f598e568ff54cf1868047c66a8b20
+- 5_appendix.tex: e731aa044ca85d389302e8e0cdb98bd192fabf146c00ea265ead130685b557
+- arxiv.sty: ef10114191959ed9410a29b44f0f3b2ef401a34755917aeb84bf357e1404faf1
+- ims.bst: c1f6e420970d0c72b3c0d184a14c4223fe8c373055eb4c43692a72b660a9ca5f
+- main.tex: 623c9a44ed6944ca0be78af3f8b31d002eff764e921f17ab0787771aea380432
+- reference.bib: 80214465186d1ca1cd21c16297702a7f42436897e9ab25b34786e9a9ba42a1d2
+
+Perform the smallest complete repair. Add a paper-facing theorem-style statement of the Euclidean area formula for an injective affine map Xi(x)=b+Lx from R^k to R^n, with k>=0, injective L, measurable D, nonnegative Borel h, the exact Hausdorff/Lebesgue integral identity, sqrt(det(L^T L)), extended-real convention, and the full k=0 empty-Gram/counting-measure convention. The accepted source statement is perspective_2/idea_1/proof_steps/step_004/proof.md beginning at line 149 and is authoritative. Restate it faithfully in current LaTeX notation and back it with a BibTeX citation. Prefer the existing Federer source and cite Section 3.2.3 specifically. The existing BibTeX key is federer1969gmt; preserve or normalize its 1969 original-edition metadata consistently, and do not create duplicate editions or keys.
+
+At the current Step 004 application near the graph-Jacobian computation, cite the new theorem and explicitly discharge all instantiated objects and hypotheses: k=N-1, n=N, D=mathcal B_{j,theta}, Xi=Psi_j(theta,cdot), domain measurability, injectivity/bijectivity onto the exact affine section, the computed Gram determinant and its square root, nonnegative Borel integrand, extended-real scope, and N=1 equivalently k=0. The result must make clear that no orientation sign, multiplicity factor, or boundary deletion appears. Keep cube faces and corners. Optionally correct the existing prose typo "area/multiplicity multiplicity" if present.
+
+Preserve every theorem claim, quantifier, literal constant, dependency, accepted proof-step artifact, source boundary, public label target, and all other bundle content except edits strictly needed for this repair and consistency. Do not alter the exact unconditional formalized goal, the closed six-producer interface of step_012, Counter-example 1, the three distinct scales 1/(4 delta), 1/delta, and sqrt(2)/delta, either baseline-invariance obligation, or the stated no-unrestricted-raw-Pfaffian-certificate boundary. Do not introduce an independent proof result beyond the accepted cited theorem already present in step_004.
+
+Keep assembly_report.md Status COMPLETE only if the repaired bundle still proves the exact goal and every assembly gate passes; update its notes so the assembly report honestly records the repaired public cited-result integration. Run the complete proof-assembly self-check, exact nine-file manifest check, protected-input hash check, ASCII/control-byte/final-LF hygiene, label/ref/citation/BibTeX integrity, balanced-environment checks, and a fresh temporary-copy TeX/BibTeX/rerun build. Do not leave build byproducts in latex_template/. Before returning, report the exact changed output files, final SHA-256 values for assembly_report.md and all nine bundle files, compile result and warnings, and confirmation that all protected inputs remained unchanged.

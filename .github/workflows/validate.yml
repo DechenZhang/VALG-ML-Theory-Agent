@@ -1,0 +1,33 @@
+name: Validate repository
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  repository:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate skills and case-study corpus
+        run: bash scripts/validate-repository.sh
+      - name: Check Markdown links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --offline
+            './README.md'
+            './CONTRIBUTING.md'
+            './CHANGELOG.md'
+            './THIRD_PARTY_NOTICES.md'
+            './docs/**/*.md'
+            './examples/**/*.md'
+            './case-studies/colt-2026/README.md'
+            './case-studies/colt-2026/*/README.md'
+            './case-studies/colt-2026/*/sp-*/README.md'
+            './case-studies/colt-2026/evaluation/**/*.md'
+          fail: true

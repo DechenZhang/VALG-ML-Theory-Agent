@@ -1,0 +1,129 @@
+\section{Theoretical Setup}\label{sec:theoretical-setup}
+
+\subsection{Problem Setting}\label{sec:problem-setting}
+Fix integers $N\geq1$, $q\geq0$, and $m\geq0$, a number $T>0$, and a nondegenerate compact interval
+$\Theta\subseteq[-T,T]$. Let $U\supseteq\Theta$ be an open interval. We use the one-dimensional
+Balcan--Nguyen--Sharma common-chain convention \citep{balcan2024structured}. Let
+$\eta=(\eta_1,\ldots,\eta_q)$ be a common triangular chain on $U$ satisfying
+\begin{equation}
+\label{eq:setup-display-001}
+\eta_j'(\theta)=P_j(\theta,\eta_1(\theta),\ldots,\eta_j(\theta)),\qquad 1\leq j\leq q,
+\end{equation}
+and let $Q_i(\theta,y_1,\ldots,y_q)$, $0\leq i\leq N$, be output polynomials. With total degree,
+\begin{equation}
+\label{eq:setup-display-002}
+M:=\begin{cases}\max_{1\leq j\leq q}\deg P_j,&q\geq1,\\0,&q=0,\end{cases}
+\qquad
+\Delta:=\max_{0\leq i\leq N}\deg Q_i,
+\end{equation}
+define
+\begin{equation}
+\label{eq:setup-display-003}
+F_i(\theta):=Q_i(\theta,\eta_1(\theta),\ldots,\eta_q(\theta)),
+\qquad
+\widetilde F:=(F_0,F_1,\ldots,F_N),
+\qquad F:=(F_1,\ldots,F_N).
+\end{equation}
+The coordinate $F_0$ is deterministic and only the coefficients multiplying $F_1,\ldots,F_N$ are random.
+
+Let $B:U\to\mathbb R^{(N+1)\times(N+1)}$ be a supplied polynomial matrix,
+\begin{equation}
+\label{eq:setup-display-004}
+B_{rs}(\theta)=\sum_{\ell=0}^{m}b_{rs,\ell}\theta^\ell,
+\qquad 0\leq r,s\leq N,
+\end{equation}
+and set $T_*:=\max\{1,T\}$. Its static coefficient-height certificate is
+\begin{equation}
+\label{eq:setup-display-005}
+\widehat\Lambda_{B,T}:=\left(\sum_{r=0}^{N}\sum_{s=0}^{N}
+\left(\sum_{\ell=0}^{m}|b_{rs,\ell}|T_*^\ell\right)^2\right)^{1/2}.
+\end{equation}
+
+For $R>0$ and $0<\kappa<\infty$, let $\mathcal D_{N,R,\kappa}$ be the class of Borel probability laws
+on $\mathbb R^N$ having one Lebesgue density $f_\mu$ supported on $[-R,R]^N$ with
+$0\leq f_\mu\leq\kappa$ almost everywhere. Coordinates may be arbitrarily correlated. Assume this class is
+nonempty, write $\mathcal D:=\mathcal D_{N,R,\kappa}$, and set
+\begin{equation}
+\label{eq:setup-display-006}
+A:=(2R)^N\kappa.
+\end{equation}
+The affine event and its section are
+\begin{equation}
+\label{eq:setup-display-007}
+\phi_\alpha(\theta):=F_0(\theta)+\langle\alpha,F(\theta)\rangle,
+\qquad
+H_\theta:=\{a\in\mathbb R^N:F_0(\theta)+\langle a,F(\theta)\rangle=0\}.
+\end{equation}
+Whenever $F_j(\theta)\neq0$, write the nonpivot coordinates as
+$\beta=(\beta_i)_{i\neq j}\in[-R,R]^{N-1}$ and define
+\begin{equation}
+\label{eq:setup-display-008}
+T_j(\theta,\beta):=-\frac{F_0(\theta)}{F_j(\theta)}
+-\sum_{i\neq j}\beta_i\frac{F_i(\theta)}{F_j(\theta)}.
+\end{equation}
+Let $\Psi_j(\theta,\beta)$ insert $T_j$ in coordinate $j$ and $\beta_i$ in every other coordinate.
+The associated graph Jacobian is $|\det D\Psi_j|=|\partial_\theta T_j|$.
+
+The anchor and closure are theorem-critical conditions. Under them, $F\neq0$ on $\Theta$, so define
+\begin{equation}
+\label{eq:setup-display-009}
+\gamma_F(\theta):=\frac{F(\theta)}{\|F(\theta)\|_2},\qquad
+\Gamma_{\mathrm{proj}}(F):=\sup_{\theta\in\Theta}\|\gamma_F'(\theta)\|_2.
+\end{equation}
+Finally, for positive-length intervals, define
+\begin{equation}
+\label{eq:setup-display-010}
+C^{\mathrm{Pf}}_{\mathcal D}(F;\Theta):=
+\sup_{\mu\in\mathcal D}\sup_{\substack{I\subseteq\Theta\ \mathrm{interval}\\|I|>0}}
+\frac{\Pr_{\alpha\sim\mu}[\exists\theta\in I:\langle\alpha,F(\theta)\rangle=0]}{|I|},
+\end{equation}
+\begin{equation}
+\label{eq:setup-display-011}
+C^{\mathrm{aff}}_{\mathcal D}(F_0,F;\Theta):=
+\sup_{\mu\in\mathcal D}\sup_{\substack{I\subseteq\Theta\ \mathrm{interval}\\|I|>0}}
+\frac{\Pr_{\alpha\sim\mu}[\exists\theta\in I:\phi_\alpha(\theta)=0]}{|I|}.
+\end{equation}
+
+\subsection{Assumptions}\label{sec:assumptions}
+\begin{assumption}[Static one-dimensional parameter regime]\label{assump:parameter-regime}
+$N\geq1$, $q\geq0$, $m\geq0$, $T>0$, $R>0$, and $0<\kappa<\infty$ are finite fixed instance data;
+$\Theta\subseteq[-T,T]$ is nondegenerate compact, $U\supseteq\Theta$ is open, and
+$\mathcal D_{N,R,\kappa}$ is nonempty. All presentation degrees, matrix coefficients, and support parameters
+are fixed before a law or interval is selected.
+\end{assumption}
+
+\begin{assumption}[Balcan common-chain presentation]\label{assump:balcan-common-chain}
+The chain and output polynomials use the triangular equations and degree convention in the problem setting, with ambient
+parameter dimension $p=1$. Thus $q$ is chain length, $M$ is chain degree, and $\Delta$ is output-function degree.
+\end{assumption}
+
+\begin{assumption}[Anchored static derivative closure]\label{assump:anchored-derivative-closure}
+There is a fixed $j_*\in\{1,\ldots,N\}$ with $Q_{j_*}\equiv1$, and the supplied deterministic matrix obeys
+\begin{equation}
+\label{eq:setup-display-012}
+\widetilde F'(\theta)=B(\theta)\widetilde F(\theta)\qquad(\theta\in U).
+\end{equation}
+Consequently $F_{j_*}\equiv1$ and $\|F(\theta)\|_2\geq1$. No projective-speed, transversality, or
+swept-area bound is assumed here.
+\end{assumption}
+
+\begin{assumption}[Arbitrarily correlated capped joint laws]\label{assump:cube-density-laws}
+The coefficient vector is drawn from an arbitrary $\mu\in\mathcal D_{N,R,\kappa}$. The only distributional
+inputs are cube support and the one full-joint density cap; no independence, marginal-density, or
+conditional-density condition is imposed.
+\end{assumption}
+
+\subsection{Formalized Goal}\label{sec:formalized-goal}
+The theorem below proves, without an additional assumption, the exact anchored derivative-closure
+coefficient-sweep goal. It includes the static certificate and homogeneous normalized-curve identity, the
+equivalent measurable pivot-chart inequalities, the coordinate-free affine rate and capacity, the sharper
+homogeneous rate and capacity, the exact affine-monic presentation/certificate and probability recovery, and
+Counter-example 1 with selected-law probability $\epsilon/(4\delta)$ and positive-length ratio
+$1/(4\delta)$, all-law upper coefficient $1/\delta$, and raw certificate and projective speed $1/\delta$,
+with their distinct probabilistic and certificate origins made explicit. All probabilities are ordinary
+probabilities for a fixed law, all interval
+suprema precede the outer law supremum,
+and all stated vector, operator, Frobenius, scalar, Lebesgue, and Hausdorff norms and measures are Euclidean.
+The conclusion is confined to presentations satisfying the supplied anchor and derivative-closure certificate;
+it makes no claim that an unrestricted raw Pfaffian presentation admits that certificate or any polynomial
+presentation-format bound.

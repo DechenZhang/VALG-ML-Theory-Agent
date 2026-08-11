@@ -1,0 +1,51 @@
+\section{Proof Sketch}\label{sec:proof-sketch}
+
+The proof first conjugates binary labels and hypotheses by the
+pointwise bijection \(y\mapsto2y-1\).  This preserves realizability,
+zero-one loss, iid laws, exact atom probabilities, measurable output
+events, and replacement adjacency.  The stable-selection theorem of
+\citet{bun2021equivalence} can therefore be applied to the producer
+in Assumption~\ref{assump:polynomial-global-stability}.  Its
+construction depends on the fixed producer and public parameters,
+not on the realizable distribution or its frequent atom, which yields
+one distribution-free arbitrary-output learner.
+
+The resulting two-term sample bound is then specialized without
+discarding any logarithmic or confidence term.  With
+\(b=2a+2\), every term is dominated explicitly by
+\(q^b(1+T_a(q,L))\), and a constant \(K_a\) with only the declared
+dependence suffices.  Prefix projection pads the learner to exactly
+\(N_a(q,L,\varepsilon_0)\) inputs while preserving both utility and
+privacy.
+
+Next, the privacy parameter is evaluated exactly:
+\[
+\delta_a(q,L)
+=\frac{e^{-q^b}}{\log(e^e+L)},\qquad
+\log(1/\delta_a(q,L))
+=q^b+\log\log(e^e+L).
+\]
+The cardinality factor remains active when \(q\) is bounded.
+For a class sequence, the full quantifier order in the
+superpolynomial condition and
+\(\ell_\kappa\leq L_\kappa/\log2\) imply
+\(q_\kappa=L_\kappa^{o(1)}\).  Direct exponent allocation through
+\(T_a\), the product defining \(N_a\), and its ceiling then proves
+\(N_\kappa=L_\kappa^{o(1)}=o(L_\kappa)\).
+
+Finally, writing \(x_\kappa=q_\kappa^b\) and
+\(u_\kappa=u(L_\kappa)\), the exact privacy product factors into an
+\(x_\kappa\)-term that is uniformly bounded on \([1,\infty)\) and an
+\(u_\kappa\)-term that tends to zero:
+\[
+\delta_\kappa N_\kappa^\rho
+\leq C_{\rho,\varepsilon_0,K_a}
+\bigl[e^{-x_\kappa}x_\kappa^\rho(1+x_\kappa)^\rho\bigr]
+\bigl[e^{-u_\kappa}(1+u_\kappa)^\rho\bigr].
+\]
+This proves privacy negligibility for every fixed \(\rho>0\),
+including bounded \(q_\kappa\).  Privacy monotonicity is used only
+toward a larger additive allowance, and the exact learners with
+\(N_\kappa/L_\kappa\to0\) contradict every eventual positive linear
+lower bound.  The complete derivations and the final assembly appear
+in Section~\ref{sec:proof-details}.

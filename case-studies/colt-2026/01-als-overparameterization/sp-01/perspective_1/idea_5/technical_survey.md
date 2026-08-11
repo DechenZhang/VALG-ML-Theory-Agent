@@ -1,0 +1,277 @@
+# Technical Survey
+
+## Current Idea Branch
+
+- Perspective: `perspective_1` (global convergence for asymmetric CP least squares)
+- Current idea: `idea_5` (SC-JEP-ALS with an observable same-state
+  projective-stationarity certificate and certified-state carry-over)
+- Survey pass: attempt 10, revised after the archived global review at
+  `proof_history/sketch_009/global_proof_review.md`
+- Setting / goal summary: Under bounded base scales, cumulative modewise Gram
+  mass at most `q_* / 4`, near-balanced weights, and source Gaussian
+  smoothing, prove a conditional end-to-end relative-error theorem with
+  `k = Theta(r^(5/3) (log r)^(5/2))`.  A covered Jacobi proposal must certify
+  within `O(log r)` additional sweeps, certified high-score states must form
+  exactly one observable cluster per component, and the stored states
+  themselves must enter a quantitative cyclic-ALS basin.
+
+## Candidate Frameworks
+
+### Framework 1: Same-state projective normal equations and spatial row/column small gain
+
+- Source papers: *Guarantees for Alternating Least Squares in
+  Overparameterized Tensor Decompositions* (NeurIPS 2025,
+  https://proceedings.neurips.cc/paper_files/paper/2025/hash/70791f20a907b7f7cb2ad8ade32486b2-Abstract-Conference.html);
+  `perspective_1/idea_4/technical_survey.md`;
+  `perspective_1/idea_4/proof_sketch_review.md`; `perspective_1/idea_5/idea.md`
+- Applicability to current branch: The NeurIPS paper supplies the simultaneous
+  old-state Jacobi convention.  The current branch replaces the failed
+  last-displacement handoff by an approximate projective fixed-point
+  certificate.  For each stored state, multiplying the certificate by the
+  contraction norm gives the raw right-sided equation
+  `P_M^raw D_M=G_M K_M^raw Sigma_M+R_M^raw`, with the weight diagonal retained in
+  `K_M^raw`; after score orientation it becomes
+  `bar P_M D_M=G_M bar K_M+bar R_M`.  Both pair matrices and directions are
+  formed from that stored state, so passing to the true-factor dual
+  coordinates avoids every pre-update/post-update identification that blocked
+  idea 4.  The proof sketch now keeps the setting objects binding: the
+  setting-level `P,Q,S,K,D,theta` remain raw algorithm objects, with
+  `P_M^raw:=P_M` and `K_M^raw:=K_M`.  Proof-only oriented copies
+  `bar P,bar K,bar R` are introduced only after score filtering; `D` is
+  unchanged, the initialized z sign remains the setting sign, and
+  `bar theta=abs(theta)` is used only by downstream proof estimates.  Thus
+  no later declaration rebinds a symbol used by `setting.md` initialization.
+  At the tail producer, `G_M^T P_M^raw=H_Mc_M` with `H_M=I+F_M`; expanding
+  `(H_{M'}c_{M'})circ(H_{M''}c_{M''})` gives the two Cauchy first-order terms
+  and the `q_*^2` cross term, while the coefficient-norm scalars cancel into
+  `hat alpha_M` and leave only the `5q_*^2` scalar reserve.
+- Proof roadmap:
+  1. Derive the realized norm, Gram-row, weight, and Khatri-Rao events and the
+     rare three-mode Gaussian window coverage.
+  2. Prove the displayed simultaneous `R,S` recurrences, then construct the
+     explicit `chi_chart=1/128` quotient chart and Banach fixed point; make
+     consecutive projective displacements fall below `tau_r` in the
+     certification window.
+  3. Produce the oriented same-state certificate equation for every certified
+     slot before target labels or clustering, retaining a sign diagonal and an
+     l2 residual budget `d tau_r`.
+  4. Emit a global no-label `E_cert_tail` ledger for every certified state:
+     first mark proof-only LOW scores below `0.7lambda_min`, normalize
+     `mu_i=lambda_i/lambda_min`, and expand the two first-order Gram-factor
+     leakages as `E'+E''+E'circ E''`, giving the coefficient-vector budget
+     `eta_G=2q_*+q_*^2`; absorb coefficient norms into `hat alpha_M` and
+     retain the exact scalar remainder reserve `eta_N=5q_*^2` and
+     `eta_C=2sqrt(r)tau_r`.  The finite conversion is
+     `sqrt(r)tau_r=q_*^2/(10^4sqrt(r))`, which is absorbed without changing
+     rank or probability.  With `eta_0=eta_G+eta_N+eta_C` and
+     `eta_rel=8eta_0`, threshold at `vartheta=1/8`, prove
+     `vartheta_*>1/16`, derive the norm-scalar ratio
+     `0.995<=s_M/(s_{M'}s_{M''})<=1.005`, hence `alpha_M>=0.69`,
+     `d_0<=16eta_0`, a ratio
+     product `104eta_0` (the mode-M factor cancels when solving its squared ratio), and the
+     normalized profile `|delta_{M,i}|<=144eta_0`, charge singleton
+     l1 tails by `a_cert=7q_*+8tau_r`, and charge the weighted
+     multi-support score tails by `8.08eta_0+2eta_rel^2/vartheta_*<16eta_0`.
+     Feed that ledger into a weighted support/score lemma that
+     retains `diag(lambda)`, covers arbitrary m-support orthogonal fixed
+     points, uses the exact score `S_I=(sum lambda_i^(-2))^(-1/2)` at the
+     unequal-weight boundary, handles threshold-straddling, negative, and
+     zero scores, and proves observable cluster correctness.
+  5. In dual coordinates, close the explicit small-root column inequality and
+     then the incoming row mass from the same-state equation.  The static
+     forcing is quadratic in Gram mass; a per-entry dual residual bound gives
+     `O(r tau_r)` in both induced `l1` norms without an `r^2 tau_r` loss.
+  6. Transfer certified directions and observable best scalars into a
+     numerical quotient entry (`rho_ALS=1/1024`) using the represented-product
+     amplitude coordinate after canonical equal-norm balancing, so raw
+     per-mode scales are quotiented and the absolute `kappa_0` scale cancels.
+  7. Before invoking local contraction, retain the accepted perpendicular
+     columns `N_M`, expand the exact held pair Gram into target-span,
+     mixed-perpendicular, and shared-perpendicular pieces, and charge the
+     latter by `beta_perp=O(tau_r^2+r tau_r^4)`.  Prove the first cyclic
+     `U,V,W` sweep is nonsingular and maps each updated mode exactly into its
+     target span.
+  8. Prove the numerical quotient contraction only on the generated
+     target-span tube, where the full dual row/column interface controls the
+     pair Gram and the target-span condition is invariant.  Use the
+     scale-equivariant canonical equal-norm representative after each block;
+     treat each block solve as a gauge-fixed coordinate-output map with a
+     held-input codomain, compose the U/V/W recurrence, and explicitly assemble
+     the product-one/equal-norm gauge for the completed sweep.
+- Key lemmas / ingredients: normalized Gaussian Gram perturbation; correlated
+  Gaussian regression and pair-product tails; the simultaneous ratio and
+  pair-mass recurrences; contraction-mapping displacement decay; weighted
+  support/score classification of Jacobi fixed points; true-factor dual bases;
+  induced row/column Hadamard inequalities; and a quantitative
+  block-normal-equation perturbation bound.
+- Main transfer challenges: Certification must be reached from every covered
+  window without assuming convergence; the per-state equation must precede
+  all-certified-state classification; the dual certificate residual must be
+  normalized by the target weight without losing more than `r tau_r`; and the
+  local ALS source has an existential neighborhood, so a current-notation
+  uniform radius and exact zero-padding bridge are required.  The archived
+  step-008 review additionally shows that the old max-column quotient ball
+  permits a coherent `r t^4` pair-Gram term.  The repair must therefore keep
+  the accepted `N_M` decomposition through the first sweep, expose the
+  `tau_r^2` mixed terms and `r tau_r^4` shared term, prove exact unfolding
+  range containment, and only then export a target-span contraction domain.
+  Attempt 10 additionally fixes the block-map object identity: a one-block
+  output is measured in a mode-coordinate seminorm and depends only on its two
+  held inputs; the sequential U/V/W recurrence and final gauge transfer are
+  exposed before exporting the full-sweep factor.  The global
+  threshold/tail ledger, coefficient-vector Gram expansion, exact normalization cancellation, denominator arithmetic
+  (`104eta_0` ratio, `144eta_0` profile), and raw/post-score notation; the
+  right-side sign-matrix convention and product-preserving gauge used when
+  `theta<0` remain binding interfaces.
+- Potential repair techniques and supporting references:
+  - Technique: Treat the projective residual as a same-state normal-equation
+    residual and close row mass only after a member-local column bootstrap.
+  - Supporting reference: `perspective_1/idea_5/idea.md` and the failed
+    time-slice audit in `perspective_1/idea_4/proof_sketch_review.md`.
+  - Why it may help: Off-diagonal coefficients are products of two
+    `Gram + coefficient-error` terms.  Thus the row inequality has the form
+    `eta <= C(q + chi)(q + eta) + C r tau_r`, with no unsourced temporal
+    transition term.
+  - Technique: Use a contraction-mapping estimate to bound successive Jacobi
+    displacements rather than claiming finite-time arrival at an exact fixed
+    point.
+  - Supporting reference: the simultaneous Jacobi map in the NeurIPS 2025
+    paper and the exact map recorded in `perspective_1/idea_5/setting.md`.
+  - Why it may help: Once the covered trajectory enters the target chart,
+    `zeta(h^{t+1}) <= L zeta(h^t)` with `L < 1/4`, so the observable tolerance
+    is reached in `O(log r)` sweeps.
+  - Technique: Emit a global threshold/tail ledger from the same-state
+    certificate before clustering.  Normalize `mu=lambda/lambda_min`, use
+    `vartheta=1/8`, and split proof-only LOW, singleton-core, multi-core, and
+    threshold-straddling states with explicit `a_cert` and `tail_score` fields.
+  - Supporting reference: the same-state weighted normal equations in
+    `perspective_1/idea_5/setting.md` and the threshold obligation recorded in
+    `proof_history/sketch_014/proof_sketch_review.md`.
+  - Why it may help: Every certified state is classified without target labels
+    or the covered-only `E_chart_l1`; LOW is discharged by the unchanged
+    `0.85 sigma_max` rule rather than a new algorithmic filter.  The direct bound
+    `|theta| <= lambda_max(1/sqrt(2)+160eta_0)`; numerically
+    `1.01s_mix<0.794<0.85s_-`, so the `0.85` filter remains separated under
+    `Gamma<=1.01`.
+  - Technique: Use a reachable-trajectory first-sweep bridge for local ALS.
+  - Supporting reference: accepted
+    `perspective_1/idea_5/proof_steps/step_007/proof.md` and the exact CP
+    unfolding in `perspective_1/idea_5/setting.md`.
+  - Why it may help: The accepted selected entry has per-column perpendicular
+    residual at most `tau_r` and simultaneous dual row/column mass
+    `O(q_*^2+r tau_r)`.  The exact held pair Gram then has contamination
+    `O(tau_r^2+r tau_r^4)`, while each updated unfolding lies in the matching
+  target span.  One sweep removes all perpendicular fields, after which the
+  quotient row/column norm is sufficient for a uniform contraction.
+  - Technique: Define block ALS outputs as gauge-fixed quotient coordinate maps
+    and compose them in the U/V/W Gauss--Seidel sequence.  For canonical held
+    norms `R_gamma=diag(gamma^(1/3))`, the exact solve factors as
+    `T_(M)K_dir J^(-1)R_gamma^(-2)`, so the represented product and normalized
+    direction are independent of raw held scales.
+  - Supporting reference: the exact cyclic update order in
+    `perspective_1/idea_5/setting.md` and the quotient scaling convention in
+    `perspective_1/idea_5/proof_steps/step_007/proof.md`.
+  - Why it may help: A full-state one-block map leaves its held coordinates
+    unchanged and cannot have a coefficient below one.  A gauge-fixed
+    mode-coordinate seminorm records only the newly solved quotient block,
+    exposes its two held inputs, and removes pure componentwise scaling before
+    the explicit recurrence and product-one gauge assembly.
+- Disposition: `selected`
+- Branch notes: This is not the idea-4 last-update coefficient framework.
+  There is no pre-state pair matrix.  The earlier attempt-8 repair inserted the global
+  `E_cert_tail` producer before weighted `E_support_wt`, replaces the invalid
+  unweighted uniform-profile claim by a direct weighted score bound, exports
+  ratio-l1 and per-entry residual interfaces, and keeps the setting's raw
+  `P,Q,S,K,D,theta` distinct from proof-only barred representatives.  The
+  ledger records the coefficient-vector budget `eta_G=2q_*+q_*^2`, exact
+  scalar normalization cancellation with `eta_N=5q_*^2`, `eta_C`, the exact
+  finite-support `sqrt(r)tau_r` conversion, the retained-floor denominator
+  chain, the `104eta_0` ratio product, and the `144eta_0` profile bound.
+  Gauge-invariant represented-product coordinates make `C_best=512` independent
+  of `kappa_0`; the numerical tube remains
+  `rho_ALS=1/1024`.  At `q_real=0`, a finitely certified transient may have
+  nonzero error, and that error remains in `R_M^raw` (or `bar R_M` after
+  orientation); only an exact fixed point has zero certificate residual.  The
+  rho-zero case is an explicit deterministic limiting specialization, not a
+  new primitive probability domain.  Attempt 10 adds only the derived
+  first-sweep interface; it does not add a perpendicular-incoherence
+  assumption or narrow the theorem to arbitrary target-span initializations.
+
+### Inherited Constant Audit For Attempt 10
+
+At the worst finite-support case `r=1`, the repaired reserve satisfies
+`eta_0<4.89e-4`, `eta_rel<3.91e-3`, and `vartheta_*>0.0937`.  The coefficient
+scale bounds give `alpha_M>=0.69`, the ratio product is below `104eta_0`,
+the normalized profile below `144eta_0`, the singleton tail is below
+`1.43e-3<a_cert`, and the multi-support score tail is below
+`4.29e-3<16eta_0`.  The resulting score margins are
+`s_->0.953`, `s_+<1.047`, and `1.01s_mix<0.794`; hence
+`1.01s_mix<0.85s_-` and `s_-/(1.01s_+)>0.901`.  The graph radius,
+`chi_-<=32omega`, `C_best=512`, `rho_ALS=1/1024`, the `2r tau_r` residual
+conversion, and the exact rho-zero baseline are unchanged by this ledger
+rerun.
+
+### Framework 2: Quantitative quotient-Hessian cyclic CP-ALS
+
+- Source papers: Andre Uschmajew, *Local Convergence of the Alternating Least
+  Squares Algorithm for Canonical Tensor Approximation*, SIAM J. Matrix Anal.
+  Appl. 2012, DOI `10.1137/110843587`, Assumption 1, Lemma 3.2, Theorems 3.3
+  and 3.5
+- Applicability to current branch: The source matches exact CP least squares
+  after componentwise scaling is quotiented out.  It applies only after the
+  certified best-scalar factors have been compared with the exact realized
+  factors.  It supplies the qualitative block-Gauss--Seidel mechanism, not
+  random entry or a numerical radius.
+- Proof roadmap:
+  1. Use the realized Gram floors and dual bases to identify the derivative
+     kernel exactly with the CP scaling tangent.
+  2. Restate the cyclic normal equations in the branch's balanced chart and
+     prove a uniform inverse and Lipschitz bound on an explicit tube.
+  3. Invoke the cited derivative identification only after its hypotheses and
+     current-object mapping have been discharged.
+- Key lemmas / ingredients: Khatri--Rao spectral floors; quotient Hessian
+  `J^T J`; diagonal balancing; inverse perturbation; and cyclic block-map
+  composition.
+- Main transfer challenges: The source neighborhood is existential, the source
+  uses equilibrated coordinates, and it does not cover zero-padded inactive
+  columns.  The branch must prove its own numerical tube and show that freezing
+  the inactive columns is exactly the active rank-`r` problem.
+- Potential repair techniques and supporting references:
+  - Technique: Derive the radius and contraction constant directly from the
+    normalized Khatri--Rao normal equations, using the cited paper only for
+    the quotient interpretation.
+  - Supporting reference: DOI `10.1137/110843587`, Lemma 3.2 and Theorems 3.3,
+    3.5.
+  - Why it may help: It makes the source's known non-output boundary explicit
+    and prevents an existential basin from being used as a generated entry
+    condition.
+- Disposition: `backup`
+- Branch notes: This is the terminal component of Framework 1, not an
+  alternative global-entry proof.
+
+### Framework 3: Smoothed product-factor conditioning
+
+- Source papers: *Smoothed Analysis of Tensor Decompositions* (STOC 2014,
+  arXiv:1311.3651); *New Tools for Smoothed Analysis: Least Singular Value
+  Bounds for Random Matrices with Dependent Entries* (STOC 2024,
+  arXiv:2405.01517)
+- Applicability to current branch: These sources support the general static
+  conditioning pattern but do not provide the required normalized Gram-row
+  bounds or any SC-JEP-ALS trajectory statement.  The branch's stronger
+  primitive margins make a direct current-notation concentration argument
+  shorter and more transparent.
+- Proof roadmap:
+  1. Separate linear directional, quadratic, and normalization perturbations.
+  2. Sum them by target row and allocate the finite confidence union.
+  3. Use Schur products to obtain every Khatri--Rao spectral floor.
+- Key lemmas / ingredients: Gaussian norm and inner-product concentration,
+  normalization perturbation, Gershgorin, and Schur products.
+- Main transfer challenges: Generic least-singular-value results do not imply
+  the branch's cumulative normalized Gram interface.
+- Potential repair techniques and supporting references:
+  - Technique: Use the displayed scalar smoothing margin directly.
+  - Supporting reference: arXiv:1311.3651 and arXiv:2405.01517.
+  - Why it may help: The papers validate the static smoothed-conditioning
+    lineage while the exact row-sum arithmetic remains branch-local.
+- Disposition: `backup`
+- Branch notes: This framework is confined to the static instance step.

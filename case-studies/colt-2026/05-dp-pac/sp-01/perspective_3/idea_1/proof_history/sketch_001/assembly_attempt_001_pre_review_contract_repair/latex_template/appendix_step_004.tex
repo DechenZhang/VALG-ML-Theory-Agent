@@ -1,0 +1,517 @@
+\begin{lemma}[Exact compact polytope of source-private kernels]\label{lem:step-004-kernel-polytope}
+Under the primitive finite one-block definitions, let \(d_*>0\), fix
+integers \(N\ge2\), \(M\ge8\), and put
+\(\bar\delta_M=d_*/(M^2\log M)\). Define
+
+\[
+\mathcal S_{N,M}:=([N]\times\{0,1\})^M,
+\qquad
+\mathcal G_N:=\{0,1\}^{[N]},
+\qquad
+D:=|\mathcal S_{N,M}|\,|\mathcal G_N|=(2N)^M2^N.
+\]
+
+Let \(\mathcal K_{N,M}\subset\mathbb R^D\) consist of the arrays
+\(K=(K_{s,g})_{s\in\mathcal S_{N,M},g\in\mathcal G_N}\) satisfying
+
+\[
+K_{s,g}\ge0,
+\qquad
+\sum_{g\in\mathcal G_N}K_{s,g}=1
+\quad(s\in\mathcal S_{N,M}),
+\tag{6}
+\]
+
+and, for every \emph{ordered} adjacent pair \(s\simeq s'\) and every event
+\(E\subseteq\mathcal G_N\),
+
+\[
+\sum_{g\in E}K_{s,g}
+\le
+e^{0.1}\sum_{g\in E}K_{s',g}+\bar\delta_M.
+\tag{7}
+\]
+
+Then \(\mathcal K_{N,M}\) is a nonempty compact convex polytope, and its
+points are in exact bijection with the output kernels of randomized
+unrestricted \((0.1,\bar\delta_M)\)-DP maps
+\(B:\mathcal S_{N,M}\to\mathcal G_N\).
+\end{lemma}
+
+\begin{proof}
+Both \(\mathcal S_{N,M}\) and \(\mathcal G_N\) are finite. Consequently,
+(6) is a finite family of linear equalities and inequalities. Although the
+all-event privacy family is large, it is also finite: there are finitely many
+ordered adjacent pairs and exactly \(2^{|\mathcal G_N|}\) subsets of the
+finite output space. Thus (7) is the \emph{exact} all-event approximate-DP
+definition expressed as finitely many closed affine halfspaces. In
+particular, no invalid replacement of all-event privacy by singleton-only
+constraints is made.
+
+The product of row simplexes defined by (6) is closed and bounded in
+\(\mathbb R^D\), hence compact. Intersecting it with the finitely many closed
+halfspaces (7) leaves a compact set. All constraints are affine, so the
+intersection is convex and is a polytope.
+
+For nonemptiness, fix any \(g_0\in\mathcal G_N\) and set
+
+\[
+K^0_{s,g}:=\mathbf 1\{g=g_0\}
+\quad\text{for every }s,g.
+\]
+
+The output distribution is identical for \(s\) and \(s'\). Hence it is
+\((0,0)\)-DP and satisfies (7), including the events containing \(g_0\) and
+those not containing it. Thus \(K^0\in\mathcal K_{N,M}\).
+
+If \(B\) is any randomized map, define
+\(K_{s,g}=\Pr[B(s)=g]\). Row-stochasticity is (6), and its all-event DP
+inequality is exactly (7), so a source-private \(B\) gives a point of
+\(\mathcal K_{N,M}\). Conversely, given \(K\in\mathcal K_{N,M}\), on input
+\(s\) draw \(g\) from the finite row distribution \((K_{s,g})_g\). This
+defines a randomized unrestricted map \(B_K\), and (7) proves its exact
+source-cap privacy for every event. The full set \(\mathcal G_N\) includes
+every improper, nonmonotone hypothesis.
+
+Only the output law on each input matters to both privacy and the one-call
+expected loss. Therefore arbitrary internal randomization is encoded without
+loss. Also, if a public object is hardwired into a learner's code, the
+resulting map still has one such finite kernel and belongs to
+\(\mathcal K_{N,M}\) whenever it satisfies source privacy. If a map is
+\((\varepsilon,\delta)\)-DP with
+\(0\le\varepsilon\le0.1\) and \(0\le\delta\le\bar\delta_M\), its event
+inequality is at most the right side of (7), so its kernel also belongs to
+\(\mathcal K_{N,M}\). Thus the polytope includes the exact cap and every
+stronger privacy pair below it. \end{proof}
+
+\begin{lemma}[Continuous payoff geometry and uniform strict game value]\label{lem:step-004-payoff-value}
+Under Lemma~\ref{lem:step-004-kernel-polytope} and Proposition~\ref{prop:step-003-expected-hardness}, fix integers
+\(N\ge N_*\), \(M\ge8\) satisfying (H). Give \([N+1]\) the discrete
+topology and \(\Delta([N])\) its Euclidean simplex topology, and set
+\(\mathcal I_N=[N+1]\times\Delta([N])\). Then:
+
+\begin{enumerate}
+\item \(\mathcal I_N\) is compact.
+\item The expected one-block loss \(\ell_{N,M}(K;t,Q)\) admits the finite
+   coefficient representation
+   \[
+   \ell_{N,M}(K;t,Q)=\langle K,a_{N,M}(t,Q)\rangle.
+   \]
+   It is affine and
+   continuous in \(K\), and jointly continuous in \((K,t,Q)\). For fixed
+   \(K,t\), its dependence on \(Q\) is generally polynomial of degree at
+   most \(M+1\), so only continuity, not affinity in \((t,Q)\), is claimed.
+\item The function
+   \[
+   f_{N,M}(K):=\max_{(t,Q)\in\mathcal I_N}
+      \ell_{N,M}(K;t,Q)
+   \]
+   is continuous on \(\mathcal K_{N,M}\), and the attained value
+   \[
+   v_{N,M}:=\min_{K\in\mathcal K_{N,M}}f_{N,M}(K)
+   \tag{8}
+   \]
+   satisfies \(v_{N,M}>\eta\).
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+The simplex \(\Delta([N])\) is closed and bounded in \(\mathbb R^N\), and
+\([N+1]\) is finite. Their product \(\mathcal I_N\) is compact. This includes
+every boundary face and every point mass of the simplex.
+
+Write an arbitrary labeled dataset as
+
+\[
+s=((x_1,y_1),\ldots,(x_M,y_M))\in\mathcal S_{N,M}.
+\]
+
+For \((t,Q)\in\mathcal I_N\) and \(g\in\mathcal G_N\), define
+
+\[
+p_{t,Q}(s)
+:=\left(\prod_{j=1}^M Q(x_j)\right)
+  \mathbf 1\{y_j=\tau_t(x_j)\text{ for every }j\},
+\tag{9}
+\]
+
+and
+
+\[
+r_{t,Q}(g)
+:=R_Q(g,\tau_t)
+=\sum_{x=1}^N Q(x)\mathbf 1\{g(x)\ne\tau_t(x)\}.
+\tag{10}
+\]
+
+Thus \(p_{t,Q}\) is exactly the mass function of
+\((Q^{\tau_t})^M\), including zero mass on every label-inconsistent
+dataset. Define the coefficient vector \(a_{N,M}(t,Q)\in\mathbb R^D\) by
+
+\[
+a_{N,M}(t,Q)_{s,g}:=p_{t,Q}(s)r_{t,Q}(g).
+\tag{11}
+\]
+
+For the learner represented by \(K\), direct expansion of the sample and
+output expectations gives
+
+\[
+\begin{aligned}
+\ell_{N,M}(K;t,Q)
+&:=\mathbb E_{\substack{S\sim(Q^{\tau_t})^M\\g\sim B_K(S)}}
+       R_Q(g,\tau_t)\\
+&=\sum_{s\in\mathcal S_{N,M}}p_{t,Q}(s)
+  \sum_{g\in\mathcal G_N}K_{s,g}r_{t,Q}(g)\\
+&=\sum_{s,g}K_{s,g}a_{N,M}(t,Q)_{s,g}
+=\langle K,a_{N,M}(t,Q)\rangle.
+\end{aligned}
+\tag{12}
+\]
+
+For fixed \(t\), every coordinate in (11) is a polynomial in the coordinates
+of \(Q\): (9) has degree \(M\) and (10) has degree one. Hence
+\(a_{N,M}\) is continuous on each simplex copy and therefore on the finite
+disjoint union \(\mathcal I_N\). Equation (12) is linear, hence affine and
+continuous, in \(K\), and is jointly continuous in \((K,t,Q)\). The product
+structure in (9) is precisely why no affine dependence on raw \(Q\) is
+asserted or needed.
+
+The compact coefficient image
+\(a_{N,M}(\mathcal I_N)\) is bounded. Therefore, for any
+\(K,K'\in\mathcal K_{N,M}\),
+
+\[
+\begin{aligned}
+|f_{N,M}(K)-f_{N,M}(K')|
+&\le
+\max_{(t,Q)\in\mathcal I_N}
+  |\langle K-K',a_{N,M}(t,Q)\rangle|\\
+&\le \|K-K'\|_2
+\max_{(t,Q)\in\mathcal I_N}\|a_{N,M}(t,Q)\|_2.
+\end{aligned}
+\tag{13}
+\]
+
+Thus \(f_{N,M}\) is continuous. Its inner maximum is attained because
+\(\mathcal I_N\) is compact, and its minimum in (8) is attained because
+\(\mathcal K_{N,M}\) is compact.
+
+Now fix any \(K\in\mathcal K_{N,M}\). By
+Lemma~\ref{lem:step-004-kernel-polytope}, \(K\) defines an arbitrary
+randomized unrestricted source-private map \(B_K\).  Proposition
+\ref{prop:step-003-expected-hardness} therefore supplies some
+\((t,Q)\in\mathcal I_N\) such that
+\[
+\ell_{N,M}(K;t,Q)>\eta.
+\]
+Hence
+
+\[
+f_{N,M}(K)>\eta
+\quad\text{for every }K\in\mathcal K_{N,M}.
+\tag{14}
+\]
+
+Let \(K_*\) attain the minimum in (8). Applying (14) to this actual
+minimizer, rather than taking an unattained infimum, yields
+
+\[
+v_{N,M}=f_{N,M}(K_*)>\eta.
+\tag{15}
+\]
+
+This is the required compactness upgrade from learner-by-learner strict
+hardness to one uniform strict game value. \end{proof}
+
+\begin{lemma}[Compact bilinear minimax via finite-dimensional separation]\label{lem:step-004-compact-minimax}
+Let \(X\) and \(Y\) be nonempty compact convex subsets of finite-dimensional
+real vector spaces, and let \(p:X\times Y\to\mathbb R\) be continuous and
+affine in each argument (in particular, a restricted bilinear pairing).
+Then both outer extrema below are attained and
+
+\[
+\min_{x\in X}\max_{y\in Y}p(x,y)
+=
+\max_{y\in Y}\min_{x\in X}p(x,y).
+\tag{16}
+\]
+\end{lemma}
+
+\begin{proof}
+Continuity on the compact product implies that
+\(x\mapsto\max_{y\in Y}p(x,y)\) is continuous; for example, uniform
+continuity of \(p\) bounds the change of the maximum by the same uniform
+modulus. Hence
+
+\[
+\alpha:=\min_{x\in X}\max_{y\in Y}p(x,y)
+\]
+
+is attained. The elementary weak minimax inequality gives
+
+\[
+\max_{y\in Y}\min_{x\in X}p(x,y)\le\alpha.
+\tag{17}
+\]
+
+We prove the reverse inequality by separation. Fix any real \(r<\alpha\).
+For each \(x\in X\), compactness of \(Y\) supplies some \(y_x\in Y\) with
+\(p(x,y_x)>r\). Continuity in \(x\) gives a neighborhood on which this same
+strict inequality holds. Compactness of \(X\) yields a finite subcover, so
+there are \(y_1,\ldots,y_m\in Y\) such that
+
+\[
+\max_{1\le j\le m}p(x,y_j)>r
+\quad\text{for every }x\in X.
+\tag{18}
+\]
+
+Define the affine continuous map
+
+\[
+F:X\to\mathbb R^m,
+\qquad
+F(x)=(p(x,y_1),\ldots,p(x,y_m)),
+\]
+
+and the closed convex lower orthant
+
+\[
+\mathcal D_r:=(-\infty,r]^m.
+\]
+
+The image \(F(X)\) is compact and convex, and (18) says
+\(F(X)\cap\mathcal D_r=\varnothing\). Strong separation provides a nonzero
+\(\lambda\in\mathbb R^m\) oriented so that
+
+\[
+\sup_{z\in\mathcal D_r}\langle\lambda,z\rangle
+<
+\inf_{x\in X}\langle\lambda,F(x)\rangle.
+\tag{19}
+\]
+
+Every coordinate of \(\lambda\) must be nonnegative: if
+\(\lambda_j<0\), sending the \(j\)-th coordinate of \(z\in\mathcal D_r\)
+to \(-\infty\) makes the left side of (19) infinite. Normalize the nonzero
+nonnegative vector so that \(\sum_j\lambda_j=1\). Then the left side of
+(19) is exactly \(r\), attained at \((r,\ldots,r)\), and hence
+
+\[
+\inf_{x\in X}\sum_{j=1}^m\lambda_jp(x,y_j)>r.
+\tag{20}
+\]
+
+Convexity of \(Y\) puts \(y_r:=\sum_j\lambda_jy_j\) in \(Y\), while
+affinity in the second argument turns (20) into
+
+\[
+\min_{x\in X}p(x,y_r)>r.
+\tag{21}
+\]
+
+Choose \(r_q\uparrow\alpha\). Compactness of \(Y\) gives a convergent
+subsequence \(y_{r_q}\to y_*\in Y\). For every fixed \(x\in X\), (21) and
+continuity give
+
+\[
+p(x,y_*)=\lim_q p(x,y_{r_q})\ge\lim_q r_q=\alpha.
+\]
+
+Thus \(\min_xp(x,y_*)\ge\alpha\). Together with (17), this proves (16) and
+shows that the right-hand maximum is attained at \(y_*\). \end{proof}
+
+\begin{lemma}[Compact coefficient hull and exact finite barycenters]\label{lem:step-004-finite-barycenter}
+Let \(I\) be a nonempty compact space and let \(a:I\to\mathbb R^D\) be
+continuous. Then
+
+\[
+\mathcal C:=\operatorname{conv}(a(I))
+\]
+
+is compact and convex. Moreover, every \(c\in\mathcal C\) has an exact
+representation
+
+\[
+c=\sum_{j=1}^r\lambda_j a(i_j),
+\qquad
+1\le r\le D+1,
+\quad
+\lambda_j\ge0,
+\quad
+\sum_{j=1}^r\lambda_j=1,
+\tag{22}
+\]
+
+with \(i_j\in I\). Consequently, for every \(K\in\mathbb R^D\),
+
+\[
+\langle K,c\rangle
+=\sum_{j=1}^r\lambda_j\langle K,a(i_j)\rangle
+\tag{23}
+\]
+
+exactly.
+\end{lemma}
+
+\begin{proof}
+Convexity is immediate from the definition. For the support bound, start
+from any finite convex representation
+\(c=\sum_{j=1}^q\lambda_ja(i_j)\), which exists by the definition of convex
+hull, and first remove every zero-weight term. Thus all remaining
+\(\lambda_j>0\). If \(q>D+1\), the points
+\(a(i_1),\ldots,a(i_q)\) are affinely dependent. Hence there are scalars
+\(\theta_j\), not all zero, such that
+
+\[
+\sum_{j=1}^q\theta_j=0,
+\qquad
+\sum_{j=1}^q\theta_ja(i_j)=0.
+\tag{24}
+\]
+
+After changing all signs if needed, at least one \(\theta_j>0\). Put
+
+\[
+\rho:=\min_{j:\theta_j>0}\frac{\lambda_j}{\theta_j}.
+\]
+
+Then \(\lambda'_j=\lambda_j-\rho\theta_j\) are nonnegative, sum to one,
+represent the same \(c\) by (24), and at least one formerly positive
+coefficient becomes zero. Removing zero coefficients and iterating gives
+(22). This is the affine-dependence proof of Caratheodory's theorem.
+
+The representation bound also proves compactness. Pad every representation
+to exactly \(D+1\) terms using zero weights. Then \(\mathcal C\) is the
+image of the compact set
+
+\[
+\Delta([D+1])\times I^{D+1}
+\]
+
+under the continuous map
+\((\lambda,i_1,\ldots,i_{D+1})\mapsto
+\sum_j\lambda_ja(i_j)\). Thus \(\mathcal C\) is compact. Equation (23)
+follows from bilinearity of the Euclidean pairing and introduces no
+approximation. \end{proof}
+
+\begin{proposition}[Finite public hard prior for source-private one-block kernels]\label{prop:step-004-finite-hard-prior}
+Let \(b_*,d_*>0\) and \(N_*\ge2\) be the constants supplied by Proposition~\ref{prop:step-003-expected-hardness}. Under that proposition and
+Lemmas~\ref{lem:step-004-kernel-polytope}--\ref{lem:step-004-finite-barycenter},
+for every integer \(N\ge N_*\) and integer \(M\ge8\) satisfying (H), there
+is a probability law \(\mu_{N,M}\) supported on at most
+
+\[
+D+1=(2N)^M2^N+1
+\tag{25}
+\]
+
+pairs in \([N+1]\times\Delta([N])\) such that every randomized unrestricted
+\((0.1,d_*/(M^2\log M))\)-DP one-block learner satisfies (HP). The prior is
+selected independently of the learner and may be revealed to it.
+\end{proposition}
+
+\begin{proof}
+Use the coefficient map in (11) and define
+
+\[
+\mathcal A_{N,M}:=a_{N,M}(\mathcal I_N),
+\qquad
+\mathcal C_{N,M}:=\operatorname{conv}(\mathcal A_{N,M}).
+\]
+
+Lemma~\ref{lem:step-004-finite-barycenter} makes
+\(\mathcal C_{N,M}\) a nonempty compact convex subset of \(\mathbb R^D\).
+For every fixed \(K\), linearity of the pairing gives
+
+\[
+\max_{c\in\mathcal C_{N,M}}\langle K,c\rangle
+=
+\max_{a\in\mathcal A_{N,M}}\langle K,a\rangle
+=f_{N,M}(K).
+\tag{26}
+\]
+
+Indeed, a convex combination cannot exceed the largest paired coefficient,
+and \(\mathcal A_{N,M}\subseteq\mathcal C_{N,M}\) gives the reverse
+inequality.
+
+Apply Lemma~\ref{lem:step-004-compact-minimax} with
+
+\[
+X=\mathcal K_{N,M},
+\qquad
+Y=\mathcal C_{N,M},
+\qquad
+p(K,c)=\langle K,c\rangle.
+\]
+
+The first set is nonempty compact convex by
+Lemma~\ref{lem:step-004-kernel-polytope}; the second is nonempty compact
+convex by Lemma~\ref{lem:step-004-finite-barycenter}; and the payoff is
+continuous bilinear. Thus all hypotheses of the separation-based minimax
+theorem are discharged. Equations (8), (15), and (26) yield the exact
+quantifier swap
+
+\[
+\begin{aligned}
+v_{N,M}
+&=\min_{K\in\mathcal K_{N,M}}
+  \max_{c\in\mathcal C_{N,M}}\langle K,c\rangle\\
+&=\max_{c\in\mathcal C_{N,M}}
+  \min_{K\in\mathcal K_{N,M}}\langle K,c\rangle
+>\eta.
+\end{aligned}
+\tag{27}
+\]
+
+Let \(c_*\in\mathcal C_{N,M}\) attain the maximum in (27). By
+Lemma~\ref{lem:step-004-finite-barycenter}, there are
+\(r\le D+1\), pairs \((t_j,Q_j)\in\mathcal I_N\), and nonnegative weights
+\(\lambda_j\) summing to one such that
+
+\[
+c_*=\sum_{j=1}^r\lambda_j a_{N,M}(t_j,Q_j).
+\tag{28}
+\]
+
+Remove zero weights and merge repeated pairs, and define the finite law
+
+\[
+\mu_{N,M}:=\sum_{j=1}^r\lambda_j\,\delta_{(t_j,Q_j)}.
+\tag{29}
+\]
+
+For every \(K\in\mathcal K_{N,M}\), equations (12), (27), and (28) give
+
+\[
+\begin{aligned}
+\mathbb E_{(t,Q)\sim\mu_{N,M}}\ell_{N,M}(K;t,Q)
+&=\sum_{j=1}^r\lambda_j
+  \langle K,a_{N,M}(t_j,Q_j)\rangle\\
+&=\langle K,c_*\rangle\\
+&\ge\min_{K'\in\mathcal K_{N,M}}\langle K',c_*\rangle\\
+&=v_{N,M}>\eta.
+\end{aligned}
+\tag{30}
+\]
+
+The first equality is the exact finite-prior expectation, not an
+approximation to a continuum. Lemma~\ref{lem:step-004-kernel-polytope}
+identifies every source-private randomized unrestricted \(B\) with one such
+\(K\), so (30) is precisely (HP).
+
+The construction of \(\mu_{N,M}\) uses the whole fixed strategy set
+\(\mathcal K_{N,M}\), not any selected learner. Once (29) is fixed and made
+public, a learner whose program refers to (29) still induces some kernel
+\(K\in\mathcal K_{N,M}\) if it is source-private; (30) was proved for every
+such kernel after the prior was fixed. Hence prior awareness does not change
+the quantifier order.
+
+Finally, no interiority was used. The compact instance space contains
+\(t=1,N+1\), every boundary distribution, and every point-mass \(Q\).
+Equations (9)--(12) remain polynomial and exact when some \(Q(x)=0\).
+Different thresholds that agree on the support of a point mass may give
+duplicate coefficient vectors, but duplicates neither invalidate the convex
+hull nor change (30). \end{proof}

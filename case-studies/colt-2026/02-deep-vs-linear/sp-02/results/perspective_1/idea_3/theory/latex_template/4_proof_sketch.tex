@@ -1,0 +1,34 @@
+\section{Proof Sketch}
+\label{sec:proof-sketch}
+
+First, Lemma~\ref{lem:step-001-canonical-validity} verifies the additive SQ
+condition separately at every reached query of the canonical rounded policy.
+Proposition~\ref{prop:step-001-canonical-membership} may therefore invoke the
+catalog assumption on an actual execution, and only on that execution.
+
+For fixed \((\mathcal D,h)\),
+Lemma~\ref{lem:step-002-attained-low-risk} considers only the measurable
+scalar actual-run loss.  Its finite range has an attained minimum no larger
+than its expectation, giving an actually occurring catalog function of risk
+at most \(\varepsilon\), without a measurable catalog selector.
+Proposition~\ref{prop:step-002-exact-correlation} converts this risk exactly
+to correlation at least \(\rho_{\varepsilon}\).
+
+For a nonempty finite \(F\subseteq\mathcal X\), instantiate that correlation
+statement at every finitely supported law on \(F\).  The resulting finite
+matrix game has value at least \(\rho_{\varepsilon}\).  Sion's minimax
+theorem \citep[Theorem~3.4]{Sion1958}, applied only after all of its
+finite-dimensional hypotheses are checked, reverses the two optimization
+orders.  Proposition~\ref{prop:step-003-finite-separator} then gives one
+catalog mixture meeting every margin constraint on \(F\); the empty set is
+handled separately by Lemma~\ref{lem:step-003-empty-restriction}.
+
+For fixed \(h\), each pointwise margin constraint is a closed subset of the
+single compact simplex \(\Delta_L\).  Finite feasibility gives the
+finite-intersection property, and the open-cover form of compactness yields
+the global weight in Proposition~\ref{prop:step-004-global-separator}.  The
+coordinate identity in Lemma~\ref{lem:step-005-coordinate-map} then turns
+that mixture into the exact Euclidean score.  Propositions
+\ref{prop:step-005-exact-signs} and
+\ref{prop:step-005-dimension-closure} finish the strict-sign and dimension
+conclusions without changing the margin or introducing a hidden factor.

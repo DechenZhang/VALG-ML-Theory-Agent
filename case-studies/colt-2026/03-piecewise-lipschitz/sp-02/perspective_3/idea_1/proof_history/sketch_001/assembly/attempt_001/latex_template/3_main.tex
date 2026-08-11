@@ -1,0 +1,72 @@
+\section{Main Theorem}\label{sec:main-theorem}
+
+\begin{theorem}[Fixed-family affine coordinate-pivot sweep]
+\label{thm:main}
+Under Assumptions~\ref{assump:shared-pfaffian-chain},
+\ref{assump:no-forced-root}, and \ref{assump:joint-density-cap}, the following
+statements hold.
+
+\begin{enumerate}[label=\textnormal{(\roman*)}]
+\item The static functional $\Gamma_{\rm piv}(b,F;R)$ is finite.  For every
+$\mu\in\mathcal D_{N,R,\kappa}$ and every interval $I\subseteq\Theta$ with
+$|I|>0$,
+\[
+\Pr_{\alpha\sim\mu}\!\left[
+  \exists\theta\in I:\phi_\alpha(\theta)=0
+\right]
+\leq
+\kappa(2R)^{N-1}\Gamma_{\rm piv}(b,F;R)|I|
+=\frac{A\Gamma_{\rm piv}(b,F;R)}{2R}|I|.
+\]
+Consequently,
+\[
+\sup_{\mu\in\mathcal D_{N,R,\kappa}}
+\sup_{\substack{I\subseteq\Theta\text{ an interval}\\|I|>0}}
+\frac{\Pr_{\alpha\sim\mu}[
+  \exists\theta\in I:\phi_\alpha(\theta)=0]}{|I|}
+\leq\frac{A\Gamma_{\rm piv}(b,F;R)}{2R}.
+\]
+
+\item For $0<\delta\leq1$, the scale-stress family satisfies
+\[
+\Gamma_{\rm piv}(b_\delta,F_\delta;1)=\frac1\delta.
+\]
+Moreover, under the uniform law on $[-1,1]^2$, for every
+$0<\epsilon\leq\delta$,
+\[
+\Pr\!\left[
+  \exists\theta\in[0,\epsilon]:
+  \alpha_1+\alpha_2\theta/\delta=0
+\right]
+=\frac{\epsilon}{4\delta}.
+\]
+
+\item For every integer $d\geq1$, the monic family, restricted to any
+compact interval $\Theta\subset\mathbb R$, satisfies
+\[
+\Gamma_{\rm piv}(b_d,F_d;R)
+\leq d+\frac{Rd(d-1)}2.
+\]
+For every $\mu\in\mathcal D_{d,R,\kappa}$, with arbitrary correlation among
+the $d$ lower coefficients, and every bounded interval
+$I\subset\mathbb R$,
+\[
+\Pr_{\alpha\sim\mu}\!\left[
+  \exists\theta\in I:p_\alpha(\theta)=0
+\right]
+\leq
+\kappa(2R)^{d-1}
+\left(d+\frac{Rd(d-1)}2\right)|I|.
+\]
+The coefficient of $\theta^d$ is deterministic and is not included in the
+$d$-dimensional random law.
+\end{enumerate}
+
+All displayed bounds are ordinary-probability statements.  They have no
+hidden constants, confidence parameters, horizon limits, or asymptotic
+qualifications.  The family descriptors
+$q,M,\Delta_{\rm rnd},\Delta_{\rm aff}$ are fixed and do not enter the
+bound as an additional factor.  This is a material-partial theorem: it does
+not assert polynomial general-instance control of $\Gamma_{\rm piv}$ from
+these descriptors or from other Pfaffian-format data.
+\end{theorem}

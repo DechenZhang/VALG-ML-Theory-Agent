@@ -1,0 +1,15 @@
+You are the distinct step-scoped reviewer for perspective_3/idea_1, step_004, unit attempt 1, sketch attempt 2, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+Read <CODEX_SKILLS_ROOT>/proof-step-review/SKILL.md completely and every directly required shared contract/template it names. Then independently review exactly perspective_3/idea_1/proof_steps/step_004/proof.md. Do not repair it.
+
+Binding SHA-256 values: setting 91119d2600ee2f787eb873796569ab53e35201e499bf81658d8a0bc1a8e7c79e; accepted sketch aabcf6f6302d5cfab51cc1495d683cfa353390df7bf0fa81c3beecfcb076d108; accepted sketch review 56d6b16524f0935fbfeee3802f4f6fe748cf0eebfdcfcdf1a66ddce763ebc88c; submitted proof 5ba08d410b755f28421fa6ba4b0ca9d711c6b22bcc5a2ab495cbede7c400da31; accepted dependency step_003 proof 600dae80a5c1e625dfce538a887d37242f083020b5042a8036ed014a79b91bdc; accepted dependency step_003 review c935863b672cd9244c1c9bb33a86037e0226b417608b9c80c911b35aa6fc824e; accepted global proof fcb7dc635362de5be5c61bbaf858c09ed9795863e8cdd5598247666d45b178b0; accepted global review 51006b10c890f501de7e1f6dd672a2ce07502b82251fcd58bbeef81ea006805b.
+
+Audit exactly unit_001 and unit_002. Verify that the full joint-density cap applies to the exact original-coordinate measurable event for every admissible possibly fully correlated law; that support, completion measurability, and ordinary-probability integration are handled correctly; and that the literal chain
+
+Pr(S_I) <= kappa lambda_N(S_I) <= kappa (2R)^(N-1) Gamma_piv |I| = A Gamma_piv |I|/(2R)
+
+uses A=(2R)^N kappa with no hidden factor or mode conversion. Verify all empty, zero-length, boundary, N=1, Gamma_piv=0, and cube-support cases. For capacity closure, check division only for positive-length intervals, the exact setting-defined order of inner interval supremum then outer law supremum, nonvacuity under the setting's nonempty law class and nondegenerate Theta, and that finiteness of Gamma_piv is legally inherited through the accepted dependency interface rather than assumed or imported from an unlisted artifact. Reject any product-law, marginal-density, confidence, union-bound, or polynomial general-instance conditioning claim.
+
+The sketch-attempt-1 live review is stale and has a matching consumed copy at perspective_3/idea_1/proof_history/sketch_001/proof_steps/step_004/attempt_001/review.md, SHA-256 7eb2ef7d37239b4af8e7c1aafd8eb4bc1725aab06a809bc7a1115467e0dc7a1b. Do not use proof_history or stale acceptance as current evidence. Write only perspective_3/idea_1/proof_steps/step_004/review.md.
+
+Use every required section, exactly two Per-Lemma Audit subsections, and raw controlled fields. Validate all binding hashes, sketch/step/unit identity, reviewed proof digest, headings, labels/references, table arity, stable assumption IDs, ASCII/control bytes, TeX balance, exact rate and quantifier preservation, fixed-family `material_partial` boundary, and file scope. Report status, smallest target, blockers, and final SHA-256.

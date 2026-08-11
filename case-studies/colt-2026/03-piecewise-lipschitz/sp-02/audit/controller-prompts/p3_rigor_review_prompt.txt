@@ -1,0 +1,30 @@
+You are the distinct rigor final reviewer for perspective_3/idea_1. Use the installed proof-review-rigor skill exactly. Read its SKILL.md, the shared artifact-contracts.md, and the rigor review template completely before reviewing.
+
+Run configuration: RUN_MODE=interactive; model=gpt-5.6-sol; reasoning=max; idea attempt 1; sketch attempt 1; assembly attempt 2; progress_type=material_partial. The theorem boundary is fixed-family Gamma_piv control only. Never present this branch as polynomial general-instance Pfaffian-format control; that source-relevant gap must remain explicit.
+
+Independently inspect setting.md, the accepted sketch and global diagnostics, all six accepted proof/review pairs, assembly_report.md, and every source/support file in latex_template/. Check all used step derivations against 5_appendix.tex line by line at proof-obligation granularity, as well as constants, quantifiers, probability modes, boundary cases, exact examples, and the material-partial claim boundary. Do not infer PASS from the controller's build or from assembly_report.md.
+
+Binding SHA-256 manifest:
+- setting.md: 91119d2600ee2f787eb873796569ab53e35201e499bf81658d8a0bc1a8e7c79e
+- proof_sketch.md: 6dbdbee33e82384d0e5d1e68986f1347d39519eb653c40336b08f8dfec199dfc
+- proof_sketch_review.md: 30fd3d6f632b9eef96539dd3b40ed5eddbc42827c2683f9357f56de61f2cede0
+- global_proof.md: 20173ffea1c58c58bf7d217cfbe38912c9b388eff435912237c341e9803b9ab0
+- global_proof_review.md: 3df11de5344be2f1e8c4e8c4cecfe76db77fb5003b69bc670053defd32c60e7b
+- assembly_report.md: 3752eace94b5f6a2af79c46d25ed24e06181742c583a4afd89f6236245e53be0
+- step_001 proof/review: 2a44be9fcaa15c23fdfcde0d473d4cd3019c264628c431a082c1d90f1bcb634a / c935a43af6c57c18a18af36c36ce74083a6ba91edbaf75fb9c83a6c04339e489
+- step_002 proof/review: 54baabedeb5ca0c51351e233c8cc2c3043f541e4defdaa2f536803b9119f92a1 / a3b9d7e80b6e8e820ca06e37421713181c50a2510a26e3f749bf0e1991ce68ec
+- step_003 proof/review: 38086ac69a640ffd22b3dc9f7ca26c26f868a1ec9b78bfdb078e429c4085504f / 04d4b47609b1dd375af3f870dc62e7922da2395b69d8db8c140068ec3c8bf3b5
+- step_004 proof/review: 84d16264879bff1e5842820f8291b7981beeb279683fe7701e56135cab476a91 / 7eb2ef7d37239b4af8e7c1aafd8eb4bc1725aab06a809bc7a1115467e0dc7a1b
+- step_005 proof/review: a2f4501ff74d57a3bc9bf4406203bd4c1e602ae96318d548a98796d661520805 / 0dc0126ab2406f795dcaac6fae66bb18ca90da7414f274d0e229ae7a8885651e
+- step_006 proof/review: 1a3400a6c132242fb0b8be9dbdad7bdbea8482765f81bc80f9dbb9f880cfee40 / 49b03b628a445ddd04df1f4b5a31dc217734df9c67d085b9bc2d83491b62d4d8
+- main.tex: ec2c915f7eb6d3eaf6204176dbc7829520e4b0f073710af70841d0cc2895f7a8
+- 1_intro.tex: 0580009eb681cb991c3d0af1f5771a00ec3dda4db0d75d25d68bd9dd4d43be90
+- 2_preliminary.tex: 679d3a6fe8da8de4b68539cef51c5b7e4c3e37ac0d5650c8799e082f29bf0c36
+- 3_main.tex: 6ab9b8a9d6f9c910faba365c0ded311555e87e1aac8324de7a950e35418ce35d
+- 4_proof_sketch.tex: e6dab1bdd6ca196bfc777fa00b87b6365cbf4aa72bef70d4d67f8213039f1c5f
+- 5_appendix.tex: 7d73a2c2fe573f3b247ba9eae1046ddab586cdc131cfe1f8470571b479a8eaf8
+- arxiv.sty: 6a083ef347ecbe390f101460ab4ff90b34cd14cae33665a8595f34a53d3b85ab
+- ims.bst: c1f6e420970d0c72b3c0d184a14c4223fe8c373055eb4c43692a72b660a9ca5f
+- reference.bib: 086205b906f4b68586ca5c5edcc2e685a3a2a6798f7661d377e8639a77ca9003
+
+Fail closed if any binding hash differs. Write only perspective_3/idea_1/proof_review_rigor.md. Do not modify any proof, TeX, report, tracker, worker log, history, prompt, other branch, or results artifact. Emit the required raw controlled fields and a substantive Rigor Audit. Report the final output hash.

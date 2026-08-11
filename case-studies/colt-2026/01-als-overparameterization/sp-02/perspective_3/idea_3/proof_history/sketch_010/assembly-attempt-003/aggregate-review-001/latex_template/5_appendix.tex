@@ -1,0 +1,4112 @@
+\appendix
+
+\section{Proof Details}\label{sec:proof-details}
+
+\subsection{Realized-factor conditioning}\label{app:step-001}
+
+\begin{lemma}[conditioning of the deterministic base matrices]
+\label{lem:step-001-base-conditioning}
+Under Assumption~\ref{assump:base_conditioning}, for every
+\(\bar M\in\{\bar A,\bar B,\bar C\}\),
+\[
+  \sigma_{\min}(\bar M)\ge \kappa^{-2},
+  \qquad
+  \|\bar M\|_{\rm op}\le \kappa^2.
+\]
+
+\end{lemma}
+
+\begin{proof}
+Write, exactly as in the setting,
+\[
+  \bar M=\bar M^\circ D_M,
+  \qquad
+  D_M=\operatorname{diag}(\|\bar m_1\|_2,\ldots,
+  \|\bar m_r\|_2).
+\]
+Assumption~\ref{assump:base_conditioning} makes \(D_M\) invertible and gives
+\[
+  \sigma_{\min}(\bar M^\circ)\ge\kappa^{-1},\quad
+  \|\bar M^\circ\|_{\rm op}\le\kappa,\quad
+  \sigma_{\min}(D_M)\ge\kappa^{-1},\quad
+  \|D_M\|_{\rm op}\le\kappa.
+\]
+For every \(x\in\mathbb R^r\),
+\[
+  \|\bar Mx\|_2
+  =\|\bar M^\circ D_Mx\|_2
+  \ge \sigma_{\min}(\bar M^\circ)\|D_Mx\|_2
+  \ge \kappa^{-2}\|x\|_2,
+\]
+which proves the lower singular bound. Submultiplicativity gives
+\[
+  \|\bar M\|_{\rm op}
+  \le \|\bar M^\circ\|_{\rm op}\|D_M\|_{\rm op}
+  \le \kappa^2.
+\]
+This proves the lemma. 
+
+\end{proof}
+
+
+\begin{lemma}[simultaneous Gaussian perturbation control]
+\label{lem:step-001-gaussian-perturbation}
+Under Assumptions~\ref{assump:dimension} and
+\ref{assump:gaussian_smoothing}, define
+\[
+  r_{0,\rm cond}(\kappa,q)
+  :=\max\left\{3,\left\lceil(6\kappa^2)^{1/q}\right\rceil\right\}.
+\]
+Choose the dimension constant in Assumption~\ref{assump:dimension} so that
+\(C(\kappa,q)\ge1\). Then, for every integer
+\(r\ge r_{0,\rm cond}(\kappa,q)\) and every
+\(n\ge C(\kappa,q)r^4\log r\), the event
+\[
+  \mathcal E_{\rm pert}
+  :=\left\{
+    \max_{M\in\{A,B,C\}}\|M-\bar M\|_{\rm op}
+    \le \frac1{2\kappa^2}
+  \right\}
+\]
+satisfies
+\[
+  \mathbb P(\mathcal E_{\rm pert})\ge1-r^{-20}.
+\]
+The probability is uniform over all deterministic base triples satisfying the
+setting assumptions and over all such \(n\).
+
+\end{lemma}
+
+\begin{proof}
+Put \(\rho=r^{-q}\),
+\(\Xi_M=M-\bar M\), and
+\[
+  u_r=\sqrt{2\log(3r^{20})}.
+\]
+The rectangular Gaussian norm bound of \citet[Theorem~II.13]{davidsonSzarek2001}
+states, in the present notation, that an \(n\times r\) matrix \(G\) with
+iid \(\mathcal N(0,1)\) entries satisfies
+\[
+  \mathbb P\!\left(\|G\|_{\rm op}>\sqrt n+\sqrt r+u\right)
+  \le e^{-u^2/2},\qquad u\ge0.
+\]
+Assumption~\ref{assump:gaussian_smoothing} gives
+\(\Xi_M=(\rho/\sqrt n)G_M\) with such a \(G_M\).  Hence, for each of the
+three modes,
+\begin{equation}
+  \mathbb P\!\left(
+    \|\Xi_M\|_{\rm op}
+    >\rho\left(1+\sqrt{r/n}+u_r/\sqrt n\right)
+  \right)
+  \le \frac1{3r^{20}}.                                      \label{eq:step-001-1}
+\end{equation}
+For \(r\ge3\),
+\begin{equation}
+  u_r^2=2\log 3+40\log r
+  \le42\log r
+  \le r^4\log r
+  \le n,                                                     \label{eq:step-001-2}
+\end{equation}
+where the penultimate inequality uses \(r^4\ge81>42\). Also
+\(n\ge r^4\log r\ge r\). Hence
+\begin{equation}
+  \sqrt{r/n}\le1,
+  \qquad u_r/\sqrt n\le1.                                   \label{eq:step-001-3}
+\end{equation}
+Combining \eqref{eq:step-001-1}--\eqref{eq:step-001-3}, outside a per-mode event of probability at most
+\((3r^{20})^{-1}\),
+\[
+  \|\Xi_M\|_{\rm op}
+  \le3\rho=3r^{-q}.
+\]
+The definition of \(r_{0,\rm cond}(\kappa,q)\) gives
+\begin{equation}
+  3r^{-q}\le\frac1{2\kappa^2}.                              \label{eq:step-001-4}
+\end{equation}
+A union bound over \(M=A,B,C\), which does not require independence, yields
+\begin{equation}
+  \mathbb P(\mathcal E_{\rm pert}^c)
+  \le3\cdot\frac1{3r^{20}}=r^{-20}.                         \label{eq:step-001-5}
+\end{equation}
+The right sides of \eqref{eq:step-001-1}--\eqref{eq:step-001-5} do not depend on the deterministic base triple.
+Increasing \(n\) only decreases \(\sqrt{r/n}\) and \(u_r/\sqrt n\), so the
+argument has no upper-dimensional restriction. This proves the lemma.
+
+
+\end{proof}
+
+
+\begin{proposition}[realized-factor conditioning]
+\label{prop:step-001-realized-conditioning}
+Under Assumptions~\ref{assump:base_conditioning},
+\ref{assump:dimension}, and \ref{assump:gaussian_smoothing}, let
+\(\kappa_1=2\kappa^2\), choose \(C(\kappa,q)\ge1\), and suppose
+\(r\ge r_{0,\rm cond}(\kappa,q)\). Then, simultaneously for
+\(M\in\{A,B,C\}\), with probability at least \(1-r^{-20}\),
+\[
+  \sigma_{\min}(M)\ge\kappa_1^{-1},
+  \qquad
+  \|M\|_{\rm op}\le\kappa_1,
+  \qquad
+  \|M^\dagger\|_{\rm op}\le\kappa_1.
+\]
+In particular, the generated event \(\mathcal E_{\rm cond}\) holds with
+probability at least \(1-r^{-20}\).
+
+\end{proposition}
+
+\begin{proof}
+For same-size matrices \(X,E\), Weyl's singular-value perturbation inequality
+in the form
+\[
+  \sigma_{\min}(X+E)\ge \sigma_{\min}(X)-\|E\|_{\rm op}
+\]
+is the standard current-notation specialization of
+\citet[Chapter~IV]{stewartSun1990}.  Apply it with
+\(X=\bar M\), \(E=M-\bar M\).  On \(\mathcal E_{\rm pert}\), together with
+Lemma~\ref{lem:step-001-base-conditioning}, this gives, for every mode,
+\begin{equation}
+  \sigma_{\min}(M)
+  \ge\kappa^{-2}-\frac1{2\kappa^2}
+  =\frac1{2\kappa^2}
+  =\kappa_1^{-1}.                                           \label{eq:step-001-6}
+\end{equation}
+The operator-norm triangle inequality gives
+\begin{equation}
+  \|M\|_{\rm op}
+  \le\kappa^2+\frac1{2\kappa^2}
+  \le2\kappa^2
+  =\kappa_1,                                                \label{eq:step-001-7}
+\end{equation}
+where the second inequality uses \(\kappa\ge1\). Equation \eqref{eq:step-001-6} makes every
+realized mode matrix full column rank and therefore
+\begin{equation}
+  \|M^\dagger\|_{\rm op}
+  =\sigma_{\min}(M)^{-1}
+  \le\kappa_1.                                              \label{eq:step-001-8}
+\end{equation}
+Equations \eqref{eq:step-001-6}--\eqref{eq:step-001-7} show that
+\(\mathcal E_{\rm pert}\subseteq\mathcal E_{\rm cond}\). By
+Lemma~\ref{lem:step-001-gaussian-perturbation},
+\(\mathbb P(\mathcal E_{\rm pert})\ge1-r^{-20}\), so the same lower bound
+holds for \(\mathbb P(\mathcal E_{\rm cond})\). This proves the proposition.
+
+\end{proof}
+
+\begin{proof}[Proof of the subsection conclusion]
+
+Lemma~\ref{lem:step-001-base-conditioning} converts
+Assumption~\ref{assump:base_conditioning} into the deterministic interval
+\([\kappa^{-2},\kappa^2]\) for each base mode matrix.
+Lemma~\ref{lem:step-001-gaussian-perturbation} uses the exact smoothing
+variance \(r^{-2q}/n\), the explicit threshold
+\(u_r=\sqrt{2\log(3r^{20})}\), and a union over the three modes to produce
+\(\mathcal E_{\rm pert}\) with failure at most \(r^{-20}\), uniformly over
+all admissible bases and all \(n\) above the lower dimension threshold.
+Proposition~\ref{prop:step-001-realized-conditioning} then applies Weyl to
+obtain, with \(\kappa_1=2\kappa^2\),
+\[
+  \sigma_{\min}(M)\ge\kappa_1^{-1},\qquad
+  \|M\|_{\rm op}\le\kappa_1
+  \quad(M=A,B,C),
+\]
+on an event of probability at least \(1-r^{-20}\). These are precisely the
+conditions defining \(\mathcal E_{\rm cond}\), which proves the proposition.
+No initialization-geometry, tangent, or trajectory claim is used
+or proved here.
+
+\end{proof}
+
+\subsection{Balanced coefficient Gaussianization}\label{app:step-002}
+
+For the raw initialization matrices from Section~\ref{sec:setup}, write
+\[
+  X_0^{\rm raw}=[\widetilde x_1\ \cdots\ \widetilde x_k],
+  \qquad
+  Y_0^{\rm raw}=[\widetilde y_1\ \cdots\ \widetilde y_k],
+  \qquad
+  Z_0^{\rm raw}=[\widetilde z_1\ \cdots\ \widetilde z_k],
+\]
+and pair the factor matrices, physical modes, and coefficient coordinates as
+\[
+  (A,x,\alpha),\qquad (B,y,\beta),\qquad (C,z,\gamma).
+\]
+Thus \(m=x,y,z\) when \(M=A,B,C\), respectively.
+Define the pre-balancing coefficient vectors by
+\[
+  \widetilde\zeta_i^A=A^\dagger\widetilde x_i,
+  \qquad
+  \widetilde\zeta_i^B=B^\dagger\widetilde y_i,
+  \qquad
+  \widetilde\zeta_i^C=C^\dagger\widetilde z_i.
+\]
+After balancing, write
+\[
+  \zeta_i^A=\alpha_{i,0},
+  \qquad
+  \zeta_i^B=\beta_{i,0},
+  \qquad
+  \zeta_i^C=\gamma_{i,0},
+  \qquad
+  \bar\zeta_i^M=\sqrt{\frac nr}\,\zeta_i^M,
+  \quad M\in\{A,B,C\}.
+\]
+
+\begin{lemma}[Gaussian radii and exact balancing scalars]
+\label{lem:step-002-balancing-scalars}
+Under Assumption~\ref{assump:independent_initialization}, define, for every
+component \(i\),
+\[
+  g_i^x=\sqrt n\,\widetilde x_i,
+  \qquad g_i^y=\sqrt n\,\widetilde y_i,
+  \qquad g_i^z=\sqrt n\,\widetilde z_i,
+  \qquad \chi_i^m=\|g_i^m\|_2.
+\]
+Then the \(g_i^m\) are independent \(\mathcal N(0,I_n)\) vectors over all
+\(i\) and \(m\). Almost surely, every \(\chi_i^m\) is positive, the directions
+\(\omega_i^m=g_i^m/\chi_i^m\) are independent uniform sphere vectors and are
+independent of all radii, and the balancing map satisfies
+\[
+  x_{i,0}=s_i^x\widetilde x_i,\qquad
+  y_{i,0}=s_i^y\widetilde y_i,\qquad
+  z_{i,0}=s_i^z\widetilde z_i,
+\]
+where, on the positive-radius branch,
+\[
+  s_i^x=\left(\frac{\chi_i^y\chi_i^z}{(\chi_i^x)^2}\right)^{1/3},
+  \quad
+  s_i^y=\left(\frac{\chi_i^x\chi_i^z}{(\chi_i^y)^2}\right)^{1/3},
+  \quad
+  s_i^z=\left(\frac{\chi_i^x\chi_i^y}{(\chi_i^z)^2}\right)^{1/3}.
+\]
+On the setting's zero-factor branch, define
+\(s_i^x=s_i^y=s_i^z=1\). With this extension every scalar is nonzero, the
+displayed scalar representation agrees with \(\mathcal G\) on every branch,
+and
+\[
+  s_i^x s_i^y s_i^z=1
+\]
+identically.
+
+\end{lemma}
+
+\begin{proof}
+Assumption~\ref{assump:independent_initialization}
+gives the stated joint standard Gaussian law after multiplication by
+\(\sqrt n\). The density of one \(g_i^m\) is a function only of its Euclidean
+radius. In polar coordinates its measure is proportional to
+\[
+  e^{-\chi^2/2}\chi^{n-1}\,d\chi\,d\sigma(\omega),
+\]
+where \(d\sigma\) is uniform surface measure. This factorization proves the
+radius-direction independence and uniformity. The singleton \(\{0\}\) has
+Gaussian measure zero; a finite union over the \(3k\) raw columns therefore
+shows that all radii are positive almost surely.
+
+On that probability-one branch, the three raw physical norms are
+\(\chi_i^x/\sqrt n,\chi_i^y/\sqrt n,\chi_i^z/\sqrt n\), so their geometric
+mean is
+\[
+  q_i=\frac{(\chi_i^x\chi_i^y\chi_i^z)^{1/3}}{\sqrt n}.
+\]
+The balancing definition gives
+\(s_i^x=q_i/(\chi_i^x/\sqrt n)\), and similarly in the other modes, which is
+exactly the displayed formula. In particular, balancing changes only radii:
+\(x_{i,0}=q_i\omega_i^x\), and analogously for \(y,z\), so all raw directions
+are preserved. Direct multiplication gives
+\[
+  (s_i^x s_i^y s_i^z)^3
+  =\frac{(\chi_i^y\chi_i^z)(\chi_i^x\chi_i^z)
+          (\chi_i^x\chi_i^y)}
+         {(\chi_i^x\chi_i^y\chi_i^z)^2}
+  =1.
+\]
+All three scalars are positive, hence their product is one rather than another
+cube root of one. If any raw factor is zero, the setting leaves the entire raw
+triple unchanged; assigning all three scalars the value one represents that
+branch exactly and preserves the product identity. This proves the lemma.
+
+
+\end{proof}
+
+
+\begin{lemma}[compact-SVD Gaussianization of the balanced coefficients]
+\label{lem:step-002-coefficient-gaussianization}
+Under Assumption~\ref{assump:independent_initialization}, Proposition~\ref{prop:step-001-realized-conditioning}, and
+Lemma~\ref{lem:step-002-balancing-scalars}, condition on any realized triple
+\((A,B,C)\in\mathcal E_{\rm cond}\). For each
+\(M\in\{A,B,C\}\), choose a compact SVD
+\[
+  M=U_M\Sigma_MV_M^{\mathsf T},
+  \qquad U_M^{\mathsf T}U_M=V_M^{\mathsf T}V_M=I_r,
+  \qquad \Sigma_M\succ0,
+\]
+and define
+\[
+  H_M=V_M\Sigma_M^{-1},
+  \qquad z_i^M=U_M^{\mathsf T}g_i^m,
+\]
+using the mode pairing \((A,x),(B,y),(C,z)\). Then, under the conditional
+initialization law, the full family
+\(\{z_i^M:M\in\{A,B,C\},i\in[k]\}\) is independent with
+\(z_i^M\sim\mathcal N(0,I_r)\), every \(H_M\) is invertible and satisfies
+\[
+  \sigma(H_M)\subset[\kappa_1^{-1},\kappa_1],
+\]
+and the raw, balanced, and normalized coefficient vectors obey the exact
+identities
+\[
+  \widetilde\zeta_i^M=\frac1{\sqrt n}H_Mz_i^M,
+  \qquad
+  \zeta_i^M=\frac{s_i^m}{\sqrt n}H_Mz_i^M,
+  \qquad
+  \boxed{\bar\zeta_i^M=\frac{s_i^m}{\sqrt r}H_Mz_i^M}.
+\]
+No independence between \(s_i^m\) and \(z_i^M\) is asserted or needed.
+
+\end{lemma}
+
+\begin{proof}
+Conditional on the realized factors, all SVD
+matrices are deterministic, while the standardized raw initialization vectors
+remain independent standard Gaussians because initialization is independent
+of smoothing. Since \(U_M^{\mathsf T}U_M=I_r\),
+\[
+  \mathbb E[z_i^M(z_i^M)^{\mathsf T}\mid A,B,C]
+  =U_M^{\mathsf T}U_M=I_r,
+\]
+and each \(z_i^M\) is Gaussian. Distinct \((M,i)\) use distinct independent
+raw vectors, proving independence across all modes and components.
+
+The compact-SVD pseudoinverse formula gives
+\[
+  M^\dagger=V_M\Sigma_M^{-1}U_M^{\mathsf T}.
+\]
+Because \(\widetilde m_i=g_i^m/\sqrt n\),
+\begin{equation}
+  \widetilde\zeta_i^M
+  =M^\dagger\widetilde m_i
+  =\frac1{\sqrt n}V_M\Sigma_M^{-1}U_M^{\mathsf T}g_i^m
+  =\frac1{\sqrt n}H_Mz_i^M.                 \label{eq:step-002-1}
+\end{equation}
+Lemma~\ref{lem:step-002-balancing-scalars} gives
+\(m_{i,0}=s_i^m\widetilde m_i\) on every branch under its scalar extension.
+Linearity of \(M^\dagger\) therefore yields
+\begin{equation}
+  \zeta_i^M=s_i^m\widetilde\zeta_i^M
+  =\frac{s_i^m}{\sqrt n}H_Mz_i^M.           \label{eq:step-002-2}
+\end{equation}
+Multiplication by the setting's coefficient normalization
+\(\sqrt{n/r}\) gives the boxed formula, with no omitted factor.
+
+The singular values of \(H_M=V_M\Sigma_M^{-1}\) are exactly the reciprocals
+of the singular values of \(M\). On \(\mathcal E_{\rm cond}\),
+\(\sigma(M)\subset[\kappa_1^{-1},\kappa_1]\), and this interval is invariant
+under reciprocal, proving the claimed bounds for \(H_M\). Repeated singular
+values, permutations, or SVD sign choices only apply orthogonal changes to
+the standard Gaussian coordinates and do not alter their joint law or the
+singular values of \(H_M\). Thus any fixed compact-SVD convention, including
+any measurable convention used below, gives the same identities. Finally, the
+scalars are functions of the full raw radii and may be dependent on the
+projected Gaussian coordinates; none of the algebraic conclusions requires
+independence. This proves the lemma.
+
+\end{proof}
+
+
+\begin{proposition}[exact tangent-block and coefficient-product invariance]
+\label{prop:step-002-balancing-invariance}
+Under Assumption~\ref{assump:independent_initialization}, Proposition~\ref{prop:step-001-realized-conditioning}, and
+Lemmas~\ref{lem:step-002-balancing-scalars} and
+\ref{lem:step-002-coefficient-gaussianization}, condition on any realized
+triple in \(\mathcal E_{\rm cond}\). For each component define the three
+elliptic-Gaussian baseline tangent blocks
+\[
+  \begin{aligned}
+  \mathcal B_i^x
+  &=\{u\otimes H_Bz_i^B\otimes H_Cz_i^C:u\in\mathbb R^r\},\\
+  \mathcal B_i^y
+  &=\{H_Az_i^A\otimes v\otimes H_Cz_i^C:v\in\mathbb R^r\},\\
+  \mathcal B_i^z
+  &=\{H_Az_i^A\otimes H_Bz_i^B\otimes w:w\in\mathbb R^r\}.
+  \end{aligned}
+\]
+Then every tangent block in the setting, both raw and normalized, has exactly
+the corresponding baseline range. More precisely,
+\begin{equation}
+  \begin{aligned}
+  \{u\otimes\beta_{i,0}\otimes\gamma_{i,0}:u\in\mathbb R^r\}
+    &=\frac{s_i^ys_i^z}{n}\mathcal B_i^x=\mathcal B_i^x,\\
+  \{\alpha_{i,0}\otimes v\otimes\gamma_{i,0}:v\in\mathbb R^r\}
+    &=\frac{s_i^xs_i^z}{n}\mathcal B_i^y=\mathcal B_i^y,\\
+  \{\alpha_{i,0}\otimes\beta_{i,0}\otimes w:w\in\mathbb R^r\}
+    &=\frac{s_i^xs_i^y}{n}\mathcal B_i^z=\mathcal B_i^z,
+  \end{aligned}                                             \label{eq:step-002-3}
+\end{equation}
+and
+\begin{equation}
+  \begin{aligned}
+  \{u\otimes\bar\beta_{i,0}\otimes\bar\gamma_{i,0}:u\in\mathbb R^r\}
+    &=\frac{s_i^ys_i^z}{r}\mathcal B_i^x=\mathcal B_i^x,\\
+  \{\bar\alpha_{i,0}\otimes v\otimes\bar\gamma_{i,0}:v\in\mathbb R^r\}
+    &=\frac{s_i^xs_i^z}{r}\mathcal B_i^y=\mathcal B_i^y,\\
+  \{\bar\alpha_{i,0}\otimes\bar\beta_{i,0}\otimes w:w\in\mathbb R^r\}
+    &=\frac{s_i^xs_i^y}{r}\mathcal B_i^z=\mathcal B_i^z.
+  \end{aligned}                                             \label{eq:step-002-4}
+\end{equation}
+Consequently,
+\begin{equation}
+  \mathscr S_0^{\rm raw}=\mathscr S_0^{\rm norm}
+  =\operatorname{span}_{i\in[k]}
+    (\mathcal B_i^x\cup\mathcal B_i^y\cup\mathcal B_i^z)
+  =\mathscr S_0.                                            \label{eq:step-002-5}
+\end{equation}
+Moreover balancing preserves the exact raw coefficient tensor componentwise:
+\begin{equation}
+  \widehat D_0
+  =\sum_{i=1}^k\alpha_{i,0}\otimes\beta_{i,0}\otimes\gamma_{i,0}
+  =\sum_{i=1}^k\widetilde\zeta_i^A\otimes
+                    \widetilde\zeta_i^B\otimes
+                    \widetilde\zeta_i^C
+  =\frac1{n^{3/2}}\sum_{i=1}^k
+       H_Az_i^A\otimes H_Bz_i^B\otimes H_Cz_i^C.           \label{eq:step-002-6}
+\end{equation}
+The normalization is certificate-only:
+\begin{equation}
+  \sum_{i=1}^k\bar\alpha_{i,0}\otimes\bar\beta_{i,0}
+                    \otimes\bar\gamma_{i,0}
+  =\left(\frac nr\right)^{3/2}\widehat D_0,                \label{eq:step-002-7}
+\end{equation}
+so neither \(\widehat D_0\) nor the fixed raw target \(D_r\) is replaced by a
+normalized tensor.
+
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:step-002-coefficient-gaussianization}
+gives
+\[
+  \beta_{i,0}=\frac{s_i^y}{\sqrt n}H_Bz_i^B,
+  \qquad
+  \gamma_{i,0}=\frac{s_i^z}{\sqrt n}H_Cz_i^C.
+\]
+Substitution into the first raw tangent family yields the first equality in
+\eqref{eq:step-002-3}. The other two follow by the same substitution in their displayed modes.
+The normalized coefficient formula replaces each denominator \(\sqrt n\) by
+\(\sqrt r\), giving \eqref{eq:step-002-4}. By
+Lemma~\ref{lem:step-002-balancing-scalars}, every pair product appearing in
+\eqref{eq:step-002-3}--\eqref{eq:step-002-4} is nonzero; also \(n,r>0\). Multiplication of a linear subspace by a
+nonzero scalar is a bijection of that subspace, proving the second equality in
+each line. Taking the span over all components and all three mode blocks proves
+\eqref{eq:step-002-5}. This argument remains valid when a displayed baseline block happens to
+be the zero subspace.
+
+For each component, the same Gaussianization and the exact product-one identity
+give
+\[
+  \begin{aligned}
+  \alpha_{i,0}\otimes\beta_{i,0}\otimes\gamma_{i,0}
+  &=\frac{s_i^xs_i^ys_i^z}{n^{3/2}}
+      H_Az_i^A\otimes H_Bz_i^B\otimes H_Cz_i^C\\
+  &=\frac1{n^{3/2}}
+      H_Az_i^A\otimes H_Bz_i^B\otimes H_Cz_i^C\\
+  &=\widetilde\zeta_i^A\otimes
+    \widetilde\zeta_i^B\otimes
+    \widetilde\zeta_i^C.
+  \end{aligned}
+\]
+Summing proves \eqref{eq:step-002-6}. Repeating the calculation with the normalized formula
+gives the factor \(r^{-3/2}\), which compared with \eqref{eq:step-002-6} is exactly
+\((n/r)^{3/2}\), proving \eqref{eq:step-002-7}. The target \(D_r\) is fixed by the realized
+factor model and is not an initialization output, so neither balancing nor the
+coefficient normalization acts on it. Thus the tangent range and the raw
+coefficient target remain exactly the objects specified in Section~\ref{sec:setup}.
+
+
+\end{proof}
+
+\begin{proof}[Proof of the subsection conclusion]
+
+Lemma~\ref{lem:step-002-balancing-scalars} derives the exact raw
+radius-direction law and the balancing multipliers from
+Assumption~\ref{assump:independent_initialization}. It proves that the zero
+branch is null, supplies an exact scalar extension on that branch, and proves
+that all balancing scalars are nonzero with
+\(s_i^xs_i^ys_i^z=1\).
+
+Conditional on \(\mathcal E_{\rm cond}\),
+Lemma~\ref{lem:step-002-coefficient-gaussianization} applies compact SVDs to
+the raw initialization and proves, with all factors displayed,
+\[
+  \bar\zeta_i^M=\frac{s_i^m}{\sqrt r}H_Mz_i^M,
+  \qquad z_i^M\stackrel{\rm iid}{\sim}\mathcal N(0,I_r),
+  \qquad \sigma(H_M)\subset[\kappa_1^{-1},\kappa_1].
+\]
+The independence is simultaneous across every mode and component, conditional
+on the realized factors. The lemma explicitly records that the balancing
+scalars may depend on the Gaussian arrays, which creates no gap because the
+remaining conclusions are exact scalar identities.
+
+Proposition~\ref{prop:step-002-balancing-invariance} then shows that every
+individual tangent block is multiplied only by a nonzero pair scalar, including
+the fixed \(1/n\) or \(1/r\) normalization factor. Hence every block range,
+and therefore \(\mathscr S_0\), is unchanged. The same proposition uses the
+triple-product identity to prove exact componentwise and summed preservation
+of \(\widehat D_0\), while keeping \(D_r\) and the raw residual convention
+untouched. Together these results give the exact
+\(H_M,z_i^M,s_i^m\) representation and its invariance properties.
+No Gram concentration, quotient-range statement, Haar factorization, or Haar
+disintegration is asserted here.
+
+\end{proof}
+
+\subsection{Normalized Khatri--Rao Gram control}\label{app:step-003}
+
+\begin{lemma}[full-radius control and dependent balancing diagonals]
+\label{lem:step-003-radius-diagonals}
+Under Assumptions~\ref{assump:dimension}, \ref{assump:rank_window}, and
+\ref{assump:independent_initialization}, enlarge the dimension constant so
+that \(C(\kappa,q)\ge1\), and suppose \(r\ge2^{40}\). Define the proof-local
+event
+\[
+  \mathcal R_{\rm rad}
+  :=\bigcap_{i=1}^k\bigcap_{m\in\{x,y,z\}}
+    \left\{\frac12\le\frac{(\chi_i^m)^2}{n}\le\frac32\right\}.
+\]
+Then, conditional on any realized smoothing outcome,
+\[
+  \mathbb P(\mathcal R_{\rm rad}^c\mid A,B,C)\le r^{-28}.
+\]
+On \(\mathcal R_{\rm rad}\), for every component \(i\),
+\[
+  3^{-1/3}\le s_i^ys_i^z\le3^{1/3},\qquad
+  3^{-1/3}\le s_i^xs_i^z\le3^{1/3},\qquad
+  3^{-1/3}\le s_i^xs_i^y\le3^{1/3}.
+\]
+
+\end{lemma}
+
+\begin{proof}
+Initialization is independent of smoothing, so,
+after conditioning on \((A,B,C)\), the \(3k\) vectors \(g_i^m\) remain
+independent \(\mathcal N(0,I_n)\).  The Laurent--Massart inequalities
+\citep[Lemma~1]{laurentMassart2000} imply, for
+\(g\sim\mathcal N(0,I_d)\) and \(0<\delta<1\),
+\[
+  \mathbb P\!\left(\left|\|g\|_2^2/d-1\right|>\delta\right)
+  \le 2\exp(-d\delta^2/8).
+\]
+Indeed, substitute \(x=d\delta^2/8\) into their upper and lower
+chi-square deviations; for \(0<\delta<1\), both resulting thresholds lie
+inside the deviation \(d\delta\).  Applying this with \(d=n\),
+\(\delta=1/2\), and a union bound gives
+\[
+  \mathbb P(\mathcal R_{\rm rad}^c\mid A,B,C)
+  \le 6k e^{-n/32}
+  \le 6r^{5/4}e^{-r^4\log r/32}.
+\]
+For \(r\ge2^{40}\), one has \(6\le r^{3/4}\) and \(r^4/32\ge30\), hence
+\begin{equation}
+  6r^{5/4}e^{-r^4\log r/32}
+  \le r^2r^{-30}=r^{-28}.                                  \label{eq:step-003-1}
+\end{equation}
+This bound improves as \(n\) increases, so it is uniform with no upper
+restriction on \(n\).
+
+On \(\mathcal R_{\rm rad}\), all radii are positive. The exact balancing formulas give
+\begin{equation}
+  (s_i^ys_i^z)^3
+    =\frac{(\chi_i^x)^2}{\chi_i^y\chi_i^z},\quad
+  (s_i^xs_i^z)^3
+    =\frac{(\chi_i^y)^2}{\chi_i^x\chi_i^z},\quad
+  (s_i^xs_i^y)^3
+    =\frac{(\chi_i^z)^2}{\chi_i^x\chi_i^y}.                \label{eq:step-003-2}
+\end{equation}
+Every squared radius lies in \([n/2,3n/2]\), while every product of two
+radii lies in the same interval \([n/2,3n/2]\). Each ratio in \eqref{eq:step-003-2} therefore
+lies in \([1/3,3]\). Taking its positive cube root proves the three displayed
+bounds. This is a pointwise consequence on \(\mathcal R_{\rm rad}\); it does
+not use or assert independence between the pair multipliers and the projected
+Gaussian coefficient vectors. 
+
+\end{proof}
+
+
+\begin{lemma}[rectangular isotropic Gaussian Khatri--Rao concentration]
+\label{lem:step-003-isotropic-khatri-rao}
+Under Assumption~\ref{assump:rank_window}, let
+\(Z=[z_1\ \cdots\ z_k]\) and \(W=[w_1\ \cdots\ w_k]\) be independent
+\(r\times k\) matrices with iid \(\mathcal N(0,1)\) entries. Define
+\[
+  K_0=\frac1r
+    [z_1\otimes w_1\ \cdots\ z_k\otimes w_k]
+    \in\mathbb R^{r^2\times k}.
+\]
+If \(r\ge2^{40}\), then
+\begin{equation}
+  \mathbb P\!\left(
+    \operatorname{spec}(K_0^{\mathsf T}K_0)
+      \not\subset[1/2,3/2]
+  \right)\le r^{-26}.                                      \label{eq:step-003-3}
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+Put \(A=Z^{\mathsf T}Z\) and
+\(L_r=8\sqrt{\log r}\). First define
+\begin{equation}
+  \mathcal Z
+  :=\left\{
+    \max_i\left|\frac{\|z_i\|_2^2}{r}-1\right|\le\frac14,
+    \quad \|Z\|_{\rm op}\le3\sqrt k
+  \right\}.                                                \label{eq:step-003-4}
+\end{equation}
+The same Laurent--Massart bound \citep[Lemma~1]{laurentMassart2000}, with
+\(d=r\), \(\delta=1/4\), followed by a
+union over the \(k\) columns, gives a first failure term
+\(2ke^{-r/128}\). The rectangular Gaussian norm bound
+\citep[Theorem~II.13]{davidsonSzarek2001}, applied to the \(r\times k\)
+matrix \(Z\) with \(u=L_r\), gives
+a second term \(r^{-32}\). Since \(r\ge2^{40}\) implies
+\(L_r\le\sqrt r<\sqrt k\), its good-event threshold is at most
+\(3\sqrt k\). The elementary numerical inequalities
+\begin{equation}
+  2r^{5/4}e^{-r/128}\le r^{-28},
+  \qquad r\ge2^{40},                                       \label{eq:step-003-5}
+\end{equation}
+and \(r^{-32}\le r^{-28}\) yield
+\begin{equation}
+  \mathbb P(\mathcal Z^c)\le r^{-27}.                     \label{eq:step-003-6}
+\end{equation}
+On \(\mathcal Z\),
+\begin{equation}
+  \|A\|_{\rm op}\le9k,\qquad
+  a_*:=\max_i A_{ii}\le\frac54r,\qquad
+  \frac34I_k\preceq\frac{\operatorname{diag}(A)}r
+    \preceq\frac54I_k.                                    \label{eq:step-003-7}
+\end{equation}
+
+Write the rows of \(W\) as \(w_{a\bullet}^{\mathsf T}\),
+\(a\in[r]\), and let
+\(D_a=\operatorname{diag}(w_{a1},\ldots,w_{ak})\). The Hadamard/diagonal
+identity gives
+\begin{equation}
+  K_0^{\mathsf T}K_0
+  =\frac1{r^2}\bigl(A\circ W^{\mathsf T}W\bigr)
+  =\frac1{r^2}\sum_{a=1}^r D_aAD_a.                        \label{eq:step-003-8}
+\end{equation}
+Introduce the entrywise truncation event
+\[
+  \mathcal T_W:=\left\{\max_{a,i}|w_{ai}|\le L_r\right\}.
+\]
+A scalar Gaussian union bound gives
+\begin{equation}
+  \mathbb P(\mathcal T_W^c)
+  \le2rk e^{-L_r^2/2}
+  \le2r^{9/4}r^{-32}
+  \le r^{-29}.                                             \label{eq:step-003-9}
+\end{equation}
+Because \(\mathcal T_W\) is a product of coordinatewise truncation events,
+conditional on \(\mathcal T_W\) all entries remain independent with the
+common law of a standard normal \(\xi\) conditioned on
+\(|\xi|\le L_r\). Put
+\[
+  \mu=\mathbb E\xi^2,\qquad \nu=\mathbb E\xi^4
+\]
+under this conditional law. Symmetry gives \(\mathbb E\xi=0\). Since
+\(L_r\ge4\), integration of the Gaussian tail gives
+\begin{equation}
+  \frac78\le\mu\le1,\qquad \nu\le6.                     \label{eq:step-003-10}
+\end{equation}
+Indeed,
+\(\mathbb E[g^2\mathbf1_{\{|g|>L\}}]
+ =2(L\varphi(L)+\overline\Phi(L))\), so the conditional second-moment loss
+is below \(1/8\) for \(L\ge4\); and the fourth numerator is at most
+\(\mathbb Eg^4=3\), while
+\(\mathbb P(|g|\le L)\ge1/2\).
+
+Fix any \(Z\in\mathcal Z\), put \(B=\operatorname{diag}(A)\), and, under
+the conditional law given \(\mathcal T_W\), define the independent centered
+self-adjoint matrices
+\begin{equation}
+  X_a=\frac1{r^2}(D_aAD_a-\mu B),\qquad a\in[r].            \label{eq:step-003-11}
+\end{equation}
+The almost-sure truncation and \eqref{eq:step-003-7} give
+\begin{equation}
+  \|X_a\|_{\rm op}
+  \le\frac{(L_r^2+1)\|A\|_{\rm op}}{r^2}
+  \le\frac{18L_r^2k}{r^2}=:R_B.                            \label{eq:step-003-12}
+\end{equation}
+For completeness, independence, symmetry, and \eqref{eq:step-003-10} make
+\(\mathbb E(D_aAD_a)^2\) diagonal. Its \(i\)-th diagonal entry is
+\[
+  \mu^2(A^2)_{ii}+(\nu-\mu^2)A_{ii}^2.
+\]
+After subtracting the square of the mean, the \(i\)-th diagonal entry of
+\(\mathbb E(D_aAD_a-\mu B)^2\) is at most
+\[
+  (A^2)_{ii}+6A_{ii}^2
+  \le \|A\|_{\rm op}A_{ii}+6A_{ii}^2
+  \le7\|A\|_{\rm op}a_*.
+\]
+Consequently the matrix-Bernstein variance proxy satisfies
+\begin{equation}
+  v_B:=\left\|\sum_{a=1}^r\mathbb EX_a^2\right\|_{\rm op}
+  \le\frac{7\|A\|_{\rm op}a_*}{r^3}
+  \le\frac{315}{4}\frac{k}{r^2}
+  \le79\frac{k}{r^2}.                                     \label{eq:step-003-13}
+\end{equation}
+
+The self-adjoint matrix Bernstein inequality
+\citep[Theorem~6.1]{tropp2012} states in the present two-sided form that
+independent centered self-adjoint \(d\times d\) matrices with
+\(\|X_a\|_{\rm op}\le R\) and
+\(v=\|\sum_a\mathbb EX_a^2\|_{\rm op}\) obey
+\[
+  \mathbb P\!\left(\left\|\sum_aX_a\right\|_{\rm op}\ge t\right)
+  \le 2d\exp\!\left(-\frac{t^2}{2v+(2Rt)/3}\right).
+\]
+Here conditioning on \(Z\in\mathcal Z\) and \(\mathcal T_W\) leaves the
+matrices in the preceding display independent and centered, while the two
+preceding bounds give \(R=R_B\) and \(v=v_B\).  Apply this inequality at
+\(t=1/8\).
+Using \(L_r^2=64\log r\), \eqref{eq:step-003-12}--\eqref{eq:step-003-13}, and
+\(k\le r^{5/4}\), its exponent is at least
+\begin{equation}
+  \frac{(1/8)^2}{2v_B+(2R_B/8)/3}
+  \ge\frac{r^2}{64(158+96\log r)k}
+  \ge\frac{r^{3/4}}{64(158+96\log r)}.                    \label{eq:step-003-14}
+\end{equation}
+For every \(r\ge2^{40}\),
+\begin{equation}
+  \frac{r^{3/4}}{64(158+96\log r)}\ge30\log r.            \label{eq:step-003-15}
+\end{equation}
+The inequality holds directly at \(2^{40}\), and the ratio of its left side
+to \(\log r\) is increasing thereafter. Thus, uniformly for
+\(Z\in\mathcal Z\),
+\begin{equation}
+  \mathbb P\!\left(
+    \left\|K_0^{\mathsf T}K_0-\frac{\mu B}{r}\right\|_{\rm op}
+      >\frac18
+    \ \middle|\ Z,\mathcal T_W
+  \right)
+  \le2kr^{-30}\le r^{-28}.                                \label{eq:step-003-16}
+\end{equation}
+
+On the complementary event in \eqref{eq:step-003-16}, \eqref{eq:step-003-7} and \eqref{eq:step-003-10} imply
+\begin{equation}
+  \lambda_{\min}(K_0^{\mathsf T}K_0)
+  \ge\frac78\frac34-\frac18
+  =\frac{17}{32}\ge\frac12,                               \label{eq:step-003-17}
+\end{equation}
+and
+\begin{equation}
+  \lambda_{\max}(K_0^{\mathsf T}K_0)
+  \le\frac54+\frac18
+  =\frac{11}{8}\le\frac32.                                \label{eq:step-003-18}
+\end{equation}
+Finally, \eqref{eq:step-003-6}, \eqref{eq:step-003-9}, and \eqref{eq:step-003-16}, with no independence needed between their
+failures, give
+\[
+  \mathbb P\!\left(
+    \operatorname{spec}(K_0^{\mathsf T}K_0)
+      \not\subset[1/2,3/2]
+  \right)
+  \le r^{-27}+r^{-29}+r^{-28}
+  \le r^{-26}.
+\]
+This proves the lemma. 
+
+\end{proof}
+
+
+\begin{proposition}[elliptic transfer with dependent balancing scalars]
+\label{prop:step-003-elliptic-transfer}
+Under Proposition~\ref{prop:step-001-realized-conditioning},
+Lemmas~\ref{lem:step-002-balancing-scalars} and
+\ref{lem:step-002-coefficient-gaussianization}, and
+Lemma~\ref{lem:step-003-radius-diagonals}, condition on any realized triple
+in \(\mathcal E_{\rm cond}\). For the three mode pairs define
+\begin{equation}
+  \begin{aligned}
+  K_0^{BC}&=\frac1r[z_1^B\otimes z_1^C\ \cdots\ z_k^B\otimes z_k^C],
+  &D^{BC}&=\operatorname{diag}(s_1^ys_1^z,\ldots,s_k^ys_k^z),\\
+  K_0^{AC}&=\frac1r[z_1^A\otimes z_1^C\ \cdots\ z_k^A\otimes z_k^C],
+  &D^{AC}&=\operatorname{diag}(s_1^xs_1^z,\ldots,s_k^xs_k^z),\\
+  K_0^{AB}&=\frac1r[z_1^A\otimes z_1^B\ \cdots\ z_k^A\otimes z_k^B],
+  &D^{AB}&=\operatorname{diag}(s_1^xs_1^y,\ldots,s_k^xs_k^y).
+  \end{aligned}                                             \label{eq:step-003-19}
+\end{equation}
+If \(\mathcal R_{\rm rad}\) holds and each corresponding isotropic Gram in
+\eqref{eq:step-003-19} has spectrum in \([1/2,3/2]\), then each exact normalized balanced pair
+Gram has spectrum in
+\begin{equation}
+  \left[
+    \frac1{2\,3^{2/3}\kappa_1^4},
+    \frac{3^{5/3}}2\kappa_1^4
+  \right].                                                  \label{eq:step-003-20}
+\end{equation}
+
+\end{proposition}
+
+\begin{proof}
+The normalized coefficient formula and the mixed-product identity for tensor
+products give
+\begin{equation}
+  \begin{aligned}
+  \bar K_0^{\bar\beta\bar\gamma}
+    &=(H_B\otimes H_C)K_0^{BC}D^{BC},\\
+  \bar K_0^{\bar\alpha\bar\gamma}
+    &=(H_A\otimes H_C)K_0^{AC}D^{AC},\\
+  \bar K_0^{\bar\alpha\bar\beta}
+    &=(H_A\otimes H_B)K_0^{AB}D^{AB}.
+  \end{aligned}\label{eq:step-003-21}
+\end{equation}
+The factor \(1/r\) in \eqref{eq:step-003-19} is exactly the product of the two
+\(1/\sqrt r\) normalized coefficient factors. Thus \eqref{eq:step-003-21} uses the setting's
+normalized convention without a raw-scale substitution.
+
+On \(\mathcal E_{\rm cond}\), every Kronecker elliptic map in \eqref{eq:step-003-21} has
+singular values in \([\kappa_1^{-2},\kappa_1^2]\). On
+\(\mathcal R_{\rm rad}\), Lemma~\ref{lem:step-003-radius-diagonals} gives
+\[
+  \sigma(D^{MN})\subset[3^{-1/3},3^{1/3}]
+\]
+for all three pairs. The assumed isotropic Gram event gives
+\[
+  \sigma(K_0^{MN})\subset[2^{-1/2},(3/2)^{1/2}].
+\]
+Applying the checked product singular-value inequalities to \eqref{eq:step-003-21} yields
+\begin{equation}
+  \sigma_{\min}(\bar K_0^{MN})
+    \ge \kappa_1^{-2}2^{-1/2}3^{-1/3},
+  \qquad
+  \|\bar K_0^{MN}\|_{\rm op}
+    \le \kappa_1^2(3/2)^{1/2}3^{1/3}.                      \label{eq:step-003-22}
+\end{equation}
+Squaring \eqref{eq:step-003-22} gives exactly \eqref{eq:step-003-20}.
+
+This transfer is deterministic on the intersection of the stated events.
+The diagonal \(D^{MN}\) can be arbitrarily dependent on \(K_0^{MN}\): the
+pointwise singular-value comparison uses only its realized lower and upper
+diagonal entries. Hence no false scalar/Gaussian independence is introduced.
+The endpoint singular values of the \(H_M\) and endpoint pair multipliers are
+included in \eqref{eq:step-003-22}. 
+
+\end{proof}
+
+
+\begin{proposition}[simultaneous normalized pair-Gram event]
+\label{prop:step-003-normalized-gram-event}
+Under Assumptions~\ref{assump:dimension}, \ref{assump:rank_window}, and
+\ref{assump:independent_initialization}, Proposition~\ref{prop:step-001-realized-conditioning}, and Lemmas~\ref{lem:step-002-balancing-scalars} and
+\ref{lem:step-002-coefficient-gaussianization}, define
+\begin{equation}
+  r_{0,{\rm gram}}(\kappa)
+  :=\max\left\{
+    2^{40},
+    \left\lceil
+      \bigl(2\,3^{2/3}\kappa_1^4\bigr)^{1/20}
+    \right\rceil
+  \right\},
+  \qquad \kappa_1=2\kappa^2.                              \label{eq:step-003-23}
+\end{equation}
+Choose \(C(\kappa,q)\ge1\). Then, for every
+\(r\ge r_{0,{\rm gram}}(\kappa)\), every
+\(n\ge C(\kappa,q)r^4\log r\), every
+\(r<k\le\lfloor r^{5/4}\rfloor\), and every realized factor triple in
+\(\mathcal E_{\rm cond}\),
+\begin{equation}
+  \mathbb P\!\left(
+    \mathcal E_{\rm gram}^{\rm norm}
+    \mid A,B,C
+  \right)\ge1-r^{-20}.                                     \label{eq:step-003-24}
+\end{equation}
+
+\end{proposition}
+
+\begin{proof}
+Conditional on the realized factors, the three
+mode arrays \(Z_M=[z_1^M\ \cdots\ z_k^M]\) are independent standard
+Gaussian arrays by the Gaussianization lemma. Therefore
+Lemma~\ref{lem:step-003-isotropic-khatri-rao} applies to each of the three
+pairs in \eqref{eq:step-003-19}, giving failure at most \(r^{-26}\) per pair. The pairs share
+mode arrays, but a union bound needs no independence. Together with
+Lemma~\ref{lem:step-003-radius-diagonals},
+\begin{equation}
+  \mathbb P\!\left(
+    \mathcal R_{\rm rad}^c
+    \ \text{or some isotropic pair event fails}
+    \mid A,B,C
+  \right)
+  \le r^{-28}+3r^{-26}
+  \le4r^{-26}
+  \le r^{-20}.                                             \label{eq:step-003-25}
+\end{equation}
+
+On the complementary event, Proposition~\ref{prop:step-003-elliptic-transfer}
+places every normalized pair-Gram eigenvalue in the constant interval \eqref{eq:step-003-20}.
+The threshold \eqref{eq:step-003-23} gives
+\begin{equation}
+  r^{20}\ge2\,3^{2/3}\kappa_1^4.                          \label{eq:step-003-26}
+\end{equation}
+Consequently
+\begin{equation}
+  \frac1{2\,3^{2/3}\kappa_1^4}\ge r^{-20},               \label{eq:step-003-27}
+\end{equation}
+and, because
+\[
+  \frac{3^{5/3}}2\kappa_1^4
+  \le2\,3^{2/3}\kappa_1^4,
+\]
+also
+\begin{equation}
+  \frac{3^{5/3}}2\kappa_1^4\le r^{20}.                   \label{eq:step-003-28}
+\end{equation}
+Thus all three exact normalized Grams lie in the setting-defined polynomial
+window on an event whose total conditional failure is bounded by \eqref{eq:step-003-25}. This
+is precisely \(\mathcal E_{\rm gram}^{\rm norm}\), proving \eqref{eq:step-003-24}.
+
+The proof is uniform in the realized factor triple because it uses that triple
+only through the common \(\kappa_1\) singular interval. It is uniform in
+\(n\) above its lower threshold because the projected \(z_i^M\) law is exactly
+standard Gaussian for every \(n\), while the full-radius failure in \eqref{eq:step-003-1}
+decreases with \(n\). The cases \(k=r+1\) and
+\(k=\lfloor r^{5/4}\rfloor\) are both included, as are the endpoint elliptic
+and radial bounds. 
+
+\end{proof}
+
+\begin{proof}[Proof of the subsection conclusion]
+
+Lemma~\ref{lem:step-003-radius-diagonals} derives a full-radius
+event from the primitive ambient Gaussian initialization and proves uniform
+pointwise bounds for all three pairwise balancing diagonals. This is the only
+place where full radii enter, and their dependence on the projected
+coefficient Gaussians is retained rather than discarded.
+
+Lemma~\ref{lem:step-003-isotropic-khatri-rao} proves both spectral sides for
+an \(r^2\times k\) isotropic Gaussian Khatri--Rao matrix. Its row
+decomposition \eqref{eq:step-003-8} makes the conditional mean diagonal; entrywise Gaussian
+truncation supplies an almost-sure Bernstein envelope; \eqref{eq:step-003-12}--\eqref{eq:step-003-13} verify the
+matrix-Bernstein hypotheses; and \eqref{eq:step-003-14}--\eqref{eq:step-003-18} give the explicit lower and upper
+window with failure at most \(r^{-26}\).
+
+Proposition~\ref{prop:step-003-elliptic-transfer} then uses the exact
+preceding formula
+\[
+  \bar K^{MN}=(H_M\otimes H_N)K_0^{MN}D^{MN}
+\]
+with the setting's \(1/r\) normalized scale. Pointwise singular-value
+comparisons transfer the isotropic window through the elliptic maps and the
+possibly dependent balancing diagonal, producing the constant interval \eqref{eq:step-003-20}
+for each exact normalized Gram.
+
+Finally, Proposition~\ref{prop:step-003-normalized-gram-event} unions the
+single radial event and the three pair events, converts their total failure to
+at most \(r^{-20}\), and verifies by \eqref{eq:step-003-26}--\eqref{eq:step-003-28} that the constant interval is
+contained in \([r^{-20},r^{20}]\). These named results prove exactly all three
+normalized pair-Gram windows and nothing about the raw-scale bridge or
+\(\mathcal E_{\rm size}\).
+
+\end{proof}
+
+\subsection{Balanced initialization radius}\label{app:step-004}
+
+\begin{lemma}[raw Gaussian radius tail]
+\label{lem:step-004-raw-radius-tail}
+Under Assumption~\ref{assump:independent_initialization}, fix any realized
+factor triple \((A,B,C)\) and any component-mode pair
+\((i,m)\in[k]\times\{x,y,z\}\). Then
+\[
+  \mathbb P\!\left(\|\widetilde m_i\|_2>2\mid A,B,C\right)
+  \le \exp\!\left[-\frac{3-\log4}{2}n\right]
+  \le e^{-n/2}.
+\]
+
+\end{lemma}
+
+\begin{proof}
+Independence of initialization from smoothing
+implies that, conditionally on the realized factors,
+\(g_i^m:=\sqrt n\,\widetilde m_i\) remains a standard Gaussian vector in
+\(\mathbb R^n\). For one standard normal scalar \(G\), direct Gaussian
+integration gives
+\[
+  \mathbb E e^{\lambda G^2}=(1-2\lambda)^{-1/2},
+  \qquad 0<\lambda<\frac12.
+\]
+Independence of the \(n\) coordinates therefore yields
+\[
+  \mathbb E e^{\lambda\|g_i^m\|_2^2}
+  =(1-2\lambda)^{-n/2}.
+\]
+Markov's inequality with \(\lambda=3/8\) gives
+\[
+  \begin{aligned}
+  \mathbb P\!\left(\|\widetilde m_i\|_2>2\mid A,B,C\right)
+  &=\mathbb P\!\left(\|g_i^m\|_2^2>4n\mid A,B,C\right)\\
+  &\le e^{-(3/8)4n}(1-3/4)^{-n/2}\\
+  &=e^{-3n/2}4^{n/2}
+   =\exp\!\left[-\frac{3-\log4}{2}n\right].
+  \end{aligned}
+\]
+Since \(\log4<2\), the exponent coefficient
+\((3-\log4)/2\) is larger than \(1/2\), proving the second inequality. The
+calculation is uniform in the realized factors because their values do not
+enter the conditional Gaussian law. 
+
+\end{proof}
+
+
+\begin{proposition}[simultaneous control of all raw initialization radii]
+\label{prop:step-004-uniform-raw-size}
+Under Assumptions~\ref{assump:dimension}, \ref{assump:rank_window}, and
+\ref{assump:independent_initialization}, and
+Lemma~\ref{lem:step-004-raw-radius-tail}, define the event
+\[
+  \mathcal E_{\rm raw,size}
+  :=\left\{\max_{i\in[k],\,m\in\{x,y,z\}}
+       \|\widetilde m_i\|_2\le2\right\}.
+\]
+Choose the dimension-constant contribution
+\(C_{\rm size}:=1\) and the rank threshold \(r_{\rm size}:=3\). If
+\[
+  C(\kappa,q)\ge C_{\rm size},\qquad r\ge r_{\rm size},
+\]
+then, conditionally on every realized factor triple,
+\[
+  \mathbb P\!\left(\mathcal E_{\rm raw,size}^{\mathsf c}
+    \mid A,B,C\right)\le r^{-20}.
+\]
+This conclusion holds throughout the full rank window, including the boundary
+\(k=\lfloor r^{5/4}\rfloor\).
+
+\end{proposition}
+
+\begin{proof}
+A union bound over the \(3k\) raw columns and
+Lemma~\ref{lem:step-004-raw-radius-tail} give
+\[
+  \mathbb P\!\left(\mathcal E_{\rm raw,size}^{\mathsf c}
+      \mid A,B,C\right)
+  \le 3k e^{-n/2}.
+\]
+No independence is needed for this union bound, although the columns are in
+fact independent. Assumptions~\ref{assump:dimension} and
+\ref{assump:rank_window}, together with \(C(\kappa,q)\ge1\), imply
+\[
+  3k e^{-n/2}
+  \le 3r^{5/4}
+       \exp\!\left(-\frac12r^4\log r\right).
+\]
+For \(r\ge3\),
+\[
+  \frac{r^4}{2}
+  \ge \frac{81}{2}
+  \ge \frac{85}{4}+\frac{\log3}{\log r},
+\]
+because \(\log3/\log r\le1\). Multiplying by \(\log r>0\) and rearranging
+gives the explicit absorption inequality
+\[
+  \log3+\frac54\log r-\frac{r^4}{2}\log r
+  \le -20\log r.
+\]
+Exponentiation proves
+\[
+  3r^{5/4}\exp\!\left(-\frac12r^4\log r\right)
+  \le r^{-20}.
+\]
+The use of \(k\le r^{5/4}\) is valid at
+\(k=\lfloor r^{5/4}\rfloor\), so the maximal-rank boundary requires no
+separate loss. The lower inequality \(r<k\) is part of the declared window
+but is not needed for this upper-tail estimate. 
+
+\end{proof}
+
+
+\begin{proposition}[geometric-mean transfer to balanced columns]
+\label{prop:step-004-balanced-size-transfer}
+\leavevmode\par\noindent
+Under Assumption~\ref{assump:independent_initialization},
+Lemma~\ref{lem:step-002-balancing-scalars}, and
+Proposition~\ref{prop:step-004-uniform-raw-size}, the deterministic inclusion
+\[
+  \mathcal E_{\rm raw,size}\subseteq\mathcal E_{\rm size}
+\]
+holds. Hence, whenever \(C(\kappa,q)\ge1\) and \(r\ge3\), conditionally on
+every realized factor triple,
+\[
+  \mathbb P\!\left(\mathcal E_{\rm size}^{\mathsf c}
+    \mid A,B,C\right)\le r^{-20}.
+\]
+
+\end{proposition}
+
+\begin{proof}
+Fix a component \(i\) on
+\(\mathcal E_{\rm raw,size}\). First suppose all three raw norms are
+positive. The balancing lemma gives
+\[
+  \|x_{i,0}\|_2=\|y_{i,0}\|_2=\|z_{i,0}\|_2
+  =\left(\|\widetilde x_i\|_2
+          \|\widetilde y_i\|_2
+          \|\widetilde z_i\|_2\right)^{1/3}.
+\]
+Every raw norm on the right is at most \(2\), so
+\[
+  \left(\|\widetilde x_i\|_2
+          \|\widetilde y_i\|_2
+          \|\widetilde z_i\|_2\right)^{1/3}
+  \le (2\cdot2\cdot2)^{1/3}=2.
+\]
+
+If at least one raw factor is exactly zero, the setting-defined zero branch
+leaves the entire raw triple unchanged. On
+\(\mathcal E_{\rm raw,size}\), each unchanged raw norm is already at most
+\(2\), including any nonzero factors in that triple. Thus the same balanced
+size conclusion holds on the zero branch without division by a raw norm and
+without removing a null event.
+
+The argument applies to every \(i\in[k]\), proving the event inclusion.
+Consequently
+\[
+  \mathbb P\!\left(\mathcal E_{\rm size}^{\mathsf c}\mid A,B,C\right)
+  \le
+  \mathbb P\!\left(\mathcal E_{\rm raw,size}^{\mathsf c}\mid A,B,C\right)
+  \le r^{-20}
+\]
+by Proposition~\ref{prop:step-004-uniform-raw-size}. 
+
+\end{proof}
+
+\begin{proof}[Proof of the subsection conclusion]
+
+Lemma~\ref{lem:step-004-raw-radius-tail} derives from
+Assumption~\ref{assump:independent_initialization} the explicit conditional
+one-column bound \(e^{-n/2}\). Proposition~\ref{prop:step-004-uniform-raw-size}
+unions that bound over exactly the \(3k\) raw initialization columns and uses
+the full admissible boundary \(k\le\lfloor r^{5/4}\rfloor\), the explicit
+dimension contribution \(C_{\rm size}=1\), and the explicit threshold
+\(r_{\rm size}=3\) to obtain
+\[
+  \mathbb P\!\left(\mathcal E_{\rm raw,size}^{\mathsf c}
+    \mid A,B,C\right)\le r^{-20}.
+\]
+
+Proposition~\ref{prop:step-004-balanced-size-transfer}, using the exact
+balancing law from Lemma~\ref{lem:step-002-balancing-scalars}, proves on the positive-radius branch
+that each balanced norm is the geometric mean of three raw norms bounded by
+\(2\), and separately proves the same conclusion on the setting-defined
+zero-factor no-op branch. Therefore
+\(\mathcal E_{\rm raw,size}\subseteq\mathcal E_{\rm size}\), and hence
+\[
+  \boxed{
+  \mathbb P\!\left(\mathcal E_{\rm size}^{\mathsf c}
+    \mid A,B,C\right)\le r^{-20}}
+\]
+uniformly for every realized factor triple in \(\mathcal E_{\rm cond}\),
+every \(r\ge3\), every \(n\ge C(\kappa,q)r^4\log r\) with
+\(C(\kappa,q)\ge1\), and every
+\(r<k\le\lfloor r^{5/4}\rfloor\). This proves the claimed conditional
+failure bound for the balanced initial-size event. No Gram or path statement
+has been used or proved.
+
+\end{proof}
+
+\subsection{Raw and normalized tangent geometry}\label{app:step-005}
+
+\begin{lemma}[Exact scaling of all three pair Grams]
+\label{lem:step-005-pair-gram-scaling}
+Under the setting definitions, Lemma~\ref{lem:step-002-coefficient-gaussianization}, and Proposition~\ref{prop:step-002-balancing-invariance}, define
+\[
+\begin{aligned}
+  K_{\rm raw}^{\beta\gamma}
+    &=[\,\beta_{1,0}\otimes\gamma_{1,0}\ \cdots\
+          \beta_{k,0}\otimes\gamma_{k,0}\,],\\
+  K_{\rm raw}^{\alpha\gamma}
+    &=[\,\alpha_{1,0}\otimes\gamma_{1,0}\ \cdots\
+          \alpha_{k,0}\otimes\gamma_{k,0}\,],\\
+  K_{\rm raw}^{\alpha\beta}
+    &=[\,\alpha_{1,0}\otimes\beta_{1,0}\ \cdots\
+          \alpha_{k,0}\otimes\beta_{k,0}\,],
+\end{aligned}
+\]
+and define the normalized matrices by replacing every coefficient vector by
+its barred version. For every pair
+\(pq\in\{\beta\gamma,\alpha\gamma,\alpha\beta\}\), let
+\(G_{\rm raw}^{pq}=(K_{\rm raw}^{pq})^{\mathsf T}K_{\rm raw}^{pq}\) and
+\(G_{\rm norm}^{pq}=(K_{\rm norm}^{pq})^{\mathsf T}K_{\rm norm}^{pq}\).
+Then, pointwise on every branch,
+\[
+  K_{\rm raw}^{pq}=\frac rn K_{\rm norm}^{pq},
+  \qquad
+  \boxed{G_{\rm raw}^{pq}=\left(\frac rn\right)^2G_{\rm norm}^{pq}}
+  \quad
+  \bigl(pq=\beta\gamma,\alpha\gamma,\alpha\beta\bigr).
+\]
+
+\end{lemma}
+
+\begin{proof}
+Put \(c=\sqrt{n/r}>0\). The setting definitions
+give \(\bar\alpha_{i,0}=c\alpha_{i,0}\),
+\(\bar\beta_{i,0}=c\beta_{i,0}\), and
+\(\bar\gamma_{i,0}=c\gamma_{i,0}\). Thus, for example,
+\[
+  \beta_{i,0}\otimes\gamma_{i,0}
+  =c^{-2}(\bar\beta_{i,0}\otimes\bar\gamma_{i,0})
+  =\frac rn(\bar\beta_{i,0}\otimes\bar\gamma_{i,0}).
+\]
+The identical calculation applies to the other two pairs, proving the matrix
+identity column by column. Taking transpose times the matrix gives
+\[
+  (K_{\rm raw}^{pq})^{\mathsf T}K_{\rm raw}^{pq}
+  =\left(\frac rn\right)^2
+    (K_{\rm norm}^{pq})^{\mathsf T}K_{\rm norm}^{pq}.
+\]
+No division by a coefficient vector occurs, so the calculation remains valid
+when a pair column is zero. This proves the lemma. 
+
+\end{proof}
+
+
+\begin{proposition}[Exact scaling and range of the tangent synthesis maps]
+\label{prop:step-005-synthesis-scaling}
+Under the setting definitions, Lemma~\ref{lem:step-002-coefficient-gaussianization}, and Proposition~\ref{prop:step-002-balancing-invariance}, let
+\[
+  \mathcal P=\bigoplus_{i=1}^k
+    (\mathbb R^r\oplus\mathbb R^r\oplus\mathbb R^r)
+\]
+and write \(p=((u_i,v_i,w_i))_{i=1}^k\in\mathcal P\). Define the raw and
+normalized tangent synthesis maps into
+\(\mathcal H=(\mathbb R^r)^{\otimes3}\) by
+\[
+\begin{aligned}
+  \mathcal T_{\rm raw}p
+  &=\sum_{i=1}^k\bigl(
+      u_i\otimes\beta_{i,0}\otimes\gamma_{i,0}
+      +\alpha_{i,0}\otimes v_i\otimes\gamma_{i,0}
+      +\alpha_{i,0}\otimes\beta_{i,0}\otimes w_i\bigr),\\
+  \mathcal T_{\rm norm}p
+  &=\sum_{i=1}^k\bigl(
+      u_i\otimes\bar\beta_{i,0}\otimes\bar\gamma_{i,0}
+      +\bar\alpha_{i,0}\otimes v_i\otimes\bar\gamma_{i,0}
+      +\bar\alpha_{i,0}\otimes\bar\beta_{i,0}\otimes w_i\bigr).
+\end{aligned}
+\]
+Then, pointwise on every branch,
+\[
+  \boxed{\mathcal T_{\rm raw}=\frac rn\mathcal T_{\rm norm}},
+  \qquad
+  \operatorname{range}(\mathcal T_{\rm raw})
+    =\mathscr S_0^{\rm raw},
+  \qquad
+  \operatorname{range}(\mathcal T_{\rm norm})
+    =\mathscr S_0^{\rm norm}.
+\]
+Consequently,
+\[
+  \boxed{\mathscr S_0^{\rm raw}=\mathscr S_0^{\rm norm}=\mathscr S_0},
+  \qquad
+  \ker(\mathcal T_{\rm raw})=\ker(\mathcal T_{\rm norm}).
+\]
+
+\end{proposition}
+
+\begin{proof}
+With \(c=\sqrt{n/r}\), every normalized tangent
+summand contains exactly two barred coefficient vectors and therefore equals
+\(c^2=n/r\) times the corresponding raw summand. Summing over components
+gives \(\mathcal T_{\rm norm}=(n/r)\mathcal T_{\rm raw}\), equivalently the
+boxed map identity. The scalar \(r/n\) is nonzero.
+
+Every image of \(\mathcal T_{\rm raw}\) is a finite sum of generators in the
+definition of \(\mathscr S_0^{\rm raw}\), so its range is contained in that
+span. Conversely, each displayed raw generator is obtained by setting exactly
+one of the variables \(u_i,v_i,w_i\) and setting all other variables to zero.
+Hence the range is the full displayed span. The normalized case is identical.
+Multiplication of a linear map by a nonzero scalar changes neither its range
+nor its kernel, proving both final equalities. Zero coefficient vectors merely
+remove zero generators from both maps and do not affect any argument. This
+proves the proposition. 
+
+\end{proof}
+
+
+\begin{lemma}[Exact component gauge kernels and canonical gauge images]
+\label{lem:step-005-gauge-kernel}
+Under the setting definitions, Lemma~\ref{lem:step-002-coefficient-gaussianization}, and Proposition~\ref{prop:step-002-balancing-invariance}, let
+\[
+  a_i=\alpha_{i,0},\qquad b_i=\beta_{i,0},\qquad c_i=\gamma_{i,0},
+\]
+and let \(\mathcal T_{{\rm raw},i}\) denote the \(i\)-th summand map. Define
+the canonical gauge map and its image by
+\[
+\begin{aligned}
+  \Gamma_i(\lambda,\mu)
+  &=\lambda(a_i,-b_i,0)+\mu(a_i,0,-c_i),\\
+  \mathfrak n_i&=\operatorname{image}(\Gamma_i).
+\end{aligned}
+\]
+Then \(\mathfrak n_i\subseteq\ker(\mathcal T_{{\rm raw},i})\) on every
+branch. On the almost-sure branch supplied by
+Lemma~\ref{lem:step-002-coefficient-gaussianization}, where
+\(a_i,b_i,c_i\ne0\),
+\[
+  \ker(\mathcal T_{{\rm raw},i})
+  =\{(\lambda a_i,\mu b_i,\nu c_i):\lambda+\mu+\nu=0\}
+  =\mathfrak n_i,\qquad \dim\mathfrak n_i=2.
+\]
+On all branches the exact classification is:
+
+\begin{center}
+\small
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lllll}
+\hline
+Branch & Local synthesis map & Local kernel & Kernel dimension & \(\dim\mathfrak n_i\) \\
+\hline
+\(a_i,b_i,c_i\ne0\) & Full three-term map & \(\{(\lambda a_i,\mu b_i,\nu c_i):\lambda+\mu+\nu=0\}\) & \(2\) & \(2\) \\
+\(a_i=0,\ b_i,c_i\ne0\) & \(u\otimes b_i\otimes c_i\) & \(\{0\}\oplus\mathbb R^r\oplus\mathbb R^r\) & \(2r\) & \(2\) \\
+\(b_i=0,\ a_i,c_i\ne0\) & \(a_i\otimes v\otimes c_i\) & \(\mathbb R^r\oplus\{0\}\oplus\mathbb R^r\) & \(2r\) & \(2\) \\
+\(c_i=0,\ a_i,b_i\ne0\) & \(a_i\otimes b_i\otimes w\) & \(\mathbb R^r\oplus\mathbb R^r\oplus\{0\}\) & \(2r\) & \(2\) \\
+\(a_i\ne0,\ b_i=c_i=0\) & \(0\) & \((\mathbb R^r)^3\) & \(3r\) & \(1\) \\
+\(b_i\ne0,\ a_i=c_i=0\) & \(0\) & \((\mathbb R^r)^3\) & \(3r\) & \(1\) \\
+\(c_i\ne0,\ a_i=b_i=0\) & \(0\) & \((\mathbb R^r)^3\) & \(3r\) & \(1\) \\
+\(a_i=b_i=c_i=0\) & \(0\) & \((\mathbb R^r)^3\) & \(3r\) & \(0\) \\
+\hline
+\end{tabular}
+\end{adjustbox}
+\end{center}
+
+The normalized gauge map is
+\(\Gamma_i^{\rm norm}=\sqrt{n/r}\,\Gamma_i\), so its image is the same
+\(\mathfrak n_i\), and the normalized and raw local kernels agree.
+
+\end{lemma}
+
+\begin{proof}
+Direct substitution gives
+\[
+\begin{aligned}
+  \mathcal T_{{\rm raw},i}(a_i,-b_i,0)
+  &=a_i\otimes b_i\otimes c_i-a_i\otimes b_i\otimes c_i=0,\\
+  \mathcal T_{{\rm raw},i}(a_i,0,-c_i)
+  &=a_i\otimes b_i\otimes c_i-a_i\otimes b_i\otimes c_i=0.
+\end{aligned}
+\]
+This proves the all-branch inclusion without a nonvanishing assumption.
+
+Now suppose \(a_i,b_i,c_i\ne0\) and
+\(\mathcal T_{{\rm raw},i}(u,v,w)=0\). Choose linear functionals
+\(b_i^*,c_i^*\) with \(b_i^*(b_i)=c_i^*(c_i)=1\), and let
+\(P_{a_i^\perp}\) be orthogonal projection onto \(a_i^\perp\). Applying
+\(P_{a_i^\perp}\otimes b_i^*\otimes c_i^*\) gives
+\(u=\lambda a_i\). Repeating in the other modes gives
+\(v=\mu b_i\) and \(w=\nu c_i\). Substitution yields
+\[
+  (\lambda+\mu+\nu)a_i\otimes b_i\otimes c_i=0.
+\]
+The rank-one tensor is nonzero, so \(\lambda+\mu+\nu=0\). Conversely, every
+such triple is killed by the map, and
+\[
+  (\lambda a_i,\mu b_i,\nu c_i)
+  =-\mu(a_i,-b_i,0)-\nu(a_i,0,-c_i)
+\]
+proves equality with \(\mathfrak n_i\). The two
+generators are independent because all three coefficient vectors are nonzero.
+
+If exactly one fixed vector is zero, the table's displayed one-term map
+survives and vanishes exactly when its free vector is zero; the two columns of
+\(\Gamma_i\) remain independent. If exactly two fixed vectors are zero, the
+local map is zero and the gauge image is the one-dimensional span of the
+surviving block vector. If all three vanish, both maps vanish. These
+observations prove the remaining table rows. The normalized conclusions follow
+from the common nonzero normalization scalar and
+Proposition~\ref{prop:step-005-synthesis-scaling}. 
+
+\end{proof}
+
+
+\begin{proposition}[Gauge quotient, unreduced range, and raw-target compatibility]
+\label{prop:step-005-quotient-range}
+Under the setting definitions, Lemma~\ref{lem:step-002-coefficient-gaussianization}, Proposition~\ref{prop:step-002-balancing-invariance},
+Proposition~\ref{prop:step-005-synthesis-scaling}, and
+Lemma~\ref{lem:step-005-gauge-kernel}, embed each \(\mathfrak n_i\) in the
+\(i\)-th parameter block and define
+\[
+  \mathfrak N_{\rm can}=\bigoplus_{i=1}^k\mathfrak n_i\subseteq\mathcal P,
+  \qquad \mathcal Q_{\rm can}=\mathcal P/\mathfrak N_{\rm can}.
+\]
+Then both synthesis maps factor uniquely through the quotient map
+\(\pi_{\rm can}:\mathcal P\to\mathcal Q_{\rm can}\):
+\[
+  \widetilde{\mathcal T}_{\rm raw}([p])=\mathcal T_{\rm raw}p,
+  \qquad
+  \widetilde{\mathcal T}_{\rm norm}([p])=\mathcal T_{\rm norm}p.
+\]
+These induced maps satisfy
+\[
+\begin{aligned}
+  \operatorname{range}(\widetilde{\mathcal T}_{\rm raw})
+  &=\operatorname{range}(\mathcal T_{\rm raw})
+   =\mathscr S_0,\\
+  \operatorname{range}(\widetilde{\mathcal T}_{\rm norm})
+  &=\operatorname{range}(\mathcal T_{\rm norm})
+   =\mathscr S_0,\\
+  \widetilde{\mathcal T}_{\rm raw}
+  &=\frac rn\widetilde{\mathcal T}_{\rm norm}.
+\end{aligned}
+\]
+On the almost-sure all-nonzero branch,
+\(\dim\mathfrak N_{\rm can}=2k\), so this is exactly the two-gauge-directions-per-component quotient. On every zero branch it is the
+quotient by the branch-dependent, possibly lower-dimensional canonical gauge
+image. If
+\(\mathcal P=\mathfrak N_{\rm can}\oplus\mathcal C_{\rm can}\), call a basis
+of \(\mathcal C_{\rm can}\) a reduced parameter frame. Its synthesized
+columns have image range \(\mathscr S_0\), but no injectivity or linear
+independence is claimed. Furthermore,
+\[
+  \boxed{\widehat D_0\in\mathscr S_0}.
+\]
+All these are raw coefficient-space statements: \(D_r\) is unchanged,
+\(D_r-\widehat D_0\) is the raw coefficient residual in the Frobenius inner
+product on \(\mathcal H\), and the physical loss remains the setting's
+\(\|T-S(X,Y,Z)\|_F^2\) with no normalization.
+
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:step-005-gauge-kernel} gives
+\(\mathfrak n_i\subseteq\ker(\mathcal T_{{\rm raw},i})\) for each component.
+Because the global map is the sum of its local maps,
+\(\mathfrak N_{\rm can}\subseteq\ker(\mathcal T_{\rm raw})\).
+Proposition~\ref{prop:step-005-synthesis-scaling} then gives
+\(\mathfrak N_{\rm can}\subseteq\ker(\mathcal T_{\rm norm})\). Hence
+the two formulas on cosets are well defined: replacing \(p\) by \(p+g\),
+\(g\in\mathfrak N_{\rm can}\), does not change either image.
+
+The quotient map \(\pi_{\rm can}\) is surjective, so every quotient image is an
+unreduced image and every unreduced image is the image of the coset of its
+parameter. Therefore
+\[
+  \operatorname{range}(\widetilde{\mathcal T}_{\rm raw})
+  =\operatorname{range}(\mathcal T_{\rm raw}),
+  \qquad
+  \operatorname{range}(\widetilde{\mathcal T}_{\rm norm})
+  =\operatorname{range}(\mathcal T_{\rm norm}).
+\]
+The remaining range and scaling identities follow from
+Proposition~\ref{prop:step-005-synthesis-scaling}. If
+\(\mathcal P=\mathfrak N_{\rm can}\oplus\mathcal C_{\rm can}\), then for
+\(p=g+c\),
+\(\mathcal T_{\rm raw}p=\mathcal T_{\rm raw}c\); hence restriction to any
+such complement, and thus any reduced parameter frame, has the same image
+range as the unreduced generator frame. Additional kernel vectors may remain
+in \(\mathcal C_{\rm can}\), so no basis or injectivity claim is made. An
+actual tangent-space basis would instead use the full common kernel
+\(\ker(\mathcal T_{\rm raw})=\ker(\mathcal T_{\rm norm})\).
+
+For membership of the represented raw coefficient tensor, take
+\(p_{\widehat D}=((\alpha_{i,0},0,0))_{i=1}^k\). Then
+\[
+  \mathcal T_{\rm raw}p_{\widehat D}
+  =\sum_{i=1}^k
+    \alpha_{i,0}\otimes\beta_{i,0}\otimes\gamma_{i,0}
+  =\widehat D_0,
+\]
+so \(\widehat D_0\in\operatorname{range}(\mathcal T_{\rm raw})=\mathscr S_0\),
+including on every zero branch. Neither the quotient nor the coefficient
+normalization acts on \(D_r\), and no map here acts on the physical
+tensor space. This proves every raw-target and metric convention in the
+statement. 
+
+The global kernel of \(\mathcal T_{\rm raw}\) can contain additional
+cross-component linear dependencies. No equality
+\(\ker(\mathcal T_{\rm raw})=\mathfrak N_{\rm can}\) is claimed or needed.
+On the almost-sure nonzero branch the canonical image removes exactly two
+local gauge directions per component; on zero branches its dimension is the
+one in Lemma~\ref{lem:step-005-gauge-kernel}. In every case, inclusion in the
+full kernel is the precise condition that preserves the range.
+
+\end{proof}
+
+\begin{proof}[Proof of the subsection conclusion]
+
+Lemma~\ref{lem:step-005-pair-gram-scaling} applies the setting normalization
+column by column to all three Khatri--Rao pair matrices and proves exactly
+\[
+  G_{\rm raw}^{pq}=\left(\frac rn\right)^2G_{\rm norm}^{pq},
+  \qquad pq\in\{\beta\gamma,\alpha\gamma,\alpha\beta\}.
+\]
+It makes no claim about eigenvalues, concentration, or a Gram event.
+
+Proposition~\ref{prop:step-005-synthesis-scaling} defines the unreduced raw
+and normalized tangent synthesis maps and proves the exact nonzero scalar
+identity between them. Their ranges are, by direct two-sided comparison with
+the setting generators, precisely \(\mathscr S_0^{\rm raw}\) and
+\(\mathscr S_0^{\rm norm}\). This yields
+\(\mathscr S_0^{\rm raw}=\mathscr S_0^{\rm norm}=\mathscr S_0\) without a
+surrogate span or metric change.
+
+Lemma~\ref{lem:step-005-gauge-kernel} identifies the exact two-dimensional
+local scaling kernel on the previously established almost-sure nonzero branch and
+gives the exact kernel and canonical gauge-image dimensions on every zero
+branch.
+Proposition~\ref{prop:step-005-quotient-range} then factors both synthesis
+maps through the canonical-image quotient. On the nonzero branch this removes
+exactly two gauge directions per component; on every branch the quotient,
+unreduced generator frame, and complement-based reduced parameter frame have
+the same image range \(\mathscr S_0\), with no injectivity claim. The same
+proposition also proves the exact membership
+\(\widehat D_0\in\mathscr S_0\).
+
+Thus the range and membership claims are proved. In particular, the exact raw,
+normalized, and quotient ranges all equal \(\mathscr S_0\), while
+\(\widehat D_0\in\mathscr S_0\) and the raw target, residual, and Frobenius
+conventions remain unchanged. No probability, Gram concentration,
+full-rank Gaussian-array, Haar, projection-energy, or deficit conclusion is
+asserted.
+
+\end{proof}
+
+\subsection{Product-Haar orbit factorization}\label{app:step-006}
+
+For each \(M\in\{A,B,C\}\), define the standard-Gaussian mode array
+\[
+  Z_M=[z_1^M\ \cdots\ z_k^M]\in\mathbb R^{r\times k},
+\]
+using the vectors from
+Lemma~\ref{lem:step-002-coefficient-gaussianization}.  The arrays
+\(Z_A,Z_B,Z_C\) correspond respectively to modes \(a,b,c\), and we use the
+accepted mode abbreviations
+\[
+  H_a:=H_A,\qquad H_b:=H_B,\qquad H_c:=H_C.
+\]
+
+\begin{lemma}[Gaussian block QR separates orientation from the full rotated shape]
+\label{lem:step-006-gaussian-qr-shape}
+Under Assumptions~\ref{assump:independent_initialization} and
+\ref{assump:rank_window}, where the latter gives \(r<k\), hence \(k\ge r\),
+and Lemma~\ref{lem:step-002-coefficient-gaussianization}, let
+\(Z\in\mathbb R^{r\times k}\) have iid \(\mathcal N(0,1)\) entries. Write
+\[
+  Z=[G\ W],\qquad G\in\mathbb R^{r\times r},
+  \qquad W\in\mathbb R^{r\times(k-r)}.
+\]
+There are Borel functions \(O(Z)\in O(r)\) and
+\(R(Z)\in\mathbb R^{r\times k}\) such that
+\begin{equation}
+  Z=O(Z)R(Z)                                                   \label{eq:step-006-2}
+\end{equation}
+for every \(Z\), and, under the Gaussian law,
+\begin{equation}
+  O(Z)\sim\operatorname{Haar}(O(r)),
+  \qquad O(Z)\ \perp\!\!\!\perp\ R(Z).                       \label{eq:step-006-3}
+\end{equation}
+On the full-probability event \(\Omega_{\rm qr}=\{\det G\ne0\}\), if
+\[
+  G=O_0R_0
+\]
+is the unique QR decomposition with \(R_0\) upper triangular and strictly
+positive diagonal, then the construction is explicitly
+\begin{equation}
+  O(Z)=O_0,\qquad
+  Y=O_0^{\mathsf T}W,\qquad
+  R(Z)=[R_0\ Y].                                               \label{eq:step-006-4}
+\end{equation}
+Thus the orientation is independent not only of the triangular factor but of
+the complete shape containing all rotated remaining Gaussian columns.
+
+\end{lemma}
+
+\begin{proof}
+The determinant is a nonzero polynomial in the
+entries of \(G\), and the Gaussian law has a density, so
+\begin{equation}
+  \mathbb P(\Omega_{\rm qr}^c)=0.                              \label{eq:step-006-5}
+\end{equation}
+On \(\Omega_{\rm qr}\), positive-diagonal QR is unique. Moreover,
+\(R_0\) is the unique upper-triangular positive-diagonal Cholesky factor of
+\(G^{\mathsf T}G\), and
+\begin{equation}
+  O_0=GR_0^{-1}.                                               \label{eq:step-006-6}
+\end{equation}
+The Cholesky map is continuous on the positive-definite cone, so \(O_0,R_0\)
+are Borel functions of \(G\) there. On \(\Omega_{\rm qr}^c\), set
+\(O(Z)=I_r\), and on all branches set
+\[
+  R(Z)=O(Z)^{\mathsf T}Z.
+\]
+This is a Borel extension and proves equation \eqref{eq:step-006-2} pointwise. On
+\(\Omega_{\rm qr}\) it agrees with equation \eqref{eq:step-006-4}.
+
+For a deterministic \(U\in O(r)\), the positive-diagonal QR decomposition of
+\(UG\) is
+\begin{equation}
+  UG=(UO_0)R_0.                                                \label{eq:step-006-7}
+\end{equation}
+Because \(UG\stackrel d=G\), equation \eqref{eq:step-006-7} implies
+\begin{equation}
+  (O_0,R_0)\stackrel d=(UO_0,R_0).                            \label{eq:step-006-8}
+\end{equation}
+For every Borel set \(B\) in the triangular-factor space, the finite measure
+\[
+  \mu_B(A)=\mathbb P(O_0\in A,R_0\in B)
+\]
+on \(O(r)\) is left invariant by equation \eqref{eq:step-006-8}. Haar uniqueness therefore gives
+\begin{equation}
+  \mu_B(A)=\operatorname{Haar}_{O(r)}(A)\,
+            \mathbb P(R_0\in B),                             \label{eq:step-006-9}
+\end{equation}
+so \(O_0\) is Haar and independent of \(R_0\).
+Here the invoked compact-group fact is uniqueness of normalized Haar measure:
+every finite left-invariant Borel measure is a scalar multiple of it
+\citep[Chapter~2]{folland1999}.  Applying that statement to each \(\mu_B\)
+gives exactly the displayed product factorization, including the cases
+\(\mathbb P(R_0\in B)=0\).
+
+It remains to include the unused columns in the shape. The Gaussian block
+\(W\) is independent of \(G\), hence of \((O_0,R_0)\). Conditional on
+\((O_0,R_0)=(o,t)\), orthogonal invariance of every column of \(W\) gives
+\begin{equation}
+  o^{\mathsf T}W\stackrel d=W,                                \label{eq:step-006-10}
+\end{equation}
+and this conditional law does not depend on \(o\) or \(t\). More explicitly,
+for bounded Borel \(f\) and \(g\), define
+\(h(t)=\mathbb E[g(t,W)]\). Then
+\begin{equation}
+\begin{aligned}
+  \mathbb E[f(O_0)g(R_0,O_0^{\mathsf T}W)]
+  &=\mathbb E[f(O_0)h(R_0)]\\
+  &=\mathbb E[f(O_0)]\,\mathbb E[h(R_0)]\\
+  &=\mathbb E[f(O_0)]\,
+    \mathbb E[g(R_0,O_0^{\mathsf T}W)].
+\end{aligned}\label{eq:step-006-11}
+\end{equation}
+Thus \(O_0\) is independent of \((R_0,Y)\), proving equations \eqref{eq:step-006-3}--\eqref{eq:step-006-4}. The
+measurable extension changes the variables only on the null event in equation
+\eqref{eq:step-006-5}, so the Haar and independence laws remain exact. Since invertibility of
+\(G\) implies full row rank of \(Z\), every rank-deficient branch is contained
+in the same null event. The argument also covers \(k=r+1\), where \(W\) has
+exactly one column.
+
+
+\end{proof}
+
+
+\begin{proposition}[Reflection-bit absorption gives an independent Haar orientation in \(SO(r)\)]
+\label{prop:step-006-reflection-absorption}
+Under Lemma~\ref{lem:step-006-gaussian-qr-shape}, fix
+\[
+  J=\operatorname{diag}(-1,1,\ldots,1)\in O(r),
+  \qquad \det J=-1,
+\]
+and write \(Z=O_0R\) for the lemma's factorization. Define the measurable
+determinant bit, orientation, and reflected shape by
+\begin{equation}
+  \varepsilon=\mathbf 1_{\{\det O_0=-1\}},\qquad
+  Q=O_0J^{\varepsilon},\qquad
+  \widetilde R=J^{\varepsilon}R.                              \label{eq:step-006-12}
+\end{equation}
+Then
+\begin{equation}
+  Q\in SO(r),\qquad Z=Q\widetilde R,                           \label{eq:step-006-13}
+\end{equation}
+\(Q\) is Haar on \(SO(r)\), and
+\begin{equation}
+  Q\ \perp\!\!\!\perp\ \widetilde R.                       \label{eq:step-006-14}
+\end{equation}
+The bit \(\varepsilon\) is stored entirely in \(\widetilde R\).
+
+\end{proposition}
+
+\begin{proof}
+Since \(J^2=I_r\), equation \eqref{eq:step-006-12} gives
+\[
+  \det Q=(\det O_0)(-1)^{\varepsilon}=1,
+  \qquad
+  Q\widetilde R=O_0J^{\varepsilon}J^{\varepsilon}R=O_0R=Z,
+\]
+which proves equation \eqref{eq:step-006-13} on every branch.
+
+Normalized Haar measure on \(O(r)\) assigns mass \(1/2\) to each determinant
+component because right multiplication by \(J\) interchanges them. On the
+component \(\det O_0=1\), \(Q=O_0\); on the component \(\det O_0=-1\), right
+multiplication by \(J\) maps that component bijectively and measure
+preservingly onto \(SO(r)\). Hence
+\begin{equation}
+  Q\sim\operatorname{Haar}(SO(r)),\qquad
+  Q\ \perp\!\!\!\perp\ \varepsilon.                         \label{eq:step-006-15}
+\end{equation}
+Lemma~\ref{lem:step-006-gaussian-qr-shape} gives
+\(O_0\perp\!\!\!\perp R\). The measurable bijection
+\(O_0\leftrightarrow(Q,\varepsilon)\) therefore gives
+\((Q,\varepsilon)\perp\!\!\!\perp R\). Combining this with equation \eqref{eq:step-006-15},
+for bounded Borel \(f,g\),
+\[
+\begin{aligned}
+  \mathbb E[f(Q)g(J^{\varepsilon}R)]
+  &=\mathbb E\!\left[g(J^{\varepsilon}R)
+      \mathbb E[f(Q)\mid\varepsilon,R]\right]\\
+  &=\mathbb E[f(Q)]\,\mathbb E[g(J^{\varepsilon}R)],
+\end{aligned}
+\]
+which proves equation \eqref{eq:step-006-14}. Thus absorbing the reflection does not leave a
+determinant bit correlated with the exposed \(SO(r)\) orientation.
+
+
+\end{proof}
+
+
+\begin{proposition}[Product-Haar orientation--shape factorization]
+\label{prop:step-006-product-shape}
+\leavevmode\par\noindent
+Under Assumptions~\ref{assump:independent_initialization} and
+\ref{assump:rank_window}, where the latter gives \(r<k\), hence \(k\ge r\),
+Lemma~\ref{lem:step-002-coefficient-gaussianization}, and
+Proposition~\ref{prop:step-006-reflection-absorption}, there are measurable
+factorizations
+\begin{equation}
+  Z_A=Q_aR_A,\qquad Z_B=Q_bR_B,\qquad Z_C=Q_cR_C,              \label{eq:step-006-16}
+\end{equation}
+such that, conditional on the realized factors,
+\begin{equation}
+  (Q_a,Q_b,Q_c)\sim
+  \operatorname{Haar}(SO(r))^{\otimes3},
+  \qquad
+  (Q_a,Q_b,Q_c)\ \perp\!\!\!\perp\ (R_A,R_B,R_C).           \label{eq:step-006-17}
+\end{equation}
+Writing \(r_i^M\) for column \(i\) of \(R_M\), define
+\begin{equation}
+\begin{aligned}
+  E=\operatorname{span}_{i\in[k]}\{&
+    u\otimes r_i^B\otimes r_i^C,
+    r_i^A\otimes v\otimes r_i^C,
+    r_i^A\otimes r_i^B\otimes w:\
+   &u,v,w\in\mathbb R^r\}.
+\end{aligned}\label{eq:step-006-18}
+\end{equation}
+Then \(E\) is a measurable random subspace,
+\begin{equation}
+  (Q_a,Q_b,Q_c)\ \perp\!\!\!\perp\ E,
+  \qquad \boxed{\dim(E)\le3kr}.                              \label{eq:step-006-19}
+\end{equation}
+
+\end{proposition}
+
+\begin{proof}
+Conditional on the realized factor triple, the
+three arrays \(Z_A,Z_B,Z_C\) are independent standard Gaussian arrays by the
+Gaussianization lemma. Apply
+Proposition~\ref{prop:step-006-reflection-absorption} separately to each
+array. Each pair \((Q_m,R_M)\) is a measurable function of its own mode array,
+so the three pairs are independent. Within each pair the orientation is Haar
+and independent of its shape. The joint law consequently factors as
+\[
+  \bigotimes_{m\in\{a,b,c\}}
+    \left(\operatorname{Haar}_{SO(r)}\otimes\mathcal L(R_M)\right),
+\]
+which is exactly equation \eqref{eq:step-006-17}, not merely pairwise independence.
+
+For measurability of equation \eqref{eq:step-006-18}, define the internal synthesis map
+\begin{equation}
+\begin{aligned}
+  \mathcal T_R((u_i,v_i,w_i)_{i=1}^k)
+  =\sum_{i=1}^k(&u_i\otimes r_i^B\otimes r_i^C
+    +r_i^A\otimes v_i\otimes r_i^C\\
+    &+r_i^A\otimes r_i^B\otimes w_i).
+\end{aligned}\label{eq:step-006-20}
+\end{equation}
+In standard bases, the matrix \(V_R\) of \(\mathcal T_R\) has entries that
+are polynomial in the entries of \(R_A,R_B,R_C\), and
+\(E=\operatorname{range}(V_R)\). Its orthogonal projector is the Borel
+function
+\begin{equation}
+  P_E=V_RV_R^\dagger,
+  \qquad
+  V_R^\dagger=\lim_{j\to\infty}
+    (V_R^{\mathsf T}V_R+j^{-1}I)^{-1}V_R^{\mathsf T},          \label{eq:step-006-21}
+\end{equation}
+where the limit follows directly from a singular-value decomposition. Thus
+the random subspace is measurable. Since it is a function only of the three
+shapes, equation \eqref{eq:step-006-17} proves the independence in equation \eqref{eq:step-006-19}.
+
+Finally, the domain of \(\mathcal T_R\) has dimension \(3kr\), so
+\[
+  \dim(E)=\operatorname{rank}(\mathcal T_R)\le3kr.
+\]
+This remains true if some shape column vanishes or if cross-component
+dependencies enlarge the synthesis kernel. It makes no injectivity or exact
+dimension claim. At \(k=r+1\), each QR shape contains one rotated remaining
+column, and the same construction and bound apply without modification.
+
+
+\end{proof}
+
+
+\begin{proposition}[Exact raw tangent equivariance]
+\label{prop:step-006-exact-equivariance}
+Under Lemma~\ref{lem:step-002-coefficient-gaussianization}, Proposition~\ref{prop:step-002-balancing-invariance}, Propositions~\ref{prop:step-005-synthesis-scaling} and
+\ref{prop:step-005-quotient-range}, and
+Proposition~\ref{prop:step-006-product-shape}, define
+\begin{equation}
+  L=H_a\otimes H_b\otimes H_c,
+  \qquad Q=Q_a\otimes Q_b\otimes Q_c.                         \label{eq:step-006-22}
+\end{equation}
+Then \(L\) and \(Q\) are invertible coefficient-tensor operators and
+\begin{equation}
+  \boxed{
+  \mathscr S_0
+  =(H_a\otimes H_b\otimes H_c)
+   (Q_a\otimes Q_b\otimes Q_c)E
+  =LQE.}                                                       \label{eq:step-006-23}
+\end{equation}
+This is equality with the exact raw tangent range from the setting and the
+quotient convention.
+
+\end{proposition}
+
+\begin{proof}
+By equation \eqref{eq:step-006-16}, for every component and mode,
+\begin{equation}
+  z_i^A=Q_ar_i^A,\qquad z_i^B=Q_br_i^B,
+  \qquad z_i^C=Q_cr_i^C.                                     \label{eq:step-006-24}
+\end{equation}
+Let \(E_i^a,E_i^b,E_i^c\) denote the three component subspaces displayed in
+equation \eqref{eq:step-006-18}. For the first one,
+\begin{equation}
+\begin{aligned}
+  LQ E_i^a
+  &=\{H_aQ_au\otimes H_bQ_br_i^B\otimes H_cQ_cr_i^C:
+      u\in\mathbb R^r\}\\
+  &=\{u'\otimes H_bz_i^B\otimes H_cz_i^C:
+      u'\in\mathbb R^r\},
+\end{aligned}\label{eq:step-006-25}
+\end{equation}
+because \(H_aQ_a\) is invertible. The same argument in the other two free
+modes gives
+\begin{equation}
+\begin{aligned}
+  LQ E_i^b
+    &=\{H_az_i^A\otimes v'\otimes H_cz_i^C:v'\in\mathbb R^r\},\\
+  LQ E_i^c
+    &=\{H_az_i^A\otimes H_bz_i^B\otimes w':w'\in\mathbb R^r\}.
+\end{aligned}\label{eq:step-006-26}
+\end{equation}
+Taking the span over \(i\) and comparing equations \eqref{eq:step-006-25}--\eqref{eq:step-006-26} with the
+exact raw-range identity from
+Proposition~\ref{prop:step-002-balancing-invariance} gives
+\begin{equation}
+\begin{aligned}
+  \mathscr S_0=\operatorname{span}_{i\in[k]}\{&
+    u\otimes H_bz_i^B\otimes H_cz_i^C,
+    H_az_i^A\otimes v\otimes H_cz_i^C,\\
+   &H_az_i^A\otimes H_bz_i^B\otimes w:
+    u,v,w\in\mathbb R^r\}.
+\end{aligned}\label{eq:step-006-raw-range}
+\end{equation}
+The three ranges in \eqref{eq:step-006-25}--\eqref{eq:step-006-26}
+are precisely the three displayed generator families, so their span proves
+equation~\eqref{eq:step-006-23}.
+
+For completeness, the actual raw first-mode tangent block contains the
+factor \(s_i^ys_i^z/n\), while its normalized counterpart contains
+\(s_i^ys_i^z/r\); the analogous factors occur in the other two modes. The
+balancing-invariance proposition proves that every such factor is
+nonzero, including its exact scalar convention on the no-op zero branch, so
+each multiplies a whole block by a bijective scalar. Thus no balancing scalar,
+normalization scalar, or independence assertion about those scalars is hidden
+in equation \eqref{eq:step-006-23}. Proposition~\ref{prop:step-005-quotient-range} then
+identifies this range with the raw, normalized, and quotient ranges. The fixed coefficient
+target \(D_r\), \(\widehat D_0\), and every physical-space object are not acted
+on or redefined in this proof. 
+
+\end{proof}
+
+\begin{proof}[Proof of the subsection conclusion]
+
+Lemma~\ref{lem:step-006-gaussian-qr-shape} applies positive-diagonal QR to
+the first \(r\) columns of each standard Gaussian mode array. It proves
+explicitly that the QR orientation is Haar on \(O(r)\) and
+independent of the complete rotated shape
+\([R_0\ O_0^{\mathsf T}W]\), not only of the triangular factor. The singular
+first-block and rank-deficient branches are null; the piecewise definition
+still gives a measurable exact factorization on those branches.
+
+Proposition~\ref{prop:step-006-reflection-absorption} writes each Haar
+\(O(r)\) orientation as \(Q_mJ^{\varepsilon_m}\), with \(Q_m\) Haar on
+\(SO(r)\), and replaces the shape by \(J^{\varepsilon_m}R_M\). It proves both
+the exact identity \(Z_M=Q_mR_M\) after this replacement and independence of
+the exposed orientation from the reflected shape. Therefore no untracked
+determinant bit remains outside the internal shape.
+
+Proposition~\ref{prop:step-006-product-shape} uses independence of the three
+Gaussian mode arrays to obtain the product law
+  \(\operatorname{Haar}(SO(r))^{\otimes3}\), jointly independent of all three
+shapes. It defines the measurable internal tangent subspace \(E\) from those
+shapes and proves
+\[
+  (Q_a,Q_b,Q_c)\perp\!\!\!\perp E,
+  \qquad \dim(E)\le3kr.
+\]
+The proof explicitly includes the boundary \(k=r+1\), null rank branch, and
+possible rank loss of the internal synthesis map.
+
+Finally, the exact identities \(z_i^M=Q_mr_i^M\), together with
+Propositions~\ref{prop:step-002-balancing-invariance} and
+\ref{prop:step-005-quotient-range}, give the blockwise identity
+\[
+  \mathscr S_0
+  =(H_a\otimes H_b\otimes H_c)
+   (Q_a\otimes Q_b\otimes Q_c)E.
+\]
+These results establish the claimed product-Haar factorization. No
+projection of \(D_r\), Haar mean, concentration inequality, leverage bound,
+or tangent-deficit conclusion is asserted.
+
+\end{proof}
+
+\subsection{Fixed-target product-Haar projection}\label{app:step-007}
+
+For a fixed subspace
+\(E\subset\mathcal H=(\mathbb R^r)^{\otimes3}\), a fixed nonzero tensor
+\(X\in\mathcal H\setminus\{0\}\), and
+\(Q=Q_a\otimes Q_b\otimes Q_c\), define
+\[
+  h(Q;E,X):=\frac{\|P_{QE}X\|_F^2}{\|X\|_F^2}.
+\]
+The denominator is therefore strictly positive; no \(X=0\) case is included.
+If \(d=\dim(E)=0\), then \(QE=\{0\}\) and \(h(Q;E,X)=0\).
+
+\begin{lemma}[Sequential \(SO(r)\) twirling gives the exact projection mean]
+\label{lem:step-007-sequential-twirl}
+Under Assumption~\ref{assump:dimension}, using only \(r\ge3\), let
+\(E\subset\mathcal H=(\mathbb R^r)^{\otimes3}\) be a fixed subspace of
+dimension \(d\), let \(X\in\mathcal H\setminus\{0\}\), and let
+\(Q_a,Q_b,Q_c\) be independent Haar matrices in \(SO(r)\). Then
+\begin{equation}
+  \mathbb E\frac{\|P_{(Q_a\otimes Q_b\otimes Q_c)E}X\|_F^2}
+  {\|X\|_F^2}
+  =\frac d{r^3}.                                             \label{eq:step-007-6}
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+We first prove the one-mode identity in the exact
+real representation used here. Let \(V=\mathbb R^r\), let \(W\) be any
+finite-dimensional real inner-product space, and let
+\(A\in\operatorname{End}(V\otimes W)\). Define
+\begin{equation}
+  \mathcal T_V(A)
+  =\int_{SO(r)}(U\otimes I_W)A(U^{\mathsf T}\otimes I_W)\,dU. \label{eq:step-007-7}
+\end{equation}
+Haar invariance shows that \(\mathcal T_V(A)\) commutes with
+\(S\otimes I_W\) for every \(S\in SO(r)\).
+
+For completeness, the commutant of the natural real \(SO(r)\)-action is
+scalar when \(r\ge3\). Indeed, if \(C\in\operatorname{End}(V)\) commutes
+with \(SO(r)\), then for every unit vector \(u\), the vector \(Cu\) is fixed
+by the subgroup that fixes \(u\) and rotates \(u^\perp\). The fixed space of
+that subgroup is \(\operatorname{span}\{u\}\), so every unit vector is an
+eigenvector of \(C\). Applying linearity to two independent vectors and their
+sum shows that all eigenvalues coincide; hence \(C\) is scalar. Taking matrix
+coefficients of \(\mathcal T_V(A)\) between arbitrary vectors of \(W\) now
+gives
+\[
+  \mathcal T_V(A)=I_V\otimes B
+\]
+for some \(B\in\operatorname{End}(W)\). Partial trace over \(V\) is unchanged
+by the conjugations in equation \eqref{eq:step-007-7}, whereas
+\(\operatorname{Tr}_V(I_V\otimes B)=rB\). Therefore
+\begin{equation}
+  \boxed{\mathcal T_V(A)
+  =\frac{I_V}{r}\otimes\operatorname{Tr}_V(A).}             \label{eq:step-007-8}
+\end{equation}
+
+Let \(P_E\) be the orthogonal projector onto \(E\). Since the tensor product
+of orthogonal maps is orthogonal,
+\begin{equation}
+  P_{(Q_a\otimes Q_b\otimes Q_c)E}
+  =(Q_a\otimes Q_b\otimes Q_c)P_E
+   (Q_a^{\mathsf T}\otimes Q_b^{\mathsf T}\otimes Q_c^{\mathsf T}). \label{eq:step-007-9}
+\end{equation}
+Apply equation \eqref{eq:step-007-8} successively in modes \(a,b,c\). Independence permits the
+three iterated Haar integrals, and the commuting mode actions give
+\begin{equation}
+\begin{aligned}
+  \mathbb E[QP_EQ^{\mathsf T}]
+  &=\frac{I_r}{r}\otimes\frac{I_r}{r}\otimes\frac{I_r}{r}
+    \operatorname{Tr}(P_E)\\
+  &=\frac d{r^3}I_{\mathcal H}.
+\end{aligned}\label{eq:step-007-10}
+\end{equation}
+Thus
+\[
+  \mathbb Eh
+  =\frac{\langle X,\mathbb E[QP_EQ^{\mathsf T}]X\rangle}
+         {\|X\|_F^2}
+  =\frac d{r^3},
+\]
+which proves equation \eqref{eq:step-007-6}.
+
+If \(d=0\), then \(P_E=0\) and \(h=0\) identically, in agreement with the
+formula. The proof uses only \(\operatorname{Tr}(P_E)=d\), so it remains
+valid at every actual endpoint, including \(d=3kr\) whenever a subspace of
+that dimension is supplied. No separate inequality \(3kr<r^3\) is assumed;
+the existence of \(E\subset\mathcal H\) already enforces \(d\le r^3\).
+
+
+\end{proof}
+
+
+\begin{lemma}[Metric-exact Lipschitz bound for product rotations]
+\label{lem:step-007-lipschitz}
+Fix \(E\subset\mathcal H\) and \(X\in\mathcal H\setminus\{0\}\). Equip each
+\(SO(r)\) factor with the bi-invariant metric whose identity inner product is
+\[
+  \langle K,L\rangle_F=-\operatorname{tr}(KL),
+  \qquad K,L\in\mathfrak{so}(r),
+\]
+and equip \(SO(r)^3\) with the product metric. Then
+\begin{equation}
+  \boxed{\operatorname{Lip}(h)\le2\sqrt3}.                  \label{eq:step-007-11}
+\end{equation}
+Equivalently, a product tangent vector with skew generators
+\((K_a,K_b,K_c)\) has squared speed
+\[
+  \sum_{m\in\{a,b,c\}}\|K_m\|_F^2,
+\]
+with no normalization factor, and the directional derivative of \(h\) is at
+most \(2\sqrt3\) times that speed.
+
+\end{lemma}
+
+\begin{proof}
+By left invariance, a product geodesic through
+\((Q_a,Q_b,Q_c)\) can be written
+\[
+  Q_m(s)=e^{sK_m}Q_m,
+  \qquad K_m\in\mathfrak{so}(r),
+\]
+and its speed is exactly
+\begin{equation}
+  \left(\|K_a\|_F^2+\|K_b\|_F^2+\|K_c\|_F^2\right)^{1/2}.  \label{eq:step-007-12}
+\end{equation}
+The three tensor-mode generators commute, so the induced tensor action is
+\begin{equation}
+\begin{aligned}
+  Q(s)&=e^{s\mathcal K}Q,\\
+  \mathcal K
+  &=K_a\otimes I_r\otimes I_r
+    +I_r\otimes K_b\otimes I_r
+    +I_r\otimes I_r\otimes K_c.
+\end{aligned}\label{eq:step-007-13}
+\end{equation}
+This gives the explicit tensor-generator estimate
+\begin{equation}
+\begin{aligned}
+  \|\mathcal K\|_{\rm op}
+  &\le \|K_a\|_{\rm op}+\|K_b\|_{\rm op}+\|K_c\|_{\rm op}\\
+  &\le \|K_a\|_F+\|K_b\|_F+\|K_c\|_F\\
+  &\le \sqrt3
+  \left(\|K_a\|_F^2+\|K_b\|_F^2+\|K_c\|_F^2\right)^{1/2}.
+\end{aligned}\label{eq:step-007-14}
+\end{equation}
+
+Write \(P=P_{QE}\). Along the geodesic,
+\begin{equation}
+  P(s)=e^{s\mathcal K}Pe^{-s\mathcal K},
+  \qquad P'(0)=[\mathcal K,P].                               \label{eq:step-007-15}
+\end{equation}
+Consequently,
+\begin{equation}
+\begin{aligned}
+  |h'(0)|
+  &=\frac{|\langle X,[\mathcal K,P]X\rangle|}{\|X\|_F^2}\\
+  &\le\|[\mathcal K,P]\|_{\rm op}
+  \le2\|\mathcal K\|_{\rm op}\\
+  &\le2\sqrt3
+  \left(\|K_a\|_F^2+\|K_b\|_F^2+\|K_c\|_F^2\right)^{1/2}.
+\end{aligned}\label{eq:step-007-16}
+\end{equation}
+Here \(\|P\|_{\rm op}\le1\), including the case \(E=\{0\}\). The bound
+holds at every point and along every geodesic. Integrating equation \eqref{eq:step-007-16}
+along a minimizing geodesic proves equation \eqref{eq:step-007-11} for exactly the metric in
+the statement. 
+
+\end{proof}
+
+
+\begin{proposition}[Ricci--log-Sobolev--Herbst tail in the unnormalized product metric]
+\label{prop:step-007-product-tail}
+Under Assumption~\ref{assump:dimension}, using only \(r\ge3\), and under the
+hypotheses of Lemma~\ref{lem:step-007-sequential-twirl}, one has for every
+\(t>0\)
+\begin{equation}
+  \mathbb P(h-\mathbb Eh\ge t)
+  \le \exp\!\left(-\frac{(r-2)t^2}{96}\right)
+  \le \exp\!\left(-\frac{rt^2}{288}\right).                \label{eq:step-007-17}
+\end{equation}
+Combining this with Lemma~\ref{lem:step-007-sequential-twirl}, for
+\(0<t\le1\),
+\begin{equation}
+  \mathbb P\!\left(h\ge\frac d{r^3}+t\right)
+  \le 8\exp(-c_Hrt^2),
+  \qquad \boxed{c_H=\frac1{288}}.                          \label{eq:step-007-18}
+\end{equation}
+
+\end{proposition}
+
+\begin{proof}
+We first verify the metric normalization rather
+than importing a scale-free concentration slogan. On
+\(\mathfrak{so}(r)\), use the inner product stated in
+Lemma~\ref{lem:step-007-lipschitz}. The matrices
+\[
+  F_{ij}=\frac{E_{ij}-E_{ji}}{\sqrt2},
+  \qquad 1\le i<j\le r,
+\]
+form an orthonormal basis. The Koszul formula for left-invariant fields and
+the \(\operatorname{Ad}\)-invariance of that inner product give the standard
+bi-invariant compact-group connection and curvature formulas
+\citep[Chapter~7]{besse1987}, here written in our curvature-sign convention,
+\begin{equation}
+  \nabla_KL=\frac12[K,L],
+  \qquad
+  R(K,L)M=-\frac14[[K,L],M].                                \label{eq:step-007-19}
+\end{equation}
+Hence
+\begin{equation}
+  \operatorname{Ric}(K,K)
+  =\frac14\sum_{i<j}\|[K,F_{ij}]\|_F^2
+  =-\frac14\operatorname{tr}(\operatorname{ad}_K^2).       \label{eq:step-007-20}
+\end{equation}
+A direct summation in the displayed matrix-unit basis gives, for
+\(K,L\in\mathfrak{so}(r)\),
+\begin{equation}
+  \operatorname{tr}(\operatorname{ad}_K\operatorname{ad}_L)
+  =(r-2)\operatorname{tr}(KL).                              \label{eq:step-007-21}
+\end{equation}
+Since \(\operatorname{tr}(K^2)=-\|K\|_F^2\), equations
+\eqref{eq:step-007-20}--\eqref{eq:step-007-21} yield the exact identity
+\begin{equation}
+  \operatorname{Ric}_{SO(r)}(K,K)
+  =\frac{r-2}{4}\|K\|_F^2.                                 \label{eq:step-007-22}
+\end{equation}
+This calculation is tied to the unnormalized basis \(F_{ij}\); replacing
+the metric by \(-\operatorname{tr}(KL)/2\) or by a dimension-normalized
+metric would change equation \eqref{eq:step-007-22}, but no such replacement is made here.
+
+For the product metric and
+\(\mathbf K=(K_a,K_b,K_c)\), Ricci curvature adds over factors:
+\begin{equation}
+\begin{aligned}
+  \operatorname{Ric}_{SO(r)^3}(\mathbf K,\mathbf K)
+  &=\sum_{m\in\{a,b,c\}}
+    \frac{r-2}{4}\|K_m\|_F^2\\
+  &=\rho\|\mathbf K\|_g^2,
+  \qquad \rho=\frac{r-2}{4}.
+\end{aligned}\label{eq:step-007-23}
+\end{equation}
+In current notation, the Bakry--Emery criterion says that on a
+complete connected Riemannian manifold with normalized volume \(\mu\) and
+\(\operatorname{Ric}\ge\rho g\), \(\rho>0\),
+\[
+  \operatorname{Ent}_\mu(f^2)
+  \le \frac2\rho\int\|\nabla f\|_g^2\,d\mu
+\]
+for smooth \(f\), where
+\[
+  \operatorname{Ent}_\mu(Y)
+  :=\int Y\log Y\,d\mu
+    -\left(\int Y\,d\mu\right)
+       \log\left(\int Y\,d\mu\right).
+\]
+This is the Bakry--Emery log-Sobolev implication
+\citep[Chapter~5]{bakryGentilLedoux2014}.  Compactness supplies completeness,
+\(SO(r)^3\) is connected for \(r\ge3\), and the preceding calculation gives
+\(\rho=(r-2)/4\), so every hypothesis is discharged for normalized product
+Haar measure. Let
+\[
+  Y=h-\mathbb Eh,
+  \qquad
+  \psi(\lambda)=\log\mathbb E e^{\lambda Y},
+  \qquad \lambda>0.
+\]
+Apply this log-Sobolev inequality to \(f=e^{\lambda Y/2}\). By
+Lemma~\ref{lem:step-007-lipschitz}, \(\|\nabla h\|_g\le L\) with
+\(L=2\sqrt3\), so
+\begin{equation}
+\begin{aligned}
+  \operatorname{Ent}(e^{\lambda Y})
+  &\le \frac2\rho\frac{\lambda^2}{4}
+    \mathbb E[e^{\lambda Y}\|\nabla h\|_g^2]\\
+  &\le \frac{\lambda^2L^2}{2\rho}\mathbb E e^{\lambda Y}.
+\end{aligned}\label{eq:step-007-24}
+\end{equation}
+On the other hand,
+\begin{equation}
+  \frac{\operatorname{Ent}(e^{\lambda Y})}
+       {\mathbb E e^{\lambda Y}}
+  =\lambda\psi'(\lambda)-\psi(\lambda).                   \label{eq:step-007-25}
+\end{equation}
+Dividing equations \eqref{eq:step-007-24}--\eqref{eq:step-007-25} by \(\lambda^2\), integrating the derivative
+of \(\psi(\lambda)/\lambda\) from \(0\) to \(\lambda\), and using
+\(\mathbb EY=0\), gives
+\begin{equation}
+  \psi(\lambda)\le\frac{\lambda^2L^2}{2\rho}.             \label{eq:step-007-26}
+\end{equation}
+Chernoff's bound and optimization at \(\lambda=\rho t/L^2\) now give
+\begin{equation}
+\begin{aligned}
+  \mathbb P(Y\ge t)
+  &\le\inf_{\lambda>0}
+    \exp\!\left(-\lambda t+\frac{\lambda^2L^2}{2\rho}\right)\\
+  &=\exp\!\left(-\frac{\rho t^2}{2L^2}\right)
+   =\exp\!\left(-\frac{(r-2)t^2}{96}\right),
+\end{aligned}\label{eq:step-007-27}
+\end{equation}
+because \(L^2=12\) and \(\rho=(r-2)/4\). For \(r\ge3\),
+\(r-2\ge r/3\), proving the second inequality in equation \eqref{eq:step-007-17}. Finally,
+\begin{equation}
+  \exp(-rt^2/288)
+  \le8\exp(-c_Hrt^2)
+  \quad\text{with}\quad c_H=1/288,                         \label{eq:step-007-28}
+\end{equation}
+which proves equation \eqref{eq:step-007-18}. The derivation actually holds for all
+\(t>0\); restricting to \(0<t\le1\) gives the stated range.
+
+When \(d=0\), \(h=0\) and the left side of equation \eqref{eq:step-007-17} is zero for every
+\(t>0\), so the conclusion also holds without invoking curvature. No case
+\(X=0\) is introduced: the row quantifies over nonzero \(X\), which
+is necessary for the displayed normalization. 
+
+\end{proof}
+
+\begin{proof}[Proof of the subsection conclusion]
+
+Proposition~\ref{prop:step-006-product-shape} permits conditioning
+on the internal shapes while retaining independent Haar
+\(Q_a,Q_b,Q_c\in SO(r)\). For every resulting fixed \(E\) and every fixed
+nonzero \(X\), Lemma~\ref{lem:step-007-sequential-twirl} proves
+\[
+  \mathbb Eh=\frac d{r^3}
+\]
+by three exact current-notation twirls. Lemma~\ref{lem:step-007-lipschitz}
+computes the tensor generator and proves
+\(\operatorname{Lip}(h)\le2\sqrt3\) in the unnormalized product
+Hilbert--Schmidt geodesic metric. Proposition~\ref{prop:step-007-product-tail}
+computes \(\operatorname{Ric}=(r-2)g/4\) in that same metric, applies the
+metric-matched log-Sobolev inequality and Herbst argument, and obtains
+\[
+  \mathbb P\!\left(h\ge\frac d{r^3}+t\right)
+  \le\exp(-rt^2/288)
+  \le8\exp(-c_Hrt^2),
+  \qquad c_H=1/288,
+\]
+for \(0<t\le1\).
+
+These conclusions are uniform in fixed \(E,d,X\), include \(d=0\) and every
+actual upper endpoint such as \(d=3kr\), and use only \(r\ge3\) from the
+large-\(r\) setting. The proof introduces no operator norm over targets, net,
+data-dependent supremum, \(O(r)\) surrogate, transformed target, or claim
+about \(LQE\). Thus Proposition~\ref{prop:step-007-product-tail} holds for
+the fixed objects and with the scope stated there.
+
+\end{proof}
+
+\subsection{Elliptic transfer and raw leverage}\label{app:step-008}
+
+\begin{lemma}[Exact oblique-basis projection transfer]
+\label{lem:step-008-oblique-projection}
+Under Proposition~\ref{prop:step-006-exact-equivariance} \(\mathscr S_0=LQE\), let
+\(E\subset(\mathbb R^r)^{\otimes3}\) have dimension \(d\), let \(L\) be
+invertible, and, when \(d>0\), let \(U\) have orthonormal columns spanning
+\(QE\). For every coefficient tensor \(x\), define
+\[
+  X=L^{\mathsf T}x,
+  \qquad b=U^{\mathsf T}X.
+\]
+If \(d>0\), then
+\begin{equation}
+  P_{LQE}
+  =LU\bigl(U^{\mathsf T}L^{\mathsf T}LU\bigr)^{-1}
+    U^{\mathsf T}L^{\mathsf T},                            \label{eq:step-008-2}
+\end{equation}
+and
+\begin{equation}
+  \|P_{LQE}x\|_F^2
+  =b^{\mathsf T}\bigl(U^{\mathsf T}L^{\mathsf T}LU\bigr)^{-1}b
+  \le\sigma_{\min}(L)^{-2}\|P_{QE}X\|_F^2.              \label{eq:step-008-3}
+\end{equation}
+If \(d=0\), then \(QE=LQE=\{0\}\), and both sides of the inequality in
+equation \eqref{eq:step-008-3} are zero.
+
+\end{lemma}
+
+\begin{proof}
+Suppose first that \(d>0\). The columns of
+\(LU\) span \(LQE\). Since \(L\) is invertible and \(U\) has full column
+rank, \(LU\) has full column rank. The orthogonal projector onto the range of
+a full-column-rank matrix \(A\) is
+\(A(A^{\mathsf T}A)^{-1}A^{\mathsf T}\); substituting \(A=LU\) proves
+equation \eqref{eq:step-008-2} directly.
+
+Because an orthogonal projector is symmetric and idempotent,
+\begin{equation}
+\begin{aligned}
+  \|P_{LQE}x\|_F^2
+  &=\langle x,P_{LQE}x\rangle_F\\
+  &=b^{\mathsf T}\bigl(U^{\mathsf T}L^{\mathsf T}LU\bigr)^{-1}b.
+\end{aligned}\label{eq:step-008-4}
+\end{equation}
+For every \(y\in\mathbb R^d\), orthonormality of \(U\) gives
+\[
+  y^{\mathsf T}U^{\mathsf T}L^{\mathsf T}LUy
+  =\|LUy\|_F^2
+  \ge\sigma_{\min}(L)^2\|Uy\|_F^2
+  =\sigma_{\min}(L)^2\|y\|_2^2.
+\]
+Hence
+\begin{equation}
+  \bigl(U^{\mathsf T}L^{\mathsf T}LU\bigr)^{-1}
+  \preceq\sigma_{\min}(L)^{-2}I_d.                         \label{eq:step-008-5}
+\end{equation}
+Moreover,
+\begin{equation}
+  \|b\|_2^2=\|U^{\mathsf T}X\|_2^2
+  =\|UU^{\mathsf T}X\|_F^2
+  =\|P_{QE}X\|_F^2.                                       \label{eq:step-008-6}
+\end{equation}
+Combining equations \eqref{eq:step-008-4}--\eqref{eq:step-008-6} proves equation \eqref{eq:step-008-3}. When \(d=0\), both
+subspaces are the zero subspace, so the stated zero-case conclusion is
+immediate. 
+
+\end{proof}
+
+
+\begin{proposition}[Elliptic transfer with the exact condition-number loss]
+\label{prop:step-008-elliptic-transfer}
+Under the generated event \(\mathcal E_{\rm cond}\), the elliptic
+singular intervals from
+Lemma~\ref{lem:step-002-coefficient-gaussianization},
+Proposition~\ref{prop:step-006-exact-equivariance} \(\mathscr S_0=LQE\), and
+Lemma~\ref{lem:step-008-oblique-projection},
+\begin{equation}
+  \sigma_{\min}(L)\ge\kappa_1^{-3},
+  \qquad
+  \sigma_{\max}(L)\le\kappa_1^3.                          \label{eq:step-008-7}
+\end{equation}
+Consequently, for every nonzero coefficient tensor \(x\), with
+\(X=L^{\mathsf T}x\),
+\begin{equation}
+\begin{aligned}
+  \|P_{\mathscr S_0}x\|_F^2
+  &\le \sigma_{\min}(L)^{-2}
+      h(Q;E,X)\|X\|_F^2\\
+  &\le \kappa_1^{12}h(Q;E,X)\|x\|_F^2.
+\end{aligned}\label{eq:step-008-8}
+\end{equation}
+In particular,
+\begin{equation}
+  \|P_{\mathscr S_0}D_r\|_F^2
+  \le\kappa_1^{12}h(Q;E,L^{\mathsf T}D_r)\|D_r\|_F^2.
+                                                               \label{eq:step-008-9}
+\end{equation}
+
+\end{proposition}
+
+\begin{proof}
+The singular values of a tensor product are the
+pairwise products of the singular values of its factors. On
+\(\mathcal E_{\rm cond}\),
+Lemma~\ref{lem:step-002-coefficient-gaussianization} gives
+\(\sigma(H_m)\subset[\kappa_1^{-1},\kappa_1]\) for
+\(m\in\{a,b,c\}\). Applying these intervals to
+\(L=H_a\otimes H_b\otimes H_c\) gives
+\[
+  \sigma_{\min}(L)
+  =\prod_{m\in\{a,b,c\}}\sigma_{\min}(H_m)
+  \ge\kappa_1^{-3},
+\]
+and
+\[
+  \sigma_{\max}(L)
+  =\prod_{m\in\{a,b,c\}}\sigma_{\max}(H_m)
+  \le\kappa_1^3,
+\]
+proving equation \eqref{eq:step-008-7}. These are the simultaneous worst cases in which all
+three lower singular values equal \(\kappa_1^{-1}\), or all three upper
+singular values equal \(\kappa_1\).
+
+Lemma~\ref{lem:step-008-oblique-projection} and
+\(\|X\|_F\le\sigma_{\max}(L)\|x\|_F\) give
+\begin{equation}
+\begin{aligned}
+  \|P_{\mathscr S_0}x\|_F^2
+  &\le\sigma_{\min}(L)^{-2}\|P_{QE}X\|_F^2\\
+  &=\sigma_{\min}(L)^{-2}h(Q;E,X)\|X\|_F^2\\
+  &\le\sigma_{\min}(L)^{-2}\sigma_{\max}(L)^2
+       h(Q;E,X)\|x\|_F^2\\
+  &\le\kappa_1^{12}h(Q;E,X)\|x\|_F^2,
+\end{aligned}\label{eq:step-008-10}
+\end{equation}
+because the lower and upper singular-value factors contribute
+\(\kappa_1^6\) each. This proves equation \eqref{eq:step-008-8}, and \(x=D_r\) gives equation
+\eqref{eq:step-008-9}. If \(d=0\), the same conclusion holds with both projection energies
+equal to zero. 
+
+\end{proof}
+
+
+\begin{proposition}[Exact raw target leverage bound]
+\label{prop:step-008-raw-leverage}
+Under Assumption~\ref{assump:rank_window},
+Proposition~\ref{prop:step-006-product-shape}, which gives
+\(d\le3kr\), Lemma~\ref{lem:step-007-sequential-twirl},
+Proposition~\ref{prop:step-007-product-tail}, and
+Proposition~\ref{prop:step-008-elliptic-transfer}, define
+\begin{equation}
+  \tau_\kappa:=\frac1{4\kappa_1^{12}}.                     \label{eq:step-008-11}
+\end{equation}
+If
+\begin{equation}
+  r\ge\left\lceil(12\kappa_1^{12})^{4/3}\right\rceil,     \label{eq:step-008-12}
+\end{equation}
+then, conditional on every realized factor triple in
+\(\mathcal E_{\rm cond}\),
+\begin{equation}
+  \|P_{\mathscr S_0}D_r\|_F^2\le\frac r2
+  \label{eq:step-008-raw-leverage-conclusion}
+\end{equation}
+holds with conditional failure at most
+\begin{equation}
+  8\exp\!\left(-\frac{c_Hr}{16\kappa_1^{24}}\right).
+                                                               \label{eq:step-008-13}
+\end{equation}
+
+\end{proposition}
+
+\begin{proof}
+Since \(\kappa\ge1\) and
+\(\kappa_1=2\kappa^2\ge1\),
+\begin{equation}
+  0<\tau_\kappa\le\frac14\le1,                            \label{eq:step-008-14}
+\end{equation}
+so it is an admissible deviation for
+Proposition~\ref{prop:step-007-product-tail}. Assumption~\ref{assump:rank_window}
+and the dimension bound give, including the maximal allowed rank,
+\begin{equation}
+  \frac d{r^3}
+  \le\frac{3kr}{r^3}
+  =\frac{3k}{r^2}
+  \le3r^{-3/4}.                                             \label{eq:step-008-15}
+\end{equation}
+The threshold in equation \eqref{eq:step-008-12} is exactly the condition
+\[
+  r^{3/4}\ge12\kappa_1^{12},
+\]
+and therefore
+\begin{equation}
+  3r^{-3/4}\le\frac1{4\kappa_1^{12}}=\tau_\kappa.          \label{eq:step-008-16}
+\end{equation}
+
+Condition now on the realized factors and the internal shapes. Then
+\(E,d\) are fixed, \(Q\) remains product Haar, and
+\(X=L^{\mathsf T}D_r\ne0\) is fixed. Applying
+Lemma~\ref{lem:step-007-sequential-twirl} and
+Proposition~\ref{prop:step-007-product-tail} with
+\(t=\tau_\kappa\), and using equations
+\eqref{eq:step-008-15}--\eqref{eq:step-008-16}, shows that outside an
+event of conditional probability at most
+\begin{equation}
+  8e^{-c_Hr\tau_\kappa^2}
+  =8\exp\!\left(-\frac{c_Hr}{16\kappa_1^{24}}\right),       \label{eq:step-008-17}
+\end{equation}
+one has
+\begin{equation}
+  h(Q;E,L^{\mathsf T}D_r)
+  \le\frac d{r^3}+\tau_\kappa
+  \le2\tau_\kappa
+  =\frac1{2\kappa_1^{12}}.                                 \label{eq:step-008-18}
+\end{equation}
+Proposition~\ref{prop:step-008-elliptic-transfer} then gives
+\begin{equation}
+\begin{aligned}
+  \|P_{\mathscr S_0}D_r\|_F^2
+  &\le\kappa_1^{12}h(Q;E,L^{\mathsf T}D_r)\|D_r\|_F^2\\
+  &\le\frac12\|D_r\|_F^2
+   =\frac r2,
+\end{aligned}\label{eq:step-008-19}
+\end{equation}
+because the \(r\) summands in \(D_r\) are orthonormal and hence
+\(\|D_r\|_F^2=r\). This is exactly
+\eqref{eq:step-008-raw-leverage-conclusion} for the raw target and exact raw
+tangent span.
+
+The bound in equation \eqref{eq:step-008-17} is uniform in the internal shapes. Integrating
+over them preserves the same conditional failure probability for every
+realized factor triple in \(\mathcal E_{\rm cond}\); no union bound or
+operator supremum is used. The case \(d=0\) is deterministic and already
+satisfies equation \eqref{eq:step-008-19}. 
+
+\end{proof}
+
+
+\begin{lemma}[Explicit conversion to the polynomial failure budget]
+\label{lem:step-008-tail-conversion}
+Let
+\begin{equation}
+  a_\kappa:=\frac{c_H}{16\kappa_1^{24}},                   \label{eq:step-008-20}
+\end{equation}
+and define the explicit threshold
+\begin{equation}
+  r_{0,\rm LEV}(\kappa)
+  :=\left\lceil
+    \max\left\{
+      3,
+      (12\kappa_1^{12})^{4/3},
+      \left(\frac{20+\log8}{a_\kappa}\right)^2
+    \right\}
+  \right\rceil.                                            \label{eq:step-008-21}
+\end{equation}
+For every integer \(r\ge r_{0,\rm LEV}(\kappa)\),
+\begin{equation}
+  8e^{-a_\kappa r}\le r^{-20}.                             \label{eq:step-008-22}
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+For every \(r\ge1\),
+\begin{equation}
+  \log r\le\sqrt r.                                       \label{eq:step-008-23}
+\end{equation}
+Indeed, \(f(r)=\sqrt r-\log r\) decreases on \([1,4]\), increases on
+\([4,\infty)\), and \(f(4)=2-\log4>0\). The last term in the maximum in
+equation \eqref{eq:step-008-21} gives
+\[
+  \sqrt r\ge\frac{20+\log8}{a_\kappa}.
+\]
+Using equation \eqref{eq:step-008-23} and \(\sqrt r\ge1\),
+\begin{equation}
+\begin{aligned}
+  a_\kappa r
+  &=a_\kappa\sqrt r\,\sqrt r\\
+  &\ge(20+\log8)\sqrt r\\
+  &\ge20\log r+\log8.
+\end{aligned}\label{eq:step-008-24}
+\end{equation}
+Therefore
+\[
+  8e^{-a_\kappa r}
+  \le8e^{-20\log r-\log8}
+  =r^{-20},
+\]
+which is equation \eqref{eq:step-008-22}. The same threshold includes equation \eqref{eq:step-008-12}, so it
+simultaneously discharges the mean-dominance and tail-conversion conditions.
+
+
+\end{proof}
+
+\begin{proof}[Proof of the subsection conclusion]
+
+Lemma~\ref{lem:step-008-oblique-projection} gives the exact orthogonal
+projection formula for the anisotropic subspace \(LQE\), including the
+degenerate case \(d=0\), and proves
+\[
+  \|P_{LQE}x\|_F^2
+  \le\sigma_{\min}(L)^{-2}\|P_{QE}L^{\mathsf T}x\|_F^2.
+\]
+Proposition~\ref{prop:step-008-elliptic-transfer} applies the singular intervals in all three modes and proves
+\[
+  \sigma_{\min}(L)\ge\kappa_1^{-3},
+  \qquad
+  \sigma_{\max}(L)\le\kappa_1^3,
+\]
+so the complete worst-case anisotropic loss is exactly
+\(\kappa_1^{12}\).
+
+Proposition~\ref{prop:step-008-raw-leverage} cites
+Assumption~\ref{assump:rank_window} to use the maximal-rank inequality
+\[
+  \frac d{r^3}\le\frac{3k}{r^2}\le3r^{-3/4}
+  \le\tau_\kappa,
+  \qquad
+  \tau_\kappa=\frac1{4\kappa_1^{12}},
+\]
+and applies Lemma~\ref{lem:step-007-sequential-twirl} and
+Proposition~\ref{prop:step-007-product-tail} at the single exact
+tensor \(X=L^{\mathsf T}D_r\). It obtains
+\(h\le2\tau_\kappa\), hence
+\[
+  \|P_{\mathscr S_0}D_r\|_F^2
+  \le\kappa_1^{12}(2\tau_\kappa)\|D_r\|_F^2
+  =\frac r2.
+\]
+Finally, Lemma~\ref{lem:step-008-tail-conversion} gives an explicit
+\(r_{0,\rm LEV}(\kappa)\) for which the conditional failure in equation
+\eqref{eq:step-008-13} is at most \(r^{-20}\). Uniformity over the conditioned shapes permits
+the same bound after integrating them out. These four named results prove
+that \eqref{eq:step-008-raw-leverage-conclusion} holds for the raw \(D_r\) and exact raw
+\(\mathscr S_0\), with conditional failure at most \(r^{-20}\), without a
+surrogate residual or target supremum.
+
+\end{proof}
+
+\subsection{Raw tangent-deficit witness}\label{app:step-009}
+
+For a realized smoothing triple \((A,B,C)\in\mathcal E_{\rm cond}\), write
+\(\mathbb P_{\rm init}(\,\cdot\mid A,B,C)\) for conditional probability over
+the remaining independent raw Gaussian initialization after the matrices
+\(A,B,C\) are fixed.  This is precisely the conditional law supplied by
+Assumption~\ref{assump:independent_initialization}; it introduces no
+independence beyond the setting's initialization--smoothing independence.
+
+\begin{lemma}[Exact membership and nonzero raw normal energy]
+\label{lem:step-009-normal-energy}
+Under the setting definitions,
+Proposition~\ref{prop:step-005-quotient-range}, and
+Proposition~\ref{prop:step-008-raw-leverage}, if
+\(\|P_{\mathscr S_0}D_r\|_F^2\le r/2\), then
+\begin{equation}
+  \widehat D_0\in\mathscr S_0,
+  \qquad
+  \|P_{\mathscr S_0^\perp}D_r\|_F^2\ge\frac r2>0.
+  \label{eq:step-009-2}
+\end{equation}
+Thus the denominator in the setting-required definition of \(W_0\) is
+nonzero.
+
+\end{lemma}
+
+\begin{proof}
+The membership in equation \eqref{eq:step-009-2} is exactly the raw
+membership conclusion of
+Proposition~\ref{prop:step-005-quotient-range}. The tensors
+\(e_j\otimes e_j\otimes e_j\), \(j\in[r]\), are orthonormal, so
+\begin{equation}
+  \|D_r\|_F^2
+  =\left\|\sum_{j=1}^r e_j\otimes e_j\otimes e_j\right\|_F^2
+  =r.
+  \label{eq:step-009-3}
+\end{equation}
+Orthogonal Pythagorean decomposition in the raw coefficient space gives
+\begin{equation}
+\begin{aligned}
+  \|P_{\mathscr S_0^\perp}D_r\|_F^2
+  &=\|D_r\|_F^2-\|P_{\mathscr S_0}D_r\|_F^2\\
+  &\ge r-\frac r2
+   =\frac r2.
+\end{aligned}\label{eq:step-009-4}
+\end{equation}
+Because \(r\ge1\), the right-hand side is strictly positive. Equality in
+the assumed leverage bound merely makes equation \eqref{eq:step-009-4} an equality and still leaves normal energy
+\(r/2>0\). Conversely, a zero denominator would make the left-hand side of
+equation \eqref{eq:step-009-4} zero, contradicting \(r/2>0\). 
+
+\end{proof}
+
+
+\begin{proposition}[Raw unit normal witness and tangent deficit]
+\label{prop:step-009-raw-witness}
+Under the setting definitions and
+Lemma~\ref{lem:step-009-normal-energy}, if
+\(\|P_{\mathscr S_0}D_r\|_F^2\le r/2\), define exactly
+\begin{equation}
+  W_0:=\frac{P_{\mathscr S_0^\perp}D_r}
+  {\|P_{\mathscr S_0^\perp}D_r\|_F}.
+  \label{eq:step-009-5}
+\end{equation}
+Then
+\begin{equation}
+  \|W_0\|_F=1,
+  \qquad
+  W_0\perp\mathscr S_0,
+  \qquad
+  \langle D_r-\widehat D_0,W_0\rangle
+  \ge\delta_0\|D_r\|_F,
+  \label{eq:step-009-6}
+\end{equation}
+where \(\delta_0=1/8\). Consequently,
+\begin{equation}
+  \left\{\|P_{\mathscr S_0}D_r\|_F^2\le\frac r2\right\}
+  \quad\Longrightarrow\quad
+  \mathcal E_{\rm deficit}.
+  \label{eq:step-009-7}
+\end{equation}
+
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:step-009-normal-energy} makes the
+denominator in equation \eqref{eq:step-009-5} strictly positive, so the impossible
+zero-denominator branch does not occur under the stated leverage bound. By construction,
+\(W_0\) has unit Frobenius norm and lies in \(\mathscr S_0^\perp\).
+The exact membership \(\widehat D_0\in\mathscr S_0\) gives
+\(\langle\widehat D_0,W_0\rangle=0\). Therefore
+\begin{equation}
+\begin{aligned}
+  \langle D_r-\widehat D_0,W_0\rangle
+  &=\left\langle D_r,
+    \frac{P_{\mathscr S_0^\perp}D_r}
+    {\|P_{\mathscr S_0^\perp}D_r\|_F}\right\rangle_F\\
+  &=\frac{\|P_{\mathscr S_0^\perp}D_r\|_F^2}
+    {\|P_{\mathscr S_0^\perp}D_r\|_F}\\
+  &=\|P_{\mathscr S_0^\perp}D_r\|_F\\
+  &\ge\sqrt{\frac r2}
+   =\frac1{\sqrt2}\|D_r\|_F
+   \ge\frac18\|D_r\|_F
+   =\delta_0\|D_r\|_F.
+\end{aligned}\label{eq:step-009-8}
+\end{equation}
+The second equality uses the orthogonal decomposition of \(D_r\), equation
+\eqref{eq:step-009-3} gives \(\|D_r\|_F=\sqrt r\), and
+\(1/\sqrt2\ge1/8\). Thus equation \eqref{eq:step-009-6} is exactly the witness condition in
+the setting-defined event, proving equation \eqref{eq:step-009-7}. 
+
+For every realized factor triple in \(\mathcal E_{\rm cond}\), the conditional estimate from Proposition~\ref{prop:step-008-raw-leverage} and the deterministic inclusion in
+equation \eqref{eq:step-009-7} give
+\begin{equation}
+\begin{aligned}
+  \mathbb P_{\rm init}(\mathcal E_{\rm deficit}^{c}\mid A,B,C)
+  &\le
+  \mathbb P_{\rm init}\!\left(
+    \|P_{\mathscr S_0}D_r\|_F^2>\frac r2\,\middle|\,A,B,C
+  \right)\\
+  &\le r^{-20}.
+\end{aligned}\label{eq:step-009-9}
+\end{equation}
+This spends no new failure probability.
+
+\end{proof}
+
+\begin{proof}[Proof of the subsection conclusion]
+
+Lemma~\ref{lem:step-009-normal-energy} combines the exact membership
+\(\widehat D_0\in\mathscr S_0\), the raw identity
+\(\|D_r\|_F^2=r\), Pythagoras, and the exact raw leverage bound to prove
+\[
+  \|P_{\mathscr S_0^\perp}D_r\|_F^2\ge r/2>0.
+\]
+This handles equality in the leverage bound, uses \(r\ge1\), and excludes the only
+potential zero-denominator branch.
+
+Proposition~\ref{prop:step-009-raw-witness} then normalizes that exact raw
+normal component, proves unit norm and orthogonality, cancels
+\(\widehat D_0\) by its exact same-span membership, and obtains
+\[
+  \langle D_r-\widehat D_0,W_0\rangle
+  =\|P_{\mathscr S_0^\perp}D_r\|_F
+  \ge\sqrt{r/2}
+  \ge\delta_0\|D_r\|_F.
+\]
+Hence the raw leverage event is contained in
+\(\mathcal E_{\rm deficit}\) deterministically,
+and equation \eqref{eq:step-009-9} inherits the conditional \(r^{-20}\) failure bound
+without a union bound or additional budget. This proves the claimed raw
+tangent-deficit bound, with the raw target, raw tangent span, raw represented tensor, raw
+witness, and Frobenius metric unchanged.
+
+\end{proof}
+
+\subsection{Initialization-event probability}\label{app:step-010}
+
+\begin{proposition}[Conditional assembly of the initialization event]
+\label{prop:step-010-conditional-union}
+Under Assumptions~\ref{assump:base_conditioning},
+\ref{assump:dimension}, \ref{assump:rank_window},
+\ref{assump:gaussian_smoothing}, and
+\ref{assump:independent_initialization}, and under
+Propositions~\ref{prop:step-001-realized-conditioning},
+\ref{prop:step-003-normalized-gram-event},
+\ref{prop:step-004-balanced-size-transfer}, and
+\ref{prop:step-009-raw-witness}, the exact setting event satisfies
+\[
+  \mathbb P(\mathcal E_{\rm init\_norm}^{\mathsf c})\le4r^{-20}
+\]
+under the joint smoothing/initialization law conditional on the deterministic
+base triple.
+
+\end{proposition}
+
+\begin{proof}
+By the exact event identity,
+\[
+  \mathcal E_{\rm init\_norm}
+  =\mathcal E_{\rm cond}\cap\mathcal E_{\rm gram}^{\rm norm}
+   \cap\mathcal E_{\rm size}\cap\mathcal E_{\rm deficit},
+\]
+and hence
+\begin{equation}
+\begin{aligned}
+  \mathcal E_{\rm init\_norm}^{\mathsf c}
+  ={}&\mathcal E_{\rm cond}^{\mathsf c}\ \uplus\
+  \Bigl[\mathcal E_{\rm cond}\cap
+    \bigl((\mathcal E_{\rm gram}^{\rm norm})^{\mathsf c}
+      \cup\mathcal E_{\rm size}^{\mathsf c}
+      \cup\mathcal E_{\rm deficit}^{\mathsf c}\bigr)\Bigr],
+\end{aligned}                                               \label{eq:step-010-1}
+\end{equation}
+where \(\uplus\) denotes a disjoint union. Let
+\(\mathcal G=\sigma(A,B,C)\). Applying the tower property and the
+conditional union bound to the second term in equation \eqref{eq:step-010-1} gives
+\begin{equation}
+\begin{aligned}
+&\mathbb P\!\left(\mathcal E_{\rm cond}\cap
+    \bigl((\mathcal E_{\rm gram}^{\rm norm})^{\mathsf c}
+      \cup\mathcal E_{\rm size}^{\mathsf c}
+      \cup\mathcal E_{\rm deficit}^{\mathsf c}\bigr)\right)\\
+&\quad=\mathbb E\!\left[\mathbf 1_{\mathcal E_{\rm cond}}
+  \mathbb P\!\left(
+    (\mathcal E_{\rm gram}^{\rm norm})^{\mathsf c}
+      \cup\mathcal E_{\rm size}^{\mathsf c}
+      \cup\mathcal E_{\rm deficit}^{\mathsf c}
+      \middle|\mathcal G\right)\right]\\
+&\quad\le\mathbb E\!\left[\mathbf 1_{\mathcal E_{\rm cond}}
+  \left(
+    \mathbb P((\mathcal E_{\rm gram}^{\rm norm})^{\mathsf c}
+      \mid\mathcal G)
+    +\mathbb P(\mathcal E_{\rm size}^{\mathsf c}\mid\mathcal G)
+    +\mathbb P(\mathcal E_{\rm deficit}^{\mathsf c}\mid\mathcal G)
+  \right)\right]\\
+&\quad\le 3r^{-20}.
+\end{aligned}\label{eq:step-010-2}
+\end{equation}
+The last line uses the three bounds for every realized triple in
+\(\mathcal E_{\rm cond}\). It does not require independence among the
+Gram, size, and deficit events. Combining equations \eqref{eq:step-010-1}--\eqref{eq:step-010-2} with the
+smoothing bound yields
+\[
+  \mathbb P(\mathcal E_{\rm init\_norm}^{\mathsf c})
+  \le \mathbb P(\mathcal E_{\rm cond}^{\mathsf c})+3r^{-20}
+  \le r^{-20}+3r^{-20}=4r^{-20}.
+\]
+This proves the proposition. 
+
+\end{proof}
+
+
+\begin{proposition}[Public initialization confidence]
+\label{prop:step-010-public-confidence}
+Under Assumption~\ref{assump:dimension} and
+Proposition~\ref{prop:step-010-conditional-union}, if \(r\ge2\), then
+\[
+  \mathbb P(\mathcal E_{\rm init\_norm})\ge1-r^{-10}.
+\]
+
+\end{proposition}
+
+\begin{proof}
+For \(r\ge2\),
+\[
+  4\le2^{10}\le r^{10},
+\]
+and therefore
+\begin{equation}
+  4r^{-20}\le r^{10}r^{-20}=r^{-10}.                     \label{eq:step-010-3}
+\end{equation}
+Proposition~\ref{prop:step-010-conditional-union} and equation \eqref{eq:step-010-3} imply
+\[
+\begin{aligned}
+  \mathbb P(\mathcal E_{\rm init\_norm})
+  &=1-\mathbb P(\mathcal E_{\rm init\_norm}^{\mathsf c})\\
+  &\ge1-4r^{-20}\\
+  &\ge1-r^{-10}.
+\end{aligned}
+\]
+Assumption~\ref{assump:dimension} already permits enlarging the theorem's
+large-\(r\) threshold, so requiring \(r\ge2\) adds no new theorem-facing
+condition. 
+
+\end{proof}
+
+\begin{proof}[Proof of the subsection conclusion]
+
+Proposition~\ref{prop:step-010-conditional-union} uses the exact event
+identity, the unconditional failure for \(\mathcal E_{\rm cond}\),
+and the three uniformly conditional failure bounds. The tower
+property and a conditional union bound give
+\[
+  \mathbb P(\mathcal E_{\rm init\_norm}^{\mathsf c})
+  \le r^{-20}+3r^{-20}=4r^{-20}
+\]
+without multiplying probabilities or asserting independence among the three
+initialization events. Proposition~\ref{prop:step-010-public-confidence}
+then proves explicitly that \(4r^{-20}\le r^{-10}\) for \(r\ge2\), and
+therefore
+\[
+  \boxed{\mathbb P(\mathcal E_{\rm init\_norm})\ge1-r^{-10}}.
+\]
+This proves the claim under the exact joint probability space.
+
+\end{proof}
+
+\subsection{Finite-path convergence and factor radius}\label{app:step-011}
+
+\begin{lemma}[finite total variation gives a finite balanced-factor limit]
+\label{lem:step-011-finite-path-limit}
+Under Assumption~\ref{assump:gd_step}, consider the setting-defined trajectory
+\((\theta_t)_{t\ge0}\). On the sole local conditional hypothesis
+\(\mathcal C_{\rm path}\), define
+\[
+  \ell_t:=d_{\rm bal}(\theta_{t+1},\theta_t)\ge0.
+\]
+Then, for every pair of integers \(0\le s<t\),
+\begin{equation}
+  d_{\rm bal}(\theta_s,\theta_t)
+  \le \sum_{u=s}^{t-1}\ell_u.                         \label{eq:step-011-1}
+\end{equation}
+The tails \(\sum_{u=s}^{\infty}\ell_u\) tend to zero as
+\(s\to\infty\). Consequently, the balanced representatives form a Cauchy
+sequence in \((\mathbb R^{n\times k})^3\) and converge in
+\(d_{\rm bal}\) to a finite \(\theta_\infty\).
+
+\end{lemma}
+
+\begin{proof}
+Assumption~\ref{assump:gd_step} is used only to
+identify the recursively defined trajectory. The metric formula in the
+setting is the Euclidean product-space distance, so repeated application of
+its triangle inequality gives
+\[
+\begin{aligned}
+  d_{\rm bal}(\theta_s,\theta_t)
+  &\le d_{\rm bal}(\theta_s,\theta_{s+1})
+      +d_{\rm bal}(\theta_{s+1},\theta_{s+2})
+      +\cdots+d_{\rm bal}(\theta_{t-1},\theta_t)\\
+  &=\sum_{u=s}^{t-1}\ell_u,
+\end{aligned}
+\]
+which proves equation \eqref{eq:step-011-1}.
+
+Let
+\[
+  S_N:=\sum_{u=0}^{N-1}\ell_u,
+  \qquad S_0:=0.
+\]
+On \(\mathcal C_{\rm path}\), the nonnegative partial sums increase to the
+finite value
+\[
+  E_{\rm path}=\sum_{u=0}^{\infty}\ell_u\le E_\star<\infty.
+\]
+Therefore the exact tail remainder
+\[
+  R_s:=E_{\rm path}-S_s=\sum_{u=s}^{\infty}\ell_u
+\]
+is nonnegative and satisfies \(R_s\downarrow0\). Given
+\(\varepsilon>0\), choose \(N\) with \(R_N<\varepsilon\). For arbitrary
+\(s,t\ge N\), assume without loss of generality that \(s<t\). Equation \eqref{eq:step-011-1}
+and nonnegativity give
+\[
+  d_{\rm bal}(\theta_s,\theta_t)
+  \le\sum_{u=s}^{t-1}\ell_u
+  \le R_s\le R_N<\varepsilon.
+\]
+Thus \((\theta_t)\) is Cauchy in the finite-dimensional Euclidean product
+space
+\(
+  (\mathbb R^{n\times k})^3
+\),
+which is complete. Hence there is a finite
+\(
+  \theta_\infty=(X_\infty,Y_\infty,Z_\infty)
+\)
+such that
+\[
+  d_{\rm bal}(\theta_t,\theta_\infty)\longrightarrow0.
+\]
+
+If \(E_{\rm path}=0\), nonnegativity forces \(\ell_t=0\) for every \(t\).
+Because \(d_{\rm bal}\) is a metric on the displayed product space,
+\(\theta_{t+1}=\theta_t\) for every \(t\), so the trajectory is constant and
+\(\theta_\infty=\theta_0\). At the other boundary
+\(E_{\rm path}=E_\star\), the same finite-tail argument applies with equality
+in the total budget and requires no strict slack. 
+
+\end{proof}
+
+
+\begin{proposition}[horizon-uniform path and endpoint radius]
+\label{prop:step-011-path-radius}
+\leavevmode\par\noindent
+Under Assumption~\ref{assump:gd_step},
+Lemma~\ref{lem:step-011-finite-path-limit}, and the sole local conditional
+hypothesis \(\mathcal C_{\rm path}\), every \(t\ge0\) satisfies
+\begin{equation}
+  d_{\rm bal}(\theta_t,\theta_0)
+  \le\sum_{u=0}^{t-1}\ell_u
+  \le E_{\rm path}
+  \le E_\star
+  \le1,                                                  \label{eq:step-011-2}
+\end{equation}
+where the first sum is empty when \(t=0\). The finite limit produced by
+Lemma~\ref{lem:step-011-finite-path-limit} satisfies
+\begin{equation}
+  d_{\rm bal}(\theta_\infty,\theta_0)
+  \le E_{\rm path}
+  \le E_\star.                                          \label{eq:step-011-3}
+\end{equation}
+
+\end{proposition}
+
+\begin{proof}
+Applying equation \eqref{eq:step-011-1} from
+Lemma~\ref{lem:step-011-finite-path-limit} with \(s=0\) gives
+\[
+  d_{\rm bal}(\theta_t,\theta_0)
+  =d_{\rm bal}(\theta_0,\theta_t)
+  \le\sum_{u=0}^{t-1}\ell_u
+  \le\sum_{u=0}^{\infty}\ell_u
+  =E_{\rm path}.
+\]
+The event \(\mathcal C_{\rm path}\) gives
+\(E_{\rm path}\le E_\star\). From the setting definition
+\[
+  E_\star
+  =\min\left\{1,
+    \sqrt{\frac{\delta_0}{16C_{\rm CP}(\kappa,3)}}\right\},
+\]
+we also have \(E_\star\le1\). This proves equation \eqref{eq:step-011-2}.
+
+Since \(\theta_t\to\theta_\infty\) in \(d_{\rm bal}\), continuity of the
+Euclidean norm, equivalently the reverse triangle inequality, gives
+\[
+  d_{\rm bal}(\theta_\infty,\theta_0)
+  =\lim_{t\to\infty}d_{\rm bal}(\theta_t,\theta_0).
+\]
+Taking the limit in the already uniform bound
+\(d_{\rm bal}(\theta_t,\theta_0)\le E_{\rm path}\) proves equation \eqref{eq:step-011-3}.
+Both conclusions remain non-strict when \(E_{\rm path}=E_\star\), while the
+case \(E_{\rm path}=0\) reduces to the constant trajectory identified in
+Lemma~\ref{lem:step-011-finite-path-limit}. 
+
+\end{proof}
+
+
+\begin{proposition}[uniform component bounds along the path and at the limit]
+\label{prop:step-011-uniform-factor-radius}
+Under Assumption~\ref{assump:gd_step}, Proposition~\ref{prop:step-004-balanced-size-transfer}, Propositions~\ref{prop:step-010-conditional-union} and
+\ref{prop:step-010-public-confidence}, and
+Proposition~\ref{prop:step-011-path-radius}, on
+\(\mathcal E_{\rm init\_norm}\cap\mathcal C_{\rm path}\), for every
+component \(i\in[k]\), every mode
+\(M_t\in\{X_t,Y_t,Z_t\}\), and every \(t\ge0\),
+\begin{equation}
+  \|m_{i,t}\|_2\le2+E_\star\le3.                       \label{eq:step-011-4}
+\end{equation}
+Writing \(M_\infty\in\{X_\infty,Y_\infty,Z_\infty\}\) for the
+corresponding limit block and \(m_{i,\infty}\) for its \(i\)-th column,
+\begin{equation}
+  \|m_{i,\infty}\|_2\le2+E_\star\le3.                 \label{eq:step-011-5}
+\end{equation}
+
+\end{proposition}
+
+\begin{proof}
+By the exact setting identity for \(\mathcal E_{\rm init\_norm}\),
+\(\mathcal E_{\rm size}\) holds on
+\(\mathcal E_{\rm init\_norm}\). Hence
+\[
+  \|m_{i,0}\|_2\le2
+\]
+for every component and mode.
+
+Fix \(i\), one mode matrix \(M_t\), and \(t\ge0\). The Euclidean norm of one
+column is bounded by the Frobenius norm of the full mode-matrix difference,
+and that Frobenius norm is one summand of the product norm defining
+\(d_{\rm bal}\). Therefore
+\[
+\begin{aligned}
+  \|m_{i,t}\|_2
+  &\le \|m_{i,0}\|_2+\|m_{i,t}-m_{i,0}\|_2\\
+  &\le \|m_{i,0}\|_2+\|M_t-M_0\|_F\\
+  &\le \|m_{i,0}\|_2+d_{\rm bal}(\theta_t,\theta_0)\\
+  &\le2+E_\star\le3,
+\end{aligned}
+\]
+where Proposition~\ref{prop:step-011-path-radius} supplies the fourth line and
+the setting definition supplies \(E_\star\le1\). This proves equation \eqref{eq:step-011-4}
+simultaneously for every finite time.
+
+The product-space convergence from
+Lemma~\ref{lem:step-011-finite-path-limit} implies
+\(M_t\to M_\infty\) in Frobenius norm and hence identifies
+\(m_{i,\infty}\) as the Euclidean limit of the corresponding columns.
+Using the endpoint bound from Proposition~\ref{prop:step-011-path-radius}
+directly gives
+\[
+\begin{aligned}
+  \|m_{i,\infty}\|_2
+  &\le\|m_{i,0}\|_2+\|m_{i,\infty}-m_{i,0}\|_2\\
+  &\le\|m_{i,0}\|_2+\|M_\infty-M_0\|_F\\
+  &\le\|m_{i,0}\|_2+d_{\rm bal}(\theta_\infty,\theta_0)\\
+  &\le2+E_\star\le3,
+\end{aligned}
+\]
+which proves equation \eqref{eq:step-011-5}. At \(E_{\rm path}=0\), all inequalities reduce to
+the unchanged initial columns and \(\theta_\infty=\theta_0\). At
+\(E_{\rm path}=E_\star\), the non-strict bound still gives exactly
+\(2+E_\star\le3\). 
+
+\end{proof}
+
+\begin{proof}[Proof of the subsection conclusion]
+
+Work on the exact event
+\(\mathcal E_{\rm init\_norm}\cap\mathcal C_{\rm path}\).
+Assumption~\ref{assump:gd_step} identifies the trajectory but supplies no
+convergence claim. Lemma~\ref{lem:step-011-finite-path-limit} uses only the
+sole local conditional hypothesis \(\mathcal C_{\rm path}\) to prove the exact
+tail-sum bound
+\[
+  d_{\rm bal}(\theta_s,\theta_t)
+  \le\sum_{u=s}^{t-1}\ell_u,
+\]
+shows that the tails vanish, and obtains a finite limit
+\(\theta_\infty\) by completeness of the fixed Euclidean product space.
+Proposition~\ref{prop:step-011-path-radius} then proves the horizon-uniform and
+endpoint bounds
+\[
+  d_{\rm bal}(\theta_t,\theta_0)\le E_\star,
+  \qquad
+  d_{\rm bal}(\theta_\infty,\theta_0)\le E_\star.
+\]
+
+The event identity and Proposition~\ref{prop:step-004-balanced-size-transfer}
+give \(\mathcal E_{\rm size}\) on \(\mathcal E_{\rm init\_norm}\), and hence
+the initial column bound \(2\). Proposition~\ref{prop:step-011-uniform-factor-radius}
+combines that bound with the exact mode-matrix displacement dominated by
+\(d_{\rm bal}\) to prove, for every component, mode, finite time, and the
+limit,
+\[
+  \|m_{i,t}\|_2\le2+E_\star\le3,
+  \qquad
+  \|m_{i,\infty}\|_2\le2+E_\star\le3.
+\]
+Thus the exact conditional path-convergence and radius-\(3\) claim is proved
+without upgrading \(\mathcal C_{\rm path}\) to an unconditional theorem and
+without inserting convergence, trapping, or loss into the certificate.
+
+\end{proof}
+
+\subsection{Multilinear endpoint remainder}\label{app:step-012}
+
+\begin{lemma}[exact trilinear coefficient expansion]
+\label{lem:step-012-exact-expansion}
+Under Proposition~\ref{prop:step-001-realized-conditioning}, on
+\(\mathcal E_{\rm cond}\), let
+\(\theta=(X,Y,Z)\) and \(\theta'=(X',Y',Z')\), and write
+\[
+  \Delta X=X'-X,\qquad \Delta Y=Y'-Y,\qquad \Delta Z=Z'-Z.
+\]
+For every \(i\in[k]\), define the exact raw coefficient columns
+\[
+  \alpha_i=A^\dagger x_i,\quad
+  \beta_i=B^\dagger y_i,\quad
+  \gamma_i=C^\dagger z_i
+\]
+and their increments
+\[
+  \Delta\alpha_i=A^\dagger(x_i'-x_i),\quad
+  \Delta\beta_i=B^\dagger(y_i'-y_i),\quad
+  \Delta\gamma_i=C^\dagger(z_i'-z_i).
+\]
+Then
+\begin{equation}
+\begin{aligned}
+  D\Psi_{A,B,C}(\theta)[\theta'-\theta]
+  =\sum_{i=1}^k\bigl(&
+      \Delta\alpha_i\otimes\beta_i\otimes\gamma_i
+      +\alpha_i\otimes\Delta\beta_i\otimes\gamma_i\\
+      &+\alpha_i\otimes\beta_i\otimes\Delta\gamma_i
+    \bigr),
+\end{aligned}\label{eq:step-012-1}
+\end{equation}
+and, after subtracting the value and all three derivative terms per
+component, the remainder is exactly
+\begin{equation}
+\begin{aligned}
+  &\Psi_{A,B,C}(\theta')-\Psi_{A,B,C}(\theta)
+       -D\Psi_{A,B,C}(\theta)[\theta'-\theta]\\
+  &\quad=\sum_{i=1}^k\bigl(
+      \Delta\alpha_i\otimes\Delta\beta_i\otimes\gamma_i
+      +\Delta\alpha_i\otimes\beta_i\otimes\Delta\gamma_i
+      +\alpha_i\otimes\Delta\beta_i\otimes\Delta\gamma_i
+      +\Delta\alpha_i\otimes\Delta\beta_i\otimes
+        \Delta\gamma_i
+    \bigr).
+\end{aligned}\label{eq:step-012-2}
+\end{equation}
+Thus equation \eqref{eq:step-012-2} contains exactly three quadratic tensors and one cubic
+tensor for each component, and contains no constant or first-order term.
+
+\end{lemma}
+
+\begin{proof}
+Linearity of the fixed left inverses gives
+\[
+  A^\dagger x_i'=\alpha_i+\Delta\alpha_i,
+  \quad B^\dagger y_i'=\beta_i+\Delta\beta_i,
+  \quad C^\dagger z_i'=\gamma_i+\Delta\gamma_i.
+\]
+Substitution into the exact setting map yields
+\[
+  \Psi_{A,B,C}(\theta')
+  =\sum_{i=1}^k
+    (\alpha_i+\Delta\alpha_i)
+    \otimes(\beta_i+\Delta\beta_i)
+    \otimes(\gamma_i+\Delta\gamma_i).
+\]
+Expanding each trilinear product gives eight tensors: the base tensor, the
+three tensors linear in one increment, the three tensors quadratic in two
+increments, and the tensor cubic in all three increments. The coefficient
+of a scalar perturbation parameter in the three linear tensors is precisely
+the Frechet derivative in equation \eqref{eq:step-012-1}. Subtracting the base value and
+equation \eqref{eq:step-012-1} leaves exactly equation \eqref{eq:step-012-2}. This is an algebraic identity, with
+no limiting argument, generic smoothness estimate, or remainder notation.
+
+
+\end{proof}
+
+
+\begin{proposition}[quadratic raw Taylor bound from a base-column radius]
+\label{prop:step-012-raw-remainder}
+Under Proposition~\ref{prop:step-001-realized-conditioning} and
+Lemma~\ref{lem:step-012-exact-expansion}, work on
+\(\mathcal E_{\rm cond}\). Let \(R\ge0\) and suppose only that the columns
+of the base point \(\theta=(X,Y,Z)\) satisfy
+\begin{equation}
+  \max_{i\in[k]}
+  \max\{\|x_i\|_2,\|y_i\|_2,\|z_i\|_2\}\le R.             \label{eq:step-012-3}
+\end{equation}
+For any \(\theta'=(X',Y',Z')\), put
+\[
+  d=d_{\rm bal}(\theta',\theta)
+   =\bigl(\|\Delta X\|_F^2+\|\Delta Y\|_F^2
+           +\|\Delta Z\|_F^2\bigr)^{1/2},
+\]
+and assume \(0\le d\le1\). Then the three quadratic families in equation
+\eqref{eq:step-012-2} each have Frobenius norm at most \(\kappa_1^3Rd^2\), the cubic family
+has Frobenius norm at most \(\kappa_1^3d^3\le\kappa_1^3d^2\), and
+\begin{equation}
+  \left\|\Psi_{A,B,C}(\theta')-\Psi_{A,B,C}(\theta)
+  -D\Psi_{A,B,C}(\theta)[\theta'-\theta]\right\|_F
+  \le \kappa_1^3(1+3R)d^2
+  =C_{\rm CP}(\kappa,R)d^2.                               \label{eq:step-012-4}
+\end{equation}
+No column-radius condition on \(\theta'\) is required.
+
+\end{proposition}
+
+\begin{proof}
+On \(\mathcal E_{\rm cond}\), Proposition~\ref{prop:step-001-realized-conditioning} gives
+\begin{equation}
+  \|A^\dagger\|_{\rm op},\ \|B^\dagger\|_{\rm op},\
+  \ \|C^\dagger\|_{\rm op}\le\kappa_1.                   \label{eq:step-012-5}
+\end{equation}
+Consequently, for every component,
+\begin{equation}
+\begin{aligned}
+  \|\Delta\alpha_i\|_2&\le\kappa_1\|\Delta x_i\|_2,
+  &\|\alpha_i\|_2&\le\kappa_1R,\\
+  \|\Delta\beta_i\|_2&\le\kappa_1\|\Delta y_i\|_2,
+  &\|\beta_i\|_2&\le\kappa_1R,\\
+  \|\Delta\gamma_i\|_2&\le\kappa_1\|\Delta z_i\|_2,
+  &\|\gamma_i\|_2&\le\kappa_1R.
+\end{aligned}\label{eq:step-012-6}
+\end{equation}
+Denote the three quadratic sums in their displayed order in equation \eqref{eq:step-012-2} by
+\(Q_{xy},Q_{xz},Q_{yz}\), and denote the cubic sum by \(C_{xyz}\). The
+triangle inequality, the rank-one Frobenius identity, equation \eqref{eq:step-012-6}, and
+Cauchy--Schwarz give each quadratic family explicitly:
+\begin{align}
+  \|Q_{xy}\|_F
+  &\le\sum_{i=1}^k
+       \|\Delta\alpha_i\|_2\|\Delta\beta_i\|_2\|\gamma_i\|_2\notag\\
+  &\le\kappa_1^3R
+       \sum_{i=1}^k\|\Delta x_i\|_2\|\Delta y_i\|_2
+   \le\kappa_1^3R\|\Delta X\|_F\|\Delta Y\|_F
+   \le\kappa_1^3Rd^2,                                    \label{eq:step-012-7}\\
+  \|Q_{xz}\|_F
+  &\le\sum_{i=1}^k
+       \|\Delta\alpha_i\|_2\|\beta_i\|_2\|\Delta\gamma_i\|_2\notag\\
+  &\le\kappa_1^3R
+       \sum_{i=1}^k\|\Delta x_i\|_2\|\Delta z_i\|_2
+   \le\kappa_1^3R\|\Delta X\|_F\|\Delta Z\|_F
+   \le\kappa_1^3Rd^2,                                    \label{eq:step-012-8}\\
+  \|Q_{yz}\|_F
+  &\le\sum_{i=1}^k
+       \|\alpha_i\|_2\|\Delta\beta_i\|_2\|\Delta\gamma_i\|_2\notag\\
+  &\le\kappa_1^3R
+       \sum_{i=1}^k\|\Delta y_i\|_2\|\Delta z_i\|_2
+   \le\kappa_1^3R\|\Delta Y\|_F\|\Delta Z\|_F
+   \le\kappa_1^3Rd^2.                                    \label{eq:step-012-9}
+\end{align}
+For the cubic family, let
+\(a_i=\|\Delta x_i\|_2\),
+\(b_i=\|\Delta y_i\|_2\), and
+\(c_i=\|\Delta z_i\|_2\). Two finite-sum inequalities give
+\begin{equation}
+\begin{aligned}
+  \sum_{i=1}^k a_ib_ic_i
+  &\le\left(\sum_i a_i^2\right)^{1/2}
+       \left(\sum_i b_i^2c_i^2\right)^{1/2}\\
+  &\le\left(\sum_i a_i^2\right)^{1/2}
+       \left(\sum_i b_i^2\right)^{1/2}
+       \left(\sum_i c_i^2\right)^{1/2},
+\end{aligned}\label{eq:step-012-10}
+\end{equation}
+where the second line also follows directly from
+\(\sum_i b_i^2c_i^2\le(\sum_i b_i^2)(\sum_i c_i^2)\).
+Therefore
+\begin{equation}
+\begin{aligned}
+  \|C_{xyz}\|_F
+  &\le\kappa_1^3\sum_{i=1}^k a_ib_ic_i\\
+  &\le\kappa_1^3
+       \|\Delta X\|_F\|\Delta Y\|_F\|\Delta Z\|_F
+   \le\kappa_1^3d^3
+   \le\kappa_1^3d^2,
+\end{aligned}\label{eq:step-012-11}
+\end{equation}
+where the last inequality uses exactly \(d\le1\). Applying the triangle
+inequality to the four exact families in equation \eqref{eq:step-012-2} and using
+equations \eqref{eq:step-012-7}--\eqref{eq:step-012-11} yields
+\[
+  3\kappa_1^3Rd^2+\kappa_1^3d^2
+  =\kappa_1^3(1+3R)d^2,
+\]
+which is equation \eqref{eq:step-012-4}.
+
+Only the unperturbed coefficients \(\alpha_i,\beta_i,\gamma_i\) occur in
+the three quadratic terms, one per term. The comparison point
+\(\theta'\) enters exclusively through \(\Delta X,\Delta Y,\Delta Z\).
+This is why equation \eqref{eq:step-012-3} is needed only at the base point and no radius for
+\(\theta'\) is used.
+
+If \(d=0\), all three physical increments and hence all coefficient
+increments vanish, so equation \eqref{eq:step-012-2} is exactly zero and equation \eqref{eq:step-012-4} holds
+with equality. If \(d=1\), the only degree reduction used above is
+\(d^3\le d^2\), which is equality at that boundary; all other estimates
+remain non-strict. Thus both boundary values are included. 
+
+\end{proof}
+
+
+\begin{proposition}[one-endpoint raw coefficient remainder]
+\label{prop:step-012-endpoint-remainder}
+Under Proposition~\ref{prop:step-001-realized-conditioning},
+Lemma~\ref{lem:step-011-finite-path-limit} and
+Propositions~\ref{prop:step-011-path-radius} and
+\ref{prop:step-011-uniform-factor-radius}, and
+Proposition~\ref{prop:step-012-raw-remainder}, on the exact conditional event
+\(\mathcal E_{\rm init\_norm}\cap\mathcal C_{\rm path}\),
+\begin{equation}
+\begin{aligned}
+  &\left\|\Psi_{A,B,C}(\theta_\infty)
+      -\Psi_{A,B,C}(\theta_0)
+      -D\Psi_{A,B,C}(\theta_0)[\theta_\infty-\theta_0]
+    \right\|_F\\
+  &\qquad\le C_{\rm CP}(\kappa,3)
+      d_{\rm bal}(\theta_\infty,\theta_0)^2
+   \le C_{\rm CP}(\kappa,3)E_\star^2
+   \le\frac{\delta_0}{16}.
+\end{aligned}\label{eq:step-012-12}
+\end{equation}
+This is a raw coefficient-space Frobenius bound for the single endpoint
+pair; it makes no physical-coordinate change and contains no sum over time.
+
+\end{proposition}
+
+\begin{proof}
+On
+\(\mathcal E_{\rm init\_norm}\cap\mathcal C_{\rm path}\), Proposition~\ref{prop:step-011-uniform-factor-radius} gives
+\begin{equation}
+  \max_{i\in[k]}
+  \max\{\|x_{i,0}\|_2,\|y_{i,0}\|_2,\|z_{i,0}\|_2\}
+  \le3.                                                    \label{eq:step-012-13}
+\end{equation}
+This is the required base-point condition with \(R=3\). No endpoint column
+bound is needed for Proposition~\ref{prop:step-012-raw-remainder}.
+Proposition~\ref{prop:step-011-path-radius} gives
+\begin{equation}
+  d_{\rm bal}(\theta_\infty,\theta_0)
+  \le E_{\rm path}\le E_\star\le1.                       \label{eq:step-012-14}
+\end{equation}
+Moreover, the definition of \(\mathcal E_{\rm init\_norm}\) includes
+\(\mathcal E_{\rm cond}\), so the left-inverse bounds hold for the
+same realization. Proposition~\ref{prop:step-012-raw-remainder}, with
+\(\theta=\theta_0\), \(\theta'=\theta_\infty\), \(R=3\), and equation
+\eqref{eq:step-012-14}, gives the first two inequalities in equation \eqref{eq:step-012-12}. Finally, the exact
+setting definition
+\[
+  E_\star
+  =\min\left\{1,
+       \sqrt{\frac{\delta_0}{16C_{\rm CP}(\kappa,3)}}
+    \right\}
+\]
+implies
+\[
+  C_{\rm CP}(\kappa,3)E_\star^2\le\frac{\delta_0}{16},
+\]
+which proves the last inequality.
+
+At the zero-path boundary,
+Lemma~\ref{lem:step-011-finite-path-limit} gives
+\(\theta_\infty=\theta_0\), and every term on the left of equation \eqref{eq:step-012-12}
+vanishes exactly. At the unit-displacement boundary, the generic estimate
+already includes \(d=1\); no strict radius or displacement inequality is
+used. 
+
+\end{proof}
+
+\begin{proof}[Proof of the subsection conclusion]
+
+Lemma~\ref{lem:step-012-exact-expansion} expands the exact setting map
+\(\Psi_{A,B,C}\) in the raw coefficient coordinates induced by the realized
+left inverses. After removing \(\Psi_{A,B,C}(\theta)\) and the exact Frechet
+derivative, it leaves exactly three quadratic tensors and one cubic tensor
+per component. Proposition~\ref{prop:step-012-raw-remainder} applies the
+\(\kappa_1\) left-inverse bounds, the base physical column radius,
+the rank-one Frobenius identity, and finite-sum Cauchy--Schwarz. Each
+quadratic family is bounded by \(\kappa_1^3Rd^2\), while the cubic family is
+bounded by \(\kappa_1^3d^3\le\kappa_1^3d^2\). Their sum is exactly
+\[
+  C_{\rm CP}(\kappa,R)d^2
+  =\kappa_1^3(1+3R)d^2.
+\]
+
+On \(\mathcal E_{\rm init\_norm}\cap\mathcal C_{\rm path}\),
+Lemma~\ref{lem:step-011-finite-path-limit} supplies the finite endpoint,
+Proposition~\ref{prop:step-011-path-radius} supplies
+\(d_{\rm bal}(\theta_\infty,\theta_0)\le E_\star\le1\), and
+Proposition~\ref{prop:step-011-uniform-factor-radius} supplies the base
+radius \(R=3\). Since this event is
+contained in \(\mathcal E_{\rm cond}\),
+Proposition~\ref{prop:step-001-realized-conditioning} supplies the required
+left-inverse bounds. Proposition~\ref{prop:step-012-endpoint-remainder}
+therefore establishes the exact one-endpoint raw coefficient remainder
+\[
+  \left\|\Psi_{A,B,C}(\theta_\infty)-\Psi_{A,B,C}(\theta_0)
+      -D\Psi_{A,B,C}(\theta_0)[\theta_\infty-\theta_0]\right\|_F
+  \le C_{\rm CP}(\kappa,3)E_\star^2
+  \le\delta_0/16.
+\]
+This is the claimed Taylor constant. It is a single endpoint estimate, not a
+time accumulation, and it remains in the exact raw coefficient Frobenius
+norm.
+
+\end{proof}
+
+\subsection{Persistence of the raw coefficient margin}\label{app:step-013}
+
+\begin{lemma}[raw tangent-range cancellation at initialization]
+\label{lem:step-013-tangent-cancellation}
+Under the exact setting definitions and
+Lemma~\ref{lem:step-011-finite-path-limit},
+Proposition~\ref{prop:step-011-path-radius}, and
+\ref{prop:step-012-endpoint-remainder}, work on
+\(\mathcal E_{\rm init\_norm}\cap\mathcal C_{\rm path}\). Since this event
+is contained in \(\mathcal E_{\rm deficit}\), select \(W_0\) directly from
+the existential clause defining that event, so that
+\begin{equation}
+  \|W_0\|_F=1,\qquad W_0\perp\mathscr S_0,\qquad
+  \langle D_r-\widehat D_0,W_0\rangle_F
+  \ge\delta_0\|D_r\|_F=\delta_0\sqrt r.
+  \label{eq:step-013-event-witness}
+\end{equation}
+Let
+\[
+  \Delta\theta=\theta_\infty-\theta_0
+  =(\Delta X,\Delta Y,\Delta Z).
+\]
+Then
+\begin{equation}
+  D\Psi_{A,B,C}(\theta_0)[\Delta\theta]\in\mathscr S_0,
+  \qquad
+  \left\langle D\Psi_{A,B,C}(\theta_0)[\Delta\theta],W_0\right\rangle_F=0.
+  \label{eq:step-013-5}
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+Write \(\Delta x_i,\Delta y_i,\Delta z_i\) for
+the columns of the three increment matrices. The exact derivative formula
+from Lemma~\ref{lem:step-012-exact-expansion}, specialized at
+\(\theta_0\), is
+\begin{equation}
+\begin{aligned}
+  D\Psi_{A,B,C}(\theta_0)[\Delta\theta]
+  =\sum_{i=1}^k\bigl(&
+    (A^\dagger\Delta x_i)\otimes\beta_{i,0}\otimes\gamma_{i,0}\\
+    &+\alpha_{i,0}\otimes(B^\dagger\Delta y_i)\otimes\gamma_{i,0}\\
+    &+\alpha_{i,0}\otimes\beta_{i,0}\otimes(C^\dagger\Delta z_i)
+  \bigr).
+\end{aligned}\label{eq:step-013-6}
+\end{equation}
+Each of \(A^\dagger\Delta x_i\), \(B^\dagger\Delta y_i\), and
+\(C^\dagger\Delta z_i\) lies in \(\mathbb R^r\). By the exact raw tangent
+definition in Section~\ref{sec:setup}, the three summands in equation \eqref{eq:step-013-6} belong,
+respectively, to the three generator families whose span is
+\(\mathscr S_0\). Their finite sum therefore lies in \(\mathscr S_0\).
+The event-wide selection in
+\eqref{eq:step-013-event-witness} gives
+\(W_0\perp\mathscr S_0\), which proves the second equality in equation \eqref{eq:step-013-5}.
+No quotient representative, normalized target, or closure of the tangent
+space is used. 
+
+\end{proof}
+
+
+\begin{proposition}[preserved positive raw coefficient margin]
+\label{prop:step-013-preserved-raw-margin}
+Under the exact setting definitions,
+Lemma~\ref{lem:step-011-finite-path-limit},
+Proposition~\ref{prop:step-011-path-radius}, and
+\ref{prop:step-012-endpoint-remainder}, and
+Lemma~\ref{lem:step-013-tangent-cancellation}, on
+\(\mathcal E_{\rm init\_norm}\cap\mathcal C_{\rm path}\), use the same
+event-wide witness \(W_0\) selected in
+\eqref{eq:step-013-event-witness} and define the exact
+endpoint remainder
+\begin{equation}
+  R_\infty:=\Psi_{A,B,C}(\theta_\infty)-\Psi_{A,B,C}(\theta_0)
+  -D\Psi_{A,B,C}(\theta_0)[\Delta\theta].                \label{eq:step-013-7}
+\end{equation}
+Then
+\begin{equation}
+  \left\langle D_r-\Psi_{A,B,C}(\theta_\infty),W_0\right\rangle_F
+  \ge\frac{15}{16}\delta_0\sqrt r,                      \label{eq:step-013-8}
+\end{equation}
+and consequently
+\begin{equation}
+  \left\|D_r-\Psi_{A,B,C}(\theta_\infty)\right\|_F
+  \ge\frac{15}{16}\delta_0\sqrt r.                      \label{eq:step-013-9}
+\end{equation}
+
+\end{proposition}
+
+\begin{proof}
+Rearranging equation \eqref{eq:step-013-7} gives the exact raw
+coefficient identity
+\begin{equation}
+  D_r-\Psi_{A,B,C}(\theta_\infty)
+  =D_r-\Psi_{A,B,C}(\theta_0)
+   -D\Psi_{A,B,C}(\theta_0)[\Delta\theta]-R_\infty.
+  \label{eq:step-013-10}
+\end{equation}
+By the setting definitions,
+\begin{equation}
+  \Psi_{A,B,C}(\theta_0)
+  =\sum_{i=1}^k\alpha_{i,0}\otimes\beta_{i,0}\otimes\gamma_{i,0}
+  =\widehat D_0.
+  \label{eq:step-013-initial-coefficient}
+\end{equation}
+Pairing equation
+\eqref{eq:step-013-10} with \(W_0\), using the exact cancellation in
+Lemma~\ref{lem:step-013-tangent-cancellation}, the initial margin and unit
+norm in \eqref{eq:step-013-event-witness}, and Frobenius
+Cauchy--Schwarz, gives
+\begin{equation}
+\begin{aligned}
+  \left\langle D_r-\Psi_{A,B,C}(\theta_\infty),W_0\right\rangle_F
+  &=\langle D_r-\widehat D_0,W_0\rangle_F
+    -\langle R_\infty,W_0\rangle_F\\
+  &\ge\delta_0\sqrt r-|\langle R_\infty,W_0\rangle_F|\\
+  &\ge\delta_0\sqrt r-\|R_\infty\|_F.
+\end{aligned}\label{eq:step-013-11}
+\end{equation}
+No sign is assigned to the remainder pairing. The endpoint estimate
+in Proposition~\ref{prop:step-012-endpoint-remainder}, specifically
+\eqref{eq:step-012-12}, and \(r\ge1\) imply
+\begin{equation}
+  \|R_\infty\|_F
+  \le\frac{\delta_0}{16}
+  \le\frac{\delta_0\sqrt r}{16}.                        \label{eq:step-013-12}
+\end{equation}
+Substituting equation \eqref{eq:step-013-12} into equation \eqref{eq:step-013-11} proves equation \eqref{eq:step-013-8}. Finally,
+Frobenius Cauchy--Schwarz and \(\|W_0\|_F=1\) give
+\[
+  \left\|D_r-\Psi_{A,B,C}(\theta_\infty)\right\|_F
+  \ge
+  \left|\left\langle
+    D_r-\Psi_{A,B,C}(\theta_\infty),W_0
+  \right\rangle_F\right|
+  \ge\frac{15}{16}\delta_0\sqrt r,
+\]
+because the pairing is positive by equation \eqref{eq:step-013-8}. This proves equation \eqref{eq:step-013-9}.
+
+If \(E_{\rm path}=0\),
+Lemma~\ref{lem:step-011-finite-path-limit} gives
+\(\theta_\infty=\theta_0\), so \(\Delta\theta=0\) and
+\(R_\infty=0\). Equation \eqref{eq:step-013-10} then retains the complete initial margin
+\(\langle D_r-\widehat D_0,W_0\rangle_F\ge\delta_0\sqrt r\), rather than
+only the conservative factor \(15/16\). If \(E_{\rm path}=E_\star\), the
+non-strict bound in \eqref{eq:step-012-12} still gives equation \eqref{eq:step-013-12}. If the
+initial deficit inequality in \eqref{eq:step-013-event-witness} holds with equality, equation
+\eqref{eq:step-013-11} still yields the claimed floor after the worst-sign remainder. For
+\(r=1\), the second inequality in equation \eqref{eq:step-013-12} is equality, so the same
+\(15/16\) conclusion holds without a large-r simplification. 
+
+\end{proof}
+
+\begin{proof}[Proof of the subsection conclusion]
+
+Lemma~\ref{lem:step-013-tangent-cancellation} expands the exact raw
+coefficient derivative at \(\theta_0\) and places each of its three families
+inside a defining generator family of \(\mathscr S_0\). The raw
+witness is orthogonal to this exact span, so the complete first-order term
+cancels.
+
+Proposition~\ref{prop:step-013-preserved-raw-margin} then uses the exact
+identity \(\Psi_{A,B,C}(\theta_0)=\widehat D_0\), the initial raw
+margin, and the single-endpoint remainder. It controls the remainder
+pairing by absolute value and proves
+\[
+  \langle D_r-\Psi_{A,B,C}(\theta_\infty),W_0\rangle_F
+  \ge\delta_0\sqrt r-\frac{\delta_0}{16}
+  \ge\frac{15}{16}\delta_0\sqrt r.
+\]
+Unit norm of \(W_0\) converts this positive pairing into the same lower bound
+for the exact raw coefficient residual norm. The argument is deterministic
+on \(\mathcal E_{\rm init\_norm}\cap\mathcal C_{\rm path}\), uses one endpoint
+remainder rather than a time sum, and makes no physical-coordinate transfer.
+
+\end{proof}
+
+\subsection{Same-target transfer to physical loss}\label{app:step-014}
+
+\begin{lemma}[exact mode-span projection of the physical residual]
+\label{lem:step-014-mode-span-projection}
+Under the basic setting definitions and Proposition~\ref{prop:step-001-realized-conditioning}, work on
+\(\mathcal E_{\rm cond}\). For every \(\theta=(X,Y,Z)\), let
+\[
+  \mathcal P:=P_A\otimes P_B\otimes P_C,
+  \qquad \mathcal L:=A\otimes B\otimes C.
+\]
+Then \(\mathcal P\) is the orthogonal projection onto
+\(\operatorname{range}(A)\otimes\operatorname{range}(B)\otimes
+\operatorname{range}(C)\),
+\begin{equation}
+  \mathcal P(T-S(\theta))
+  =\mathcal L(D_r-\Psi_{A,B,C}(\theta)),                   \label{eq:step-014-3}
+\end{equation}
+and
+\begin{equation}
+  \|T-S(\theta)\|_F^2
+  =\|\mathcal P(T-S(\theta))\|_F^2
+   +\|(I-\mathcal P)(T-S(\theta))\|_F^2.                 \label{eq:step-014-4}
+\end{equation}
+
+\end{lemma}
+
+\begin{proof}
+Proposition~\ref{prop:step-001-realized-conditioning} gives full column rank
+for every mode matrix on \(\mathcal E_{\rm cond}\), so
+\[
+  P_M=M(M^{\mathsf T}M)^{-1}M^{\mathsf T}
+\]
+is self-adjoint and idempotent, satisfies \(P_MM=M\), and obeys
+\(P_Mx=M(M^\dagger x)\). Tensoring self-adjointness and idempotence shows that
+\(\mathcal P\) is the stated orthogonal projection.
+
+Because the target factors are columns of \(A,B,C\),
+\begin{equation}
+  \mathcal PT=T=\mathcal LD_r.                            \label{eq:step-014-5}
+\end{equation}
+For the model columns, with
+\(\alpha_i=A^\dagger x_i\), \(\beta_i=B^\dagger y_i\), and
+\(\gamma_i=C^\dagger z_i\),
+\begin{equation}
+\begin{aligned}
+  \mathcal P S(\theta)
+  &=\sum_{i=1}^k P_Ax_i\otimes P_By_i\otimes P_Cz_i\\
+  &=\sum_{i=1}^k A\alpha_i\otimes B\beta_i\otimes C\gamma_i
+   =\mathcal L\Psi_{A,B,C}(\theta).
+\end{aligned}\label{eq:step-014-6}
+\end{equation}
+Subtracting \eqref{eq:step-014-6} from \eqref{eq:step-014-5} proves \eqref{eq:step-014-3}. The tensor in parentheses on the right
+of \eqref{eq:step-014-3} lies in \((\mathbb R^r)^{\otimes3}\), while both sides lie in
+\((\mathbb R^n)^{\otimes3}\), so the mode dimensions agree.
+
+Finally, \(\mathcal P(T-S(\theta))\) and
+\((I-\mathcal P)(T-S(\theta))\) are orthogonal because
+\(\mathcal P(I-\mathcal P)=0\). Pythagoras gives \eqref{eq:step-014-4}. Thus the only discarded
+quantity is the explicitly nonnegative second squared norm in \eqref{eq:step-014-4}.
+
+
+\end{proof}
+
+
+\begin{proposition}[positive relative physical loss]
+\label{prop:step-014-positive-physical-loss}
+\leavevmode\par\noindent
+Under Propositions~\ref{prop:step-001-realized-conditioning} and
+\ref{prop:step-013-preserved-raw-margin}, and
+Lemma~\ref{lem:step-014-mode-span-projection}, work on
+\(\mathcal E_{\rm init\_norm}\cap\mathcal C_{\rm path}\). Then, for every
+\(H\in(\mathbb R^r)^{\otimes3}\),
+\begin{equation}
+  \kappa_1^{-3}\|H\|_F
+  \le\|(A\otimes B\otimes C)H\|_F
+  \le\kappa_1^3\|H\|_F.                                  \label{eq:step-014-7}
+\end{equation}
+Moreover,
+\begin{equation}
+  0<\kappa_1^{-3}\sqrt r\le\|T\|_F\le\kappa_1^3\sqrt r,
+  \label{eq:step-014-target-norm-conclusion}
+\end{equation}
+\begin{equation}
+  \|T-S(\theta_\infty)\|_F
+  \ge\frac{15}{16}\delta_0\kappa_1^{-6}\|T\|_F,
+  \label{eq:step-014-relative-residual-conclusion}
+\end{equation}
+and, with
+\(\epsilon_0(\kappa)=((15/16)\delta_0)^2\kappa_1^{-12}>0\),
+\begin{equation}
+  F(\theta_\infty)
+  \ge\epsilon_0(\kappa)\|T\|_F^2>0.
+  \label{eq:step-014-positive-loss-conclusion}
+\end{equation}
+
+\end{proposition}
+
+\begin{proof}
+Take compact singular-value decompositions
+\(M=U_M\Sigma_MV_M^{\mathsf T}\) for \(M=A,B,C\). Then
+\begin{equation}
+\begin{aligned}
+  A\otimes B\otimes C
+  ={}&(U_A\otimes U_B\otimes U_C)
+      (\Sigma_A\otimes\Sigma_B\otimes\Sigma_C)\\
+     &\quad\cdot(V_A\otimes V_B\otimes V_C)^{\mathsf T}.
+\end{aligned}\label{eq:step-014-8}
+\end{equation}
+The first factor is an isometry into the physical tensor space, the last is
+orthogonal, and the middle diagonal entries are
+\(\sigma_i(A)\sigma_j(B)\sigma_\ell(C)\). Proposition~\ref{prop:step-001-realized-conditioning}
+places every one-mode singular value in
+\([\kappa_1^{-1},\kappa_1]\); multiplying the three factors gives
+\eqref{eq:step-014-7}, including the
+exact lower product \(\kappa_1^{-3}\) and upper product \(\kappa_1^3\).
+
+The \(r\) tensors \(e_j\otimes e_j\otimes e_j\) are orthonormal, so
+\(\|D_r\|_F=\sqrt r\). Since
+\(T=(A\otimes B\otimes C)D_r\), equation \eqref{eq:step-014-7} gives
+\begin{equation}
+  0<\kappa_1^{-3}\sqrt r
+  \le\|T\|_F\le\kappa_1^3\sqrt r.                         \label{eq:step-014-9}
+\end{equation}
+In particular, the target upper bound holds and the target is nonzero, which
+proves \eqref{eq:step-014-target-norm-conclusion}.
+
+Apply \eqref{eq:step-014-3}--\eqref{eq:step-014-4} at \(\theta=\theta_\infty\), then \eqref{eq:step-014-7}, and finally the
+raw margin from
+Proposition~\ref{prop:step-013-preserved-raw-margin}, namely
+\eqref{eq:step-013-9}:
+\begin{equation}
+\begin{aligned}
+  \|T-S(\theta_\infty)\|_F
+  &\ge\|\mathcal P(T-S(\theta_\infty))\|_F\\
+  &=\|(A\otimes B\otimes C)
+      (D_r-\Psi_{A,B,C}(\theta_\infty))\|_F\\
+  &\ge\kappa_1^{-3}
+      \|D_r-\Psi_{A,B,C}(\theta_\infty)\|_F\\
+  &\ge\kappa_1^{-3}\frac{15}{16}\delta_0\sqrt r.
+\end{aligned}\label{eq:step-014-10}
+\end{equation}
+Combining \eqref{eq:step-014-9} and \eqref{eq:step-014-10} in the required
+direction gives
+\begin{equation}
+  \|T-S(\theta_\infty)\|_F
+  \ge\frac{15}{16}\delta_0\kappa_1^{-6}\|T\|_F.          \label{eq:step-014-11}
+\end{equation}
+This proves \eqref{eq:step-014-relative-residual-conclusion}.
+Both sides are nonnegative. Squaring \eqref{eq:step-014-11} and using the exact definition of
+\(F\) proves \eqref{eq:step-014-positive-loss-conclusion}. Since \(\delta_0=1/8\) and
+\(\kappa_1=2\kappa^2>0\), \(\epsilon_0(\kappa)>0\); \eqref{eq:step-014-9} then makes the
+right side of \eqref{eq:step-014-positive-loss-conclusion} strictly positive.
+
+At equality in the allowed singular bounds, all displayed inequalities remain
+valid with a positive lower product. If the orthogonal term in \eqref{eq:step-014-4} vanishes,
+the projected term still has the floor \eqref{eq:step-014-10}; if it is nonzero, it only
+increases the physical norm. A zero raw residual is excluded by
+Proposition~\ref{prop:step-013-preserved-raw-margin}, and a
+zero target is excluded by \eqref{eq:step-014-9}. Zero model columns cause no exception because
+\eqref{eq:step-014-5}--\eqref{eq:step-014-6} use only linear projections. At \(E_{\rm path}=0\), Proposition~\ref{prop:step-013-preserved-raw-margin} retains the full raw margin \(\delta_0\sqrt r\), so the same
+calculation preserves the stronger baseline constant
+\(\delta_0^2\kappa_1^{-12}\). 
+
+\end{proof}
+
+\begin{proof}[Proof of the subsection conclusion]
+
+Lemma~\ref{lem:step-014-mode-span-projection} proves the exact projected
+residual identity directly for the
+actual residual and shows by \eqref{eq:step-014-4} that projection discards only a nonnegative
+orthogonal squared norm. Proposition~\ref{prop:step-014-positive-physical-loss}
+combines the raw floor with the exact tensor singular products,
+proves the target and relative-residual bounds, checks the normalization
+direction before squaring, and proves the positive physical-loss floor. The
+event scope, target, residual, Frobenius norm,
+and conditional mode are unchanged.
+
+\end{proof}
+
+\subsection{Continuity and conditional probability}\label{app:step-015}
+
+\begin{proposition}[polynomial continuity of the CP model and objective]
+\label{prop:step-015-polynomial-continuity}
+Under the basic setting definitions, fix any realization of the target
+\(T\). The map
+\[
+  S:(\mathbb R^{n\times k})^3\longrightarrow
+    (\mathbb R^n)^{\otimes3}
+\]
+is a homogeneous polynomial map of degree three, and
+\(F:(\mathbb R^{n\times k})^3\to\mathbb R\) is a polynomial of degree at
+most six. Both maps are continuous in the Euclidean product metric
+\(d_{\rm bal}\). In particular, if
+\(d_{\rm bal}(\theta_t,\theta_\infty)\to0\), then
+\begin{equation}
+  \|S(\theta_t)-S(\theta_\infty)\|_F\to0,
+  \qquad
+  F(\theta_t)\to F(\theta_\infty).                       \label{eq:step-015-1}
+\end{equation}
+
+\end{proposition}
+
+\begin{proof}
+Write tensor coordinates as
+\(1\le a,b,c\le n\). From the setting definition,
+\begin{equation}
+  [S(X,Y,Z)]_{abc}
+  =\sum_{i=1}^k X_{ai}Y_{bi}Z_{ci}.                     \label{eq:step-015-2}
+\end{equation}
+Thus every coordinate of \(S\) is a finite sum of degree-three monomials in
+the entries of \((X,Y,Z)\). Hence \(S\) is a homogeneous polynomial map of
+degree three.
+
+For the fixed realized target, the objective has the coordinate expression
+\begin{equation}
+  F(X,Y,Z)
+  =\sum_{a=1}^n\sum_{b=1}^n\sum_{c=1}^n
+    \left(T_{abc}-\sum_{i=1}^kX_{ai}Y_{bi}Z_{ci}\right)^2. \label{eq:step-015-3}
+\end{equation}
+Each summand is the square of a polynomial of degree at most three, so \eqref{eq:step-015-3} is
+a polynomial of degree at most six. Coordinate projections are continuous,
+and finite sums and products of continuous real-valued functions are
+continuous. Equations \eqref{eq:step-015-2}--\eqref{eq:step-015-3}, together with the finite number of tensor
+coordinates, therefore prove continuity of both maps.
+
+Finally, the setting identity
+\[
+  d_{\rm bal}(\theta,\theta')
+  =\bigl(\|X-X'\|_F^2+\|Y-Y'\|_F^2+\|Z-Z'\|_F^2\bigr)^{1/2}
+\]
+is exactly the Euclidean norm distance on the parameter space. Applying the
+just-proved continuity to
+\(d_{\rm bal}(\theta_t,\theta_\infty)\to0\) proves \eqref{eq:step-015-1}.
+
+
+\end{proof}
+
+
+\begin{proposition}[endpoint continuity and exact event inclusion]
+\label{prop:step-015-event-inclusion}
+\leavevmode\par\noindent
+Under Assumption~\ref{assump:gd_step}, Lemma~\ref{lem:step-011-finite-path-limit}, Proposition~\ref{prop:step-014-positive-physical-loss}, and
+Proposition~\ref{prop:step-015-polynomial-continuity}, every outcome in
+\(\mathcal E_{\rm init\_norm}\cap\mathcal C_{\rm path}\) satisfies
+\begin{equation}
+  d_{\rm bal}(\theta_t,\theta_\infty)\to0,
+  \qquad
+  \lim_{t\to\infty}F(\theta_t)
+  =F(\theta_\infty)
+  \ge\epsilon_0(\kappa)\|T\|_F^2>0.                    \label{eq:step-015-4}
+\end{equation}
+Consequently,
+\begin{equation}
+  \mathcal E_{\rm init\_norm}\cap\mathcal C_{\rm path}
+  \subseteq\mathcal F_+.                                \label{eq:step-015-5}
+\end{equation}
+
+\end{proposition}
+
+\begin{proof}
+Fix an arbitrary outcome in
+\(\mathcal E_{\rm init\_norm}\cap\mathcal C_{\rm path}\). Lemma~\ref{lem:step-011-finite-path-limit} produces a finite
+\(\theta_\infty\) and proves
+\(d_{\rm bal}(\theta_t,\theta_\infty)\to0\). Applying
+Proposition~\ref{prop:step-015-polynomial-continuity} to this exact
+convergence yields
+\begin{equation}
+  \lim_{t\to\infty}F(\theta_t)=F(\theta_\infty).        \label{eq:step-015-6}
+\end{equation}
+On the same outcome, Proposition~\ref{prop:step-014-positive-physical-loss} gives
+\begin{equation}
+  F(\theta_\infty)
+  \ge\epsilon_0(\kappa)\|T\|_F^2>0.                    \label{eq:step-015-7}
+\end{equation}
+Combining \eqref{eq:step-015-6}--\eqref{eq:step-015-7} proves \eqref{eq:step-015-4}.
+
+The setting-defined event \(\mathcal F_+\) is precisely the event that the
+balanced-GD representatives converge in \(d_{\rm bal}\) to a finite limit
+and that their objective limit obeys the positive relative floor in \eqref{eq:step-015-4}.
+Thus \eqref{eq:step-015-4} is exactly membership in \(\mathcal F_+\), not membership in a
+surrogate endpoint or finite-time event. Since the chosen outcome was
+arbitrary, \eqref{eq:step-015-5} follows. 
+
+\end{proof}
+
+
+\begin{proposition}[exact conditional-probability accounting]
+\label{prop:step-015-conditional-accounting}
+Under Assumption~\ref{assump:dimension}, Proposition~\ref{prop:step-010-public-confidence}, and
+Proposition~\ref{prop:step-015-event-inclusion}, work under the setting's
+joint smoothing/initialization law conditional on an arbitrary admissible
+deterministic base triple. For \(r\ge2\),
+\(\mathbb P(\mathcal E_{\rm init\_norm})>0\), the conditional probability
+\(\mathbb P(\mathcal C_{\rm path}\mid
+\mathcal E_{\rm init\_norm})\) is well defined by event conditioning, and
+\[
+\begin{aligned}
+  \mathbb P(\mathcal F_+)
+  &\ge \mathbb P(\mathcal E_{\rm init\_norm}
+    \cap\mathcal C_{\rm path}),\\
+  \mathbb P(\mathcal E_{\rm init\_norm}
+    \cap\mathcal C_{\rm path})
+  &=\mathbb P(\mathcal E_{\rm init\_norm})
+    \mathbb P(\mathcal C_{\rm path}
+      \mid\mathcal E_{\rm init\_norm}),\\
+  \mathbb P(\mathcal F_+)
+  &\ge(1-r^{-10})
+    \mathbb P(\mathcal C_{\rm path}
+      \mid\mathcal E_{\rm init\_norm}).
+\end{aligned}
+\]
+All three relations remain valid when the final conditional probability is
+zero.
+
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:step-010-public-confidence} gives
+\[
+  \mathbb P(\mathcal E_{\rm init\_norm})\ge1-r^{-10}.
+\]
+For \(r\ge2\), \(r^{-10}<1\), and therefore
+\begin{equation}
+  \mathbb P(\mathcal E_{\rm init\_norm})
+  \ge1-r^{-10}>0.                                       \label{eq:step-015-8}
+\end{equation}
+Assumption~\ref{assump:dimension} permits enlarging the sufficiently-large
+\(r\) threshold to include \(r\ge2\), so \eqref{eq:step-015-8} adds no theorem-facing
+restriction. It also verifies the positive denominator before conditioning.
+
+By Proposition~\ref{prop:step-015-event-inclusion} and monotonicity of
+probability,
+\begin{equation}
+  \mathbb P(\mathcal F_+)
+  \ge\mathbb P(\mathcal E_{\rm init\_norm}
+    \cap\mathcal C_{\rm path}).                         \label{eq:step-015-9}
+\end{equation}
+Using \eqref{eq:step-015-8}, the definition of conditional probability for the two exact
+setting events gives the identity
+\begin{equation}
+  \mathbb P(\mathcal E_{\rm init\_norm}
+    \cap\mathcal C_{\rm path})
+  =\mathbb P(\mathcal E_{\rm init\_norm})
+    \mathbb P(\mathcal C_{\rm path}
+      \mid\mathcal E_{\rm init\_norm}).                 \label{eq:step-015-10}
+\end{equation}
+The conditional probability in \eqref{eq:step-015-10} is nonnegative. Multiplying the lower bound for \(\mathbb P(\mathcal E_{\rm init\_norm})\) by this
+nonnegative factor preserves the inequality direction:
+\begin{equation}
+\begin{aligned}
+  \mathbb P(\mathcal E_{\rm init\_norm})
+    \mathbb P(\mathcal C_{\rm path}
+      \mid\mathcal E_{\rm init\_norm})
+  \ge(1-r^{-10})
+    \mathbb P(\mathcal C_{\rm path}
+      \mid\mathcal E_{\rm init\_norm}).
+\end{aligned}\label{eq:step-015-11}
+\end{equation}
+Equations \eqref{eq:step-015-9}--\eqref{eq:step-015-11} prove the three
+relations displayed in the proposition.
+
+If
+\(\mathbb P(\mathcal C_{\rm path}\mid
+\mathcal E_{\rm init\_norm})=0\), equation \eqref{eq:step-015-10} says that the intersection
+has probability zero and \eqref{eq:step-015-11} has zero on both sides. Thus the theorem still
+asserts only \(\mathbb P(\mathcal F_+)\ge0\); it does not acquire an
+unconditional positive failure probability or any lower bound on the path
+event. No independence assertion is used anywhere. 
+
+\end{proof}
+
+\begin{proof}[Proof of the subsection conclusion]
+
+Proposition~\ref{prop:step-015-polynomial-continuity} proves directly from
+the CP coordinates that \(S\) and \(F\) are finite-dimensional polynomial
+maps and converts the \(d_{\rm bal}\)-limit into
+\[
+  \lim_{t\to\infty}F(\theta_t)=F(\theta_\infty).
+\]
+Lemma~\ref{lem:step-011-finite-path-limit} supplies that finite
+limit on the exact path event, while Proposition~\ref{prop:step-014-positive-physical-loss} supplies the actual
+physical endpoint floor. Proposition~\ref{prop:step-015-event-inclusion}
+combines them to obtain the exact inclusion
+\[
+  \mathcal E_{\rm init\_norm}\cap\mathcal C_{\rm path}
+  \subseteq\mathcal F_+.
+\]
+
+Proposition~\ref{prop:step-010-public-confidence} and the explicit
+large-\(r\) check in
+Proposition~\ref{prop:step-015-conditional-accounting} show that the
+conditioning event has positive probability. The same proposition then
+uses only event monotonicity and the definition of conditional probability to
+prove
+\[
+  \boxed{
+  \mathbb P(\mathcal F_+)
+  \ge(1-r^{-10})
+    \mathbb P(\mathcal C_{\rm path}\mid
+      \mathcal E_{\rm init\_norm})}.
+\]
+The probability space, all-time/asymptotic mode, physical objective, and
+setting events are unchanged, and the unresolved conditional factor is
+retained exactly even at its zero boundary.
+
+\end{proof}
+
+\subsection{Proof of the Main Theorem}\label{app:proof-main}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Proposition~\ref{prop:step-010-public-confidence} proves
+$\mathbb P(\mathcal E_{\rm init\_norm})\geq1-r^{-10}$.
+Lemma~\ref{lem:step-011-finite-path-limit} and
+Propositions~\ref{prop:step-014-positive-physical-loss} and
+\ref{prop:step-015-event-inclusion} prove, on
+$\mathcal E_{\rm init\_norm}\cap\mathcal C_{\rm path}$,
+the finite parameter limit and the positive asymptotic physical-loss floor
+with $\epsilon_0(\kappa)=((15/16)\delta_0)^2\kappa_1^{-12}$.
+Finally, Proposition~\ref{prop:step-015-conditional-accounting} proves the
+exact event-conditioning identity and
+\[
+  \mathbb P(\mathcal F_+)
+  \geq(1-r^{-10})
+  \mathbb P(\mathcal C_{\rm path}\mid
+    \mathcal E_{\rm init\_norm}).
+\]
+That proposition also verifies the positive conditioning denominator and
+retains the conditional factor when it equals zero.  These are precisely all
+claims in Theorem~\ref{thm:main}.
+\end{proof}

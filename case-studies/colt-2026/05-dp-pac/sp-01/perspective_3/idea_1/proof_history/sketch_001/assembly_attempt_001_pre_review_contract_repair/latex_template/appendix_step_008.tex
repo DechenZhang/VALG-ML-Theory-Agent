@@ -1,0 +1,302 @@
+\begin{lemma}[Hidden-coordinate instance factorization]\label{lem:step-008-instance-factorization}
+Under Proposition~\ref{prop:step-004-finite-hard-prior} and the
+ideal experiment above, if \(J\sim\operatorname{Unif}[k]\) and, conditional
+on each \(J=j\), the coordinate instances
+\(\Xi_1,\ldots,\Xi_k\) are mutually independent with their common law
+\(\mu_{N,M}\), then
+
+\[
+\mathcal L(\boldsymbol\Xi\mid J=j)=\mu_{N,M}^{\otimes k}
+\quad\text{for every }j\in[k],
+\tag{5}
+\]
+
+and consequently (2) holds. This remains true when \(\mu_{N,M}\) has
+singleton support or repeated coordinate draws occur.
+\end{lemma}
+
+\begin{proof}
+Let \(\mathcal Z=\operatorname{supp}(\mu_{N,M})\), which is a nonempty
+finite set because Proposition~\ref{prop:step-004-finite-hard-prior}
+supplies a finitely supported
+probability law. For every \(j\in[k]\) and
+\(\boldsymbol\xi=(\xi_1,\ldots,\xi_k)\in\mathcal Z^k\), the specified
+conditional independence gives
+
+\[
+\begin{aligned}
+\Pr\{J=j,\boldsymbol\Xi=\boldsymbol\xi\}
+&=\Pr\{J=j\}
+  \Pr\{\boldsymbol\Xi=\boldsymbol\xi\mid J=j\}\\
+&=\frac1k\prod_{i=1}^k\mu_{N,M}(\{\xi_i\}).
+\end{aligned}
+\tag{6}
+\]
+
+The product on the right does not depend on \(j\). Summing (6) over
+\(j\) gives
+
+\[
+\Pr\{\boldsymbol\Xi=\boldsymbol\xi\}
+=\prod_{i=1}^k\mu_{N,M}(\{\xi_i\}),
+\]
+
+which is the product law in (2). Equation (6) then factors as
+
+\[
+\Pr\{J=j,\boldsymbol\Xi=\boldsymbol\xi\}
+=\Pr\{J=j\}\Pr\{\boldsymbol\Xi=\boldsymbol\xi\},
+\]
+
+proving independence. If the prior has singleton support, all coordinates
+are the same deterministic pair almost surely, but the same factorization
+still proves both the product law and independence from \(J\). Calling one
+coordinate hidden therefore creates no selection bias. \end{proof}
+
+\begin{lemma}[Conditional i.i.d. tagged-product sample law]\label{lem:step-008-ideal-sample-law}
+Under the primitive tagged-product definitions and
+Lemma~\ref{lem:step-008-instance-factorization}, suppose that after
+\((J,\boldsymbol\Xi)\) is generated, the tags
+\(I_1,\ldots,I_n\) are drawn independently from
+\(\operatorname{Unif}[k]\), independently of the preceding variables;
+conditional on \((\boldsymbol\Xi,I_1,\ldots,I_n)\), the features are
+independent with \(X_\ell\sim Q_{I_\ell}\); and
+\(Y_\ell=\tau_{T_{I_\ell}}(X_\ell)\). Then for every realized
+\(\boldsymbol\xi=((t_i,Q_i))_{i=1}^k\in\mathcal Z^k\) and every
+\(j\in[k]\),
+
+\[
+\mathcal L\!\left(S^{\mathrm{id}}\mid
+  \boldsymbol\Xi=\boldsymbol\xi,J=j\right)
+=\left(P_{\boldsymbol Q}^{c_{\boldsymbol t}}\right)^n.
+\tag{7}
+\]
+
+In particular, the conditional row kernel is independent of \(j\), and (3)
+holds.
+\end{lemma}
+
+\begin{proof}
+Fix \(\boldsymbol\xi=((t_i,Q_i))_{i=1}^k\) and \(j\). For any row index
+\(\ell\), any \(i\in[k]\), \(x\in[N]\), and \(y\in\{0,1\}\), the tag,
+feature, and deterministic-label rules give
+
+\[
+\begin{aligned}
+&\Pr\left\{((I_\ell,X_\ell),Y_\ell)=((i,x),y)
+  \mid\boldsymbol\Xi=\boldsymbol\xi,J=j\right\}\\
+&\qquad=\frac1k Q_i(x)\,
+  \mathbf1\{y=\tau_{t_i}(x)\}\\
+&\qquad=P_{\boldsymbol Q}(i,x)\,
+  \mathbf1\{y=c_{\boldsymbol t}(i,x)\}\\
+&\qquad=P_{\boldsymbol Q}^{c_{\boldsymbol t}}
+  \bigl(\{((i,x),y)\}\bigr).
+\end{aligned}
+\tag{8}
+\]
+
+The first line on the right uses neither \(j\) nor any property of the
+learner. The pairs \((I_\ell,X_\ell)\) are mutually independent conditional
+on \(\boldsymbol\Xi\): tags are drawn independently, and the conditional
+feature draws use independent randomness across rows. Labels are
+deterministic rowwise functions. Therefore the \(n\) labeled rows are
+conditionally independent and all have the common law in (8), which proves
+(7).
+
+By Lemma~\ref{lem:step-008-instance-factorization}, the conditional law of
+\(\boldsymbol\Xi\) itself is the same for every \(j\). Since (7) is also the
+same for every \(j\), summing over \(J\) yields (3). Importantly, (3) is a
+conditional i.i.d. statement for each fixed product instance. Unconditionally,
+the rows share the random vector \(\boldsymbol\Xi\), so no stronger
+unconditional i.i.d. assertion is made or needed.
+
+Equation (8) remains valid for \(t_i=1\) or \(t_i=N+1\), when the labels in
+that block are constant, and when \(Q_i\) is a point mass or has zeros. No
+division by \(Q_i(x)\) occurs. It also defines an exact size-\(n\) dataset
+when no sampled tag equals the later-designated hidden coordinate \(J\).
+\end{proof}
+
+\begin{lemma}[Persistence of selector independence through an asymmetric
+learner]\label{lem:step-008-selector-independence}
+Under Lemmas~\ref{lem:step-008-instance-factorization} and
+\ref{lem:step-008-ideal-sample-law}, if \(A\) is any randomized map with the
+domain and codomain in Section~\ref{sec:setup} and is run on
+\(S^{\mathrm{id}}\) with fresh internal randomness, then
+
+\[
+J\ \perp\!\!\!\perp\
+(\boldsymbol\Xi,S^{\mathrm{id}},H).
+\tag{9}
+\]
+
+Equivalently, for every \(i\in[k]\),
+
+\[
+\Pr\{J=i\mid\boldsymbol\Xi,S^{\mathrm{id}},H\}=\frac1k
+\quad\text{almost surely}.
+\tag{10}
+\]
+
+No permutation invariance, tag symmetry, properness, or determinism of
+\(A\) is required.
+\end{lemma}
+
+\begin{proof}
+Because all involved spaces are finite, represent the randomized learner by
+its stochastic kernel
+
+\[
+K_A(h\mid s):=\Pr\{A(s)=h\},
+\qquad h\in\mathcal H_{k,N}.
+\]
+
+For a fixed instance vector \(\boldsymbol\xi\), let
+\(p_{\boldsymbol\xi}(s)\) denote the product-sample mass furnished by
+Lemma \ref{lem:step-008-ideal-sample-law}. Equations (6)--(8), followed by
+the independent learner call, give for every atom with
+\(\boldsymbol\xi\in\mathcal Z^k\),
+
+\[
+\begin{aligned}
+&\Pr\{J=j,\boldsymbol\Xi=\boldsymbol\xi,
+       S^{\mathrm{id}}=s,H=h\}\\
+&\qquad=\frac1k
+  \left(\prod_{i=1}^k\mu_{N,M}(\{\xi_i\})\right)
+  p_{\boldsymbol\xi}(s)K_A(h\mid s).
+\end{aligned}
+\tag{11}
+\]
+
+Every factor after \(1/k\) is independent of \(j\). Summing (11) over
+\(j\) shows that it equals
+
+\[
+\Pr\{J=j\}\Pr\{\boldsymbol\Xi=\boldsymbol\xi,
+S^{\mathrm{id}}=s,H=h\},
+\]
+
+which proves (9), including zero-mass atoms by omission. The finite
+conditional-probability formula gives (10) on every positive-mass atom.
+
+The kernel \(K_A(h\mid s)\) may depend arbitrarily on every tag and every
+row of \(s\). Thus (11) does not assert that the law of \(H\) is invariant
+under permutations of tags. It uses only that \(J\) is an analysis-side
+variable not supplied as an argument to \(A\), and that the sample kernel
+in (7) does not depend on \(J\). The learner may also have the public prior
+hardwired into its code; this changes \(K_A\) but introduces no \(j\)-factor.
+\end{proof}
+
+\begin{proposition}[Deterministic tagged-product risk decomposition]\label{prop:step-008-risk-decomposition}
+Under the primitive product-distribution definition and Proposition~\ref{prop:step-007-risk-identity}, for every fixed
+\(\boldsymbol t\in[N+1]^k\), every vector of probability distributions
+\(\boldsymbol Q=(Q_1,\ldots,Q_k)\) on \([N]\), and every arbitrary
+\(h\in\mathcal H_{k,N}\),
+
+\[
+\begin{aligned}
+R_{P_{\boldsymbol Q}}(h,c_{\boldsymbol t})
+&=\frac1k\sum_{i=1}^k e_i(h;\boldsymbol t,\boldsymbol Q)\\
+&=\frac1k\sum_{i=1}^k
+  R_{Q_i}(D_i h,\tau_{t_i}).
+\end{aligned}
+\tag{12}
+\]
+
+The equality is deterministic and does not require any distributional
+symmetry of \(\boldsymbol Q\) or any structural property of \(h\).
+\end{proposition}
+
+\begin{proof}
+Expanding the population risk on the finite tagged domain and using
+\[
+P_{\boldsymbol Q}(i,x)=k^{-1}Q_i(x)
+\]
+gives
+
+\[
+\begin{aligned}
+R_{P_{\boldsymbol Q}}(h,c_{\boldsymbol t})
+&=\sum_{i=1}^k\sum_{x\in[N]}
+  \frac1k Q_i(x)
+  \mathbf1\{h(i,x)\ne c_{\boldsymbol t}(i,x)\}\\
+&=\frac1k\sum_{i=1}^k\sum_{x\in[N]}Q_i(x)
+  \mathbf1\{h(i,x)\ne\tau_{t_i}(x)\}\\
+&=\frac1k\sum_{i=1}^k e_i(h;\boldsymbol t,\boldsymbol Q).
+\end{aligned}
+\tag{13}
+\]
+
+Proposition~\ref{prop:step-007-risk-identity} identifies the
+\(i\)-th inner sum with
+\(R_{Q_i}(D_i h,\tau_{t_i})\), proving the second equality in (12). The
+calculation remains exact for unequal block distributions, endpoint
+thresholds, point masses, and arbitrary nonmonotone or tag-asymmetric
+hypotheses. \end{proof}
+
+\begin{proposition}[Selected-coordinate averaging for arbitrary randomized
+learners]\label{prop:step-008-selected-risk-identity}
+Under Proposition~\ref{prop:step-007-risk-identity},
+Lemma~\ref{lem:step-008-selector-independence}, and
+Proposition~\ref{prop:step-008-risk-decomposition}, for the ideal experiment
+and every randomized map \(A\) specified above,
+
+\[
+\mathbb E\!\left[
+e_J(H;\boldsymbol T,\boldsymbol Q)
+\mid\boldsymbol\Xi,S^{\mathrm{id}},H
+\right]
+=R_{P_{\boldsymbol Q}}(H,c_{\boldsymbol T})
+\quad\text{almost surely}.
+\tag{14}
+\]
+
+Consequently,
+
+\[
+\begin{aligned}
+\mathbb E\,
+R_{Q_J}(D_JH,\tau_{T_J})
+&=\mathbb E\,e_J(H;\boldsymbol T,\boldsymbol Q)\\
+&=\mathbb E\,R_{P_{\boldsymbol Q}}(H,c_{\boldsymbol T}),
+\end{aligned}
+\tag{15}
+\]
+
+where the expectations retain all prior, sample, selector, and learner
+randomness.
+\end{proposition}
+
+\begin{proof}
+Conditional on \((\boldsymbol\Xi,S^{\mathrm{id}},H)\), every quantity
+\(e_i(H;\boldsymbol T,\boldsymbol Q)\) is fixed. By (10), the remaining
+coordinate selector is uniform, so the elementary finite
+conditional-expectation identity restated above gives
+
+\[
+\begin{aligned}
+\mathbb E\!\left[
+e_J(H;\boldsymbol T,\boldsymbol Q)
+\mid\boldsymbol\Xi,S^{\mathrm{id}},H
+\right]
+&=\sum_{i=1}^k\frac1k
+  e_i(H;\boldsymbol T,\boldsymbol Q)\\
+&=R_{P_{\boldsymbol Q}}(H,c_{\boldsymbol T}),
+\end{aligned}
+\]
+
+where the last equality is the pathwise application of
+Proposition~\ref{prop:step-008-risk-decomposition}. Taking expectations and
+using the total-expectation part of the same restated finite identity proves
+the second equality in (15), which is (4). The first equality in (15) is the
+pathwise Proposition~\ref{prop:step-007-risk-identity} at the realized
+\((J,H,T_J,Q_J)\).
+
+The proof averages over an independent uniform \(J\) after conditioning on
+the complete realized vector, sample, and output. It never replaces
+\(e_J\) by \(e_1\), never permutes \(A\), and never assumes the errors
+\(e_1,\ldots,e_k\) have the same distribution. Thus deliberate tag
+asymmetry of \(A\) is fully covered. For \(k=2\) and \(k=3\), the
+conditional sums are exactly \((e_1+e_2)/2\) and
+\((e_1+e_2+e_3)/3\), respectively. Samples in which the selected tag does
+not occur require no special conditioning and remain part of the same
+unconditioned identity. \end{proof}

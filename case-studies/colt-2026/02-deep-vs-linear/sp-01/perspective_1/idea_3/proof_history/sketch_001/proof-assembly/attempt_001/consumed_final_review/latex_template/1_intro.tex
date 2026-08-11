@@ -1,0 +1,257 @@
+\section{Theoretical Setup}
+\label{sec:setup}
+
+\subsection{Problem setting}
+
+Let $n\in\mathbb N_{\geq1}$, let
+$\mathbb N_0=\{0,1,2,\ldots\}$, and put
+$\mathcal X=\{-1,+1\}^n$ and
+$\mathcal H\subseteq\{-1,+1\}^{\mathcal X}$.  We write
+$\Delta(\mathcal X)$ for the probability distributions on $\mathcal X$ and
+$[m]=\{1,\ldots,m\}$.  Fix the source tie label
+$s_0=\operatorname{sign}(0)\in\{-1,+1\}$ and define
+\[
+\operatorname{sign}_{s_0}(z)=
+\begin{cases}
++1,&z>0,\\
+-1,&z<0,\\
+s_0,&z=0.
+\end{cases}
+\]
+For a map $\varphi:\mathcal X\to\mathbb R^d$, a coefficient
+$w\in\mathbb R^d$, $\mathcal D\in\Delta(\mathcal X)$, and
+$h\in\mathcal H$, define the tie-resolved linear error
+\[
+R_{\mathcal D,h}(w,\varphi)
+:=\Pr_{x\sim\mathcal D}\!\left[
+\operatorname{sign}_{s_0}(\langle w,\varphi(x)\rangle)h(x)<0
+\right].
+\]
+For $\alpha\geq0$, the probabilistic dimension complexity is
+\[
+\operatorname{dc}_{\alpha}(\mathcal H)
+:=\min\left\{d\in\mathbb N_0:
+\begin{array}{l}
+\exists\text{ a law }\mathcal P\text{ over }
+\varphi:\mathcal X\to\mathbb R^d\quad
+\forall\mathcal D\in\Delta(\mathcal X)\quad\forall h\in\mathcal H,\\[1mm]
+\displaystyle
+\mathbb E_{\varphi\sim\mathcal P}\!\left[
+\inf_{w\in\mathbb R^d}R_{\mathcal D,h}(w,\varphi)
+\right]\leq\alpha
+\end{array}
+\right\}.
+\tag{1}
+\]
+Thus the feature-map law is selected before every later distribution and
+target, whereas the optimizing coefficient may depend on the realized map,
+distribution, and target.  The fixed tie label makes the definition
+nonvacuous at a zero score.
+
+Fix a depth $L\in\mathbb N_{\geq1}$, positive integer widths
+$n_0=n,n_1,\ldots,n_{L-1},n_L=1$, and matrices
+$\theta_\ell\in\mathbb R^{n_\ell\times n_{\ell-1}}$.  The network has no
+biases and has parameter count
+\[
+S:=\sum_{\ell=1}^{L}n_\ell n_{\ell-1},
+\qquad
+\theta=(\theta_1,\ldots,\theta_L)\in\mathbb R^S.
+\tag{2}
+\]
+With $\sigma(a)=\max\{0,a\}$ coordinatewise, define
+\[
+z_0(\theta,x)=x,
+\qquad
+u_\ell(\theta,x)=\theta_\ell z_{\ell-1}(\theta,x),
+\qquad
+z_\ell(\theta,x)=\sigma(u_\ell(\theta,x))
+\quad(1\leq\ell<L),
+\]
+and $f_\theta(x)=\theta_Lz_{L-1}(\theta,x)$.  The coordinate
+$u_{\ell,j}$ denotes the $j$th entry of $u_\ell$.
+
+Fix the source protocol's ReLU-kink convention $\kappa\in[0,1]$ and write
+\[
+\rho_\kappa(a)=
+\begin{cases}
+1,&a>0,\\
+0,&a<0,\\
+\kappa,&a=0.
+\end{cases}
+\]
+The notation $\nabla_\theta^{(\kappa)}$ denotes the resulting single-valued
+back-propagation derivative.  Both $s_0$ and $\kappa$ are fixed protocol
+conventions, not choices made by the theorem.
+
+Initialize all weights independently according to
+\[
+(\theta_\ell^{(0)})_{jk}\sim\mathcal N(0,1/n_{\ell-1}),
+\qquad 1\leq\ell\leq L.
+\tag{3}
+\]
+For $\mathcal D\in\Delta(\mathcal X)$ and $h^\star\in\mathcal H$, draw
+$x^{(0)},\ldots,x^{(T-1)}$ independently from $\mathcal D$, independently
+of $\theta^{(0)}$.  With $\ell(a)=\log(1+e^{-a})$, use the exact one-sample,
+all-layer update
+\[
+\theta^{(t+1)}=\theta^{(t)}-
+\eta\nabla_\theta^{(\kappa)}
+\ell\!\left(h^\star(x^{(t)})f_{\theta^{(t)}}(x^{(t)})\right),
+\qquad 0\leq t<T.
+\tag{4}
+\]
+The prescribed latter-half score, predictor, and strict classification error
+are
+\[
+A_{\mathcal D,h^\star}(x)
+:=\sum_{t=\lceil T/2\rceil}^{T}f_{\theta^{(t)}}(x),
+\qquad
+\widehat h_{\mathcal D,h^\star}(x)
+:=\operatorname{sign}_{s_0}(A_{\mathcal D,h^\star}(x)),
+\tag{5}
+\]
+\[
+\mathcal L_{\mathcal D,h^\star}
+(\widehat h_{\mathcal D,h^\star})
+:=\Pr_{x\sim\mathcal D}\!\left[
+\widehat h_{\mathcal D,h^\star}(x)h^\star(x)<0
+\right].
+\tag{6}
+\]
+
+For $r\geq0$, let
+\[
+B_\infty(\theta^{(0)},r)
+:=\{\theta\in\mathbb R^S:
+\|\theta-\theta^{(0)}\|_\infty\leq r\}.
+\tag{7}
+\]
+Define the static hidden-preactivation margin
+\[
+M_r(\theta^{(0)}):=
+\begin{cases}
++\infty,&L=1,\\[1mm]
+\displaystyle
+\inf_{\substack{\theta\in B_\infty(\theta^{(0)},r),\ x\in\mathcal X,\\
+1\leq\ell<L,\ j\in[n_\ell]}}
+|u_{\ell,j}(\theta,x)|,&L\geq2,
+\end{cases}
+\tag{8}
+\]
+and the exact selected-gradient envelope
+\[
+G_r(\theta^{(0)}):=
+\sup_{\substack{\theta\in B_\infty(\theta^{(0)},r),\ x\in\mathcal X,\\
+y\in\{-1,+1\}}}
+\left\|\nabla_\theta^{(\kappa)}\ell(yf_\theta(x))\right\|_\infty.
+\tag{9}
+\]
+The initialization event used below is
+\[
+E_r:=\{M_r(\theta^{(0)})>0,
+\ \eta T G_r(\theta^{(0)})\leq r\}.
+\tag{10}
+\]
+It is determined solely by initialization and worst-case quantities on the
+fixed parameter ball, before a sample path, distribution, or target is
+selected.
+
+Finally, introduce the path index set and its dimension
+\[
+\mathcal I_{\rm path}:=\prod_{\ell=0}^{L-1}[n_\ell],
+\qquad
+d_{\rm path}:=|\mathcal I_{\rm path}|
+=\prod_{\ell=0}^{L-1}n_\ell.
+\tag{11}
+\]
+For $p=(i_0,\ldots,i_{L-1})\in\mathcal I_{\rm path}$, define the
+initialization-gate feature map by
+\[
+[\varphi_{\theta^{(0)}}(x)]_p
+:=x_{i_0}\prod_{\ell=1}^{L-1}
+\mathbf 1\{u_{\ell,i_\ell}(\theta^{(0)},x)>0\},
+\tag{12}
+\]
+where the empty product is one for $L=1$.  Let
+$\mathcal P_{\rm gate}$ be the pushforward law of
+$\varphi_{\theta^{(0)}}$ under the Gaussian initialization (3).  This law is
+fixed by the architecture and initialization distribution before
+$\mathcal D$ and $h$, and it is defined on both $E_r$ and $E_r^c$.
+
+\subsection{Assumptions}
+
+\begin{assumption}[Fixed source witnesses and regime]
+\label{assump:fixed-source-witnesses}
+The parameters satisfy $0\leq\varepsilon<1/4$, $T\in\mathbb N_{\geq1}$,
+and $\eta>0$.  For the given $(n,\mathcal H,\varepsilon)$, one architecture,
+its parameter count $S$, the constant stepsize $\eta$, and the horizon $T$
+are selected once and held fixed before $\mathcal D$ and $h^\star$.  The same
+witnesses and the same fixed $(s_0,\kappa)$ conventions are used for every
+$(\mathcal D,h^\star)\in\Delta(\mathcal X)\times\mathcal H$.
+\end{assumption}
+
+\begin{assumption}[Universal expected-error SGD premise]
+\label{assump:universal-expected-success}
+For every $\mathcal D\in\Delta(\mathcal X)$ and every
+$h^\star\in\mathcal H$,
+\[
+\mathbb E_{\theta^{(0)},x^{(0)},\ldots,x^{(T-1)}}\!\left[
+\mathcal L_{\mathcal D,h^\star}
+(\widehat h_{\mathcal D,h^\star})
+\right]\leq\varepsilon,
+\tag{13}
+\]
+where the expectation is jointly over the independent Gaussian initialization
+and fresh one-sample SGD draws specified above.
+\end{assumption}
+
+\begin{assumption}[Fixed constant depth]
+\label{assump:constant-depth}
+A depth cap $L_0\in\mathbb N_{\geq1}$ is fixed as a universal constant,
+independently of $n,\mathcal H,\varepsilon,\eta,T,S$, and the source
+architecture satisfies $1\leq L\leq L_0$.  Widths remain arbitrary and all
+layers remain trainable.
+\end{assumption}
+
+\begin{assumption}[Static robust initialization tube]
+\label{assump:robust-tube}
+Deterministic values $r>0$ and $\delta_0$ with
+$0\leq\delta_0\leq\varepsilon$ are fixed after the source witnesses but
+before $\theta^{(0)},\mathcal D,h^\star$, and the SGD samples, and
+\[
+\Pr_{\theta^{(0)}}(E_r)\geq1-\delta_0.
+\tag{14}
+\]
+This is only a primitive statement about the static quantities $M_r$ and
+$G_r$; it does not assume trajectory containment, gate stability, or a path
+representation.
+\end{assumption}
+
+\subsection{Formalized goal}
+
+The objective is the following conditional, fixed-depth probabilistic
+dimension statement:
+\[
+\operatorname{dc}_{\varepsilon+\delta_0}(\mathcal H)
+\leq d_{\rm path}\leq S^{L_0}.
+\tag{15}
+\]
+The first inequality must be witnessed by the single target- and
+distribution-independent law $\mathcal P_{\rm gate}$; equivalently, for every
+$\mathcal D\in\Delta(\mathcal X)$ and $h\in\mathcal H$,
+\[
+\mathbb E_{\varphi\sim\mathcal P_{\rm gate}}\!\left[
+\inf_{w\in\mathbb R^{d_{\rm path}}}
+R_{\mathcal D,h}(w,\varphi)
+\right]\leq\varepsilon+\delta_0.
+\tag{16}
+\]
+Because $\delta_0\leq\varepsilon$, the same witness should give
+\[
+\operatorname{dc}_{2\varepsilon}(\mathcal H)\leq S^{L_0}.
+\tag{17}
+\]
+The statement is conditional on Assumption~\ref{assump:robust-tube} and the
+constant-depth restriction.  It does not assert the corresponding result in
+the absence of the robust tube, at general depth, or with a deterministic
+exact feature map.

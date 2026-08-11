@@ -1,0 +1,43 @@
+\section{Proof Sketch}
+\label{sec:proof-sketch}
+
+The proof begins with a finite one-dimensional threshold game.  An arbitrary
+hypothesis is restricted to its predictions on $[N]$, which preserves both
+privacy and every risk in the game.  Sampling $n$ rows with replacement from
+an empirical database of size $9n$ gives an empirical wrapper whose expected
+empirical loss is exactly the finite-game risk.  The corrected
+secrecy-of-the-sample calculation of \citet{bunEtAl2015thresholds} preserves
+the original privacy parameters uniformly through $\varepsilon=1$.
+
+The homogeneous-set argument of \citet{alonEtAl2018private} is then
+rederived at expected loss $1/20$.  A finite coloring records all prediction
+marginals, the finite Ramsey theorem of \citet{erdosRado1952} gives a large
+homogeneous set, and endpoint privacy comparisons yield a positive adjacent
+rise.  Moving one record across the remaining ordered block produces a family
+of pairwise private output laws with an off-diagonal margin.  A finite product
+experiment and binary-search tree turn this margin into an upper bound on the
+homogeneous set.  Comparing the Ramsey lower bound and binary upper bound and
+inverting the resulting iterated logarithms gives universal constants
+$a_{\rm th},a_\delta>0$ and $N_{\rm th}$ for the one-arm obstruction.
+
+The finite set of private kernels is a compact convex polytope and each
+experiment risk is affine.  Finite minimax therefore converts the
+algorithm-wise obstruction into a single learner-independent hard prior over
+finite threshold experiments.  From this prior we build a hidden-arm kernel:
+one uniformly selected arm receives distinct records from an external
+$n$-sample, while all other arms are simulated independently.  Fixing all
+internal randomness maps an external one-record replacement to zero or one
+replacement in the input to $A$, so the kernel inherits the pair
+$(\varepsilon_0,\delta_m)$ exactly.
+
+A grand collection of iid arm pools couples the constructed input to an ideal
+iid sample from the uniform arm mixture.  The mixture is realized by the
+minor-table concept, and Bernstein's inequality bounds the sole overflow
+event by $e^{-27/2}$.  The iid latent experiment vector is independent of the
+hidden designation, so uniform-arm averaging identifies hidden-arm risk with
+mixture risk exactly.  The PAC guarantee and bounded-loss conversion then give
+strict prior-average risk below $1/20$, contradicting the hard prior.  The
+last arithmetic step transfers the unchanged $\delta_m$ denominator, chooses
+$c_\delta=a_\delta/[225(1+\log15)]$ and $c=a_{\rm th}/4$, and retains the
+zero-overflow $k=1$ specialization.  Complete derivations appear in the
+appendix.

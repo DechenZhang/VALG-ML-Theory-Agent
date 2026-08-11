@@ -1,0 +1,28 @@
+\section{Proof Sketch}\label{sec:proof-sketch}
+
+For a fixed distribution, target, and arbitrary valid policy, push the learner
+tape through the measurable terminal selector.  This produces an exact finite
+law on the catalog and exact loss and correlation mixtures, including at zero
+queries.  Universal expected accuracy then yields a catalog-mixture
+correlation at least $\rho$, and a finite maximum dominates that mixture.
+
+For a nonempty finite $F\subseteq X$, apply the policy-free correlation bound
+to every distribution supported on $F$.  A self-contained finite minimax
+argument converts the resulting $\forall r\,\exists i$ statement into one
+$w\in\Delta_L$ satisfying every point constraint on $F$, without margin
+loss.  The empty set is handled directly.  The finite constraint sets are
+closed subsets of the fixed compact simplex, and their finite intersections
+are exactly the constraint sets associated with finite unions.  Compactness
+therefore gives one $w_h$ satisfying all constraints on an arbitrary domain.
+
+Finally, the catalog score is exactly the inner product with $\phi_G$.
+Because $\rho>1/2$, its signed margin gives strict signs, and the resulting
+$L$-coordinate common map is an admissible witness in the definition of
+$\operatorname{dc}(H)$.  Appending the primitive catalog budget gives the
+stated dimension chain.  The complete arguments appear in
+Propositions~\ref{prop:step-001-catalog-law},
+\ref{prop:step-002-policy-free-correlation},
+\ref{prop:step-003-finite-feasibility},
+\ref{prop:step-004-global-weight},
+\ref{prop:step-005-exact-representation}, and
+\ref{prop:step-006-dimension-chain}.

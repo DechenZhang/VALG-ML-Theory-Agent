@@ -1,0 +1,1935 @@
+\appendix
+
+\section{Proof Details}
+
+\subsection{Deterministic Midpoint Localization}
+\label{app:midpoint-localization}
+
+\begin{lemma}[Uniform polynomial derivative envelope]
+\label{lem:derivative-envelope}
+Fix an integer $d\geq1$, a radius $R>0$, and a compact set
+$\Theta\subseteq\mathbb R$, and define $\phi_\alpha$, $B$, and
+$L_{d,R,\Theta}$ as defined above.  Then every
+$\alpha\in[-R,R]^d$ and $\theta\in\Theta$ satisfy
+\[
+\left|\partial_\theta\phi_\alpha(\theta)\right|
+\leq dB^{d-1}+R\sum_{k=1}^{d-1}kB^{k-1}.
+\]
+Consequently,
+\[
+L_{d,R,\Theta}
+\leq dB^{d-1}+R\sum_{k=1}^{d-1}kB^{k-1}<\infty.
+\]
+For $d=1$, the sum is empty and $L_{1,R,\Theta}=1$.
+\end{lemma}
+
+\begin{proof}
+Compactness of $\Theta$ makes
+$\sup_{\theta\in\Theta}|\theta|$ finite, so $B$ is finite and at least
+one.  Differentiating gives
+\[
+\partial_\theta\phi_\alpha(\theta)
+=d\theta^{d-1}+\sum_{k=1}^{d-1}k\alpha_k\theta^{k-1}.
+\]
+Since $|\alpha_k|\leq R$ and $|\theta|\leq B$, the triangle inequality
+gives, term by term,
+\[
+\begin{aligned}
+\left|\partial_\theta\phi_\alpha(\theta)\right|
+&\leq d|\theta|^{d-1}
+  +\sum_{k=1}^{d-1}k|\alpha_k||\theta|^{k-1}\\
+&\leq dB^{d-1}+R\sum_{k=1}^{d-1}kB^{k-1}.
+\end{aligned}
+\]
+The right-hand side is a finite sum of finite quantities and is uniform
+over the coefficient cube and $\Theta$.  Taking the defining supremum
+proves the bound and finiteness of $L_{d,R,\Theta}$.  If $d=1$, then
+$\phi_\alpha(\theta)=\theta+\alpha_0$ and
+$\partial_\theta\phi_\alpha\equiv1$, proving the exact identity.
+\end{proof}
+
+\begin{proposition}[Borel root hitting for arbitrary interval endpoints]
+\label{prop:borel-root-event}
+Fix an integer $d\geq1$, a radius $R>0$, and a compact set
+$\Theta\subseteq\mathbb R$, with $\phi_\alpha$ and $Z_\alpha$ as in the
+setup.  For every $I\in\mathscr I(\Theta)$, under any open, closed, or
+half-open endpoint convention,
+\[
+\mathcal E_I
+:=\{\alpha\in[-R,R]^d:Z_\alpha\cap I\neq\varnothing\}
+\]
+is a Borel subset of $[-R,R]^d$.
+\end{proposition}
+
+\begin{proof}
+Let $a=\inf I$ and $b=\sup I$.  Both are finite, and $a<b$.  For
+$n\geq1$, set
+\[
+\varepsilon_n:=\frac{b-a}{2(n+1)},
+\qquad
+a_n:=
+\begin{cases}
+a,&a\in I,\\
+a+\varepsilon_n,&a\notin I,
+\end{cases}
+\qquad
+b_n:=
+\begin{cases}
+b,&b\in I,\\
+b-\varepsilon_n,&b\notin I,
+\end{cases}
+\]
+and $K_n=[a_n,b_n]$.  Because
+$\varepsilon_n<(b-a)/2$, every $K_n$ is a nonempty compact interval
+contained in $I$.  Moreover, $K_n\subseteq K_{n+1}$ and
+\[
+\bigcup_{n\geq1}K_n=I.
+\]
+An endpoint is retained in every $K_n$ exactly when it belongs to $I$,
+and every interior point is eventually captured.  Thus the exhaustion
+covers all four endpoint conventions.
+
+For $\alpha\in[-R,R]^d$, define
+\[
+F_n(\alpha):=\min_{\theta\in K_n}|\phi_\alpha(\theta)|.
+\]
+The minimum exists because $K_n$ is nonempty and compact and the
+polynomial is continuous.  For any
+$\alpha,\gamma\in[-R,R]^d$, put
+\[
+\delta:=\sup_{\theta\in K_n}
+|\phi_\alpha(\theta)-\phi_\gamma(\theta)|.
+\]
+Pointwise on $K_n$,
+$|\phi_\gamma(\theta)|-\delta\leq|\phi_\alpha(\theta)|
+\leq|\phi_\gamma(\theta)|+\delta$.  Taking minima and then interchanging
+$\alpha$ and $\gamma$ gives
+\[
+\begin{aligned}
+|F_n(\alpha)-F_n(\gamma)|
+&\leq\sup_{\theta\in K_n}
+  |\phi_\alpha(\theta)-\phi_\gamma(\theta)|\\
+&\leq\sum_{k=0}^{d-1}|\alpha_k-\gamma_k|B^k.
+\end{aligned}
+\]
+Hence $F_n$ is continuous, and
+\[
+\mathcal E_{I,n}:=\{\alpha\in[-R,R]^d:F_n(\alpha)=0\}
+\]
+is closed relative to the coefficient cube.  Since the minimum is
+attained, $F_n(\alpha)=0$ exactly when $\phi_\alpha$ has a zero in $K_n$.
+The compact exhaustion therefore yields
+\[
+\mathcal E_I=\bigcup_{n\geq1}\mathcal E_{I,n},
+\]
+a countable union of closed sets.  The argument only asserts existence of
+a zero on each compact set and never chooses a root as a function of
+$\alpha$.
+\end{proof}
+
+\begin{proposition}[Measurable midpoint intercept slab]
+\label{prop:midpoint-slab}
+Fix an integer $d\geq1$, a radius $R>0$, a compact set
+$\Theta\subseteq\mathbb R$, and $I\in\mathscr I(\Theta)$.  Under
+Lemma~\ref{lem:derivative-envelope}, define, with an empty sum when
+$d=1$,
+\[
+c_I(\beta):=m_I^d+\sum_{k=1}^{d-1}\alpha_km_I^k,
+\qquad \beta=(\alpha_1,\ldots,\alpha_{d-1}),
+\]
+and
+\[
+J_I(\beta):=
+\left[-c_I(\beta)-\frac{L_{d,R,\Theta}|I|}{2},
+      -c_I(\beta)+\frac{L_{d,R,\Theta}|I|}{2}\right].
+\]
+Then $c_I$ and both endpoints of $J_I$ are Borel measurable,
+$|J_I(\beta)|=L_{d,R,\Theta}|I|$, and
+\[
+\{(a_0,\beta):a_0\in J_I(\beta)\}
+=\left\{(a_0,\beta):
+|a_0+c_I(\beta)|\leq\frac{L_{d,R,\Theta}|I|}{2}\right\}
+\]
+is Borel.  For every $\alpha=(\alpha_0,\beta)\in[-R,R]^d$,
+\[
+Z_\alpha\cap I\neq\varnothing
+\quad\Longrightarrow\quad
+|\phi_\alpha(m_I)|
+\leq\frac{L_{d,R,\Theta}|I|}{2}
+\quad\Longleftrightarrow\quad
+\alpha_0\in J_I(\beta).
+\]
+The implication holds for every endpoint convention and requires neither
+simple nor transverse roots.
+\end{proposition}
+
+\begin{proof}
+Again write $a=\inf I$ and $b=\sup I$.  Since $a<b$, the midpoint
+$m_I=(a+b)/2$ lies strictly between $a$ and $b$, and hence belongs to
+$I$ for every endpoint convention.  If $\theta_*\in I$, the closed
+segment joining $\theta_*$ and $m_I$ lies in $I\subseteq\Theta$, and
+\[
+|m_I-\theta_*|\leq\frac{b-a}{2}=\frac{|I|}{2}.
+\]
+
+Suppose $\theta_*\in Z_\alpha\cap I$.  If $\theta_*=m_I$, the desired
+bound has left-hand side zero.  Otherwise, the one-dimensional
+mean-value inequality applies on the segment: polynomiality gives
+continuity and differentiability, and Lemma~\ref{lem:derivative-envelope}
+bounds the derivative there.  Since $\phi_\alpha(\theta_*)=0$,
+\[
+\begin{aligned}
+|\phi_\alpha(m_I)|
+&=|\phi_\alpha(m_I)-\phi_\alpha(\theta_*)|\\
+&\leq L_{d,R,\Theta}|m_I-\theta_*|\\
+&\leq\frac{L_{d,R,\Theta}|I|}{2}.
+\end{aligned}
+\]
+This retains the exact midpoint factor.
+
+The additive-intercept form gives
+\[
+\phi_\alpha(m_I)=\alpha_0+c_I(\beta),
+\]
+so the evaluation bound is equivalent to
+$\alpha_0\in J_I(\beta)$.  The endpoint difference of $J_I$ is exactly
+$L_{d,R,\Theta}|I|$.  For fixed $I$, $c_I$ is a polynomial in $\beta$,
+so it and the interval endpoints are continuous.  The map
+$(a_0,\beta)\mapsto|a_0+c_I(\beta)|$ is continuous, and the slab is the
+inverse image of the closed interval
+$[0,L_{d,R,\Theta}|I|/2]$.
+
+When $d=1$, $\beta$ is the empty tuple,
+$c_I(\beta)=m_I$, $L_{1,R,\Theta}=1$, and
+\[
+J_I=[-m_I-|I|/2,-m_I+|I|/2].
+\]
+Thus the formulas remain literal on the one-point conditioning space.
+If an included endpoint is a root, the distance bound may be an equality;
+an excluded endpoint is absent from the event, while arbitrarily
+endpoint-near roots obey the same weak inequality.  The proof never
+divides by $|\partial_\theta\phi_\alpha(\theta_*)|$ and never uses root
+uniqueness, so tangent and multiple roots are covered.  Together with
+Proposition~\ref{prop:borel-root-event}, this supplies a Borel root event
+contained in a jointly Borel intercept slab of exact width
+$L_{d,R,\Theta}|I|$.
+\end{proof}
+
+\subsection{Averaged Conditional-Density Integration}
+\label{app:averaged-integration}
+
+\begin{lemma}[Conditional integration over the midpoint slab]
+\label{lem:slab-disintegration}
+Under Assumption~\ref{assump:averaged-intercept-density},
+Proposition~\ref{prop:borel-root-event}, and
+Proposition~\ref{prop:midpoint-slab}, fix
+$\mu\in\mathcal D$ and $I\in\mathscr I(\Theta)$.  Then the root event
+and midpoint slab are Borel, the function
+\[
+(a_0,\beta)\longmapsto
+\mathbf1\{a_0\in J_I(\beta)\}f_\mu(a_0\mid\beta)
+\]
+is nonnegative and jointly measurable, and
+\[
+\Pr_\mu(Z_\alpha\cap I\neq\varnothing)
+\leq
+\int\!\int_{\mathbb R}
+\mathbf1\{a_0\in J_I(\beta)\}
+f_\mu(a_0\mid\beta)\,da_0\,\pi_\mu(d\beta).
+\]
+\end{lemma}
+
+\begin{proof}
+Proposition~\ref{prop:borel-root-event} makes
+$\mathcal E_I=\{Z_\alpha\cap I\neq\varnothing\}$ measurable, while
+Proposition~\ref{prop:midpoint-slab} makes
+$\mathcal S_I=\{(a_0,\beta):a_0\in J_I(\beta)\}$ Borel and gives
+$\mathcal E_I\subseteq\mathcal S_I$.  Hence
+\[
+\Pr_\mu(\mathcal E_I)\leq\Pr_\mu(\mathcal S_I).
+\]
+The indicator of $\mathcal S_I$ is jointly Borel.  Multiplying it by the
+jointly measurable nonnegative density supplied by
+Assumption~\ref{assump:averaged-intercept-density} gives the asserted
+integrand.  Regular conditional-density disintegration yields
+\[
+\Pr_\mu(\mathcal S_I)
+=\int\!\int_{\mathbb R}
+\mathbf1\{a_0\in J_I(\beta)\}
+f_\mu(a_0\mid\beta)\,da_0\,\pi_\mu(d\beta).
+\]
+The density identity is needed only for $\pi_\mu$-almost every fiber;
+the remaining fibers contribute zero to the outer integral.  The
+conditional intercept is supported on $[-R,R]$ and its density is
+extended by zero, so the formula remains exact even if $J_I(\beta)$
+extends outside the cube.  Tonelli's theorem for this nonnegative jointly
+measurable integrand also makes the inner integral a measurable
+extended-valued function of $\beta$.
+\end{proof}
+
+\begin{lemma}[Averaged slice-cap control]
+\label{lem:averaged-slice-control}
+Under Assumption~\ref{assump:averaged-intercept-density},
+Proposition~\ref{prop:midpoint-slab}, and
+Lemma~\ref{lem:slab-disintegration}, fix
+$\mu\in\mathcal D$ and $I\in\mathscr I(\Theta)$.  For
+$\pi_\mu$-almost every $\beta$,
+\[
+\int_{\mathbb R}
+\mathbf1\{a_0\in J_I(\beta)\}
+f_\mu(a_0\mid\beta)\,da_0
+\leq K_\mu(\beta)L_{d,R,\Theta}|I|,
+\]
+and
+\[
+\int\!\int_{\mathbb R}
+\mathbf1\{a_0\in J_I(\beta)\}
+f_\mu(a_0\mid\beta)\,da_0\,\pi_\mu(d\beta)
+\leq L_{d,R,\Theta}|I|
+\int K_\mu(\beta)\,\pi_\mu(d\beta)<\infty.
+\]
+\end{lemma}
+
+\begin{proof}
+For fixed $\mu$, the definition of the class envelope gives
+\[
+0\leq\int K_\mu(\beta)\,\pi_\mu(d\beta)
+\leq\bar\kappa_{\mathcal D}<\infty.
+\]
+Because $K_\mu$ is nonnegative, measurable, and possibly
+extended-valued, this implies $K_\mu(\beta)<\infty$ almost surely.  To
+see this explicitly, let
+$N_\mu^\infty=\{\beta:K_\mu(\beta)=\infty\}$.  For every integer
+$n\geq1$,
+\[
+\int K_\mu\,d\pi_\mu\geq n\pi_\mu(N_\mu^\infty),
+\]
+so finiteness forces $\pi_\mu(N_\mu^\infty)=0$.
+
+Intersect this full-measure set with the full-measure set on which
+$f_\mu(\cdot\mid\beta)$ is the conditional density and $K_\mu(\beta)$
+is its Lebesgue essential supremum.  On the resulting full-measure set,
+\[
+f_\mu(a_0\mid\beta)\leq K_\mu(\beta)
+\quad\text{for Lebesgue-almost every }a_0.
+\]
+Proposition~\ref{prop:midpoint-slab} gives
+$|J_I(\beta)|=L_{d,R,\Theta}|I|<\infty$.  Therefore
+\[
+\begin{aligned}
+\int_{\mathbb R}\mathbf1\{a_0\in J_I(\beta)\}
+f_\mu(a_0\mid\beta)\,da_0
+&=\int_{J_I(\beta)}f_\mu(a_0\mid\beta)\,da_0\\
+&\leq K_\mu(\beta)|J_I(\beta)|\\
+&=K_\mu(\beta)L_{d,R,\Theta}|I|.
+\end{aligned}
+\]
+Null fibers, including a fiber assigned $K_\mu=\infty$, contribute
+nothing to the outer integral.  By Lemma~\ref{lem:slab-disintegration}
+and Tonelli, the left-hand inner integral is measurable and nonnegative.
+Integrating the last display against the arbitrary Borel probability
+$\pi_\mu$ proves the second inequality.  This uses no density of
+$\pi_\mu$ and never replaces $K_\mu(\beta)$ by an essential supremum
+over $\beta$.
+\end{proof}
+
+\begin{proposition}[Uniform root hitting under an averaged intercept envelope]
+\label{prop:averaged-root-hitting}
+Under Assumption~\ref{assump:averaged-intercept-density},
+Proposition~\ref{prop:borel-root-event},
+Proposition~\ref{prop:midpoint-slab},
+Lemma~\ref{lem:slab-disintegration}, and
+Lemma~\ref{lem:averaged-slice-control}, every
+$\mu\in\mathcal D$ and $I\in\mathscr I(\Theta)$ satisfy
+\[
+\Pr_\mu(Z_\alpha\cap I\neq\varnothing)
+\leq L_{d,R,\Theta}|I|
+\int K_\mu(\beta)\,\pi_\mu(d\beta)
+\leq L_{d,R,\Theta}|I|\bar\kappa_{\mathcal D}.
+\]
+Consequently,
+\[
+C_{\mathcal D}
+\leq L_{d,R,\Theta}\bar\kappa_{\mathcal D}<\infty.
+\]
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:slab-disintegration} bounds the root probability by the
+nonnegative double integral over the midpoint slab, and
+Lemma~\ref{lem:averaged-slice-control} bounds that integral by the first
+right-hand side.  For the fixed law $\mu$,
+\[
+\int K_\mu(\beta)\,\pi_\mu(d\beta)
+\leq\sup_{\nu\in\mathcal D}
+\int K_\nu(\beta)\,\pi_\nu(d\beta)
+=\bar\kappa_{\mathcal D}.
+\]
+Thus each fiber cap is integrated before the class supremum is applied.
+Since $|I|>0$, division by $|I|$ gives
+\[
+\sup_{I\in\mathscr I(\Theta)}
+\frac{\Pr_\mu(Z_\alpha\cap I\neq\varnothing)}{|I|}
+\leq L_{d,R,\Theta}\bar\kappa_{\mathcal D}.
+\]
+Taking the outer supremum over $\mu\in\mathcal D$ proves the claim.
+Finiteness follows from Lemma~\ref{lem:derivative-envelope} and
+Assumption~\ref{assump:averaged-intercept-density}.
+
+When $d=1$, $\beta$ is the empty tuple and $\pi_\mu$ is the point mass
+on its one-point space.  Proposition~\ref{prop:midpoint-slab} gives
+$L_{1,R,\Theta}=1$ and a constant interval $J_I$ of length $|I|$; the
+outer integrals reduce to evaluation at one point.  Thus the argument is
+the ordinary one-dimensional density bound and introduces no hidden
+positive-dimensional marginal condition.  The preceding results also
+show explicitly that zero extension, unbounded slice caps, singular or
+discrete higher-coordinate marginals, and every endpoint convention
+leave the exact coefficient-one conclusion unchanged.
+\end{proof}
+\subsection{Random-Intercept Conditional Kernels}
+\label{app:random-intercepts}
+
+\begin{lemma}[Measurable conditional kernel for an affine uniform intercept]
+\label{lem:conditional-uniform-kernel}
+Let $R>0$, let $\beta$ have an arbitrary Borel probability law $\pi$ on
+the higher-coordinate cube, with the one-point convention when $d=1$,
+and let $U\sim\operatorname{Unif}[-1,1]$ be independent of $\beta$.
+Let $G,\rho$ be measurable real-valued functions of $\beta$ and put
+$Y=G(\beta)+\rho(\beta)U$.  Suppose $H$ is measurable,
+$\pi(H)=1$, and $\rho(\beta)>0$ for every $\beta\in H$.  Then $Y$ has a
+jointly measurable regular conditional density $f(a\mid\beta)$ given
+$\beta$ such that, for every $\beta\in H$,
+\[
+f(a\mid\beta)
+=\frac{\mathbf1\{|a-G(\beta)|\leq\rho(\beta)\}}
+       {2\rho(\beta)},
+\qquad
+\operatorname*{ess\,sup}_{a\in\mathbb R}f(a\mid\beta)
+=\frac{1}{2\rho(\beta)}.
+\]
+If also $|G(\beta)|+\rho(\beta)\leq R$ on $H$, the density version can
+be chosen to vanish outside $[-R,R]$ on every fiber.
+\end{lemma}
+
+\begin{proof}
+Define the fallback density
+\[
+g_R(a):=\frac{\mathbf1\{|a|\leq R\}}{2R}
+\]
+and the piecewise function
+\[
+f(a\mid\beta)=
+\begin{cases}
+\displaystyle
+\frac{\mathbf1\{|a-G(\beta)|\leq\rho(\beta)\}}
+     {2\rho(\beta)},&\beta\in H,\\[8pt]
+g_R(a),&\beta\notin H.
+\end{cases}
+\]
+There is no quotient on $H^c$, so this definition contains no hidden
+$0/0$ convention.  The set
+\[
+\{(a,\beta):|a-G(\beta)|\leq\rho(\beta)\}
+\]
+is measurable, as are $H,G$, and $\rho$.  Strict positivity on $H$
+makes $f$ jointly measurable.  Its integral in $a$ equals one on $H$
+because the indicated interval has length $2\rho(\beta)$, and equals one
+on $H^c$ by the definition of $g_R$.  Thus
+\[
+Q(A\mid\beta):=\int_A f(a\mid\beta)\,da
+\]
+is a measurable probability kernel.
+
+Fix Borel sets $A\subseteq\mathbb R$ and $B_0$ in the
+higher-coordinate space.  Independence gives the product-law identity
+\[
+\Pr(Y\in A,\beta\in B_0)
+=\int_{B_0}\frac12\int_{-1}^{1}
+\mathbf1\{G(b)+\rho(b)u\in A\}\,du\,\pi(db).
+\]
+For $b\in H$, the positive-width substitution $a=G(b)+\rho(b)u$ gives,
+for every nonnegative Borel function $h$,
+\[
+\frac12\int_{-1}^{1}h(G(b)+\rho(b)u)\,du
+=\int_{\mathbb R}h(a)
+\frac{\mathbf1\{|a-G(b)|\leq\rho(b)\}}{2\rho(b)}\,da.
+\]
+Consequently, the inner integral over $A$ equals
+$\int_Af(a\mid b)\,da$ on $H$.  Since $H^c$ has $\pi$-measure zero,
+replacing the inner integral there by the fallback kernel changes
+nothing, and
+\[
+\Pr(Y\in A,\beta\in B_0)
+=\int_{B_0}\int_Af(a\mid b)\,da\,\pi(db).
+\]
+This rectangle identity proves that $Q$ is a regular conditional law of
+the actual $Y$ given the actual $\beta$.  It integrates against $\pi$
+itself and needs no Lebesgue density of $\pi$.
+
+For $b\in H$, the displayed density equals the positive constant
+$1/[2\rho(b)]$ on an interval of positive length $2\rho(b)$ and is zero
+off that interval.  Its essential supremum is therefore exactly
+$1/[2\rho(b)]$.  A globally measurable cap version is
+\[
+K(b)=
+\begin{cases}
+1/[2\rho(b)],&b\in H,\\
+1/(2R),&b\notin H.
+\end{cases}
+\]
+Finally, if $|G|+\rho\leq R$ on $H$, then
+$[G(b)-\rho(b),G(b)+\rho(b)]\subseteq[-R,R]$ there, while $g_R$ is also
+supported on that interval.  Hence the selected version vanishes outside
+$[-R,R]$ on every fiber.
+\end{proof}
+
+\begin{proposition}[Reciprocal-width envelope for random intercepts]
+\label{prop:random-intercept-envelope}
+Under Assumption~\ref{assump:random-intercept-witness} and
+Lemma~\ref{lem:conditional-uniform-kernel}, every
+$\mu\in\mathcal D_{\mathrm{RI}}$ is supported on $[-R,R]^d$ and has a
+jointly measurable regular conditional density, extended by zero outside
+$[-R,R]$, satisfying for $\pi_\mu$-almost every $\beta$
+\[
+f_\mu(a_0\mid\beta)
+=\frac{\mathbf1\{|a_0-G_\mu(\beta)|\leq\rho_\mu(\beta)\}}
+       {2\rho_\mu(\beta)},
+\qquad
+K_\mu(\beta)=\frac{1}{2\rho_\mu(\beta)}.
+\]
+Moreover, $K_\mu$ has a measurable version and
+\[
+\int K_\mu(\beta)\,\pi_\mu(d\beta)
+=\frac12\int\rho_\mu(\beta)^{-1}\,\pi_\mu(d\beta),
+\qquad
+\bar\kappa_{\mathcal D_{\mathrm{RI}}}
+=\frac12M_{\mathrm{RI}}<\infty.
+\]
+Thus $\mathcal D_{\mathrm{RI}}$ satisfies every component of
+Assumption~\ref{assump:averaged-intercept-density}.
+\end{proposition}
+
+\begin{proof}
+Fix $\mu\in\mathcal D_{\mathrm{RI}}$ and define
+\[
+H_\mu
+:=\{\beta:\rho_\mu(\beta)>0,
+             \ |G_\mu(\beta)|+\rho_\mu(\beta)\leq R\}.
+\]
+This set is measurable, and
+Assumption~\ref{assump:random-intercept-witness} gives
+$\pi_\mu(H_\mu)=1$.  Apply
+Lemma~\ref{lem:conditional-uniform-kernel} with $H=H_\mu$.  It produces
+a jointly measurable conditional density with the asserted formula and
+cap.  Its support clause gives a version vanishing outside $[-R,R]$ on
+every fiber, and its piecewise cap gives a measurable essential-supremum
+version on every fiber.
+
+The higher-coordinate vector already lies in $[-R,R]^{d-1}$.  On the
+probability-one event $\{\beta\in H_\mu,|U_\mu|\leq1\}$,
+\[
+|\alpha_0|
+\leq|G_\mu(\beta)|+\rho_\mu(\beta)|U_\mu|
+\leq|G_\mu(\beta)|+\rho_\mu(\beta)
+\leq R.
+\]
+Therefore the actual coefficient law is supported on $[-R,R]^d$.
+
+The complement of $H_\mu$ is null, so neither the fallback cap nor any
+arbitrary value assigned to $\rho_\mu^{-1}$ there contributes.  Hence
+\[
+\begin{aligned}
+\int K_\mu(\beta)\,\pi_\mu(d\beta)
+&=\frac12\int_{H_\mu}
+  \rho_\mu(\beta)^{-1}\,\pi_\mu(d\beta)\\
+&=\frac12\int
+  \rho_\mu(\beta)^{-1}\,\pi_\mu(d\beta).
+\end{aligned}
+\]
+Only after this per-law integration do we take the class supremum:
+\[
+\begin{aligned}
+\bar\kappa_{\mathcal D_{\mathrm{RI}}}
+&=\sup_{\mu\in\mathcal D_{\mathrm{RI}}}
+  \int K_\mu\,d\pi_\mu\\
+&=\frac12\sup_{\mu\in\mathcal D_{\mathrm{RI}}}
+  \int\rho_\mu^{-1}\,d\pi_\mu
+=\frac12M_{\mathrm{RI}}.
+\end{aligned}
+\]
+No essential supremum over $\beta$ has been inserted.  When $d=1$, the
+higher-coordinate space is the one-point empty-tuple space and all these
+integrals are evaluations at that point.  The kernel, support estimate,
+and reciprocal-width identity remain literal.  Joint measurability of
+$f_\mu$, measurability of $K_\mu$, and finiteness of the last display
+verify all components of
+Assumption~\ref{assump:averaged-intercept-density}.
+\end{proof}
+
+\begin{proposition}[Uniform root hitting for random intercepts]
+\label{prop:random-intercept-root-hitting}
+Under Assumption~\ref{assump:random-intercept-witness},
+Proposition~\ref{prop:random-intercept-envelope}, and
+Proposition~\ref{prop:averaged-root-hitting}, every
+$\mu\in\mathcal D_{\mathrm{RI}}$ and
+$I\in\mathscr I(\Theta)$ satisfy
+\[
+\begin{aligned}
+\Pr_\mu(Z_\alpha\cap I\neq\varnothing)
+&\leq\frac{L_{d,R,\Theta}|I|}{2}
+  \int\rho_\mu(\beta)^{-1}\,\pi_\mu(d\beta)\\
+&\leq L_{d,R,\Theta}|I|
+  \bar\kappa_{\mathcal D_{\mathrm{RI}}}\\
+&\leq\frac{L_{d,R,\Theta}M_{\mathrm{RI}}}{2}|I|,
+\end{aligned}
+\]
+and
+\[
+C_{\mathcal D_{\mathrm{RI}}}
+\leq L_{d,R,\Theta}\bar\kappa_{\mathcal D_{\mathrm{RI}}}
+\leq\frac12L_{d,R,\Theta}M_{\mathrm{RI}}<\infty.
+\]
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:random-intercept-envelope} proves from the primitive
+random-intercept assumption that the class is cube-supported and satisfies
+the full conditional-density and averaged-envelope hypothesis of
+Proposition~\ref{prop:averaged-root-hitting}.  Applying that proposition
+to $\mathcal D_{\mathrm{RI}}$ gives
+\[
+\Pr_\mu(Z_\alpha\cap I\neq\varnothing)
+\leq L_{d,R,\Theta}|I|\int K_\mu\,d\pi_\mu.
+\]
+Substitution of the exact per-law identity from
+Proposition~\ref{prop:random-intercept-envelope}, followed by the
+definition of $M_{\mathrm{RI}}$, gives
+\[
+\begin{aligned}
+L_{d,R,\Theta}|I|\int K_\mu\,d\pi_\mu
+&=\frac{L_{d,R,\Theta}|I|}{2}
+  \int\rho_\mu^{-1}\,d\pi_\mu\\
+&\leq L_{d,R,\Theta}|I|
+      \bar\kappa_{\mathcal D_{\mathrm{RI}}}\\
+&\leq\frac{L_{d,R,\Theta}M_{\mathrm{RI}}}{2}|I|.
+\end{aligned}
+\]
+The class conclusion follows in the same way.  The fixed law's reciprocal
+width is integrated before the class supremum is used.  Since
+Proposition~\ref{prop:averaged-root-hitting} is already uniform over all
+positive-length intervals, no interval-dependent exceptional set or
+probability conversion arises.  The one-point $d=1$ marginal is covered
+by the same substitution.
+\end{proof}
+
+\begin{proposition}[Exact fixed-width certificate]
+\label{prop:fixed-width}
+Under Assumption~\ref{assump:random-intercept-witness},
+Proposition~\ref{prop:random-intercept-envelope}, and
+Proposition~\ref{prop:random-intercept-root-hitting}, suppose
+$\mu\in\mathcal D_{\mathrm{RI}}$ has
+$\rho_\mu(\beta)=r_\mu$ for $\pi_\mu$-almost every $\beta$, where
+$r_\mu>0$.  Then
+\[
+K_\mu(\beta)=\frac{1}{2r_\mu}
+\quad\text{for }\pi_\mu\text{-almost every }\beta,
+\qquad
+\int K_\mu\,d\pi_\mu=\frac{1}{2r_\mu},
+\]
+and, for every $I\in\mathscr I(\Theta)$,
+\[
+\Pr_\mu(Z_\alpha\cap I\neq\varnothing)
+\leq\frac{L_{d,R,\Theta}}{2r_\mu}|I|.
+\]
+If $\mathcal F$ is a nonempty class of such fixed-width members satisfying
+the same support condition and
+$\sup_{\mu\in\mathcal F}r_\mu^{-1}<\infty$, then
+\[
+\bar\kappa_{\mathcal F}
+=\frac12\sup_{\mu\in\mathcal F}r_\mu^{-1},
+\qquad
+C_{\mathcal F}
+\leq\frac{L_{d,R,\Theta}}2
+       \sup_{\mu\in\mathcal F}r_\mu^{-1}<\infty.
+\]
+\end{proposition}
+
+\begin{proof}
+On the full-measure set where the fixed-width identity and
+Assumption~\ref{assump:random-intercept-witness} hold,
+Proposition~\ref{prop:random-intercept-envelope} gives
+\[
+K_\mu(\beta)=\frac{1}{2\rho_\mu(\beta)}
+=\frac{1}{2r_\mu}.
+\]
+Integration with respect to the probability law $\pi_\mu$ proves the
+cap integral, and substitution into
+Proposition~\ref{prop:random-intercept-root-hitting} proves the per-law
+root bound.  For a class $\mathcal F$, take the supremum only after the
+per-law calculation:
+\[
+\bar\kappa_{\mathcal F}
+=\sup_{\mu\in\mathcal F}\frac{1}{2r_\mu}
+=\frac12\sup_{\mu\in\mathcal F}r_\mu^{-1}.
+\]
+The stated reciprocal-width condition is exactly the class-uniform
+integrability condition specialized to fixed widths.  Applying
+Proposition~\ref{prop:averaged-root-hitting} to $\mathcal F$ gives the
+class conclusion.  For $d=1$, $r_\mu$ is the width of the unique
+empty-tuple fiber and all equations remain unchanged.  Together with
+Propositions~\ref{prop:random-intercept-envelope}
+and~\ref{prop:random-intercept-root-hitting}, this proves the conditional
+density, exact cap, averaged budget, root bound, and fixed-width clauses
+without any higher-marginal density assumption.
+\end{proof}
+
+\subsection{Exact Heteroscedastic Sheet and Conditional Law}
+\label{app:heteroscedastic-sheet}
+
+\begin{proposition}[Exact support of the heteroscedastic sheet]
+\label{prop:exact-sheet-support}
+Fix $d\geq3$, $R>0$, and $q\in(0,1)$, and let $\mu_q$ be the explicit
+witness law from the setup.  Define
+\[
+T_q=[-R/2,R/2]\times[-1,1]
+\]
+and
+\[
+F_q:T_q\longrightarrow\mathbb R^d,
+\qquad
+F_q(z,u)=(\rho_q(z)u,z,z^2/R,0,\ldots,0).
+\]
+When $d=3$, the trailing list of zeros is empty.  Then
+\[
+\operatorname{supp}(\mu_q)=F_q(T_q)=S_q,
+\]
+where
+\[
+S_q=\left\{(a_0,z,z^2/R,0,\ldots,0):
+|z|\leq R/2,\ |a_0|\leq\rho_q(z)\right\}.
+\]
+The identity includes the collapsed fiber at $z=0$ and the fibers at
+$z=\pm R/2$.
+\end{proposition}
+
+\begin{proof}
+Since $q>0$, the map $z\mapsto|z|^q$, and hence $\rho_q$, is continuous
+at every $z$, including zero.  Since $R>0$, all other coordinates of
+$F_q$ are continuous.  Thus $F_q$ is continuous on the compact rectangle
+$T_q$ and $F_q(T_q)$ is compact, hence closed.
+
+For $(z,u)\in T_q$, $|\rho_q(z)u|\leq\rho_q(z)$, so
+$F_q(T_q)\subseteq S_q$.  Conversely, take a point of $S_q$.  If
+$z\neq0$, then $\rho_q(z)>0$ and
+\[
+u=\frac{a_0}{\rho_q(z)}\in[-1,1]
+\]
+maps to that point.  If $z=0$, then $\rho_q(0)=0$ and the sheet
+inequality forces $a_0=0$; choosing $u=0$ again gives the point.  Thus
+\[
+F_q(T_q)=S_q.
+\]
+
+Independence and the uniform laws of $Z$ and $U$ make their joint law
+normalized two-dimensional Lebesgue measure on $T_q$.  Every nonempty
+relatively open subset of $T_q$, including one meeting an edge or corner,
+has positive probability, so the support of $(Z,U)$ is exactly $T_q$.
+Moreover, $\alpha^{(q)}=F_q(Z,U)$, and therefore
+$\mu_q=(F_q)_\#\mathcal L(Z,U)$.
+
+The pushforward is concentrated on the closed set $F_q(T_q)$, giving one
+support inclusion.  For the reverse inclusion, fix $y=F_q(z,u)$ and an
+open neighborhood $O\ni y$.  Continuity makes $F_q^{-1}(O)$ a relatively
+open subset of $T_q$ containing $(z,u)$, so it has positive joint
+probability and
+\[
+\mu_q(O)=\Pr(F_q(Z,U)\in O)>0.
+\]
+Thus every image point belongs to the topological support.
+
+At $z=0$, every $(0,u)$ maps to $(0,0,0,\ldots,0)$.  Although
+$\Pr(Z=0)=0$, every neighborhood of this point has positive pushforward
+mass by the preimage argument, so the collapsed point remains in support.
+At $z=\pm R/2$, relative neighborhoods of the latent boundary also have
+positive mass; hence the full endpoint fibers, including their
+$u=\pm1$ endpoints, remain in support.
+\end{proof}
+
+\begin{proposition}[Cube support and almost-sure positive width]
+\label{prop:cube-positive-width}
+Fix $d\geq3$, $R>0$, and $q\in(0,1)$.  Under
+Proposition~\ref{prop:exact-sheet-support},
+\[
+S_q\subseteq[-R,R]^d,
+\qquad
+\mu_q([-R,R]^d)=1,
+\qquad
+\Pr(\rho_q(Z)>0)=1.
+\]
+These conclusions include $d=3$, the collapsed support point at $z=0$,
+and both endpoint fibers $z=\pm R/2$.
+\end{proposition}
+
+\begin{proof}
+For $|z|\leq R/2$, put $t=2|z|/R$.  Since $R>0$, $t\in[0,1]$, and
+$q>0$ gives $t^q\in[0,1]$.  Hence
+\[
+0\leq\rho_q(z)=\frac R2t^q\leq\frac R2.
+\]
+Every point of $S_q$ satisfies
+\[
+|a_0|\leq\rho_q(z)\leq R/2\leq R,
+\qquad
+|\alpha_1|=|z|\leq R/2\leq R,
+\]
+and
+\[
+|\alpha_2|=\frac{z^2}{R}
+\leq\frac{(R/2)^2}{R}=\frac R4\leq R.
+\]
+All remaining coordinates vanish.  This proves
+$S_q\subseteq[-R,R]^d$, and
+Proposition~\ref{prop:exact-sheet-support} gives cube support of the
+actual law.
+
+Because $R>0$ and $q>0$,
+\[
+\rho_q(z)=0\quad\Longleftrightarrow\quad z=0.
+\]
+The uniform law on the nondegenerate interval $[-R/2,R/2]$ has no atoms,
+so $\Pr(Z=0)=0$ and the almost-sure assertion follows.  This does not
+remove the origin from topological support.
+
+When $d=3$, the only coordinates are $a_0,z,z^2/R$, and the same bounds
+apply with no trailing coordinates.  At $z=\pm R/2$,
+$\rho_q(z)=R/2$ and $z^2/R=R/4$; at $z=0$, all displayed coordinates
+vanish.  The upper restriction $q<1$ is not needed for these support
+claims; it is used in the cap integral below.
+\end{proof}
+
+\begin{lemma}[Recovery of the latent coordinate and inherited independence]
+\label{lem:latent-recovery}
+Fix $d\geq3$, $R>0$, and $q\in(0,1)$.  For a higher-coordinate vector
+$b\in[-R,R]^{d-1}$, let $b_1$ denote its first coordinate and define
+\[
+G_q(b)=0,
+\qquad
+\widetilde\rho_q(b)
+=\frac R2\left(\frac{2|b_1|}{R}\right)^q,
+\qquad
+H_q=\{b:0<|b_1|\leq R/2\}.
+\]
+Then $G_q,\widetilde\rho_q$, and $H_q$ are measurable,
+\[
+Z=\operatorname{pr}_1(\beta_q(Z)),
+\qquad
+\sigma(\beta_q(Z))=\sigma(Z),
+\]
+$U$ is independent of $\beta_q(Z)$,
+$\pi_{\mu_q}(H_q)=1$, $\widetilde\rho_q>0$ on $H_q$, and
+\[
+\rho_q(Z)U
+=G_q(\beta_q(Z))+\widetilde\rho_q(\beta_q(Z))U.
+\]
+Thus all conditions of Lemma~\ref{lem:conditional-uniform-kernel} hold
+for this construction.
+\end{lemma}
+
+\begin{proof}
+The condition $d\geq3$ ensures that the higher-coordinate vector has a
+first coordinate.  By definition,
+\[
+\beta_q(Z)=(Z,Z^2/R,0,\ldots,0),
+\]
+so projection onto that coordinate recovers $Z$ exactly.  Since
+$\beta_q(Z)$ is a measurable function of $Z$,
+$\sigma(\beta_q(Z))\subseteq\sigma(Z)$; recovery gives the reverse
+inclusion.  The signed linear coordinate prevents any ambiguity from the
+quadratic coordinate.
+
+For Borel sets $A\subseteq[-1,1]$ and
+$C\subseteq[-R,R]^{d-1}$, independence of $U$ and $Z$ gives
+\[
+\begin{aligned}
+\Pr(U\in A,\beta_q(Z)\in C)
+&=\Pr(U\in A,Z\in\beta_q^{-1}(C))\\
+&=\Pr(U\in A)\Pr(Z\in\beta_q^{-1}(C))\\
+&=\Pr(U\in A)\Pr(\beta_q(Z)\in C).
+\end{aligned}
+\]
+Thus $U$ is independent of the actual conditioning vector.
+
+The functions above are continuous and $H_q$ is Borel.  Along the
+actual higher-coordinate curve,
+\[
+\widetilde\rho_q(\beta_q(z))
+=\frac R2\left(\frac{2|z|}{R}\right)^q
+=\rho_q(z).
+\]
+This proves the representation.  Also,
+\[
+\pi_{\mu_q}(H_q)=\Pr(0<|Z|\leq R/2)=1,
+\]
+because $Z$ has no atom at zero.  For $b\in H_q$, positivity of $R,q$ and
+$b_1\neq0$ imply $\widetilde\rho_q(b)>0$, and
+$|G_q(b)|+\widetilde\rho_q(b)\leq R/2\leq R$.  Thus measurability,
+representation, independence, full measure, positive width, and support
+are all established before Lemma~\ref{lem:conditional-uniform-kernel} is
+used.  No reciprocal-width integrability is asserted here.
+\end{proof}
+
+\begin{proposition}[Conditional density and exact heteroscedastic cap]
+\label{prop:witness-conditional-cap}
+Fix $d\geq3$, $R>0$, and $q\in(0,1)$.  Under
+Lemma~\ref{lem:latent-recovery} and
+Lemma~\ref{lem:conditional-uniform-kernel}, the actual intercept
+$\alpha_0^{(q)}=\rho_q(Z)U$ has a jointly measurable regular conditional
+density given $\beta_q(Z)$.  One valid version satisfies, for every
+$0<|z|\leq R/2$,
+\[
+f_{\mu_q}(a_0\mid\beta_q(z))
+=\frac{\mathbf1\{|a_0|\leq\rho_q(z)\}}{2\rho_q(z)},
+\]
+and its exact Lebesgue essential-supremum cap is
+\[
+K_{\mu_q}(\beta_q(z))
+=\frac{1}{2\rho_q(z)}
+=\frac{1}{R(2|z|/R)^q}.
+\]
+At $z=0$, neither formula is asserted; the selected conditional version
+uses a genuine fallback density on that $\pi_{\mu_q}$-null fiber.
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:latent-recovery} proves that
+Lemma~\ref{lem:conditional-uniform-kernel} applies with
+\[
+\beta=\beta_q(Z),\quad G=G_q,\quad
+\rho=\widetilde\rho_q,\quad H=H_q,
+\quad Y=\alpha_0^{(q)}.
+\]
+The noise is therefore independent of the actual conditioning vector,
+not merely of an unrecovered latent variable.  A valid density version is
+\[
+f_{\mu_q}(a_0\mid b)=
+\begin{cases}
+\displaystyle
+\frac{\mathbf1\{|a_0|\leq\widetilde\rho_q(b)\}}
+     {2\widetilde\rho_q(b)},&b\in H_q,\\[8pt]
+\displaystyle
+\frac{\mathbf1\{|a_0|\leq R\}}{2R},&b\notin H_q.
+\end{cases}
+\]
+The second line is a probability density because $R>0$.  It defines a
+measurable version on the null complement without any quotient involving
+$\widetilde\rho_q=0$.
+
+For $0<|z|\leq R/2$, $\beta_q(z)\in H_q$ and
+Lemma~\ref{lem:latent-recovery} turns the first line into the asserted
+density.  It is the positive constant $1/[2\rho_q(z)]$ on an interval of
+positive length $2\rho_q(z)$ and zero elsewhere, so its essential
+supremum is exactly that constant.  Since
+\[
+2\rho_q(z)=R\left(\frac{2|z|}{R}\right)^q,
+\]
+the cap has the displayed form.
+
+At $z=\pm R/2$, the denominator is $R$ and the cap is exactly $1/R$.
+At $z=0$, Proposition~\ref{prop:exact-sheet-support} retains the
+collapsed point in topological support, but
+$\pi_{\mu_q}(\{\beta_q(0)\})=\Pr(Z=0)=0$.  A regular conditional law is
+not determined there, and the fallback is a legal version choice rather
+than a positive-mass conditional-uniform assertion.  Combining this
+conditional law with Propositions~\ref{prop:exact-sheet-support}
+and~\ref{prop:cube-positive-width} gives the exact support, cube,
+positive-width, latent-recovery, and nonzero-fiber cap conclusions for the
+witness, without evaluating a reciprocal-width integral at the null
+fiber.
+\end{proof}
+
+\subsection{Unbounded Slice Caps with a Finite Average}
+\label{app:witness-cap-integral}
+
+\begin{lemma}[Positive-mass blowup of the heteroscedastic slice cap]
+\label{lem:positive-mass-cap}
+Fix $d\geq3$, $R>0$, and $q\in(0,1)$.  Under
+Proposition~\ref{prop:witness-conditional-cap}, for every $M>0$,
+\[
+\pi_{\mu_q}\{\beta:K_{\mu_q}(\beta)>M\}>0.
+\]
+Consequently,
+\[
+\operatorname*{ess\,sup}_{\beta\sim\pi_{\mu_q}}
+K_{\mu_q}(\beta)=\infty.
+\]
+Both conclusions are unchanged by any legal conditional-density fallback
+on the marginal-null fiber $\beta_q(0)$.
+\end{lemma}
+
+\begin{proof}
+For $z\in[-R/2,R/2]$, define the dimensionless coordinate
+\[
+t(z):=\frac{2|z|}{R}\in[0,1].
+\]
+Fix $M>0$ and put
+\[
+\delta_M:=\min\left\{\frac12,(2RM)^{-1/q}\right\}.
+\]
+Because $R,q,M$ are positive,
+$0<\delta_M\leq1/2$, and
+\[
+\delta_M^q\leq\frac{1}{2RM},
+\qquad
+\frac{1}{R\delta_M^q}\geq2M.
+\]
+
+Let $b_1$ be the first coordinate of a higher-coordinate vector $b$ and
+define the Borel set
+\[
+A_M:=\left\{b:0<\frac{2|b_1|}{R}<\delta_M\right\}.
+\]
+Lemma~\ref{lem:latent-recovery} gives $(\beta_q(z))_1=z$.  Since $Z$ is
+uniform on an interval of length $R$,
+\[
+\begin{aligned}
+\pi_{\mu_q}(A_M)
+&=\Pr\left(0<\frac{2|Z|}{R}<\delta_M\right)\\
+&=\frac1R\left|
+\left(-\frac{R\delta_M}{2},\frac{R\delta_M}{2}\right)
+\setminus\{0\}\right|
+=\delta_M>0.
+\end{aligned}
+\]
+For every actual fiber $b=\beta_q(z)\in A_M$, $z\neq0$, and
+Proposition~\ref{prop:witness-conditional-cap} gives
+\[
+K_{\mu_q}(b)
+=\frac{1}{Rt(z)^q}
+>\frac{1}{R\delta_M^q}
+\geq2M>M.
+\]
+Thus the cap exceeds $M$ on a set of positive marginal measure.
+
+A nonnegative measurable function has finite essential supremum only if
+some finite $M$ bounds it outside a null set, which the preceding result
+rules out.  The set $A_M$ expressly excludes $b_1=0$, while
+$\pi_{\mu_q}\{\beta_q(0)\}=0$, so a fallback modification cannot affect
+the conclusion.  At $z=\pm R/2$, the cap is the finite value $1/R$; the
+blowup comes solely from positive-mass punctured neighborhoods of zero.
+The strict condition $q>0$ is exactly what makes the cap diverge there.
+\end{proof}
+
+\begin{lemma}[Exact averaged cap of the power-width witness]
+\label{lem:exact-witness-average}
+Fix $d\geq3$, $R>0$, and $q\in(0,1)$.  Under
+Proposition~\ref{prop:witness-conditional-cap},
+\[
+\int K_{\mu_q}(\beta)\,\pi_{\mu_q}(d\beta)
+=\frac{1}{R(1-q)}<\infty.
+\]
+For every dimensionless cutoff $\delta\in(0,1]$, the cap mass on
+$t(z)\geq\delta$ is
+\[
+\frac{1-\delta^{1-q}}{R(1-q)},
+\]
+and the omitted central mass is exactly
+$\delta^{1-q}/[R(1-q)]$, which vanishes as $\delta\downarrow0$.
+\end{lemma}
+
+\begin{proof}
+Retain $t(z)=2|z|/R$ and define
+\[
+\widehat K_q(z):=
+\begin{cases}
+\displaystyle\frac{1}{Rt(z)^q},&z\neq0,\\[6pt]
+0,&z=0.
+\end{cases}
+\]
+Proposition~\ref{prop:witness-conditional-cap} gives
+$\widehat K_q(z)=K_{\mu_q}(\beta_q(z))$ for every $z\neq0$.  They may
+differ at zero, but the uniform law assigns zero probability there.
+Because $\pi_{\mu_q}=(\beta_q)_\#\mathcal L(Z)$,
+\[
+\int K_{\mu_q}\,d\pi_{\mu_q}
+=\mathbb E[\widehat K_q(Z)].
+\]
+This remains true even if a selected null-fiber cap is infinite: a
+nonnegative extended-valued function supported on a null set has integral
+zero.
+
+For integers $n\geq1$, define
+\[
+g_n(z):=\widehat K_q(z)\mathbf1\{t(z)\geq1/n\}.
+\]
+Each $g_n$ is nonnegative and Borel.  Its cutoff set increases with $n$,
+so $g_n(z)\uparrow\widehat K_q(z)$ for every $z$, including zero.  By
+monotone convergence and the exact uniform density $1/R$,
+\[
+\mathbb E[\widehat K_q(Z)]
+=\lim_{n\to\infty}\frac1R
+\int_{-R/2}^{R/2}g_n(z)\,dz.
+\]
+
+For each $n$, symmetry and the substitution
+$t=2z/R$, $dz=(R/2)dt$, yield
+\[
+\begin{aligned}
+\frac1R\int_{-R/2}^{R/2}g_n(z)\,dz
+&=\frac{2}{R}\int_{R/(2n)}^{R/2}
+  \frac{1}{R(2z/R)^q}\,dz\\
+&=\frac1R\int_{1/n}^{1}t^{-q}\,dt\\
+&=\frac{1-n^{-(1-q)}}{R(1-q)}.
+\end{aligned}
+\]
+Every normalization is visible: the first $1/R$ is the density of $Z$,
+the second is part of the cap, symmetry contributes two, and
+$dz=(R/2)dt$ leaves the single prefactor $1/R$.
+
+Since $q<1$, $1-q>0$ and $n^{-(1-q)}\to0$, proving the exact integral.
+Replacing $1/n$ by any $\delta\in(0,1]$ gives the cutoff mass; subtracting
+it from the full integral gives the omitted mass.
+
+The point $z=0$ is excluded only from the pointwise formula and remains a
+null point in the integration domain.  At $z=\pm R/2$, $t=1$ and the cap
+is $1/R$, so no endpoint singularity occurs.  At the excluded lower
+boundary $q=0$, the mean remains finite but
+Lemma~\ref{lem:positive-mass-cap} fails; at the excluded upper boundary
+$q=1$, the logarithmic integral $\int_0^1t^{-1}dt$ diverges.  The degree
+condition $d\geq3$ identifies the coefficient vector but introduces no
+normalization factor.
+\end{proof}
+
+\begin{proposition}[Root hitting for the heteroscedastic witness]
+\label{prop:witness-root-hitting}
+Fix $d\geq3$, $R>0$, $q\in(0,1)$, and compact
+$\Theta\subseteq\mathbb R$.  Under
+Proposition~\ref{prop:cube-positive-width},
+Proposition~\ref{prop:witness-conditional-cap},
+Lemma~\ref{lem:exact-witness-average}, and
+Proposition~\ref{prop:averaged-root-hitting}, the singleton class
+$\{\mu_q\}$ satisfies
+Assumption~\ref{assump:averaged-intercept-density}, with
+\[
+\bar\kappa_{\{\mu_q\}}
+=\int K_{\mu_q}(\beta)\,\pi_{\mu_q}(d\beta)
+=\frac{1}{R(1-q)}.
+\]
+Consequently, for every $I\in\mathscr I(\Theta)$,
+\[
+\Pr_{\mu_q}(Z_\alpha\cap I\neq\varnothing)
+\leq\frac{L_{d,R,\Theta}|I|}{R(1-q)},
+\qquad
+C_{\{\mu_q\}}
+\leq\frac{L_{d,R,\Theta}}{R(1-q)}.
+\]
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:cube-positive-width} proves cube support.
+Proposition~\ref{prop:witness-conditional-cap} supplies a jointly
+measurable regular conditional-density version of the actual intercept
+given the actual higher-coordinate vector, together with a measurable
+essential-supremum cap.  On the full-measure set of nonzero fibers, that
+cap has the formula used in Lemma~\ref{lem:exact-witness-average}, which
+proves the cap integral is finite and has the displayed exact value.
+A kernel or cap modification at $\beta_q(0)$ changes neither the integral
+nor any conditional identity on the full-measure set.
+
+Thus the singleton class satisfies every component of
+Assumption~\ref{assump:averaged-intercept-density}; none is assumed for
+the witness.  Conditional-density and cap measurability come from
+Proposition~\ref{prop:witness-conditional-cap}, and finite averaged
+envelope comes from Lemma~\ref{lem:exact-witness-average}.  A supremum
+over a singleton is its sole value.
+
+The conditions of Proposition~\ref{prop:averaged-root-hitting} are now
+verified.  Applying its per-law conclusion and substituting the exact
+cap integral gives the interval inequality.  Division by $|I|>0$ and
+the defining interval supremum give the bound on $C_{\{\mu_q\}}$.  There
+is no class-supremum loss and no pointwise-in-$\beta$ cap assumption.
+Finiteness follows from $R>0$, $1-q>0$, and
+Lemma~\ref{lem:derivative-envelope}.  Combining this proposition with
+Lemma~\ref{lem:positive-mass-cap} proves simultaneously that the slice
+cap is essentially unbounded, its mean is exactly finite, and the
+root-hitting constant has the stated exact dependence, with no cutoff
+remainder or hidden factor.
+\end{proof}
+
+\subsection{Geometry Beyond the Full-Rank Affine-Latent Baseline}
+\label{app:affine-exclusion}
+
+\begin{proposition}[Exact affine hull of the witness sheet]
+\label{prop:sheet-affine-hull}
+Fix $d\geq3$, $R>0$, and $q\in(0,1)$.  Under
+Proposition~\ref{prop:exact-sheet-support}, define
+\[
+E_d:=\{(a,z,w,0,\ldots,0):a,z,w\in\mathbb R\}
+\subseteq\mathbb R^d.
+\]
+Then
+\[
+\operatorname{aff}(S_q)=E_d,
+\qquad
+\dim\operatorname{aff}(S_q)=3.
+\]
+For $d=3$, $E_d=\mathbb R^3$.
+\end{proposition}
+
+\begin{proof}
+Every point of $S_q$ has only its first three coordinates possibly
+nonzero, and the collapsed point
+\[
+o=(0,0,0,0,\ldots,0)
+\]
+belongs to $S_q$.  Hence $\operatorname{aff}(S_q)$ is a linear subspace
+contained in $E_d$.
+
+At either endpoint $z=\pm R/2$,
+\[
+\rho_q(\pm R/2)
+=\frac R2\left(\frac{2(R/2)}R\right)^q
+=\frac R2.
+\]
+Therefore the exact support contains
+\[
+o,
+\qquad
+p_+=\left(0,\frac R2,\frac R4,0,\ldots,0\right),
+\qquad
+p_-=\left(0,-\frac R2,\frac R4,0,\ldots,0\right),
+\]
+and
+\[
+r=\left(\frac R2,\frac R2,\frac R4,0,\ldots,0\right).
+\]
+The projections of $o,p_+,p_-$ onto the
+$(\alpha_1,\alpha_2)$ coordinates are
+\[
+(0,0),\qquad(R/2,R/4),\qquad(-R/2,R/4),
+\]
+and the determinant of the two nonzero vectors is
+\[
+\det\begin{pmatrix}R/2&-R/2\\R/4&R/4\end{pmatrix}
+=\frac{R^2}{4}>0.
+\]
+Thus the curved projection supplies two independent affine directions.
+More explicitly, the direction space contains
+\[
+p_+-p_-=Re_1,
+\qquad
+p_++p_-=\frac R2e_2,
+\qquad
+r-p_+=\frac R2e_0.
+\]
+Because $R>0$, these span $E_d$.  This proves the reverse containment and
+the affine-hull identity.  For $d=3$, the same directions span all of
+$\mathbb R^3$.  The collapsed origin causes no loss because it belongs
+to the topological support, while the nonzero directions come from the
+endpoint fibers.
+\end{proof}
+
+\begin{proposition}[Zero three-volume inside the affine hull]
+\label{prop:sheet-null-volume}
+Fix $d\geq3$, $R>0$, and $q\in(0,1)$.  Under
+Proposition~\ref{prop:exact-sheet-support}, define
+\[
+D_q:=\{(a,z)\in\mathbb R^2:|z|\leq R/2,
+\ |a|\leq\rho_q(z)\}
+\]
+and
+\[
+T:D_q\longrightarrow E_d,
+\qquad
+T(a,z)=(a,z,z^2/R,0,\ldots,0).
+\]
+Then $T(D_q)=S_q$, the map $T$ is $\sqrt2$-Lipschitz in Euclidean norm,
+and, under Proposition~\ref{prop:sheet-affine-hull},
+\[
+\mathcal H^3_{E_d}(S_q)=0.
+\]
+\end{proposition}
+
+\begin{proof}
+The definitions give both inclusions directly: each $(a,z)\in D_q$ maps
+to the displayed sheet, and each sheet point is $T(a,z)$ for its first
+two coordinates.  Hence
+\[
+T(D_q)=S_q.
+\]
+No division by $\rho_q(z)$ occurs, including at $z=0$.
+
+Take $(a,z),(a',z')\in D_q$.  Since
+$|z|,|z'|\leq R/2$,
+\[
+\left|\frac{z^2-(z')^2}{R}\right|
+=\frac{|z-z'||z+z'|}{R}
+\leq|z-z'|.
+\]
+Consequently,
+\[
+\begin{aligned}
+\|T(a,z)-T(a',z')\|_2^2
+&=|a-a'|^2+|z-z'|^2
+ +\left|\frac{z^2-(z')^2}{R}\right|^2\\
+&\leq|a-a'|^2+2|z-z'|^2\\
+&\leq2\bigl(|a-a'|^2+|z-z'|^2\bigr).
+\end{aligned}
+\]
+This is the claimed $\sqrt2$-Lipschitz estimate.
+
+Proposition~\ref{prop:cube-positive-width} gives
+$\rho_q(z)\leq R/2$, so $D_q$ lies in the square
+$[-R/2,R/2]^2$.  A mesh of side length $\delta$ covers this square with
+at most $(\lceil R/\delta\rceil+1)^2$ squares, each of diameter at most
+$\sqrt2\delta$.  The sum of cubed diameters is bounded by
+\[
+(\lceil R/\delta\rceil+1)^2(\sqrt2\delta)^3,
+\]
+which tends to zero as $\delta\downarrow0$.  Thus
+$\mathcal H^3(D_q)=0$.  An $L$-Lipschitz map satisfies
+$\mathcal H^s(F(A))\leq L^s\mathcal H^s(A)$: map a fine cover of $A$,
+noting that each diameter grows by at most $L$, and then take the
+defining infimum and limit.  Applying this cover estimate gives
+\[
+\mathcal H^3_{E_d}(S_q)
+=\mathcal H^3_{E_d}(T(D_q))
+\leq(\sqrt2)^3\mathcal H^3(D_q)=0.
+\]
+
+The regular map here is $T(a,z)$.  The latent parametrization
+$(z,u)\mapsto(\rho_q(z)u,z,z^2/R,0,\ldots,0)$ is not used; its first
+coordinate is only Holder at zero when $q<1$.  This distinction handles
+the collapsed fiber and the minimal case $d=3$ without any unsupported
+regularity assertion.
+\end{proof}
+
+\begin{lemma}[Fixed-monic descending-coordinate embedding]
+\label{lem:monic-embedding}
+Under Propositions~\ref{prop:sheet-affine-hull}
+and~\ref{prop:sheet-null-volume}, define
+\[
+\iota_d:\mathbb R^d\longrightarrow\mathbb R^{d+1},
+\qquad
+\iota_d(a_0,a_1,\ldots,a_{d-1})
+=(1,a_{d-1},a_{d-2},\ldots,a_0).
+\]
+Then $\iota_d$ places the branch coefficient vector in descending full-
+coefficient order with fixed leading coefficient $\alpha_d=1$.  It is an
+affine isometry, and
+\[
+\operatorname{supp}((\iota_d)_\#\mu_q)=\iota_d(S_q),
+\]
+\[
+\dim\operatorname{aff}(\iota_d(S_q))=3,
+\qquad
+\mathcal H^3_{\operatorname{aff}(\iota_d(S_q))}
+  (\iota_d(S_q))=0.
+\]
+\end{lemma}
+
+\begin{proof}
+For $x,y\in\mathbb R^d$, the leading coordinates of $\iota_d(x)$ and
+$\iota_d(y)$ cancel and the remaining coordinates are merely reversed.
+Thus
+\[
+\|\iota_d(x)-\iota_d(y)\|_2=\|x-y\|_2.
+\]
+The map is an affine isometry onto the closed fixed-monic hyperplane.  Its
+formula gives the exact ordering bridge from
+$(\alpha_0,\ldots,\alpha_{d-1})$ to
+$(\alpha_d,\ldots,\alpha_0)$ with $\alpha_d=1$.
+
+Write $\iota_d(x)=c_*+Q_dx$.  The isometry gives
+$Q_d^\top Q_d=I_d$.  If a lower-coordinate affine map has linear part
+$B_0$, then its fixed-monic composition has linear part $Q_dB_0$, and
+\[
+(Q_dB_0)^\top(Q_dB_0)=B_0^\top B_0.
+\]
+Thus the translation preserves full column rank and the exact Gram-
+determinant normalization.
+
+Because $\iota_d$ is a homeomorphism onto its closed image, it transports
+support exactly: every neighborhood of $\iota_d(x)$ with $x\in S_q$
+pulls back to a neighborhood of a support point and has positive
+pushforward mass, while the pushforward is concentrated on the closed set
+$\iota_d(S_q)$.  Affine isometries commute with affine hulls and preserve
+their dimensions and induced Hausdorff volumes.  The remaining claims
+follow from Propositions~\ref{prop:sheet-affine-hull}
+and~\ref{prop:sheet-null-volume}.
+\end{proof}
+
+The affine generalization in Appendix Theorem 18 of
+\citet{balcan2020semibandit} uses the descending full coefficient vector,
+a full-column-rank linear part $A$, affine-image volume proportional to
+$\sqrt{\det(A^\top A)}$, and an induced density divided by the same
+factor.  In particular, a latent cube $[-R_{\mathrm{lat}},R_{\mathrm{lat}}]^k$
+has image volume
+$\sqrt{\det(A^\top A)}(2R_{\mathrm{lat}})^k$, and a latent density bounded
+by $\kappa$ induces a within-image density bounded by
+$\kappa/\sqrt{\det(A^\top A)}$.  The proof in that source unambiguously
+uses the full descending vector $(\alpha_d,\ldots,\alpha_0)$; this is the
+convention reconciled by Lemma~\ref{lem:monic-embedding}.  The source's
+no-forced-root premise belongs to its subsequent root-hitting conclusion
+and is not needed for the representability question considered here.  The
+following proposition derives the exact measure statement directly.
+
+\begin{proposition}[Full-rank affine pushforward geometry]
+\label{prop:affine-pushforward}
+Let $k\geq1$.  Let $X\in\mathbb R^k$ have a probability density $p$
+with respect to $\mathcal L^k$, with $p\leq\kappa<\infty$ almost
+everywhere and bounded support.  Let
+\[
+\mathfrak f(x)=b+Ax,
+\qquad
+A\in\mathbb R^{(d+1)\times k},
+\qquad
+\operatorname{rank}(A)=k,
+\]
+and put
+\[
+L=b+\operatorname{im}(A),
+\qquad
+J_A:=\sqrt{\det(A^\top A)}>0.
+\]
+Then $\nu:=\mathfrak f_\#\mathcal L(X)$ is absolutely continuous with
+respect to $\mathcal H_L^k$, with exact density
+\[
+g(b+Ax)=\frac{p(x)}{J_A}
+\quad\text{for Lebesgue-almost every }x,
+\qquad
+g\leq\frac{\kappa}{J_A}.
+\]
+Moreover,
+\[
+\operatorname{aff}(\operatorname{supp}\nu)=L,
+\qquad
+\dim\operatorname{aff}(\operatorname{supp}\nu)=k.
+\]
+\end{proposition}
+
+\begin{proof}
+Full column rank makes $\mathfrak f$ one-to-one from $\mathbb R^k$ onto
+$L$, with inverse on $L$
+\[
+x=A^\dagger(y-b),
+\qquad
+A^\dagger=(A^\top A)^{-1}A^\top.
+\]
+The $k$-dimensional volume scaling of $A$ is the Gram determinant:
+for every Borel set $B_0\subseteq\mathbb R^k$,
+\[
+\mathcal H_L^k(b+AB_0)=J_A\mathcal L^k(B_0).
+\]
+Applying this identity first to simple functions and then to the
+nonnegative density $p$ gives, for every Borel $C\subseteq L$,
+\[
+\begin{aligned}
+\nu(C)
+&=\int_{\mathfrak f^{-1}(C)}p(x)\,dx\\
+&=\int_C
+\frac{p(A^\dagger(y-b))}{J_A}\,d\mathcal H_L^k(y).
+\end{aligned}
+\]
+This proves the exact density, its bound, and within-image absolute
+continuity.
+
+It remains to justify the support dimension because bounded density does
+not require $p$ to be positive throughout a bounding cube.  Every Borel
+probability on Euclidean space gives full mass to its topological support:
+the complement is the union of a countable base of open sets of measure
+zero.  If
+$H=\operatorname{aff}(\operatorname{supp}\nu)$ were a proper affine
+subspace of $L$, then $\mathcal H_L^k(H)=0$ but $\nu(H)=1$, contradicting
+the absolute continuity just proved.  Hence $H=L$, with no full-support or
+positive lower-density assumption on $X$.
+\end{proof}
+
+\begin{proposition}[Exclusion of every affine-latent dimension]
+\label{prop:affine-nonmembership}
+Fix $d\geq3$, $R>0$, and $q\in(0,1)$.  Under
+Proposition~\ref{prop:exact-sheet-support},
+Lemma~\ref{lem:monic-embedding}, and
+Proposition~\ref{prop:affine-pushforward}, the law
+$(\iota_d)_\#\mu_q$ is not the affine pushforward of any bounded-support,
+bounded-Lebesgue-density latent probability under a full-column-rank
+affine map into $\mathbb R^{d+1}$.  Consequently, $\mu_q$ is not an
+affine image of such a latent law in the fixed-monic affine convention of
+\citet{balcan2020semibandit}.
+\end{proposition}
+
+\begin{proof}
+If $\mu_q$ had such a representation in ascending lower-coordinate order,
+composition with $\iota_d$ would give one in descending full-coordinate
+order.  Lemma~\ref{lem:monic-embedding} shows that this composition
+preserves full column rank and the Gram determinant.  It therefore
+suffices to exclude the descending-order representations.
+
+Suppose for contradiction that for some positive integer $k$,
+\[
+(\iota_d)_\#\mu_q=\mathfrak f_\#\mathcal L(X),
+\]
+where $X$ has a bounded Lebesgue density in $\mathbb R^k$ and
+$\mathfrak f(x)=b+Ax$ has full-column-rank $A$.  Equality of laws gives
+equality of topological supports.  By Lemma~\ref{lem:monic-embedding},
+the left support has affine dimension three.  By
+Proposition~\ref{prop:affine-pushforward}, the right support has affine
+dimension $k$.  Thus
+\[
+k=3.
+\]
+Every positive latent dimension $k\neq3$, including $k=1,2$ and every
+$k>3$ compatible with full column rank, is excluded by dimension alone.
+
+For $k=3$, let $L=b+\operatorname{im}(A)$.  Proposition~\ref{prop:affine-pushforward}
+gives
+\[
+\mathfrak f_\#\mathcal L(X)\ll\mathcal H_L^3,
+\qquad
+L=\operatorname{aff}(\operatorname{supp}
+(\mathfrak f_\#\mathcal L(X))).
+\]
+Equality of laws and Lemma~\ref{lem:monic-embedding} identify $L$ with
+$\operatorname{aff}(\iota_d(S_q))$ and give
+\[
+\mathcal H_L^3(\iota_d(S_q))=0.
+\]
+Absolute continuity implies
+\[
+(\mathfrak f_\#\mathcal L(X))(\iota_d(S_q))=0,
+\]
+whereas exact support and the embedding give
+\[
+((\iota_d)_\#\mu_q)(\iota_d(S_q))=\mu_q(S_q)=1,
+\]
+a contradiction.  This is the missing dimension-three argument that
+curvature alone would not supply.
+
+If a zero-dimensional latent variable is admitted, its affine image is a
+single point and has affine-support dimension zero, again contradicting
+Lemma~\ref{lem:monic-embedding}.  If $k>d+1$, no
+$(d+1)\times k$ matrix has full column rank.  Thus every nonnegative
+latent dimension is covered.  In the minimal case $d=3$, the branch
+sheet spans all three lower-coefficient coordinates, its monic embedding
+lies in $\mathbb R^4$, and the same $k=3$ null-volume contradiction
+applies.
+
+The conclusion does not address rank-deficient affine maps paired with
+singular latent laws or any broader comparison class.  It uses neither a
+no-forced-root condition nor any root-section estimate or root bound from
+the cited source.  Propositions~\ref{prop:sheet-affine-hull}
+and~\ref{prop:sheet-null-volume}, together with the exact monic embedding
+and affine-pushforward density calculation, provide both the dimension
+and within-hull-volume arguments needed for this precisely limited
+nonmembership result.
+\end{proof}
+
+\subsection{The Sufficient Theorem and Baseline Reduction}
+\label{app:theorem-composition}
+
+\begin{proposition}[Complete averaged-intercept sufficient conclusion]
+\label{prop:complete-sufficient-theorem}
+Fix the basic setting.  The derivative envelope satisfies
+\[
+L_{d,R,\Theta}
+\leq dB^{d-1}+R\sum_{k=1}^{d-1}kB^{k-1}<\infty,
+\]
+with the sum zero when $d=1$.  Under
+Assumption~\ref{assump:averaged-intercept-density}, simultaneously for
+every $\mu\in\mathcal D$ and $I\in\mathscr I(\Theta)$,
+\[
+\Pr_\mu(Z_\alpha\cap I\neq\varnothing)
+\leq L_{d,R,\Theta}|I|
+      \int K_\mu(\beta)\,\pi_\mu(d\beta)
+\leq\bar\kappa_{\mathcal D}L_{d,R,\Theta}|I|,
+\]
+and
+\[
+C_{\mathcal D}
+\leq\bar\kappa_{\mathcal D}L_{d,R,\Theta}<\infty.
+\]
+
+Separately, under Assumption~\ref{assump:random-intercept-witness}, every
+$\mu\in\mathcal D_{\mathrm{RI}}$ is cube-supported and, for
+$\pi_\mu$-almost every $\beta$,
+\[
+f_\mu(a_0\mid\beta)
+=\frac{\mathbf1\{|a_0-G_\mu(\beta)|\leq\rho_\mu(\beta)\}}
+       {2\rho_\mu(\beta)},
+\qquad
+K_\mu(\beta)=\frac1{2\rho_\mu(\beta)}.
+\]
+For every such law and every $I\in\mathscr I(\Theta)$,
+\[
+\bar\kappa_{\mathcal D_{\mathrm{RI}}}=\frac12M_{\mathrm{RI}},
+\qquad
+\Pr_\mu(Z_\alpha\cap I\neq\varnothing)
+\leq\frac{L_{d,R,\Theta}|I|}{2}
+      \int\rho_\mu^{-1}\,d\pi_\mu,
+\]
+and
+\[
+C_{\mathcal D_{\mathrm{RI}}}
+\leq\frac12L_{d,R,\Theta}M_{\mathrm{RI}}<\infty.
+\]
+If $\rho_\mu=r_\mu>0$ almost surely, then
+\[
+K_\mu=\frac1{2r_\mu}\quad\pi_\mu\text{-almost surely},
+\qquad
+\Pr_\mu(Z_\alpha\cap I\neq\varnothing)
+\leq\frac{L_{d,R,\Theta}}{2r_\mu}|I|.
+\]
+For every nonempty class $\mathcal F$ of such fixed-width members obeying
+the support condition and
+$\sup_{\mu\in\mathcal F}r_\mu^{-1}<\infty$,
+\[
+\bar\kappa_{\mathcal F}
+=\frac12\sup_{\mu\in\mathcal F}r_\mu^{-1},
+\qquad
+C_{\mathcal F}
+\leq\frac{L_{d,R,\Theta}}2
+      \sup_{\mu\in\mathcal F}r_\mu^{-1}<\infty.
+\]
+
+For every $d\geq3$, $R>0$, and $q\in(0,1)$,
+\[
+\operatorname{supp}(\mu_q)
+=\left\{(a_0,z,z^2/R,0,\ldots,0):
+|z|\leq R/2,\ |a_0|\leq\rho_q(z)\right\}
+\subseteq[-R,R]^d,
+\qquad
+\Pr(\rho_q(Z)>0)=1.
+\]
+For $a_0\in\mathbb R$ and $0<|z|\leq R/2$, one conditional-density
+version satisfies
+\[
+f_{\mu_q}(a_0\mid\beta_q(z))
+=\frac{\mathbf1\{|a_0|\leq\rho_q(z)\}}{2\rho_q(z)},
+\qquad
+K_{\mu_q}(\beta_q(z))
+=\frac1{R(2|z|/R)^q}.
+\]
+Moreover,
+\[
+\operatorname*{ess\,sup}_{\beta\sim\pi_{\mu_q}}
+K_{\mu_q}(\beta)=\infty,
+\qquad
+\int K_{\mu_q}\,d\pi_{\mu_q}=\frac1{R(1-q)},
+\]
+and, for every $I\in\mathscr I(\Theta)$,
+\[
+\Pr_{\mu_q}(Z_\alpha\cap I\neq\varnothing)
+\leq\frac{L_{d,R,\Theta}|I|}{R(1-q)},
+\qquad
+C_{\{\mu_q\}}
+\leq\frac{L_{d,R,\Theta}}{R(1-q)}.
+\]
+The support has affine-hull dimension three and zero induced
+three-dimensional Hausdorff volume there, and $\mu_q$ is not a
+full-column-rank affine pushforward of a bounded-support,
+bounded-Lebesgue-density latent law under the fixed-monic convention.
+This last conclusion does not extend by assertion to rank-deficient maps
+or singular latent laws.
+
+All displayed conclusions are one-way and sufficient.  They assert no
+necessity, converse, indexed uniform polynomial dependence on $(d,R)$,
+root simplicity, root separation, or transversality, and supply neither a
+learner nor an online guarantee.
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:derivative-envelope} gives the first display, including the
+empty-sum case.  Proposition~\ref{prop:averaged-root-hitting} gives the
+general per-law inequality and closes both defining suprema for
+$C_{\mathcal D}$, without any mode conversion.
+
+Under the separately scoped random-intercept assumption,
+Proposition~\ref{prop:random-intercept-envelope} proves cube support, the
+conditional density, exact cap, per-law cap integral, and exact class
+envelope.  It thereby verifies
+Assumption~\ref{assump:averaged-intercept-density} for
+$\mathcal D_{\mathrm{RI}}$ rather than assuming it.
+Proposition~\ref{prop:random-intercept-root-hitting} gives the per-law and
+class root bounds, and Proposition~\ref{prop:fixed-width} gives the
+fixed-width statements under precisely the class-uniform reciprocal-width
+condition.  None of these results needs a density or coordinate
+independence assumption for $\pi_\mu$.
+
+For the explicit witness,
+Proposition~\ref{prop:exact-sheet-support} gives the support equality,
+Proposition~\ref{prop:cube-positive-width} gives cube containment and
+almost-sure positivity, and
+Proposition~\ref{prop:witness-conditional-cap} gives the selected
+conditional density and exact nonzero-fiber cap.  The collapsed zero
+fiber remains in topological support but has zero conditioning-marginal
+mass and is assigned a genuine fallback density.
+Lemma~\ref{lem:positive-mass-cap} gives the infinite essential supremum,
+Lemma~\ref{lem:exact-witness-average} gives the exact finite integral, and
+Proposition~\ref{prop:witness-root-hitting} gives the interval and
+singleton bounds.
+
+Propositions~\ref{prop:sheet-affine-hull}
+and~\ref{prop:sheet-null-volume} give the two independent structural
+facts.  Proposition~\ref{prop:affine-nonmembership} applies them only to
+the full-column-rank latent-Lebesgue-density convention, so the conclusion
+does not rely on curvature alone and does not overstate the excluded
+class.
+
+The final scope paragraph records the direction of the established
+implications.  None of the cited propositions supplies a reverse
+implication, a polynomial-family bound, or a root-regularity conclusion.
+Thus every displayed rate retains its exact exposed parameters and no
+unstated inference is added.
+\end{proof}
+
+\begin{lemma}[A bounded joint density implies the averaged intercept cap]
+\label{lem:joint-density-bridge}
+Fix the basic cube setting and let $\mathcal A$ be a nonempty class of
+Borel probability laws on $[-R,R]^d$.  Suppose there is a common
+$\kappa_{\mathrm{joint}}\in(0,\infty)$ such that every
+$\nu\in\mathcal A$ has a Borel density $h_\nu(a_0,\beta)$ with respect
+to $\mathcal L^d$, extended by zero outside the cube, and
+\[
+0\leq h_\nu(a_0,\beta)
+\leq\kappa_{\mathrm{joint}}
+\quad\text{for Lebesgue-almost every }(a_0,\beta).
+\]
+Then $\mathcal A$ satisfies
+Assumption~\ref{assump:averaged-intercept-density}, and one may choose
+measurable conditional-density and cap versions such that
+\[
+\int K_\nu(\beta)\,\pi_\nu(d\beta)
+\leq\kappa_{\mathrm{joint}}(2R)^{d-1}
+\quad\text{for every }\nu\in\mathcal A.
+\]
+Consequently,
+\[
+\bar\kappa_{\mathcal A}
+\leq\kappa_{\mathrm{joint}}(2R)^{d-1}.
+\]
+For $d=1$, $(2R)^0=1$ and the same statements hold.
+\end{lemma}
+
+\begin{proof}
+First suppose $d\geq2$ and fix $\nu\in\mathcal A$.  Define the
+higher-coordinate marginal density
+\[
+g_\nu(\beta):=\int_{\mathbb R}h_\nu(a_0,\beta)\,da_0.
+\]
+Tonelli's theorem makes $g_\nu$ Borel and gives
+$\pi_\nu(d\beta)=g_\nu(\beta)d\beta$.  Because $h_\nu$ is supported on
+the cube and bounded by $\kappa_{\mathrm{joint}}$,
+\[
+0\leq g_\nu(\beta)\leq2R\kappa_{\mathrm{joint}}
+\quad\text{for Lebesgue-almost every }\beta,
+\qquad
+\int g_\nu(\beta)d\beta=1.
+\]
+Thus the measurable set
+\[
+G_\nu:=\{\beta:0<g_\nu(\beta)<\infty\}
+\]
+has full $\pi_\nu$-measure: $\{g_\nu=0\}$ has zero marginal mass, and
+$\{g_\nu=\infty\}$ is Lebesgue-null by integrability and also has zero
+marginal mass.
+
+Define the sectionwise essential supremum
+\[
+H_\nu(\beta)
+:=\operatorname*{ess\,sup}_{a_0\in\mathbb R}
+h_\nu(a_0,\beta).
+\]
+It has a measurable extended-valued version.  Indeed, for every rational
+$t\geq0$, Tonelli makes
+\[
+m_t(\beta):=\int_{-R}^{R}
+\mathbf1\{h_\nu(a_0,\beta)>t\}\,da_0
+\]
+measurable, and
+$\{H_\nu>t\}=\{m_t>0\}$.  The rational superlevel sets determine a
+measurable version of $H_\nu$.  Fubini applied to the joint bound gives
+\[
+H_\nu(\beta)\leq\kappa_{\mathrm{joint}}
+\quad\text{for Lebesgue-almost every }\beta.
+\]
+
+Now define
+\[
+f_\nu(a_0\mid\beta)=
+\begin{cases}
+h_\nu(a_0,\beta)/g_\nu(\beta),&\beta\in G_\nu,\\[4pt]
+\mathbf1\{|a_0|\leq R\}/(2R),&\beta\notin G_\nu.
+\end{cases}
+\]
+This is jointly measurable and makes no division on a zero or infinite
+marginal-density fiber.  Each line integrates to one: on $G_\nu$ this is
+the definition of $g_\nu$, and on $G_\nu^c$ it follows from $R>0$.
+For Borel sets $A\subseteq\mathbb R$ and
+$D\subseteq\mathbb R^{d-1}$, Tonelli gives
+\[
+\begin{aligned}
+\int_D\int_A f_\nu(a_0\mid\beta)\,da_0\,\pi_\nu(d\beta)
+&=\int_{D\cap G_\nu}\int_A
+ h_\nu(a_0,\beta)\,da_0\,d\beta\\
+&=\nu\{\alpha_0\in A,\ \beta\in D\}.
+\end{aligned}
+\]
+The omitted part $D\cap G_\nu^c$ has zero marginal and joint-law mass.
+Thus $f_\nu$ is a jointly measurable regular conditional density of the
+actual intercept given the actual higher coordinates, extended by zero
+outside $[-R,R]$.
+
+Its measurable essential-supremum version is
+\[
+K_\nu(\beta)=
+\begin{cases}
+H_\nu(\beta)/g_\nu(\beta),&\beta\in G_\nu,\\[4pt]
+1/(2R),&\beta\notin G_\nu.
+\end{cases}
+\]
+On $G_\nu$, multiplication by the finite positive number
+$g_\nu(\beta)$ commutes with the Lebesgue essential supremum, and hence,
+for Lebesgue-almost every $\beta\in G_\nu$,
+\[
+g_\nu(\beta)K_\nu(\beta)
+=H_\nu(\beta)
+\leq\kappa_{\mathrm{joint}}.
+\]
+The complement of $G_\nu$ is marginal-null, so its fallback cap
+contributes nothing.  Integration over the exact higher-coordinate cube
+gives
+\[
+\begin{aligned}
+\int K_\nu(\beta)\,\pi_\nu(d\beta)
+&=\int_{G_\nu\cap[-R,R]^{d-1}}
+  g_\nu(\beta)K_\nu(\beta)\,d\beta\\
+&\leq\kappa_{\mathrm{joint}}
+  \operatorname{Leb}^{d-1}([-R,R]^{d-1})\\
+&=\kappa_{\mathrm{joint}}(2R)^{d-1}.
+\end{aligned}
+\]
+This establishes joint measurability of the conditional density,
+measurability of its cap, and finite cap integral for $d\geq2$.
+
+When $d=1$, the conditioning space is the one-point empty-tuple space.
+The conditional density is the one-dimensional joint density
+$h_\nu(a_0)$ and
+\[
+K_\nu
+=\operatorname*{ess\,sup}_{a_0}h_\nu(a_0)
+\leq\kappa_{\mathrm{joint}}
+=\kappa_{\mathrm{joint}}(2R)^0.
+\]
+The cap integral is evaluation at that one point.  Taking the class
+supremum proves the asserted envelope bound.  The density and cap
+constructions verify every part of
+Assumption~\ref{assump:averaged-intercept-density} for $\mathcal A$;
+the joint-density premise is confined to this comparison.
+\end{proof}
+
+\begin{proposition}[Recovery of the monic bounded-joint-density baseline]
+\label{prop:joint-density-baseline}
+Under the basic setting and the hypotheses of
+Lemma~\ref{lem:joint-density-bridge}, that lemma and
+Proposition~\ref{prop:averaged-root-hitting} imply that every
+$\nu\in\mathcal A$ and $I\in\mathscr I(\Theta)$ satisfy
+\[
+\Pr_\nu(Z_\alpha\cap I\neq\varnothing)
+\leq\kappa_{\mathrm{joint}}(2R)^{d-1}
+      L_{d,R,\Theta}|I|,
+\]
+and
+\[
+C_{\mathcal A}
+\leq\kappa_{\mathrm{joint}}(2R)^{d-1}L_{d,R,\Theta}.
+\]
+If $B=1$, then
+\[
+C_{\mathcal A}
+\leq\kappa_{\mathrm{joint}}(2R)^{d-1}
+\left(d+\frac{Rd(d-1)}2\right).
+\]
+For $d=1$, $(2R)^0=1$ and the bracket equals one.
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:joint-density-bridge} constructs the required conditional
+density and cap versions for $\mathcal A$, verifies
+Assumption~\ref{assump:averaged-intercept-density}, and proves
+\[
+\bar\kappa_{\mathcal A}
+\leq\kappa_{\mathrm{joint}}(2R)^{d-1}.
+\]
+Proposition~\ref{prop:averaged-root-hitting} therefore applies to the
+comparison class.  Its per-law and class conclusions yield the first two
+displays without using the joint-density premise anywhere in
+Proposition~\ref{prop:complete-sufficient-theorem}.
+
+Lemma~\ref{lem:derivative-envelope} gives
+\[
+L_{d,R,\Theta}
+\leq dB^{d-1}+R\sum_{k=1}^{d-1}kB^{k-1}.
+\]
+When $B=1$, every power equals one and
+\[
+\sum_{k=1}^{d-1}k=\frac{d(d-1)}2,
+\]
+with both sides zero for $d=1$.  Substitution gives the final display.
+Every factor is exact: conditioning on the intercept leaves the
+higher-coordinate cube volume $(2R)^{d-1}$, and the monic derivative
+contributes $d+Rd(d-1)/2$.  Thus the $B=1$ statement recovers the monic
+ambient-volume scale rather than an asymptotic surrogate.  In the absence
+of the optional joint-density premise, the general averaged-envelope
+theorem and both constructive specializations remain unchanged.
+\end{proof}
+
+\subsection{Proof of the Main Theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Lemma~\ref{lem:derivative-envelope} proves the displayed deterministic
+bound on $L_{d,R,\Theta}$.  Under
+Assumption~\ref{assump:averaged-intercept-density},
+Proposition~\ref{prop:averaged-root-hitting} proves the exact general
+per-law, per-interval inequality and the bound on $C_{\mathcal D}$.
+
+Under the separately scoped
+Assumption~\ref{assump:random-intercept-witness},
+Proposition~\ref{prop:random-intercept-envelope} proves cube support, the
+jointly measurable conditional density, the exact reciprocal-width cap,
+and the averaged envelope.  Proposition~\ref{prop:random-intercept-root-hitting}
+proves the corresponding root-hitting bounds, and
+Proposition~\ref{prop:fixed-width} proves every fixed-width statement.
+
+For the explicit witness,
+Propositions~\ref{prop:exact-sheet-support}
+and~\ref{prop:cube-positive-width} prove exact support, cube membership,
+and almost-sure positivity.  Lemma~\ref{lem:latent-recovery} and
+Proposition~\ref{prop:witness-conditional-cap} prove the actual
+conditioning identity, the measurable fallback construction, and the
+exact nonzero-fiber cap.  Lemmas~\ref{lem:positive-mass-cap}
+and~\ref{lem:exact-witness-average} prove, respectively, infinite
+essential cap and the exact finite cap integral, while
+Proposition~\ref{prop:witness-root-hitting} proves the singleton interval
+and $C_{\{\mu_q\}}$ bounds.
+
+Propositions~\ref{prop:sheet-affine-hull}
+and~\ref{prop:sheet-null-volume} prove the exact affine dimension and
+within-hull nullity.  Lemma~\ref{lem:monic-embedding} preserves those
+properties in descending fixed-monic coordinates, and
+Propositions~\ref{prop:affine-pushforward}
+and~\ref{prop:affine-nonmembership} prove the precisely limited
+full-column-rank affine-latent exclusion.  Proposition~\ref{prop:complete-sufficient-theorem}
+collects these conclusions with their original quantifiers and records
+the sufficient-only boundary.  Every displayed dependence in
+Theorem~\ref{thm:main} is therefore proved with no hidden constant,
+probability-mode conversion, or horizon change.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:joint-density-baseline}]
+Lemma~\ref{lem:joint-density-bridge} constructs the conditional-density
+versions and proves
+$\bar\kappa_{\mathcal A}\leq
+\kappa_{\mathrm{joint}}(2R)^{d-1}$ under the corollary's optional premise.
+Proposition~\ref{prop:joint-density-baseline} then gives the interval and
+class bounds and evaluates the derivative sum exactly when $B=1$,
+including the $d=1$ empty-tuple case.
+\end{proof}

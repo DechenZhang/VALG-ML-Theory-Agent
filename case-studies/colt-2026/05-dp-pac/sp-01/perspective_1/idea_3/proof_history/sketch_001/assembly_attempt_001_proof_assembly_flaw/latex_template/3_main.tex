@@ -1,0 +1,179 @@
+\section{Main Theorem}\label{sec:main}
+
+\begin{theorem}[Conditional private direct sum for Cartesian VC-one products]
+\label{thm:main}
+Under Assumptions~\ref{assump:canonical-product},
+\ref{assump:vc-one-factors},
+\ref{assump:countably-coded-evaluation}, and
+\ref{assump:global-privacy-range}, there are simultaneous universal
+constants
+\[
+C_{\rm up}=65536,
+\qquad
+C_{\rm quota}=\max\left\{1,K_Y+\frac1{20}\right\},
+\qquad
+c_{\rm low}>0,
+\]
+with the following properties.
+
+\begin{enumerate}
+\item For every integer
+\[
+n\ge\left\lceil C_{\rm up}Q_\oplus\right\rceil,
+\]
+the routed rule \(\bar A_n^{\oplus,Q}\) in
+\eqref{eq:prelim-routed-kernel} is a measurable Markov kernel into
+\((\mathcal H^\oplus,\mathscr H^\oplus)\), is
+replacement-\((\varepsilon,\delta)\)-DP on every pair of adjacent
+labeled datasets, and satisfies, for every target \(c\in C\) and every
+probability measure \(D\) on \((X,\Sigma)\),
+\begin{equation}\label{eq:main-upper-pac}
+\Pr_{\substack{S\sim D_c^n\\
+                \bar H\sim\bar A_n^{\oplus,Q}(S,\cdot)}}
+\left[R_D(h_{\bar H},c)\le\frac1{16}\right]
+\ge\frac{15}{16}.
+\end{equation}
+Consequently,
+\begin{equation}\label{eq:main-upper-rate}
+\operatorname{SC}_{\varepsilon,\delta}(C)
+\le\left\lceil C_{\rm up}Q_\oplus\right\rceil,
+\qquad
+Q_\oplus
+\le C_{\rm quota}
+\frac{M_\oplus(C)}{\varepsilon}
+\log^2\!\left(
+\frac{eM_\oplus(C)}{\varepsilon\delta}
+\right).
+\end{equation}
+This clause holds for every \(0<\delta<1\) allowed by
+Assumption~\ref{assump:global-privacy-range}.
+
+\item Fix \(n\ge1\) and suppose
+Assumption~\ref{assump:candidate-delta-budget} holds at this candidate.
+Every unrestricted measurable replacement-\((\varepsilon,\delta)\)-DP
+learner satisfying the universal guarantee \eqref{eq:prelim-sc} at
+this \(n\) obeys
+\begin{equation}\label{eq:main-candidate-lower}
+n\ge c_{\rm low}M_\oplus(C).
+\end{equation}
+Equivalently, if
+\(n<c_{\rm low}M_\oplus(C)\), then for every such learner there are a
+full-product target \(c\in C\) and a legal probability measure \(D\)
+with \(D(X_i)=\omega_i\) for all \(i\) such that
+\begin{equation}\label{eq:main-lower-witness}
+\Pr_{\substack{S\sim D_c^n\\
+                \Omega\sim A_n(S,\cdot)}}
+\left[R_D(h_\Omega,c)>\frac1{16}\right]
+>\frac1{16}.
+\end{equation}
+The learner in this clause may be improper, joint across factors, and
+computationally unbounded.
+
+\item Let
+\[
+n_*=\operatorname{SC}_{\varepsilon,\delta}(C).
+\]
+If both
+\begin{equation}\label{eq:main-nstar-global-cap}
+0<\delta\le\frac1{n_*\log(n_*+1)}
+\end{equation}
+and
+\begin{equation}\label{eq:main-nstar-factor-caps}
+\delta\le
+\frac{c_\delta}
+{m_{n_*,i}^2\log(m_{n_*,i}+1)}
+\qquad(1\le i\le k)
+\end{equation}
+hold, then
+\begin{equation}\label{eq:main-sandwich}
+c_{\rm low}M_\oplus(C)
+\le n_*
+\le\left\lceil C_{\rm up}Q_\oplus\right\rceil
+\le C_{\rm up}C_{\rm quota}
+\frac{M_\oplus(C)}{\varepsilon}
+\log^2\!\left(
+\frac{eM_\oplus(C)}{\varepsilon\delta}
+\right).
+\end{equation}
+If either candidate condition fails, the upper bounds
+\eqref{eq:main-upper-rate} remain valid, but no lower bound at \(n_*\)
+is asserted.
+
+\item If \(k=1\), then \(M_\oplus(C)=s_1\),
+\(Q_\oplus=q_1\), and the upper learner is exactly the unpadded
+measurable quotient-first factor rule.  It has zero quotient-risk
+residual and satisfies the stronger guarantee
+\begin{equation}\label{eq:main-one-factor-upper}
+\Pr\left[R_D(h_{\bar H_1},c)\le\frac1{64}\right]
+\ge\frac{4095}{4096}.
+\end{equation}
+For an admissible lower candidate,
+\[
+\omega_1=1,
+\qquad
+m_{n,1}=\max\{8,4n\},
+\]
+the hidden-factor simulation has zero overflow, and the unrestricted
+one-factor VC/Littlestone lower conclusion is
+\begin{equation}\label{eq:main-one-factor-lower}
+n\ge c_{\rm low}\bigl(1+\log^*(d_1+1)\bigr),
+\end{equation}
+with the strict failure event \eqref{eq:main-lower-witness} on the
+contradicted branch.
+\end{enumerate}
+
+All utility probabilities are over the iid sample and learner
+randomness; privacy is pointwise for adjacent fixed-size datasets and
+measurable output events; and every risk is exact distributional binary
+\(0\)-\(1\) risk.  The upper horizon is fixed-sample and the lower
+horizon is one checked candidate.  The exposed quantities are
+\(k,(d_i,s_i,q_i,m_{n,i})_i,M_\oplus(C),Q_\oplus,n,\varepsilon,\delta\).
+The fixed quantities are the accuracy and confidence levels
+\(1/16,1/64,1/4096\), the equal factor privacy split, the logarithm
+convention, and the universal source constants \(K_Y,c_\delta\).
+The hidden constants are universal and independent of the class,
+factor or quotient cardinalities, distribution supports, block masses,
+learner, candidate, and privacy parameters.  No balance, finite-support,
+properness, factorwise-output, or computational restriction is hidden.
+\end{theorem}
+
+\begin{corollary}[Explicit-rate specialization]
+\label{cor:public-rate}
+Under Assumptions~\ref{assump:canonical-product},
+\ref{assump:vc-one-factors},
+\ref{assump:countably-coded-evaluation}, and
+\ref{assump:global-privacy-range}, choose the integer quotas
+\((q_i)_i\) exactly as in \eqref{eq:prelim-quotas},
+\(C_{\rm up}=65536\), and
+\(C_{\rm quota}=\max\{1,K_Y+1/20\}\).  Then, for every
+\(0<\delta<1\),
+\begin{equation}\label{eq:main-public-upper-rate}
+\operatorname{SC}_{\varepsilon,\delta}(C)
+\le C_{\rm up}C_{\rm quota}
+\frac{M_\oplus(C)}{\varepsilon}
+\log^2\!\left(
+\frac{eM_\oplus(C)}{\varepsilon\delta}
+\right).
+\end{equation}
+If \eqref{eq:main-nstar-global-cap} and
+\eqref{eq:main-nstar-factor-caps} hold at the attained sample
+complexity \(n_*\), then the left side is also at least
+\(c_{\rm low}M_\oplus(C)\).  The probability, horizon, risk, fixed
+quantities, and universal hidden-constant dependence are exactly those
+declared in Theorem~\ref{thm:main}.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:step-006-public-quota-bridge} verifies the exact
+quota choices and absorbs the \(k\) ceiling terms using
+\(M_\oplus(C)\ge2k\), \(\varepsilon\le1/10\), and the displayed
+logarithmic scale.  Proposition~\ref{prop:step-015-global-upper}
+performs the PAC conversion at \(C_{\rm up}Q_\oplus\).
+Because \(C_{\rm up}\) and \(Q_\oplus\) are integers,
+Proposition~\ref{prop:step-015-conditional-sandwich} proves
+\(\lceil C_{\rm up}Q_\oplus\rceil=C_{\rm up}Q_\oplus\), multiplies the
+quota bound by \(C_{\rm up}\), and, only after checking both candidate
+conditions at \(n_*\), supplies the lower inequality.  These are
+precisely the technical checks and probability conversions behind
+\eqref{eq:main-public-upper-rate}.
+\end{proof}

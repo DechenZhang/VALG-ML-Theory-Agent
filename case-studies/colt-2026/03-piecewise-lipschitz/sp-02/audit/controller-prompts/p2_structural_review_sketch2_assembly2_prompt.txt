@@ -1,0 +1,15 @@
+Perform the fresh independent /proof-review-structural stage for perspective_2/idea_1, accepted sketch attempt 2, assembly attempt 2.
+
+Read <CODEX_SKILLS_ROOT>/proof-review-structural/SKILL.md completely, <CODEX_SKILLS_ROOT>/_shared/checklists/artifact-contracts.md completely, and <CODEX_SKILLS_ROOT>/_shared/templates/proof-review-structural.md completely. Then read .controller_tmp/p2_final_review_common_manifest_assembly2.txt completely and verify that its SHA-256 is 2a63bc5e9892bb46cbff15ab2c8e754917874d80693ee835feaf7805db92afee.
+
+Write only perspective_2/idea_1/proof_review_structural.md, replacing the stale attempt-1 live file without reading it. Do not read proof_review.md, sibling specialized reviews, proof_history, or any archived final review. Do not write or modify any other file.
+
+Independently audit exact-goal alignment, all 12 current accepted producer interfaces, acyclic dependency closure, theorem-block mapping, all five inseparable theorem clauses, assembly discipline, main-theorem standalone readability, assumption provenance, notation surface, explicit-rate and baseline bridges, theorem-style statement shape, public reference discipline, and exact nine-file self-containment. Verify that the final wrapper uses only accepted producer conclusions and direct composition and that no unreviewed lemma or changed step statement entered assembly.
+
+Perform an exhaustive source-to-appendix structural comparison for all 49 accepted local units, every used cited-result application, and all 12 Target-Step Assembly sections. Directly account for any apparent compression as non-proof cleanup or valid precisely cross-referenced repetition. Do not PASS from counts, labels, compilation, assembly_report.md, or accepted review tokens.
+
+Audit the attempt-2 repair in particular: compare the new injective affine Euclidean area-formula theorem and its Step 004 use against accepted step_004. Confirm its statement is paper-facing, its theorem-style dependency is named by label/ref, its use preserves the fixed-section interface, and the repair adds no theorem-facing assumption, independent unreviewed lemma, or scope change. Check the pivot-exhaustion/area chain, root-section geometry, homogeneous projective bridge, original-coordinate monic wrapper, deterministic leading coefficient, Counter-example scale chain, all null/endpoint/dimension branches, and the final six-producer conjunction.
+
+Use exactly the shared structural-review template and preserve its heading order. Controlled field bodies must be raw tokens. PASS requires Blocking Issues=None, Suggested Repair Depth=None, and Smallest Candidate Repair Target=None. BLOCKING requires numbered blockers and aligned depth/target. Do not emit a score, aggregate Failure Type, Retry Mode, or controller route.
+
+Before returning, reverify all protected inputs, complete the all-12-step comparison, output SHA-256, ASCII/control-byte cleanliness, final LF, and single-output-file scope. Report the verdict, blocker/concern state, repair depth/target, comparison completion, output hash, and protected-input verification in your final message.

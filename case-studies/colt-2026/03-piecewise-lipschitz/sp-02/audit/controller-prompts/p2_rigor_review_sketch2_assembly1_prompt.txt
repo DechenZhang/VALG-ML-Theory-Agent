@@ -1,0 +1,15 @@
+Perform the fresh independent /proof-review-rigor stage for perspective_2/idea_1.
+
+Read <CODEX_SKILLS_ROOT>/proof-review-rigor/SKILL.md completely, <CODEX_SKILLS_ROOT>/_shared/checklists/artifact-contracts.md, and <CODEX_SKILLS_ROOT>/_shared/templates/proof-review-rigor.md. Then read .controller_tmp/p2_final_review_common_manifest.txt completely and verify that its SHA-256 is 44cd4521cbf811bd053d8c579c837c7f49b918e9659548c67a9e60ef59c7e6ec.
+
+Write only perspective_2/idea_1/proof_review_rigor.md. That output is absent at dispatch. Do not write or modify any other file.
+
+Build a line-by-line derivation map from all 12 accepted source proofs into the public appendix. Independently compare all 49 local derivations, every used cited-result application, boundary argument, and Target-Step Assembly against the actual appendix proof body. Do not PASS from theorem counts, labels, compilation, assembly_report.md, or high-level correspondence.
+
+Audit the literal coefficient-height certificate, operator/Frobenius bounds, normalized-projector identity, completed-measurability and finite-pivot exhaustion, area/coarea multiplicity, persistent-root affine-subspace nullity, arbitrary full-joint density conversion, translated cube-section constants, the affine and homogeneous probability coefficients, ordered suprema, original-coordinate monic charts, d=1/d=2 and zero-length interval branches, and the Counter-example equality epsilon/(4 delta). Stress every displayed constant, all equality-to-inequality transitions, all interchanges and monotone limits, the no-pivot-margin/tangent/multiple-root regimes, and the distinction among 1/(4 delta), 1/delta, and sqrt(2)/delta. Preserve ordinary probability, arbitrary coefficient correlation, Euclidean norm conventions, and the exact source boundary on the supplied derivative certificate.
+
+Independently audit public-source hygiene and reference validity, including equation labels/references and fresh standalone compilation. Successful compilation is not proof evidence. Classify every real defect at the shallowest valid repair depth.
+
+Use exactly the shared rigor-review template and preserve its heading order. The controlled field bodies must be raw tokens. PASS requires Blocking Issues=None, Suggested Repair Depth=None, and Smallest Candidate Repair Target=None. BLOCKING requires numbered blockers and an aligned smallest depth/target. Do not emit a score, aggregate Failure Type, Retry Mode, or controller route.
+
+Before returning, reverify all protected inputs, complete all-12-step derivation comparison, output SHA-256, ASCII/control-byte cleanliness, final LF, and single-output-file scope. Report the verdict, blocker/concern state, repair depth/target, comparison completion, output hash, and protected-input verification in your final message.

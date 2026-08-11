@@ -1,0 +1,88 @@
+\section{Theoretical Setup}
+
+\subsection{Problem Setting}
+
+Fix an integer $N\geq 1$, a support radius $R>0$, a density cap
+$\kappa\in(0,\infty)$, and a compact interval $\Theta\subset\mathbb R$.
+Let
+\[
+b:\Theta\to\mathbb R,
+\qquad
+F=(F_1,\ldots,F_N):\Theta\to\mathbb R^N,
+\qquad
+\phi_\alpha(\theta)=b(\theta)+\langle\alpha,F(\theta)\rangle.
+\]
+We use $\|x\|_1=\sum_i|x_i|$, and $|I|$ denotes one-dimensional
+Lebesgue measure.  Put
+\[
+A=(2R)^N\kappa.
+\]
+Let $\mathcal D_{N,R,\kappa}$ be the class of Borel probability laws $\mu$
+on $\mathbb R^N$ that have a full joint Lebesgue density $f_\mu$ satisfying
+\[
+f_\mu=0\quad\text{almost everywhere outside }[-R,R]^N,
+\qquad
+\|f_\mu\|_{L^\infty(\mathbb R^N)}\leq\kappa.
+\]
+This definition imposes no product structure or coordinate independence.
+
+The deterministic family has a common one-dimensional triangular Pfaffian
+presentation
+\[
+\eta_j'(\theta)=P_j(\theta,\eta_1(\theta),\ldots,\eta_j(\theta)),
+\quad 1\leq j\leq q,
+\]
+\[
+b(\theta)=Q_0(\theta,\eta(\theta)),
+\qquad
+F_i(\theta)=Q_i(\theta,\eta(\theta)),\quad 1\leq i\leq N.
+\]
+In ambient parameter dimension $p=1$, its descriptors are
+\[
+M=\max_{1\leq j\leq q}\deg P_j,
+\qquad
+\Delta_{\rm rnd}=\max_{1\leq i\leq N}\deg Q_i,
+\qquad
+\Delta_{\rm aff}=\max_{0\leq i\leq N}\deg Q_i.
+\]
+When $q=0$ the chain is absent and $M=0$.  The offset $b=Q_0$ contributes
+to $\Delta_{\rm aff}$ but is not a random coefficient.
+
+\subsection{Assumptions}
+
+\begin{assumption}[Shared one-dimensional Pfaffian regularity]
+\label{assump:shared-pfaffian-chain}
+The functions $b,F_1,\ldots,F_N$ are $C^1$ on $\Theta$ and have the common
+triangular Pfaffian representation and the
+$(q,M,\Delta_{\rm rnd},\Delta_{\rm aff},p=1)$ degree convention above.
+\end{assumption}
+
+\begin{assumption}[Primitive no-forced-root nondegeneracy]
+\label{assump:no-forced-root}
+For every $\theta\in\Theta$,
+\[
+(b(\theta),F(\theta))\neq(0,0).
+\]
+Thus no parameter value is a root for every coefficient vector.  Points at
+which $F(\theta)=0$ and $b(\theta)\neq0$ remain admissible and root-free.
+\end{assumption}
+
+\begin{assumption}[Arbitrarily correlated bounded joint density]
+\label{assump:joint-density-cap}
+The coefficient law is any $\mu\in\mathcal D_{N,R,\kappa}$.  The bound is
+on the full joint density and does not impose independence.
+\end{assumption}
+
+\subsection{Objective and Scope}
+
+Our objective is an unconditional affine coordinate-pivot sweep theorem.
+It gives fixed-family finiteness of a static pivot-conditioning functional,
+an ordinary-probability root bound uniform over admissible laws and
+positive-length intervals, and two quantitative checks.  The first check
+retains the exact $1/\delta$ scale in a rescaled two-feature family.  The
+second keeps the leading coefficient of a monic polynomial deterministic
+and recovers the exact coefficient for arbitrary correlated laws on its
+lower coefficients.  No result below asserts a polynomial general-instance
+bound for the conditioning functional in
+$q,M,\Delta_{\rm rnd},\Delta_{\rm aff}$ or in other general Pfaffian
+presentation data.

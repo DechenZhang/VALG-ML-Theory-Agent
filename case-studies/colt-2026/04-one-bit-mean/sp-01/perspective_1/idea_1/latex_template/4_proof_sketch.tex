@@ -1,0 +1,37 @@
+\section{Proof Sketch}\label{sec:proof-sketch}
+
+The coding scheme of \citet[Theorem~16]{lau2026orderoptimal} first produces
+an interval of length at most \(100\sigma\); taking its midpoint gives an
+always-defined center \(c\) with \(|c-\mu|\leq50\sigma\) except on an event
+of probability at most \(\delta/4\).  Recentring the \(k\)-moment at this
+actual decoder output costs only a \(k\)-dependent constant
+(Lemma~\ref{lem:step-002-recentered-moment}).
+
+At each dyadic scale, one of four shifts puts \(c\) a distance at least
+\(3h_j/8\) from the selected cell boundary
+(Proposition~\ref{prop:step-004-cell-margin}).  The encoder queries every
+randomly selected scale-offset entry without knowing \(c\); the decoder
+retains the matching entry afterward.  Uniform dithering turns its centered
+bit into an exact selected-digit difference
+(Proposition~\ref{prop:step-005-dither-identities}), and these differences
+telescope to \(X-c\) up to a bottom quantization residual and a top
+truncation residual (Proposition~\ref{prop:step-006-residual-interface}).
+
+The cell margin makes a digit identically zero until
+\(|X-c|>3h_j/8\).  Summing this activation constraint pathwise before taking
+expectations gives a count-free fine-scale bound and a \(k\)-moment-compatible
+coarse bound (Propositions~\ref{prop:step-007-fine-ledger} and
+\ref{prop:step-007-coarse-ledger}).  Consequently the conditional variance
+has the three regimes \(\sigma^2\), \(\sigma^2\log(\sigma/\epsilon)\), and
+\(\sigma^kH^{2-k}\), with only one logarithm at \(k=2\)
+(Proposition~\ref{prop:step-010-three-regime}).
+
+The two residual expectations total at most \(\epsilon/4\)
+(Proposition~\ref{prop:step-011-bias-certificate}).  A fixed
+median-of-means allocation estimates the exact telescope mean to accuracy
+\(\epsilon/2\), after which the localization and refinement failure
+probabilities are integrated under their common joint law
+(Proposition~\ref{prop:step-013-unconditional-pac}).  Finally, the exact
+ceilings, confidence factors, and localization cost are absorbed into the
+three-regime rate in the Rate Specialization Bridge,
+Proposition~\ref{prop:step-014-rate-bridge}.

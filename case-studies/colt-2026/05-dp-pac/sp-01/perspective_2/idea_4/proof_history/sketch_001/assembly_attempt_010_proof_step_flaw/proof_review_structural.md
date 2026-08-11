@@ -1,0 +1,35 @@
+# Structural Proof Review
+
+## Reviewer Verdict
+
+BLOCKING
+
+## Blocking Issues
+
+1. The public proof-dependency statement in `latex_template/4_proof_sketch.tex` lines 3--6 attributes quotient factorization, preservation of VC and Littlestone dimensions, the measurable record map, iid pushforward, and exact risk transfer collectively to `Propositions~\ref{prop:step-002-factorization}--\ref{prop:step-002-risk}`. The accepted Step 002 artifact and the public appendix establish dimension preservation as `Lemma~\ref{lem:step-002-vc}` and `Lemma~\ref{lem:step-002-ld}`, while `arxiv.sty` gives lemmas and propositions separate counters. The proposition range therefore does not name the two dimension results with their actual theorem type and is not an exact public authority map. Replace that proof-sketch sentence by explicit references to Proposition~`\ref{prop:step-002-factorization}`, Lemmas~`\ref{lem:step-002-vc}` and `\ref{lem:step-002-ld}`, and Propositions~`\ref{prop:step-002-record-map}`, `\ref{prop:step-002-iid-pushforward}`, and `\ref{prop:step-002-risk}`, matching the repaired final theorem proof. This is an assembly-level public-TeX synchronization defect; it does not require changing the accepted Step 002 claim, proof, review, or dependencies.
+
+## Nonblocking Concerns
+
+1. The fresh cached Tectonic build succeeds, but its log reports eight overfull appendix boxes, with maximum excess `22.38173pt`, and two font-shape substitutions. These warnings do not affect compilation, references, or proof closure, but the overfull lines remain a paper-readiness issue.
+
+## Suggested Repair Depth
+
+assembly
+
+## Smallest Candidate Repair Target
+
+/proof-assembly
+
+## Structural Audit
+
+- Goal alignment: The attempted theorem matches the exact-goal, explicitly conditional finite-or-countable measurable evaluation-quotient target under the four primitive assumptions. The theorem and corollary expressly exclude uncountable evaluation quotients and any universal polynomial-in-`v` and logarithmic-in-`d` conclusion; they do not claim to solve the unrestricted DP-PAC open problem. The blocker is only the public proof-sketch authority sentence.
+- Dependency closure: All 16 live proof-step reviews are `ACCEPTED`, are bound to their current proof hashes and producer attempts, and have current accepted dependencies. The step graph is acyclic and every dependency is available. The final main-theorem proof now correctly separates Proposition~`\ref{prop:step-002-factorization}`, Lemmas~`\ref{lem:step-002-vc}` and `\ref{lem:step-002-ld}`, and the three transport/risk propositions; only the earlier proof-sketch summary remains unsynchronized.
+- Sketch-step coverage: Each of the 16 accepted sketch steps is used and has one source-ordered appendix subsection, with Steps 014--016 supplying the VC arm, independent old-Lyu arm, finite-class arm, common-interface minimum, rate bridge, and boundary frontier. No accepted sketch step is orphaned or silently declared unnecessary.
+- Assembly discipline: The appendix introduces no independent unreviewed mathematical lemma and does not strengthen an accepted claim or assumption. All 107 accepted local units are represented in mathematical source order; the Step 005 local claim is validly published as Proposition~`\ref{prop:step-005-positive-range}`. The additional Propositions~`\ref{prop:step-010-interfaces}`, `\ref{prop:step-013-interfaces}`, and `\ref{prop:step-015-interfaces}` substantively translate accepted cited-result/interface sections rather than add new proof obligations. Exact result-type attribution nevertheless fails in the proof-sketch sentence identified above.
+- LaTeX bundle structural synchronization: Assembly-attempt-10 hashes match the live setting, accepted sketch/global artifacts, report, and all nine public bundle files. `main.tex` loads the five content files, style, and bibliography as required, and an independent cached Tectonic build produces the PDF without TeX or BibTeX errors or unresolved references/citations. Compilation does not cure the semantic result-type mismatch in `4_proof_sketch.tex`.
+- Main theorem self-containedness: Relative to the theoretical setup and preliminaries, the main theorem states all four numbered assumptions, learner interfaces, privacy and probability modes, exact horizons, exposed rates, hidden-constant restrictions, finite/infinite conventions, and the deterministic least-arm construction. It has no forbidden appendix-local dependency in its statement, and the readable frontier corollary cites the named Rate Specialization Bridge.
+- Theorem-style statement shape: The appendix contains 110 paper-facing theorem-style units, with explicit assumption or prior-result bases and full proofs. It has no public `claim`, `hypothesis`, or `invariant` environment, no workflow authority, and no orphan proof fragment. The Step 002 appendix correctly publishes the two dimension results as lemmas, which is precisely why the proof-sketch proposition range is structurally inaccurate.
+- Explicit-rate and bridge structure: The VC-sensitive, old-Lyu, and finite-class arms expose their variables, universal constants, probability mode, fixed-horizon mode, risk metric, finite/infinite conventions, and boundary cases. Proposition~`\ref{prop:step-016-frontier}` supplies the auxiliary choices, technical-condition checks, displayed term absorptions, schedule conversion, common minimum, and baseline reductions required by the public corollary; no rate or assumption mismatch was found.
+- Derivation-over-notation: The appendix retains the accepted quotient/kernel constructions, privacy comparisons, trace and holdout bounds, recurrence and potential arguments, probability conversions, rate absorptions, boundary calculations, cited-result discharges, and target-step assemblies as substantive derivations. The public theorem is not supported merely by renamed notation, dependency prose, or an admissibility dictionary.
+- Appendix local-unit coverage: Every used accepted step's `Cited Result Applications`, `Local Derivation`, and `Target-Step Assembly` sections was compared against its appendix body. All 107 local units, substantive displayed chains, constants, boundary cases, cited-result mappings, and concluding assemblies are present. Of 558 source tags, 554 are literal; Step 013 tag `(11)` restates its accepted Step 010 producer equality, and Step 016 tags `(C.V)`, `(C.O)`, and `(C.Odelta)` restate accepted Step 014/015 dependencies. The repaired final authority paragraph at appendix lines 10836--10841 uses the exact Step 002 proposition/lemma types.
+- Internal label/ref structure: The live bundle has 134 unique labels and 113 referenced targets, with no duplicate label, missing target, malformed reference/citation command, or missing BibTeX key. Its two external citation keys resolve, and compilation reports no unresolved citation or reference. The separate lemma and proposition counters are internally valid but make the proof-sketch's proposition-only range an inaccurate mathematical authority reference.

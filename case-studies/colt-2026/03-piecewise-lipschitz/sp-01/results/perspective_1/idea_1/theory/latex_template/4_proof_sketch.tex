@@ -1,0 +1,38 @@
+\section{Proof Sketch}
+
+A root in an interval forces the polynomial's value at the interval
+midpoint into a deterministic slab.  Lemma~\ref{lem:derivative-envelope}
+gives the uniform derivative envelope,
+Proposition~\ref{prop:borel-root-event} handles all endpoint conventions
+without selecting a root, and Proposition~\ref{prop:midpoint-slab} turns
+the root event into an intercept interval of exact length
+$L_{d,R,\Theta}|I|$.  Conditional disintegration and integration of the
+fiber cap then yield Proposition~\ref{prop:averaged-root-hitting}.
+
+For random intercepts, Lemma~\ref{lem:conditional-uniform-kernel}
+constructs a measurable regular conditional kernel, including a legal
+fallback on null fibers.  Propositions~\ref{prop:random-intercept-envelope}
+and~\ref{prop:random-intercept-root-hitting} derive the exact reciprocal-
+width budget before invoking the general result; Proposition~\ref{prop:fixed-width}
+records the fixed-width specialization.
+
+The explicit witness is a continuous pushforward of a full-support latent
+rectangle.  Propositions~\ref{prop:exact-sheet-support}
+and~\ref{prop:cube-positive-width} identify its exact support and prove
+cube membership and almost-sure positive width.  Lemma~\ref{lem:latent-recovery}
+recovers the latent coordinate from the conditioning vector, and
+Proposition~\ref{prop:witness-conditional-cap} gives the exact cap.
+Positive-mass punctured neighborhoods prove its essential unboundedness,
+while a direct $t^{-q}$ integral proves its finite mean; these are
+Lemmas~\ref{lem:positive-mass-cap} and~\ref{lem:exact-witness-average}.
+
+For the structural comparison, the support has a three-dimensional affine
+hull but zero induced three-volume.  The fixed-monic embedding reconciles
+coefficient order, and the full-column-rank affine-pushforward interface
+used in the affine baseline of \citet{balcan2020semibandit} is absolutely
+continuous in its affine image.  Proposition~\ref{prop:affine-nonmembership}
+therefore rules out every latent dimension while expressly retaining the
+full-rank and latent-density limitations.  Finally,
+Lemma~\ref{lem:joint-density-bridge} and
+Proposition~\ref{prop:joint-density-baseline} recover the bounded-joint-
+density comparison without adding that premise to the main theorem.

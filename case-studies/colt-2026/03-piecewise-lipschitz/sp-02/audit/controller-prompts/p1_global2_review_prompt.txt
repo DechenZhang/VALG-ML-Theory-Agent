@@ -1,0 +1,39 @@
+You are the distinct perspective-scoped global-proof reviewer for perspective_1/idea_1, sketch attempt 2, global unit attempt 1, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+First read <CODEX_SKILLS_ROOT>/global-proof-review/SKILL.md completely and every directly required shared contract/template it names. Then independently review exactly the fresh attempt-2 global diagnostic. Do not trust its COMPLETE_DRAFT status, its validation report, or the accepted sketch review's viability judgment. Do not repair or prove the theorem yourself.
+
+Binding current artifacts and hashes:
+- idea.md: 90d54348c0603de55463b9e61611436feb86a1c329966f786db2fc8bc43ba910
+- setting.md: f77d11e1a559e22a96b14de1936d50c691c79d5a4a15e5806ddf4e6d119ada83
+- proof_sketch.md: 2fa48ee16cca9a8d0379071f448d1e72ce98ae46d624482d772e74b97649c74a, sketch attempt 2
+- proof_sketch_review.md: 40b66331aa50a66607d068e266c545a865044bd175a56d81f012542e6d17d6f8, status ACCEPTED, score 9
+- global_proof.md: 45e93d102aa948c0d80886e5f21cf3bdaa412dfaa25611684eb363d48fa1f5b9, status COMPLETE_DRAFT
+- proof_tracker.md: 5e44d1e2604adca9fa14b736064973c08cfaabbc1b074e27ac14d49b0e728191
+- technical_survey.md: 0ed8d7940fa0bb20917efc5998326633b0399279a59f988b3e8bee7517d4915b
+
+Diagnostic-only stale lineage:
+- archived attempt-1 global_proof.md: ab5340e84579424a3359d13063e91ed62e3db868b3b126c0bf10e5073f98153f
+- archived attempt-1 global_proof_review.md: bc4164bc1cad6e4856ee1268a586fbd17d5f8aa319f69716ea73b3da580f28c2
+These attempt-1 artifacts may explain the dependency repair but cannot establish an attempt-2 claim. The live global_proof_review.md initially has the same stale attempt-1 review identity and is already archived; overwrite it with this fresh review.
+
+Independently audit the exact-goal, unconditional, full-progress theorem architecture across all ten accepted steps. Preserve every inseparable clause: the primitive Pfaffian-chain derivative envelope, anchored normalized-projective speed, both central arbitrary-correlated-law bounds and the all-law/all-positive-length-interval constant, the extended-real general affine chart inequality, the exact affine-monic presentation and probability rate for every d >= 1 and bounded J, and the Counter-example 1 scale certificate.
+
+Stress the actual high-risk transitions rather than merely checking section presence:
+- step_001's unit-box coefficient-l1 envelope and exact chain rule, including q=0, Delta=0, and the claimed degree-zero dependence on M;
+- step_002's literal anchor, Euclidean projector identity, nonvanishing denominator, h^{-1} coordinate transfer, N=1 and stationary-curve cases;
+- step_003's incidence hypersurface, exact tangential Jacobians, area/coarea order, coefficient-image inequality, tangent/multiple roots, endpoint hyperplanes, and identically-zero coefficient combinations;
+- step_004's use of Ball's sharp cube-section theorem, scaling to [-R,R]^N, the coefficient norm bound, full joint-density cap without independence, and literal A sqrt(N/2) constant;
+- step_005's positive-interval division and two suprema without a mode upgrade or illicit export of step_001/step_002 internals;
+- step_006's measurable pivot partition, finite 1/m exhaustion, exact coefficient graph map and Jacobian, noninjective area formula, monotone convergence, arbitrary correlation, near-zero pivots, and allowed divergent extended-real integral;
+- step_007's exact prescribed low/high monic cells, coefficient ordering, constant and top pivots, both chart formulas and derivative caps, d=1, d=2, theta=0, |theta|=1, empty cells, and deterministic leading coefficient external to the random law;
+- step_008's exact same-target instantiation of step_006 using step_007, cell-length identity, zero-dimensional cube convention, and literal kappa(2R)^(d-1)[d+Rd(d-1)/2]|J| bound without independence;
+- step_009's B_Q=1/delta certificate, exact projective-speed maximum, two-wedge root-event area, axes and equality boundaries, epsilon=delta, delta=1, and exact 1/(4delta) ratio;
+- step_010's direct dependency set being exactly step_001, step_002, step_005, step_006, step_007, step_008, and step_009, with no illegal transitive exports, new algebra, or unreviewed claim.
+
+Run independent source identity and interface preflight for every theorem-critical source. In particular verify Ball, "Cube Slicing in R^n," main theorem, DOI 10.1090/S0002-9939-1986-0840631-0, maps to the exact central Euclidean cube section and supplies only section size. Treat Edelman--Kostlan Theorem 5.1 and Balcan--Dick--Pegden Theorem 18 only as non-authoritative convention/lineage cross-checks as declared. Independently check that each current-notation area/coarea or area-formula wrapper exposes its exact objects, regularity/measurability domain, source convention, Jacobian, multiplicity role, hypothesis discharge, conclusion interface, and known nonoutputs; do not accept a category-level "standard formula" assertion.
+
+Apply every required controller gate: source-direction fidelity and full-progress labeling; exact-goal and explicit-rate audits; assumption provenance; theorem-critical mechanism witnesses; source-to-claim adequacy; source-convention and object-target compatibility; exported-interface feasibility; residual-to-target adequacy; generated-output flow; scope accumulation; noncircular closure; entry/boundary activation; baseline invariance; and obligation locality. Inspect the Gate Evidence Table row by row. ACCEPTED is allowed only if every affected obligation is independently supported and classified step-local, every cited/source interface passes preflight, Global Gaps And Hard Steps really is None, and all ten fresh step proofs can proceed without changing the accepted sketch or theorem contract.
+
+Write only perspective_1/idea_1/global_proof_review.md. Do not edit the global proof, sketch, sketch review, setting, tracker, worker log, technical survey, proof steps, history, final TeX, prompts, results, or another branch. Include every required global-proof-review section. Use the exact controlled status/target pair, with no numeric score and no Retry Mode. State explicitly that the diagnostic is not proof evidence and that all ten attempt-2 steps still require fresh proof and review.
+
+Before reporting, validate all binding hashes, the reviewed global artifact identity, status/target alignment, required headings, ten-step coverage, Gate Evidence Table arity and row completeness, ASCII/control bytes, balanced TeX delimiters/braces, Markdown table arity ignoring escaped pipes, and file scope. Report the review status, smallest retry target, reviewed global hash, output path, and final review SHA-256.

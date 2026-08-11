@@ -1,0 +1,291 @@
+\begin{lemma}[Fixed-constant form of the ALMM v3 threshold theorem]\label{lem:step-002-almm-constants}
+The threshold theorem of \citet[Theorem~1]{AlonLivniMalliarisMoran2019},
+together with its PAC and privacy definitions and the fixed constants in its
+proof, implies that there exist universal constants
+
+\[
+b_0>0,\qquad d_0>0,\qquad N_0\in\mathbb Z_{\ge2}
+\]
+
+such that, for every finite ordered real domain \(X\) with \(|X|=N\ge N_0\), every integer \(M\ge8\), and every possibly randomized, possibly improper threshold learner on \(X\) that is \((1/16,1/16)\)-accurate in the source PAC sense and
+
+\[
+\left(0.1,\frac{d_0}{M^2\log M}\right)
+\text{-differentially private},
+\]
+
+one has
+
+\[
+M\ge b_0\log_2^*N.
+\]
+\end{lemma}
+
+\begin{proof}
+The source theorem states
+
+\[
+M=\Omega(\log^*N)
+\quad\text{under}\quad
+\varepsilon=0.1,\qquad
+\delta=O\!\left(\frac1{M^2\log M}\right).
+\tag{1}
+\]
+
+The constants in both asymptotic symbols are absolute: the theorem fixes the accuracy and privacy constants before quantifying over the domain and learner. This is also visible in the active proof. Its private homogeneous-set lemma uses the explicit empirical-size cap
+
+\[
+\delta\le \frac1{10^3m^2\log m},
+\tag{2}
+\]
+
+and the source's constant-factor empirical reduction increases the original
+PAC sample size by at most the absolute factor nine while preserving accuracy
+and privacy.
+
+For completeness, the factor-nine change does not leave an unverified denominator. The function
+
+\[
+x\longmapsto \frac{\log x}{\log(9x)}
+\]
+
+is increasing for \(x>1\), because its derivative is
+
+\[
+\frac{\log 9}{x(\log(9x))^2}>0.
+\]
+
+Hence, for every \(M\ge8\),
+
+\[
+\frac{\log M}{\log(9M)}
+\ge \frac{\log8}{\log72}.
+\tag{3}
+\]
+
+Choose \(d_0\) no larger than the fixed privacy constant represented by the
+\(O(\cdot)\) in (1), and shrink it further, if needed, so that
+
+\[
+0<d_0\le \frac{\log8}{81000\log72}\,.
+\tag{4}
+\]
+
+Then it obeys
+
+\[
+\frac{d_0}{M^2\log M}
+\le
+\frac1{10^3(9M)^2\log(9M)}.
+\tag{5}
+\]
+
+If the empirical reduction uses a size \(m\le9M\), then
+\(m^2\log m\le(9M)^2\log(9M)\), so (5) also implies (2) at that actual
+size. Thus the source proof exhibits a strictly positive universal privacy
+constant after its own constant-factor reduction; (4) is only a conservative
+witness and is not claimed as a numerical constant printed in the theorem
+statement.
+
+Unpacking the \(\Omega\)-conclusion in (1) gives an absolute lower-bound constant and a finite domain threshold. The source's unadorned iterated-log convention and the branch's base-two convention differ by at most an absolute additive number of iterations: for some universal \(K_{\rm base}\),
+
+\[
+\log^*_{\rm source}N
+\ge \log_2^*N-K_{\rm base}.
+\tag{6}
+\]
+
+This is the standard fixed-base comparison: multiplying a logarithm by the fixed base-change constant can require only a fixed number of additional iterates before entering \((0,1]\). Increase the finite domain threshold so that
+
+\[
+\log_2^*N\ge2K_{\rm base}
+\]
+
+throughout the retained regime. Then (6) is at least \(\frac12\log_2^*N\), and halving the source lower-bound constant gives a universal \(b_0>0\). Absorb every finite exceptional domain and every fixed source convention into one integer \(N_0\ge2\). This proves the displayed fixed-constant form for all \(M\ge8\). No value of \(b_0\) or \(N_0\) beyond existence is asserted. \end{proof}
+
+\begin{lemma}[Exact order, label, PAC, output, and adjacency transport]\label{lem:step-002-transport}
+Under the primitive one-block definitions with \(N\ge2\), and consistently with the endpoint/distinctness certificate in Lemma~\ref{lem:step-001-cardinality}, let
+
+\[
+B:([N]\times\{0,1\})^M\longrightarrow\{0,1\}^{[N]}
+\]
+
+be any randomized map. There is a rowwise bijective transport to a possibly randomized, unrestricted ALMM learner
+
+\[
+\widetilde B:(X\times\{-1,+1\})^M
+\longrightarrow\{-1,+1\}^{X}
+\]
+
+on an \(N\)-point ordered real set \(X\) such that:
+
+\begin{enumerate}
+\item All increasing thresholds, including the all-positive and all-negative
+endpoint restrictions, correspond to \(\{\tau_t:t\in[N+1]\}\).
+\item Every arbitrary output of \(B\) corresponds bijectively to an
+arbitrary output of \(\widetilde B\), with no properness or monotonicity.
+\item For every \(t,Q\), the labeled sample laws are exact i.i.d. products
+of the same fixed size \(M\), and population risks agree pointwise.
+\item Two input datasets differ in one labeled row by replacement before
+transport if and only if their images do so after transport.
+\item \emph{(W-PAC)} for every \(t,Q\) is exactly the source realizable-PAC
+premise for \(\widetilde B\).
+\end{enumerate}
+
+The same conclusions hold if a presentation of the source reverses the threshold orientation, after reversing the order or complementing all labels.
+\end{lemma}
+
+\begin{proof}
+Choose any increasing real sequence
+
+\[
+x_1<x_2<\cdots<x_N
+\]
+
+and put \(X=\{x_1,\ldots,x_N\}\). Let \(\phi:[N]\to X\) be the order bijection \(\phi(j)=x_j\), and let
+
+\[
+\lambda(-1)=0,\qquad \lambda(+1)=1.
+\]
+
+For the increasing source threshold with cut index \(t\), write
+
+\[
+s_t(x_j)=
+\begin{cases}
+-1,&j<t,\\
++1,&j\ge t.
+\end{cases}
+\]
+
+Then, for every \(j\in[N]\) and \(t\in[N+1]\),
+
+\[
+\lambda(s_t(\phi(j)))=\mathbf1\{j\ge t\}=\tau_t(j).
+\tag{7}
+\]
+
+The endpoint \(t=1\) is all positive/all one, and \(t=N+1\) is all negative/all zero. They are restrictions of real half-line thresholds with the cut at or below \(x_1\), respectively above \(x_N\). Lemma~\ref{lem:step-001-cardinality} independently certifies that these are legal, distinct branch members. Even under a convention that lists only interior cut representatives, that source family is a subclass of the branch family, so a learner satisfying (W-PAC) still meets every source target requirement.
+
+Transport a source labeled row by
+
+\[
+(x_j,y)\longmapsto(j,\lambda(y)).
+\tag{8}
+\]
+
+For a source sample \(S\), apply (8) row by row to obtain \(S^{\flat}\), run \(B(S^{\flat})\), and define
+
+\[
+\widetilde B(S)(x_j)
+=\lambda^{-1}\!\left(B(S^{\flat})(j)\right).
+\tag{9}
+\]
+
+Equation (9) is defined for every branch output, including constant, oscillating, and nonmonotone functions. It transports the internal randomness unchanged and uses no projection onto the target class.
+
+Let \(Q\) be a probability law on \([N]\), and let \(\widetilde Q=\phi_{\#}Q\) be its pushforward to \(X\). For every deterministic branch output \(g\), with transported source output \(\widetilde g(x_j)=\lambda^{-1}(g(j))\), (7) gives
+
+\[
+\begin{aligned}
+L_{\widetilde Q^{s_t}}(\widetilde g)
+&=\Pr_{J\sim Q}
+   [\widetilde g(x_J)\ne s_t(x_J)]\\
+&=\Pr_{J\sim Q}[g(J)\ne\tau_t(J)]\\
+&=R_Q(g,\tau_t).
+\end{aligned}
+\tag{10}
+\]
+
+The row transport is deterministic and coordinatewise, so
+
+\[
+S\sim(\widetilde Q^{s_t})^M
+\quad\Longleftrightarrow\quad
+S^{\flat}\sim(Q^{\tau_t})^M.
+\tag{11}
+\]
+
+There is no random or expected sample-size substitution. Every distribution on labeled source examples realizable by a threshold equals \(\widetilde Q^{s_t}\) for its feature marginal \(\widetilde Q\) and its realizing cut (up to changes on zero-mass points). Thus (10)--(11), including the learner's unchanged randomness, identify (W-PAC) with the source PAC premise for every realizable threshold distribution.
+
+Finally, (8) is a bijection on individual labeled rows and is applied without mixing row indices. Consequently two length-\(M\) samples are equal or differ at exactly one row before transport exactly when the corresponding samples are equal or differ at that same row afterward. Output relabeling in (9) is bijective postprocessing. Hence the replacement-DP event inequalities are identical under the event bijection. The source's two-sided indistinguishability is equivalent to the branch's one-sided display quantified over all ordered adjacent pairs, because adjacency is symmetric.
+
+If a threshold convention uses positive labels below the cut, either replace \(\lambda\) by the complemented label bijection or replace \(\phi(j)\) by the order-reversing bijection \(x_{N+1-j}\). These are still rowwise bijections, so (10)--(11) and adjacency preservation remain exact. \end{proof}
+
+\begin{lemma}[Privacy monotonicity at the source cap]\label{lem:step-002-privacy-monotonicity}
+Under the fixed-size replacement convention, let \(M\ge8\), \(d_0>0\),
+\(0\le\varepsilon\le0.1\), and
+
+\[
+0\le\delta\le\frac{d_0}{M^2\log M}.
+\]
+
+If a randomized kernel is \((\varepsilon,\delta)\)-differentially private, then it is also
+
+\[
+\left(0.1,\frac{d_0}{M^2\log M}\right)
+\text{-differentially private}.
+\]
+
+This conclusion includes \(M=8\), \(\varepsilon<0.1\), \(\delta\) strictly below the cap, and \(\delta=0\).
+\end{lemma}
+
+\begin{proof}
+For adjacent datasets \(S,S'\) and every output event \(E\), privacy gives
+
+\[
+\Pr[B(S)\in E]
+\le e^{\varepsilon}\Pr[B(S')\in E]+\delta.
+\]
+
+Since the event probability is nonnegative, \(e^{\varepsilon}\le e^{0.1}\), and
+\(\delta\le d_0/(M^2\log M)\),
+
+\[
+\Pr[B(S)\in E]
+\le e^{0.1}\Pr[B(S')\in E]
+   +\frac{d_0}{M^2\log M}.
+\tag{12}
+\]
+
+Swapping \(S,S'\) gives the reverse source inequality. There is one application of privacy at the same sample size; no group privacy, composition, subsampling, or adjacency conversion occurs. At \(M=8\), \(M^2\log M=64\log8>0\), so the cap in (12) is finite and positive. Decreasing either privacy parameter only strengthens (12). \end{proof}
+
+\begin{proposition}[Current-notation unrestricted ALMM threshold wrapper]\label{prop:step-002-wrapper}
+Under Lemmas~\ref{lem:step-002-almm-constants},
+\ref{lem:step-002-transport}, and
+\ref{lem:step-002-privacy-monotonicity}, there are universal
+\(b_*,d_*>0\) and \(N_*\ge2\) such that, for every \(N\ge N_*\), integer \(M\ge8\),
+\(0\le\varepsilon\le0.1\), and
+\(0\le\delta\le d_*/(M^2\log M)\), every randomized unrestricted map
+
+\[
+B:([N]\times\{0,1\})^M\to\{0,1\}^{[N]}
+\]
+
+that is \((\varepsilon,\delta)\)-DP under one-row replacement and satisfies (W-PAC) for every \(t\in[N+1]\) and every law \(Q\) on \([N]\) must satisfy (W-LB):
+
+\[
+M\ge b_*\log_2^*N.
+\]
+\end{proposition}
+
+\begin{proof}
+Take
+
+\[
+b_*=b_0,\qquad d_*=d_0,\qquad N_*=N_0
+\]
+
+from Lemma~\ref{lem:step-002-almm-constants}. Lemma~\ref{lem:step-002-privacy-monotonicity} promotes the stated privacy guarantee to
+
+\[
+\left(0.1,\frac{d_0}{M^2\log M}\right)\text{-DP}.
+\]
+
+Apply the exact row/order/label transport of Lemma~\ref{lem:step-002-transport}. It produces a possibly randomized source learner whose output ranges over all \(\{\pm1\}\)-valued functions, whose input consists of exactly \(M\) iid labeled examples, whose loss is the identical population 0-1 risk, and whose adjacency/privacy guarantee is the identical one-entry replacement guarantee. By (W-PAC) and (10)--(11), this transported learner is \((1/16,1/16)\)-accurate for every source threshold-realizable distribution. All hypotheses of Lemma~\ref{lem:step-002-almm-constants} are therefore discharged, so
+
+\[
+M\ge b_0\log_2^*N=b_*\log_2^*N.
+\]
+
+The proof does not select a hard instance and does not assert expected-risk hardness. Those are conclusions of later contrapositive and minimax steps, not outputs of this proposition. \end{proof}

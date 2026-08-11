@@ -1,0 +1,1069 @@
+\appendix
+
+\section{Proof Details}\label{sec:proof-details}
+
+\subsection{Terminal Catalog Law under Adaptive Replies}
+\label{app:terminal-catalog-law}
+
+\begin{proposition}[Validity of the exact-center reply policy]
+\label{prop:step-001-center-policy}
+Under Assumptions~\ref{assump:source-parameter-regime},
+\ref{assump:finite-horizon-randomized-adaptivity},
+\ref{assump:bounded-unrestricted-queries}, and
+\ref{assump:full-adversarial-tolerance}, if $D$ is a distribution on $X$ and
+$h\in H$, then the rule
+\begin{equation}\label{eq:center-policy}
+\pi_t^{\mathrm{ctr}}
+(q_1,v_1,\ldots,q_{t-1},v_{t-1},q_t)
+:=\mu_{q_t}(D,h)
+=\mathbb E_{x\sim D}q_t(x,h(x))
+\end{equation}
+at every issued round is a measurable nonanticipating member of
+$\Pi(D,h)$.  Consequently $\Pi(D,h)\ne\varnothing$, including for a run
+that stops at $T=0$.
+\end{proposition}
+
+\begin{proof}
+Fix $D$ and $h$.  Since $X$ has the power-set sigma algebra and
+$q_t:X\times\{+1,-1\}\to[-1,1]$, the map
+$x\mapsto q_t(x,h(x))$ is measurable and bounded.  Its expectation in
+\eqref{eq:center-policy} therefore exists and lies in $[-1,1]$.
+
+At round $t$, the rule uses only the fixed pair $(D,h)$ and the currently
+revealed query $q_t$.  It sees the tape only through the information already
+revealed in $q_t$ and inspects no future learner coin, so it is
+nonanticipating under Assumption~\ref{assump:full-adversarial-tolerance}.
+The setup's measurability convention applies to this protocol selector; no
+topology, encoding, or finite sigma algebra on the query space is introduced.
+
+For every issued query,
+\[
+\left|\pi_t^{\mathrm{ctr}}-\mu_{q_t}(D,h)\right|=0\le\tau,
+\]
+and hence
+\[
+\pi_t^{\mathrm{ctr}}=\mu_{q_t}(D,h)
+\in[\mu_{q_t}(D,h)-\tau,\mu_{q_t}(D,h)+\tau]
+=I_{q_t}(D,h).
+\]
+The rule is defined at every history at which a query is issued, regardless
+of earlier real responses, and remains valid when subsequent queries depend
+arbitrarily on those responses.  After termination no further condition is
+imposed.  If $T=0$, in particular if $m=0$, there is no issued query and all
+reply-validity conditions are vacuous.  Thus the same contingent rule belongs
+to $\Pi(D,h)$.
+\end{proof}
+
+\begin{lemma}[Finite terminal-selector pushforward]
+\label{lem:step-001-terminal-pushforward}
+Under Assumptions~\ref{assump:source-parameter-regime},
+\ref{assump:finite-horizon-randomized-adaptivity},
+\ref{assump:full-adversarial-tolerance}, and
+\ref{assump:finite-terminal-catalog}, if $D$ is a distribution on $X$,
+$h\in H$, and $\pi\in\Pi(D,h)$ is arbitrary, then
+\begin{equation}\label{eq:terminal-index}
+Z_{D,h,\pi}(u):=J(e(u;D,h,\pi))\in[L]
+\end{equation}
+is measurable.  Its fibers form a measurable finite partition,
+\[
+p_i(D,h,\pi)
+=\nu\{u:Z_{D,h,\pi}(u)=i\}
+=\nu\{u:\widehat h_{u;D,h,\pi}=g_i\},
+\qquad p(D,h,\pi)\in\Delta_L,
+\]
+and every bounded $f:G\to\mathbb R$ satisfies
+\begin{equation}\label{eq:finite-pushforward}
+\mathbb E_{u\sim\nu}f(\widehat h_{u;D,h,\pi})
+=\sum_{i=1}^Lp_i(D,h,\pi)f(g_i).
+\end{equation}
+These conclusions allow full-interval continuous adaptive replies, randomized
+adaptive queries, variable stopping, and $T=0$.
+\end{lemma}
+
+\begin{proof}
+Fix $D,h$, and an arbitrary $\pi\in\Pi(D,h)$; this policy is not replaced by
+the center policy of Proposition~\ref{prop:step-001-center-policy}.  The
+taped learner's query and termination variables are measurable functions of
+the tape and the measurable transcript already produced.  Since $\pi$ is a
+measurable nonanticipating selector, each next response is a measurable
+composition of the revealed history with $\pi$.  Induction through at most
+$m$ rounds makes $u\mapsto e(u;D,h,\pi)$ measurable.  Early stopping causes
+no limiting issue because the stopping depth is one of
+$0,1,\ldots,m$.
+
+The selector $J$ in Assumption~\ref{assump:finite-terminal-catalog} is
+measurable on every complete valid execution.  Thus
+\eqref{eq:terminal-index} is a measurable map into the finite discrete set
+$[L]$.  Put
+\[
+E_i(D,h,\pi):=\{u:Z_{D,h,\pi}(u)=i\}.
+\]
+The events $E_i$ are measurable, pairwise disjoint, and their union is the
+whole learner-tape space.  Therefore
+\begin{equation}\label{eq:simplex-masses}
+p_i=\nu(E_i)\ge0,
+\qquad
+\sum_{i=1}^Lp_i
+=\nu\!\left(\bigcup_{i=1}^LE_i\right)=1,
+\end{equation}
+which proves $p(D,h,\pi)\in\Delta_L$.
+
+On $E_i$, the exact selector identity gives
+\begin{equation}\label{eq:eventwise-catalog-output}
+\widehat h_{u;D,h,\pi}
+=g_{J(e(u;D,h,\pi))}=g_i.
+\end{equation}
+Because $g_1,\ldots,g_L$ are the distinct indexed members of the set $G$,
+the converse also holds: a terminal output equal to $g_i$ has selected index
+$i$.  This proves the asserted equality between selector fibers and output
+events.
+
+For bounded $f:G\to\mathbb R$, equation
+\eqref{eq:eventwise-catalog-output} gives the pointwise simple-function
+identity
+\[
+f(\widehat h_{u;D,h,\pi})
+=\sum_{i=1}^L\mathbf 1_{E_i}(u)f(g_i).
+\]
+Integrating and using only linearity of the finite sum proves
+\eqref{eq:finite-pushforward}.  No transcript conditioning or regular
+conditional distribution is required.
+
+Replies may be continuous, and queries may contain label-independent
+components.  Randomized and reply-adaptive future queries can change the
+fibers $E_i$ and their masses, but they create neither an outcome outside
+$G$ nor an approximation term.  A tape that stops at $T=0$ still supplies a complete empty-reply
+execution to $J$; if $m=0$, this holds for every tape.  When $L=1$, $E_1$
+is the whole tape space and $p_1=1$.  If the oracle uses an independent
+random seed, fixing it gives one deterministic policy.  It is
+nonanticipating, so the preceding argument applies; no expectation other than
+$u\sim\nu$ has been introduced.
+\end{proof}
+
+\begin{proposition}[Exact terminal loss and correlation mixtures]
+\label{prop:step-001-exact-mixtures}
+Under Assumptions~\ref{assump:finite-horizon-randomized-adaptivity},
+\ref{assump:full-adversarial-tolerance}, and
+\ref{assump:finite-terminal-catalog}, and the conclusion of
+Lemma~\ref{lem:step-001-terminal-pushforward}, if $D$ is a distribution on
+$X$, $h\in H$, and $\pi\in\Pi(D,h)$, then
+\begin{align}
+\mathbb E_{u\sim\nu}\mathcal L_{D,h}(\widehat h_{u;D,h,\pi})
+&=\sum_{i=1}^Lp_i(D,h,\pi)\mathcal L_{D,h}(g_i),
+\label{eq:exact-loss-mixture}\\
+\mathbb E_{u\sim\nu}\mathbb E_{x\sim D}
+[h(x)\widehat h_{u;D,h,\pi}(x)]
+&=\sum_{i=1}^Lp_i(D,h,\pi)
+\mathbb E_{x\sim D}[h(x)g_i(x)].
+\label{eq:exact-correlation-mixture}
+\end{align}
+Equivalently,
+\begin{equation}\label{eq:loss-correlation-mixture-bridge}
+\sum_{i=1}^Lp_i\mathbb E_D[h g_i]
+=1-2\sum_{i=1}^Lp_i\mathcal L_{D,h}(g_i)
+=1-2\mathbb E_u\mathcal L_{D,h}(\widehat h_{u;D,h,\pi}).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The loss $g_i\mapsto\mathcal L_{D,h}(g_i)$ lies in $[0,1]$.
+Lemma~\ref{lem:step-001-terminal-pushforward}, applied to this bounded
+functional, gives \eqref{eq:exact-loss-mixture}.  Likewise,
+$g_i\mapsto\mathbb E_D[hg_i]$ lies in $[-1,1]$, so the same lemma gives
+\eqref{eq:exact-correlation-mixture}.  The inner $D$-expectation is simply
+one bounded scalar for each of finitely many catalog functions; no
+conditioning on the continuous transcript or interchange of an infinite sum
+is involved.
+
+Equivalently, equation \eqref{eq:eventwise-catalog-output} gives, for every
+$x\in X$,
+\[
+\mathbb E_{u\sim\nu}\widehat h_{u;D,h,\pi}(x)
+=\sum_{i=1}^Lp_i(D,h,\pi)g_i(x).
+\]
+Multiplying by $h(x)$ and integrating over $D$ moves only a finite sum and
+again yields \eqref{eq:exact-correlation-mixture}.
+
+Finally, \eqref{eq:loss-definition} gives
+$\mathbb E_D[hg_i]=1-2\mathcal L_{D,h}(g_i)$.  Multiply this equality by
+$p_i$, sum over $i$, use \eqref{eq:simplex-masses}, and then use
+\eqref{eq:exact-loss-mixture}.  This proves
+\eqref{eq:loss-correlation-mixture-bridge}, with zero residual at every link.
+\end{proof}
+
+\begin{proposition}[Exact finite terminal catalog law]
+\label{prop:step-001-catalog-law}
+Under Assumptions~\ref{assump:source-parameter-regime}--
+\ref{assump:finite-terminal-catalog}, if $D$ is a distribution on $X$ and
+$h\in H$, then $\Pi(D,h)\ne\varnothing$.  For every arbitrary
+$\pi\in\Pi(D,h)$, the vector $p(D,h,\pi)$ belongs to $\Delta_L$ and obeys
+the exact identities \eqref{eq:exact-loss-mixture}--
+\eqref{eq:loss-correlation-mixture-bridge}.  The assertion holds for all
+continuous tolerance-valid adaptive replies and for every stopping depth,
+including $T=0$.
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:step-001-center-policy} constructs a measurable
+nonanticipating policy whose response is the exact center of the currently
+issued query's full real tolerance interval, proving
+$\Pi(D,h)\ne\varnothing$.  This policy is used only for nonemptiness.
+
+For an arbitrary $\pi\in\Pi(D,h)$,
+Lemma~\ref{lem:step-001-terminal-pushforward} pushes $\nu$ through the
+measurable map $J\circ e$ and yields the setting-defined simplex vector and
+its exact finite functional identity.  Proposition~\ref{prop:step-001-exact-mixtures}
+then supplies the loss and correlation specializations.
+
+The calculation never enumerates replies or transcripts; arbitrary
+continuous adaptive replies alter only the selector events.  The mixture
+policy remains arbitrary, so the center policy is not a favorable-policy
+substitution.  Only learner-tape randomness is pushed forward.  At $T=0$ the
+empty-reply execution is complete and $J$ still selects an index; at $m=0$
+every run has this form, and at $L=1$ the unique mass is one.  If
+$X=\varnothing$, there is no distribution on $X$, so this
+distribution-indexed proposition is vacuous rather than based on a
+nonexistent $D$.
+\end{proof}
+
+\subsection{Universal Catalog Correlation}
+\label{app:universal-catalog-correlation}
+
+For this subsection, write
+\[
+c_i(D,h):=\mathbb E_{x\sim D}[h(x)g_i(x)],\qquad i\in[L].
+\]
+Each $c_i(D,h)$ belongs to $[-1,1]$.
+
+\begin{lemma}[Exact policywise catalog correlation]
+\label{lem:step-002-policywise-correlation}
+Under Assumptions~\ref{assump:source-parameter-regime} and
+\ref{assump:universal-expected-accuracy}, and the conclusions of
+Lemma~\ref{lem:step-001-terminal-pushforward} and
+Proposition~\ref{prop:step-001-exact-mixtures}, if $D$ is a distribution on
+$X$, $h\in H$, and $\pi\in\Pi(D,h)$ is arbitrary, then
+\begin{equation}\label{eq:policywise-correlation}
+\sum_{i=1}^Lp_i(D,h,\pi)c_i(D,h)
+=1-2\mathbb E_{u\sim\nu}
+\mathcal L_{D,h}(\widehat h_{u;D,h,\pi})
+\ge\rho.
+\end{equation}
+The equality has zero residual, and its only algorithmic expectation is over
+the learner tape.
+\end{lemma}
+
+\begin{proof}
+Fix arbitrary $D,h$, and $\pi\in\Pi(D,h)$.  For every $i$ and $x$,
+\[
+\mathbf 1\{g_i(x)\ne h(x)\}=\frac{1-h(x)g_i(x)}2.
+\]
+Integration with respect to $D$ gives
+\begin{equation}\label{eq:catalog-binary-correlation}
+c_i(D,h)=1-2\mathcal L_{D,h}(g_i).
+\end{equation}
+Using $p_i\ge0$, $\sum_i p_i=1$, and
+Proposition~\ref{prop:step-001-exact-mixtures}, we obtain
+\begin{align*}
+\sum_{i=1}^Lp_i(D,h,\pi)c_i(D,h)
+&=\sum_{i=1}^Lp_i(D,h,\pi)
+  \bigl(1-2\mathcal L_{D,h}(g_i)\bigr)\\
+&=1-2\sum_{i=1}^Lp_i(D,h,\pi)\mathcal L_{D,h}(g_i)\\
+&=1-2\mathbb E_{u\sim\nu}
+  \mathcal L_{D,h}(\widehat h_{u;D,h,\pi}).
+\end{align*}
+All sums are finite; no response approximation, transcript conditioning,
+oracle-randomness average, or expectation interchange occurs.
+
+Assumption~\ref{assump:universal-expected-accuracy} applies to this same
+arbitrary policy.  Multiplying its upper bound by $-2$ reverses the
+inequality, and therefore
+\[
+1-2\mathbb E_{u\sim\nu}
+\mathcal L_{D,h}(\widehat h_{u;D,h,\pi})
+\ge1-2\varepsilon=\rho.
+\]
+This proves \eqref{eq:policywise-correlation} for every valid policy.  If
+$\varepsilon=0$, then the left side is at least $1$ and, as a convex average
+of numbers at most $1$, is also at most $1$; hence it equals $1$ exactly.
+The proof uses no query round, so
+Proposition~\ref{prop:step-001-catalog-law} makes the calculation unchanged at
+$m=0$ or $T=0$.
+\end{proof}
+
+\begin{proposition}[Policy-free best catalog correlation]
+\label{prop:step-002-policy-free-correlation}
+Under Assumptions~\ref{assump:source-parameter-regime} and
+\ref{assump:universal-expected-accuracy}, and the conclusions of
+Proposition~\ref{prop:step-001-center-policy},
+Lemma~\ref{lem:step-001-terminal-pushforward}, and
+Lemma~\ref{lem:step-002-policywise-correlation}, if $D$ is a distribution on
+$X$ and $h\in H$, then every $\pi\in\Pi(D,h)$ satisfies
+\begin{equation}\label{eq:max-over-catalog-average}
+\max_{i\in[L]}c_i(D,h)
+\ge\sum_{i=1}^Lp_i(D,h,\pi)c_i(D,h)
+\ge\rho.
+\end{equation}
+Consequently,
+\begin{equation}\label{eq:policy-free-correlation}
+\max_{i\in[L]}\mathbb E_{x\sim D}[h(x)g_i(x)]\ge\rho
+\end{equation}
+for every $D,h$, independently of the valid policy and its output
+probabilities.
+\end{proposition}
+
+\begin{proof}
+Fix $D,h$ and first let $\pi\in\Pi(D,h)$ be arbitrary.  Since $L\ge1$, the
+finite maximum exists, and
+$c_i(D,h)\le\max_{j\in[L]}c_j(D,h)$ for every $i$.  Multiply these
+coordinate inequalities by the nonnegative simplex masses and sum:
+\begin{align*}
+\sum_{i=1}^Lp_i(D,h,\pi)c_i(D,h)
+&\le\sum_{i=1}^Lp_i(D,h,\pi)
+\max_{j\in[L]}c_j(D,h)\\
+&=\max_{j\in[L]}c_j(D,h).
+\end{align*}
+Lemma~\ref{lem:step-002-policywise-correlation} supplies the other inequality
+in \eqref{eq:max-over-catalog-average} for this same arbitrary policy.
+
+Proposition~\ref{prop:step-001-center-policy} ensures that
+$\Pi(D,h)\ne\varnothing$, so the already established every-policy inequality
+has at least one instance.  Its left side depends only on $D,h$, and the fixed
+catalog and contains neither a policy nor an output law.  This proves
+\eqref{eq:policy-free-correlation}.  The center policy is used only to prevent
+vacuity; it never replaces the arbitrary policy in
+\eqref{eq:policywise-correlation}.
+
+When $L=1$, one has $p_1=1$ and
+\eqref{eq:max-over-catalog-average} reduces to $c_1(D,h)\ge\rho$.  At
+$\varepsilon=0$, the maximum is both at least and at most $1$, so it equals
+$1$.  At $m=0$ or $T=0$, the preceding catalog law still supplies both the
+simplex vector and policy nonemptiness, and no query update enters this proof.
+If $X=\varnothing$, no distribution exists and the conclusion is vacuous.
+
+Thus the expected-error premise has been converted, for the same arbitrary
+continuous adaptive policy, into the exact mixture correlation and then into
+a policy-free catalog maximum.  The level $\rho=1-2\varepsilon$ is unchanged,
+no $\tau$-dependent term is introduced, and no probability mode is converted.
+\end{proof}
+
+\subsection{Finite Simultaneous Feasibility}
+\label{app:finite-simultaneous-feasibility}
+
+For fixed $h\in H$ and nonempty finite $F\subseteq X$, define
+\begin{equation}\label{eq:finite-payoff-matrix}
+A^{h,F}_{xi}:=h(x)g_i(x),\qquad x\in F,\ i\in[L].
+\end{equation}
+When $h,F$ are fixed, write $A$ for this matrix.  For
+$w\in\Delta_L$ and $r\in\Delta_F$,
+\[
+(Aw)_x=\sum_{i=1}^Lw_iA_{xi},\qquad
+(r^\top A)_i=\sum_{x\in F}r_xA_{xi}.
+\]
+
+\begin{lemma}[Finite-support catalog payoff]
+\label{lem:step-003-finite-support-payoff}
+Under Assumptions~\ref{assump:finite-terminal-catalog} and
+\ref{assump:universal-expected-accuracy}, and
+Proposition~\ref{prop:step-002-policy-free-correlation}, if $h\in H$,
+$\varnothing\ne F\subseteq X$ is finite, and $r\in\Delta_F$, define
+\begin{equation}\label{eq:finite-support-law}
+D_r(S):=\sum_{x\in F\cap S}r_x,\qquad S\subseteq X.
+\end{equation}
+Then $D_r$ is a distribution on $X$ and
+\begin{equation}\label{eq:finite-support-payoff}
+\max_{i\in[L]}\sum_{x\in F}r_xh(x)g_i(x)
+=\max_{i\in[L]}\mathbb E_{z\sim D_r}[h(z)g_i(z)]
+\ge\rho.
+\end{equation}
+Consequently,
+\begin{equation}\label{eq:finite-row-value}
+\min_{r\in\Delta_F}\max_{i\in[L]}
+\sum_{x\in F}r_xh(x)g_i(x)\ge\rho,
+\end{equation}
+and the minimum is attained.
+\end{lemma}
+
+\begin{proof}
+The masses in \eqref{eq:finite-support-law} are nonnegative, have total mass
+one, and have finite support, so the formula defines a countably additive
+probability measure on the power-set sigma algebra.  For every $i$,
+\[
+\mathbb E_{z\sim D_r}[h(z)g_i(z)]
+=\sum_{x\in F}r_xh(x)g_i(x).
+\]
+Proposition~\ref{prop:step-002-policy-free-correlation}, applied to this exact
+$D_r$ and the fixed $h$, proves \eqref{eq:finite-support-payoff}.  The result
+is already policy-free; no reply policy, output-probability vector, or
+coherent maximizing index as $r$ varies is required.
+
+Since \eqref{eq:finite-support-payoff} holds for every $r$, its minimum is at
+least $\rho$.  The objective is a finite maximum of linear functions of $r$
+and is continuous on the compact simplex $\Delta_F$, so the minimum is
+attained.
+\end{proof}
+
+\begin{lemma}[Finite convex-hull alternative]
+\label{lem:step-003-convex-hull-alternative}
+Let $F$ be a nonempty finite set, let $L\ge1$, let
+$A\in\mathbb R^{F\times L}$, and let $\gamma\in\mathbb R$.  If
+\begin{equation}\label{eq:convex-hull-premise}
+\forall r\in\Delta_F,\qquad
+\max_{i\in[L]}\sum_{x\in F}r_xA_{xi}\ge\gamma,
+\end{equation}
+then there exists $w\in\Delta_L$ such that
+\begin{equation}\label{eq:convex-hull-conclusion}
+\forall x\in F,\qquad
+\sum_{i=1}^Lw_iA_{xi}\ge\gamma.
+\end{equation}
+The threshold $\gamma$ is unchanged.
+\end{lemma}
+
+\begin{proof}
+Consider the compact convex set of column mixtures
+\[
+C:=\{Aw:w\in\Delta_L\}\subseteq\mathbb R^F
+\]
+and the closed convex upper orthant
+\[
+Q_\gamma:=\{q\in\mathbb R^F:q_x\ge\gamma
+\text{ for every }x\in F\}.
+\]
+Conclusion \eqref{eq:convex-hull-conclusion} is equivalent to
+$C\cap Q_\gamma\ne\varnothing$.  Suppose instead that the two sets are
+disjoint.
+
+For $a\in\mathbb R$, write $a_+:=\max\{a,0\}$.  Coordinatewise
+minimization over $Q_\gamma$ gives, for every $c\in\mathbb R^F$,
+\begin{equation}\label{eq:orthant-distance}
+\operatorname{dist}(c,Q_\gamma)^2
+=\sum_{x\in F}(\gamma-c_x)_+^2.
+\end{equation}
+The right side is continuous.  Compactness of $C$ therefore gives a point
+$c^0\in C$ minimizing this distance.  Disjointness and
+\eqref{eq:orthant-distance} make the minimum strictly positive.  Define
+\begin{equation}\label{eq:closest-point-objects}
+q_x^0:=\max\{c_x^0,\gamma\},\qquad
+y:=q^0-c^0,\qquad
+\delta:=\lVert y\rVert_2>0.
+\end{equation}
+Then $q^0\in Q_\gamma$,
+$y_x=(\gamma-c_x^0)_+\ge0$, and
+$\delta=\operatorname{dist}(c^0,Q_\gamma)$.
+
+Fix $c\in C$.  By convexity,
+$c_t:=c^0+t(c-c^0)\in C$ for $t\in[0,1]$.  Minimality of $c^0$ and
+$q^0\in Q_\gamma$ imply
+\[
+\delta\le\operatorname{dist}(c_t,Q_\gamma)
+\le\lVert c_t-q^0\rVert_2.
+\]
+Since $c^0-q^0=-y$, squaring and subtracting
+$\delta^2=\lVert y\rVert_2^2$ yields
+\[
+0\le-2t\langle y,c-c^0\rangle
++t^2\lVert c-c^0\rVert_2^2.
+\]
+For $t>0$, divide by $t$ and let $t\downarrow0$.  Then
+\begin{equation}\label{eq:closest-point-support}
+\langle y,c\rangle\le\langle y,c^0\rangle
+\qquad\text{for every }c\in C.
+\end{equation}
+
+Set $S:=\sum_{x\in F}y_x$.  Since $y\ge0$ and $y\ne0$, one has
+$S>0$ and $r^0:=y/S\in\Delta_F$.  Whenever $y_x>0$, definition
+\eqref{eq:closest-point-objects} gives $q_x^0=\gamma$; coordinates with
+$y_x=0$ contribute nothing.  Consequently,
+\begin{equation}\label{eq:closest-point-gap}
+\langle y,q^0\rangle=\gamma S,\qquad
+\langle y,c^0\rangle=\gamma S-\lVert y\rVert_2^2.
+\end{equation}
+For the $i$th simplex vertex $e_i\in\Delta_L$, the column $Ae_i$ lies in
+$C$.  Equations \eqref{eq:closest-point-support} and
+\eqref{eq:closest-point-gap} give, for every $i$,
+\[
+\sum_{x\in F}r_x^0A_{xi}
+=\frac{\langle y,Ae_i\rangle}{S}
+\le\frac{\langle y,c^0\rangle}{S}
+=\gamma-\frac{\lVert y\rVert_2^2}{S}
+<\gamma.
+\]
+The maximum over $i$ is therefore below $\gamma$ for
+$r^0\in\Delta_F$, contradicting \eqref{eq:convex-hull-premise}.  Hence
+$C\cap Q_\gamma\ne\varnothing$, which is precisely
+\eqref{eq:convex-hull-conclusion}.  The proof reaches $\gamma$ itself and
+uses no limiting sequence of smaller thresholds.
+\end{proof}
+
+\begin{proposition}[Exact finite matrix minimax with attainment]
+\label{prop:step-003-finite-minimax}
+Let $F$ be a nonempty finite set, let $L\ge1$, and let
+$A\in\mathbb R^{F\times L}$.  Then
+\begin{align}
+\min_{r\in\Delta_F}\max_{i\in[L]}
+\sum_{x\in F}r_xA_{xi}
+&=\max_{w\in\Delta_L}\min_{r\in\Delta_F}
+\sum_{x\in F}\sum_{i=1}^Lr_xw_iA_{xi}\notag\\
+&=\max_{w\in\Delta_L}\min_{x\in F}
+\sum_{i=1}^Lw_iA_{xi}.
+\label{eq:finite-minimax}
+\end{align}
+The outer minimum and maximum are attained.
+\end{proposition}
+
+\begin{proof}
+The functions
+\[
+r\longmapsto\max_{i\in[L]}\sum_{x\in F}r_xA_{xi},
+\qquad
+w\longmapsto\min_{x\in F}\sum_{i=1}^Lw_iA_{xi}
+\]
+are finite maxima and minima of linear functions and hence continuous.
+Compactness of the two nonempty finite simplices gives attainment.  Let
+\[
+\beta:=\min_{r\in\Delta_F}\max_{i\in[L]}
+\sum_{x\in F}r_xA_{xi},\qquad
+\alpha:=\max_{w\in\Delta_L}\min_{x\in F}
+\sum_{i=1}^Lw_iA_{xi}.
+\]
+
+For every $r\in\Delta_F$ and $w\in\Delta_L$,
+\begin{equation}\label{eq:minimax-weak-duality}
+\min_{x\in F}\sum_{i=1}^Lw_iA_{xi}
+\le\sum_{x\in F}\sum_{i=1}^Lr_xw_iA_{xi}
+\le\max_{i\in[L]}\sum_{x\in F}r_xA_{xi}.
+\end{equation}
+The middle term is a convex average of the row payoffs for fixed $w$ and a
+convex average of the column payoffs for fixed $r$.  Maximizing the left side
+and minimizing the right side gives $\alpha\le\beta$.
+
+By definition of $\beta$, every $r\in\Delta_F$ satisfies
+\[
+\max_{i\in[L]}\sum_{x\in F}r_xA_{xi}\ge\beta.
+\]
+Lemma~\ref{lem:step-003-convex-hull-alternative}, applied with
+$\gamma=\beta$, gives $w^\star\in\Delta_L$ for which
+\[
+\min_{x\in F}\sum_{i=1}^Lw_i^\star A_{xi}\ge\beta.
+\]
+Thus $\alpha\ge\beta$, so $\alpha=\beta$.
+
+For fixed $w$, put $a_x:=\sum_iw_iA_{xi}$.  Every
+$r\in\Delta_F$ satisfies $\sum_xr_xa_x\ge\min_xa_x$, and equality holds at
+a simplex vertex supported on a minimizing row.  Hence
+\[
+\min_{r\in\Delta_F}\sum_{x\in F}\sum_{i=1}^Lr_xw_iA_{xi}
+=\min_{x\in F}\sum_{i=1}^Lw_iA_{xi}.
+\]
+Likewise, for fixed $r$, maximizing the bilinear expression over
+$\Delta_L$ gives the largest pure-column payoff.  These identities, together
+with $\alpha=\beta$, prove \eqref{eq:finite-minimax} in the stated
+row-minimizer/column-maximizer order.
+\end{proof}
+
+\begin{proposition}[Exact finite catalog feasibility]
+\label{prop:step-003-finite-feasibility}
+Under Assumptions~\ref{assump:finite-terminal-catalog} and
+\ref{assump:universal-expected-accuracy}, and
+Propositions~\ref{prop:step-002-policy-free-correlation} and
+\ref{prop:step-003-finite-minimax}, if $h\in H$ and $F\subseteq X$ is
+finite, then
+\[
+K_{h,F}:=\left\{w\in\Delta_L:
+h(x)\sum_{i=1}^Lw_i g_i(x)\ge\rho
+\text{ for every }x\in F\right\}
+\]
+is nonempty.  If $F=\varnothing$, then
+$K_{h,F}=\Delta_L$.  If $F\ne\varnothing$, then
+\begin{align}
+\min_{r\in\Delta_F}\max_{i\in[L]}
+\sum_{x\in F}r_xh(x)g_i(x)
+&=\max_{w\in\Delta_L}\min_{r\in\Delta_F}
+\sum_{x\in F}\sum_{i=1}^Lr_xw_i h(x)g_i(x)\notag\\
+&=\max_{w\in\Delta_L}\min_{x\in F}
+\sum_{i=1}^Lw_i h(x)g_i(x)
+\ge\rho,
+\label{eq:catalog-finite-minimax}
+\end{align}
+and an attained maximizer belongs to $K_{h,F}$.
+\end{proposition}
+
+\begin{proof}
+If $F=\varnothing$, there are no constraints, so
+$K_{h,\varnothing}=\Delta_L$.  Assumption~\ref{assump:finite-terminal-catalog}
+gives $L\ge1$, and the first simplex vertex proves nonemptiness.  No
+$\Delta_F$, distribution on $F$, or minimax expression is formed in this
+case.
+
+Suppose now that $F\ne\varnothing$.  By
+Lemma~\ref{lem:step-003-finite-support-payoff},
+\[
+\min_{r\in\Delta_F}\max_{i\in[L]}
+\sum_{x\in F}r_xA_{xi}\ge\rho
+\]
+for $A_{xi}=h(x)g_i(x)$.  Proposition~\ref{prop:step-003-finite-minimax}
+applies because both $F$ and $[L]$ are nonempty and finite, and substituting
+this matrix proves \eqref{eq:catalog-finite-minimax}, including its
+orientation and attainment.
+
+Choose an attained maximizer $w_{h,F}\in\Delta_L$ in the last expression.
+Then
+\[
+\min_{x\in F}\sum_{i=1}^Lw_{h,F,i}h(x)g_i(x)\ge\rho,
+\]
+so every $x\in F$ satisfies
+\[
+h(x)s_{w_{h,F}}(x)
+=\sum_{i=1}^Lw_{h,F,i}h(x)g_i(x)\ge\rho.
+\]
+Thus $w_{h,F}\in K_{h,F}$.  Every transfer is an equality or a direct
+consequence of an attained minimum, so the threshold remains exactly $\rho$.
+At $L=1$, the maximizer is the unique simplex weight; at
+$\varepsilon=0$, the same calculation retains margin $1$.
+
+For completeness, the logical chain is as follows.  Every
+$r\in\Delta_F$ defines the genuine distribution $D_r$, and the policy-free
+correlation result yields the row-game value without selecting any policy or
+requiring the best index to be coherent in $r$.  The reverse minimax
+inequality follows from Lemma~\ref{lem:step-003-convex-hull-alternative}, and
+the attained finite-game mixture is already a vector in $\Delta_L$.
+The proposition asserts no coherence among the separately produced
+$w_{h,F}$ for different finite sets; the next subsection supplies the
+arbitrary-domain passage.
+\end{proof}
+
+\subsection{Arbitrary-Domain Mixture Certificate}
+\label{app:arbitrary-domain-certificate}
+
+For $h\in H$ and finite $F\subseteq X$, retain the exact constraint set
+\begin{equation}\label{eq:finite-constraint-set}
+K_{h,F}:=\left\{w\in\Delta_L:
+h(x)s_w(x)\ge\rho\ \text{for every }x\in F\right\}.
+\end{equation}
+
+\begin{lemma}[Compact catalog simplex and closed exact constraints]
+\label{lem:step-004-compact-constraints}
+Under Assumption~\ref{assump:finite-terminal-catalog}, $\Delta_L$ is a
+nonempty compact subset of $\mathbb R^L$.  If $h\in H$ and
+$F\subseteq X$ is finite, then $K_{h,F}$ is closed in $\mathbb R^L$ and
+hence relatively closed in that same compact simplex.  Moreover,
+$K_{h,\varnothing}=\Delta_L$.
+\end{lemma}
+
+\begin{proof}
+Assumption~\ref{assump:finite-terminal-catalog} gives a finite integer
+$L\ge1$.  The vector $e_1=(1,0,\ldots,0)$ belongs to $\Delta_L$, so the
+simplex is nonempty.  It has the representation
+\begin{equation}\label{eq:simplex-closed-form}
+\Delta_L
+=\bigcap_{i=1}^L\{w\in\mathbb R^L:w_i\ge0\}
+\cap\left\{w\in\mathbb R^L:\sum_{i=1}^Lw_i=1\right\}.
+\end{equation}
+Every set on the right is closed, so $\Delta_L$ is closed.  For
+$w\in\Delta_L$,
+\[
+\lVert w\rVert_2\le\lVert w\rVert_1
+=\sum_{i=1}^Lw_i=1,
+\]
+so it is bounded.  In finite-dimensional $\mathbb R^L$, closed bounded sets
+are compact, and hence this one simplex is compact.
+
+Fix $h,F$, and $x\in F$.  The finite linear functional
+\[
+\lambda_{h,x}(w):=h(x)\sum_{i=1}^Lw_i g_i(x)
+\]
+is continuous.  Its inverse image of $[\rho,\infty)$ is closed, and
+\begin{equation}\label{eq:constraint-closed-form}
+K_{h,F}=\Delta_L\cap
+\bigcap_{x\in F}\lambda_{h,x}^{-1}([\rho,\infty)).
+\end{equation}
+The second intersection is finite, so $K_{h,F}$ is closed in
+$\mathbb R^L$.  If $F=\varnothing$, it is an empty intersection equal to
+$\mathbb R^L$, and \eqref{eq:constraint-closed-form} gives
+$K_{h,\varnothing}=\Delta_L$ without introducing a point of $X$.
+\end{proof}
+
+\begin{proposition}[Exact finite-intersection identity]
+\label{prop:step-004-exact-fip}
+Under Assumption~\ref{assump:finite-terminal-catalog},
+Proposition~\ref{prop:step-003-finite-feasibility}, and
+Lemma~\ref{lem:step-004-compact-constraints}, if $h\in H$,
+$n\in\mathbb N_0$, and $F_1,\ldots,F_n\subseteq X$ are finite, then,
+with intersections taken inside $\Delta_L$ and with the nullary conventions
+\[
+\bigcap_{j=1}^0K_{h,F_j}:=\Delta_L,
+\qquad
+\bigcup_{j=1}^0F_j:=\varnothing,
+\]
+one has
+\begin{equation}\label{eq:exact-finite-intersection}
+\bigcap_{j=1}^nK_{h,F_j}
+=K_{h,\,\bigcup_{j=1}^nF_j}\ne\varnothing.
+\end{equation}
+Thus the family of all $K_{h,F}$, over finite $F\subseteq X$, has the
+finite-intersection property, including its empty finite subfamily.
+\end{proposition}
+
+\begin{proof}
+For $n=0$, the left side of \eqref{eq:exact-finite-intersection} is
+$\Delta_L$ and the right side is $K_{h,\varnothing}$.  They are equal by
+Lemma~\ref{lem:step-004-compact-constraints} and nonempty because
+$e_1\in\Delta_L$.
+
+Now let $n\ge1$ and put $F_\cup:=\bigcup_{j=1}^nF_j$, which is finite.
+For $w\in\Delta_L$, the definition \eqref{eq:finite-constraint-set} gives
+\begin{align*}
+w\in\bigcap_{j=1}^nK_{h,F_j}
+&\iff
+\text{$h(x)s_w(x)\ge\rho$ for every $j$ and every $x\in F_j$}\\
+&\iff
+\text{$h(x)s_w(x)\ge\rho$ for every $x\in F_\cup$}\\
+&\iff w\in K_{h,F_\cup}.
+\end{align*}
+This proves the set identity.  Proposition~\ref{prop:step-003-finite-feasibility}
+gives $K_{h,F_\cup}\ne\varnothing$.  The same constraints and threshold
+occur on both sides, so neither coherence among finite witnesses nor a margin
+loss has been assumed.
+\end{proof}
+
+\begin{lemma}[Arbitrary closed-family intersection on the catalog simplex]
+\label{lem:step-004-compact-fip}
+Under Assumption~\ref{assump:finite-terminal-catalog} and
+Lemma~\ref{lem:step-004-compact-constraints}, let $\mathcal A$ be an
+arbitrary index set and let $\{C_\alpha\}_{\alpha\in\mathcal A}$ be a family
+of relatively closed subsets of $\Delta_L$.  If
+\[
+\bigcap_{\alpha\in\mathcal A_0}C_\alpha\ne\varnothing
+\]
+for every finite $\mathcal A_0\subseteq\mathcal A$, including the convention
+$\bigcap_{\alpha\in\varnothing}C_\alpha:=\Delta_L$, then
+\[
+\bigcap_{\alpha\in\mathcal A}C_\alpha\ne\varnothing.
+\]
+\end{lemma}
+
+\begin{proof}
+If $\mathcal A=\varnothing$, the total intersection is the nonempty simplex
+$\Delta_L$.  Otherwise, suppose for contradiction that the total
+intersection is empty.  The relatively open sets
+\[
+O_\alpha:=\Delta_L\setminus C_\alpha,
+\qquad \alpha\in\mathcal A,
+\]
+then cover $\Delta_L$.  Compactness from
+Lemma~\ref{lem:step-004-compact-constraints} gives a finite subcover indexed
+by some finite $\mathcal A_0\subseteq\mathcal A$:
+\[
+\Delta_L=\bigcup_{\alpha\in\mathcal A_0}O_\alpha.
+\]
+Taking complements relative to $\Delta_L$ yields
+$\bigcap_{\alpha\in\mathcal A_0}C_\alpha=\varnothing$, contradicting the
+finite-intersection premise.  The argument works for an index set of any
+cardinality and uses no sequence, measure, or topology on that index set.
+\end{proof}
+
+\begin{proposition}[Exact arbitrary-domain catalog weight]
+\label{prop:step-004-global-weight}
+Under Assumption~\ref{assump:finite-terminal-catalog},
+Proposition~\ref{prop:step-003-finite-feasibility},
+Lemma~\ref{lem:step-004-compact-constraints},
+Proposition~\ref{prop:step-004-exact-fip}, and
+Lemma~\ref{lem:step-004-compact-fip}, if $h\in H$, then there exists
+\begin{equation}\label{eq:global-weight-intersection}
+w_h\in
+\bigcap_{\substack{F\subseteq X\\F\text{ finite}}}K_{h,F}
+\subseteq\Delta_L.
+\end{equation}
+The same weight satisfies
+\begin{equation}\label{eq:global-score-margin}
+\forall x\in X,\qquad h(x)s_{w_h}(x)\ge\rho.
+\end{equation}
+Both conclusions hold on the empty domain, and the margin is unchanged.
+\end{proposition}
+
+\begin{proof}
+Fix $h\in H$.  By Lemma~\ref{lem:step-004-compact-constraints}, every
+$K_{h,F}$ is relatively closed in the same compact simplex $\Delta_L$.
+By Proposition~\ref{prop:step-004-exact-fip}, every finite subfamily has
+nonempty intersection, including the empty subfamily.  Apply
+Lemma~\ref{lem:step-004-compact-fip} with
+\[
+\mathcal A:=\{F\subseteq X:F\text{ is finite}\},
+\qquad C_F:=K_{h,F}.
+\]
+Its conclusion is the nonemptiness of the intersection in
+\eqref{eq:global-weight-intersection}; choose one member and call it $w_h$.
+
+For arbitrary $x\in X$, the singleton $\{x\}$ is finite.  Equation
+\eqref{eq:global-weight-intersection} gives
+$w_h\in K_{h,\{x\}}$, and the exact definition of this set yields
+\eqref{eq:global-score-margin}.  Equivalently,
+\[
+\rho-h(x)s_{w_h}(x)\le0
+\qquad\text{for every }x\in X,
+\]
+so the finite-to-global passage has no limiting, approximation, or
+cardinality-dependent residual.
+
+If $X=\varnothing$, the finite-subset index set contains only
+$\varnothing$ and the intersection is
+$K_{h,\varnothing}=\Delta_L\ne\varnothing$; one may choose $e_1$, and
+\eqref{eq:global-score-margin} is vacuous.  No distribution on the empty
+domain is formed.  If $L=1$, the construction returns the unique simplex
+weight, and if $\rho=1$, every point constraint keeps margin $1$.
+
+The sets being intersected are determined only by $h$, the fixed catalog,
+and $\rho$.  Thus $w_h$ depends on no distribution, valid policy, reply,
+transcript, learner-tape realization, point $x$, or coherent choice of the
+finite-game witnesses.  In particular, the exact identities
+\eqref{eq:exact-finite-intersection} and the compact closed-family argument
+provide the full arbitrary-domain passage without an annihilating
+distribution or topology on $X$.
+\end{proof}
+
+\subsection{Strict Deterministic Catalog Representation}
+\label{app:strict-catalog-representation}
+
+\begin{lemma}[Fixed catalog coordinates are the mixture score]
+\label{lem:step-005-coordinate-identity}
+Under Assumption~\ref{assump:finite-terminal-catalog}, the map
+\[
+\phi_G:X\longrightarrow\mathbb R^L,
+\qquad \phi_G(x)=(g_1(x),\ldots,g_L(x))
+\]
+is determined solely by the fixed catalog.  It is therefore independent of
+$D,h$, every valid policy and transcript, and the learner tape.  For every
+$w\in\Delta_L$ and $x\in X$,
+\begin{equation}\label{eq:coordinate-score-identity}
+\langle w,\phi_G(x)\rangle
+=\sum_{i=1}^Lw_i g_i(x)=s_w(x),
+\end{equation}
+and
+\begin{equation}\label{eq:mixture-score-bound}
+|\langle w,\phi_G(x)\rangle|\le1.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Assumption~\ref{assump:finite-terminal-catalog} fixes
+$g_1,\ldots,g_L$ before any of $D,h,\pi$, the replies, or the learner tape
+is selected.  Listing their deterministic values therefore introduces none
+of those later dependencies.  Since each $g_i(x)\in\{+1,-1\}$, the listed
+vector lies in $\mathbb R^L$.
+
+The Euclidean inner product with this vector is the finite coordinate sum in
+\eqref{eq:coordinate-score-identity}, which is exactly the definition of
+$s_w(x)$.  The upstream score and the feature-map score are thus the same
+object, with no transform or residual.  Finally, $w_i\ge0$,
+$\sum_iw_i=1$, and $|g_i(x)|=1$, so
+\[
+|\langle w,\phi_G(x)\rangle|
+\le\sum_{i=1}^Lw_i|g_i(x)|
+=\sum_{i=1}^Lw_i=1.
+\]
+\end{proof}
+
+\begin{lemma}[Strict binary signed-margin conversion]
+\label{lem:step-005-binary-sign}
+Under Assumption~\ref{assump:source-parameter-regime}, let
+$a\in\{+1,-1\}$ and $z\in\mathbb R$.  If $az\ge\rho$, then
+\[
+\begin{cases}
+z\ge\rho>\frac12>0,&a=+1,\\[1mm]
+z\le-\rho<-\frac12<0,&a=-1.
+\end{cases}
+\]
+Consequently $az>0$, $z\ne0$, and the strict sign of $z$ is the binary
+value $a$.
+\end{lemma}
+
+\begin{proof}
+Assumption~\ref{assump:source-parameter-regime} gives
+$0\le\varepsilon<1/4$, whence
+\[
+2\varepsilon<\frac12,
+\qquad \rho=1-2\varepsilon>\frac12>0.
+\]
+For $a=+1$, the premise is $z\ge\rho$.  For $a=-1$, it is
+$-z\ge\rho$, and multiplication by $-1$ reverses the inequality to
+$z\le-\rho<-1/2<0$.  The two cases exhaust the binary alphabet, and in
+both cases $az\ge\rho>0$, excluding a zero score and any tie convention.
+\end{proof}
+
+\begin{proposition}[Exact common-map catalog representation]
+\label{prop:step-005-exact-representation}
+Under Assumptions~\ref{assump:source-parameter-regime} and
+\ref{assump:finite-terminal-catalog}, and
+Proposition~\ref{prop:step-004-global-weight} and
+Lemmas~\ref{lem:step-005-coordinate-identity} and
+\ref{lem:step-005-binary-sign}, the single deterministic map $\phi_G$
+satisfies
+\begin{equation}\label{eq:exact-common-map-margin}
+\forall h\in H\ \exists w_h\in\Delta_L\ \forall x\in X,\qquad
+h(x)\langle w_h,\phi_G(x)\rangle
+\ge\rho=1-2\varepsilon>\frac12.
+\end{equation}
+For the same $w_h$,
+\begin{align*}
+h(x)=+1&\ \Longrightarrow\
+\langle w_h,\phi_G(x)\rangle\ge\rho>0,\\
+h(x)=-1&\ \Longrightarrow\
+\langle w_h,\phi_G(x)\rangle\le-\rho<0.
+\end{align*}
+Hence every signed product is strictly positive.  The assertion retains
+margin $1$ at $\varepsilon=0$, the unique weight at $L=1$, and vacuous
+pointwise truth when $X=\varnothing$.
+\end{proposition}
+
+\begin{proof}
+Fix $h\in H$.  Proposition~\ref{prop:step-004-global-weight} gives one
+$w_h\in\Delta_L$ such that
+$h(x)s_{w_h}(x)\ge\rho$ simultaneously for all $x\in X$.
+Lemma~\ref{lem:step-005-coordinate-identity} gives, for each such $x$,
+\begin{equation}\label{eq:same-target-margin-transfer}
+h(x)\langle w_h,\phi_G(x)\rangle
+=h(x)s_{w_h}(x)\ge\rho.
+\end{equation}
+The parameter regime supplies $\rho>1/2$, proving
+\eqref{eq:exact-common-map-margin} without loss.  Apply
+Lemma~\ref{lem:step-005-binary-sign} with
+$a=h(x)$ and $z=\langle w_h,\phi_G(x)\rangle$; its premise is exactly
+\eqref{eq:same-target-margin-transfer}, and its two cases give the stated
+strict score signs.
+
+Lemma~\ref{lem:step-005-coordinate-identity} also shows that $\phi_G$ is
+fixed once the primitive catalog is fixed and is common to all targets and
+protocol instances.  Proposition~\ref{prop:step-004-global-weight} constructs
+$w_h$ from the constraint family determined by $h,G$, and $\rho$, so it
+depends on no distribution, policy, reply, transcript, tape realization, or
+queried point.  The quantifier order is therefore
+$\forall h\,\exists w_h\,\forall x$.
+
+If $\varepsilon=0$, then $\rho=1$ and
+\eqref{eq:exact-common-map-margin} gives a signed product at least $1$.
+Equation \eqref{eq:mixture-score-bound} and $|h(x)|=1$ give the reverse
+bound, so the signed margin is exactly $1$ pointwise.  If $L=1$, then
+$\Delta_1=\{(1)\}$ and the same proof uses the unique weight and the
+one-coordinate map $(g_1(x))$.  If $X=\varnothing$, the global weight still
+exists, $\phi_G$ is the unique function from the empty domain into
+$\mathbb R^L$, and all pointwise statements are vacuous; no distribution is
+formed.  The live setting assumes $H\ne\varnothing$.  If that restriction
+were dropped, the outer universal statement would be vacuous and the
+zero-dimensional map would give $\operatorname{dc}(\varnothing)=0$.
+
+Thus the arbitrary-domain mixture score transfers to the primitive catalog
+inner product with zero residual, and strict positivity removes every sign
+tie.  This is an exact deterministic $L$-coordinate representation.
+\end{proof}
+
+\subsection{Boundary-Corrected Dimension Bound}
+\label{app:dimension-bound}
+
+\begin{proposition}[Boundary-corrected catalog dimension bound]
+\label{prop:step-006-dimension-chain}
+Under Assumptions~\ref{assump:source-parameter-regime} and
+\ref{assump:polynomial-catalog-budget}, the dimension definition
+\eqref{eq:dc-definition}, and
+Proposition~\ref{prop:step-005-exact-representation}, one has
+\begin{equation}\label{eq:dimension-chain}
+\operatorname{dc}(H)
+\le L
+\le B\left(1+\frac{m}{\tau^2}\right)^k.
+\end{equation}
+The conclusion is deterministic, fixed-horizon, and uses the exact strict
+pointwise sign representation.  It holds without alteration at $m=0$, for
+every finite $\tau>0$, at $L=1$, at $B=1$, and on the empty domain.  It is
+conditional on the catalog budget and makes no catalog-free or
+boundary-unadjusted $Cm/\tau^2$ assertion.
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:step-005-exact-representation} supplies one
+deterministic map $\phi_G:X\to\mathbb R^L$ and, for every $h\in H$, one
+$w_h\in\Delta_L\subseteq\mathbb R^L$ such that
+\[
+h(x)\langle w_h,\phi_G(x)\rangle
+\ge\rho>\frac12>0
+\qquad\text{for every }x\in X.
+\]
+Since the finite positive integer $L$ lies in $\mathbb N_0$, these objects
+make $d=L$ admissible in the set defining $\operatorname{dc}(H)$ in
+\eqref{eq:dc-definition}.  That set is nonempty, and its infimum satisfies
+\begin{equation}\label{eq:dc-at-most-catalog}
+\operatorname{dc}(H)\le L.
+\end{equation}
+The inference preserves the exact common-map quantifier order and makes no
+distributionwise, policywise, or pointwise selection of the feature map.
+
+Assumption~\ref{assump:polynomial-catalog-budget} states literally that
+\begin{equation}\label{eq:primitive-catalog-budget}
+1\le L\le B\left(1+\frac{m}{\tau^2}\right)^k.
+\end{equation}
+The displayed $B\ge1$ and integer $k\ge1$ are fixed family constants, with
+exactly the independence recorded in that assumption.  Appending the upper
+inequality in \eqref{eq:primitive-catalog-budget} to
+\eqref{eq:dc-at-most-catalog} proves \eqref{eq:dimension-chain} by
+transitivity, without a hidden constant or suppressed dependence.
+
+The boundary regimes are direct specializations of the same inequalities.
+If $m=0$, then every finite $\tau>0$ gives
+\[
+B\left(1+\frac{0}{\tau^2}\right)^k=B,
+\qquad
+\operatorname{dc}(H)\le L\le B,
+\]
+so the bound does not collapse to zero.  For every finite $\tau>0$, the
+denominator is positive and $1+m/\tau^2\ge1$; no condition $\tau\le1$,
+large-tolerance limit, or deletion of the leading $1$ occurs.  If $L=1$,
+Proposition~\ref{prop:step-005-exact-representation} gives
+$\operatorname{dc}(H)\le1$, while
+\eqref{eq:primitive-catalog-budget} remains literal.  If $B=1$, then
+\[
+\operatorname{dc}(H)\le L
+\le\left(1+\frac{m}{\tau^2}\right)^k.
+\]
+In the joint case $B=1$ and $m=0$, the inequalities
+$1\le L\le1$ force $L=1$.
+
+If $X=\varnothing$, the unique map $X\to\mathbb R^0$, with the unique
+zero-dimensional vector for every $h\in H$, satisfies the pointwise condition
+vacuously.  Hence $d=0$ is admissible in
+\eqref{eq:dc-definition}; since all admissible dimensions are nonnegative,
+$\operatorname{dc}(H)=0$, and \eqref{eq:dimension-chain} reads
+$0\le L\le B(1+m/\tau^2)^k$.  No distribution on the empty domain is used.
+
+Only \eqref{eq:dc-at-most-catalog} follows from the strict representation
+alone.  The second inequality uses the primitive budget
+\eqref{eq:primitive-catalog-budget}; nothing here derives such a budget for an
+arbitrary unrestricted response tree.  Nor is that expression replaced by
+$Cm/\tau^2$, which would contradict the $m=0$ specialization.  There is no
+auxiliary parameter, term absorption, probability conversion, horizon
+upgrade, or norm change.
+\end{proof}
+
+\subsection{Proof of the Main Theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Proposition~\ref{prop:step-005-exact-representation}, whose dependencies are
+ultimately the exact terminal catalog law in
+Proposition~\ref{prop:step-001-catalog-law}, the universal correlation in
+Proposition~\ref{prop:step-002-policy-free-correlation}, the finite
+certificate in Proposition~\ref{prop:step-003-finite-feasibility}, and the
+arbitrary-domain passage in Proposition~\ref{prop:step-004-global-weight},
+gives the single map $\phi_G$ and the exact pointwise margin
+\[
+\forall h\in H\ \exists w_h\in\Delta_L\ \forall x\in X,\qquad
+h(x)\langle w_h,\phi_G(x)\rangle
+\ge1-2\varepsilon>\frac12.
+\]
+The same proposition supplies strict signs and the required independence of
+the map and weights.  Proposition~\ref{prop:step-006-dimension-chain} then
+applies the definition of $\operatorname{dc}(H)$ and appends the primitive
+catalog budget to obtain
+\[
+\operatorname{dc}(H)\le L
+\le B\left(1+\frac{m}{\tau^2}\right)^k.
+\]
+Its proof also establishes the exact $m=0$, finite-$\tau$, $L=1$, $B=1$,
+and empty-domain specializations.  These are precisely all conclusions of
+Theorem~\ref{thm:main}.
+\end{proof}

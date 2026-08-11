@@ -1,0 +1,34 @@
+You are the step-scoped proof producer for perspective_1/idea_1, step_001, unit attempt 1 under sketch attempt 2, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+First read <CODEX_SKILLS_ROOT>/proof-step/SKILL.md completely and every directly required shared contract/template it names. Then prove exactly the accepted attempt-2 step_001 row.
+
+Binding artifacts and hashes:
+- setting.md: f77d11e1a559e22a96b14de1936d50c691c79d5a4a15e5806ddf4e6d119ada83
+- idea.md: 90d54348c0603de55463b9e61611436feb86a1c329966f786db2fc8bc43ba910
+- proof_sketch.md: 2fa48ee16cca9a8d0379071f448d1e72ce98ae46d624482d772e74b97649c74a
+- proof_sketch_review.md: 40b66331aa50a66607d068e266c545a865044bd175a56d81f012542e6d17d6f8, status ACCEPTED
+- optional global_proof.md planning context: 45e93d102aa948c0d80886e5f21cf3bdaa412dfaa25611684eb363d48fa1f5b9
+- paired global_proof_review.md: cd86cc68e3982c55aeb16fcafbda0759bb71464aee405c4a158bd41a308463db, status ACCEPTED
+- dependencies: None
+
+Exact target: for every x in [-1,1] and every i in {1,...,N}, prove
+
+|G_i'(x)| <= D_* := Delta B_Q (1 + q B_P),
+
+including the q=0 empty-chain convention and explicit degree-zero dependence on M. Work in the exact one-input Balcan--Nguyen--Sharma common-chain convention already fixed in setting.md and the accepted sketch. At z=(x,eta(x)) in [-1,1]^(q+1), derive directly from the monomial coefficient l1 budgets that
+
+|P_j(z)| <= B_P,
+|partial_x Q_i(z)| <= Delta B_Q,
+|partial_{y_j} Q_i(z)| <= Delta B_Q.
+
+Then apply the ordinary chain rule
+
+G_i'(x) = partial_x Q_i(z) + sum_{j=1}^q partial_{y_j} Q_i(z) P_j(z)
+
+and prove the literal bound Delta B_Q + q Delta B_Q B_P = D_*. Do not insert a monomial-count, degree-count, or unrecorded range factor. Explain explicitly why differentiating a monomial lowers its exponent and why the sum of differentiated coefficient magnitudes is at most Delta times the original coefficient l1 budget, including Delta=0. Preserve the actual G_i object and normalized x coordinate; no surrogate, transformed target, or residual is allowed.
+
+Use exactly primitive assump:balcan-common-chain and assump:anchored-unit-range. This is a direct primitive-source derivation with no accepted dependency artifact and no external theorem. The accepted global proof may supply planning ideas only and is never proof evidence, a citation, or an assumption source. Progress type is full. Export only the public-facing literal derivative envelope D_* needed by steps 002, 006, and 010. Audit q=0, Delta=0, B_P=0, x=+/-1, and the Counter-example 1 scale B_Q=1/delta. State explicitly that M appears with degree zero.
+
+The pre-existing live step_001 proof and review are stale sketch-attempt-1 artifacts and are byte-identical to the precise archive at proof_history/sketch_001/proof_steps/step_001/attempt_001/. You may inspect those two exact same-step files before overwriting only as diagnostic context if useful; they establish no attempt-2 claim and must not be cited as evidence. Do not scan any other proof_history content.
+
+Write only perspective_1/idea_1/proof_steps/step_001/proof.md. Do not edit trackers, worker_log.md, dependency artifacts, reviews, final artifacts, or another branch. Use all required proof-step sections, exact assumption provenance, a complete local lemma map, cited-result applications, detailed derivations, target-step assembly, explicit-rate audit, blockers, and notation/public-surface classifications. Set Step Proof Status to COMPLETE only if the exact claim is fully proved. Before reporting, validate binding hashes, ASCII/control bytes, structurally balanced TeX delimiters and braces, Markdown table arity while ignoring escaped pipes, local-unit correspondence, required headings, and file scope. Report status, path, local-unit count, and final SHA-256.

@@ -1,0 +1,90 @@
+\section{Preliminaries}\label{sec:preliminaries}
+
+Assumption~\ref{assump:base_conditioning} makes each deterministic base
+matrix full column rank.  Define the fixed left coordinate maps
+\[
+\Lambda_A=(\bar A^{\mathsf T}\bar A)^{-1}\bar A^{\mathsf T},
+\qquad
+\Lambda_B=(\bar B^{\mathsf T}\bar B)^{-1}\bar B^{\mathsf T},
+\qquad
+\Lambda_C=(\bar C^{\mathsf T}\bar C)^{-1}\bar C^{\mathsf T},
+\]
+and their modewise tensor product
+\[
+Q=\Lambda_A\otimes\Lambda_B\otimes\Lambda_C.
+\]
+The map $Q$ is used in the theorem to compare the ambient residual with a
+coefficient-space deficit.  Both coefficient and ambient tensor spaces carry
+their Frobenius norms.
+
+For every component and time, set
+\[
+\alpha_i^t=\Lambda_Ax_{i,t},
+\qquad
+\beta_i^t=\Lambda_By_{i,t},
+\qquad
+\gamma_i^t=\Lambda_Cz_{i,t},
+\qquad
+p_{i,t}=\alpha_i^t\otimes\beta_i^t\otimes\gamma_i^t.
+\]
+With $e_1,\ldots,e_r$ the standard basis of $\mathbb R^r$, define
+\[
+D_r=\sum_{j=1}^r e_j\otimes e_j\otimes e_j,
+\qquad \|D_r\|_F=\sqrt r,
+\]
+and
+\[
+C_t=\sum_{i=1}^k p_{i,t},
+\qquad
+\mathcal S_t=\operatorname{span}\{p_{i,t}:i\in[k]\},
+\qquad
+P_t=\operatorname{Proj}_{\mathcal S_t}.
+\]
+Here $P_t$ is the orthogonal projector in coefficient Frobenius geometry,
+including $P_t=0$ if $\mathcal S_t=\{0\}$.  Finally, put
+\[
+\Delta_0=\operatorname{dist}_F(D_r,\mathcal S_0),
+\qquad
+E_\rho=QT-D_r.
+\]
+These quantities are all defined from the setting objects.  In particular,
+the adaptive spaces $\mathcal S_t$ are outputs of the unconstrained ALS
+trajectory and are not required to remain in $\mathcal S_0$ or in any other
+fixed space.
+
+For positive constants $\delta,L_P,\zeta,C_T$ satisfying
+\[
+L_P<\delta/4,
+\qquad
+\zeta<\delta/4,
+\]
+let $\mathsf C_2(\delta,L_P,\zeta,C_T)$ denote exactly the event on which
+the following four clauses hold:
+\begin{enumerate}
+\item \emph{Normalized entry deficit:}
+\[
+\Delta_0\geq\delta\|D_r\|_F=\delta\sqrt r.
+\]
+\item \emph{Finite adaptive-projector path:}
+\[
+\sum_{t=0}^{\infty}\|P_{t+1}-P_t\|_{\mathrm{op}}\leq L_P.
+\]
+\item \emph{Unsquared finite represented-tensor variation:}
+\[
+\sum_{t=0}^{\infty}\|\widehat T_{t+1}-\widehat T_t\|_F<\infty.
+\]
+\item \emph{Relative smoothing and target scale:}
+\[
+\|E_\rho\|_F\leq\zeta\|D_r\|_F,
+\qquad
+\|T\|_F\leq C_T\|D_r\|_F,
+\]
+where $C_T=C_T(\kappa,q)$ is independent of $r,n,k$ and of the admissible
+deterministic base triple.
+\end{enumerate}
+These four clauses are conditional hypotheses of the main theorem, not
+primitive assumptions and not claimed consequences of
+Assumptions~\ref{assump:dimension}--\ref{assump:independent_initialization}.
+They include no Gram condition, factor bound, fixed-subspace restriction,
+basin, trapping event, persistent residual premise, positive-loss premise, or
+assertion about their own probability.

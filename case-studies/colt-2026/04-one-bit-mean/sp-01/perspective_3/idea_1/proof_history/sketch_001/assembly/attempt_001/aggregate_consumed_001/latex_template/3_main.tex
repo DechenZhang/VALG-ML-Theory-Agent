@@ -1,0 +1,37 @@
+\section{Main Theorem}
+
+\begin{theorem}[Order-optimal fully non-adaptive one-bit mean estimation]
+\label{thm:main}
+Under Assumptions~\ref{assump:parameter-domain}--
+\ref{assump:precommitted-protocol}, for every fixed $k>1$ there are constants
+$c_k,C_k>0$ and choices $a_k,b_k,\alpha_k,\beta_k>0$, all depending only on
+$k$, such that the protocol of Section~\ref{sec:preliminaries} is well defined
+for every known $\lambda\geq\sigma>0$, every
+$0<\epsilon\leq c_k\sigma$, and every $\delta\in(0,1/2)$.  Every query is a
+Borel set fixed before the first response; the protocol has no interactive
+transition, sends exactly one bit for each independent sample it uses, and has
+the deterministic non-stopping horizon $n=N_{\rm loc}+N_{\rm ref}$ satisfying
+\[
+ n\leq C_k r_k(\lambda,\sigma,\epsilon,\delta).
+\]
+Moreover, with probability taken jointly over all observations and all
+localization and refinement randomness,
+\[
+ \sup_{D\in\mathcal D(k,\lambda,\sigma)}
+ \Pr_D\left\{|\widehat\mu-\mu(D)|>\epsilon\right\}\leq\delta.
+\]
+The norm is absolute value on $\mathbb R$; the displayed rate retains every
+$\lambda,\sigma,\epsilon,\delta$ factor, and the hidden constant depends only
+on the fixed $k$.
+
+For any realized localization output $c$, the same construction has two exact
+baseline reductions.  If $D(J_{0,j_0(c)})=1$, all retained higher-level
+corrections and the outer residual vanish exactly, leaving the same fixed
+median aggregation applied only to the level-zero unbiased dither correction.
+If $D\{m_0(c)\}=1$, every refinement correction vanishes seedwise and
+$\widehat\mu=m_0(c)=\mu(D)$.
+\end{theorem}
+
+The auxiliary choices, all ceiling bounds, the conditional-to-unconditional
+probability conversion, and the three explicit substitutions are verified in
+the Rate Specialization Bridge, Proposition~\ref{prop:rate-specialization-bridge}.

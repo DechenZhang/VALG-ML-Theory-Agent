@@ -1,0 +1,23 @@
+You are the distinct step-scoped proof reviewer for perspective_1/idea_1, step_009, unit attempt 1, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+First read <CODEX_SKILLS_ROOT>/proof-step-review/SKILL.md completely and every directly required shared contract/template it names. Then independently review exactly the submitted step_009 proof. Do not trust the producer's COMPLETE status or validation report.
+
+Binding artifacts and hashes:
+- setting.md: f77d11e1a559e22a96b14de1936d50c691c79d5a4a15e5806ddf4e6d119ada83
+- proof_sketch.md: e7035d01ff910e55426d09e1add806b49103404582df2cf3e998000a8eebe898
+- proof_sketch_review.md: ccc24fd25cd6ac468831c0cd84f8aea642d7584e7cd402686da3bb6f82a86561, status ACCEPTED
+- target proof.md: dedafd879112766a36b21219fd796648dfd794da944fe3de7c371c9159290333
+- dependency step_005 proof.md: 8af0c8f33a8e26e96adcc9808aadcd77e6464d930d6acdbcf0e7f255934cc68d
+- dependency step_005 review.md: 97aad3d3cc66eea47cf89b8896cc4482387b35decf484914e092b901e58c8712, status ACCEPTED
+
+Audit the exact accepted row and all three local units. Independently verify:
+- the specialized tuple follows the setting conventions exactly, including q=0, M=0, Delta=1, A=1, B_P=0, and B_Q=1/delta for 0<delta<=1;
+- differentiating the normalized curve gives the displayed Euclidean speed and ordinary projective supremum exactly 1/delta, with no metric or presentation switch;
+- the closed root event on [0,epsilon] is exactly the union of both displayed wedges, including coefficient axes, origin, square and wedge boundaries, and both interval endpoints;
+- for 0<epsilon<=delta, each wedge has area epsilon/(2 delta), their overlap is null, and the uniform full joint density 1/4 gives exact probability epsilon/(4 delta) without independence or an almost-everywhere event replacement;
+- dividing only by positive epsilon and using one admissible law and interval yields C^Pf >= 1/(4 delta), without a limiting argument;
+- the accepted step_005 dependency is used only for the upper comparison, and substitution gives the exact projective certificate 1/delta and raw-presentation certificate sqrt(2)/delta;
+- no equality for C^Pf, hidden constant, auxiliary tolerance, alternate coefficient convention, or stronger claim is introduced;
+- rate, probability, norm, boundary, assumption-provenance, and target-assembly contracts pass, and every independent subclaim has a matching paper-ready result.
+
+Use exactly the controlled review fields and one per-unit audit for unit_001 through unit_003. Write only perspective_1/idea_1/proof_steps/step_009/review.md. Do not edit the proof, trackers, worker log, dependencies, history, prompt, or any other branch. Validate binding hashes, ASCII/control bytes, balanced TeX delimiters/braces, Markdown table arity ignoring escaped pipes, required headings, reviewed-artifact identity, and file scope. Report status, smallest retry target, path, reviewed proof hash, and final review SHA-256.

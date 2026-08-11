@@ -1,0 +1,36 @@
+\documentclass[11pt, letterpaper]{article}
+\usepackage{subcaption}
+\makeatletter
+\@namedef{ver@subfigure.sty}{2002/03/15 v2.1.5}
+\makeatother
+\usepackage{arxiv}
+\makeatletter
+\expandafter\let\csname ver@subfigure.sty\endcsname\relax
+\makeatother
+\usepackage{tikz}
+\usepackage{adjustbox}
+\usepackage{cancel}
+\usetikzlibrary{positioning, arrows.meta}
+
+\title{\LARGE Order-Optimal Noninteractive One-Bit Mean Estimation}
+
+\author{}
+\date{\small{\today}}
+
+\begin{document}
+
+\maketitle
+
+\input{1_intro.tex}
+\input{2_preliminary.tex}
+\input{3_main.tex}
+\input{4_proof_sketch.tex}
+
+\newpage
+\bibliographystyle{ims}
+\bibliography{reference}
+
+\newpage
+\input{5_appendix.tex}
+
+\end{document}

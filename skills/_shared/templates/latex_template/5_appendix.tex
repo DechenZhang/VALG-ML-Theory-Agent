@@ -1,0 +1,66 @@
+\appendix
+
+\section{Proof Details}
+
+\subsection{Step ID: Step Goal}\label{app:step-id}
+
+Each appendix subsection should contain the full paper-ready translation of the
+corresponding step derivation. Public appendix proof content should use only
+lemma, theorem, proposition, corollary, and proof environments, apart from
+appendix headings and concise mathematical exposition needed to introduce a
+result. Convert any step-local claim, hypothesis, or invariant into one of the
+allowed public theorem-style units, or integrate it into a proof environment;
+do not emit public claim, hypothesis, or invariant environments or proof
+dependencies. Do not replace detailed derivations with a summary. When choosing
+between more helper notation and more visible derivation, prefer the visible
+derivation unless the notation clearly improves repeated complex calculations
+without hiding any proof obligation.
+
+\begin{lemma}[Local Result Title]\label{lem:step-id-unit-001}
+Under Assumptions~\ref{assump:example} and any named prior theorem-style
+results used by this unit, if the local conditions for this unit hold, then
+state the exact conclusion in current notation.
+\end{lemma}
+
+\begin{proof}
+Translate the full local derivation for this unit into LaTeX. Preserve the
+definitions, inequalities, recursions, case checks, constants, parameter
+dependence, and cited-result assumption discharge needed to audit the argument.
+\end{proof}
+
+\begin{proposition}[Step Assembly]\label{prop:step-id-assembly}
+Under the numbered assumptions and preceding theorem-style results used by this
+step, if the step-local conditions hold, then state the exact step-level
+conclusion as a theorem-style result.
+\end{proposition}
+
+\begin{proof}
+Combine the preceding local units and earlier labeled appendix results to prove
+the step-level conclusion. Use internal references such as
+Lemma~\ref{lem:step-id-unit-001}; use BibTeX-backed citation commands only for
+external sources.
+\end{proof}
+
+\begin{proposition}[Rate Specialization Bridge]\label{prop:rate-specialization-bridge}
+Use this proposition only when the public main theorem or corollary simplifies a
+technical appendix rate. State the auxiliary parameter choices, the public
+assumptions, the technical theorem conditions being verified, and the final
+simplified rate.
+\end{proposition}
+
+\begin{proof}
+Verify every technical condition from the source theorem, prove each term
+absorption or simplification by an explicit inequality under stated
+admissibility thresholds, convert the probability statement to the public
+probability mode, and state the final hidden-constant dependence.
+\end{proof}
+
+\subsection{Proof of the Main Theorem}
+
+\begin{proof}[Proof of the main theorem]
+Combine the earlier theorem-style results and direct algebraic implications to
+prove Theorem~\ref{thm:main}. Cite only lemmas, theorems, propositions,
+corollaries, or numbered assumptions as proof authorities; do not use public
+claims, hypotheses, invariants, subsection titles, or local unit IDs as proof
+authorities.
+\end{proof}

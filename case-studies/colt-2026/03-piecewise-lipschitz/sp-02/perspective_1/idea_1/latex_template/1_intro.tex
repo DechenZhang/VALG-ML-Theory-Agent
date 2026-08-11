@@ -1,0 +1,109 @@
+\section{Theoretical Setup}
+
+\subsection{Anchored common-chain presentations}
+
+Fix integers $N\geq 1$ and $q\geq 0$, a center $c\in\mathbb R$, and a
+half-width $h>0$.  Write
+\[
+\Theta=[c-h,c+h],
+\qquad
+x=x(\theta):=\frac{\theta-c}{h}\in[-1,1].
+\]
+The ambient parameter dimension is $p=1$.  For a polynomial $S$, let
+$\|\operatorname{coeff}(S)\|_1$ denote the sum of the absolute values of its
+coefficients in the standard monomial basis.
+
+Let $\eta=(\eta_1,\ldots,\eta_q)$ be a common triangular chain on
+$[-1,1]$.  For $1\leq j\leq q$, let $P_j$ be its chain polynomial in
+$(x,y_1,\ldots,y_j)$.  For $1\leq i\leq N$, let $Q_i$ be an output
+polynomial in $(x,y_1,\ldots,y_q)$.  We use the one-variable convention in
+\citep{balcan2025pfaffian}:
+\[
+M:=\max_{1\leq j\leq q}\deg P_j\quad(q\geq1),
+\qquad
+\Delta:=\max_{1\leq i\leq N}\deg Q_i,
+\]
+where degrees are total degrees, and $M=0$ when $q=0$.  Define
+\[
+G_i(x):=Q_i(x,\eta_1(x),\ldots,\eta_q(x)),
+\qquad
+F_i(\theta):=G_i(x(\theta)),
+\]
+and
+\[
+B_P:=
+\begin{cases}
+\displaystyle\max_{1\leq j\leq q}
+ \|\operatorname{coeff}(P_j)\|_1,&q\geq1,\\
+0,&q=0,
+\end{cases}
+\qquad
+B_Q:=\max_{1\leq i\leq N}
+ \|\operatorname{coeff}(Q_i)\|_1.
+\]
+The affine change from $x$ to $\theta$ leaves $q,M,\Delta$ unchanged and
+satisfies $d/d\theta=h^{-1}d/dx$.
+
+For $R>0$ and $0<\kappa<\infty$, let $\mathcal D_{N,R,\kappa}$ be the class
+of Borel probability laws on $\mathbb R^N$ with a Lebesgue density supported
+on $[-R,R]^N$ and bounded almost everywhere by $\kappa$.  No product
+structure is part of this definition.
+
+\subsection{Assumptions}
+
+\begin{assumption}[Primitive parameter regime]
+\label{assump:parameter-regime}
+$N\geq1$, $q\geq0$, $h>0$, $R>0$, and $0<\kappa<\infty$;
+$\Theta=[c-h,c+h]$; the class $\mathcal D_{N,R,\kappa}$ is nonempty; and all
+polynomial degrees and coefficient budgets displayed above are finite static
+presentation data.
+\end{assumption}
+
+\begin{assumption}[Balcan common-chain presentation]
+\label{assump:balcan-common-chain}
+Each $\eta_j\in C^1([-1,1])$ satisfies
+\[
+\eta_j'(x)=P_j(x,\eta_1(x),\ldots,\eta_j(x)),
+\qquad \deg P_j\leq M,
+\]
+and every output has the common-chain representation
+\[
+G_i(x)=Q_i(x,\eta_1(x),\ldots,\eta_q(x)),
+\qquad \deg Q_i\leq\Delta.
+\]
+Thus $q$ is chain length, $M$ is chain degree, $\Delta$ is output degree,
+and $p=1$.
+\end{assumption}
+
+\begin{assumption}[Literal anchor and unit-range certificate]
+\label{assump:anchored-unit-range}
+For every $x\in[-1,1]$, $|\eta_j(x)|\leq1$ for all $j$, and
+$Q_1\equiv1$.  No separate lower norm margin or projective-speed bound is
+assumed.
+\end{assumption}
+
+\begin{assumption}[Arbitrarily correlated capped joint laws]
+\label{assump:cube-density-laws}
+In every probabilistic clause, $\alpha$ is drawn from an arbitrary
+$\mu\in\mathcal D_{N,R,\kappa}$.  Only cube support and the cap on the full
+joint density are available; the coordinates may be arbitrarily correlated.
+\end{assumption}
+
+\begin{assumption}[Deterministic affine offset and pivot cover]
+\label{assump:affine-chart-data}
+Whenever the affine clause is invoked, $F_0\in C^1(\Theta)$, and the selected
+measurable sets $E_1,\ldots,E_N$ form a partition
+$I=\bigsqcup_{j=1}^N E_j$ of the interval under consideration, with
+$F_j(\theta)\neq0$ on $E_j$.
+\end{assumption}
+
+\subsection{Objective}
+
+Our goal is a single theorem that derives projective conditioning from the
+anchored presentation, controls central and affine coefficient incidences for
+arbitrary capped joint laws, recovers the exact monic-polynomial baseline with
+the leading coefficient kept deterministic, and records the sharp metric
+scale forced by the two-feature example.  The result applies to the declared
+anchored, unit-range, coefficient-controlled presentation; it makes no claim
+that every raw Pfaffian presentation admits such a normalization with
+polynomial budgets.

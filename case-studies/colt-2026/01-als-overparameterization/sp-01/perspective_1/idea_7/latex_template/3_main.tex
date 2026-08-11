@@ -1,0 +1,164 @@
+\section{Main Theorem}\label{sec:main}
+
+\begin{theorem}[Conditional strictly subquadratic recovery]
+\label{thm:main}
+There are universal choices of
+$C_{\rm rank},C_{\rm burn},C_{\rm cert},C_{\rm stop},C_{\rm rep}>0$ such
+that the following holds uniformly under
+Assumptions~\ref{assump:base-scale}--\ref{assump:accuracy-confidence}.
+
+With probability at least $1-\delta_{\rm sm}$ over the once-drawn smoothing
+perturbations, there is an event $E_{\rm sm}$ on which every realized column
+has norm at least $(2\kappa _0)^{-1}$ and, for each mode $M$,
+\[
+ q_{\rm real}\le q_*,\qquad \Gamma\le1.01,\qquad
+ \lambda_{\min}\!\left((G_{M'}\odot G_{M''})^\top
+ (G_{M'}\odot G_{M''})\right)\ge1-q_*^2.
+\]
+The construction of $E_{\rm sm}$ separately controls the linear directional,
+independent quadratic, normalization, row-sum, and finite-union terms required
+by Assumption~\ref{assump:smoothing-margin}.
+
+Conditional on any fixed instance in $E_{\rm sm}$, the exact observable
+target/slot event $E_{{\rm win},ij}=W_{ij}\cap C_{ij}$ from
+Section~\ref{sec:setup} has probability
+$\Theta(r^{-5/3}(\log r)^{-3/2})$, with universal positive constants.
+Thus all three target raw coordinates lie in
+$[\sqrt{a_*\log r},\sqrt{a_*\log r}+1/\sqrt{a_*\log r}]$ in absolute
+value, while every competing pair product is at most $b_*\log r$.
+Consequently
+\[
+ k=U(r)=\left\lceil C_{\rm rank}r^{5/3}(\log r)^{5/2}\right\rceil=o(r^2)
+\]
+gives one-run all-target coverage probability at least $26/27$. On every
+covered slot,
+\[
+ R_0\le\frac{19}{20},\qquad S_0\le rR_0,
+\]
+and, whenever $\Gamma R_t<1$,
+\[
+ R_{t+1}\le\left(\frac{\Gamma R_t+q_{\rm real}}
+ {1-\Gamma q_{\rm real}R_t}\right)^2,\qquad
+ S_{t+1}\le
+ \frac{(\Gamma R_t+q_{\rm real})
+ \{\Gamma(1+q_{\rm real})S_t+q_{\rm real}\}}
+ {(1-\Gamma q_{\rm real}R_t)^2}.
+\]
+The denominator persists, the burn and certification horizons are finite,
+and the procedure stores a state with $\zeta\le\tau_r$. The fully observable
+retention, graph, failure, and tie-breaking rule in
+Section~\ref{sec:setup} returns one representative per target without labels.
+After a proof-only permutation and product-one sign gauge, its balanced seed
+satisfies
+\[
+ \max_M\bigl(\|C_M^0\|_{\rm row,1}\vee\|C_M^0\|_{\rm col,1}\bigr)
+ \le48\omega,\qquad
+ \max_{M,j}\|N_M^0(:,j)\|_2\le\tau_r,\qquad
+ \|s^0\|_\infty\le128\omega.
+\]
+
+Before any landing output is committed, the three designs formed from this
+single frozen seed simultaneously have the direct pair/cross-Gram
+cancellation, positive pair-Gram floors, both induced-norm inverse reserves,
+positive diagonal scale congruences, and strictly positive output normalizers.
+Thus their three Moore--Penrose solves are evaluated independently from the
+same seed. Their joint commit and one product-preserving rebalance yield an
+exact target-span state satisfying
+\[
+ d_Q(e^{\rm land},0)\le4096\omega<\rho_{\rm ALS}/3.
+\]
+No landing output, post-solve scale, comparator, or reserve is an input to a
+second landing call.
+
+Starting from $e^{\rm land}$, every chronological $U/V/W$ cyclic sweep is
+quotient-equivalent to the literal active ALS orbit, stays in the
+$\rho_{\rm ALS}$ chart, and obeys
+\[
+ d_Q(e^{t+1},0)\le\frac{17}{512}d_Q(e^t,0)<\frac1{16}d_Q(e^t,0).
+\]
+Every covered run therefore reaches the original stopping rule
+\[
+ \left\|T-\sum_{i=1}^k
+ \widehat x_i\otimes\widehat y_i\otimes\widehat z_i\right\|_F
+ \le\epsilon\|T\|_F
+\]
+before the pre-registered cap. Every other tape, including singular and
+nonhitting branches, also terminates at that cap. With
+\[
+ J=\max\left\{1,
+ \left\lceil C_{\rm rep}\log(1/\delta_{\rm init})\right\rceil\right\},
+\]
+independent completed runs, the conditional success probability is at least
+$1-\delta_{\rm init}$. The returned tensor has at most $U(r)$ nonzero terms,
+and its total dense arithmetic work is polynomial in
+\[
+ n,r,\kappa _0,\rho^{-1},\log(1/\epsilon),
+ \log(1/\delta_{\rm init}),
+\]
+with constants depending only on the fixed universal choices and the declared
+finite envelope exponents $d_\kappa,d_\rho$. The instance and restart
+probabilities remain nested rather than being absorbed into $k$.
+\end{theorem}
+
+This is a conditional result for the primitive base-scale, cumulative-Gram,
+near-balance, and smoothing-margin regime. It does not assert recovery for an
+unrestricted deterministic base or for an unmodified parallel ALS landing.
+
+\begin{corollary}[Explicit dense runtime and probability specialization]
+\label{cor:rate-specialization-bridge}
+Under Assumptions~\ref{assump:base-scale}--\ref{assump:accuracy-confidence},
+use the choices in Theorem~\ref{thm:main} and set
+\[
+ m_{\rm cap}=\left\lceil C_{\rm stop}
+ \log\frac{8\kappa _0^2}{\epsilon}\right\rceil,
+ \qquad
+ J=\max\left\{1,
+ \left\lceil C_{\rm rep}\log\frac1{\delta_{\rm init}}\right\rceil\right\}.
+\]
+On the event $E_{\rm sm}$ of Theorem~\ref{thm:main}, the returned output has
+conditional success probability at least $1-\delta_{\rm init}$ and
+\[
+\begin{aligned}
+W_{\rm total}=O\!\Big((1+\log(1/\delta_{\rm init}))\big[&n^3
++n^3r^{5/3}(\log r)^{7/2}+nr^{10/3}(\log r)^5\\
+&+(1+\log\kappa _0+\log(1/\epsilon))
+\{n^3r^{5/3}(\log r)^{5/2}
++n^2r^{10/3}(\log r)^5+r^5(\log r)^{15/2}\}\big]\Big).
+\end{aligned}
+\]
+The hidden constant depends only on the universal algorithmic constants.
+Assumptions~\ref{assump:base-scale} and
+\ref{assump:gaussian-smoothing} give
+$\kappa _0\le r^{d_\kappa}$ and $\rho^{-1}\le r^{d_\rho}$; the displayed
+cost is independent of $\rho^{-1}$ and hence is polynomial in the full
+declared parameter list. Moreover,
+\[
+ \Pr(E_{\rm sm})\ge1-\delta_{\rm sm},\qquad
+ \Pr(\mathrm{success}\mid\mathcal F_{\rm sm})\ge1-\delta_{\rm init}
+ \quad\text{on }E_{\rm sm},
+\]
+so the joint success probability is at least
+$(1-\delta_{\rm sm})(1-\delta_{\rm init})$.
+\end{corollary}
+
+\begin{proof}
+This is the specialization and probability conversion in
+Proposition~\ref{prop:rate-specialization-bridge}.
+\end{proof}
+
+\begin{corollary}[Deterministic exact-certified-seed baseline]
+\label{cor:exact-certified-seed}
+Assume the deterministic scope $\mathsf{ExactCertifiedSeed}$ from
+Section~\ref{sec:preliminaries}, including $\rho_{\rm sm}=0$, orthonormal
+$U,V,W$, equal positive weights, and exact certified representatives up to
+permutation and a product-one sign gauge. Then all three frozen landing
+outputs are the exact balanced target factors, the joint rebalance preserves
+them, every chronological cyclic state is fixed with product-log register
+zero, and the original relative Frobenius residual is exactly zero for every
+$\epsilon>0$.
+\end{corollary}
+
+\begin{proof}
+The exact identities are proved in
+Propositions~\ref{prop:step-013-frozen-landing}--\ref{prop:step-013-zero-residual}.
+\end{proof}

@@ -1,0 +1,34 @@
+# Rigor Proof Review
+
+## Reviewer Verdict
+
+PASS
+
+## Blocking Issues
+
+None
+
+## Nonblocking Concerns
+
+None
+
+## Suggested Repair Depth
+
+None
+
+## Smallest Candidate Repair Target
+
+None
+
+## Rigor Audit
+
+- Mathematical derivations: Independently compared all 49 accepted local derivations, every used cited-result application, and all 12 Target-Step Assemblies with the actual appendix proof body, followed by the final theorem assembly and main proof. The coefficient-height calculation, Frobenius and operator bounds, normalized-projector identity, completed-measurability construction, finite-pivot exhaustion, area/coarea multiplicity accounting, persistent-root nullity, translated-section bounds, affine and homogeneous probability coefficients, monic chart calculations, and Counter-example equality are all derived with their stated constants and scopes. The Federer area formula, Ball cube-section theorem, Gardner translated-section input, and Balcan common-chain convention are cited consistently with the uses made of them.
+- Statement self-containedness: The public theorem, assumptions, definitions, appendix statements, and proofs form a standalone argument. In particular, the appendix publicly states the equal-dimensional area formula and the repaired injective affine area formula before use, names the exact producer results used in the final conjunction, and retains the boundary excluding any certificate-existence or presentation-format claim for unrestricted raw Pfaffian presentations. All 542 labels are unique, all 90 distinct reference targets resolve, all four citation keys exist and are used, and a fresh standalone build converges without unresolved references, citations, or substantive warnings.
+- Main theorem constants and notation: The public proof preserves the literal certificate based on the displayed coefficient list, the inequalities between operator norm, Frobenius norm, and certificate height, and the homogeneous normalized-curve identity in the original Euclidean parameter metric. The affine coefficient is exactly \(\kappa\sqrt2(2R)^{N-1}(1+NR^2)=A(1+NR^2)/(\sqrt2R)\), the homogeneous coefficient is exactly \(A\sqrt{N/2}\), and the monic certificate is exactly \((\sum_{k=1}^d k^2)^{1/2}\). The Counter-example keeps \(1/(4\delta)\), \(1/\delta\), and \(\sqrt2/\delta\) distinct, with the last identified as geometric rather than probabilistic.
+- Derivation-over-notation: The proof does not rely on labels, theorem counts, compilation, or assembly metadata in place of mathematics. The appendix supplies the measurable domains, localized Lipschitz charts, exact Jacobians, multiplicity inequalities, monotone exhaustion, persistent-set argument, section pullback, velocity bounds, root wedges, and density integrals used in the public conclusions. Tangencies, multiple roots, zero Jacobians, and lack of a uniform pivot margin are handled by the actual area and exhaustion arguments rather than by genericity notation.
+- Explicit-rate contract: Every equality-to-inequality transition and constant simplification was checked. The affine velocity bound retains \(1+NR^2\); the homogeneous section calculation retains the literal \(\sqrt2\) Ball factor before its exact conversion to \(A\sqrt{N/2}\); the monic inner and outer velocity sums retain \(d+Rd(d-1)/2\); and the exact wedge area \(\epsilon/\delta\) is multiplied by density \(1/4\) before division by the positive length \(\epsilon\). No clipping, term absorption, chart-count factor, interval-location factor, orientation factor, multiplicity loss, or hidden dependence is introduced.
+- Appendix full derivations: The source-to-appendix comparison covers Steps 001 through 012 with local-unit counts \(5,3,5,4,3,3,3,5,7,4,6,1\), totaling 49, and includes each source proof's cited-result ledger and Target-Step Assembly. The appendix preserves the literal coefficient certificate, completed measurability and finite exhaustion, coordinate-free section formula, translated cube-section estimates, affine and homogeneous rates, original-coordinate monic charts, the six Counter-example derivations, the final dependency conjunction, and the main theorem proof. No accepted source obligation is replaced by a high-level correspondence claim.
+- Quantifiers and constants: The deterministic presentation and supplied closure certificate are fixed before selection of a law and interval. General probability statements quantify over each arbitrary full-joint-density law with arbitrary coefficient correlation, and each capacity takes the interval supremum for a fixed law before the outer law supremum. The monic specialization keeps its deterministic leading coefficient outside the random vector, and the independent uniform law is used only for the selected Counter-example equality. All vector, operator, Frobenius, and projective norms and all Hausdorff section measures use the declared Euclidean conventions.
+- Probability or convergence modes: All conclusions use ordinary probability, with no confidence event, conditional-density substitution, expectation conversion, or independence reduction for the general law class. Full-joint-density domination is applied directly to measurable coefficient sets. Finite chart images increase to the exhausted event, continuity from below is used in the extended nonnegative reals, persistent-root coefficient sets lie in proper affine subspaces and are null, and the interval-then-law supremum order is unchanged.
+- Boundary cases: Weak cube and pivot inequalities retain faces, corners, endpoints, and empty sections. The proofs cover \(N=1\), the \(k=0\) Hausdorff/counting convention, empty cells, zero Jacobians, tangent and multiple roots, stationary and zero-certificate branches, negative outer monic coordinates, \(\theta=0,\pm1\), \(d=1\), \(d=2\), intervals contained in either monic region, and empty or singleton monic intervals. The Counter-example includes both closed sign wedges, both coefficient axes, \(\theta=0\) and \(\theta=\epsilon\), \(\epsilon=\delta\), \(\delta=1\), and the limit through positive \(\epsilon\) only.
+- Hidden subclaims: The assembly-attempt-2 repair is complete. The new affine theorem covers arbitrary measurable \(D\), nonnegative Borel \(h\), extended-real integrals, the factor \(\sqrt{\det(L^{\mathsf T}L)}\), and the \(k=0\) convention. Step 004 instantiates \(k=N-1\), \(n=N\), \(D=\mathcal B_{j,\theta}\), and \(\Xi=\Psi_j(\theta,\cdot)\); it proves Borel measurability, injectivity, exact-section bijectivity, the Gram determinant and its nonnegative square root, weak-boundary retention, empty-section behavior, and \(N=1\). The resulting Hausdorff pullback has exactly the accepted factor \(\lVert F(\theta)\rVert_2/\lvert F_j(\theta)\rvert\), with no orientation, multiplicity, or boundary-deletion factor.

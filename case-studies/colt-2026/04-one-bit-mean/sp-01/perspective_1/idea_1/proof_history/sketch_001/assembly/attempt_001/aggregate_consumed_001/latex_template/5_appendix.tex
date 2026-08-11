@@ -1,0 +1,4674 @@
+\appendix
+
+\section{Proof Details}\label{sec:proof-details}
+
+\subsection{Coded One-Bit Localization}\label{app:step-001}
+
+\begin{lemma}[Central \(k\)-moment implies the localization first moment]\label{lem:step-001-first-moment}
+Under Assumptions~\ref{assump:parameter-domain} and \ref{assump:moment-class},
+\[
+\mathbb E_D|X-\mu|\leq\sigma.
+\]
+\end{lemma}
+
+\begin{proof}
+Let \(V=|X-\mu|\). Assumption~\ref{assump:moment-class} gives \(\mathbb EV^k\leq\sigma^k<\infty\), and Assumption~\ref{assump:parameter-domain} gives \(k>1\). H\"older's inequality with conjugate exponents \(k\) and \(k/(k-1)\) gives
+\[
+\mathbb EV
+=\mathbb E[V\cdot1]
+\leq(\mathbb EV^k)^{1/k}
+       \bigl(\mathbb E1^{k/(k-1)}\bigr)^{(k-1)/k}
+=(\mathbb EV^k)^{1/k}
+\leq\sigma.
+\]
+This is the first-moment condition required by the localization theorem.
+\end{proof}
+
+\begin{proposition}[Deterministic coded localization interval]\label{prop:step-001-source-localization}
+Under Assumptions~\ref{assump:parameter-domain}, \ref{assump:moment-class}, and \ref{assump:iid-independent-randomness}, and using Lemma~\ref{lem:step-001-first-moment}, set \(\eta=\delta/4\). The localization theorem of \citet[Theorem~16 and its localization appendix]{lau2026orderoptimal} has an exact instantiation in the present precommitted Borel-set query convention which uses one bit from every localization sample and returns an always-defined interval \(I\) satisfying
+\[
+|I|\leq100\sigma,
+\qquad
+\Pr\{\mu\in I\}\geq1-\eta.
+\]
+In the branch \(2\lambda\leq20\sigma\), the instantiation uses no sample and returns \([-\lambda,\lambda]\). In the branch \(2\lambda>20\sigma\), it uses exactly
+\[
+\ell=\left\lceil10000\left(\log N+\log\frac1\eta\right)\right\rceil,
+\qquad
+N=\left\lceil\frac{2\lambda}{20\sigma}\right\rceil,
+\]
+localization samples. A deterministic rule resolves every Hamming-score tie.
+\end{proposition}
+
+\begin{proof}
+First, \(\eta=\delta/4\in(0,1/2)\) by Assumption~\ref{assump:parameter-domain}. The same assumption gives \(\lambda\geq\sigma>0\); Assumption~\ref{assump:moment-class} gives \(\mu\in[-\lambda,\lambda]\); Lemma~\ref{lem:step-001-first-moment} gives \(\mathbb E|X-\mu|\leq\sigma\); and Assumption~\ref{assump:iid-independent-randomness} supplies the iid localization samples. These discharge every hypothesis of the cited localization result.
+
+For completeness, the exact object map is as follows. Put \(h=20\sigma\).
+
+Trivial branch \(2\lambda\leq h\). Take \(I_{\rm loc}=\varnothing\), make the localization public seed a constant, issue no query, and set
+\[
+I=[-\lambda,\lambda].
+\]
+Then \(I\) is always defined, \(\mu\in I\) deterministically, and
+\[
+|I|=2\lambda\leq h=20\sigma\leq100\sigma.
+\]
+This includes the boundary \(2\lambda=h\), as well as \(\lambda=\sigma\).
+
+Nontrivial branch \(2\lambda>h\). Define
+\[
+N=\left\lceil\frac{2\lambda}{h}\right\rceil\geq2,
+\qquad
+\Delta=\frac{2\lambda}{N},
+\qquad
+a_v=-\lambda+(v-1)\Delta.
+\]
+Use the localization bins
+\[
+B_v=[a_v,a_{v+1})\quad(v<N),
+\qquad
+B_N=[a_N,a_{N+1}],
+\]
+and the clipped cells
+\[
+C_1=(-\infty,a_2),
+\qquad
+C_v=[a_v,a_{v+1})\ (1<v<N),
+\qquad
+C_N=[a_N,\infty).
+\]
+Thus the clipped-bin map \(b:\mathbb R\to[N]\) satisfies \(b^{-1}(v)=C_v\). Set
+\[
+\ell=\left\lceil10000\left(\log N+\log\frac1\eta\right)\right\rceil.
+\]
+Since \(N\geq2\) and \(\ell\geq10000\log N\), the checked balanced-codebook lemma supplies deterministic \(\mathsf c_1,\ldots,\mathsf c_N\in\{0,1\}^{\ell}\). For the \(t\)-th localization sample define
+\[
+Q_t(x)=\mathsf c_{b(x),t},
+\qquad
+\mathcal B_t=Q_t^{-1}(\{1\})
+=\bigcup_{v:\,\mathsf c_{v,t}=1}C_v.
+\]
+Every \(C_v\) is an interval and the union is finite, so \(\mathcal B_t\) is Borel. Moreover
+\[
+Y_t=Q_t(X_t)=\mathbf1\{X_t\in\mathcal B_t\}.
+\]
+The codebook, the sets \(\mathcal B_t\), and the enumeration of \(I_{\rm loc}\) depend only on known parameters and are fixed before any sample response. Hence the cited Boolean-query convention and the present measurable-set convention are identical, query by query. Take \(R_{\rm loc}\) to be a constant encoding this fixed schedule; its degeneracy satisfies the stipulated independence.
+
+For candidate \(v\), form
+\[
+H_v=\sum_{t=1}^{\ell}\mathbf1\{Y_t\neq\mathsf c_{v,t}\},
+\qquad
+\widehat i=\min\operatorname*{argmin}_{v\in[N]}H_v,
+\]
+and return
+\[
+I=\bigcup_{u=\max\{1,\widehat i-2\}}^{\min\{N,\widehat i+2\}}B_u.
+\]
+The finite argmin is nonempty, and taking its least index makes both \(\widehat i\) and \(I\) deterministic and always defined for every bit transcript.
+
+The cited appendix proves \(h/2\leq\Delta\leq h\); therefore this union of at most five consecutive bins obeys
+\[
+|I|\leq5\Delta\leq5h=100\sigma.
+\]
+It also proves the containment probability in precisely this convention. In brief, for the true bin \(i=b(\mu)\), the safe set \(S=\{u:|u-i|\leq2\}\) has probability mass at least \(19/20\) by Markov's inequality and Lemma~\ref{lem:step-001-first-moment}. A heaviest safe anchor has mass at least \(19/100\). The balanced-codeword bounds then give, for every far bin \(j\notin S\),
+\[
+\mathbb E[H_j-H_{i^*}]>0.05\ell,
+\qquad
+\Pr\{H_j\leq H_{i^*}\}\leq e^{-0.00125\ell}.
+\]
+A union bound yields
+\[
+\Pr\{\widehat i\notin S\}
+\leq N e^{-0.00125\ell}
+\leq\eta.
+\]
+The non-strict comparison \(H_j\leq H_{i^*}\) already includes every tie between a far minimizer and the safe anchor. Consequently the bound holds for the least-index deterministic tie rule fixed above, rather than requiring an unspecified favorable tie resolution. Whenever \(\widehat i\in S\), the enlarged interval contains the true bin and hence \(\mu\). Thus \(\Pr\{\mu\in I\}\geq1-\eta\).
+
+Combining the two branches proves the proposition.
+\end{proof}
+
+\begin{lemma}[midpoint localization wrapper]\label{lem:step-001-midpoint}
+Under Assumptions~\ref{assump:parameter-domain}, \ref{assump:moment-class}, and \ref{assump:iid-independent-randomness}, and Proposition~\ref{prop:step-001-source-localization}, define
+\[
+c=\operatorname{mid}(I):=\frac{\inf I+\sup I}{2},
+\qquad
+\mathcal E_{\rm loc}:=\{|c-\mu|\leq50\sigma\}.
+\]
+Then \(c\) is an always-defined measurable function of the localization transcript,
+\[
+\Pr(\mathcal E_{\rm loc})\geq1-\frac\delta4,
+\]
+and on \(\mathcal E_{\rm loc}\), \(|c-\mu|\leq50\sigma\). The midpoint postprocessing uses no additional sample or query.
+\end{lemma}
+
+\begin{proof}
+Proposition~\ref{prop:step-001-source-localization} returns in each branch a nonempty bounded interval \(I\), including the possible half-open interval produced by a consecutive union of localization bins. Hence \(\inf I\), \(\sup I\), and their midpoint are defined for every transcript. In the nontrivial branch, the decoded index takes values in a finite set and the interval endpoints are deterministic functions of that index; in the trivial branch \(I\) is deterministic. Thus \(c\) is measurable and always defined.
+
+On the interval-containment event \(\{\mu\in I\}\), elementary interval geometry gives
+\[
+|c-\mu|
+\leq\frac{\sup I-\inf I}{2}
+=\frac{|I|}{2}
+\leq50\sigma.
+\]
+Therefore \(\{\mu\in I\}\subseteq\mathcal E_{\rm loc}\), and Proposition~\ref{prop:step-001-source-localization}, with \(\eta=\delta/4\), yields
+\[
+\Pr(\mathcal E_{\rm loc})
+\geq\Pr\{\mu\in I\}
+\geq1-\eta
+=1-\frac\delta4.
+\]
+In the trivial branch, the stronger deterministic identities \(c=0\) and \(|c-\mu|\leq\lambda\leq10\sigma\) hold. Defining the present decoder \(\mathsf{Dec}_{\rm loc}\) to perform this midpoint postprocessing does not change a localization query or its sample count. Thus the localization constant may be fixed as the universal value \(L_k=50\).
+\end{proof}
+
+\begin{lemma}[explicit localization cost]\label{lem:step-001-cost}
+Under Assumption~\ref{assump:parameter-domain} and Proposition~\ref{prop:step-001-source-localization}, the exact localization cost is
+\[
+N_{\rm loc}=
+\begin{cases}
+0, & 2\lambda\leq20\sigma,\\[0.35em]
+\left\lceil10000\left(
+\log\left\lceil\dfrac{2\lambda}{20\sigma}\right\rceil
++\log\dfrac4\delta
+\right)\right\rceil, & 2\lambda>20\sigma,
+\end{cases}
+\]
+and, uniformly over both branches,
+\[
+N_{\rm loc}
+\leq1+10000\log\frac\lambda\sigma
++30000\log\frac1\delta
+=O\left(1+\log\frac\lambda\sigma+\log\frac1\delta\right).
+\]
+The hidden constant is universal and in particular is independent of \(k,\lambda,\sigma,\delta,D\).
+\end{lemma}
+
+\begin{proof}
+Only the nontrivial branch needs an estimate. Write \(\rho=\lambda/\sigma\). Then \(\rho>10\), and
+\[
+N=\left\lceil\frac\rho{10}\right\rceil
+\leq\frac\rho{10}+1
+\leq\rho,
+\]
+so \(\log N\leq\log\rho\). Also, since \(\delta<1/2\),
+\[
+\log\frac4\delta
+=\log4+\log\frac1\delta
+\leq3\log\frac1\delta.
+\]
+Using \(\lceil x\rceil\leq x+1\) in the exact appendix count gives
+\[
+N_{\rm loc}=\ell
+\leq1+10000\log\frac\lambda\sigma
++30000\log\frac1\delta.
+\]
+The trivial branch has \(N_{\rm loc}=0\), so the same nonnegative upper bound applies.
+\end{proof}
+
+\begin{proof}[Completion of the localization certificate]
+Lemma~\ref{lem:step-001-first-moment} derives \(\mathbb E|X-\mu|\leq\sigma\) from the unrestricted central \(k\)-moment assumption. Together with the parameter and iid conditions, this discharges every hypothesis of the cited localization theorem.
+
+Proposition~\ref{prop:step-001-source-localization} then instantiates that theorem and its appendix in the present model: Boolean queries become precommitted Borel membership queries, the localization seed is degenerate, one fresh iid sample yields one bit, the zero-query and coded branches are both covered, and the least-index rule makes every decoder tie deterministic. It gives an always-defined interval with
+\[
+|I|\leq100\sigma,
+\qquad
+\Pr\{\mu\in I\}\geq1-\delta/4.
+\]
+
+Lemma~\ref{lem:step-001-midpoint} supplies the interval-to-midpoint bridge: with \(c=\operatorname{mid}(I)\), interval containment implies \(|c-\mu|\leq50\sigma\), and hence
+\[
+\Pr(\mathcal E_{\rm loc})\geq1-\delta/4.
+\]
+Lemma~\ref{lem:step-001-cost} gives the exact branchwise count and the uniform additive bound
+\[
+N_{\rm loc}
+=O\left(1+\log\frac\lambda\sigma+\log\frac1\delta\right),
+\]
+with a universal hidden constant. These four named results jointly establish the localization center, event, and count, with \(I\) retained only for the interval construction.
+\end{proof}
+
+\subsection{Moment Recentring at the Decoder}\label{app:step-002}
+
+\begin{lemma}[actual-center moment recentering]\label{lem:step-002-recentered-moment}
+Under Assumption~\ref{assump:moment-class} and Lemma~\ref{lem:step-001-midpoint}, for every localization transcript whose
+generated center \(c\) lies in
+\(\mathcal E_{\rm loc}=\{\lvert c-\mu\rvert\leq50\sigma\}\),
+\[
+\mathbb E_D\lvert X-c\rvert^k
+\leq 2^{k-1}(1+50^k)\sigma^k.
+\]
+\end{lemma}
+
+\begin{proof}
+Fix an arbitrary localization transcript in
+\(\mathcal E_{\rm loc}\). Relative to the distributional expectation
+\(\mathbb E_D\), its output \(c\) is now a fixed real number. For every
+\(x\in\mathbb R\), the scalar triangle inequality and the elementary power
+inequality \((u+v)^k\leq2^{k-1}(u^k+v^k)\) give
+\[
+\begin{aligned}
+\lvert x-c\rvert^k
+&=\lvert (x-\mu)+(\mu-c)\rvert^k\\
+&\leq\bigl(\lvert x-\mu\rvert+\lvert\mu-c\rvert\bigr)^k\\
+&\leq2^{k-1}\left(
+    \lvert x-\mu\rvert^k+\lvert\mu-c\rvert^k
+  \right).
+\end{aligned}
+\]
+Taking expectation with respect to \(X\sim D\) is legitimate because the
+right-hand side is integrable: its first term has finite expectation by
+Assumption~\ref{assump:moment-class}, and its second term is a finite
+constant for the fixed transcript. Hence
+\[
+\mathbb E_D\lvert X-c\rvert^k
+\leq2^{k-1}\left(
+  \mathbb E_D\lvert X-\mu\rvert^k+\lvert\mu-c\rvert^k
+\right).
+\]
+Assumption~\ref{assump:moment-class} and the localization bound on
+\(\mathcal E_{\rm loc}\) now yield
+\[
+\begin{aligned}
+\mathbb E_D\lvert X-c\rvert^k
+&\leq2^{k-1}\left(\sigma^k+(50\sigma)^k\right)\\
+&=2^{k-1}(1+50^k)\sigma^k.
+\end{aligned}
+\]
+The argument holds for every transcript in the generated event, so the claimed
+on-event statement is pathwise in the localization output.
+
+For the zero-displacement boundary \(c=\mu\), the original expression itself
+gives the sharper exact specialization
+\[
+\mathbb E_D\lvert X-c\rvert^k
+=\mathbb E_D\lvert X-\mu\rvert^k
+\leq\sigma^k.
+\]
+Thus recentering preserves the primitive moment when no translation is present;
+the displayed exported constant only covers the full localization radius.
+\end{proof}
+
+\begin{proof}[Completion of the recentered-moment certificate]
+Lemma~\ref{lem:step-001-midpoint} supplies the actual center used
+by the protocol and proves the derived displacement invariant
+\(\lvert c-\mu\rvert\leq50\sigma\) on the generated event
+\(\mathcal E_{\rm loc}\). Assumption~\ref{assump:moment-class} supplies the
+only primitive moment input,
+\(\mathbb E_D\lvert X-\mu\rvert^k\leq\sigma^k\).
+
+Lemma~\ref{lem:step-002-recentered-moment} composes exactly those two
+inputs through the direct power inequality and proves, for every localization
+outcome in \(\mathcal E_{\rm loc}\),
+\[
+\mathbb E_D\lvert X-c\rvert^k
+\leq C_k^{\rm rec}\sigma^k,
+\qquad
+C_k^{\rm rec}:=2^{k-1}(1+50^k).
+\]
+The constant is finite for every fixed \(k>1\) and depends only on \(k\). The
+center in this conclusion is the actual decoder output of
+Lemma~\ref{lem:step-001-midpoint}, not an
+oracle center or a surrogate. This is the stated result and
+exports the requested recentered moment.
+\end{proof}
+
+\subsection{Dyadic Scales and Level Probabilities}\label{app:step-003}
+
+\begin{lemma}[tail-calibrated dyadic design and ceiling ordering]\label{lem:step-003-scale-ordering}
+Under Assumption~\ref{assump:parameter-domain} and the \(C_k^{\rm rec}\) interface of
+Lemma~\ref{lem:step-002-recentered-moment}, define
+\[
+\overline C_k^{\rm tail}
+:=\frac{11}{3}\left(\frac{8}{3}\right)^{k-1}C_k^{\rm rec},
+\qquad
+\gamma_k:=\frac18,
+\]
+\[
+b_k:=\max\left\{4,
+  \left(8\overline C_k^{\rm tail}\right)^{1/(k-1)}
+\right\},
+\qquad
+c_k:=e^{-1}.
+\]
+For every \(0<\epsilon\leq c_k\sigma\), let \(h_0,H_*,J,h_j,H\)
+be exactly the setting-defined scales. Then all three design constants are
+legal, \(J\geq1\), and
+\[
+0<h_0<\sigma<\frac{H_*}{2}
+\leq h_{J-1}=\frac H2
+<H_*\leq H<2H_*.
+\]
+In particular, \(0\in\mathcal J_{\rm f}\),
+\(J-1\in\mathcal J_{\rm c}\), and both groups are nonempty. These
+conclusions remain valid at the largest permitted accuracy
+\(\epsilon=c_k\sigma\).
+\end{lemma}
+
+\begin{proof}
+Lemma~\ref{lem:step-002-recentered-moment} gives
+\(0<C_k^{\rm rec}<\infty\) as a function of fixed \(k\) only. Hence
+\(\overline C_k^{\rm tail}\) is positive, finite, and \(k\)-only. Because
+\(k-1>0\), the displayed choices satisfy
+\[
+0<\gamma_k<1,
+\qquad b_k\geq4\geq1,
+\qquad 0<c_k<1,
+\qquad
+b_k^{k-1}\geq8\overline C_k^{\rm tail}.
+\]
+Thus they meet every design-domain requirement in the setup.
+
+Put, only for this proof,
+\[
+t:=\frac{\sigma}{\epsilon}.
+\]
+Assumption~\ref{assump:parameter-domain} and \(c_k=e^{-1}\) imply
+\(t\geq e\), including equality at the largest allowed \(\epsilon\). The
+bottom scale therefore obeys
+\[
+h_0=\frac{\epsilon}{8}=\frac{\sigma}{8t}
+\leq\frac{\sigma}{8e}<\sigma.
+\]
+Moreover,
+\[
+\frac{H_*}{h_0}
+=\frac{b_k\sigma t^{1/(k-1)}}{\epsilon/8}
+=8b_k t^{1+1/(k-1)}
+=8b_k t^{k/(k-1)}>1.
+\]
+Consequently \(J=\lceil\log_2(H_*/h_0)\rceil\) is a positive integer.
+Applying the ceiling relation to \(x=H_*/h_0\) gives
+\[
+2^{J-1}<\frac{H_*}{h_0}\leq2^J.
+\]
+After multiplying by \(h_0\), and recalling \(H=2^Jh_0\), this is
+\[
+\frac H2=h_{J-1}<H_*\leq H<2H_*.
+\]
+The middle lower bound follows separately from \(H\geq H_*\):
+\[
+h_{J-1}=\frac H2\geq\frac{H_*}{2}
+=\frac{b_k}{2}\sigma t^{1/(k-1)}
+\geq2\sigma e^{1/(k-1)}>\sigma.
+\]
+Together with \(h_0<\sigma\), these displays prove the full ordering and
+show that the endpoint indices \(0\) and \(J-1\) lie in the claimed groups.
+Every inequality used \(t\geq e\), so equality
+\(\epsilon=c_k\sigma\) causes no endpoint or ceiling failure.
+\end{proof}
+
+\begin{proposition}[group partition and empty-group-safe level law]\label{prop:step-003-group-law}
+Let \(k>1\), \(\sigma>0\), \(h_0>0\), and \(J\geq1\), and set
+\(h_j=2^jh_0\) for \(0\leq j\leq J\). With the setting's group, weight,
+and probability definitions, the sampled indices \(\{0,\ldots,J-1\}\)
+are the disjoint union of a fine prefix
+\(\mathcal J_{\rm f}\) and a coarse suffix \(\mathcal J_{\rm c}\), with
+the equality case \(h_j=\sigma\) assigned to the fine prefix. Every nonempty
+group \(G\) has \(W_G>0\). If \(m\) is the number of nonempty groups and
+\[
+p_j=\frac1m\frac{w_j}{W_G}\qquad(j\in G),
+\]
+then
+\[
+\sum_{j\in G}p_j=\frac1m
+\quad\text{for each nonempty }G,
+\qquad
+\sum_{j=0}^{J-1}p_j=1.
+\]
+For inequality statements, an empty group's normalizer may be extended by the
+empty-sum convention \(W_G=0\); its probability formula is not evaluated. If
+one group is empty, the other group receives all mass with \(m=1\). Both
+groups cannot be empty because \(J\geq1\). If, in addition,
+Assumption~\ref{assump:parameter-domain} holds and the constants and scales
+are those of Lemma~\ref{lem:step-003-scale-ordering}, then both groups are
+nonempty, so \(m=2\) and each receives mass \(1/2\).
+\end{proposition}
+
+\begin{proof}
+The scales are strictly increasing because
+\(h_{j+1}=2h_j\). Hence once \(h_j>\sigma\), every later sampled scale is
+also larger than \(\sigma\), and every earlier scale is smaller than that
+scale. Thus the indices satisfying \(h_j\leq\sigma\) form a prefix, while
+those satisfying \(h_j>\sigma\) form the complementary suffix. The weak and
+strict inequalities make the two sets disjoint and place an exact transition
+\(h_j=\sigma\) in \(\mathcal J_{\rm f}\).
+
+Every weight is strictly positive: on the fine group,
+\(w_j=h_j/\sigma>0\), and on the coarse group,
+\(w_j=(h_j/\sigma)^{2-k}>0\). A finite sum of at least one positive weight is
+positive, so \(W_G>0\) for each nonempty group. Consequently the displayed
+formula for \(p_j\) never divides by zero. Direct summation within such a
+group gives
+\[
+\sum_{j\in G}p_j
+=\frac1m\frac{\sum_{j\in G}w_j}{W_G}
+=\frac1m.
+\]
+Summing this identity over the \(m\) nonempty groups gives total mass one.
+
+If a group is empty, its defining sum contains no terms, so setting that sum
+to zero is the usual empty-sum extension for bounds. The protocol definition
+only applies \(w_j/W_G\) for \(j\in G\), so an empty group creates neither an
+index nor a denominator. Since \(J\geq1\), the sampled index set is nonempty,
+and at least one of the two partition sets is nonempty. Thus \(m\in\{1,2\}\),
+and in the one-group case the preceding mass identity gives mass one to the
+existing group. Finally,
+Lemma~\ref{lem:step-003-scale-ordering} proves that index \(0\) is fine
+and index \(J-1\) is coarse under the theorem choices, so there \(m=2\).
+\end{proof}
+
+\begin{lemma}[uniform fine normalizer]\label{lem:step-003-fine-normalizer}
+For every positive dyadic scale family covered by
+Proposition~\ref{prop:step-003-group-law}, the fine normalizer satisfies
+\[
+0\leq W_{\rm f}\leq2,
+\]
+where \(W_{\rm f}=0\) is the empty-sum value if
+\(\mathcal J_{\rm f}=\varnothing\). If the group is nonempty, then in fact
+\(W_{\rm f}<2\).
+\end{lemma}
+
+\begin{proof}
+The empty case is immediate. Otherwise let
+\(j_{\rm f}:=\max\mathcal J_{\rm f}\). By the prefix property from
+Proposition~\ref{prop:step-003-group-law},
+\(\mathcal J_{\rm f}=\{0,\ldots,j_{\rm f}\}\). Reindexing backward from its
+largest scale gives the explicit finite geometric sum
+\[
+\begin{aligned}
+W_{\rm f}
+&=\sum_{j=0}^{j_{\rm f}}\frac{h_j}{\sigma}
+=\frac{h_{j_{\rm f}}}{\sigma}
+  \sum_{r=0}^{j_{\rm f}}2^{-r}\\
+&=\frac{h_{j_{\rm f}}}{\sigma}
+  \frac{1-2^{-(j_{\rm f}+1)}}{1-1/2}
+<2\frac{h_{j_{\rm f}}}{\sigma}
+\leq2.
+\end{aligned}
+\]
+The last inequality uses the defining fine condition
+\(h_{j_{\rm f}}\leq\sigma\), including equality at the fine/coarse boundary.
+No bound on the number of fine levels was used.
+\end{proof}
+
+\begin{proposition}[three-regime coarse normalizers]\label{prop:step-003-coarse-normalizers}
+With the setting's empty-group semantics, an empty coarse group has the
+empty-sum value \(W_{\rm c}=0\), and no probability denominator for that
+group is evaluated. Under Assumption~\ref{assump:parameter-domain},
+Lemma~\ref{lem:step-003-scale-ordering}, and
+Proposition~\ref{prop:step-003-group-law}, put
+\(t=\sigma/\epsilon\geq e\). The theorem scales satisfy
+\[
+W_{\rm c}\leq
+\begin{cases}
+\displaystyle \frac{1}{1-2^{2-k}}, & k>2,\\[0.8em]
+\displaystyle
+\left(\log_2(2b_k)+\frac1{\log 2}\right)
+\log t, & k=2,\\[0.8em]
+\displaystyle
+\frac{1}{1-2^{-(2-k)}}
+\left(\frac{H}{2\sigma}\right)^{2-k}, & 1<k<2.
+\end{cases}
+\]
+Here \(\log\) is natural, as in the setting. In the last regime this also
+implies the two structural consequences
+\[
+W_{\rm c}
+\leq\frac{1}{1-2^{-(2-k)}}
+\left(\frac{H}{\sigma}\right)^{2-k}
+<\frac{(2b_k)^{2-k}}{1-2^{-(2-k)}}
+t^{(2-k)/(k-1)}.
+\]
+Thus the only nonconstant scale accumulation at \(k=2\) is the explicit
+\(\log(\sigma/\epsilon)\) factor, while for \(1<k<2\) the exact structural
+factor is \((H/\sigma)^{2-k}\).
+\end{proposition}
+
+\begin{proof}
+The empty case satisfies every displayed bound
+because each right-hand side is positive. Suppose henceforth that the coarse
+group is nonempty. By Proposition~\ref{prop:step-003-group-law}, it is a
+suffix. Write
+\[
+j_{\rm c}:=\min\mathcal J_{\rm c},
+\qquad n_{\rm c}:=J-j_{\rm c}\geq1,
+\]
+so its indices are \(j_{\rm c},\ldots,J-1\).
+
+If \(k>2\), let \(\beta=k-2>0\). Since
+\(h_{j_{\rm c}}/\sigma>1\), the first coarse weight satisfies
+\((h_{j_{\rm c}}/\sigma)^{-\beta}<1\). Successive weights have ratio
+\(2^{-\beta}\in(0,1)\). Therefore the explicit decreasing geometric sum
+obeys
+\[
+\begin{aligned}
+W_{\rm c}
+&=\left(\frac{h_{j_{\rm c}}}{\sigma}\right)^{-\beta}
+  \sum_{r=0}^{n_{\rm c}-1}2^{-\beta r}\\
+&<\sum_{r=0}^{\infty}2^{-\beta r}
+=\frac1{1-2^{-\beta}}
+=\frac1{1-2^{2-k}}.
+\end{aligned}
+\]
+This is finite for each fixed \(k>2\) and contains no dependence on
+\(J,H,\sigma\), or \(\epsilon\).
+
+If \(k=2\), every coarse weight equals one, so
+\(W_{\rm c}=n_{\rm c}\) exactly. The largest sampled coarse scale is
+\(h_{J-1}=H/2\), and
+\[
+\frac{H}{2}=h_{J-1}
+=2^{n_{\rm c}-1}h_{j_{\rm c}}
+>2^{n_{\rm c}-1}\sigma.
+\]
+Thus \(n_{\rm c}<\log_2(H/\sigma)\). At \(k=2\), the ceiling upper bound
+from Lemma~\ref{lem:step-003-scale-ordering} reads
+\[
+H<2H_*=2b_k\sigma t,
+\]
+and hence
+\[
+W_{\rm c}<\log_2(2b_k t)
+=\log_2(2b_k)+\frac{\log t}{\log 2}.
+\]
+Since \(t\geq e\), \(\log t\geq1\), so the constant first term may be
+dominated by its explicit multiple of \(\log t\):
+\[
+\log_2(2b_k)+\frac{\log t}{\log 2}
+\leq
+\left(\log_2(2b_k)+\frac1{\log 2}\right)\log t.
+\]
+This verifies the exact \(k=2\) logarithm even when
+\(\epsilon=c_k\sigma\), where \(\log t=1\); no unquantified +1 is
+discarded.
+
+Finally, let \(1<k<2\) and \(\alpha=2-k>0\). Successive coarse weights now
+have ratio \(2^\alpha>1\). Reindexing backward from the largest sampled
+coarse scale gives
+\[
+\begin{aligned}
+W_{\rm c}
+&=\left(\frac{h_{J-1}}{\sigma}\right)^\alpha
+  \sum_{r=0}^{n_{\rm c}-1}2^{-\alpha r}\\
+&\leq\left(\frac{H}{2\sigma}\right)^\alpha
+  \sum_{r=0}^{\infty}2^{-\alpha r}
+=\frac{(H/(2\sigma))^\alpha}{1-2^{-\alpha}}.
+\end{aligned}
+\]
+Dropping only the factor \(2^{-\alpha}\leq1\) gives the stated
+\((H/\sigma)^\alpha\) bound. The strict ceiling inequality
+\(H<2b_k\sigma t^{1/(k-1)}\) then gives
+\[
+\left(\frac H\sigma\right)^{2-k}
+<(2b_k)^{2-k}t^{(2-k)/(k-1)},
+\]
+which is the final displayed consequence. All geometric denominators are
+positive in their stated open regimes. Their possible growth as \(k\to2\)
+is permitted because \(k\) is fixed and hidden constants are only required to
+be \(k\)-dependent.
+\end{proof}
+
+\begin{lemma}[Endpoint calibration]\label{lem:step-003-endpoint-calibration}
+Under Assumption~\ref{assump:parameter-domain}, the \(C_k^{\rm rec}\) interface of
+Lemma~\ref{lem:step-002-recentered-moment}, and
+Lemma~\ref{lem:step-003-scale-ordering}, the explicit design satisfies
+\[
+h_0=\frac{\epsilon}{8},
+\qquad
+\overline C_k^{\rm tail}\frac{\sigma^k}{H^{k-1}}
+\leq\frac{\epsilon}{8}.
+\]
+\end{lemma}
+
+\begin{proof}
+The first equality is the definition
+\(h_0=\gamma_k\epsilon\) with \(\gamma_k=1/8\). For the top scale,
+Lemma~\ref{lem:step-003-scale-ordering} gives \(H\geq H_*\), while
+\(k-1>0\). Therefore
+\[
+H^{k-1}\geq H_*^{k-1}
+=b_k^{k-1}\sigma^{k-1}
+  \left(\frac{\sigma}{\epsilon}\right)
+=b_k^{k-1}\frac{\sigma^k}{\epsilon}.
+\]
+It follows that
+\[
+\overline C_k^{\rm tail}\frac{\sigma^k}{H^{k-1}}
+\leq\frac{\overline C_k^{\rm tail}}{b_k^{k-1}}\epsilon
+\leq\frac\epsilon8,
+\]
+where the last inequality is exactly the design relation
+\(b_k^{k-1}\geq8\overline C_k^{\rm tail}\) proved in
+Lemma~\ref{lem:step-003-scale-ordering}. This is only an endpoint-scale
+certificate; it does not assume or prove any residual-bias statement.
+\end{proof}
+
+\begin{proof}[Completion of the scale and normalizer certificate]
+Lemma~\ref{lem:step-002-recentered-moment} supplies the explicit
+finite constant \(C_k^{\rm rec}=2^{k-1}(1+50^k)\). From this bound and
+Assumption~\ref{assump:parameter-domain},
+Lemma~\ref{lem:step-003-scale-ordering} chooses
+\[
+\gamma_k=\frac18,
+\quad
+c_k=e^{-1},
+\quad
+b_k=\max\left\{4,
+  (8\overline C_k^{\rm tail})^{1/(k-1)}
+\right\},
+\quad
+\overline C_k^{\rm tail}
+=\frac{11}{3}\left(\frac83\right)^{k-1}C_k^{\rm rec},
+\]
+and proves the exact ceiling relations \(H_*\leq H<2H_*\),
+\(h_0<\sigma<h_{J-1}\), and \(J\geq1\), including at
+\(\epsilon=c_k\sigma\).
+
+Proposition~\ref{prop:step-003-group-law} then proves the complete group
+interface. Under the theorem parameters both groups occur and receive mass
+\(1/2\). In every stipulated auxiliary empty-group case, the empty sum is zero,
+the absent group contributes no indices and creates no denominator, and the
+remaining group receives mass one. Thus the exact level law is legal for
+every possible group configuration.
+
+Lemma~\ref{lem:step-003-fine-normalizer} and
+Proposition~\ref{prop:step-003-coarse-normalizers} give, without hidden
+level-count terms,
+\[
+W_{\rm f}\leq2,
+\qquad
+W_{\rm c}\lesssim_k
+\begin{cases}
+1,&k>2,\\
+\log(\sigma/\epsilon),&k=2,\\
+(H/\sigma)^{2-k},&1<k<2,
+\end{cases}
+\]
+where every implicit constant is explicitly displayed in
+Proposition~\ref{prop:step-003-coarse-normalizers} and depends only on
+fixed \(k\). The \(k=2\) proof retains the exact finite level count and uses
+\(\log(\sigma/\epsilon)\geq1\) to handle the largest allowed epsilon.
+Lemma~\ref{lem:step-003-endpoint-calibration} finally exports the two
+endpoint scale inequalities needed by downstream residual consumers. These
+named results jointly prove the stated result and export the
+requested scale/normalizer certificate.
+\end{proof}
+
+\subsection{Stable Shifted Quantizers}\label{app:step-004}
+
+\begin{lemma}[Four-arc stable selector]\label{lem:step-004-four-arc-selector}
+Under Assumption~\ref{assump:parameter-domain}, fix any \(0\le j\le J\). For every \(c\in\mathbb R\), there exists exactly one \(a\in\mathcal S=\{0,1/4,1/2,3/4\}\) such that
+
+\[
+\left\{\frac{c}{h_j}-a\right\}\in[3/8,5/8).
+\]
+
+The resulting function \(a_j:\mathbb R\to\mathcal S\) is Borel. Consequently, for the fixed finite scale family, \(c\mapsto(a_0(c),\ldots,a_J(c))\) is Borel as a map into \(\mathcal S^{J+1}\).
+\end{lemma}
+
+\begin{proof}
+By Assumption~\ref{assump:parameter-domain} and the setting definition \(h_j=2^j\gamma_k\epsilon\), one has \(h_j>0\). Put
+
+\[
+t=\left\{\frac{c}{h_j}\right\}\in[0,1).
+\]
+
+Subtracting an integer before taking fractional part has no effect, so
+\(\{c/h_j-a\}=\{t-a\}\). A direct reduction modulo one gives the following four phase sets:
+
+\[
+\begin{array}{c|c}
+a & \{t\in[0,1):\{t-a\}\in[3/8,5/8)\}\\ \hline
+0 & [3/8,5/8)\\
+1/4 & [5/8,7/8)\\
+1/2 & [7/8,1)\cup[0,1/8)\\
+3/4 & [1/8,3/8).
+\end{array}
+\]
+
+These four sets are pairwise disjoint and their union is \([0,1)\). The left-closed, right-open convention assigns each endpoint to exactly one set, so existence and uniqueness hold without an exceptional phase.
+
+The map \(c\mapsto\{c/h_j\}\) is Borel because scaling, the floor map, and subtraction are Borel. Each singleton preimage \(\{c:a_j(c)=a\}\) is the inverse image of the corresponding Borel phase set in the table. Since \(\mathcal S\) is finite, \(a_j\) is Borel. The coordinatewise product map over the finite index set \(0,\ldots,J\) is therefore Borel as well.
+\end{proof}
+
+\begin{proposition}[Exact selected-cell margin]\label{prop:step-004-cell-margin}
+Under Assumption~\ref{assump:parameter-domain} and Lemma~\ref{lem:step-004-four-arc-selector}, fix \(c\in\mathbb R\) and \(0\le j\le J\), and let \(Q_j^c=Q_{j,a_j(c)}\) be the setting-defined selected quantizer. Then its cell containing \(c\) is exactly
+
+\[
+[Q_j^c(c),Q_j^c(c)+h_j),
+\]
+
+and its two boundary distances satisfy
+
+\[
+c-Q_j^c(c)\in[3h_j/8,5h_j/8),
+\qquad
+Q_j^c(c)+h_j-c\in(3h_j/8,5h_j/8].
+\]
+
+In particular,
+
+\[
+[c-3h_j/8,c+3h_j/8]
+\subseteq[Q_j^c(c),Q_j^c(c)+h_j),
+\]
+
+so \(Q_j^c(x)=Q_j^c(c)\) for every \(|x-c|\le3h_j/8\). At the floor-cell boundaries themselves, the left endpoint is included and the right endpoint is excluded:
+
+\[
+Q_j^c\bigl(Q_j^c(c)\bigr)=Q_j^c(c),
+\qquad
+Q_j^c\bigl(Q_j^c(c)+h_j\bigr)=Q_j^c(c)+h_j.
+\]
+\end{proposition}
+
+\begin{proof}
+Write \(a=a_j(c)\),
+
+\[
+n=\left\lfloor\frac{c}{h_j}-a\right\rfloor,
+\qquad
+u=\left\{\frac{c}{h_j}-a\right\}.
+\]
+
+By Lemma~\ref{lem:step-004-four-arc-selector}, \(u\in[3/8,5/8)\). The quantizer definition gives
+
+\[
+Q_j^c(c)=a h_j+n h_j,
+\qquad
+c=Q_j^c(c)+u h_j.
+\]
+
+Moreover, for any \(x\in\mathbb R\),
+
+\[
+Q_j^c(x)=Q_j^c(c)
+\iff
+n\le \frac{x}{h_j}-a<n+1
+\iff
+x\in[Q_j^c(c),Q_j^c(c)+h_j).
+\]
+
+Thus the left distance is \(u h_j\in[3h_j/8,5h_j/8)\), whereas the right distance is
+\((1-u)h_j\in(3h_j/8,5h_j/8]\). Hence
+
+\[
+c-3h_j/8\ge Q_j^c(c),
+\qquad
+c+3h_j/8<Q_j^c(c)+h_j.
+\]
+
+The first comparison is non-strict precisely when \(u=3/8\), and the second is always strict because \(u=5/8\) is excluded. This proves the closed-radius inclusion and quantizer constancy. Substituting the two cell endpoints into the floor definition proves the final two displayed identities and records the left-closed/right-open convention explicitly.
+\end{proof}
+
+\begin{lemma}[Endpoint and dictionary-grid boundary trace]\label{lem:step-004-boundary-trace}
+Under Assumption~\ref{assump:parameter-domain}, Lemma~\ref{lem:step-004-four-arc-selector}, and Proposition~\ref{prop:step-004-cell-margin}, fix \(0\le j\le J\) and \(c\in\mathbb R\), and write \(t=\{c/h_j\}\). Then:
+
+1. At every nontrivial endpoint of the four-arc partition, the selector and selected cell are
+
+   \[
+   \begin{array}{c|c|c|c}
+   t & a_j(c) & \{c/h_j-a_j(c)\} & \text{selected cell}\\ \hline
+   1/8 & 3/4 & 3/8 & [c-3h_j/8,c+5h_j/8)\\
+   3/8 & 0 & 3/8 & [c-3h_j/8,c+5h_j/8)\\
+   5/8 & 1/4 & 3/8 & [c-3h_j/8,c+5h_j/8)\\
+   7/8 & 1/2 & 3/8 & [c-3h_j/8,c+5h_j/8)
+   \end{array}
+   \]
+
+   In each row the shift belonging to the arc immediately to the left would give normalized coordinate \(5/8\) and is excluded, while the displayed shift gives \(3/8\) and is included. Therefore \(c-3h_j/8\) is the included left cell endpoint, and every \(x\) with \(|x-c|\le3h_j/8\), including equality on the left, remains in the selected cell.
+2. If \(c\) lies on a grid boundary of any candidate quantizer, meaning that for some \(a_0\in\mathcal S\) and \(m\in\mathbb Z\),
+
+   \[
+   c=(m+a_0)h_j,
+   \]
+
+   then
+
+   \[
+   a_j(c)=(a_0+1/2)\bmod 1,
+   \qquad
+   \left\{\frac{c}{h_j}-a_j(c)\right\}=1/2,
+   \]
+
+   and the selected cell is exactly \([c-h_j/2,c+h_j/2)\). Thus a boundary for one dictionary grid is the midpoint of the uniquely selected opposite-shift cell. In particular, if \(c/h_j\in\mathbb Z\) is an unshifted-grid boundary, then \(a_j(c)=1/2\).
+3. At the circular seam \(t=0\) (equivalently \(t=1\)), the two pieces \([7/8,1)\) and \([0,1/8)\) both belong to the single shift \(a=1/2\); the seam itself is assigned uniquely to \(a_j(c)=1/2\), with normalized coordinate \(1/2\) and selected cell \([c-h_j/2,c+h_j/2)\).
+\end{lemma}
+
+\begin{proof}
+The explicit phase partition in Lemma~\ref{lem:step-004-four-arc-selector} directly gives the selector in each row of part 1. At each listed phase, subtracting the displayed shift modulo one gives \(3/8\); using the shift assigned to the immediately preceding half-open arc gives \(5/8\). The latter value is excluded by the right-open stable band. Proposition~\ref{prop:step-004-cell-margin} then converts the normalized coordinate \(3/8\) into the displayed cell and proves inclusion at the left equality.
+
+For part 2, define \(a_0^{\oplus}=(a_0+1/2)\bmod1\in\mathcal S\). From \(c/h_j=m+a_0\),
+
+\[
+\left\{\frac{c}{h_j}-a_0^{\oplus}\right\}=1/2\in[3/8,5/8).
+\]
+
+Uniqueness in Lemma~\ref{lem:step-004-four-arc-selector} forces \(a_j(c)=a_0^{\oplus}\). The exact cell formula follows from Proposition~\ref{prop:step-004-cell-margin} with normalized coordinate \(1/2\). Taking \(a_0=0\) proves the unshifted case.
+
+Finally, the \(a=1/2\) row of the four-arc partition is exactly \([7/8,1)\cup[0,1/8)\), and \(\{0-1/2\}=1/2\). This proves the seam statement and exhausts the remaining endpoint of the phase circle.
+\end{proof}
+
+\begin{proof}[Completion of the stable-selector certificate]
+Lemma~\ref{lem:step-004-four-arc-selector} proves, for every real \(c\) and every setting scale \(j=0,\ldots,J\), that the four half-open quarter arcs give exactly one shift \(a_j(c)\), and that each coordinate selector and the full finite selector vector are Borel. Proposition~\ref{prop:step-004-cell-margin} converts the selected fractional coordinate into the exact floor-cell certificate
+
+\[
+c-Q_j^c(c)\in[3h_j/8,5h_j/8),
+\qquad
+Q_j^c(c)+h_j-c\in(3h_j/8,5h_j/8],
+\]
+
+and hence gives the exact two-sided \(3h_j/8\) margin, with the full closed interval \([c-3h_j/8,c+3h_j/8]\) retained in the selected half-open cell. Lemma~\ref{lem:step-004-boundary-trace} checks every partition endpoint, the circular seam, every boundary of each of the four candidate grids, the unshifted-grid special case, and the left-equality/right-strict behavior. Together these results prove the stable-selector certificate deterministically, without a probabilistic event or rate condition.
+\end{proof}
+
+\subsection{Precommitted Dithered Queries}\label{app:step-005}
+
+\begin{lemma}[Exact floor residuals and bounded dyadic digits]\label{lem:step-005-digit-range}
+For every setting scale \(h_j>0\), every \(0\leq j<J\), every \(a,b\in\mathcal S\), and every \(x\in\mathbb R\),
+
+\[
+0\leq x-Q_{j,a}(x)<h_j,
+\qquad
+0\leq x-Q_{j+1,b}(x)<h_{j+1}=2h_j,
+\]
+
+and consequently
+
+\[
+-h_j<F_{j,a,b}(x)<2h_j.
+\]
+
+The two digit-range endpoints are never attained, including when \(x\) is a boundary of either shifted grid.
+\end{lemma}
+
+\begin{proof}
+For a width \(s>0\) and shift \(\alpha\in\mathbb R\), put
+
+\[
+n=\left\lfloor\frac{x-\alpha s}{s}\right\rfloor.
+\]
+
+The defining floor inequalities give
+
+\[
+n\leq\frac{x-\alpha s}{s}<n+1,
+\]
+
+so
+
+\[
+(\alpha+n)s\leq x<(\alpha+n+1)s.
+\]
+
+Thus the shifted floor quantizer \((\alpha+n)s\) is the included left endpoint of the unique half-open cell containing \(x\), and
+
+\[
+0\leq x-(\alpha+n)s<s.
+\]
+
+At an included left endpoint \(x=(\alpha+n)s\), the residual is exactly zero. The point \((\alpha+n+1)s\) is excluded from that cell and included as the left endpoint of the next cell, where the floor index is \(n+1\) and the residual again equals zero. Hence the residual can never equal \(s\); this explicitly covers positive, zero, and negative cell indices.
+
+Apply this calculation first with \((s,\alpha)=(h_j,a)\) and then with \((s,\alpha)=(h_{j+1},b)=(2h_j,b)\). Writing the two residuals only within this proof as
+
+\[
+r_j=x-Q_{j,a}(x)\in[0,h_j),
+\qquad
+r_{j+1}=x-Q_{j+1,b}(x)\in[0,2h_j),
+\]
+
+one obtains
+
+\[
+F_{j,a,b}(x)
+=Q_{j,a}(x)-Q_{j+1,b}(x)
+=r_{j+1}-r_j.
+\]
+
+Because \(r_{j+1}\geq0\) and \(r_j<h_j\), the difference is strictly greater than \(-h_j\). Because \(r_{j+1}<2h_j\) and \(r_j\geq0\), it is strictly less than \(2h_j\). Equality at \(-h_j\) would require the impossible value \(r_j=h_j\), and equality at \(2h_j\) would require the impossible value \(r_{j+1}=2h_j\).
+\end{proof}
+
+\begin{proposition}[Borel and precommitted refinement queries]\label{prop:step-005-query-precommitment}
+Under Assumption~\ref{assump:iid-independent-randomness}, Lemma~\ref{lem:step-004-four-arc-selector}, Proposition~\ref{prop:step-004-cell-margin}, and Lemma~\ref{lem:step-005-digit-range}, for every realized refinement seed \((L_i,A_i,B_i,U_i)=(j,a,b,u)\), the setting-defined query
+
+\[
+\mathcal A_i=\left\{x\in\mathbb R:
+\frac{F_{j,a,b}(x)}{h_j}\geq u\right\}
+\]
+
+is Borel. The membership map is jointly Borel in \((x,j,a,b,u)\) on
+\(\mathbb R\times\{0,\ldots,J-1\}\times\mathcal S^2\times[-1,2]\), and \(\mathcal A_i\) is fixed before any response bit is observed. Moreover, Lemma~\ref{lem:step-004-four-arc-selector} makes the decoder-side selected pair and centering indicator Borel in \(c\), but neither \(c\) nor any response bit changes \(\mathcal A_i\).
+\end{proposition}
+
+\begin{proof}
+For fixed \(j,a,b\), the two quantizers are constant on the half-open cells
+
+\[
+C_{n}=[(a+n)h_j,(a+n+1)h_j),
+\qquad
+K_{m}=[(b+m)h_{j+1},(b+m+1)h_{j+1}),
+\]
+
+where \(n,m\in\mathbb Z\). On \(C_n\cap K_m\),
+
+\[
+F_{j,a,b}(x)=(a+n)h_j-(b+m)h_{j+1}.
+\]
+
+Consequently,
+
+\[
+\mathcal A_i
+=\bigcup_{\substack{n,m\in\mathbb Z:\\
+((a+n)h_j-(b+m)h_{j+1})/h_j\geq u}}
+(C_n\cap K_m).
+\]
+
+Each intersection is empty or a half-open interval, and the union is countable, proving that \(\mathcal A_i\) is Borel. Equivalently, the floor map is Borel, so \(F_{j,a,b}\) is Borel and \(\mathcal A_i\) is its inverse image of the closed ray \([u,\infty)\) after division by \(h_j>0\).
+
+The map \((x,u)\mapsto F_{j,a,b}(x)/h_j-u\) is Borel. Since the level and offset spaces are finite, adjoining \((j,a,b)\) proves joint Borel measurability of the membership indicator. Lemma~\ref{lem:step-005-digit-range} also resolves the dither-support endpoints: if \(u=-1\), then \(F_{j,a,b}(x)/h_j>-1\) for every \(x\), so \(\mathcal A_i=\mathbb R\); if \(u=2\), then \(F_{j,a,b}(x)/h_j<2\), so \(\mathcal A_i=\varnothing\). Thus neither endpoint creates a range-overflow or measurability exception.
+
+By Assumption~\ref{assump:iid-independent-randomness}, \(L_i,A_i,B_i,U_i\) are all generated before any response bit. The displayed set depends only on those seeds and the known, deterministic scale family, and contains no occurrence of the decoded center \(c\). It is therefore a precommitted measurable query.
+
+For completeness on the decoder side, Lemma~\ref{lem:step-004-four-arc-selector} gives Borel maps \(c\mapsto a_j(c)\) and \(c\mapsto a_{j+1}(c)\). Because their ranges are finite and every \(F_{j,a,b}\) is Borel, both
+
+\[
+c\longmapsto
+F_{j,a_j(c),a_{j+1}(c)}(c)=D_j^c(c)
+\]
+
+and the corresponding threshold indicator are Borel. Proposition~\ref{prop:step-004-cell-margin} additionally places \(c\) at positive distance from the boundaries of both selected cells, so the selected floor values have no spatial boundary ambiguity. These decoder operations only select and center an already observed, precommitted bit; they do not alter its query set.
+\end{proof}
+
+\begin{proposition}[Exact bounded-uniform-dither moments]\label{prop:step-005-dither-identities}
+Under Assumption~\ref{assump:iid-independent-randomness}, Lemma~\ref{lem:step-004-four-arc-selector}, and Lemma~\ref{lem:step-005-digit-range}, fix \(0\leq j<J\), \(a,b\in\mathcal S\), and \(x,c\in\mathbb R\). If \(U\sim{\rm Unif}[-1,2]\), then
+
+\[
+\mathbb E_U\!\left[3h_j\left(
+\mathbf 1\!\left\{\frac{F_{j,a,b}(x)}{h_j}\geq U\right\}
+-\mathbf 1\!\left\{\frac{F_{j,a,b}(c)}{h_j}\geq U\right\}
+\right)\right]
+=F_{j,a,b}(x)-F_{j,a,b}(c),
+\]
+
+and
+
+\[
+\mathbb E_U\!\left[\left(3h_j\left(
+\mathbf 1\!\left\{\frac{F_{j,a,b}(x)}{h_j}\geq U\right\}
+-\mathbf 1\!\left\{\frac{F_{j,a,b}(c)}{h_j}\geq U\right\}
+\right)\right)^2\right]
+=3h_j\left|F_{j,a,b}(x)-F_{j,a,b}(c)\right|.
+\]
+
+These identities remain valid in the actual refinement protocol after conditioning on
+\[
+(c,X_i,L_i,A_i,B_i).
+\]
+This tuple is independent of \(U_i\), and the conditioning occurs before the response
+bit \(Y_i\) is revealed. In particular, for the Borel selected pair
+\((a_j(c),a_{j+1}(c))\) supplied by
+Lemma~\ref{lem:step-004-four-arc-selector},
+
+\[
+\mathbb E_U\!\left[3h_j\left(
+\mathbf 1\!\left\{\frac{D_j^c(x)}{h_j}\geq U\right\}
+-\mathbf 1\!\left\{\frac{D_j^c(c)}{h_j}\geq U\right\}
+\right)\right]
+=D_j^c(x)-D_j^c(c),
+\]
+
+\[
+\mathbb E_U\!\left[\left(3h_j\left(
+\mathbf 1\!\left\{\frac{D_j^c(x)}{h_j}\geq U\right\}
+-\mathbf 1\!\left\{\frac{D_j^c(c)}{h_j}\geq U\right\}
+\right)\right)^2\right]
+=3h_j\left|D_j^c(x)-D_j^c(c)\right|.
+\]
+
+At \(x=c\), the centered indicator difference and both displayed quantities are zero for every \(U\), not merely almost surely.
+\end{proposition}
+
+\begin{proof}
+Use the proof-local abbreviations
+
+\[
+f_x=\frac{F_{j,a,b}(x)}{h_j},
+\qquad
+f_c=\frac{F_{j,a,b}(c)}{h_j}.
+\]
+
+Lemma~\ref{lem:step-005-digit-range} gives \(f_x,f_c\in(-1,2)\). For any \(t\in(-1,2)\), the threshold convention in the query yields
+
+\[
+\mathbb E_U\mathbf 1\{t\geq U\}
+=\Pr\{U\leq t\}
+=\frac{t+1}{3}.
+\]
+
+Subtracting this equality at \(t=f_x\) and \(t=f_c\), then multiplying by \(3h_j\), proves the first identity.
+
+For the square, define only inside this proof
+
+\[
+\Delta_U=\mathbf 1\{f_x\geq U\}-\mathbf 1\{f_c\geq U\}.
+\]
+
+If \(f_x>f_c\), then \(\Delta_U=1\) exactly on \((f_c,f_x]\) and is zero elsewhere. If \(f_c>f_x\), then \(\Delta_U=-1\) exactly on \((f_x,f_c]\) and is zero elsewhere. If \(f_x=f_c\), it is identically zero. Hence in all cases
+
+\[
+\Delta_U^2
+=\mathbf 1\{\min(f_x,f_c)<U\leq\max(f_x,f_c)\}.
+\]
+
+The interval lies inside \([-1,2]\) and has length \(|f_x-f_c|\). Since the uniform density is \(1/3\),
+
+\[
+\mathbb E_U\Delta_U^2=\frac{|f_x-f_c|}{3}.
+\]
+
+Multiplication by \(9h_j^2\) gives
+
+\[
+\mathbb E_U(3h_j\Delta_U)^2
+=3h_j^2|f_x-f_c|
+=3h_j|F_{j,a,b}(x)-F_{j,a,b}(c)|,
+\]
+
+which is the exact square identity. The half-open interval above resolves threshold equality: at the smaller threshold both indicators equal one, whereas at the larger threshold only the larger-threshold indicator equals one. Such ties are \(U\)-null, but the pointwise convention is nevertheless consistent. At the support endpoints \(U=-1\) and \(U=2\), both indicator differences vanish because \(f_x,f_c\in(-1,2)\); including those endpoints in the dither support therefore leaves both identities unchanged.
+
+Assumption~\ref{assump:iid-independent-randomness} makes each \(U_i\) independent of the localization output \(c\), the refinement sample \(X_i\), and \((L_i,A_i,B_i)\). Therefore, conditional on any realized values of those non-dither quantities, \(U_i\) retains the same uniform law and the two calculations apply verbatim. Finally, choosing \(a=a_j(c)\) and \(b=a_{j+1}(c)\), whose existence and Borel measurability follow from Lemma~\ref{lem:step-004-four-arc-selector}, turns \(F_{j,a,b}\) into the exact setting-defined selected digit \(D_j^c\). When \(x=c\), the two threshold indicators are identical for every \(U\), proving the exact zero-displacement specialization.
+\end{proof}
+
+\begin{proof}[Completion of the bounded-dither certificate]
+Lemma~\ref{lem:step-005-digit-range} derives from the half-open floor convention the strict digit range
+
+\[
+-h_j<F_{j,a,b}(x)<2h_j
+\]
+
+for every bank entry and every real input, and it explicitly excludes both apparent endpoint values even at either grid's boundaries. Proposition~\ref{prop:step-005-query-precommitment} converts the same cell description into a Borel threshold set for every realized seed, proves joint membership measurability, and uses Assumption~\ref{assump:iid-independent-randomness} to establish that the query is fixed before all responses. Lemma~\ref{lem:step-004-four-arc-selector} supplies the Borel decoder-selected pair, and Proposition~\ref{prop:step-004-cell-margin} confirms that decoder centering at \(c\) has no selected-grid boundary ambiguity, while leaving the precommitted query unchanged.
+
+Proposition~\ref{prop:step-005-dither-identities} then integrates the exact uniform threshold rule. Its first calculation gives the signed digit difference, and its half-open interval calculation gives the exact square
+
+\[
+3h_j|F_{j,a,b}(x)-F_{j,a,b}(c)|
+\]
+
+without an inequality or remainder. Instantiating the Borel pair from Lemma~\ref{lem:step-004-four-arc-selector} gives the identical interface for \(D_j^c(x)-D_j^c(c)\), and \(x=c\) gives pathwise zero for every dither value. These three named results jointly prove the stated result and export only the bounded digit range, Borel precommitted-query certificate, and exact dither mean/square identities needed by the downstream conditional-moment step.
+\end{proof}
+
+\subsection{Telescope and Residual Identities}\label{app:step-006}
+
+\begin{lemma}[Finite selected-quantizer telescope]\label{lem:step-006-finite-telescope}
+Under the setting definitions and the stable-selector certificate from Lemma~\ref{lem:step-004-four-arc-selector}, Proposition~\ref{prop:step-004-cell-margin}, and Lemma~\ref{lem:step-004-boundary-trace}, for every \(c,x\in\mathbb R\),
+
+\[
+T_c(x)
+=\bigl(Q_0^c(x)-Q_0^c(c)\bigr)
+-\bigl(Q_J^c(x)-Q_J^c(c)\bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+Lemmas~\ref{lem:step-004-four-arc-selector} and
+\ref{lem:step-004-boundary-trace} make every \(Q_j^c\) appearing below
+well defined. By the setting definition \(D_j^c=Q_j^c-Q_{j+1}^c\), each
+summand in \(T_c(x)\) is
+
+\[
+\begin{aligned}
+D_j^c(x)-D_j^c(c)
+&=\bigl(Q_j^c(x)-Q_{j+1}^c(x)\bigr)
+  -\bigl(Q_j^c(c)-Q_{j+1}^c(c)\bigr)\\
+&=\bigl(Q_j^c(x)-Q_j^c(c)\bigr)
+  -\bigl(Q_{j+1}^c(x)-Q_{j+1}^c(c)\bigr).
+\end{aligned}
+\]
+
+Therefore, for \(J\geq1\), the finite sum expands as
+
+\[
+\begin{aligned}
+T_c(x)
+&=\sum_{j=0}^{J-1}\bigl(Q_j^c(x)-Q_j^c(c)\bigr)
+  -\sum_{j=0}^{J-1}\bigl(Q_{j+1}^c(x)-Q_{j+1}^c(c)\bigr)\\
+&=\bigl(Q_0^c(x)-Q_0^c(c)\bigr)
+  -\bigl(Q_J^c(x)-Q_J^c(c)\bigr),
+\end{aligned}
+\]
+
+because every term with index \(1,\ldots,J-1\) occurs once with each sign. If the formally degenerate case \(J=0\) is allowed, the defining sum is empty and both endpoint terms on the right are the same, so the identity remains valid. In particular, the stated identity includes the boundary case \(J=1\), where there are no intermediate terms and the single summand already equals the two endpoints. No limiting argument or infinite rearrangement is involved.
+\end{proof}
+
+\begin{lemma}[Floor-quantizer remainder range]\label{lem:step-006-floor-remainder}
+Under the setting definitions and the stable-selector certificate from Lemma~\ref{lem:step-004-four-arc-selector}, Proposition~\ref{prop:step-004-cell-margin}, and Lemma~\ref{lem:step-004-boundary-trace}, fix \(c,y\in\mathbb R\) and \(0\leq j\leq J\). Then
+
+\[
+0\leq y-Q_j^c(y)<h_j.
+\]
+
+Consequently, for every \(c,x\in\mathbb R\),
+
+\[
+-h_0<R_0^c(x)<h_0,
+\qquad\text{and hence}\qquad
+\lvert R_0^c(x)\rvert<h_0.
+\]
+\end{lemma}
+
+\begin{proof}
+Put \(a=a_j(c)\), which is uniquely defined by
+Lemma~\ref{lem:step-004-four-arc-selector}, and set
+
+\[
+v=\frac{y-a h_j}{h_j}.
+\]
+
+The defining property of the floor function is
+
+\[
+\lfloor v\rfloor\leq v<\lfloor v\rfloor+1.
+\]
+
+Because \(h_j>0\), multiplication by \(h_j\) preserves both inequality directions. Using
+
+\[
+Q_j^c(y)=a h_j+h_j\lfloor v\rfloor
+\]
+
+gives
+
+\[
+0\leq y-Q_j^c(y)<h_j.
+\]
+
+This calculation is valid for every real \(v\), so it includes negative quantizer cells and points exactly on a shifted grid, where the remainder is \(0\).
+
+At scale zero, write
+
+\[
+r_x=x-Q_0^c(x),
+\qquad
+r_c=c-Q_0^c(c).
+\]
+
+The first part gives \(r_x,r_c\in[0,h_0)\). Hence
+
+\[
+-h_0< -r_c\leq r_x-r_c\leq r_x<h_0.
+\]
+
+Since \(R_0^c(x)=r_x-r_c\), the claimed strict two-sided and absolute-value bounds follow. The strictness is preserved even when one remainder is zero; no cell-margin estimate is needed.
+\end{proof}
+
+\begin{proposition}[Residual interface]\label{prop:step-006-residual-interface}
+Under the setting definitions, Lemma~\ref{lem:step-004-four-arc-selector},
+Proposition~\ref{prop:step-004-cell-margin}, and
+Lemma~\ref{lem:step-004-boundary-trace} give the stable-selector certificate.
+Together with Lemmas~\ref{lem:step-006-finite-telescope}
+and~\ref{lem:step-006-floor-remainder}, it yields, for every
+\(c,x\in\mathbb R\),
+
+\[
+x-c=T_c(x)+R_0^c(x)+R_H^c(x),
+\qquad
+\lvert R_0^c(x)\rvert<h_0.
+\]
+
+Both residuals in the displayed equality are retained as separate signed terms. Moreover, if \(X\) is any integrable real random variable, then all terms below are integrable and
+
+\[
+\mathbb E(X-c)
+=\mathbb E T_c(X)
+ +\mathbb E R_0^c(X)
+ +\mathbb E R_H^c(X).
+\]
+
+Thus, whenever \(\mu=\mathbb E X\), the exact telescope-to-mean discrepancy is
+
+\[
+(\mu-c)-\mathbb E T_c(X)
+=\mathbb E R_0^c(X)+\mathbb E R_H^c(X),
+\]
+
+with neither bias term discarded, merged into the other, or bounded in this step.
+\end{proposition}
+
+\begin{proof}
+Add and subtract the scale-zero selected quantizer values:
+
+\[
+\begin{aligned}
+x-c
+&=\bigl[(x-Q_0^c(x))-(c-Q_0^c(c))\bigr]
+  +\bigl[Q_0^c(x)-Q_0^c(c)\bigr]\\
+&=R_0^c(x)+\bigl[Q_0^c(x)-Q_0^c(c)\bigr].
+\end{aligned}
+\]
+
+Lemma~\ref{lem:step-006-finite-telescope} rearranges, without approximation, to
+
+\[
+Q_0^c(x)-Q_0^c(c)
+=T_c(x)+\bigl[Q_J^c(x)-Q_J^c(c)\bigr]
+=T_c(x)+R_H^c(x).
+\]
+
+Substitution proves
+
+\[
+x-c=T_c(x)+R_0^c(x)+R_H^c(x).
+\]
+
+The strict fine-residual bound is exactly Lemma~\ref{lem:step-006-floor-remainder}. Notice that the algebra does not replace \(R_H^c(x)\) by zero and does not combine it with \(R_0^c(x)\).
+
+For the expectation export, suppose \(X\) is integrable. Lemma~\ref{lem:step-006-floor-remainder} gives
+
+\[
+Q_j^c(X)=X-\bigl(X-Q_j^c(X)\bigr),
+\qquad
+0\leq X-Q_j^c(X)<h_j
+\]
+
+for \(j=0,J\). Thus \(Q_0^c(X)\) is integrable, and so is \(Q_J^c(X)\).
+The endpoint representation in Lemma~\ref{lem:step-006-finite-telescope}
+then makes \(T_c(X)\) integrable. The top residual is an integrable difference
+involving \(Q_J^c(X)\), while the fine residual is bounded in absolute value by
+\(h_0\). Taking expectations in the already proved pointwise equality is
+therefore legitimate and yields the displayed formulas. This expectation
+passage introduces no moment estimate, inactivity statement, probability event,
+or residual bound beyond the strict floor-remainder bound proved here.
+\end{proof}
+
+\begin{lemma}[Exact zero-displacement specialization]\label{lem:step-006-zero-displacement}
+Under the setting definitions and the stable-selector certificate from Lemma~\ref{lem:step-004-four-arc-selector}, Proposition~\ref{prop:step-004-cell-margin}, and Lemma~\ref{lem:step-004-boundary-trace}, for every \(c\in\mathbb R\) and every \(0\leq j<J\),
+
+\[
+D_j^c(c)-D_j^c(c)=0.
+\]
+
+Consequently,
+
+\[
+T_c(c)=0,
+\qquad
+R_0^c(c)=0,
+\qquad
+R_H^c(c)=0,
+\]
+
+and the exact displacement decomposition at \(x=c\) is
+
+\[
+c-c=T_c(c)+R_0^c(c)+R_H^c(c),
+\qquad\text{i.e.}\qquad
+0=0+0+0.
+\]
+\end{lemma}
+
+\begin{proof}
+Each centered digit summand is the difference of the same real number from itself, so it is zero. The finite sum defining \(T_c(c)\) is therefore zero, including the empty-sum case. Directly from the two residual definitions,
+
+\[
+R_0^c(c)
+=\bigl(c-Q_0^c(c)\bigr)-\bigl(c-Q_0^c(c)\bigr)=0,
+\]
+
+and
+
+\[
+R_H^c(c)=Q_J^c(c)-Q_J^c(c)=0.
+\]
+
+Substitution gives the exact displayed specialization. This is an identity, not a bound of order \(h_0\) or \(H\).
+\end{proof}
+
+\begin{proof}[Completion of the telescope and residual certificate]
+Lemma~\ref{lem:step-006-finite-telescope} proves the exact endpoint formula
+
+\[
+T_c(x)
+=\bigl(Q_0^c(x)-Q_0^c(c)\bigr)
+-\bigl(Q_J^c(x)-Q_J^c(c)\bigr)
+\]
+
+by a finite signed cancellation in which every intermediate selected quantizer appears once with each sign. Lemma~\ref{lem:step-006-floor-remainder} proves directly from the floor convention that the two scale-zero remainders lie in \([0,h_0)\), and hence that their difference satisfies the required strict bound \(\lvert R_0^c(x)\rvert<h_0\). Proposition~\ref{prop:step-006-residual-interface} combines these two exact statements to obtain
+
+\[
+x-c=T_c(x)+R_0^c(x)+R_H^c(x),
+\]
+
+retaining the fine residual and the top residual as distinct signed terms. Its expectation-level export likewise exposes the only two algebraic telescope biases separately as \(\mathbb E R_0^c(X)\) and \(\mathbb E R_H^c(X)\), conditional only on integrability and without importing any future digit-moment, inactivity, tail-support, or bias-control claim. Finally, Lemma~\ref{lem:step-006-zero-displacement} proves that every centered digit summand and both residuals vanish exactly at \(x=c\), so the required baseline is \(0=0+0+0\), not an asymptotic or bounded-remainder surrogate. These named results jointly establish the stated result and export the requested telescope/residual interface.
+\end{proof}
+
+\subsection{Digit Activation and Pathwise Budgets}\label{app:step-007}
+
+Throughout this subsection, write
+\[
+\Delta_j^c(x):=D_j^c(x)-D_j^c(c),
+\qquad 0\leq j<J,
+\]
+and, whenever \(c,x\) are fixed, put \(R=|x-c|\).  We also use the
+\(k\)-only constant
+\[
+C_k^{\rm act}:=\frac{3(8/3)^k}{1-2^{-k}},
+\]
+whose adequacy is proved in Proposition~\ref{prop:step-007-coarse-ledger}.
+
+\begin{lemma}[Stable two-scale digit inactivity and top-cell support]\label{lem:step-007-stable-support}
+Under Proposition~\ref{prop:step-004-cell-margin}, Lemma~\ref{lem:step-004-boundary-trace}, and the exact top-residual interface in Proposition~\ref{prop:step-006-residual-interface}, fix \(c,x\in\mathbb R\) and put \(R=|x-c|\). Then, for every \(0\leq j<J\),
+
+\[
+R\leq\frac{3h_j}{8}
+\quad\Longrightarrow\quad
+\Delta_j^c(x)=0.
+\]
+
+Equivalently,
+
+\[
+\Delta_j^c(x)
+=\Delta_j^c(x)\mathbf 1\!\left\{R>\frac{3h_j}{8}\right\}.
+\]
+
+At the top scale,
+
+\[
+R\leq\frac{3H}{8}
+\quad\Longrightarrow\quad
+R_H^c(x)=0,
+\qquad
+R_H^c(x)
+=R_H^c(x)\mathbf 1\!\left\{R>\frac{3H}{8}\right\}.
+\]
+
+These implications include equality for both displacement signs and remain valid when \(c\) or \(x\) is a shifted-grid boundary.
+\end{lemma}
+
+\begin{proof}
+Fix \(0\leq j<J\) and suppose \(R\leq3h_j/8\). Proposition~\ref{prop:step-004-cell-margin} at scale \(j\) gives
+
+\[
+Q_j^c(x)=Q_j^c(c).
+\]
+
+The digit also uses scale \(j+1\). Since \(h_{j+1}=2h_j\),
+
+\[
+R\leq\frac{3h_j}{8}
+<\frac{3h_{j+1}}{8}
+=\frac{3h_j}{4},
+\]
+
+so the same proposition at scale \(j+1\) gives \(Q_{j+1}^c(x)=Q_{j+1}^c(c)\). Therefore
+
+\[
+\begin{aligned}
+\Delta_j^c(x)
+&=\bigl(Q_j^c(x)-Q_{j+1}^c(x)\bigr)
+  -\bigl(Q_j^c(c)-Q_{j+1}^c(c)\bigr)\\
+&=0.
+\end{aligned}
+\]
+
+The support-indicator identity follows by splitting into \(R\leq3h_j/8\) and \(R>3h_j/8\).
+
+At scale \(J\), \(h_J=H\). If \(R\leq3H/8\), Proposition~\ref{prop:step-004-cell-margin} gives \(Q_J^c(x)=Q_J^c(c)\). Proposition~\ref{prop:step-006-residual-interface} then gives \(R_H^c(x)=0\), and the top support-indicator identity follows.
+
+At \(R=3h_j/8\), the scale-\(j\) cell contains both endpoints of the closed stable radius: a possible equality is at its included left boundary, while the positive endpoint is strictly below the excluded right boundary. The same displacement is strictly inside the scale-\(j+1\) radius \(3h_j/4\). The identical left-included/right-strict argument handles \(R=3H/8\). Lemma~\ref{lem:step-004-boundary-trace} shows that a center on any candidate grid is the midpoint of the selected opposite-shift cell, including for negative grid indices. At \(x=c\), \(R=0\), and every conclusion is exactly zero, consistently with Lemma~\ref{lem:step-006-zero-displacement}.
+\end{proof}
+
+\begin{lemma}[Strict centered-digit envelope and active-scale cutoff]\label{lem:step-007-digit-envelope}
+Under Lemmas~\ref{lem:step-005-digit-range} and
+\ref{lem:step-007-stable-support}, fix \(c,x\in\mathbb R\), put
+\(R=|x-c|\), and let \(0\leq j<J\). Then
+
+\[
+-3h_j<\Delta_j^c(x)<3h_j,
+\qquad
+|\Delta_j^c(x)|<3h_j.
+\]
+
+Moreover,
+
+\[
+\Delta_j^c(x)\neq0
+\quad\Longrightarrow\quad
+R>\frac{3h_j}{8},
+\qquad
+R>\frac{3h_j}{8}
+\quad\Longleftrightarrow\quad
+h_j<\frac{8R}{3},
+\]
+
+and
+
+\[
+|\Delta_j^c(x)|
+\leq3h_j\mathbf 1\!\left\{R>\frac{3h_j}{8}\right\}
+=3h_j\mathbf 1\!\left\{h_j<\frac{8R}{3}\right\}.
+\]
+
+In particular, a level with \(R=3h_j/8\) is inactive.
+\end{lemma}
+
+\begin{proof}
+Because \(D_j^c=F_{j,a_j(c),a_{j+1}(c)}\), Lemma~\ref{lem:step-005-digit-range} gives
+
+\[
+-h_j<D_j^c(y)<2h_j
+\qquad (y=x,c).
+\]
+
+Thus
+
+\[
+D_j^c(x)-D_j^c(c)>-h_j-2h_j=-3h_j,
+\qquad
+D_j^c(x)-D_j^c(c)<2h_j-(-h_j)=3h_j.
+\]
+
+This proves the strict magnitude. It remains true at any grid boundary because the range proof resets the appropriate half-open floor remainder to zero and excludes both digit endpoints.
+
+The contrapositive of Lemma~\ref{lem:step-007-stable-support} gives \(\Delta_j^c(x)\neq0\Rightarrow R>3h_j/8\). Since \(h_j>0\), the latter is equivalent to \(h_j<8R/3\). When \(R\leq3h_j/8\), the envelope has both sides zero; when \(R>3h_j/8\), strict magnitude implies the asserted non-strict envelope. No converse is claimed: after leaving the stable radius, the centered digit may still vanish by cell constancy or cancellation.
+\end{proof}
+
+\begin{lemma}[Finite dyadic cutoff summation]\label{lem:step-007-dyadic-cutoff}
+Under \(h_j=2^jh_0\) with \(h_0>0\), let \(\alpha>0\) and let \(\mathcal A\) be a finite subset of nonnegative scale indices. If \(\mathcal A\neq\varnothing\) and \(M=\max\mathcal A\), then
+
+\[
+\sum_{j\in\mathcal A}h_j^\alpha
+\leq\sum_{j=0}^{M}h_j^\alpha
+=h_M^\alpha
+  \frac{1-2^{-\alpha(M+1)}}{1-2^{-\alpha}}
+<\frac{h_M^\alpha}{1-2^{-\alpha}}.
+\]
+
+Consequently, if \(h_j<T\) for every \(j\in\mathcal A\), where \(T>0\), then
+
+\[
+\sum_{j\in\mathcal A}h_j^\alpha
+<\frac{T^\alpha}{1-2^{-\alpha}}.
+\]
+
+The same conclusion holds if \(h_j\leq T\) for every \(j\in\mathcal A\). If \(\mathcal A=\varnothing\), its sum is \(0\).
+\end{lemma}
+
+\begin{proof}
+For nonempty \(\mathcal A\), positivity gives
+
+\[
+\sum_{j\in\mathcal A}h_j^\alpha
+\leq\sum_{j=0}^{M}h_j^\alpha.
+\]
+
+Since \(h_j=2^{j-M}h_M\), the change of variables \(r=M-j\) gives
+
+\[
+\sum_{j=0}^{M}h_j^\alpha
+=h_M^\alpha\sum_{r=0}^{M}2^{-\alpha r}
+=h_M^\alpha
+  \frac{1-2^{-\alpha(M+1)}}{1-2^{-\alpha}}.
+\]
+
+The denominator is positive and the numerator is strictly less than one. If \(h_M<T\), substitution gives the strict threshold bound. If only \(h_M\leq T\), the already strict finite-geometric-factor inequality still gives a strict bound by \(T^\alpha/(1-2^{-\alpha})\). The empty case is the empty-sum convention. The estimate depends on the largest scale, not on \(|\mathcal A|\).
+\end{proof}
+
+\begin{proposition}[Count-free fine activation ledger]\label{prop:step-007-fine-ledger}
+Under Lemma~\ref{lem:step-007-digit-envelope}, Lemma~\ref{lem:step-007-dyadic-cutoff}, and
+
+\[
+\mathcal J_{\mathrm f}
+=\{0\leq j<J:h_j\leq\sigma\},
+\]
+
+for every \(c,x\in\mathbb R\),
+
+\[
+\sum_{j\in\mathcal J_{\mathrm f}}
+\left|D_j^c(x)-D_j^c(c)\right|
+\leq16\min\{|x-c|,\sigma\}.
+\]
+
+This includes an empty fine group, \(h_j=\sigma\), \(x=c\), and any finite number of fine levels, with a constant independent of \(J\).
+\end{proposition}
+
+\begin{proof}
+Fix \(c,x\), put \(R=|x-c|\), and define
+
+\[
+\mathcal A_{\mathrm f}(R)
+:=\left\{j\in\mathcal J_{\mathrm f}:h_j<\frac{8R}{3}\right\}.
+\]
+
+Lemma~\ref{lem:step-007-digit-envelope} gives
+
+\[
+\sum_{j\in\mathcal J_{\mathrm f}}|\Delta_j^c(x)|
+\leq3\sum_{j\in\mathcal A_{\mathrm f}(R)}h_j.
+\tag{7.1}
+\]
+
+If \(R=0\), the cutoff set and both sides of the target inequality are zero. Suppose \(0<R\leq\sigma\). Lemma~\ref{lem:step-007-dyadic-cutoff}, with \(\alpha=1\) and \(T=8R/3\), gives
+
+\[
+\sum_{j\in\mathcal A_{\mathrm f}(R)}h_j
+<\frac{8R/3}{1-2^{-1}}
+=\frac{16R}{3}
+\]
+
+when the cutoff set is nonempty; the required non-strict bound is immediate if it is empty. Hence (7.1) gives
+
+\[
+\sum_{j\in\mathcal J_{\mathrm f}}|\Delta_j^c(x)|
+\leq16R
+=16\min\{R,\sigma\}.
+\]
+
+Now suppose \(R>\sigma\). If \(\mathcal J_{\mathrm f}\) is empty, the claim is immediate. Otherwise \(h_j\leq\sigma\) for every fine level, and Lemma~\ref{lem:step-007-dyadic-cutoff} with \(\alpha=1\) gives
+
+\[
+\sum_{j\in\mathcal J_{\mathrm f}}h_j<2\sigma.
+\]
+
+Enlarging the cutoff sum in (7.1) to all fine levels yields
+
+\[
+\sum_{j\in\mathcal J_{\mathrm f}}|\Delta_j^c(x)|
+<6\sigma
+\leq16\sigma
+=16\min\{R,\sigma\}.
+\]
+
+At \(R=\sigma\), the first case applies. The second case explicitly permits the included transition level \(h_j=\sigma\). No line depends on the number of fine levels.
+\end{proof}
+
+\begin{proposition}[Moment-compatible coarse activation ledger]\label{prop:step-007-coarse-ledger}
+Under \(k>1\), Lemma~\ref{lem:step-007-digit-envelope}, Lemma~\ref{lem:step-007-dyadic-cutoff}, and
+
+\[
+\mathcal J_{\mathrm c}
+=\{0\leq j<J:h_j>\sigma\},
+\]
+
+for every \(c,x\in\mathbb R\),
+
+\[
+\sum_{j\in\mathcal J_{\mathrm c}}
+h_j^{k-1}\left|D_j^c(x)-D_j^c(c)\right|
+\leq C_k^{\mathrm{act}}|x-c|^k,
+\qquad
+C_k^{\mathrm{act}}
+=\frac{3(8/3)^k}{1-2^{-k}}.
+\]
+
+This includes an empty coarse group, \(x=c\), the largest sampled level \(j=J-1\), and arbitrarily large \(|x-c|\).
+\end{proposition}
+
+\begin{proof}
+Fix \(c,x\), put \(R=|x-c|\), and define
+
+\[
+\mathcal A_{\mathrm c}(R)
+:=\left\{j\in\mathcal J_{\mathrm c}:h_j<\frac{8R}{3}\right\}.
+\]
+
+Multiplying the envelope in Lemma~\ref{lem:step-007-digit-envelope} by \(h_j^{k-1}>0\) and summing gives
+
+\[
+\sum_{j\in\mathcal J_{\mathrm c}}
+h_j^{k-1}|\Delta_j^c(x)|
+\leq3\sum_{j\in\mathcal A_{\mathrm c}(R)}h_j^k.
+\tag{7.2}
+\]
+
+If \(R=0\), the cutoff set is empty and the claim is \(0\leq0\). If \(R>0\), Lemma~\ref{lem:step-007-dyadic-cutoff}, with \(\alpha=k\) and \(T=8R/3\), gives
+
+\[
+\sum_{j\in\mathcal A_{\mathrm c}(R)}h_j^k
+<\frac{(8R/3)^k}{1-2^{-k}}.
+\]
+
+Combining with (7.2),
+
+\[
+\sum_{j\in\mathcal J_{\mathrm c}}
+h_j^{k-1}|\Delta_j^c(x)|
+<\frac{3(8/3)^k}{1-2^{-k}}R^k
+=C_k^{\mathrm{act}}R^k,
+\]
+
+which implies the stated non-strict bound. The denominator is positive because \(k>1\), so the constant is finite and depends only on \(k\). Empty groups and cutoff sets are covered by the empty-sum convention.
+
+No restriction \(R\leq H\) is used. An arbitrarily distant observation may make every sampled coarse scale eligible, including \(j=J-1\), but those scales remain a finite subset below \(8R/3\) and are charged once to \(R^k\). At \(R=3h_j/8\), that scale is excluded by the strict cutoff and is inactive by Lemma~\ref{lem:step-007-stable-support}.
+\end{proof}
+
+\begin{proof}[Completion of the activation and support certificate]
+Lemma~\ref{lem:step-007-stable-support} applies the scale-\(j\) and scale-\(j+1\) cell margins to prove
+
+\[
+|x-c|\leq\frac{3h_j}{8}
+\quad\Longrightarrow\quad
+D_j^c(x)-D_j^c(c)=0
+\]
+
+for every sampled level, including equality. It applies the scale-\(J\) margin to the exact top residual to prove
+
+\[
+|x-c|\leq\frac{3H}{8}
+\quad\Longrightarrow\quad
+R_H^c(x)=0.
+\]
+
+The proof covers both displacement signs, phase endpoints, candidate-grid boundaries, \(j=0\), \(j=J-1\), and the exact \(x=c\) baseline supplied by Lemma~\ref{lem:step-006-zero-displacement}.
+
+Lemma~\ref{lem:step-007-digit-envelope} combines support with the strict digit range to prove
+
+\[
+\left|D_j^c(x)-D_j^c(c)\right|<3h_j,
+\qquad
+\left|D_j^c(x)-D_j^c(c)\right|
+\leq3h_j\mathbf1\!\left\{h_j<\frac{8|x-c|}{3}\right\}.
+\]
+
+The strict cutoff retains inactivity at \(|x-c|=3h_j/8\). Lemma~\ref{lem:step-007-dyadic-cutoff} then controls accumulation without counting levels. Proposition~\ref{prop:step-007-fine-ledger} gives
+
+\[
+\sum_{j\in\mathcal J_{\mathrm f}}
+\left|D_j^c(x)-D_j^c(c)\right|
+\leq16\min\{|x-c|,\sigma\},
+\]
+
+and Proposition~\ref{prop:step-007-coarse-ledger} gives
+
+\[
+\sum_{j\in\mathcal J_{\mathrm c}}
+h_j^{k-1}\left|D_j^c(x)-D_j^c(c)\right|
+\leq
+\frac{3(8/3)^k}{1-2^{-k}}|x-c|^k.
+\]
+
+Empty fine or coarse groups contribute zero. The fine constant is independent of the number of fine levels, and the coarse estimate remains valid when a rare observation activates every available scale. These results jointly prove every stated conclusion and export exactly the activation/support certificate consumed by the fine-variance, coarse-variance, and top-bias steps. No moment expectation, variance conclusion, localization event, or future bias estimate is imported.
+\end{proof}
+
+\subsection{Conditional Mean and Second Moment}\label{app:step-008}
+
+\begin{lemma}[Exact level and offset law]\label{lem:step-008-level-offset-law}
+Under Assumption~\ref{assump:iid-independent-randomness} and the setting-defined ranges \(k>1\), \(0<\epsilon<\sigma\), \(\gamma_k\in(0,1)\), and \(b_k\geq1\), the sampled-level set \(\{0,\ldots,J-1\}\) is nonempty. The fine and coarse sets partition it. For each nonempty group \(G\in\{\mathcal J_{\rm f},\mathcal J_{\rm c}\}\), \(W_G\in(0,\infty)\), and every \(j\in G\) satisfies
+
+\[
+p_j=\frac1m\frac{w_j}{W_G}>0,
+\qquad
+\sum_{j\in G}p_j=\frac1m.
+\]
+
+Consequently \(\sum_{j=0}^{J-1}p_j=1\). If one auxiliary group is empty, it contributes no level, has no normalizer used in any formula, and the other group has \(m=1\) and total mass one. Moreover, conditional on any fixed center \(t\) and any level \(j\),
+
+\[
+\Pr\{(A_i,B_i)=(a_j(t),a_{j+1}(t))\mid L_i=j\}=\frac1{16}
+\quad\text{for each fixed }t.
+\]
+
+These conclusions include the smallest level \(j=0\), the top sampled level \(j=J-1\), and the case \(J=1\).
+\end{lemma}
+
+\begin{proof}
+From the setting definitions,
+
+\[
+\frac{H_*}{h_0}
+=\frac{b_k}{\gamma_k}
+ \left(\frac{\sigma}{\epsilon}\right)^{k/(k-1)}>1.
+\]
+
+Thus \(J=\lceil\log_2(H_*/h_0)\rceil\geq1\), so the sampled-level set is finite and nonempty. Each level satisfies exactly one of \(h_j\leq\sigma\) and \(h_j>\sigma\), including equality in the fine group, so the two groups form a disjoint partition.
+
+For every level, \(h_j/\sigma>0\). Hence both possible definitions of \(w_j\) are finite and strictly positive. A nonempty finite group therefore has \(0<W_G=\sum_{\ell\in G}w_\ell<\infty\), which proves \(p_j>0\) and
+
+\[
+\sum_{j\in G}p_j
+=\frac1m\frac{\sum_{j\in G}w_j}{W_G}
+=\frac1m.
+\]
+
+There are exactly \(m\in\{1,2\}\) nonempty groups, so summing the last identity over them gives total mass one. An empty group has no index in the level sum and the setting does not define or use its \(W_G\), so no empty sum appears in a denominator.
+
+Finally, \(A_i\) and \(B_i\) are independent and uniform on the four-element set \(\mathcal S\), independently of \(L_i\) and the center. Once \(t\) and \(j\) are fixed, the selected values \(a_j(t),a_{j+1}(t)\) are fixed members of \(\mathcal S\). Their ordered pair therefore has probability \((1/4)^2=1/16\). At \(j=J-1\), the second selector is \(a_J(t)\), which is setting-defined; when \(J=1\), this is the same sole sampled-level calculation with \(j=0=J-1\).
+\end{proof}
+
+\begin{lemma}[Refinement kernel and integrability]\label{lem:step-008-refinement-kernel}
+Under Assumption~\ref{assump:iid-independent-randomness},
+Proposition~\ref{prop:step-001-source-localization} and
+Lemmas~\ref{lem:step-001-midpoint} and~\ref{lem:step-001-cost} provide the
+localization center. Lemma~\ref{lem:step-005-digit-range} and
+Propositions~\ref{prop:step-005-query-precommitment}
+and~\ref{prop:step-005-dither-identities} provide the strict digit range and
+precommitment conclusions. Together with
+Lemma~\ref{lem:step-008-level-offset-law}, let
+
+\[
+\mathscr F_{\rm loc}
+:=\sigma\!\left(R_{\rm loc},(X_r)_{r\in I_{\rm loc}}\right),
+\]
+
+with the deterministic localization schedule understood as fixed. Then \(c\) is \(\mathscr F_{\rm loc}\)-measurable, and, for each \(i\in I_{\rm ref}\),
+
+\[
+\mathcal L\bigl(X_i,L_i,A_i,B_i,U_i\mid\mathscr F_{\rm loc}\bigr)
+=D\otimes(p_0,\ldots,p_{J-1})
+ \otimes {\rm Unif}(\mathcal S)^{\otimes2}
+ \otimes {\rm Unif}[-1,2]
+\quad\text{almost surely}.
+\]
+
+For every deterministic \(t\in\mathbb R\), \(Z_i(t)\) is Borel measurable, integrable, and square-integrable. In fact,
+
+\[
+|Z_i(t)|
+\leq48\max_{0\leq j<J}\frac{h_j}{p_j}<\infty
+\quad\text{pathwise}.
+\]
+
+Also, for
+
+\[
+\Delta_j^t(x):=D_j^t(x)-D_j^t(t),
+\]
+
+one has \(|\Delta_j^t(x)|<3h_j\), so \(T_t(X)=\sum_{j=0}^{J-1}\Delta_j^t(X)\) and every term in the proposed mean and raw-square formulas is integrable. The resulting right-hand sides are Borel functions of \(t\).
+\end{lemma}
+
+\begin{proof}
+The Proposition~\ref{prop:step-001-source-localization}, Lemma~\ref{lem:step-001-midpoint}, and Lemma~\ref{lem:step-001-cost} midpoint result makes \(c\) a measurable function of the localization seed and localization transcript, and hence of \(\mathscr F_{\rm loc}\). Assumption~\ref{assump:iid-independent-randomness} makes every refinement sample and seed independent of all localization samples and seeds, and gives the displayed product law within the refinement tuple. Therefore conditioning on \(\mathscr F_{\rm loc}\) changes none of the refinement marginals or their mutual independence. The response
+
+\[
+Y_i=\mathbf1\{F_{L_i,A_i,B_i}(X_i)/h_{L_i}\geq U_i\}
+\]
+
+is a Borel function of that tuple by Proposition~
+\ref{prop:step-005-query-precommitment}. It is not an independent seed, and
+the dither calculation below never conditions on \(Y_i\).
+
+The centered indicator difference in \(Z_i(t)\) belongs to \(\{-1,0,1\}\). Lemma~\ref{lem:step-008-level-offset-law} gives \(p_j>0\) at each of finitely many levels. Hence
+
+\[
+|Z_i(t)|
+\leq \frac{16}{p_{L_i}}3h_{L_i}
+\leq48\max_{0\leq j<J}\frac{h_j}{p_j}<\infty.
+\]
+
+This deterministic finite bound proves both integrability and square-integrability, conditionally and unconditionally, without a moment condition on \(D\).
+
+The digit range places each of \(D_j^t(x)\) and \(D_j^t(t)\) in \((-h_j,2h_j)\). Their difference therefore lies in \((-3h_j,3h_j)\), proving \(|\Delta_j^t(x)|<3h_j\). Since \(J\) is finite, \(T_t(X)\), \(\sum_j\mathbb E_D\Delta_j^t(X)\), and \(\sum_jp_j^{-1}h_j\mathbb E_D|\Delta_j^t(X)|\) are all absolutely finite. Thus every finite sum and iterated expectation below is legal.
+
+For measurability in \(t\), the Borel selector and the finite offset set give the finite representation
+
+\[
+D_j^t(x)
+=\sum_{a,b\in\mathcal S}
+ \mathbf1\{(a_j(t),a_{j+1}(t))=(a,b)\}F_{j,a,b}(x).
+\]
+
+For each \((j,a,b)\), the quantity \(\mathbb E_DF_{j,a,b}(X)\) is constant as
+a function of \(t\). The mean kernel is therefore a finite combination of
+Borel selector indicators, these constants, and the Borel value \(D_j^t(t)\).
+For the absolute kernel, for fixed \((j,a,b)\) define
+
+\[
+\phi_{j,a,b}(z):=\mathbb E_D|F_{j,a,b}(X)-z|.
+\]
+
+It is finite and satisfies \(|\phi(z)-\phi(z')|\leq|z-z'|\), so it is continuous. Hence the selected finite combination of \(\phi_{j,a,b}(F_{j,a,b}(t))\) is Borel. This proves the last assertion without any interchange of an infinite sum or limit.
+\end{proof}
+
+\begin{proposition}[Exact importance-weighted conditional mean]\label{prop:step-008-conditional-mean}
+Under Assumption~\ref{assump:iid-independent-randomness}, Lemmas~\ref{lem:step-008-level-offset-law} and~\ref{lem:step-008-refinement-kernel}, and the exact dither first-moment identity from Lemma~\ref{lem:step-005-digit-range}, Proposition~\ref{prop:step-005-query-precommitment}, and Proposition~\ref{prop:step-005-dither-identities}, define for every deterministic \(t\in\mathbb R\)
+
+\[
+\theta(t)
+:=\sum_{j=0}^{J-1}\mathbb E_D\bigl[D_j^t(X)-D_j^t(t)\bigr]
+=\mathbb E_DT_t(X).
+\]
+
+Then, for every \(i\in I_{\rm ref}\),
+
+\[
+\mathbb E[Z_i(c)\mid\mathscr F_{\rm loc}]=\theta(c)
+\quad\text{almost surely},
+\]
+
+and consequently
+
+\[
+\boxed{\mathbb E[Z_i(c)\mid c]=\theta(c)=\mathbb E_DT_c(X)}
+\quad\text{almost surely}.
+\]
+
+The equality is exact: the level probability \(p_j\), selected-pair probability \(1/16\), and importance factor \(16/p_j\) cancel without a remainder.
+\end{proposition}
+
+\begin{proof}
+First fix a deterministic center \(t\) and a level \(j\). Use only in this proof
+
+\[
+M_j^t
+:=\mathbf1\{(A_i,B_i)=(a_j(t),a_{j+1}(t))\}.
+\]
+
+On \(\{L_i=j\}\), the definition of \(Z_i(t)\) is
+
+\[
+Z_i(t)
+=\frac{16}{p_j}M_j^t
+G_{j,A_i,B_i}^t(X_i,U_i),
+\]
+
+where, for \(a,b\in\mathcal S\),
+\[
+G_{j,a,b}^t(x,u)
+:=3h_j\left[
+\mathbf1\!\left\{\frac{F_{j,a,b}(x)}{h_j}\geq u\right\}
+-\mathbf1\!\left\{\frac{F_{j,a,b}(t)}{h_j}\geq u\right\}
+\right].
+\]
+Conditional on \((X_i,L_i,A_i,B_i)\), Proposition~
+\ref{prop:step-005-dither-identities} applies because \(U_i\) remains
+uniform and independent. Only the single selected ordered pair survives
+multiplication by \(M_j^t\). Since that pair has probability \(1/16\), for
+every \(x\),
+
+\[
+\begin{aligned}
+&\mathbb E_{A_i,B_i,U_i}\!\left[
+M_j^tG_{j,A_i,B_i}^t(x,U_i)
+\mid L_i=j\right]\\
+&\qquad=\frac1{16}
+\bigl(D_j^t(x)-D_j^t(t)\bigr)
+=\frac1{16}\Delta_j^t(x).
+\end{aligned}
+\]
+
+Now average over \(X_i\sim D\) and over the level law. Lemma~\ref{lem:step-008-refinement-kernel} justifies every iteration and finite sum:
+
+\[
+\begin{aligned}
+\mathbb E Z_i(t)
+&=\sum_{j=0}^{J-1}
+p_j\frac{16}{p_j}\frac1{16}
+\mathbb E_D\Delta_j^t(X)\\
+&=\sum_{j=0}^{J-1}\mathbb E_D\Delta_j^t(X)
+=\mathbb E_DT_t(X)
+=\theta(t).
+\end{aligned}
+\]
+
+By Lemma~\ref{lem:step-008-refinement-kernel}, the same product-law calculation is valid conditional on \(\mathscr F_{\rm loc}\), with its realized center substituted for \(t\). This gives \(\mathbb E[Z_i(c)\mid\mathscr F_{\rm loc}]=\theta(c)\). Since \(\sigma(c)\subseteq\mathscr F_{\rm loc}\) and \(\theta(c)\) is \(\sigma(c)\)-measurable, the tower property gives
+
+\[
+\mathbb E[Z_i(c)\mid c]
+=\mathbb E[\theta(c)\mid c]
+=\theta(c).
+\]
+
+The proof does not condition on localization success; the identity holds on and off \(\mathcal E_{\rm loc}\).
+\end{proof}
+
+\begin{proposition}[Exact raw second moment with retained square structure]\label{prop:step-008-raw-square}
+Under Assumption~\ref{assump:iid-independent-randomness}, Lemmas~\ref{lem:step-008-level-offset-law} and~\ref{lem:step-008-refinement-kernel}, and the exact dither square from Lemma~\ref{lem:step-005-digit-range}, Proposition~\ref{prop:step-005-query-precommitment}, and Proposition~\ref{prop:step-005-dither-identities}, for every \(i\in I_{\rm ref}\),
+
+\[
+\boxed{
+\mathbb E[Z_i(c)^2\mid c]
+=48\sum_{j=0}^{J-1}\frac{h_j}{p_j}
+\mathbb E_D\left|D_j^c(X)-D_j^c(c)\right|
+}
+\quad\text{almost surely}.
+\]
+
+The identical equality holds conditional on \(\mathscr F_{\rm loc}\). More explicitly, for each nonempty group \(G\), substitution of \(p_j=m^{-1}w_j/W_G\) gives its exact contribution
+
+\[
+48mW_G\sum_{j\in G}\frac{h_j}{w_j}
+\mathbb E_D|D_j^c(X)-D_j^c(c)|.
+\]
+
+Thus a nonempty fine group contributes exactly
+
+\[
+48mW_{\rm f}\sigma
+\sum_{j\in\mathcal J_{\rm f}}
+\mathbb E_D|D_j^c(X)-D_j^c(c)|,
+\]
+
+and a nonempty coarse group contributes exactly
+
+\[
+48mW_{\rm c}\sigma^{2-k}
+\sum_{j\in\mathcal J_{\rm c}}h_j^{k-1}
+\mathbb E_D|D_j^c(X)-D_j^c(c)|.
+\]
+
+An empty group contributes no term and invokes no \(W_G\).
+\end{proposition}
+
+\begin{proof}
+For fixed \(t\), write \(Z_i(t)\) as the exact disjoint-level sum
+
+\[
+Z_i(t)
+=\sum_{j=0}^{J-1}\mathbf1\{L_i=j\}
+\frac{16}{p_j}M_j^tG_{j,A_i,B_i}^t(X_i,U_i).
+\]
+
+Since \(\mathbf1\{L_i=j\}\mathbf1\{L_i=\ell\}=0\) whenever \(j\neq\ell\), all cross-level products vanish pathwise, not by an expectation argument. Also \((M_j^t)^2=M_j^t\). Therefore
+
+\[
+Z_i(t)^2
+=\sum_{j=0}^{J-1}\mathbf1\{L_i=j\}
+\frac{256}{p_j^2}M_j^t
+\bigl(G_{j,A_i,B_i}^t(X_i,U_i)\bigr)^2.
+\]
+
+The internal centered-indicator cross term is not dropped. Indeed, with
+
+\[
+I_x=\mathbf1\{F_{j,a,b}(x)/h_j\geq U_i\},
+\qquad
+I_t=\mathbf1\{F_{j,a,b}(t)/h_j\geq U_i\},
+\]
+
+one has exactly
+
+\[
+(I_x-I_t)^2=I_x+I_t-2I_xI_t.
+\]
+
+The Lemma~\ref{lem:step-005-digit-range}, Proposition~\ref{prop:step-005-query-precommitment}, and Proposition~\ref{prop:step-005-dither-identities} calculation retains this cross term and identifies the square with the indicator of the half-open interval between the two thresholds. Consequently, for the selected pair,
+
+\[
+\mathbb E_{U_i}\left[
+\bigl(G_{j,a_j(t),a_{j+1}(t)}^t(x,U_i)\bigr)^2
+\right]
+=3h_j|\Delta_j^t(x)|.
+\]
+
+This equality includes threshold ties, both endpoints of the dither support, reversed threshold order, and \(x=t\). Averaging the match indicator over the independent uniform offsets contributes exactly \(1/16\). Averaging next over \(X_i\) and the level law gives
+
+\[
+\begin{aligned}
+\mathbb E Z_i(t)^2
+&=\sum_{j=0}^{J-1}
+p_j\frac{256}{p_j^2}\frac1{16}
+3h_j\mathbb E_D|\Delta_j^t(X)|\\
+&=48\sum_{j=0}^{J-1}\frac{h_j}{p_j}
+\mathbb E_D|\Delta_j^t(X)|.
+\end{aligned}
+\]
+
+This is a raw second moment: no subtraction of \(\theta(t)^2\), domination, activity estimate, or variance upper bound has occurred. Lemma~\ref{lem:step-008-refinement-kernel} applies the deterministic-center calculation conditional on \(\mathscr F_{\rm loc}\), and the tower property then yields the displayed conditioning on \(c\).
+
+Finally, if \(j\in G\), then \(p_j^{-1}=mW_G/w_j\). For fine levels, \(h_j/w_j=\sigma\). For coarse levels,
+
+\[
+\frac{h_j}{w_j}
+=h_j\left(\frac{h_j}{\sigma}\right)^{k-2}
+=\sigma^{2-k}h_j^{k-1}.
+\]
+
+Substitution gives the two exact group expressions. No normalizer is evaluated for an empty group.
+\end{proof}
+
+\begin{proposition}[Exact telescope target, residuals, and zero baseline]\label{prop:step-008-target-interface}
+Under Proposition~\ref{prop:step-008-conditional-mean}, the first-moment conclusion from Proposition~\ref{prop:step-001-source-localization}, Lemma~\ref{lem:step-001-midpoint}, and Lemma~\ref{lem:step-001-cost}, and Proposition~\ref{prop:step-006-residual-interface} and Lemma~\ref{lem:step-006-zero-displacement} from Lemma~\ref{lem:step-006-finite-telescope}, Lemma~\ref{lem:step-006-floor-remainder}, Proposition~\ref{prop:step-006-residual-interface}, and Lemma~\ref{lem:step-006-zero-displacement}, for every deterministic \(t\in\mathbb R\),
+
+\[
+\theta(t)=\mathbb E_DT_t(X),
+\qquad
+(\mu-t)-\theta(t)
+=\mathbb E_D R_0^t(X)+\mathbb E_D R_H^t(X).
+\]
+
+Consequently, for the generated center,
+
+\[
+\boxed{
+(\mu-c)-\theta(c)
+=\mathbb E_D R_0^c(X)+\mathbb E_D R_H^c(X)
+}
+\quad\text{almost surely}.
+\]
+
+Neither signed residual is bounded or discarded here. Moreover, for every realization of the seeds, \(X_i=c\) implies
+
+\[
+Z_i(c)=0,
+\qquad
+D_j^c(X_i)-D_j^c(c)=0\ \text{for all }j,
+\qquad
+T_c(c)=R_0^c(c)=R_H^c(c)=0.
+\]
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:step-001-first-moment} and \(|\mu|\leq\lambda\) give
+
+\[
+\mathbb E_D|X|
+\leq\mathbb E_D|X-\mu|+|\mu|
+\leq\sigma+\lambda<\infty.
+\]
+
+Thus the integrability condition in Proposition~\ref{prop:step-006-residual-interface} is discharged. That proposition gives, for each deterministic \(t\),
+
+\[
+(\mu-t)-\mathbb E_DT_t(X)
+=\mathbb E_D R_0^t(X)+\mathbb E_D R_H^t(X).
+\]
+
+Proposition~\ref{prop:step-008-conditional-mean} identifies \(\mathbb E_DT_t(X)=\theta(t)\), proving the two displayed residual formulas, first for every deterministic \(t\) and then at the measurable random value \(t=c\). No interchange with the random center is required: the deterministic identity is simply evaluated at its realized value.
+
+If \(X_i=c\), then the response indicator and the decoder-centering indicator in the definition of \(Z_i(c)\) have the same level, offsets, threshold, and dither, so their difference is zero for every \(U_i\). Hence \(Z_i(c)=0\) pathwise, regardless of the level probability or whether the offset pair matches. Exact vanishing of every centered digit, the telescope, and both residuals is the zero-displacement conclusion from Lemma~\ref{lem:step-006-finite-telescope}, Lemma~\ref{lem:step-006-floor-remainder}, Proposition~\ref{prop:step-006-residual-interface}, and Lemma~\ref{lem:step-006-zero-displacement}.
+\end{proof}
+
+\begin{proof}[Completion of the conditional-moment certificate]
+Lemma~\ref{lem:step-008-level-offset-law} proves that all sampled-level probabilities are strictly positive, normalized exactly, and legal even when one auxiliary group is empty. It also supplies the exact ordered-pair probability \(1/16\), including at \(j=0\), \(j=J-1\), and \(J=1\). Lemma~\ref{lem:step-008-refinement-kernel} then makes the center supplied by Lemma~\ref{lem:step-001-midpoint} measurable with respect to \(\mathscr F_{\rm loc}\), proves that the complete refinement tuple retains its product law after localization conditioning, and establishes conditional integrability and square-integrability before any expectation is interchanged.
+
+Using that legal kernel and the exact dither first moment, Proposition~\ref{prop:step-008-conditional-mean} tracks
+
+\[
+p_j\times\frac{16}{p_j}\times\frac1{16}=1
+\]
+
+at every level and obtains the exact identity
+
+\[
+\mathbb E[Z_i(c)\mid c]
+=\theta(c)
+=\sum_{j=0}^{J-1}\mathbb E_D[D_j^c(X)-D_j^c(c)]
+=\mathbb E_DT_c(X).
+\]
+
+Using the exact dither square, Proposition~\ref{prop:step-008-raw-square} tracks
+
+\[
+p_j\times\frac{256}{p_j^2}\times\frac1{16}\times3h_j
+=\frac{48h_j}{p_j}
+\]
+
+and obtains
+
+\[
+\mathbb E[Z_i(c)^2\mid c]
+=48\sum_{j=0}^{J-1}\frac{h_j}{p_j}
+\mathbb E_D|D_j^c(X)-D_j^c(c)|.
+\]
+
+Its derivation preserves the exact within-digit square/cross expression, and cross-level terms vanish only because one and only one level is sampled. The proposition also substitutes the exact fine and coarse laws without bounding a normalizer or importing a future activity argument.
+
+Finally, Proposition~\ref{prop:step-008-target-interface} uses two exact
+identities: the telescope in Lemma~\ref{lem:step-006-finite-telescope} and the
+floor-remainder result in Lemma~\ref{lem:step-006-floor-remainder}. It combines
+them with
+Proposition~\ref{prop:step-006-residual-interface},
+Lemma~\ref{lem:step-006-zero-displacement}, and the exact mean to retain the
+complete same-target residual
+
+\[
+(\mu-c)-\theta(c)
+=\mathbb E_D R_0^c(X)+\mathbb E_D R_H^c(X),
+\]
+
+and proves the exact \(X_i=c\) baseline. These results establish every stated
+conclusion without using a later activity, variance, or bias bound.
+\end{proof}
+
+\subsection{Fine-Scale Conditional Variance}\label{app:step-009}
+
+\begin{lemma}[Exact reduction of the fine conditional square]\label{lem:step-009-fine-square-reduction}
+Under Assumptions~\ref{assump:parameter-domain} and
+\ref{assump:iid-independent-randomness}, the exact group law in
+Proposition~\ref{prop:step-003-group-law}, and the raw-square
+identity in Proposition~\ref{prop:step-008-raw-square}, define, for a
+deterministic center \(t\in\mathbb R\), the appendix-local fine contribution
+
+\[
+\mathcal V_{\rm f}(t)
+:=48\sum_{j\in\mathcal J_{\rm f}}
+\frac{h_j}{p_j}\,
+\mathbb E_D|D_j^t(X)-D_j^t(t)|,
+\]
+
+where an empty fine sum is zero. If the fine group is nonempty, then
+
+\[
+\boxed{
+\mathcal V_{\rm f}(t)
+=48mW_{\rm f}\sigma\,
+\mathbb E_D\!\left[
+\sum_{j\in\mathcal J_{\rm f}}
+|D_j^t(X)-D_j^t(t)|
+\right].
+}
+\tag{9.1}
+\]
+
+For the generated center \(c\), the conditional raw square splits
+almost surely as
+
+\[
+\mathbb E[Z_i(c)^2\mid c]
+=\mathcal V_{\rm f}(c)
++48\sum_{j\in\mathcal J_{\rm c}}
+\frac{h_j}{p_j}\,
+\mathbb E_D|D_j^c(X)-D_j^c(c)|.
+\tag{9.2}
+\]
+
+No normalizer is evaluated for an empty group.
+\end{lemma}
+
+\begin{proof}
+If \(\mathcal J_{\rm f}=\varnothing\), the
+definition of \(\mathcal V_{\rm f}(t)\) is an empty sum and hence equals zero.
+There is then no fine index \(j\), no fine probability formula to evaluate,
+and no division by \(W_{\rm f}=0\). This proves the empty-group clause.
+
+Suppose \(\mathcal J_{\rm f}\neq\varnothing\). The group law gives
+\(m\in\{1,2\}\), \(W_{\rm f}>0\), and, for every fine index,
+
+\[
+w_j=\frac{h_j}{\sigma},
+\qquad
+p_j=\frac1m\frac{w_j}{W_{\rm f}}
+=\frac1m\frac{h_j/\sigma}{W_{\rm f}}
+=\frac{h_j}{m\sigma W_{\rm f}}.
+\tag{9.3}
+\]
+
+All divisions are legal because \(h_j>0\), \(\sigma>0\),
+\(W_{\rm f}>0\), and \(m\geq1\). Taking the reciprocal in (9.3) and
+multiplying by the same positive \(h_j\) gives the exact, level-independent
+identity
+
+\[
+p_j^{-1}=\frac{m\sigma W_{\rm f}}{h_j},
+\qquad
+\frac{h_j}{p_j}=mW_{\rm f}\sigma.
+\tag{9.4}
+\]
+
+In particular, if \(h_j=\sigma\), the setting assigns the level to the fine
+group, \(w_j=1\), and (9.3)--(9.4) remain unchanged.
+
+Substitution of (9.4), with no inequality, into the exact factor-48 fine sum
+gives
+
+\[
+\mathcal V_{\rm f}(t)
+=48mW_{\rm f}\sigma
+\sum_{j\in\mathcal J_{\rm f}}
+\mathbb E_D|D_j^t(X)-D_j^t(t)|.
+\tag{9.5}
+\]
+
+The level set is finite. Moreover, Lemma~
+\ref{lem:step-008-refinement-kernel} gives
+\(|D_j^t(X)-D_j^t(t)|<3h_j\) for every term. Finite linearity of
+expectation therefore yields the exact order exchange
+
+\[
+\sum_{j\in\mathcal J_{\rm f}}
+\mathbb E_D|D_j^t(X)-D_j^t(t)|
+=\mathbb E_D\!\left[
+\sum_{j\in\mathcal J_{\rm f}}
+|D_j^t(X)-D_j^t(t)|
+\right],
+\tag{9.6}
+\]
+
+with no infinite-series, limit, or conditional-expectation interchange.
+Combining (9.5) and (9.6) proves (9.1).
+
+Finally, Proposition~\ref{prop:step-008-raw-square} gives the exact full
+conditional identity for the generated center. Partitioning its finite level
+sum into the disjoint fine and coarse index sets yields (9.2). The first
+sub-sum is exactly \(\mathcal V_{\rm f}(c)\) by definition; nothing is
+bounded, subtracted, or imported about the coarse sub-sum.
+\end{proof}
+
+\begin{proposition}[Count-free fine-square bound]\label{prop:step-009-count-free-fine-bound}
+Under Lemmas~\ref{lem:step-009-fine-square-reduction}
+and~\ref{lem:step-003-fine-normalizer}, and
+Proposition~\ref{prop:step-007-fine-ledger}, for every
+deterministic center \(t\in\mathbb R\), every setting-admissible law \(D\),
+and every finite setting scale family,
+
+\[
+\boxed{
+\mathcal V_{\rm f}(t)
+\leq768mW_{\rm f}\sigma^2
+\leq3072\sigma^2.
+}
+\tag{9.7}
+\]
+
+The same bound holds almost surely at the generated center \(t=c\). The
+constant \(3072=48\cdot16\cdot2\cdot2\) is universal: it has no dependence
+on \(k,\lambda,\sigma,\epsilon,\delta,D,t,J,H\), or the number of fine
+levels. If the fine group is empty, or if all fine digits are inactive
+\(D\)-almost surely, then \(\mathcal V_{\rm f}(t)=0\).
+\end{proposition}
+
+\begin{proof}
+The empty-fine case was proved in
+Lemma~\ref{lem:step-009-fine-square-reduction}, so suppose the fine group
+is nonempty. The pathwise ledger applies before any expectation:
+
+\[
+\sum_{j\in\mathcal J_{\rm f}}
+|D_j^t(x)-D_j^t(t)|
+\leq16\min\{|x-t|,\sigma\}
+\qquad\text{for every }x\in\mathbb R.
+\tag{9.8}
+\]
+
+All quantities in (9.8) are nonnegative and integrable by the finite bounded
+digit interface. Taking \(X\sim D\), then using only the pointwise scalar
+inequality \(\min\{|X-t|,\sigma\}\leq\sigma\), gives
+
+\[
+\begin{aligned}
+\mathbb E_D\!\left[
+\sum_{j\in\mathcal J_{\rm f}}
+|D_j^t(X)-D_j^t(t)|
+\right]
+&\leq16\,\mathbb E_D\min\{|X-t|,\sigma\}\\
+&\leq16\sigma.
+\end{aligned}
+\tag{9.9}
+\]
+
+No moment of \(X-t\) is used. In particular, neither localization nor the
+recentered \(k\)-moment is needed to pass from the first to the second line.
+Substituting (9.9) into the exact reduction (9.1) gives
+
+\[
+\mathcal V_{\rm f}(t)
+\leq48mW_{\rm f}\sigma(16\sigma)
+=768mW_{\rm f}\sigma^2.
+\tag{9.10}
+\]
+
+The level law gives \(m\leq2\), and the geometric
+normalizer calculation gives \(W_{\rm f}\leq2\), independently of the
+cardinality of \(\mathcal J_{\rm f}\). Therefore
+
+\[
+768mW_{\rm f}\sigma^2
+\leq768\cdot2\cdot2\,\sigma^2
+=3072\sigma^2,
+\]
+
+which proves (9.7). In the auxiliary fine-only configuration, \(m=1\) and the
+same argument gives the sharper bound \(1536\sigma^2\). Under the theorem
+design, both groups occur, \(m=2\), and the universal displayed bound applies.
+
+The entire calculation is valid for every deterministic \(t\); the conditional kernel then permits evaluation at the generated \(c\), without
+conditioning on localization success. If every fine digit difference is zero
+\(D\)-almost surely, the exact nonnegative sum defining
+\(\mathcal V_{\rm f}(t)\) is zero. In particular, when \(D\) is concentrated
+at \(t\), the exact zero-displacement identity makes every fine
+integrand zero.
+\end{proof}
+
+\begin{proposition}[Fine conditional-variance interface]\label{prop:step-009-variance-interface}
+Under Proposition~\ref{prop:step-009-count-free-fine-bound}, the conditional kernel and raw square in
+Proposition~\ref{prop:step-008-raw-square}, and
+Assumption~\ref{assump:iid-independent-randomness}, define only for this
+proof
+
+\[
+Z_{i,{\rm f}}(t)
+:=Z_i(t)\mathbf1\{L_i\in\mathcal J_{\rm f}\}.
+\]
+
+Then, for the generated center \(c\),
+
+\[
+\mathbb E[Z_{i,{\rm f}}(c)^2\mid c]
+=\mathcal V_{\rm f}(c),
+\qquad
+\boxed{
+\operatorname{Var}(Z_{i,{\rm f}}(c)\mid c)
+\leq3072\sigma^2
+}
+\quad\text{almost surely}.
+\tag{9.11}
+\]
+
+For the full pseudo-observation, the precise assembly-facing consequence is
+
+\[
+\boxed{
+\operatorname{Var}(Z_i(c)\mid c)
+\leq3072\sigma^2
++48\sum_{j\in\mathcal J_{\rm c}}
+\frac{h_j}{p_j}\,
+\mathbb E_D|D_j^c(X)-D_j^c(c)|
+}
+\quad\text{almost surely}.
+\tag{9.12}
+\]
+
+The coarse term in (9.12) is the untouched exact raw-square sub-sum, not a
+coarse estimate.
+\end{proposition}
+
+\begin{proof}
+The Lemma~\ref{lem:step-008-refinement-kernel}, Proposition~\ref{prop:step-008-conditional-mean}, Proposition~\ref{prop:step-008-raw-square}, and Proposition~\ref{prop:step-008-target-interface} disjoint-level square
+calculation remains valid after multiplication by
+\(\mathbf1\{L_i\in\mathcal J_{\rm f}\}\): it simply retains the fine level
+indices. Hence
+
+\[
+\mathbb E[Z_{i,{\rm f}}(c)^2\mid c]
+=48\sum_{j\in\mathcal J_{\rm f}}
+\frac{h_j}{p_j}\,
+\mathbb E_D|D_j^c(X)-D_j^c(c)|
+=\mathcal V_{\rm f}(c).
+\]
+
+The square-integrability of \(Z_i(c)\) also gives conditional
+square-integrability of its fine restriction. Therefore, directly from the
+definition of conditional variance,
+
+\[
+\operatorname{Var}(Z_{i,{\rm f}}(c)\mid c)
+=\mathbb E[Z_{i,{\rm f}}(c)^2\mid c]
+-\bigl(\mathbb E[Z_{i,{\rm f}}(c)\mid c]\bigr)^2
+\leq\mathcal V_{\rm f}(c)
+\leq3072\sigma^2.
+\]
+
+For the full variable, the same variance identity and nonnegativity of a
+conditional square give
+
+\[
+\operatorname{Var}(Z_i(c)\mid c)
+\leq\mathbb E[Z_i(c)^2\mid c].
+\]
+
+Insert the exact fine/coarse raw-square split (9.2) and then apply (9.7) only
+to the fine term. This proves (9.12). We do not assert that the full
+conditional variance equals the sum of the conditional variances of its fine-
+and coarse-level restrictions: although those level events are disjoint
+pathwise, their conditional means need not vanish, so such an additive
+variance identity is not available. The raw-second-moment upper bound is the
+valid interface.
+
+If \(X_i=c\), the exact baseline gives \(Z_i(c)=0\) pathwise for
+every level and seed, and hence also \(Z_{i,{\rm f}}(c)=0\). If the fine group
+is empty, \(Z_{i,{\rm f}}(c)=0\) identically and (9.11) reads \(0\leq0\). If
+the coarse group is empty, the last sum in (9.12) is absent, so the same
+\(3072\sigma^2\) bound applies to the full conditional variance.
+\end{proof}
+
+\begin{proof}[Completion of the fine-variance certificate]
+Proposition~\ref{prop:step-008-raw-square} supplies the exact
+factor-48 conditional raw square under the independent refinement kernel.
+Lemma~\ref{lem:step-009-fine-square-reduction} combines it with the
+exact fine law from
+Proposition~\ref{prop:step-003-group-law} and explicitly checks
+
+\[
+w_j=\frac{h_j}{\sigma},
+\qquad
+p_j=\frac{h_j}{m\sigma W_{\rm f}},
+\qquad
+\frac{h_j}{p_j}=mW_{\rm f}\sigma.
+\]
+
+It then moves the finite level sum inside expectation exactly, before any
+inequality is applied. Proposition~\ref{prop:step-009-count-free-fine-bound}
+uses the pathwise result
+
+\[
+\sum_{j\in\mathcal J_{\rm f}}|D_j^c(X)-D_j^c(c)|
+\leq16\min\{|X-c|,\sigma\}
+\leq16\sigma
+\]
+
+and the bounds \(m\leq2\), \(W_{\rm f}\leq2\) to obtain
+
+\[
+48mW_{\rm f}\sigma\,
+\mathbb E_D\sum_{j\in\mathcal J_{\rm f}}
+|D_j^c(X)-D_j^c(c)|
+\leq3072\sigma^2.
+\]
+
+Thus arbitrarily many fine scales are summed pathwise and never counted.
+Proposition~\ref{prop:step-009-variance-interface} finally applies the
+conditional variance definition: the fine-restricted conditional variance is
+at most \(3072\sigma^2\), while the same universal amount is the fine
+contribution to the valid full-variance raw-second-moment bound. The coarse
+sub-sum is retained exactly for its legal later producer; no coarse or future
+concentration conclusion is imported.
+
+These named results prove the stated result with the explicit universal
+choice \(C=3072\). The statement is simultaneous over all deterministic
+centers and all setting-admissible laws, almost sure when evaluated at the
+generated center, uniform over every finite \(J\), valid at \(h_j=\sigma\),
+and empty-group safe.
+\end{proof}
+
+\subsection{Coarse-Scale Conditional Variance}\label{app:step-010}
+
+For a deterministic decoder value \(t\), write
+\[
+\Delta_j^t(x):=D_j^t(x)-D_j^t(t).
+\]
+Let \(\mathbb E_t\) and \(\operatorname{Var}_t\) denote expectation and
+variance under the independent refinement product kernel with the decoder
+parameter fixed at \(t\).  Define
+\[
+Z_{i,{\rm c}}(t):=Z_i(t)\mathbf 1\{L_i\in\mathcal J_{\rm c}\}.
+\]
+When \(\mathcal J_{\rm c}\neq\varnothing\), set
+\[
+S_{\rm c}(t)
+:=48\sum_{j\in\mathcal J_{\rm c}}\frac{h_j}{p_j}
+       \mathbb E_D|\Delta_j^t(X)|,
+\]
+and set \(S_{\rm c}(t)=0\) when the coarse group is empty.  Thus no inverse
+probability or normalizer is evaluated for an absent group.
+
+\begin{lemma}[Coarse square and conditional variance]\label{lem:step-010-exact-coarse-square}
+Under Proposition~\ref{prop:step-008-raw-square} and
+Proposition~\ref{prop:step-003-group-law}, for every deterministic center
+\(t\), the independent-refinement conditional kernel satisfies
+
+\[
+\mathbb E_t[Z_{i,{\rm c}}(t)^2]=S_{\rm c}(t),
+\qquad
+\operatorname{Var}_t(Z_{i,{\rm c}}(t))\leq S_{\rm c}(t).
+\]
+
+If \(\mathcal J_{\rm c}\neq\varnothing\), then exactly
+
+\[
+\boxed{
+S_{\rm c}(t)
+=48mW_{\rm c}\sigma^{2-k}\,
+  \mathbb E_D\!\left[
+    \sum_{j\in\mathcal J_{\rm c}}h_j^{k-1}
+      |\Delta_j^t(X)|
+  \right].
+}
+\tag{10.1}
+\]
+
+If \(\mathcal J_{\rm c}=\varnothing\), then
+\(Z_{i,{\rm c}}(t)=0\) pathwise and \(S_{\rm c}(t)=0\), without evaluating
+\(W_{\rm c}\), \(w_j/W_{\rm c}\), or \(p_j^{-1}\) for an absent level.
+\end{lemma}
+
+\begin{proof}
+By definition,
+
+\[
+Z_{i,{\rm c}}(t)^2
+=Z_i(t)^2\mathbf1\{L_i\in\mathcal J_{\rm c}\}.
+\]
+
+The raw-square proof expands \(Z_i(t)^2\) over the disjoint events
+\(\{L_i=j\}\). Restricting that same exact expansion to
+\(j\in\mathcal J_{\rm c}\) therefore gives
+
+\[
+\mathbb E_t[Z_{i,{\rm c}}(t)^2]
+=48\sum_{j\in\mathcal J_{\rm c}}\frac{h_j}{p_j}
+  \mathbb E_D|\Delta_j^t(X)|
+=S_{\rm c}(t).
+\]
+
+This is a raw conditional square. The direct conditional-variance identity
+gives
+
+\[
+\operatorname{Var}_t(Z_{i,{\rm c}}(t))
+=S_{\rm c}(t)-\mathbb E_t[Z_{i,{\rm c}}(t)]^2
+\leq S_{\rm c}(t).
+\]
+
+Now suppose the coarse group is nonempty. For every
+\(j\in\mathcal J_{\rm c}\), the definitions, in their exact order, are
+
+\[
+w_j=\left(\frac{h_j}{\sigma}\right)^{2-k},
+\qquad
+W_{\rm c}=\sum_{\ell\in\mathcal J_{\rm c}}w_\ell,
+\qquad
+p_j=\frac1m\frac{w_j}{W_{\rm c}}.
+\]
+
+Thus
+
+\[
+\frac1{p_j}
+=mW_{\rm c}\left(\frac{h_j}{\sigma}\right)^{k-2}
+=mW_{\rm c}\sigma^{2-k}h_j^{k-2},
+\]
+
+and hence, without an inequality,
+
+\[
+\begin{aligned}
+S_{\rm c}(t)
+&=48\sum_{j\in\mathcal J_{\rm c}}
+   h_j\,mW_{\rm c}\sigma^{2-k}h_j^{k-2}
+   \mathbb E_D|\Delta_j^t(X)|\\
+&=48mW_{\rm c}\sigma^{2-k}
+  \sum_{j\in\mathcal J_{\rm c}}h_j^{k-1}
+   \mathbb E_D|\Delta_j^t(X)|\\
+&=48mW_{\rm c}\sigma^{2-k}\,
+  \mathbb E_D\!\left[
+    \sum_{j\in\mathcal J_{\rm c}}h_j^{k-1}
+      |\Delta_j^t(X)|
+  \right].
+\end{aligned}
+\]
+
+The last equality moves expectation across a finite sum only. Lemma~\ref{lem:step-008-refinement-kernel}, Proposition~\ref{prop:step-008-conditional-mean}, Proposition~\ref{prop:step-008-raw-square}, and Proposition~\ref{prop:step-008-target-interface} already proves every summand integrable. At \(k=2\), this same
+calculation reads \(w_j=1\), \(p_j=(mW_{\rm c})^{-1}\), and
+\(h_j/p_j=mW_{\rm c}h_j\); no limiting interpretation is used.
+
+If the coarse group is empty, the defining indicator of
+\(Z_{i,{\rm c}}\) is zero and every coarse sum is empty. This proves the exact
+zero statements directly and completes the two cases.
+\end{proof}
+
+\begin{proposition}[Coarse-square moment closure]\label{prop:step-010-coarse-moment-closure}
+Under Assumption~\ref{assump:moment-class}, Lemma~\ref{lem:step-002-recentered-moment}, Proposition~\ref{prop:step-007-coarse-ledger}, and
+Lemma~\ref{lem:step-010-exact-coarse-square}, fix a deterministic center
+\(t\) with \(|t-\mu|\leq50\sigma\). Then
+
+\[
+S_{\rm c}(t)\leq A_kW_{\rm c}\sigma^2,
+\qquad
+A_k:=96C_k^{\rm rec}C_k^{\rm act},
+\tag{10.2}
+\]
+
+where the empty-coarse case means \(S_{\rm c}(t)=W_{\rm c}=0\) under the
+inequality-only empty-sum extension. The constant is explicitly
+
+\[
+A_k
+=96\,[2^{k-1}(1+50^k)]
+  \left[\frac{3(8/3)^k}{1-2^{-k}}\right],
+\]
+
+which is finite and positive for every fixed \(k>1\).
+\end{proposition}
+
+\begin{proof}
+If the coarse group is empty, the conclusion is
+the exact equality \(0=0\), so suppose it is nonempty. The activity
+ledger is pointwise in \(x\):
+
+\[
+\sum_{j\in\mathcal J_{\rm c}}h_j^{k-1}|\Delta_j^t(x)|
+\leq C_k^{\rm act}|x-t|^k
+\qquad\text{for every }x\in\mathbb R.
+\tag{10.3}
+\]
+
+This is the required order of operations: all active scales are summed before
+any expectation is taken. Applying \(\mathbb E_D\) to the nonnegative
+pointwise inequality gives
+
+\[
+\mathbb E_D\!\left[
+ \sum_{j\in\mathcal J_{\rm c}}h_j^{k-1}|\Delta_j^t(X)|
+\right]
+\leq C_k^{\rm act}\mathbb E_D|X-t|^k.
+\tag{10.4}
+\]
+
+Lemma~\ref{lem:step-002-recentered-moment} concerns this same deterministic
+decoder center \(t\), and the refinement kernel leaves the refinement draw
+with its population law \(D\) after localization conditioning. Therefore the
+localized-center condition and Assumption~\ref{assump:moment-class} give
+
+\[
+\mathbb E_D|X-t|^k\leq C_k^{\rm rec}\sigma^k.
+\tag{10.5}
+\]
+
+Substituting (10.4)--(10.5) into the exact identity (10.1) yields
+
+\[
+\begin{aligned}
+S_{\rm c}(t)
+&\leq48mW_{\rm c}\sigma^{2-k}
+  C_k^{\rm act}C_k^{\rm rec}\sigma^k\\
+&=48mC_k^{\rm act}C_k^{\rm rec}W_{\rm c}\sigma^2\\
+&\leq96C_k^{\rm act}C_k^{\rm rec}W_{\rm c}\sigma^2
+=A_kW_{\rm c}\sigma^2.
+\end{aligned}
+\]
+
+The final inequality is the displayed deterministic bound
+\(m\leq2\); under the actual theorem design \(m=2\), so its coefficient is
+exactly \(96\). No level count, tail truncation, or term absorption occurs.
+
+For rare \(R=|X-t|\gg H\), every sampled coarse level may be active, but
+(10.3) remains valid because Lemma~\ref{lem:step-007-stable-support}, Lemma~\ref{lem:step-007-digit-envelope}, Proposition~\ref{prop:step-007-fine-ledger}, and Proposition~\ref{prop:step-007-coarse-ledger} imposed no condition
+\(R\leq H\). At \(X=t\), its left and right sides are both zero.
+\end{proof}
+
+\begin{lemma}[Superquadratic coarse variance]\label{lem:step-010-superquadratic}
+Under Proposition~\ref{prop:step-010-coarse-moment-closure} and Proposition~\ref{prop:step-003-coarse-normalizers}, if \(k>2\) is fixed
+and \(|t-\mu|\leq50\sigma\), then
+
+\[
+S_{\rm c}(t)
+\leq C_{k,>}^{\rm c}\sigma^2,
+\qquad
+C_{k,>}^{\rm c}
+:=\frac{A_k}{1-2^{2-k}}<\infty.
+\tag{10.6}
+\]
+
+Consequently
+\(\operatorname{Var}_t(Z_{i,{\rm c}}(t))
+\leq C_{k,>}^{\rm c}\sigma^2\).
+\end{lemma}
+
+\begin{proof}
+In the fixed regime \(k>2\), the coarse
+normalizer bound is
+
+\[
+W_{\rm c}\leq\frac1{1-2^{2-k}}.
+\]
+
+The denominator is positive because \(2^{2-k}<1\). Substitution into (10.2)
+gives (10.6) directly. The conditional-variance conclusion follows from
+Lemma~\ref{lem:step-010-exact-coarse-square}. The constant may grow as
+\(k\downarrow2\); no uniform limit in \(k\) is claimed or needed.
+\end{proof}
+
+\begin{lemma}[Critical coarse variance with exactly one logarithm]\label{lem:step-010-critical}
+Under Proposition~\ref{prop:step-010-coarse-moment-closure} and Proposition~\ref{prop:step-003-coarse-normalizers}, set \(k=2\) exactly.
+For every \(|t-\mu|\leq50\sigma\),
+
+\[
+S_{\rm c}(t)
+\leq C_2^{\rm c}\sigma^2\log\frac{\sigma}{\epsilon},
+\tag{10.7}
+\]
+
+where the numerical constant
+
+\[
+C_2^{\rm c}
+:=A_2\left(\log_2(2b_2)+\frac1{\log2}\right)
+\]
+
+depends on no problem quantity. Consequently the same upper bound holds for
+\(\operatorname{Var}_t(Z_{i,{\rm c}}(t))\).
+\end{lemma}
+
+\begin{proof}
+At \(k=2\), the coarse weights are exactly
+\(w_j=1\), so
+
+\[
+W_{\rm c}=\#\mathcal J_{\rm c}.
+\]
+
+This is the sole coarse-level count. The normalizer proof, using the
+largest sampled scale \(h_{J-1}=H/2\) and
+\(H<2b_2\sigma(\sigma/\epsilon)\), gives
+
+\[
+W_{\rm c}
+<\log_2(2b_2)+\frac{\log(\sigma/\epsilon)}{\log2}.
+\tag{10.8}
+\]
+
+The design has \(\sigma/\epsilon\geq e\), hence
+\(\log(\sigma/\epsilon)\geq1\). Therefore the additive constant in (10.8)
+is dominated by the target logarithm through the explicit inequality
+
+\[
+\log_2(2b_2)+\frac{\log(\sigma/\epsilon)}{\log2}
+\leq
+\left(\log_2(2b_2)+\frac1{\log2}\right)
+\log\frac{\sigma}{\epsilon}.
+\tag{10.9}
+\]
+
+Combining (10.2) and (10.9) proves (10.7). There is no second count:
+before \(W_{\rm c}\) is applied, Proposition~\ref{prop:step-007-coarse-ledger} at \(k=2\) gives the
+pointwise geometric charge
+
+\[
+\sum_{j\in\mathcal J_{\rm c}}h_j|\Delta_j^t(x)|
+\leq C_2^{\rm act}|x-t|^2,
+\]
+
+which contains no factor \(\#\mathcal J_{\rm c}\). Thus (10.7) contains
+exactly the one logarithm carried by \(W_{\rm c}\). The proof sets \(k=2\)
+from the start and does not take either one-sided limit.
+\end{proof}
+
+\begin{lemma}[Subquadratic coarse variance]\label{lem:step-010-subquadratic}
+Under Proposition~\ref{prop:step-010-coarse-moment-closure} and Proposition~\ref{prop:step-003-coarse-normalizers}, if fixed
+\(1<k<2\) and \(|t-\mu|\leq50\sigma\), then
+
+\[
+S_{\rm c}(t)
+\leq C_{k,<}^{\rm c}\sigma^kH^{2-k},
+\qquad
+C_{k,<}^{\rm c}
+:=\frac{A_k}{2^{2-k}(1-2^{-(2-k)})}<\infty.
+\tag{10.10}
+\]
+
+Consequently the same bound holds for
+\(\operatorname{Var}_t(Z_{i,{\rm c}}(t))\).
+\end{lemma}
+
+\begin{proof}
+In the fixed regime \(1<k<2\), the last-term-dominated normalizer bound is
+
+\[
+W_{\rm c}
+\leq\frac1{1-2^{-(2-k)}}
+\left(\frac{H}{2\sigma}\right)^{2-k}.
+\]
+
+Substituting this inequality into (10.2), with no change to \(H\), gives
+
+\[
+\begin{aligned}
+S_{\rm c}(t)
+&\leq
+\frac{A_k}{1-2^{-(2-k)}}\sigma^2
+\left(\frac{H}{2\sigma}\right)^{2-k}\\
+&=\frac{A_k}{2^{2-k}(1-2^{-(2-k)})}
+  \sigma^{2-(2-k)}H^{2-k}\\
+&=C_{k,<}^{\rm c}\sigma^kH^{2-k}.
+\end{aligned}
+\]
+
+Both denominator factors are positive because \(2-k\in(0,1)\). The constant
+is finite for each fixed \(k\), although it may grow as \(k\uparrow2\). This
+is not replaced by a uniform-in-\(k\) limit or by the critical-regime formula.
+The activity ledger already includes \(|X-t|\gg H\), so no tail beyond
+\(H\) is omitted.
+\end{proof}
+
+\begin{proposition}[Three-regime coarse conditional variance certificate]\label{prop:step-010-three-regime}
+Under Assumption~\ref{assump:moment-class},
+Lemma~\ref{lem:step-010-exact-coarse-square},
+Proposition~\ref{prop:step-010-coarse-moment-closure}, and
+Lemmas~\ref{lem:step-010-superquadratic},
+\ref{lem:step-010-critical}, and
+\ref{lem:step-010-subquadratic}, on
+the generated localization event
+
+\[
+\mathcal E_{\rm loc}=\{|c-\mu|\leq50\sigma\},
+\]
+
+the actual decoder center satisfies, almost surely in its localization
+transcript,
+
+\[
+\operatorname{Var}(Z_{i,{\rm c}}(c)\mid c)
+\leq S_{\rm c}(c)
+\leq
+\begin{cases}
+C_{k,>}^{\rm c}\sigma^2, & k>2,\\[0.3em]
+C_2^{\rm c}\sigma^2\log(\sigma/\epsilon), & k=2,\\[0.3em]
+C_{k,<}^{\rm c}\sigma^kH^{2-k}, & 1<k<2.
+\end{cases}
+\tag{10.11}
+\]
+
+Moreover, \(S_{\rm c}(c)\) is exactly the coarse nonnegative summand in
+\(\mathbb E[Z_i(c)^2\mid c]\), not a replacement for the full raw square.
+If the coarse group is empty, or if every coarse digit has zero activity,
+then \(S_{\rm c}(c)=0\) and
+\(Z_{i,{\rm c}}(c)=0\) conditionally almost surely. In particular, at the
+exact baseline \(X_i=c\), the coarse component is zero pathwise for every
+level, offset, and dither realization.
+\end{proposition}
+
+\begin{proof}
+Fix any localization transcript in
+\(\mathcal E_{\rm loc}\), and denote its realized center by \(t=c\).
+Lemma~\ref{lem:step-008-refinement-kernel} says that conditional on this
+transcript the refinement kernel is still the original one, so
+Lemma~\ref{lem:step-010-exact-coarse-square}
+applies to the actual conditional square. Lemma~\ref{lem:step-002-recentered-moment} supplies the
+same-center moment needed by
+Proposition~\ref{prop:step-010-coarse-moment-closure}. Exactly one of the
+three mutually exclusive cases holds. Lemma~\ref{lem:step-010-superquadratic},
+Lemma~\ref{lem:step-010-critical}, or
+Lemma~\ref{lem:step-010-subquadratic}, respectively, gives (10.11).
+
+For the exact raw-square interface, Proposition~
+\ref{prop:step-008-raw-square} gives
+
+\[
+\mathbb E[Z_i(c)^2\mid c]
+=48\sum_{j\in\mathcal J_{\rm f}}\frac{h_j}{p_j}
+  \mathbb E_D|D_j^c(X)-D_j^c(c)|
+ +S_{\rm c}(c),
+\]
+
+where an empty fine sum is zero. This line is only an exact decomposition; no
+fine bound is asserted or imported here. Thus the proposition precisely
+certifies the coarse contribution while distinguishing it from the variance
+and from the full raw square.
+
+If the coarse group is empty, Lemma~\ref{lem:step-010-exact-coarse-square}
+gives exact pathwise zero. If all coarse digit differences vanish
+\(D\)-almost surely, the exact nonnegative formula gives
+\(S_{\rm c}(c)=0\); the conditional square of \(Z_{i,{\rm c}}(c)\) is then
+zero, so that component is conditionally almost surely zero. At \(X_i=c\),
+the definition of the centered dither bracket gives the stronger pathwise
+identity before expectation.
+\end{proof}
+
+\begin{proof}[Completion of the coarse-variance certificate]
+Proposition~\ref{prop:step-008-raw-square} supplies the exact
+factor-48 conditional raw square. Lemma~\ref{lem:step-010-exact-coarse-square}
+restricts that identity to the coarse levels, distinguishes the genuine
+conditional variance from its raw-square upper bound, and performs the exact
+substitution
+
+\[
+\frac{h_j}{p_j}
+=mW_{\rm c}\sigma^{2-k}h_j^{k-1}
+\qquad(j\in\mathcal J_{\rm c}).
+\]
+
+Proposition~\ref{prop:step-007-coarse-ledger} then sums all
+coarse activity pointwise before expectation, including the rare-tail case
+\(|X-c|\gg H\). Lemma~\ref{lem:step-002-recentered-moment} integrates the resulting
+\(|X-c|^k\) charge under exactly the generated localization interface.
+Proposition~\ref{prop:step-010-coarse-moment-closure} composes these
+inputs and proves the common bound
+
+\[
+S_{\rm c}(c)\leq A_kW_{\rm c}\sigma^2
+\quad\text{on }\mathcal E_{\rm loc}.
+\]
+
+The three normalizer formulas are then applied separately:
+Lemma~\ref{lem:step-010-superquadratic} gives the fixed-\(k>2\)
+\(C_k\sigma^2\) bound; Lemma~\ref{lem:step-010-critical} gives the exact
+\(k=2\) bound with precisely one \(\log(\sigma/\epsilon)\); and
+Lemma~\ref{lem:step-010-subquadratic} gives the fixed-\(1<k<2\)
+\(C_k\sigma^kH^{2-k}\) bound. Proposition~\ref{prop:step-010-three-regime}
+packages those mutually exclusive conclusions for the actual random center,
+with exact empty-group and zero-displacement reductions. This proves the stated result without importing a fine-variance estimate,
+concentration result, or bias statement.
+\end{proof}
+
+\subsection{Residual Bias and Target Transfer}\label{app:step-011}
+
+\begin{lemma}[Top residual pointwise tail envelope]\label{lem:step-011-top-envelope}
+Under Lemma~\ref{lem:step-006-floor-remainder},
+Proposition~\ref{prop:step-006-residual-interface}, and
+Lemma~\ref{lem:step-007-stable-support}, for every
+\(c,x\in\mathbb R\),
+\[
+\left|R_H^c(x)\right|
+\leq\frac{11}{3}|x-c|
+\mathbf1\left\{|x-c|>\frac{3H}{8}\right\}.
+\]
+In particular, the right-hand side is zero at \(x=c\) and at the support
+boundary \(|x-c|=3H/8\).
+\end{lemma}
+
+\begin{proof}
+For this proof only, write
+\[
+\rho_J^c(y):=y-Q_J^c(y).
+\]
+Lemma~\ref{lem:step-006-floor-remainder} gives
+\(0\leq\rho_J^c(y)<H\) for every real \(y\). Therefore
+\[
+\begin{aligned}
+R_H^c(x)
+&=Q_J^c(x)-Q_J^c(c)\\
+&=(x-c)-\bigl(\rho_J^c(x)-\rho_J^c(c)\bigr),
+\end{aligned}
+\]
+and hence, with \(R=|x-c|\),
+\[
+|R_H^c(x)|
+\leq R+|\rho_J^c(x)-\rho_J^c(c)|
+<R+H.
+\tag{11.1}
+\]
+
+If \(R\leq3H/8\), Lemma~\ref{lem:step-007-stable-support} gives \(R_H^c(x)=0\),
+including equality and both displacement signs. If \(R>3H/8\), then
+\(H<8R/3\), so (11.1) yields
+\[
+|R_H^c(x)|<R+\frac{8R}{3}=\frac{11R}{3}.
+\]
+Combining the two cases and relaxing the strict active-tail inequality to a
+non-strict one proves the displayed supported envelope. At \(R=0\), this also
+agrees with the exact zero-displacement identity.
+\end{proof}
+
+\begin{lemma}[Localized top-residual bias]\label{lem:step-011-top-bias}
+Under Assumptions~\ref{assump:parameter-domain} and
+\ref{assump:moment-class}, Lemmas~\ref{lem:step-002-recentered-moment} and
+\ref{lem:step-003-endpoint-calibration}, and
+Lemma~\ref{lem:step-011-top-envelope}, every localization transcript in
+\(\mathcal E_{\rm loc}\) satisfies
+\[
+\left|\mathbb E_D R_H^c(X)\right|
+\leq\mathbb E_D|R_H^c(X)|
+\leq
+\overline C_k^{\rm tail}\frac{\sigma^k}{H^{k-1}}
+\leq\frac{\epsilon}{8},
+\]
+where
+\[
+\overline C_k^{\rm tail}
+=\frac{11}{3}\left(\frac83\right)^{k-1}C_k^{\rm rec}.
+\]
+\end{lemma}
+
+\begin{proof}
+Fix an arbitrary localization transcript in
+\(\mathcal E_{\rm loc}\), so its actual decoder output \(c\) is fixed during
+\(\mathbb E_D\). Put \(R=|X-c|\). Since \(k>1\) and \(H>0\), on the event
+\(R>3H/8\),
+\[
+R
+=\frac{R^k}{R^{k-1}}
+\leq\frac{R^k}{(3H/8)^{k-1}}
+=\left(\frac83\right)^{k-1}\frac{R^k}{H^{k-1}}.
+\]
+Multiplying by the tail indicator and applying
+Lemma~\ref{lem:step-011-top-envelope} gives the pointwise estimate
+\[
+|R_H^c(X)|
+\leq\frac{11}{3}\left(\frac83\right)^{k-1}
+\frac{|X-c|^k}{H^{k-1}}.
+\tag{11.2}
+\]
+The right-hand side is integrable because Lemma~\ref{lem:step-002-recentered-moment} gives, on the fixed generated
+event,
+\[
+\mathbb E_D|X-c|^k\leq C_k^{\rm rec}\sigma^k.
+\]
+Taking expectations in (11.2) therefore yields
+\[
+\begin{aligned}
+\mathbb E_D|R_H^c(X)|
+&\leq\frac{11}{3}\left(\frac83\right)^{k-1}
+  \frac{\mathbb E_D|X-c|^k}{H^{k-1}}\\
+&\leq\frac{11}{3}\left(\frac83\right)^{k-1}
+  C_k^{\rm rec}\frac{\sigma^k}{H^{k-1}}\\
+&=\overline C_k^{\rm tail}\frac{\sigma^k}{H^{k-1}}\\
+&\leq\frac\epsilon8.
+\end{aligned}
+\]
+The last line is exactly the endpoint calibration. Absolute integrability also
+gives
+\[
+|\mathbb E_D R_H^c(X)|\leq\mathbb E_D|R_H^c(X)|.
+\]
+The calculation is
+uniform over every transcript in \(\mathcal E_{\rm loc}\) and uses the
+moment about its actual center.
+\end{proof}
+
+\begin{lemma}[Bottom quantization residual bias]\label{lem:step-011-bottom-bias}
+Under Lemma~\ref{lem:step-006-floor-remainder} and
+Lemma~\ref{lem:step-003-endpoint-calibration}, for every real center
+\(c\) and every law \(D\),
+\[
+\left|\mathbb E_D R_0^c(X)\right|
+\leq\mathbb E_D|R_0^c(X)|
+<h_0=\frac\epsilon8,
+\]
+and consequently
+\(\left|\mathbb E_D R_0^c(X)\right|\leq\epsilon/8\).
+\end{lemma}
+
+\begin{proof}
+Lemma~\ref{lem:step-006-floor-remainder} gives the pointwise strict bound
+\[
+|R_0^c(x)|<h_0
+\qquad\text{for every }x\in\mathbb R.
+\]
+Thus \(R_0^c(X)\) is integrable for every law \(D\), and monotonicity of
+expectation gives
+\[
+|\mathbb E_D R_0^c(X)|
+\leq\mathbb E_D|R_0^c(X)|<h_0.
+\]
+Lemma~\ref{lem:step-003-endpoint-calibration} identifies the
+same setting scale as \(h_0=\epsilon/8\). This proof does not require
+localization, a support restriction, or a moment bound. At \(X=c\), the
+exact zero-displacement identity makes the residual zero rather than
+merely smaller than \(h_0\).
+\end{proof}
+
+\begin{proposition}[Localized telescope-to-mean bias certificate]\label{prop:step-011-bias-certificate}
+Under Assumptions~\ref{assump:parameter-domain} and
+\ref{assump:moment-class}, Proposition~\ref{prop:step-008-target-interface}, and
+Lemmas~\ref{lem:step-011-top-bias} and
+\ref{lem:step-011-bottom-bias}, every localization transcript in
+\(\mathcal E_{\rm loc}\) satisfies
+\[
+\left|\mathbb E_D R_0^c(X)\right|\leq\frac\epsilon8,
+\qquad
+\left|\mathbb E_D R_H^c(X)\right|\leq\frac\epsilon8,
+\]
+and
+\[
+\boxed{
+\left|(\mu-c)-\theta(c)\right|\leq\frac\epsilon4
+}.
+\]
+\end{proposition}
+
+\begin{proof}
+Fix any localization transcript in
+\(\mathcal E_{\rm loc}\). Proposition~\ref{prop:step-008-target-interface} uses the same actual
+center throughout and gives the exact signed identity
+\[
+(\mu-c)-\theta(c)
+=\mathbb E_D R_0^c(X)+\mathbb E_D R_H^c(X).
+\tag{11.3}
+\]
+Lemma~\ref{lem:step-011-bottom-bias} supplies the first component bound,
+and Lemma~\ref{lem:step-011-top-bias} supplies the second. Applying the
+scalar triangle inequality to (11.3) yields
+\[
+\begin{aligned}
+\left|(\mu-c)-\theta(c)\right|
+&\leq\left|\mathbb E_D R_0^c(X)\right|
+     +\left|\mathbb E_D R_H^c(X)\right|\\
+&\leq\frac\epsilon8+\frac\epsilon8
+=\frac\epsilon4.
+\end{aligned}
+\]
+Both residuals remain separately visible, so cancellation is not needed for
+the bound. This proves the claimed estimate on the generated localization
+event.
+\end{proof}
+
+\begin{proof}[Completion of the bias certificate]
+Lemma~\ref{lem:step-006-floor-remainder} and
+Lemma~\ref{lem:step-007-stable-support} concern the exact selected top
+quantizer at the actual decoder center. Lemma~\ref{lem:step-011-top-envelope}
+combines them to prove
+\[
+|R_H^c(x)|
+\leq\frac{11}{3}|x-c|
+\mathbf1\left\{|x-c|>\frac{3H}{8}\right\}.
+\]
+Lemma~\ref{lem:step-002-recentered-moment} then controls the
+\(k\)-moment about that same actual center on \(\mathcal E_{\rm loc}\).
+Lemma~\ref{lem:step-011-top-bias} composes the supported envelope and
+the elementary tail-power inequality to obtain
+\[
+|\mathbb E_D R_H^c(X)|
+\leq\overline C_k^{\rm tail}\frac{\sigma^k}{H^{k-1}}
+\leq\frac\epsilon8,
+\]
+where the last inequality is precisely Lemma~\ref{lem:step-003-endpoint-calibration}.
+
+Independently, Lemma~\ref{lem:step-006-floor-remainder} gives
+\(|R_0^c(x)|<h_0\), and
+Lemma~\ref{lem:step-011-bottom-bias} combines this with the identity \(h_0=\epsilon/8\) to prove
+\[
+|\mathbb E_D R_0^c(X)|\leq\frac\epsilon8.
+\]
+
+Finally, Proposition~\ref{prop:step-008-target-interface}
+identifies \(\theta(c)\) as the exact conditional pseudo-observation mean and
+supplies
+\[
+(\mu-c)-\theta(c)
+=\mathbb E_D R_0^c(X)+\mathbb E_D R_H^c(X).
+\]
+Proposition~\ref{prop:step-011-bias-certificate} applies the triangle
+inequality with the two separately proved \(\epsilon/8\) bounds and concludes
+\[
+\left|(\mu-c)-\theta(c)\right|\leq\frac\epsilon4.
+\]
+This is exactly the claim of Proposition~
+\ref{prop:step-011-bias-certificate}, in absolute value, uniformly for every
+localized center and with no unaccounted residual, surrogate center,
+support assumption, confidence conversion, or changed rate interface.
+\end{proof}
+
+\subsection{Conditional Median-of-Means}\label{app:step-012}
+
+The constants entering the full conditional variance certificate are
+\[
+C_k^{\rm rec}=2^{k-1}(1+50^k),\qquad
+C_k^{\rm act}=\frac{3(8/3)^k}{1-2^{-k}},\qquad
+A_k=96C_k^{\rm rec}C_k^{\rm act},
+\]
+\[
+C_{k,>}^{\rm c}=\frac{A_k}{1-2^{2-k}}\quad(k>2),
+\]
+\[
+C_2^{\rm c}
+=A_2\left(\log_2(2b_2)+\frac1{\log2}\right)\quad(k=2),
+\]
+and
+\[
+C_{k,<}^{\rm c}
+=\frac{A_k}{2^{2-k}(1-2^{-(2-k)})}\quad(1<k<2).
+\]
+Define
+\[
+\boxed{
+V_k
+:=
+3072\sigma^2\mathbf 1\{\mathcal J_{\rm f}\neq\varnothing\}
++
+\mathbf 1\{\mathcal J_{\rm c}\neq\varnothing\}
+\begin{cases}
+C_{k,>}^{\rm c}\sigma^2, & k>2,\\[0.3em]
+C_2^{\rm c}\sigma^2\log(\sigma/\epsilon), & k=2,\\[0.3em]
+C_{k,<}^{\rm c}\sigma^kH^{2-k}, & 1<k<2.
+\end{cases}
+}
+\tag{12.1}
+\]
+At least one group is nonempty because \(J\geq1\), and every applicable
+coefficient is positive and finite.  Hence \(0<V_k<\infty\); an absent
+group contributes exactly zero.
+
+For later use, the Bernoulli form of Hoeffding's inequality proved in
+Proposition~\ref{prop:step-012-odd-median} is
+\[
+\Pr\left\{\frac1q\sum_{g=1}^qB_g-p\geq a\right\}
+\leq e^{-2qa^2}
+\tag{12.2}
+\]
+for iid Bernoulli variables of mean \(p\) and every \(a>0\).
+
+\begin{lemma}[Transcript-conditional iid full variance certificate]\label{lem:step-012-transcript-kernel}
+Under Assumptions~\ref{assump:parameter-domain} and
+\ref{assump:iid-independent-randomness}, Lemma~
+\ref{lem:step-008-refinement-kernel}, Propositions~
+\ref{prop:step-008-conditional-mean} and
+\ref{prop:step-008-raw-square}, Proposition~
+\ref{prop:step-009-variance-interface}, and Proposition~
+\ref{prop:step-010-three-regime}, let
+
+\[
+\mathscr T_{\rm loc}
+:=\sigma\!\left(R_{\rm loc},(Y_r)_{r\in I_{\rm loc}}\right)
+\]
+
+be the complete observable localization transcript. Then \(c\) and
+\(\mathcal E_{\rm loc}=\{|c-\mu|\leq50\sigma\}\) are
+\(\mathscr T_{\rm loc}\)-measurable. Conditional on
+\(\mathscr T_{\rm loc}\), the family
+\((Z_i(c))_{i\in I_{\rm ref}}\) is iid over all refinement samples, levels,
+offsets, and dithers, and
+
+\[
+\mathbb E[Z_i(c)\mid\mathscr T_{\rm loc}]=\theta(c).
+\tag{12.3}
+\]
+
+Uniformly for every transcript in \(\mathcal E_{\rm loc}\),
+
+\[
+\boxed{
+\operatorname{Var}(Z_i(c)\mid\mathscr T_{\rm loc})\leq V_k
+}
+\tag{12.4}
+\]
+
+with \(V_k\) exactly as in (12.1). If a fine or coarse group is empty, its
+contribution in (12.1) and in the underlying exact raw square is zero. If the
+actual conditional variance is zero, then
+\(Z_i(c)=\theta(c)\) conditionally almost surely.
+\end{lemma}
+
+\begin{proof}
+By precommitment, each localization response
+\(Y_r\) is a measurable function of \(R_{\rm loc}\) and \(X_r\). Hence
+
+\[
+\mathscr T_{\rm loc}\subseteq\mathscr F_{\rm loc},
+\]
+
+where \(\mathscr F_{\rm loc}\) is the localization sigma-field defined in
+Lemma~\ref{lem:step-008-refinement-kernel}. The decoder definition makes
+\(c\) measurable with respect to
+\(\mathscr T_{\rm loc}\), and therefore the event
+\(\{|c-\mu|\leq50\sigma\}\) is also
+\(\mathscr T_{\rm loc}\)-measurable.
+
+For \(i\in I_{\rm ref}\), put
+
+\[
+\Xi_i=(X_i,L_i,A_i,B_i,U_i).
+\]
+
+Lemma~\ref{lem:step-008-refinement-kernel}, together with the
+primitive mutual independence across refinement indices, gives for every
+finite collection of bounded Borel functions \(f_i\),
+
+\[
+\mathbb E\left[\prod_i f_i(\Xi_i)\,\middle|\,\mathscr F_{\rm loc}\right]
+=\prod_i\mathbb E[f_i(\Xi_i)]
+\quad\text{almost surely}.
+\]
+
+Taking conditional expectation onto
+\(\mathscr T_{\rm loc}\subseteq\mathscr F_{\rm loc}\) preserves this
+identity. Thus the complete refinement tuples are iid conditional on the
+observable transcript. Once the transcript is fixed, \(c\) is fixed, and
+\(Z_i(c)\) is the same Borel function of \(\Xi_i\) for each index. Therefore
+the \(Z_i(c)\) are conditionally iid. The exact pointwise mean
+calculation from Proposition~\ref{prop:step-008-conditional-mean} then
+gives (12.3).
+
+For a fixed transcript in \(\mathcal E_{\rm loc}\), the raw-square
+decomposition gives
+
+\[
+\begin{aligned}
+\operatorname{Var}(Z_i(c)\mid\mathscr T_{\rm loc})
+&\leq
+\mathbb E[Z_i(c)^2\mid\mathscr T_{\rm loc}]\\
+&=
+48\sum_{j\in\mathcal J_{\rm f}}\frac{h_j}{p_j}
+\mathbb E_D|D_j^c(X)-D_j^c(c)|\\
+&\quad+
+48\sum_{j\in\mathcal J_{\rm c}}\frac{h_j}{p_j}
+\mathbb E_D|D_j^c(X)-D_j^c(c)|.
+\end{aligned}
+\tag{12.5}
+\]
+
+This is an exact split of one nonnegative raw second moment, not a claim that
+the two component variances add. Proposition~
+\ref{prop:step-009-variance-interface} bounds the first sum by
+\(3072\sigma^2\) when the fine group is nonempty and identifies it as zero
+when that group is empty. Proposition~\ref{prop:step-010-three-regime} bounds the second sum by the
+applicable coarse term in (12.1) on the localized transcript and identifies
+it as zero when the coarse group is empty. Substitution into (12.5) proves
+(12.4) in all three mutually exclusive \(k\)-regimes, with exactly the group
+indicators in (12.1).
+
+If the actual conditional variance is zero, then its definition together
+with (12.3) gives
+
+\[
+\mathbb E[(Z_i(c)-\theta(c))^2\mid\mathscr T_{\rm loc}]=0.
+\]
+
+A nonnegative random variable with zero conditional expectation is zero
+conditionally almost surely. This establishes the exact
+zero-variance conclusion without dividing by the variance.
+\end{proof}
+
+\begin{proposition}[Exact block size and one-block success]\label{prop:step-012-one-block}
+Under Lemma~\ref{lem:step-012-transcript-kernel}, choose exactly
+
+\[
+s=\left\lceil\frac{32V_k}{\epsilon^2}\right\rceil
+\]
+
+and use the fixed disjoint blocks \(G_1,\ldots,G_q\) of size \(s\) from the
+setting. Then, for every \(g\), uniformly on
+\(\mathcal E_{\rm loc}\),
+
+\[
+\boxed{
+\mathbf1_{\mathcal E_{\rm loc}}
+\Pr\left\{
+\left|\overline Z_g(c)-\theta(c)\right|>\frac{\epsilon}{2}
+\ \middle|\ \mathscr T_{\rm loc}
+\right\}
+\leq\frac18\mathbf1_{\mathcal E_{\rm loc}}
+}
+\quad\text{almost surely}.
+\tag{12.6}
+\]
+
+If
+\(\operatorname{Var}(Z_i(c)\mid\mathscr T_{\rm loc})=0\), then the
+conditional probability in (12.6) is exactly zero.
+\end{proposition}
+
+\begin{proof}
+Fix a localization transcript in
+\(\mathcal E_{\rm loc}\). By
+Lemma~\ref{lem:step-012-transcript-kernel}, the \(s\) variables in
+\(G_g\) are conditionally iid with mean \(\theta(c)\) and conditional
+variance at most \(V_k\). Conditional independence gives
+
+\[
+\mathbb E[\overline Z_g(c)\mid\mathscr T_{\rm loc}]=\theta(c)
+\]
+
+and
+
+\[
+\operatorname{Var}(\overline Z_g(c)\mid\mathscr T_{\rm loc})
+=\frac1{s^2}\sum_{i\in G_g}
+\operatorname{Var}(Z_i(c)\mid\mathscr T_{\rm loc})
+\leq\frac{V_k}{s}.
+\tag{12.7}
+\]
+
+If the variance in (12.7) is zero, the block mean equals \(\theta(c)\)
+conditionally almost surely, so its bad probability is zero. Otherwise,
+conditional Chebyshev's inequality and the exact ceiling give
+
+\[
+\begin{aligned}
+\Pr\left\{
+\left|\overline Z_g(c)-\theta(c)\right|>\frac{\epsilon}{2}
+\ \middle|\ \mathscr T_{\rm loc}
+\right\}
+&\leq
+\frac{4\operatorname{Var}(\overline Z_g(c)\mid\mathscr T_{\rm loc})}
+{\epsilon^2}\\
+&\leq\frac{4V_k}{s\epsilon^2}\\
+&\leq\frac{4V_k}
+{(32V_k/\epsilon^2)\epsilon^2}\\
+&=\frac18.
+\end{aligned}
+\tag{12.8}
+\]
+
+Here \(V_k>0\) was proved after (12.1), so the last ratio is legal.
+Multiplying the pointwise transcript inequality by the
+\(\mathscr T_{\rm loc}\)-measurable indicator of
+\(\mathcal E_{\rm loc}\) gives (12.6). No probability of the localization
+event has been used.
+\end{proof}
+
+\begin{proposition}[Fixed odd-median amplification]\label{prop:step-012-odd-median}
+Under Lemma~\ref{lem:step-012-transcript-kernel} and
+Proposition~\ref{prop:step-012-one-block}, choose exactly
+
+\[
+q=2\left\lceil8\log\frac4\delta\right\rceil+1.
+\]
+
+Let \(M(c)\) be the \((q+1)/2\)-th order statistic of the fixed block means
+\(\overline Z_1(c),\ldots,\overline Z_q(c)\); this is the median in the
+setting-defined decoder. Then, uniformly on \(\mathcal E_{\rm loc}\),
+
+\[
+\boxed{
+\mathbf1_{\mathcal E_{\rm loc}}
+\Pr\left\{
+|M(c)-\theta(c)|>\frac{\epsilon}{2}
+\ \middle|\ \mathscr T_{\rm loc}
+\right\}
+\leq\frac{\delta}{4}\mathbf1_{\mathcal E_{\rm loc}}
+}
+\quad\text{almost surely}.
+\tag{12.9}
+\]
+
+The order-statistic definition is fixed even when block values tie. Because
+\(q\) is odd, no choice between two central order statistics occurs.
+\end{proposition}
+
+\begin{proof}
+Fix a localization transcript in
+\(\mathcal E_{\rm loc}\), and define the proof-local indicators
+
+\[
+B_g
+:=\mathbf1\left\{
+|\overline Z_g(c)-\theta(c)|>\frac{\epsilon}{2}
+\right\}.
+\]
+
+The blocks are fixed, disjoint, and have equal size. By
+Lemma~\ref{lem:step-012-transcript-kernel}, they are conditionally iid;
+hence the \(B_g\) are conditionally iid Bernoulli with a common parameter
+\(p\leq1/8\) by Proposition~\ref{prop:step-012-one-block}.
+
+Write \(q=2r+1\). If at most \(r\) block means are bad, at least \(r+1\)
+belong to the closed interval
+
+\[
+\left[\theta(c)-\frac{\epsilon}{2},
+\theta(c)+\frac{\epsilon}{2}\right].
+\]
+
+The \((r+1)\)-th order statistic must then belong to the same interval.
+Equivalently,
+
+\[
+\left\{|M(c)-\theta(c)|>\frac{\epsilon}{2}\right\}
+\subseteq
+\left\{\sum_{g=1}^qB_g\geq r+1\right\}
+\subseteq
+\left\{\frac1q\sum_{g=1}^qB_g\geq\frac12\right\}.
+\tag{12.10}
+\]
+
+This argument includes repeated block values and equality at either endpoint:
+endpoint equality is good because the bad event is strict.
+
+For completeness, fix the conditional Bernoulli parameter \(p\). For
+\(t\geq0\), let
+
+\[
+\psi_p(t)=\log(1-p+pe^t)-pt.
+\]
+
+Then \(\psi_p(0)=\psi_p'(0)=0\), while
+
+\[
+\psi_p''(t)=u_t(1-u_t)\leq\frac14,
+\qquad
+u_t=\frac{pe^t}{1-p+pe^t}.
+\]
+
+Twice integrating the second-derivative bound gives
+\(\psi_p(t)\leq t^2/8\). Thus, for every \(a>0\), exponential Markov and
+conditional independence yield
+
+\[
+\begin{aligned}
+\Pr\left\{\sum_{g=1}^q(B_g-p)\geq qa
+\ \middle|\ \mathscr T_{\rm loc}\right\}
+&\leq
+\inf_{t>0}\exp\left(-tqa+\frac{qt^2}{8}\right)\\
+&=\exp(-2qa^2),
+\end{aligned}
+\tag{12.11}
+\]
+
+where the infimum is attained at \(t=4a\). Apply (12.11) with
+\(a=1/2-p\geq3/8\). From (12.10),
+
+\[
+\Pr\left\{|M(c)-\theta(c)|>\frac{\epsilon}{2}
+\ \middle|\ \mathscr T_{\rm loc}\right\}
+\leq
+\exp\left(-2q(1/2-p)^2\right)
+\leq e^{-9q/32}
+\leq e^{-q/4}.
+\tag{12.12}
+\]
+
+The exact ceiling in \(q\) gives
+
+\[
+q\geq16\log\frac4\delta+1,
+\]
+
+and hence
+
+\[
+e^{-q/4}
+\leq
+\exp\left(-4\log\frac4\delta\right)
+=\left(\frac{\delta}{4}\right)^4
+\leq\frac{\delta}{4},
+\tag{12.13}
+\]
+
+because \(0<\delta/4<1\). Combining (12.12)--(12.13) and multiplying by
+\(\mathbf1_{\mathcal E_{\rm loc}}\) proves (12.9). This is a fixed finite
+majority calculation; no horizon or probability-mode upgrade is made.
+\end{proof}
+
+\begin{proposition}[Conditional exact-target refinement certificate]\label{prop:step-012-conditional-target}
+Under Assumptions~\ref{assump:parameter-domain} and
+\ref{assump:iid-independent-randomness},
+Proposition~\ref{prop:step-012-odd-median}, and the bias certificate in
+Proposition~\ref{prop:step-011-bias-certificate}, define the final
+setting estimator
+
+\[
+\widehat\mu=c+M(c).
+\]
+
+Then, uniformly on every localization transcript in
+\(\mathcal E_{\rm loc}\),
+
+\[
+\Pr\left\{
+|\widehat\mu-\mu|>\frac{3\epsilon}{4}
+\ \middle|\ \mathscr T_{\rm loc}
+\right\}
+\leq\frac{\delta}{4}.
+\tag{12.14}
+\]
+
+Equivalently, the indicator-valued conditional interface is
+
+\[
+\boxed{
+\mathbf1_{\mathcal E_{\rm loc}}
+\Pr\left\{|\widehat\mu-\mu|>\epsilon
+\ \middle|\ \mathscr T_{\rm loc}\right\}
+\leq\frac{\delta}{4}\mathbf1_{\mathcal E_{\rm loc}}
+}
+\quad\text{almost surely}.
+\tag{12.15}
+\]
+
+This is the conditional interface used in the unconditional confidence argument; no expectation of (12.15) and no control of
+\(\mathcal E_{\rm loc}^c\) is taken here.
+\end{proposition}
+
+\begin{proof}
+Fix a localization transcript in
+\(\mathcal E_{\rm loc}\). On the median-good event, Proposition~\ref{prop:step-011-bias-certificate} is used once, in the
+single triangle inequality
+
+\[
+\begin{aligned}
+|\widehat\mu-\mu|
+&=|M(c)-(\mu-c)|\\
+&\leq|M(c)-\theta(c)|
+   +|\theta(c)-(\mu-c)|\\
+&\leq\frac{\epsilon}{2}+\frac{\epsilon}{4}
+=\frac{3\epsilon}{4}
+<\epsilon.
+\end{aligned}
+\tag{12.16}
+\]
+
+Therefore
+
+\[
+\left\{|\widehat\mu-\mu|>\frac{3\epsilon}{4}\right\}
+\subseteq
+\left\{|M(c)-\theta(c)|>\frac{\epsilon}{2}\right\}
+\]
+
+on that transcript. Proposition~\ref{prop:step-012-odd-median} gives
+(12.14). Since \(3\epsilon/4<\epsilon\),
+
+\[
+\{|\widehat\mu-\mu|>\epsilon\}
+\subseteq
+\{|\widehat\mu-\mu|>3\epsilon/4\},
+\]
+
+so multiplication by the transcript-measurable localization indicator gives
+(12.15). No localization failure probability is inserted or union-bounded.
+\end{proof}
+
+\begin{proof}[Completion of the conditional refinement certificate]
+Lemma~\ref{lem:step-012-transcript-kernel} first transfers the independent
+refinement kernel of Lemma~\ref{lem:step-008-refinement-kernel} from the
+larger localization sigma-field to the complete observable localization
+transcript. It proves
+conditional iid jointly over every refinement sample, level, offset, and
+dither, and retains the exact mean
+\(\theta(c)=\mathbb E_DT_c(X)\).
+
+The same lemma composes the interfaces at their legal
+raw-second-moment boundary. Proposition~\ref{prop:step-009-variance-interface} contributes
+\(3072\sigma^2\) exactly when the fine group is present, while Proposition~\ref{prop:step-010-three-regime} contributes exactly the
+applicable coarse certificate when the coarse group is present. This yields
+the full additive certificate (12.1):
+
+\[
+\operatorname{Var}(Z_i(c)\mid\mathscr T_{\rm loc})\leq V_k
+\quad\text{uniformly on }\mathcal E_{\rm loc}.
+\]
+
+No additive decomposition of component variances is asserted. Empty groups
+are removed by explicit indicators, and zero actual variance gives exact
+conditional equality \(Z_i(c)=\theta(c)\).
+
+Proposition~\ref{prop:step-012-one-block} uses the specified choice
+
+\[
+s=\left\lceil32V_k/\epsilon^2\right\rceil
+\]
+
+and conditional block independence to obtain
+
+\[
+\Pr\{|\overline Z_g(c)-\theta(c)|>\epsilon/2
+\mid\mathscr T_{\rm loc}\}\leq1/8
+\]
+
+for every fixed block on every localized transcript. Proposition~
+\ref{prop:step-012-odd-median} uses the specified odd choice
+
+\[
+q=2\left\lceil8\log(4/\delta)\right\rceil+1
+\]
+
+and the directly proved Hoeffding bound to show that a bad majority, and
+hence a median miss by more than \(\epsilon/2\), has conditional probability
+at most \(\delta/4\). The \((q+1)/2\)-th order-statistic convention handles
+all repeated-value ties.
+
+Finally, Proposition~\ref{prop:step-012-conditional-target} invokes the
+certificate in Proposition~\ref{prop:step-011-bias-certificate},
+\(|(\mu-c)-\theta(c)|\leq\epsilon/4\) exactly once. It obtains total error
+\(\epsilon/2+\epsilon/4=3\epsilon/4<\epsilon\) and exports the
+indicator-valued conditional inequality (12.15).
+
+The allocation produced by this step is exactly
+
+\[
+\boxed{
+N_{\rm ref}
+=qs
+=
+\left(2\left\lceil8\log\frac4\delta\right\rceil+1\right)
+\left\lceil\frac{32V_k}{\epsilon^2}\right\rceil.
+}
+\tag{12.17}
+\]
+
+It is determined by known parameters and fixed design constants
+before any response is observed. Equations (12.1), (12.6), (12.9),
+(12.15), and (12.17) prove the stated result. The next two subsections
+establish unconditional confidence and the public sample bound.
+\end{proof}
+
+\subsection{Unconditional Confidence}\label{app:step-013}
+
+For a fixed \(D\in\mathcal D(k,\lambda,\sigma)\), put
+\[
+\mathcal F_D:=\{|\widehat\mu-\mu(D)|>\epsilon\}.
+\tag{13.5}
+\]
+The conditional refinement certificate and localization guarantee available
+at this point are, respectively,
+\[
+\mathbf1_{\mathcal E_{\rm loc}}
+\mathbb P_D\!\left(\mathcal F_D\mid\mathscr T_{\rm loc}\right)
+\leq\frac\delta4\mathbf1_{\mathcal E_{\rm loc}}
+\quad\text{almost surely},
+\tag{13.1}
+\]
+and
+\[
+\mathbb P_D(\mathcal E_{\rm loc})\geq1-\frac\delta4,
+\qquad
+\mathcal E_{\rm loc}=\{|c-\mu(D)|\leq50\sigma\}.
+\tag{13.2}
+\]
+We will use the defining conditional-expectation identity
+\[
+\mathbb E[\mathbf1_A G]
+=\mathbb E[\mathbf1_A\mathbb E(G\mid\mathscr T)]
+\tag{13.3}
+\]
+for integrable \(G\), \(A\in\mathscr T\), and the elementary decomposition
+\[
+\mathbb P(F)
+=\mathbb P(F\cap E)+\mathbb P(F\cap E^c)
+\leq\mathbb P(F\cap E)+\mathbb P(E^c).
+\tag{13.4}
+\]
+
+\begin{lemma}[Transcript tower identity]\label{lem:step-013-measurable-tower}
+Under Assumptions~\ref{assump:parameter-domain},
+\ref{assump:moment-class}, and
+\ref{assump:iid-independent-randomness}, Lemma~
+\ref{lem:step-001-midpoint}, and Proposition~
+\ref{prop:step-012-conditional-target},
+\(\mathcal E_{\rm loc}\in\mathscr T_{\rm loc}\),
+\(\mathcal F_D\) is measurable under the joint law \(\mathbb P_D\), and
+
+\[
+\boxed{
+\mathbb P_D(\mathcal F_D\cap\mathcal E_{\rm loc})
+=\mathbb E_D^{\rm joint}\!\left[
+ \mathbf1_{\mathcal E_{\rm loc}}
+ \mathbb P_D(\mathcal F_D\mid\mathscr T_{\rm loc})
+\right].
+}
+\tag{13.6}
+\]
+
+Here the conditional probability is any version of
+\(\mathbb E_D^{\rm joint}[\mathbf1_{\mathcal F_D}
+\mid\mathscr T_{\rm loc}]\).
+\end{lemma}
+
+\begin{proof}
+Lemma~
+\ref{lem:step-001-midpoint} makes \(c\) a measurable function of the
+complete observable transcript. Since \(\mu(D)\) and \(50\sigma\) are
+fixed scalars under \(\mathbb P_D\),
+\(\mathcal E_{\rm loc}=\{|c-\mu(D)|\leq50\sigma\}\) belongs to
+\(\mathscr T_{\rm loc}\).
+
+Proposition~\ref{prop:step-012-conditional-target} uses the
+setting-defined variables \(Z_i(c)\), finite block averages, and the fixed
+odd order-statistic median to define exactly
+
+\[
+\widehat\mu
+=c+\operatorname{median}\bigl(\overline Z_1(c),\ldots,
+\overline Z_q(c)\bigr).
+\]
+
+Those are finite measurable operations on the localization transcript, the
+refinement samples, and the refinement seeds. Hence \(\widehat\mu\), and
+therefore \(\mathcal F_D\), is measurable under the full joint law. In
+particular \(\mathbf1_{\mathcal F_D}\) is integrable.
+
+Because \(\mathbf1_{\mathcal E_{\rm loc}}\) is
+\(\mathscr T_{\rm loc}\)-measurable, the defining property of conditional
+expectation gives
+
+\[
+\begin{aligned}
+\mathbb P_D(\mathcal F_D\cap\mathcal E_{\rm loc})
+&=\mathbb E_D^{\rm joint}
+  [\mathbf1_{\mathcal E_{\rm loc}}\mathbf1_{\mathcal F_D}]\\
+&=\mathbb E_D^{\rm joint}\!\left[
+  \mathbf1_{\mathcal E_{\rm loc}}
+  \mathbb E_D^{\rm joint}
+  [\mathbf1_{\mathcal F_D}\mid\mathscr T_{\rm loc}]
+  \right]\\
+&=\mathbb E_D^{\rm joint}\!\left[
+  \mathbf1_{\mathcal E_{\rm loc}}
+  \mathbb P_D(\mathcal F_D\mid\mathscr T_{\rm loc})
+  \right].
+\end{aligned}
+\]
+
+This is a tower identity for the existing joint law. It neither redefines
+\(D\) after localization nor requires independence between the event and the
+remaining randomness.
+\end{proof}
+
+\begin{proposition}[Integrated localized refinement failure]\label{prop:step-013-localized-failure}
+Under Assumptions~\ref{assump:parameter-domain},
+\ref{assump:moment-class}, and
+\ref{assump:iid-independent-randomness}, Proposition~
+\ref{prop:step-012-conditional-target}, and Lemma~
+\ref{lem:step-013-measurable-tower}, the exact estimator satisfies
+
+\[
+\boxed{
+\mathbb P_D(\mathcal F_D\cap\mathcal E_{\rm loc})
+\leq\frac\delta4.
+}
+\tag{13.7}
+\]
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:step-012-conditional-target} gives the almost-sure
+indicator inequality (13.1). Integrating it with respect to the marginal law
+of the full observable localization transcript and applying Lemma~
+\ref{lem:step-013-measurable-tower} yields
+
+\[
+\begin{aligned}
+\mathbb P_D(\mathcal F_D\cap\mathcal E_{\rm loc})
+&=\mathbb E_D^{\rm joint}\!\left[
+ \mathbf1_{\mathcal E_{\rm loc}}
+ \mathbb P_D(\mathcal F_D\mid\mathscr T_{\rm loc})
+ \right]\\
+&\leq\mathbb E_D^{\rm joint}\!\left[
+ \frac\delta4\mathbf1_{\mathcal E_{\rm loc}}
+ \right]\\
+&=\frac\delta4\mathbb P_D(\mathcal E_{\rm loc})\\
+&\leq\frac\delta4.
+\end{aligned}
+\tag{13.8}
+\]
+
+The outer expectation accounts for every localization sample and seed; the
+conditional probability inside it already accounts for every refinement
+sample and seed. Thus (13.8) is under the same joint law as the goal. No
+extra independence step is inserted after the conditional
+certificate.
+\end{proof}
+
+\begin{proposition}[Unconditional uniform PAC conversion]\label{prop:step-013-unconditional-pac}
+Under Assumptions~\ref{assump:parameter-domain},
+\ref{assump:moment-class}, and
+\ref{assump:iid-independent-randomness}, Lemma~
+\ref{lem:step-001-midpoint}, and Proposition~
+\ref{prop:step-013-localized-failure}, for every
+\(D\in\mathcal D(k,\lambda,\sigma)\),
+
+\[
+\boxed{
+\mathbb P_D\{|\widehat\mu-\mu(D)|>\epsilon\}
+\leq\frac\delta4+\frac\delta4
+=\frac\delta2
+\leq\delta.
+}
+\tag{13.9}
+\]
+
+Consequently,
+
+\[
+\sup_{D\in\mathcal D(k,\lambda,\sigma)}
+\mathbb P_D\{|\widehat\mu-\mu(D)|>\epsilon\}
+\leq\frac\delta2\leq\delta.
+\tag{13.10}
+\]
+
+In the source trivial localization branch \(2\lambda\leq20\sigma\), the
+stronger unconditional bound \(\mathbb P_D(\mathcal F_D)\leq\delta/4\)
+holds.
+\end{proposition}
+
+\begin{proof}
+The events
+\(\mathcal F_D\cap\mathcal E_{\rm loc}\) and
+\(\mathcal F_D\cap\mathcal E_{\rm loc}^c\) are disjoint and their union is
+\(\mathcal F_D\). Hence
+
+\[
+\begin{aligned}
+\mathbb P_D(\mathcal F_D)
+&=\mathbb P_D(\mathcal F_D\cap\mathcal E_{\rm loc})
+ +\mathbb P_D(\mathcal F_D\cap\mathcal E_{\rm loc}^c)\\
+&\leq\mathbb P_D(\mathcal F_D\cap\mathcal E_{\rm loc})
+ +\mathbb P_D(\mathcal E_{\rm loc}^c)\\
+&\leq\frac\delta4+\frac\delta4
+=\frac\delta2
+\leq\delta.
+\end{aligned}
+\tag{13.11}
+\]
+
+The first contribution is Proposition~
+\ref{prop:step-013-localized-failure}; the second is Lemma~
+\ref{lem:step-001-midpoint}. The final inequality uses only
+\(\delta>0\).
+
+The law \(D\) was arbitrary, and neither contribution nor its constant
+depends on which member of \(\mathcal D(k,\lambda,\sigma)\) was fixed.
+Taking the supremum over that same unrestricted class proves (13.10). This
+supremum is taken only after the joint-probability inequality is proved for
+each fixed \(D\); it is not interchanged with a conditional expectation.
+
+If \(2\lambda\leq20\sigma\), Lemmas~\ref{lem:step-001-midpoint} and
+\ref{lem:step-001-cost} give
+\(c=0\) and \(|c-\mu(D)|\leq10\sigma\) deterministically, so
+\(\mathbb P_D(\mathcal E_{\rm loc}^c)=0\). Equation (13.11) then reduces
+exactly to \(\mathbb P_D(\mathcal F_D)\leq\delta/4\).
+\end{proof}
+
+\begin{proof}[Completion of the unconditional confidence certificate]
+Lemma~\ref{lem:step-013-measurable-tower} first verifies the required
+typing: the generated localization event belongs to the sigma-field of the
+full observable localization transcript, the failure event for the exact
+setting estimator is measurable under the joint law of all samples and
+seeds, and conditional probability means the conditional expectation of
+that failure indicator. It then proves the exact identity
+
+\[
+\mathbb P_D(\mathcal F_D\cap\mathcal E_{\rm loc})
+=\mathbb E_D^{\rm joint}\!\left[
+ \mathbf1_{\mathcal E_{\rm loc}}
+ \mathbb P_D(\mathcal F_D\mid\mathscr T_{\rm loc})
+\right].
+\]
+
+Proposition~\ref{prop:step-013-localized-failure} applies this identity
+to Proposition~\ref{prop:step-012-conditional-target}. The
+indicator-valued bound integrates to a localized joint failure
+contribution at most \(\delta/4\); no theorem-facing localization-success
+assumption remains.
+
+Proposition~\ref{prop:step-013-unconditional-pac} then uses Lemma~\ref{lem:step-001-midpoint} for the only other contribution,
+\(\mathbb P_D(\mathcal E_{\rm loc}^c)\leq\delta/4\), and the exact disjoint
+decomposition of the failure event. Therefore
+
+\[
+\mathbb P_D\{|\widehat\mu-\mu(D)|>\epsilon\}
+\leq\delta/4+\delta/4=\delta/2\leq\delta
+\]
+
+for every \(D\) in the full moment class. Taking the supremum proves the
+unconditional PAC conclusion. The same estimator, common law, absolute
+error event, and full collection of sample and protocol randomness are used
+in both the conditional and unconditional statements.
+\end{proof}
+
+\subsection{Rate and Protocol Closure}\label{app:step-014}
+
+We collect the fixed quantities used in the rate calculation.  The variance
+proxy and refinement allocation are
+\[
+V_k
+=3072\sigma^2\mathbf 1\{\mathcal J_{\rm f}\neq\varnothing\}
++\mathbf 1\{\mathcal J_{\rm c}\neq\varnothing\}
+\begin{cases}
+C_{k,>}^{\rm c}\sigma^2,&k>2,\\
+C_2^{\rm c}\sigma^2\log(\sigma/\epsilon),&k=2,\\
+C_{k,<}^{\rm c}\sigma^kH^{2-k},&1<k<2,
+\end{cases}
+\tag{14.1}
+\]
+\[
+s=\left\lceil\frac{32V_k}{\epsilon^2}\right\rceil,
+\qquad
+q=2\left\lceil8\log\frac4\delta\right\rceil+1,
+\qquad
+N_{\rm ref}=qs.
+\tag{14.2}
+\]
+Set
+\[
+t:=\frac{\sigma}{\epsilon},
+\qquad
+L:=\log\frac1\delta,
+\qquad
+a:=\log\frac{\lambda}{\sigma},
+\tag{14.3}
+\]
+and
+\[
+g_k(t):=
+\begin{cases}
+t^2,&k>2,\\
+t^2\log t,&k=2,\\
+t^{k/(k-1)},&1<k<2.
+\end{cases}
+\tag{14.4}
+\]
+Then
+\[
+r_k(\lambda,\sigma,\epsilon,\delta)=a+g_k(t)L.
+\tag{14.5}
+\]
+Using the constants from the preceding variance bounds and the value of
+\(b_k\) fixed in Lemma~\ref{lem:step-003-scale-ordering}, define
+\[
+B_k:=
+\begin{cases}
+3072+C_{k,>}^{\rm c},&k>2,\\
+3072+C_2^{\rm c},&k=2,\\
+3072+C_{k,<}^{\rm c}(2b_k)^{2-k},&1<k<2,
+\end{cases}
+\tag{14.6}
+\]
+\[
+Q_0:=48+\frac3{\log2},
+\qquad
+S_k:=32B_k+1,
+\qquad
+R_k:=Q_0S_k,
+\tag{14.7}
+\]
+and
+\[
+L_0:=30000+\frac1{\log2},
+\qquad
+C_k:=\max\{10000,L_0+R_k\}.
+\tag{14.8}
+\]
+All these quantities are positive and finite and depend at most on fixed
+\(k\).  The exact localization count and its uniform upper bound are
+\[
+N_{\rm loc}=
+\begin{cases}
+0,&2\lambda\leq20\sigma,\\[0.3em]
+\left\lceil10000\left(
+\log\left\lceil\dfrac{2\lambda}{20\sigma}\right\rceil
++\log\dfrac4\delta\right)\right\rceil,
+&2\lambda>20\sigma,
+\end{cases}
+\tag{14.9}
+\]
+\[
+N_{\rm loc}
+\leq1+10000\log\frac\lambda\sigma
++30000\log\frac1\delta.
+\tag{14.10}
+\]
+Finally, the unconditional confidence result established above is
+\[
+\sup_{D\in\mathcal D(k,\lambda,\sigma)}
+\Pr_{D,\,\mathrm{protocol}}
+\{|\widehat\mu-\mu(D)|>\epsilon\}
+\leq\frac\delta2\leq\delta.
+\tag{14.11}
+\]
+
+\begin{proposition}[Simultaneous Borel precommitment of the complete query bank]\label{prop:step-014-simultaneous-precommitment}
+Under Assumptions~\ref{assump:parameter-domain} and
+\ref{assump:iid-independent-randomness}, Proposition~
+\ref{prop:step-001-source-localization}, Lemma~
+\ref{lem:step-003-scale-ordering}, and Proposition~
+\ref{prop:step-005-query-precommitment}, every query in the exact two-block
+protocol is Borel. Moreover, the localization queries
+and all refinement queries can be and are jointly fixed, as one finite
+family, before the first response bit is observed.
+\end{proposition}
+
+\begin{proof}
+In the localization branch
+\(2\lambda\leq20\sigma\), Proposition~
+\ref{prop:step-001-source-localization} sets
+\(I_{\rm loc}=\varnothing\), so the localization Borel assertion is
+vacuous. In the nontrivial branch, the same proposition constructs each
+\(\mathcal B_r\) as a finite union of clipped half-open or closed intervals.
+Thus every \(\mathcal B_r\) is Borel. The codebook, clipped cells,
+enumeration, and least-index decoder convention depend only on known
+\((\lambda,\sigma,\delta)\), not on a sample or response. The instantiation takes \(R_{\rm loc}\) degenerate, so the complete localization
+query family is deterministic and precommitted.
+
+For refinement index \(i\), condition only on its presampled seed
+\((L_i,A_i,B_i,U_i)=(j,a,b,u)\). Proposition~
+\ref{prop:step-005-query-precommitment} proves that
+
+\[
+\mathcal A_i
+=\left\{x:\frac{F_{j,a,b}(x)}{h_j}\geq u\right\}
+\tag{14.12}
+\]
+
+is Borel. More strongly, its membership indicator is jointly Borel in
+\((x,j,a,b,u)\). The finite scale family and exact probabilities \(p_j\)
+are deterministic functions of known \((k,\sigma,\epsilon)\) and \(k\)-only constants. Assumption~\ref{assump:iid-independent-randomness}
+requires every tuple \((L_i,A_i,B_i,U_i)\), for every future refinement
+index, to be drawn before any response. Hence every realized set (14.12) is
+fixed at that same pre-message time.
+
+There are exactly \(N_{\rm loc}+N_{\rm ref}<\infty\) indices. First fix the
+deterministic localization bank and jointly draw the finite vector of all
+refinement seeds, then reveal no response until this is complete. This fixes
+the entire two-block query family simultaneously. No bank member contains
+the eventual decoded \(c\), a previous bit, a block mean, or a stopping
+event. Therefore the complete query bank is Borel and fully precommitted.
+\end{proof}
+
+\begin{proposition}[Exact one-bit, decoder-only, fixed-horizon protocol legality]\label{prop:step-014-protocol-legality}
+Under Assumptions~\ref{assump:parameter-domain},
+\ref{assump:moment-class}, and
+\ref{assump:iid-independent-randomness},
+Proposition~\ref{prop:step-014-simultaneous-precommitment}, Lemma~
+\ref{lem:step-001-midpoint}, Lemma~\ref{lem:step-003-scale-ordering},
+Lemma~\ref{lem:step-004-four-arc-selector}, and Proposition~
+\ref{prop:step-012-conditional-target}, the exact
+protocol has deterministic non-stopping horizon
+
+\[
+n=N_{\rm loc}+N_{\rm ref}=N_{\rm loc}+qs.
+\tag{14.13}
+\]
+
+It consumes exactly \(n\) independent samples and transmits exactly one bit
+from each sample. The localization output \(c\), every selected shift or
+selected digit path, the centering threshold, and every importance weight are
+decoder-only. The dither baseline is a locally computed public-randomness
+quantity, not a second transmitted bit.
+\end{proposition}
+
+\begin{proof}
+The two index sets are disjoint and have the
+deterministic sizes in (14.13). By
+Assumption~\ref{assump:iid-independent-randomness}, their samples are
+independent and share the same fixed law \(D\).
+
+For each \(r\in I_{\rm loc}\), the encoder observes only \(X_r\) and sends
+
+\[
+Y_r=\mathbf1\{X_r\in\mathcal B_r\}\in\{0,1\}.
+\tag{14.14}
+\]
+
+There is one such message and no other message from \(X_r\). In the zero-query branch, \(I_{\rm loc}=\varnothing\), so no nonexistent sample or
+bit is charged.
+
+For each \(i\in I_{\rm ref}\), the encoder observes only \(X_i\) and the
+already public seed for its precommitted set, and sends
+
+\[
+Y_i=\mathbf1\{X_i\in\mathcal A_i\}\in\{0,1\}.
+\tag{14.15}
+\]
+
+Again there is exactly one response. The decoder later forms
+
+\[
+\beta_i(c):=
+\mathbf1\left\{
+\frac{F_{L_i,A_i,B_i}(c)}{h_{L_i}}\geq U_i
+\right\}.
+\tag{14.16}
+\]
+
+This is not another sample query. It is a deterministic Borel computation
+from the decoded scalar \(c\), the known scales, and the same public seed
+used to define \(\mathcal A_i\). Thus the exact pseudo-observation contains
+\(Y_i-\beta_i(c)\), one transmitted bit minus one decoder-computed baseline.
+Neither \(U_i\), the pair-match indicator, nor \(p_{L_i}^{-1}\) is a
+response bit.
+
+Lemma~\ref{lem:step-001-midpoint} makes \(c\) a Borel function of the
+localization transcript. Lemma~\ref{lem:step-004-four-arc-selector} makes
+every \(a_j(c)\) Borel. Consequently
+the selected pair, \(Q_j^c,D_j^c,T_c,R_0^c,R_H^c\), pair-match test,
+centering in (14.16), reweighting, block averages, and odd median are all
+decoder or proof-analysis operations. The refinement query (14.12) uses
+the presampled pair \((A_i,B_i)\), not the later selected pair
+\((a_{L_i}(c),a_{L_i+1}(c))\). Changing \(c\) after the bits arrive can
+change only which already observed bank entry is retained and how it is
+centered; it cannot change an encoder query.
+
+The branch in (14.9) is determined from known \((\lambda,\sigma)\).
+Lemma~\ref{lem:step-003-scale-ordering} and Proposition~
+\ref{prop:step-003-group-law} determine \(J,H\), the groups, and all
+\(p_j\) from known parameters. Lemma~
+\ref{lem:step-012-transcript-kernel} and Propositions~
+\ref{prop:step-012-one-block} and \ref{prop:step-012-odd-median} determine
+\(V_k,s,q,N_{\rm ref}\) from known
+parameters and fixed \(k\)-only constants; none depends on a realized
+transcript or bit. The blocks are fixed before messages. The protocol
+therefore always uses the predetermined number (14.13), does not stop on
+localization success or a refinement event, and makes no fixed-to-random
+horizon conversion. This proves exact one-bit-per-sample, decoder-only center
+use, full nonadaptivity, and fixed-horizon legality.
+\end{proof}
+
+\begin{lemma}[Three-regime variance specialization]\label{lem:step-014-variance-specialization}
+Under Assumption~\ref{assump:parameter-domain}, Lemma~
+\ref{lem:step-003-scale-ordering}, Proposition~
+\ref{prop:step-009-variance-interface}, Proposition~
+\ref{prop:step-010-three-regime}, and Lemma~
+\ref{lem:step-012-transcript-kernel}, the exact certificate \(V_k\) in (14.1)
+satisfies
+
+\[
+\boxed{\frac{V_k}{\epsilon^2}\leq B_kg_k(t)}
+\tag{14.17}
+\]
+
+in all three regimes. The inequality remains valid if either auxiliary group
+is empty, while under theorem design both groups are nonempty. At \(k=2\),
+(14.17) contains exactly one \(\log(\sigma/\epsilon)\). It remains valid at
+\(\epsilon=c_k\sigma=e^{-1}\sigma\).
+\end{lemma}
+
+\begin{proof}
+Lemma~\ref{lem:step-003-scale-ordering} gives
+
+\[
+t=\frac{\sigma}{\epsilon}\geq e,
+\qquad
+H<2H_*=2b_k\sigma t^{1/(k-1)}.
+\tag{14.18}
+\]
+
+The group indicators in (14.1) are at most one. If a group is absent, its
+term is exactly zero, so replacing its indicator by one can only enlarge the
+upper bound. Under theorem parameters both indicators equal one, so no actual
+theorem contribution is lost.
+
+If \(k>2\), division of (14.1) by \(\epsilon^2\) gives
+
+\[
+\frac{V_k}{\epsilon^2}
+\leq(3072+C_{k,>}^{\rm c})\frac{\sigma^2}{\epsilon^2}
+=B_kt^2
+=B_kg_k(t).
+\tag{14.19}
+\]
+
+If \(k=2\), then \(\log t\geq1\). The logarithm-free fine term is therefore
+absorbed by one, and only one, copy of the critical logarithm:
+
+\[
+\begin{aligned}
+\frac{V_2}{\epsilon^2}
+&\leq3072t^2+C_2^{\rm c}t^2\log t\\
+&\leq(3072+C_2^{\rm c})t^2\log t
+=B_2g_2(t).
+\end{aligned}
+\tag{14.20}
+\]
+
+No other step in this calculation counts coarse levels. Proposition~\ref{prop:step-010-three-regime}
+already proved that its coarse term has exactly one logarithm, and (14.20)
+only dominates the fine term by that same factor.
+
+Finally let \(1<k<2\). The top-scale inequality (14.18) gives
+
+\[
+\begin{aligned}
+\frac{\sigma^kH^{2-k}}{\epsilon^2}
+&<(2b_k)^{2-k}
+\frac{\sigma^k\sigma^{2-k}}{\epsilon^2}
+t^{(2-k)/(k-1)}\\
+&=(2b_k)^{2-k}
+t^{2+(2-k)/(k-1)}\\
+&=(2b_k)^{2-k}t^{k/(k-1)},
+\end{aligned}
+\tag{14.21}
+\]
+
+where
+
+\[
+2+\frac{2-k}{k-1}=\frac{k}{k-1}.
+\tag{14.22}
+\]
+
+Moreover
+
+\[
+\frac{k}{k-1}-2=\frac{2-k}{k-1}>0,
+\]
+
+and \(t>1\), so \(t^2\leq t^{k/(k-1)}\). Hence
+
+\[
+\frac{V_k}{\epsilon^2}
+\leq\left(3072+C_{k,<}^{\rm c}(2b_k)^{2-k}\right)
+\,t^{k/(k-1)}
+=B_kg_k(t).
+\tag{14.23}
+\]
+
+All coefficients are positive and finite for fixed \(k\). Since \(J\geq1\),
+at least one group is nonempty; its coefficient and scale factor are
+positive, so \(V_k>0\). At the largest allowed error \(t=e\), every power
+remains positive and the critical logarithm equals one. This proves every
+regime and boundary clause.
+\end{proof}
+
+\begin{lemma}[Refinement-count bound]\label{lem:step-014-refinement-count}
+Under Assumption~\ref{assump:parameter-domain},
+Lemma~\ref{lem:step-014-variance-specialization}, and the exact
+allocation in Lemma~\ref{lem:step-012-transcript-kernel}, Proposition~\ref{prop:step-012-one-block}, Proposition~\ref{prop:step-012-odd-median}, and Proposition~\ref{prop:step-012-conditional-target},
+
+\[
+\boxed{N_{\rm ref}=qs\leq R_kg_k(t)L.}
+\tag{14.24}
+\]
+
+This explicitly absorbs both ceilings, every additive one in the upper
+bounds for \(q\) and \(s\), and the replacement of
+\(\log(4/\delta)\) by \(\log(1/\delta)\). The bound remains nondegenerate
+as \(\delta\uparrow1/2\).
+\end{lemma}
+
+\begin{proof}
+Because \(0<\delta<1/2\),
+
+\[
+L=\log\frac1\delta>\log2>0.
+\tag{14.25}
+\]
+
+Also
+
+\[
+\log\frac4\delta
+=L+\log4
+\leq L+2L
+=3L,
+\tag{14.26}
+\]
+
+because \(\log4=2\log2\leq2L\). Applying
+\(\lceil x\rceil\leq x+1\) to the exact odd block count gives
+
+\[
+\begin{aligned}
+q
+&=2\left\lceil8\log\frac4\delta\right\rceil+1\\
+&\leq16\log\frac4\delta+3\\
+&\leq48L+3\\
+&\leq\left(48+\frac3{\log2}\right)L
+=Q_0L.
+\end{aligned}
+\tag{14.27}
+\]
+
+The last line is valid throughout the allowed confidence domain because
+\(L\geq\log2\). Thus the \(+3\), including the outer \(+1\) making \(q\)
+odd and the doubled ceiling error, is charged explicitly to the positive
+target confidence logarithm.
+
+For the exact block size, Lemma~\ref{lem:step-014-variance-specialization}
+and the same ceiling inequality give
+
+\[
+\begin{aligned}
+s
+&=\left\lceil\frac{32V_k}{\epsilon^2}\right\rceil\\
+&\leq\frac{32V_k}{\epsilon^2}+1\\
+&\leq32B_kg_k(t)+1.
+\end{aligned}
+\tag{14.28}
+\]
+
+In all regimes \(t\geq e\) implies \(g_k(t)\geq1\): this is immediate for
+\(t^2\), for \(t^2\log t\) because \(\log t\geq1\), and for the positive
+power \(t^{k/(k-1)}\). Therefore
+
+\[
+s\leq(32B_k+1)g_k(t)=S_kg_k(t).
+\tag{14.29}
+\]
+
+Multiplying (14.27) and (14.29), both nonnegative, proves (14.24).
+At \(k=2\), \(g_2(t)=t^2\log t\), so (14.24) has exactly one accuracy
+logarithm and one confidence logarithm, as in the public rate. As
+\(\delta\uparrow1/2\), \(L\downarrow\log2\), so the target factor remains
+positive and every ceiling remains absorbed by the displayed constants.
+\end{proof}
+
+\begin{proposition}[Rate Specialization Bridge for the fixed nonadaptive protocol]\label{prop:step-014-rate-bridge}
+Under Assumptions~\ref{assump:parameter-domain},
+\ref{assump:moment-class}, and
+\ref{assump:iid-independent-randomness}, Lemma~
+\ref{lem:step-001-cost}, Proposition~
+\ref{prop:step-013-unconditional-pac}, Proposition~
+\ref{prop:step-014-protocol-legality}, and
+Lemma~\ref{lem:step-014-refinement-count}, the exact deterministic
+horizon satisfies
+
+\[
+\boxed{
+n=N_{\rm loc}+N_{\rm ref}
+\leq C_kr_k(\lambda,\sigma,\epsilon,\delta).
+}
+\tag{14.30}
+\]
+
+The same exact estimator, without a probability, norm, horizon, or population
+scope change, satisfies
+
+\[
+\boxed{
+\sup_{D\in\mathcal D(k,\lambda,\sigma)}
+\Pr_{D,\,\mathrm{protocol}}
+\{|\widehat\mu-\mu(D)|>\epsilon\}
+\leq\frac\delta2\leq\delta.
+}
+\tag{14.31}
+\]
+
+All hidden constants in (14.30) depend only on fixed \(k\).
+\end{proposition}
+
+\begin{proof}
+The auxiliary choices are exactly the ones: \(c_k=e^{-1}\), \(b_k,H,V_k\), and exact \(s,q\) in
+(14.2). Lemma~\ref{lem:step-014-variance-specialization} verifies every
+scale condition needed to turn \(V_k/\epsilon^2\) into the public
+multiplier, and Lemma~\ref{lem:step-014-refinement-count} proves the
+complete refinement simplification (14.24).
+
+It remains to absorb the exact localization cost. Lemma~
+\ref{lem:step-001-cost} gives
+(14.9)--(14.10). Since \(a=\log(\lambda/\sigma)\geq0\),
+\(g_k(t)\geq1\), and \(L\geq\log2\),
+
+\[
+1\leq\frac1{\log2}g_k(t)L,
+\qquad
+L\leq g_k(t)L.
+\tag{14.32}
+\]
+
+Consequently every term, including the localization ceiling \(+1\), obeys
+
+\[
+\begin{aligned}
+N_{\rm loc}
+&\leq1+10000a+30000L\\
+&\leq10000a+
+\left(30000+\frac1{\log2}\right)g_k(t)L\\
+&=10000a+L_0g_k(t)L.
+\end{aligned}
+\tag{14.33}
+\]
+
+Combining (14.24) and (14.33) gives
+
+\[
+\begin{aligned}
+n
+&\leq10000a+(L_0+R_k)g_k(t)L\\
+&\leq\max\{10000,L_0+R_k\}
+\bigl(a+g_k(t)L\bigr)\\
+&=C_kr_k(\lambda,\sigma,\epsilon,\delta),
+\end{aligned}
+\tag{14.34}
+\]
+
+because both public-rate summands are nonnegative. This proves (14.30) with
+the explicit \(k\)-only constant in (14.8).
+
+At \(\lambda=\sigma\), \(a=0\) and, more strongly,
+\(2\lambda\leq20\sigma\), so Lemma~\ref{lem:step-001-cost} gives
+\(N_{\rm loc}=0\) exactly. Thus (14.34) does not rely on a positive
+localization logarithm: all remaining ceiling and confidence costs are
+charged to the positive refinement term \(g_k(t)L\). Throughout the larger
+zero-query branch \(2\lambda\leq20\sigma\), the equality
+\(N_{\rm loc}=0\) is preserved. At \(\epsilon=c_k\sigma\), \(t=e\), so
+\(g_k(t)\geq1\), and at \(k=2\), \(\log t=1\). Equation (14.25) handles
+\(\delta\) arbitrarily close to \(1/2\).
+
+Proposition~\ref{prop:step-013-unconditional-pac} already proves (14.31) for the exact estimator under the
+exact joint law. This bridge only attaches the deterministic count (14.30);
+it does not rerun a union bound, enlarge \(\delta/2\), change the norm,
+condition on localization, replace the full class by a subclass, or turn the
+horizon into a stopping time. In the zero-query localization branch it also
+retains the sharper failure bound \(\delta/4\). Therefore the
+probability conversion and rate statement are simultaneously valid in the
+required modes.
+\end{proof}
+
+\begin{proposition}[Exact baseline invariance of the final certificate]\label{prop:step-014-baseline}
+Under Assumptions~\ref{assump:parameter-domain},
+\ref{assump:moment-class}, and
+\ref{assump:iid-independent-randomness}, Lemma~\ref{lem:step-001-cost},
+Proposition~\ref{prop:step-003-group-law}, Lemma~
+\ref{lem:step-004-four-arc-selector}, Proposition~
+\ref{prop:step-005-dither-identities}, Proposition~
+\ref{prop:step-009-variance-interface}, Proposition~
+\ref{prop:step-010-three-regime}, and Lemma~
+\ref{lem:step-012-transcript-kernel}, the final
+rate/protocol certificate preserves all of the following exact baseline
+clauses:
+
+1. If \(2\lambda\leq20\sigma\), localization uses exactly zero samples,
+   returns \(c=0\), and introduces no query, bit, ceiling charge, or stopping
+   decision.
+2. An absent fine or coarse group contributes exactly zero to every sum and
+   variance certificate; no absent normalizer or inverse probability is
+   evaluated. Under theorem parameters both groups are nonempty and receive
+   their mass \(1/2\).
+3. For every real \(c\), at \(x=c\), every centered selected digit,
+   \(T_c(c)\), \(R_0^c(c)\), \(R_H^c(c)\), and the centered dither bracket is
+   exactly zero. Hence if a refinement sample equals \(c\), then
+   \(Z_i(c)=0\) pathwise for every level, offset, and dither realization.
+4. If \(D=\delta_\mu\) and the generated center equals \(\mu\), every block
+   mean and the odd median are zero, and \(\widehat\mu=\mu\) exactly. No
+   positive error remainder is inserted by the rate absorption.
+\end{proposition}
+
+\begin{proof}
+Clause 1 is the exact zero-query branch in Lemma~
+\ref{lem:step-001-cost}; (14.33) is only an upper bound and does not replace
+that equality
+by one fictitious localization sample.
+
+For Clause 2, Proposition~\ref{prop:step-003-group-law} defines weights and
+probabilities only on nonempty groups. Its empty-sum extension is zero, and
+Propositions~\ref{prop:step-009-variance-interface} and
+\ref{prop:step-010-three-regime}, together with Lemma~
+\ref{lem:step-012-transcript-kernel}, preserve that zero with explicit group
+indicators.
+The proof of (14.17) replaces indicators by one only to obtain an upper
+bound; it does not modify the implemented law or exact absent-group value.
+Under theorem design, endpoint witnesses put one sampled level in
+each group, so \(m=2\) and each group receives mass \(1/2\).
+
+For Clause 3, the setting definitions give, without an inequality,
+
+\[
+D_j^c(c)-D_j^c(c)=0,
+\qquad
+T_c(c)=\sum_{j=0}^{J-1}0=0,
+\tag{14.35}
+\]
+
+\[
+R_0^c(c)
+=(c-Q_0^c(c))-(c-Q_0^c(c))=0,
+\qquad
+R_H^c(c)=Q_J^c(c)-Q_J^c(c)=0.
+\tag{14.36}
+\]
+
+Proposition~\ref{prop:step-005-dither-identities} gives the stronger
+pointwise dither identity: when
+\(x=c\), the encoder threshold indicator and decoder baseline indicator
+coincide for every \(U\). Directly in the actual pseudo-observation, if
+\(X_i=c\), then (14.15) equals (14.16), so
+
+\[
+Y_i-\beta_i(c)=0
+\quad\text{and hence}\quad
+Z_i(c)=0
+\tag{14.37}
+\]
+
+for every value of the match indicator and importance weight. This also
+reconfirms that the baseline is a decoder computation rather than a second
+message.
+
+For Clause 4, fix the point-mass law \(D=\delta_\mu\) and suppose the
+generated center equals \(\mu\). Then every refinement sample equals
+\(c=\mu\), so (14.37) holds at every refinement index. Every fixed block
+average and its odd median are zero, and the exact decoder returns
+\(c+0=\mu\). Lemma~\ref{lem:step-012-transcript-kernel} preserves the same
+zero-variance conclusion.
+None of (14.17), (14.24), or (14.34) changes the estimator, adds noise, or
+substitutes an \(O(h_j)\) residual. Thus all four baseline clauses pass
+unchanged through the final certificate.
+\end{proof}
+
+\begin{proof}[Completion of the rate and protocol certificate]
+Proposition~\ref{prop:step-014-simultaneous-precommitment} combines the
+localization and refinement interfaces and proves that the entire
+finite query bank is Borel and simultaneously fixed before any message.
+Proposition~\ref{prop:step-014-protocol-legality} verifies the communication
+path: each independent sample produces exactly one membership bit; the
+public dither baseline is locally computed rather than transmitted; \(c\),
+every stable selector, centered digit path, reweighting, block average, and
+median are decoder-only; and the exact horizon is deterministic and
+non-stopping.
+
+Lemma~\ref{lem:step-014-variance-specialization} uses the fine
+and coarse certificates and scale relation to prove
+\(V_k/\epsilon^2\leq B_kg_k(t)\). It treats \(k=2\) directly and retains
+exactly one \(\log(\sigma/\epsilon)\). Lemma~
+\ref{lem:step-014-refinement-count} starts from the exact ceilings in \(s,q\) and proves \(N_{\rm ref}\leq R_kg_k(t)L\), including
+every \(+1\), the odd-median outer \(+1\), the confidence substitution, and
+the boundary \(\delta\uparrow1/2\).
+
+Proposition~\ref{prop:step-014-rate-bridge}, the named Rate
+Specialization Bridge, adds the exact localization count. It charges the
+localization ceiling and confidence term to the positive refinement budget
+when \(\log(\lambda/\sigma)=0\), preserves the exact zero-query source
+branch, and obtains
+
+\[
+n\leq C_k\left[
+\log\frac\lambda\sigma+
+\begin{cases}
+\dfrac{\sigma^2}{\epsilon^2}\log\dfrac1\delta,&k>2,\\[0.5em]
+\dfrac{\sigma^2}{\epsilon^2}
+\log\dfrac\sigma\epsilon\log\dfrac1\delta,&k=2,\\[0.5em]
+\left(\dfrac\sigma\epsilon\right)^{k/(k-1)}
+\log\dfrac1\delta,&1<k<2
+\end{cases}
+\right]
+=C_kr_k(\lambda,\sigma,\epsilon,\delta).
+\tag{14.38}
+\]
+
+The same proposition consumes Proposition~\ref{prop:step-013-unconditional-pac} without modification and
+therefore carries the exact unconditional, absolute-value, fixed-horizon,
+full-population statement (14.31). Proposition~
+\ref{prop:step-014-baseline} confirms that the upper-bound algebra does
+not weaken the exact zero-query, empty-group, zero-displacement, dither, or
+fixed-point-mass-law specialization with generated center equal to its mean.
+
+These six named results prove every stated conclusion:
+Borel simultaneous precommitment, exactly one bit per independent sample,
+decoder-only use of \(c\), deterministic fixed horizon, exact three-regime
+sample complexity with only \(k\)-dependent constants, the unchanged
+unconditional PAC event, and all inherited exact baselines. No new theorem-
+facing assumption, encoder query, interaction, protocol mechanism, cited
+result, probability conversion, or conclusion is introduced.
+\end{proof}
+
+\subsection{Proof of the Main Theorem}\label{app:main-proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:technical}]
+Lemma~\ref{lem:step-003-scale-ordering} verifies that the displayed
+\(k\)-only choices are finite and legal, that \(J\geq1\), and that the
+refinement bank's scale family has the required endpoint
+ordering.  The exact variance constants are established in
+Propositions~\ref{prop:step-009-variance-interface} and
+\ref{prop:step-010-three-regime}; Lemma~
+\ref{lem:step-012-transcript-kernel} combines them into the displayed
+\(V_k\), and Propositions~\ref{prop:step-012-one-block} and
+\ref{prop:step-012-odd-median} justify the stated \(s\) and \(q\).
+
+Proposition~\ref{prop:step-014-simultaneous-precommitment} proves that the
+entire finite query bank is Borel and fixed before communication.
+Proposition~\ref{prop:step-014-protocol-legality} then gives exactly one
+transmitted bit per independent sample, decoder-only use of \(c\), and the
+deterministic horizon \(n=N_{\rm loc}+qs\).  Proposition~
+\ref{prop:step-013-unconditional-pac} proves the displayed unconditional
+uniform failure bound for the same estimator and joint law.  Finally,
+Proposition~\ref{prop:step-014-baseline} preserves the exact zero-query,
+zero-displacement, and point-mass conclusions.  These statements are
+precisely the conclusions of the theorem.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:rate}]
+Apply Theorem~\ref{thm:technical} with its displayed choices.  The Rate
+Specialization Bridge, Proposition~\ref{prop:step-014-rate-bridge}, proves
+for the same fixed-horizon protocol that
+\[
+n\leq C_kr_k(\lambda,\sigma,\epsilon,\delta)
+\]
+with \(C_k\) depending only on \(k\), while retaining the unconditional
+absolute-error guarantee of Proposition~
+\ref{prop:step-013-unconditional-pac}.  Proposition~
+\ref{prop:step-014-protocol-legality} retains simultaneous precommitment,
+one bit per independent sample, and decoder-only use of the localization
+center.  This proves every assertion of the corollary.
+\end{proof}

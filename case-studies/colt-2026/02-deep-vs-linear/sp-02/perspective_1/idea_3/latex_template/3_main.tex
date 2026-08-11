@@ -1,0 +1,37 @@
+\section{Main Theorem}
+\label{sec:main-theorem}
+
+\begin{theorem}[Conditional canonical-catalog representation]
+\label{thm:main}
+Under Assumptions~\ref{assump:sq-parameter-regime},
+\ref{assump:universal-adversarial-sq}, and
+\ref{assump:canonical-rounded-output-catalog}, the one deterministic map
+\(\phi:\mathcal X\to\mathbb R^L\) in \eqref{eq:main-notation} is fixed
+independently of the current distribution, target, valid oracle policy, and
+learner tape, and
+\begin{equation}
+\forall h\in\mathcal H\ \exists w_h\in\Delta_L\ \forall x\in\mathcal X,
+\qquad
+h(x)\langle w_h,\phi(x)\rangle
+\ge1-2\varepsilon>\frac12>0.
+\label{eq:main-margin}
+\end{equation}
+Only \(h\) may affect \(w_h\).  Consequently,
+\begin{equation}
+\operatorname{dc}(\mathcal H)
+\le L
+\le B\left(1+\frac{m}{\tau^2}\right)^k.
+\label{eq:main-dimension-bound}
+\end{equation}
+If \(\mathcal H=\varnothing\) or \(\mathcal X=\varnothing\), then in fact
+\(\operatorname{dc}(\mathcal H)=0\).
+
+The conclusion is deterministic and pointwise, with no exceptional set.  It
+uses the fixed finite horizon \(m\), including \(m=0\), and has no hidden
+constant: all dependence on \(m,\tau,\varepsilon,L,B,k\) is displayed, while
+\(B,k\) are the fixed protocol-family constants described in
+Assumption~\ref{assump:sq-parameter-regime}.  The result is conditional on
+the canonical-policy-only catalog in
+Assumption~\ref{assump:canonical-rounded-output-catalog}; it asserts no
+catalog property for other valid policies.
+\end{theorem}

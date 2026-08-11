@@ -1,0 +1,23 @@
+You are the step-scoped repair producer for perspective_2/idea_1, step_009, unit attempt 2 under accepted sketch attempt 2, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+Read <CODEX_SKILLS_ROOT>/proof-step/SKILL.md completely and every directly required shared contract/template it names. Apply only the semantic delta required by the current contract-valid step review. Overwrite only perspective_2/idea_1/proof_steps/step_009/proof.md. Do not modify the review, idea, setting, sketch, sketch review, global diagnostics, tracker, worker log, controller prompts, proof history, final review artifacts, assembly artifacts, results, or any other file.
+
+Binding controller inputs:
+
+- idea.md: 5209aa21929e84604acb2712d8657460a48463901738fd00ebafaa84d5c43596
+- setting.md: 6955a2723694ff60af8d5d40329ff0ad056f9b54780ff02744d8985456222b7e
+- accepted proof_sketch.md: 41517943f551814aaf87ff8541d5a81b56123cae7d8533b2bceb302a981bfbc4
+- accepted proof_sketch_review.md: a80e7f4ffb1ad57991675810dbf7064bc7b482b8f34b61f10a171ebfc97b43c9
+- controller-open proof_tracker.md: a8a37f5e07c130fae8b5097a4cad51548dabef04d383af5adc778e8b81cecc44
+- triggering step_009 proof.md, unit attempt 1: 130965111a7aa8a28eada371f33377fd5fa9394c56d086f0b33f3bcb4aceb81e
+- triggering step_009 review.md: fea482225091b0abe6dde7a92d3d1118e0f95da239a26adb00ed2155112401e3
+
+The target has no dependency proof/review artifacts. Continue to omit global_proof.md and global_proof_review.md because they are unnecessary diagnostic context for this direct primitive specialization.
+
+The triggering review is controlled `REVISE_STEP` with Smallest Retry Target `/proof-step step_009`. Its sole blocker is exact: `unit_006`, Global Linear-Case Chart, uses Proposition~\ref{prop:step-009-monic-presentation} in its proof to obtain the monic tuple but omits that named prior result from both its Local Lemma Map statement and its theorem statement. Under the three generic setting assumptions plus d=1 alone, the stated tuple conclusion is false. Repair the statement-level basis by explicitly naming the already proved Augmented Monomial Presentation proposition specialized to d=1, while retaining the explicit zero-dimensional convention [-R,R]^0={()} and every current conclusion. Make the same binding explicit wherever `unit_006` is restated before use.
+
+This is a minimal statement-binding repair. Preserve the exact accepted target, all seven local units and their stable IDs/types/titles/labels, every derivation and constant, all matrix/chart/pivot/velocity formulas, target-step assembly, explicit-rate/baseline audit, notation classifications, full-progress boundary, and every d=1/d=2/sign/transition/empty/location case. Do not change the sketch interface, add a dependency step, add an external theorem, introduce a density or probability claim, invoke step_003, randomize the leading coefficient, or make any mathematical strengthening. Do not opportunistically rewrite already accepted algebra or prose.
+
+Update the Step Identity to Unit attempt 2 and bind the controller-open tracker digest above. Treat the unit-attempt-1 proof and its review only as the triggering same-step repair inputs. The controller copied them byte-identically before dispatch to perspective_2/idea_1/proof_history/sketch_002/proof_steps/step_009/attempt_001/, with proof SHA-256 130965111a7aa8a28eada371f33377fd5fa9394c56d086f0b33f3bcb4aceb81e and review SHA-256 fea482225091b0abe6dde7a92d3d1118e0f95da239a26adb00ed2155112401e3. Do not read proof_history and do not use archival material as current evidence.
+
+Set Step Proof Status=COMPLETE only if the corrected theorem statement is self-contained through the named prior proposition and the exact target remains proved. Before returning, validate all protected and archived-live hashes, sketch/step/unit identity, required headings, seven-unit correspondence, table arity ignoring escaped pipes, assumption IDs, statement/proof prior-result alignment, labels/references, ASCII/control bytes, TeX delimiter and brace balance, and single-file output scope. Report status, exact repaired locations, blockers, and final SHA-256.

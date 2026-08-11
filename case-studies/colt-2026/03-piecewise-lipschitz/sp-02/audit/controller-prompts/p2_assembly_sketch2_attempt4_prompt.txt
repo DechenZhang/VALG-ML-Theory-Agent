@@ -1,0 +1,44 @@
+You are the fresh Perspective 2 proof-assembly worker for accepted sketch attempt 2, assembly attempt 4.
+
+Before acting, read <CODEX_SKILLS_ROOT>/proof-assembly/SKILL.md completely and follow it. Read the assembly, public-TeX, assumption-provenance, explicit-rate, and aggregate-routing portions of <CODEX_SKILLS_ROOT>/_shared/checklists/artifact-contracts.md. Work only in the current run root and use apply_patch for every manual file edit.
+
+Configuration: RUN_MODE=interactive; model=gpt-5.6-sol; reasoning=max; max idea attempts 30; max sketch attempts 10; max global, step, and assembly attempts 100.
+
+The current accepted inputs and attempt-3 output baseline are frozen in .controller_tmp/p2_assembly_manifest_sketch2_attempt4.txt. The complete consumed attempt-3 state is already archived under perspective_2/idea_1/proof_history/sketch_002/assembly/attempt_003 and perspective_2/idea_1/proof_history/sketch_002/final_reviews/assembly_attempt_003. Never inspect or consume proof_history as proof evidence and do not modify it.
+
+The authoritative trigger is perspective_2/idea_1/proof_review.md with SHA-256 f09d1cfe4f60b35ba15a22ab8f345e0a5eb38160cefe82b9d0864e3c78187150. It has Score 6, Failure Type PROOF_ASSEMBLY_FLAW, Suggested Next Action /proof-assembly, and Retry Mode repair_assembly.
+
+Repair only its one assembly-level final-claim synchronization issue. Accepted Step 011 and Step 012 export exactly:
+
+- selected-law probability epsilon/(4 delta) and positive-length lower ratio 1/(4 delta);
+- all-law upper coefficient 1/delta;
+- raw certificate and projective speed 1/delta.
+
+The algebraic unsharpened comparison sqrt(2)/delta is true but is neither a target clause nor a named producer output. Remove every theorem-facing addition that promotes sqrt(2)/delta into the Counter-example conclusion, while preserving every accepted output above and all other claims exactly.
+
+Required narrow repairs:
+
+1. In latex_template/1_intro.tex, resynchronize the Formalized Goal sentence so it states only the accepted Counter-example outputs and their distinct provenance. Remove sqrt(2)/delta.
+2. In latex_template/3_main.tex, delete the paragraph that introduces the geometric Ball-section sqrt(2)/delta scale. Preserve the exact certificate/projective speed, all-law upper coefficient, selected-law probability, and lower ratio clauses.
+3. In latex_template/5_appendix.tex, remove the unexported geometric-normalization equation and prose from the Step 011 synthesis; remove it from Step 012 conclusion 5 and conclusion 6; remove it from the theorem-clause synthesis; and remove it from the final main-theorem proof. Preserve all accepted Step 011 derivations and the accepted Step 012 one-unit conjunction. It is valid to delete now-unreferenced equation labels belonging only to the removed equations.
+4. In assembly_report.md, identify assembly attempt 4, cite the triggering aggregate hash above, describe this assembly-only deletion/resynchronization, and state the attempted claim using only the accepted Counter-example outputs. Preserve Status COMPLETE and Blockers None only if the repaired bundle passes all assembly gates.
+
+Allowed writes are only:
+
+- perspective_2/idea_1/latex_template/1_intro.tex
+- perspective_2/idea_1/latex_template/3_main.tex
+- perspective_2/idea_1/latex_template/5_appendix.tex
+- perspective_2/idea_1/assembly_report.md
+
+Do not modify the other six bundle files, accepted inputs, trackers, worker_log.md, specialized reviews, proof_review.md, results, .controller_tmp, or proof_history. Do not add any new lemma, inequality, assumption, rate, constant, quantifier, citation, label, dependency, or theorem conclusion.
+
+After editing:
+
+- verify no Counter-example theorem-facing sqrt(2)/delta occurrence remains in 1_intro.tex, 3_main.tex, 5_appendix.tex, or assembly_report.md;
+- verify the accepted 1/(4 delta) and 1/delta claims remain at every required public interface;
+- verify all nine bundle files exist and the six unallowed bundle files retain their manifest hashes;
+- scan for malformed public commands, forbidden workflow/audit prose, duplicate labels, unresolved local label targets, raw carriage returns, non-ASCII bytes, disallowed control bytes, unbalanced braces, and unbalanced environments;
+- run tectonic --only-cached from latex_template with all output isolated in a fresh temporary directory, retaining logs, and report any macOS system-configuration panic honestly;
+- verify every protected accepted input retains its manifest hash and report the exact four-or-fewer changed files plus their output SHA-256 hashes.
+
+Return only after the live assembly_report.md and live nine-file bundle are internally synchronized.

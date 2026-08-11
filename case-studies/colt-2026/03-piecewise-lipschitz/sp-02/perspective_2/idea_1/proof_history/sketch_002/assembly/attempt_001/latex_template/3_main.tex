@@ -1,0 +1,161 @@
+\section{Main Theorem}\label{sec:main-theorem}
+
+\begin{theorem}[Anchored derivative-closure coefficient sweep]\label{thm:main}
+The static and homogeneous clause below holds under
+Assumptions~\ref{assump:parameter-regime}--\ref{assump:anchored-derivative-closure}.
+All law-bearing clauses also use Assumption~\ref{assump:cube-density-laws}.
+In every case the deterministic presentation is fixed before the law and interval are selected.
+
+\emph{Static and homogeneous certificate.} For every $\theta\in\Theta$,
+\begin{equation}
+\label{eq:main-display-001}
+\|B(\theta)\|_{\mathrm{op}}\leq\|B(\theta)\|_{\mathrm F}\leq\widehat\Lambda_{B,T},
+\qquad
+\sup_{\theta\in\Theta}\|B(\theta)\|_{\mathrm{op}}\leq\widehat\Lambda_{B,T}.
+\end{equation}
+If $F_0\equiv0$ and $B_F$ is the block indexed by $1,\ldots,N$, then
+\begin{equation}
+\label{eq:main-display-002}
+F'=B_FF,\qquad
+\gamma_F'=(I_N-\gamma_F\gamma_F^{\mathsf T})B_F\gamma_F,\qquad
+\Gamma_{\mathrm{proj}}(F)\leq\widehat\Lambda_{B,T}.
+\end{equation}
+The anchor gives $F_{j_*}=1$, $\|F\|_2\geq1$, and $F\neq0$.
+
+\emph{Equivalent affine chart form.} For every $\mu\in\mathcal D$ and every interval
+$I\subseteq\Theta$ with $|I|>0$, and every Lebesgue-measurable partition
+$I=\bigsqcup_{j=1}^NE_j$ with $F_j\neq0$ on $E_j$,
+\begin{equation}
+\label{eq:main-display-003}
+\begin{aligned}
+\Pr_{\alpha\sim\mu}[\exists\theta\in I:\phi_\alpha(\theta)=0]
+&\leq\kappa\sum_{j=1}^N\int_{E_j}\int_{[-R,R]^{N-1}}
+\mathbf 1\{|T_j(\theta,\beta)|\leq R\}|\partial_\theta T_j(\theta,\beta)|\,d\beta\,d\theta\\
+&\leq\kappa\sum_{j=1}^N\int_{E_j}\int_{[-R,R]^{N-1}}
+|\partial_\theta T_j(\theta,\beta)|\,d\beta\,d\theta.
+\end{aligned}
+\end{equation}
+These are ordinary-probability inequalities in the original $N$ coefficient coordinates; they remain valid
+with no pivot margin, including tangent, multiple, endpoint, empty-cell, zero-Jacobian, persistent-root, and
+$N=1$ cases.
+
+\emph{Coordinate-free affine rate.} For the same $\mu$ and $I$,
+\begin{equation}
+\label{eq:main-display-004}
+\begin{aligned}
+\Pr_{\alpha\sim\mu}[\exists\theta\in I:\phi_\alpha(\theta)=0]
+&\leq\kappa\int_I\int_{H_\theta\cap[-R,R]^N}
+\frac{|F_0'(\theta)+\langle a,F'(\theta)\rangle|}{\|F(\theta)\|_2}
+\,d\mathcal H^{N-1}(a)\,d\theta\\
+&\leq\kappa\sqrt2(2R)^{N-1}(1+NR^2)\widehat\Lambda_{B,T}|I|\\
+&=\frac{A(1+NR^2)\widehat\Lambda_{B,T}}{\sqrt2R}|I|.
+\end{aligned}
+\end{equation}
+Consequently,
+\begin{equation}
+\label{eq:main-display-005}
+C^{\mathrm{aff}}_{\mathcal D}(F_0,F;\Theta)
+\leq\frac{A(1+NR^2)\widehat\Lambda_{B,T}}{\sqrt2R}.
+\end{equation}
+If $\widehat\Lambda_{B,T}=0$, the event probability is exactly zero. The section convention is Euclidean
+$\mathcal H^{N-1}$, with $\mathcal H^0$ counting measure when $N=1$.
+
+\emph{Sharper homogeneous rate.} If $F_0\equiv0$, then for $a\in H_\theta$,
+\begin{equation}
+\label{eq:main-display-006}
+H_\theta=F(\theta)^\perp=\gamma_F(\theta)^\perp,\qquad
+\frac{|\langle a,F'(\theta)\rangle|}{\|F(\theta)\|_2}=|\langle a,\gamma_F'(\theta)\rangle|,
+\end{equation}
+and
+\begin{equation}
+\label{eq:main-display-007}
+\Pr_{\alpha\sim\mu}[\exists\theta\in I:\langle\alpha,F(\theta)\rangle=0]
+\leq A\sqrt{\frac N2}\Gamma_{\mathrm{proj}}(F)|I|
+\leq A\sqrt{\frac N2}\widehat\Lambda_{B,T}|I|,
+\end{equation}
+\begin{equation}
+\label{eq:main-display-008}
+C^{\mathrm{Pf}}_{\mathcal D}(F;\Theta)
+\leq A\sqrt{\frac N2}\widehat\Lambda_{B,T}.
+\end{equation}
+The interval supremum is taken for each fixed law before the law supremum. If
+$\Gamma_{\mathrm{proj}}(F)=0$, every nonempty-interval event is one fixed proper central hyperplane and has
+probability zero under every admissible full density.
+
+\emph{Exact affine-monic specialization.} For every integer $d\geq1$, every bounded interval
+$J\subset\mathbb R$, and every possibly correlated law on $[-R,R]^d$ with full density bounded by $\kappa$,
+set
+\begin{equation}
+\label{eq:main-display-009}
+F_0(\theta)=\theta^d,\qquad F_{k+1}(\theta)=\theta^k\ (0\leq k\leq d-1),\qquad
+p_\alpha(\theta)=\theta^d+\sum_{k=0}^{d-1}\alpha_k\theta^k.
+\end{equation}
+Then $q=M=m=0$, $\Delta=N=d$, $A=(2R)^d\kappa$, the random vector is exactly
+$\alpha=(\alpha_0,\ldots,\alpha_{d-1})$, and the leading coefficient one is deterministic and outside that
+vector. The constant $(d+1)$-square shift has only
+\begin{equation}
+\label{eq:main-display-010}
+B_{0,d}=d,\qquad B_{k+1,k}=k\quad(1\leq k\leq d-1),qquad
+\widehat\Lambda_{B,T}=\left(\sum_{k=1}^d k^2\right)^{1/2}.
+\end{equation}
+For $d\geq2$, use $E_1=J\cap\{|\theta|\leq1\}$ and
+$E_d=J\cap\{|\theta|>1\}$ (all intermediate cells are empty), with
+\begin{equation}
+\label{eq:main-display-011}
+T_1(\theta,\beta)=-\theta^d-\sum_{k=1}^{d-1}\beta_k\theta^k,
+\qquad
+T_d(\theta,\beta)=-\theta-\sum_{k=0}^{d-2}\beta_k\theta^{k-d+1}.
+\end{equation}
+Their velocities obey
+\begin{equation}
+\label{eq:main-display-012}
+|\partial_\theta T_1|\leq d+\frac{Rd(d-1)}2\quad(|\theta|\leq1),
+\end{equation}
+\begin{equation}
+\label{eq:main-display-013}
+|\partial_\theta T_d|\leq1+R\sum_{m=1}^{d-1}\frac{m}{|\theta|^{m+1}}
+\leq1+\frac{Rd(d-1)}2\leq d+\frac{Rd(d-1)}2\quad(|\theta|>1).
+\end{equation}
+At $d=1$, $[-R,R]^0$ has mass one, $T_1(\theta)=-\theta$, and
+$|\partial_\theta T_1|=1$. In every case, including empty and singleton $J$,
+\begin{equation}
+\label{eq:main-display-014}
+\Pr_{\alpha\sim\mu}[\exists\theta\in J:p_\alpha(\theta)=0]
+\leq\kappa(2R)^{d-1}\left(d+\frac{Rd(d-1)}2\right)|J|.
+\end{equation}
+
+\emph{Counter-example 1.} For $0<\delta\leq1$, take $\Theta=[-1,1]$, $F_0=0$,
+$F=(1,\theta/\delta)$, $R=1$, $\kappa=1/4$, and $A=1$. Then
+\begin{equation}
+\label{eq:main-display-015}
+q=M=0,\quad \Delta=1,\quad N=2,\quad m=0,
+\qquad \widehat\Lambda_{B,T}=\Gamma_{\mathrm{proj}}(F)=\frac1\delta,
+\end{equation}
+with the sole nonzero shift entry $B_{2,1}=1/\delta$. Every possibly correlated admissible law and every
+positive-length interval $I\subseteq[-1,1]$ obey
+\begin{equation}
+\label{eq:main-display-016}
+\Pr_{\alpha\sim\mu}[\exists\theta\in I:\alpha_1+\alpha_2\theta/\delta=0]\leq\frac{|I|}{\delta},
+\qquad C^{\mathrm{Pf}}_{\mathcal D}(F;[-1,1])\leq\frac1\delta.
+\end{equation}
+For the selected independent uniform law on $[-1,1]^2$ and $0<\epsilon\leq\delta$,
+\begin{equation}
+\label{eq:main-display-017}
+\Pr[\exists\theta\in[0,\epsilon]:\alpha_1+\alpha_2\theta/\delta=0]
+=\frac{\epsilon}{4\delta},qquad
+\frac{\Pr[\exists\theta\in[0,\epsilon]:\alpha_1+\alpha_2\theta/\delta=0]}{\epsilon}
+=\frac1{4\delta}.
+\end{equation}
+The geometric Ball-section normalization combined with the same certificate is the separate scale
+$\sqrt2/\delta$; it is a section-geometry scale, not the all-law probability coefficient or the selected-law
+ratio. Thus $1/(4\delta)$, $1/\delta$, and $\sqrt2/\delta$ are not identified with one another.
+
+All assertions use ordinary probability for each fixed law, arbitrary full-joint coefficient correlation,
+and literal endpoint conventions. Vector, operator, Frobenius, and scalar norms are Euclidean; the measures
+are Lebesgue and Euclidean Hausdorff measures. No confidence parameter, hidden constant, chart-count factor,
+interval-location factor, auxiliary tolerance, random leading coordinate, or second probability conversion is
+present. Once the supplied certificate is fixed, additional dependence on $q,M,\Delta$ is degree zero. The result preserves both
+baseline-invariance obligations: the exact deterministic-leading-coefficient monic theorem and the distinct
+Counter-example scales. It makes no claim that an unrestricted raw Pfaffian presentation admits the supplied
+derivative-closure certificate or a polynomial presentation-format bound.
+\end{theorem}

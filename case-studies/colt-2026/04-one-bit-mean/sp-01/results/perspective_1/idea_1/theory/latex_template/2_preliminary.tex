@@ -1,0 +1,22 @@
+\section{Preliminaries}\label{sec:preliminaries}
+
+For \(k>1\) and \(\lambda\geq\sigma>0\), define
+\[
+\mathcal D(k,\lambda,\sigma)
+:=\left\{D:\ \mu(D)=\mathbb E_DX\in[-\lambda,\lambda],\
+\mathbb E_D|X-\mu(D)|^k\leq\sigma^k\right\}.
+\]
+All logarithms below are natural.  The target rate is
+\[
+r_k(\lambda,\sigma,\epsilon,\delta)
+:=\log\frac{\lambda}{\sigma}
++\begin{cases}
+\dfrac{\sigma^2}{\epsilon^2}\log\dfrac1\delta,&k>2,\\[0.6em]
+\dfrac{\sigma^2}{\epsilon^2}
+\log\dfrac{\sigma}{\epsilon}\log\dfrac1\delta,&k=2,\\[0.6em]
+\left(\dfrac{\sigma}{\epsilon}\right)^{k/(k-1)}
+\log\dfrac1\delta,&1<k<2.
+\end{cases}
+\]
+We write \(\Pr_{D,\,\mathrm{protocol}}\) for probability over all samples
+and all public randomness under the common law \(D\).

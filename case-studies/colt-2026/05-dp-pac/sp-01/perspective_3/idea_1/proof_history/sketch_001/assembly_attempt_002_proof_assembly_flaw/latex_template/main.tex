@@ -1,0 +1,63 @@
+\documentclass[11pt,letterpaper]{article}
+% The shared style requests both the obsolete subfigure package and its
+% incompatible replacement, subcaption.  Keep the style byte-identical while
+% suppressing only the obsolete request during style loading.
+\makeatletter
+\let\proofassemblyusepackage\usepackage
+\renewcommand{\usepackage}[2][]{%
+  \def\proofassemblyrequested{#2}%
+  \def\proofassemblyobsolete{subfigure}%
+  \ifx\proofassemblyrequested\proofassemblyobsolete
+  \else
+    \proofassemblyusepackage[#1]{#2}%
+  \fi
+}
+\usepackage{arxiv}
+\let\usepackage\proofassemblyusepackage
+\makeatother
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{etoolbox}
+
+% Manual step-qualified tags still need distinct internal destinations.
+\BeforeBeginEnvironment{equation}{\stepcounter{equation}}
+
+\providecommand{\VC}{\operatorname{VC}}
+\providecommand{\LD}{\operatorname{LD}}
+
+\title{\LARGE A Quadratic Tower-Diagonal Lower Bound for\\Approximate-Private PAC Learning}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We prove a nonasymptotic sample lower bound for central approximate-private,
+distribution-free realizable PAC learning of tagged products of finite
+threshold classes.  At fixed constant accuracy, confidence, and
+$\varepsilon$, with $\delta$ in the stated candidate regime, the bound is
+$\Omega(k\log_2^*N)$.  On the tower diagonal
+$k=r$, $N=\operatorname{Tow}_2(r)$, it becomes
+$\Omega(r^2)=\Omega(\VC\log_2^*\LD)$ for unrestricted randomized improper
+learners.  The result separates this family from the generic additive scale,
+but it does not establish the stronger exponential or log-cardinality lower
+bounds posed by the general open problem.
+\end{abstract}
+
+\input{1_intro.tex}
+\input{2_preliminary.tex}
+\input{3_main.tex}
+\input{4_proof_sketch.tex}
+
+\newpage
+\bibliographystyle{ims}
+\bibliography{reference}
+
+\newpage
+\input{5_appendix.tex}
+
+\end{document}

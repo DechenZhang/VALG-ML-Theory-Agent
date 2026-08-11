@@ -1,0 +1,98 @@
+\section{Main Theorem}\label{sec:main}
+
+\begin{theorem}[Conditional sublogarithmic approximate-private learning]
+\label{thm:main}
+Under Assumption~\ref{assump:polynomial-global-stability}, fix
+\(\varepsilon_0\in(0,1)\).  Let
+\(\{C_\kappa\}_{\kappa\in\mathbb N}\) be any sequence of nonempty
+finite binary concept classes such that
+\[
+|C_\kappa|\to\infty
+\]
+and, for every \(p\in\mathbb N\), there is \(\kappa_0(p)\) for which
+\[
+L_\kappa>d_\kappa^p
+\qquad(\kappa\geq\kappa_0(p)).
+\]
+There is a constant \(K_a\geq2\), depending only on
+\(a,\alpha_0,\beta_0\) and the universal numerical constant in the
+stable-selection bound, and independent of
+\(\kappa,X_\kappa,C_\kappa,|C_\kappa|\), every realizable
+distribution, and \(\varepsilon_0\), such that the following holds.
+For every \(\kappa\), there is an arbitrary-output,
+computationally unrestricted kernel
+\[
+M_\kappa:
+Z_{X_\kappa}^{N_\kappa}
+\rightsquigarrow\mathcal H_{X_\kappa}
+\]
+that is distribution-free realizable
+\((\alpha_0,\beta_0)\)-PAC in population zero-one risk and
+\((\varepsilon_0,\delta_\kappa)\)-differentially private under
+symmetric ordered replacement adjacency, where
+\[
+\delta_\kappa
+=
+\exp\!\left[
+-q_\kappa^{2a+2}
+-\log\log(e^e+L_\kappa)
+\right],
+\]
+\[
+\log\frac1{\delta_\kappa}
+=q_\kappa^{2a+2}+\log\log(e^e+L_\kappa),
+\]
+and
+\[
+\begin{aligned}
+N_\kappa
+&=
+\left\lceil
+K_a\varepsilon_0^{-2}q_\kappa^{2a+2}
+\left(
+1+q_\kappa^{2a+2}
++\log\log(e^e+L_\kappa)
+\right)
+\right\rceil\\
+&\leq
+1+K_a\varepsilon_0^{-2}q_\kappa^{2a+2}
+\left(
+1+q_\kappa^{2a+2}
++\log\log(e^e+L_\kappa)
+\right).
+\end{aligned}
+\]
+The probability in the PAC statement is joint over the iid sample
+and all learner randomness; privacy is pointwise for every adjacent
+pair and measurable output event.  The input arity is exactly
+\(N_\kappa\) at each class, while the sequence-asymptotic conclusions
+are
+\[
+N_\kappa=L_\kappa^{o(1)}=o(L_\kappa)
+\]
+and, for every fixed real \(\rho>0\),
+\[
+\delta_\kappa N_\kappa^\rho\longrightarrow0.
+\]
+If an allowed schedule satisfies
+\(\bar\delta(N_\kappa)\geq\delta_\kappa\), then the same learner is
+\((\varepsilon_0,\bar\delta(N_\kappa))\)-differentially private.
+In particular, for every fixed \(c>0\), eventually
+\[
+\delta_\kappa
+\leq\frac{c}{N_\kappa^2\log(eN_\kappa)}.
+\]
+At the exact schedule or any eventually larger allowed schedule,
+there are no \(c_*>0\) and \(\kappa_*\) such that every eligible
+arbitrary-output, computationally unrestricted,
+distribution-free realizable \((\alpha_0,\beta_0)\)-PAC learner for
+\(C_\kappa\) uses at least \(c_*L_\kappa\) records for every
+\(\kappa\geq\kappa_*\).
+
+All exposed variables are displayed above.  The only hidden
+numerical dependence is the stated dependence of \(K_a\); \(a\),
+\(\alpha_0,\beta_0,\varepsilon_0\), the sequence, the zero-one risk,
+and the adjacency convention are fixed while \(\kappa\to\infty\).
+This is a conditional result: it assumes, and does not prove,
+Assumption~\ref{assump:polynomial-global-stability}.
+\end{theorem}

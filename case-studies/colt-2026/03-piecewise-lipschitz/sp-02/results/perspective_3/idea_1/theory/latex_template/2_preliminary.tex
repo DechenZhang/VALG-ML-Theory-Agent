@@ -1,0 +1,44 @@
+\section{Preliminaries}
+
+The root-feasible subset of the fixed parameter interval is
+\[
+K_R=\{\theta\in\Theta:|b(\theta)|\leq R\|F(\theta)\|_1\}.
+\]
+For coordinate $j$, let $U_j=\{\theta\in\Theta:F_j(\theta)\neq0\}$ and,
+on $U_j$, set
+\[
+V_j(\theta)
+=\left|\left(\frac b{F_j}\right)'(\theta)\right|
+ +R\sum_{i\neq j}
+  \left|\left(\frac{F_i}{F_j}\right)'(\theta)\right|.
+\]
+For minimization, extend $V_j$ by $+\infty$ on $\Theta\setminus U_j$.
+The static coordinate-pivot conditioning functional used in the theorem is
+\[
+\Gamma_{\rm piv}(b,F;R)=
+\begin{cases}
+\displaystyle\sup_{\theta\in K_R}\min_{1\leq j\leq N}V_j(\theta),
+&K_R\neq\varnothing,\\[1ex]
+0,&K_R=\varnothing.
+\end{cases}
+\]
+It is defined before the coefficient vector is sampled.
+
+Two setting-derived families will be used.  For $0<\delta\leq1$, on
+$\Theta=[-1,1]$ and with $R=1$, define
+\[
+b_\delta(\theta)=0,
+\qquad
+F_\delta(\theta)=\left(1,\frac\theta\delta\right).
+\]
+For an integer $d\geq1$, define the exact monic family
+\[
+b_d(\theta)=\theta^d,
+\qquad
+F_d(\theta)=(1,\theta,\ldots,\theta^{d-1}),
+\qquad
+p_\alpha(\theta)=\theta^d+\sum_{k=0}^{d-1}\alpha_k\theta^k.
+\]
+Only $\alpha=(\alpha_0,\ldots,\alpha_{d-1})$ is random.  For this family
+$q=M=0$, $N=d$, $\Delta_{\rm rnd}=d-1$,
+$\Delta_{\rm aff}=d$, and $A=(2R)^d\kappa$.

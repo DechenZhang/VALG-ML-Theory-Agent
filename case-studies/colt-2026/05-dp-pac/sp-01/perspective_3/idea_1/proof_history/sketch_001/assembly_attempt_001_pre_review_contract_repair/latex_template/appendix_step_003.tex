@@ -1,0 +1,134 @@
+\begin{lemma}[Expectation-to-PAC conversion at the ALMM constants]\label{lem:step-003-markov-bridge}
+Under the primitive one-block definitions, fix integers \(N\ge2\) and
+\(M\ge1\), and let
+
+\[
+B:([N]\times\{0,1\})^M\to\{0,1\}^{[N]}
+\]
+
+be any randomized unrestricted map. If, for every \(t\in[N+1]\) and every
+probability law \(Q\) on \([N]\),
+
+\[
+\mathbb E_{\substack{S\sim(Q^{\tau_t})^M\\g\sim B(S)}}
+  R_Q(g,\tau_t)
+\le 2^{-8},
+\tag{1}
+\]
+
+then, for every such \(t,Q\),
+
+\[
+\Pr_{\substack{S\sim(Q^{\tau_t})^M\\g\sim B(S)}}
+  \left[R_Q(g,\tau_t)>\frac1{16}\right]
+\le\frac1{16}.
+\tag{2}
+\]
+
+Thus \(B\) satisfies (W-PAC).
+\end{lemma}
+
+\begin{proof}
+Fix an arbitrary \(t\in[N+1]\) and arbitrary law \(Q\) on \([N]\), while
+keeping the same fixed sample size \(M\). Under the joint randomness of
+\(S\sim(Q^{\tau_t})^M\) and \(g\sim B(S)\), define the proof-local random
+variable
+
+\[
+Z_{t,Q}:=R_Q(g,\tau_t).
+\]
+
+For every realized output \(g\), population 0-1 risk is a probability, so
+
+\[
+0\le Z_{t,Q}\le1.
+\tag{3}
+\]
+
+Apply Markov's inequality at the positive threshold \(1/16\). The strict
+failure event in (W-PAC) is contained in the weak-threshold event, hence
+
+\[
+\begin{aligned}
+\Pr\!\left(Z_{t,Q}>\frac1{16}\right)
+&\le \Pr\!\left(Z_{t,Q}\ge\frac1{16}\right)\\
+&\le 16\,\mathbb E Z_{t,Q}\\
+&\le 16\cdot2^{-8}\\
+&=2^{-4}
+=\frac1{16}.
+\end{aligned}
+\tag{4}
+\]
+
+The final inequality remains valid when the expectation in (1) equals
+\(2^{-8}\); no strict inequality has been inserted. Since \((t,Q)\) was
+arbitrary, (4) holds simultaneously as a universally quantified statement
+for every fixed \((t,Q)\), which is exactly (W-PAC). Randomization and
+improperness of \(g\) do not affect (3). \end{proof}
+
+\begin{proposition}[Expected-loss hardness below the one-block threshold bound]\label{prop:step-003-expected-hardness}
+Let \(b_*,d_*>0\) and \(N_*\ge2\) be the constants supplied by the Proposition~\ref{prop:step-002-wrapper}. Under that proposition and
+Lemma~\ref{lem:step-003-markov-bridge}, for every pair of integers
+\(N\ge N_*\), \(M\ge8\) satisfying
+
+\[
+M<b_*\log_2^*N,
+\]
+
+every randomized unrestricted map
+
+\[
+B:([N]\times\{0,1\})^M\to\{0,1\}^{[N]}
+\]
+
+that is
+\(\left(0.1,d_*/(M^2\log M)\right)\)-DP under one-row replacement admits
+some \(t\in[N+1]\) and some probability law \(Q\) on \([N]\) for which
+
+\[
+\mathbb E_{\substack{S\sim(Q^{\tau_t})^M\\g\sim B(S)}}
+  R_Q(g,\tau_t)
+>2^{-8}.
+\tag{5}
+\]
+\end{proposition}
+
+\begin{proof}
+Fix \(N,M\) and an arbitrary randomized unrestricted \(B\) satisfying all
+the displayed hypotheses. Suppose (5) were false. The exact logical
+negation of the existential strict inequality is
+
+\[
+\text{for every }t\in[N+1]\text{ and every law }Q\text{ on }[N],
+\qquad
+\mathbb E_{\substack{S\sim(Q^{\tau_t})^M\\g\sim B(S)}}
+  R_Q(g,\tau_t)
+\le2^{-8}.
+\tag{6}
+\]
+
+Lemma~\ref{lem:step-003-markov-bridge} applies to the same map \(B\), the
+same exact sample size \(M\), and every fixed \((t,Q)\). It converts (6) into
+(W-PAC), including the allowed equality
+\(\Pr(R_Q(g,\tau_t)>1/16)=1/16\).
+
+All remaining hypotheses of Proposition~\ref{prop:step-002-wrapper} now hold:
+\(N\ge N_*\), integer \(M\ge8\), the map is arbitrary and improper, and its
+privacy parameters equal the permitted endpoints
+
+\[
+\varepsilon=0.1,
+\qquad
+\delta=\frac{d_*}{M^2\log M}.
+\]
+
+The denominator is positive even at \(M=8\), since \(\log8>0\). The wrapper therefore yields
+
+\[
+M\ge b_*\log_2^*N,
+\]
+
+contradicting the strict hypothesis \(M<b_*\log_2^*N\). Hence (6) is false,
+so a fixed pair \((t,Q)\) satisfying (5) exists. The pair may depend on the
+fixed learner \(B\), because only worst-instance hardness is asserted here; no
+learner-independent prior or minimax conclusion is asserted. \end{proof}

@@ -1,0 +1,29 @@
+You are the distinct step-scoped proof producer for perspective_2/idea_1, step_010, unit attempt 1, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+First read <CODEX_SKILLS_ROOT>/proof-step/SKILL.md completely and every directly required shared contract/template it names. Then prove exactly the accepted step_010 row. Do not strengthen, weaken, or alter the sketch interface.
+
+Binding artifacts and hashes:
+- setting.md: 6955a2723694ff60af8d5d40329ff0ad056f9b54780ff02744d8985456222b7e
+- proof_sketch.md: 8b5b22e5000e1c5641e2b5baf0c4d48244ce3389941b0cc9857b47510bbf6c93
+- proof_sketch_review.md: 4288579fa3b8583b31faa2c220f5071879da72f06ac3a1dd3d1889cb1096cb7c, status ACCEPTED
+- optional diagnostic global_proof.md: c7529eb3ef73cdb215c7ecfb9bad5fdfee639d9eea3c0d91060b4a0aaac03fb0
+- paired global_proof_review.md: cd76bd4102c0e811947104173dcc29cd325f2082ae53865d6c8bb25b20b9bb4e, status ACCEPTED
+- proof_tracker.md after opening this producer row: 55d32164df89a823dc829e835bdcb02d42b7d8c4329078aa4d9d77886ce48e45
+- accepted dependency step_003 proof.md: 637b6b01d6041dc9b797a04e4a387713dff823f5ee51bd1e872801a5ee119312
+- accepted dependency step_003 review.md: 253d7c4f469580dafd08647358cff7696bcc1e31a8da63ad7e54d8e6451c421a
+- accepted dependency step_009 proof.md: 241aff9f7902ac53f4bbfbaa561c92d077f6827911a597eb6087aca664e00e7c
+- accepted dependency step_009 review.md: d0c991fb67d7b8f34d718ed897982178dc4f9d1fc8596efda3482e678a6a6abc
+
+The binding row is:
+`step_010`: Apply `step_003` using `step_009` to prove exactly
+Pr[exists theta in J: p_alpha(theta)=0]
+<= kappa (2R)^(d-1) (d+R d(d-1)/2) |J|
+for every arbitrary correlated lower-coefficient law. Dependencies are exactly `step_003` and `step_009`; the primitive assumption is `assump:cube-density-laws` in dimension d, with both dependency outputs as derived inputs. The proof must verify the beta-volume, disjoint partition lengths, d=1, and exact coefficient dimension while introducing no auxiliary loss or singular leading coordinate. The output is the exact affine-monic baseline conclusion, and Rate Objective R4 is the complete exact baseline bridge.
+
+Use the dependency interfaces literally. From step_009, keep the exact object ordering F_0(theta)=theta^d and F_{k+1}(theta)=theta^k, the d-dimensional random vector (alpha_0,...,alpha_{d-1}), deterministic leading coefficient one, the legal cells E_1=J intersect {|theta|<=1} and E_d=J intersect {|theta|>1} for d>=2, their exact charts, the separate d=1 convention, and the common speed cap V_d=d+R d(d-1)/2. From step_003, instantiate the already accepted indicator/indicator-dropped exhausted chart probability inequality in the same coefficient coordinates and probability space. Do not reproach or silently replace either dependency theorem.
+
+Show explicitly that the nonpivot cube has volume (2R)^(d-1), including (2R)^0=1 for d=1; that the active cells are measurable, disjoint, and have total length |J|; that the inner and outer chart speeds are each bounded by V_d; and that the chart-produced coefficient vector is exactly the original lower-coefficient vector for p_alpha, so the residual to the consumed polynomial event is zero. Apply the full joint-density cap directly, preserving arbitrary correlations. State the ordinary-probability, bounded-interval, scalar absolute-value velocity, Lebesgue-length, and no-hidden-constant modes. Handle empty cells, transition points |theta|=1, theta=0, negative outer theta, zero-length bounded intervals if covered by the accepted step_003 interface, and d=1 without inventing a beta coordinate.
+
+Do not add a random or singular leading coefficient, an independence assumption, a polynomial-root theorem, a new area-formula invocation beyond the accepted dependency interface, a factor for the number of pivot charts, an extra constant, or a new public object. The optional accepted global diagnostic may guide planning only and must not be used as proof evidence, a citation, an assumption, or authority to change the row. Use paper-ready named local units and exact theorem-style references. Set COMPLETE only if the dependency claims and local units imply every clause of the row; otherwise retain valid work and set PARTIAL_BLOCKED with an exact blocker.
+
+Fail closed if any binding hash differs. Write only perspective_2/idea_1/proof_steps/step_010/proof.md. Do not edit the sketch, reviews, dependencies, trackers, worker log, global artifacts, other steps, history, final TeX, another branch, prompt, or results. Validate target fidelity, exact dependency identities, local-unit correspondence, assumption provenance, explicit-rate fields, baseline invariance, coefficient dimensions, d=1 and boundary cases, notation-surface classifications, ASCII/control bytes, TeX delimiter/brace balance, Markdown table arity ignoring escaped pipes, required headings, and file scope. Report status, local-unit count, dependency review hashes, output path, and final SHA-256.

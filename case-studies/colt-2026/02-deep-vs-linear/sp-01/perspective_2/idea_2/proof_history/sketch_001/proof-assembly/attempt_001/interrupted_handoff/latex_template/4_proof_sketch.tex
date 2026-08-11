@@ -1,0 +1,36 @@
+\section{Proof Sketch}
+\label{sec:proof-sketch}
+
+The empty class and the zero-dimensional case are first closed exactly.
+In the remaining case, the first parameter block gives $S\geq n$; see
+Proposition~\ref{prop:step-001-architecture}.
+
+To control the size of the class, suppose that $2T$ points are shattered and
+place the uniform distribution on them.  Give those points independent fair
+labels and run the exact learner on the corresponding target.  Conditional on
+the initialization, ordered sampled inputs, and sampled labels, an unsampled
+test label remains fair.  The test point is unsampled with probability
+$(1-1/(2T))^T\geq1/2$, so the average expected error over the finitely many
+realized targets is at least $1/4$.  Selecting one fixed target contradicts
+$\varepsilon<1/4$, proving Proposition~\ref{prop:step-002-vc}.
+
+A self-contained finite-domain growth argument then bounds
+$|\mathcal H|$.  Treating VC dimension zero separately and paying every
+ceiling explicitly gives, for
+$r=\lceil\log_2(2|\mathcal H|)\rceil$,
+\[
+r\leq7TS;
+\]
+this is Proposition~\ref{prop:step-003-budget}.  Draw $r$ independent maps
+from the single target-independent law in Assumption
+\ref{assump:tie-resolved-confident-map}.  A fixed target is missed by every
+block with probability at most $2^{-r}$, and the union bound over the finite
+class is at most $|\mathcal H|2^{-r}\leq1/2$.  Hence one deterministic tuple
+covers every target, as stated in Proposition~\ref{prop:step-004-covering}.
+
+Finally, concatenate the tuple.  For each target, place one successful
+separator in its successful block and zeros elsewhere.  Lemma
+\ref{lem:step-005-score} proves exact pointwise score equality with that
+block, including at ties.  Thus a single $rd$-dimensional feature map represents
+all targets, and Proposition~\ref{prop:step-005-dimension} gives
+$\operatorname{dc}(\mathcal H)\leq rd\leq7TSd$.

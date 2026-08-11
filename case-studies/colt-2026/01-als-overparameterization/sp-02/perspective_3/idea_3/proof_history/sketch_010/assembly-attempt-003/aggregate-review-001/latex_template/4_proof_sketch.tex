@@ -1,0 +1,41 @@
+\section{Proof Sketch}\label{sec:proof-sketch}
+
+The proof first establishes realized conditioning and rewrites the balanced
+coefficient initialization as elliptic images of independent standard
+Gaussian arrays.  Radius control and a rectangular Khatri--Rao concentration
+argument yield the normalized pair-Gram event, while direct algebra preserves
+the raw tangent span and the raw represented tensor.
+
+Positive-diagonal QR separates each Gaussian mode array into an orientation
+and a complete internal shape.  After absorbing each determinant bit into the
+shape, the three orientations are independent Haar matrices in $SO(r)$ and are
+independent of a measurable internal subspace of dimension at most $3kr$.
+Sequential Haar twirling gives projection mean $d/r^3$ for a fixed target.
+An explicit product-metric Lipschitz estimate and a metric-normalized
+Ricci--log-Sobolev--Herbst calculation give the required product-Haar tail.
+The exact oblique-basis projector transfers this estimate through the elliptic
+maps with loss $\kappa_1^{12}$.  At the maximal rank in
+Assumption~\ref{assump:rank_window}, this yields
+\[
+  \|P_{\mathscr S_0}D_r\|_F^2\le r/2.
+\]
+The normalized orthogonal component of the raw $D_r$ is therefore a unit
+witness for $\mathcal E_{\rm deficit}$.  Together with the conditioning, Gram,
+and size estimates, a conditional union bound proves the initialization
+confidence.
+
+On the sole trajectory certificate $\mathcal C_{\rm path}$, finite total
+variation makes the balanced representatives Cauchy and bounds every factor
+column by $3$.  A direct trilinear expansion gives a single endpoint remainder
+at most $\delta_0/16$.  Orthogonality of the witness cancels the first-order
+term and leaves raw coefficient margin at least
+$(15/16)\delta_0\sqrt r$.  The exact same-target projection identity then
+gives the physical relative floor
+\[
+  F(\theta_\infty)
+  \ge\left(\frac{15}{16}\delta_0\right)^2
+       \kappa_1^{-12}\|T\|_F^2.
+\]
+Polynomial continuity of the CP objective and elementary event conditioning
+complete Theorem~\ref{thm:main}, while retaining the possibly zero factor
+$\mathbb P(\mathcal C_{\rm path}\mid\mathcal E_{\rm init\_norm})$.

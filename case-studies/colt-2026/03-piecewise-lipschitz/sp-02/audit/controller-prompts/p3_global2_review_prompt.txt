@@ -1,0 +1,33 @@
+You are the distinct global-proof reviewer for perspective_3/idea_1, sketch attempt 2, global unit attempt 1, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+First read <CODEX_SKILLS_ROOT>/global-proof-review/SKILL.md completely and every directly required shared contract/template it names. Then independently review the fresh attempt-2 global diagnostic. Do not prove the theorem and do not repair the producer artifact.
+
+Binding artifacts and hashes:
+- idea.md: 5743443042dfc9c20be52d5e563ebc263b0a4a3454c7eb30034c2b811123e836
+- setting.md: 91119d2600ee2f787eb873796569ab53e35201e499bf81658d8a0bc1a8e7c79e
+- proof_sketch.md: aabcf6f6302d5cfab51cc1495d683cfa353390df7bf0fa81c3beecfcb076d108
+- proof_sketch_review.md: 56d6b16524f0935fbfeee3802f4f6fe748cf0eebfdcfcdf1a66ddce763ebc88c, status ACCEPTED, viability 9
+- global_proof.md: fcb7dc635362de5be5c61bbaf858c09ed9795863e8cdd5598247666d45b178b0, status COMPLETE_DRAFT, suggested routing None
+- proof_tracker.md before review: 1718466cd0283f3a030e24b516c687aa4a54b767fb7f0da9affb60757d7ea22d
+- triggering attempt-1 aggregate review: 39e0234ca7b1412b927e0f6b0b790e1e9567e09482904a6db8ec8d01a90a5a49
+
+The live pre-existing global_proof_review.md is stale sketch-attempt-1 material, already preserved at proof_history/sketch_001/global/attempt_001/global_proof_review.md with SHA-256 3df11de5344be2f1e8c4e8c4cecfe76db77fb5003b69bc670053defd32c60e7b. It establishes no attempt-2 claim. Overwrite the live review path with a fresh review of exactly the global_proof.md hash above. Do not scan other proof_history content.
+
+The binding progress type is material_partial. The exact theorem is fixed-family only: Gamma_piv(b,F;R) must be finite for each fixed admissible C1 Pfaffian family, and it controls the arbitrary-correlated-law interval probability. The theorem must not claim or imply polynomial general-instance control of Gamma_piv from q, M, Delta_rnd, Delta_aff, N, R, A, or other Pfaffian-format descriptors. Treat any such drift as acceptance-blocking. The static scale clause is exactly Gamma_piv(b_delta,F_delta;1)=1/delta and contains no epsilon-dependent law or root-probability target. The monic clause must retain the deterministic leading coefficient outside the d-dimensional random lower-coefficient law and recover the literal correlated-law baseline.
+
+Independently audit all six attempt-2 step interfaces and dependencies:
+- step_001: no dependencies; root feasibility, compact positive pivot margin, and fixed-family finiteness.
+- step_002 <- step_001: Borel least-pivot cells, exhaustion, exact original-coordinate graph map and Jacobian.
+- step_003 <- step_001, step_002: analytic/Lebesgue measurability, exact image coverage, localized area formula, multiplicity, monotone exhaustion, and no chart-count loss.
+- step_004 <- step_003: full-joint-density conversion, A/(2R) identity, and the two uniform suprema.
+- step_005 <- step_001: exact static 1/delta certificate only; a future proof must record complete fresh step_001 proof and accepted-review hashes.
+- step_006 <- step_001, step_004: exact monic two-pivot certificate, compact localization, same-target law mapping, and literal baseline probability rate.
+
+The theorem-critical source interfaces to audit independently are:
+- Kechris, Classical Descriptive Set Theory, first ed. 1995, Section 14, Proposition 14.4, p. 86: Borel images of analytic sets under Borel maps into standard Borel targets are analytic. Known nonoutputs include Lebesgue volume and Jacobian bounds.
+- Kechris, same edition, Section 21, Theorem 21.10, p. 155: analytic sets are universally measurable. The wrapper must explain conversion to completed Lebesgue measurability on the bounded Euclidean cube. Known nonoutputs include area estimates and event coverage.
+- Federer, Geometric Measure Theory, 1969, Section 3.2.3, p. 243: measurable-domain Lipschitz area formula with extended multiplicity. Audit C1-to-countable-Lipschitz localization, same original coefficient coordinates, normalized equal-dimensional measure convention, and the implication image measure <= integral Jacobian. It must not smuggle in injectivity, finite fibers, regular values, transversality, or simple roots.
+
+Audit theorem identity, exact quantifiers and probability mode, assumption provenance, fixed-family finiteness, empty K_R and N=1 branches, zero-length monic intervals, original-coordinate residual-zero mapping, no generated assumption, no circular closure, exact quantitative constants, citation source conventions and nonoutputs, every exported interface, every generated-output flow, and the diagnostic boundary requiring all six fresh step proofs and fresh reviews. Classify every theorem-critical obligation using only step-local, sketch/interface defect, or idea/theorem-contract defect. ACCEPTED is permitted only if every applicable Gate Evidence Table row is complete, source-adequate, residual-adequate, and step-local.
+
+Write only perspective_3/idea_1/global_proof_review.md. Do not edit global_proof.md, sketch artifacts, steps, trackers, worker_log.md, assembly/final artifacts, or another branch. Use every required global-proof-review section and the full 15-column Gate Evidence Table. Use raw controlled fields. Before reporting, validate all binding hashes, required headings, table arity while ignoring escaped pipes, ASCII/control bytes, balanced TeX delimiters/braces/environments, exact reviewed artifact identity, and file scope. Report status, smallest retry target, path, and final SHA-256.

@@ -1,0 +1,40 @@
+You are the distinct perspective-scoped global-proof producer for perspective_3/idea_1, sketch attempt 2, global unit attempt 1, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+First read <CODEX_SKILLS_ROOT>/global-proof/SKILL.md completely and every directly required shared contract/template it names. Then produce a fresh theorem-level diagnostic for the accepted attempt-2 sketch. Do not trust or copy attempt-1 proof artifacts as current evidence, do not prove individual steps, and do not change the accepted sketch.
+
+Binding current artifacts and hashes:
+- idea.md: 5743443042dfc9c20be52d5e563ebc263b0a4a3454c7eb30034c2b811123e836
+- setting.md: 91119d2600ee2f787eb873796569ab53e35201e499bf81658d8a0bc1a8e7c79e
+- proof_sketch.md: aabcf6f6302d5cfab51cc1495d683cfa353390df7bf0fa81c3beecfcb076d108, sketch attempt 2
+- proof_sketch_review.md: 56d6b16524f0935fbfeee3802f4f6fe748cf0eebfdcfcdf1a66ddce763ebc88c, status ACCEPTED, score 9
+- proof_tracker.md: 1718466cd0283f3a030e24b516c687aa4a54b767fb7f0da9affb60757d7ea22d
+- technical_survey.md: d3dcf98ac10d1a86a10e38f1fe528b99ffa6e2fdd1b42cd226f98d03226f7603
+
+Diagnostic-only lineage artifacts:
+- triggering aggregate proof_review.md: 39e0234ca7b1412b927e0f6b0b790e1e9567e09482904a6db8ec8d01a90a5a49, Score 6, PROOF_SKETCH_FLAW
+- archived attempt-1 global_proof.md: 20173ffea1c58c58bf7d217cfbe38912c9b388eff435912237c341e9803b9ab0
+- archived attempt-1 global_proof_review.md: 3df11de5344be2f1e8c4e8c4cecfe76db77fb5003b69bc670053defd32c60e7b
+These files may explain the repair lineage but are stale and cannot establish an attempt-2 claim.
+
+Draft the complete exact-goal, unconditional, fixed-family material-partial theorem architecture across all six stable steps. Preserve the strict research boundary: prove finiteness and the explicit affine anti-concentration theorem in terms of the fixed family's Gamma_piv, the exact static scale certificate Gamma_piv(b_delta,F_delta;1)=1/delta, and exact affine-monic recovery; never claim or imply polynomial general-instance control of Gamma_piv from q, M, Delta_rnd, Delta_aff, N, R, A, or other Pfaffian-format descriptors.
+
+Independently expose the actual mathematical transitions at diagnostic depth:
+- root feasibility and the compact positive available-pivot margin rho on K_R, including K_R empty and the no-forced-root source;
+- the quantitative quotient bound proving finite Gamma_piv for the fixed family;
+- Borel extended pivot speeds, least-minimizer cells, finite exhaustion, exact original-coordinate graph maps, and the derivative/Jacobian interface;
+- analytic and Lebesgue measurability, exact graph-image coverage, countable Lipschitz localization, equal-dimensional area formula with extended multiplicity, monotone convergence, and the no-chart-count-loss identity;
+- direct conversion by the full joint-density cap, preserving arbitrary correlation and literal kappa(2R)^(N-1)Gamma_piv|I| and A Gamma_piv/(2R)|I| constants uniformly over laws and intervals;
+- step_005 proving only the static equality Gamma_piv(b_delta,F_delta;1)=1/delta, including theta=0, with no epsilon-dependent probability target;
+- step_006's exact same-target affine-monic presentation, constant/top pivots, d=1 and all-boundary cases, compact localization, and literal Theorem 2 constant with the deterministic leading coefficient external to the d-dimensional random law.
+
+Run full source identity and interface preflight for the theorem-critical locators already accepted at sketch level, without treating the sketch review as authority:
+- Kechris (1995), first edition, Section 14, Proposition 14.4, p. 86, for Borel images of analytic sets;
+- Kechris (1995), Section 21, Theorem 21.10, p. 155, for universal measurability of analytic sets and the Euclidean Lebesgue consequence;
+- Federer (1969), Section 3.2.3, p. 243, for the measurable-domain Lipschitz area formula with extended multiplicity.
+State source conventions, current-object mappings, every hypothesis discharge, exact conclusion interfaces, and known nonoutputs. In particular, explain why image measure is bounded by the Jacobian integral without injectivity, finite fibers, regular values, transversality, or simple roots.
+
+Apply every shared diagnostic gate: source-direction fidelity; exact-goal and explicit-rate audits; assumption provenance; theorem-critical mechanism witnesses; exported-interface and residual-to-target adequacy; generated-output flow; noncircular closure; static exhaustion accumulation; boundary stress; baseline invariance; and exact source convention/object mapping. Every hard obligation must be classified exactly as step-local, sketch/interface defect, or idea/theorem-contract defect. COMPLETE_DRAFT is allowed only if the detailed theorem-level diagnostic closes with Global Gaps And Hard Steps = None. Any missing source, bridge, dependency, or theorem-contract support must be reported honestly under the skill's controlled status and routing.
+
+Write only perspective_3/idea_1/global_proof.md. Do not edit the sketch, sketch review, setting, tracker, worker log, technical survey, proof steps, prior final reviews, history, final TeX, prompts, results, or another branch. Include every required global-proof section and all six steps in coverage. State explicitly that all attempt-1 global/step/assembly/final-review artifacts are stale, that all six attempt-2 steps require fresh proof and review, and that fresh step_005 dependency identities must eliminate the prior malformed digest rather than copy it.
+
+Validate binding hashes, controlled status and routing, required headings, six-step coverage, ASCII/control bytes, balanced TeX delimiters/braces, Markdown table arity ignoring escaped pipes, and file scope before reporting status, suggested routing, current sketch/review hashes, exact locator audit verdicts, output path, and final SHA-256.

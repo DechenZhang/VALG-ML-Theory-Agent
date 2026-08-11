@@ -1,0 +1,97 @@
+\section{Main Theorem}\label{sec:main}
+
+\begin{theorem}[Exact noninteractive refinement certificate]\label{thm:technical}
+Let Assumptions~\ref{assump:parameter-domain}--%
+\ref{assump:iid-independent-randomness} hold with
+\[
+C_k^{\rm rec}=2^{k-1}(1+50^k),\qquad
+\overline C_k^{\rm tail}
+=\frac{11}{3}\left(\frac83\right)^{k-1}C_k^{\rm rec},
+\]
+\[
+c_k=e^{-1},\qquad
+\gamma_k=\frac18,\qquad
+b_k=\max\left\{4,
+(8\overline C_k^{\rm tail})^{1/(k-1)}\right\}.
+\]
+Let
+\[
+C_k^{\rm act}=\frac{3(8/3)^k}{1-2^{-k}},
+\qquad
+A_k=96C_k^{\rm rec}C_k^{\rm act},
+\]
+and define the positive \(k\)-only coarse constants
+\[
+C_{k,>}^{\rm c}=\frac{A_k}{1-2^{2-k}}\quad(k>2),
+\]
+\[
+C_2^{\rm c}
+=A_2\left(\log_2(2b_2)+\frac1{\log2}\right)\quad(k=2),
+\]
+\[
+C_{k,<}^{\rm c}
+=\frac{A_k}{2^{2-k}(1-2^{-(2-k)})}\quad(1<k<2).
+\]
+For the protocol of Section~\ref{sec:setup}, set
+\[
+V_k
+=3072\sigma^2\mathbf1\{\mathcal J_{\rm f}\neq\varnothing\}
++\mathbf1\{\mathcal J_{\rm c}\neq\varnothing\}
+\begin{cases}
+C_{k,>}^{\rm c}\sigma^2,&k>2,\\
+C_2^{\rm c}\sigma^2\log(\sigma/\epsilon),&k=2,\\
+C_{k,<}^{\rm c}\sigma^kH^{2-k},&1<k<2,
+\end{cases}
+\]
+\[
+s=\left\lceil\frac{32V_k}{\epsilon^2}\right\rceil,
+\qquad
+q=2\left\lceil8\log\frac4\delta\right\rceil+1,
+\qquad
+N_{\rm ref}=qs.
+\]
+Then the complete query bank is Borel and fixed before the first response.
+The protocol has deterministic horizon
+\[
+n=N_{\rm loc}+N_{\rm ref},
+\]
+uses \(n\) independent samples, and receives exactly one bit from each
+sample.  Every use of \(c\), including shift selection, centering, and
+importance weighting, is decoder-only.  Moreover,
+\[
+\sup_{D\in\mathcal D(k,\lambda,\sigma)}
+\Pr_{D,\,\mathrm{protocol}}
+\{|\widehat\mu-\mu(D)|>\epsilon\}
+\leq\frac\delta2\leq\delta.
+\]
+The zero-query localization branch remains exact.  At \(x=c\), every
+centered digit, residual, and dither bracket is zero; in particular, if
+\(D\) is a point mass at \(\mu\) and the generated center equals \(\mu\),
+then \(\widehat\mu=\mu\) exactly.
+\end{theorem}
+
+\begin{corollary}[Order-optimal noninteractive one-bit mean estimation]\label{cor:rate}
+For every fixed \(k>1\), use the \(k\)-only choices
+\[
+c_k=e^{-1},\qquad \gamma_k=\frac18,\qquad
+b_k=\max\left\{4,
+(8\overline C_k^{\rm tail})^{1/(k-1)}\right\}
+\]
+from Theorem~\ref{thm:technical}, together with its displayed choices of
+\(s\) and \(q\).  There is a finite constant \(C_k>0\), depending only on
+\(k\), such that for every known \(\lambda\geq\sigma>0\), every
+\(0<\epsilon\leq c_k\sigma\), every \(\delta\in(0,1/2)\), and every
+\(D\in\mathcal D(k,\lambda,\sigma)\), the resulting fully noninteractive
+protocol has deterministic fixed horizon, uses exactly one bit from each
+independent sample, and satisfies
+\[
+n\leq C_kr_k(\lambda,\sigma,\epsilon,\delta),
+\]
+\[
+\sup_{D\in\mathcal D(k,\lambda,\sigma)}
+\Pr_{D,\,\mathrm{protocol}}
+\{|\widehat\mu-\mu(D)|>\epsilon\}\leq\delta.
+\]
+The probability statement is unconditional over all samples and protocol
+randomness and uses absolute error on \(\mathbb R\).
+\end{corollary}

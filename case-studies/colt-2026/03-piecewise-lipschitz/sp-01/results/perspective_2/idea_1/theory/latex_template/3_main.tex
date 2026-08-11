@@ -1,0 +1,73 @@
+\section{Main Theorem}
+
+\begin{theorem}[Endpoint conditional anti-concentration]
+\label{thm:main}
+Under Assumptions~\ref{assump:compact-parameter-domain}--
+\ref{assump:mean-endpoint-conditional-caps}, fix the finite
+$\eta=(\bar\kappa_0,\bar\kappa_\infty)$.  For every $d\geq1$, $R\geq1$,
+$\mu\in\mathcal D_{d,R,\eta}$, and $I\in\mathcal I(\Theta)$,
+\[
+\begin{aligned}
+\mu(H_{d,I})
+&\leq \bar\kappa_0B_0(d,R)|I_0|
+ +\bar\kappa_\infty B_\infty(d,R)(|I_+|+|I_-|)\\
+&\leq M_\eta(d,R)|I|.
+\end{aligned}
+\]
+Consequently,
+\[
+\boxed{
+C_{\mathcal D_{d,R,\eta}}
+\leq M_\eta(d,R)
+\leq P_\eta(d,R)
+=\bar\kappa_*d+\frac{\bar\kappa_*}{2}Rd^2.}
+\]
+The middle quantity is the maximum of the two chart coefficients, rather
+than their sum.
+
+Separately, if $\bar\kappa_0,\bar\kappa_\infty\geq1/2$, then for every
+$d\geq1$ and $R\geq1$ the law $\mu^{\mathrm{wit}}_{d,R}$ belongs to
+$\mathcal D_{d,R,\eta}$, and
+\[
+K_0^{\mu^{\mathrm{wit}}_{d,R}}
+=K_\infty^{\mu^{\mathrm{wit}}_{d,R}}
+=\frac1{2R}
+\quad\text{almost surely}.
+\]
+This threshold is not required for either root-hitting inequality.
+
+All exposed dependence is on $d$, $R$, $\bar\kappa_0$,
+$\bar\kappa_\infty$, and the displayed interval lengths; there are no
+hidden constants.  The pair $\eta$ and the domain $\Theta$ are fixed, and
+the bound itself is independent of $\Theta$.  The statement is a
+deterministic inequality for each probability $\mu(H_{d,I})$, followed by
+deterministic suprema, with no confidence parameter.  It is static and
+uniform over all positive-length intervals, with no horizon or limiting
+qualification.  Its norm and metric inputs are the conditional
+$L^\infty(\R)$ density norms and one-dimensional Lebesgue interval length.
+\end{theorem}
+
+\begin{corollary}[Fixed-cap polynomial rate]
+\label{cor:fixed-cap-rate}
+Under Assumptions~\ref{assump:compact-parameter-domain}--
+\ref{assump:mean-endpoint-conditional-caps}, for the single fixed finite
+$\eta$ and every $d\geq1$, $R\geq1$,
+\[
+C_{\mathcal D_{d,R,\eta}}
+\leq \bar\kappa_*d+\frac{\bar\kappa_*}{2}Rd^2.
+\]
+This is a pointwise, deterministic, static bound with no hidden constant or
+probability conversion; its displayed polynomial has total degree at most
+three in $(d,R)$ and coefficients depending only on $\eta$.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:main} gives
+$C_{\mathcal D_{d,R,\eta}}\leq M_\eta(d,R)$.  The complete scalar
+specialization, including the choices
+$\bar\kappa_*=\max\{\bar\kappa_0,\bar\kappa_\infty\}$, the conditions
+$d\geq1$ and $R\geq1$, the inequalities $1\leq d$ and
+$d(d-1)\leq d^2$, and the absence of any probability-mode conversion, is
+proved in Proposition~\ref{prop:fixed-eta-polynomial-specialization}.
+Combining the two statements gives the displayed rate.
+\end{proof}

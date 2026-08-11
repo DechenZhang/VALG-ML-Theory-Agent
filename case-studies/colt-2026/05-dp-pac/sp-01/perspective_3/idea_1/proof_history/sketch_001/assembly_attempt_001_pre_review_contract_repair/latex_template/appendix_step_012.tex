@@ -1,0 +1,358 @@
+\begin{lemma}[Deterministic one-row preprocessing map]\label{lem:step-012-one-row-map}
+Under Assumption~\ref{assump:candidate-regime}, the contradiction hypothesis~\eqref{eq:local-negation},
+and Proposition~\ref{prop:step-010-row-construction} and
+Lemma~\ref{lem:step-010-one-use}, fix any realization \(\omega\) of
+the input-independent preprocessing seed and any arbitrary
+\(z,z'\in\mathsf Z_M\) with \(z\simeq z'\).  Then exactly one of the
+following holds.
+
+\begin{enumerate}
+\item If \(U(\omega)>M\), the preprocessing control flow evaluates no
+   coordinate of either input, so its output branch is identical on
+   \(z,z'\).
+\item If \(U(\omega)\le M\), the two exact size-\(n\) datasets
+   \(\mathcal P_\omega(z)\) and \(\mathcal P_\omega(z')\) are equal or
+   replacement-adjacent.  More precisely, if the inputs differ only at
+   row \(q\), then they are equal when \(q>U\), while for \(q\le U\)
+   they can differ only at the single global row \(r_q\), the \(q\)-th
+   hidden-tag occurrence.
+\end{enumerate}
+
+This assertion includes \(U=0\), a changed unused record, a changed used
+record, simultaneous replacement of the record's feature and label, and
+arbitrary possibly nonrealizable label patterns.  All nonhidden global
+rows and all hidden rows other than \(r_q\) coincide.  In particular, the
+map never produces group-adjacent datasets.
+\end{lemma}
+
+\begin{proof}
+Proposition~\ref{prop:step-010-row-construction} gives
+
+\[
+  U=\sum_{r=1}^n\mathbf1\{I_r=J\},
+\tag{10}
+\]
+
+as a function only of \(J,I_{1:n}\), all of which belong to \(\omega\).
+Hence the same value of \(U\), and therefore the same overflow branch, is
+used on \(z\) and \(z'\).  When \(U>M\), Proposition~\ref{prop:step-010-row-construction} stops before either input
+is read.  This proves the first branch pathwise, not only in distribution.
+
+Suppose \(U\le M\).  Lemma~\ref{lem:step-010-one-use} gives distinct
+hidden positions
+
+\[
+  1\le r_1<\cdots<r_U\le n
+\tag{11}
+\]
+
+depending only on \(\omega\), and its exact row rule gives, for
+\(z_\ell=(x_\ell,y_\ell)\),
+
+\[
+  \bigl(\mathcal P_\omega(z)\bigr)_{r_\ell}
+  =((J,x_\ell),y_\ell),
+  \qquad \ell=1,\ldots,U.
+\tag{12}
+\]
+
+Every other position is a nonhidden row already fixed by \(\omega\).
+The same formulas, with primes, hold for \(z'\), with exactly the same
+positions \(r_\ell\) and exactly the same nonhidden rows.
+
+If \(z=z'\), the synthesized datasets are equal.  Otherwise adjacency in
+\(\mathsf Z_M\) supplies one index \(q\in[M]\) such that
+\(z_\ell=z'_\ell\) for every \(\ell\ne q\).  If \(q>U\), Lemma~\ref{lem:step-010-one-use} says row \(q\) is unused, and (12)
+shows equality of every used hidden row; all nonhidden rows also coincide.
+Thus
+
+\[
+  \mathcal P_\omega(z)=\mathcal P_\omega(z').
+\tag{13}
+\]
+
+If \(q\le U\), then for every hidden row \(r_\ell\) with \(\ell\ne q\),
+the equality \(z_\ell=z'_\ell\) and (12) give equal rows.  At the sole
+remaining hidden position,
+
+\[
+  \bigl(\mathcal P_\omega(z)\bigr)_{r_q}=((J,x_q),y_q),
+  \qquad
+  \bigl(\mathcal P_\omega(z')\bigr)_{r_q}=((J,x'_q),y'_q).
+\tag{14}
+\]
+
+Equation (14) is one replacement even if both \(x_q\ne x'_q\) and
+\(y_q\ne y'_q\).  It is still a legal replacement when either raw label
+is inconsistent with every threshold because both labels remain elements
+of \(\{0,1\}\), and Assumption~\ref{assump:central-dp} is stated on all
+labeled datasets.  Every nonhidden row is a component of the fixed seed,
+so no nonhidden row changes.  Thus the synthesized datasets differ in at
+most the one row \(r_q\), proving replacement adjacency and excluding any
+group-adjacency charge.
+
+Finally, if \(U=0\), there are no positions in (11), every synthesized
+row is nonhidden and seed-fixed, and (13) holds for every pair of inputs.
+This also proves the requested null case. \end{proof}
+
+\begin{proposition}[Fixed-seed privacy kernel with learner coins retained]\label{prop:step-012-fixed-seed-kernel}
+Under Assumptions~\ref{assump:candidate-regime} and
+\ref{assump:central-dp}, the contradiction hypothesis~\eqref{eq:local-negation}, Proposition~\ref{prop:step-010-simulator}, and
+Lemma~\ref{lem:step-012-one-row-map}, fix a preprocessing seed \(\omega\)
+but do not fix the internal coins of \(A\).  Define the all-zero global
+hypothesis
+
+\[
+  h_0(i,x):=0
+  \qquad ((i,x)\in X_{k,N}),
+\tag{15}
+\]
+
+and the global-output kernel \(K_\omega:\mathsf Z_M\to\mathcal H_{k,N}\)
+by
+
+\[
+  K_\omega(z,F)=
+  \begin{cases}
+    \mathbf1\{h_0\in F\}, & U(\omega)>M,\\[1mm]
+    \Pr_A\!\left[A(\mathcal P_\omega(z))\in F\right],
+      & U(\omega)\le M,
+  \end{cases}
+\tag{16}
+\]
+
+for every \(F\subseteq\mathcal H_{k,N}\).  Then, for all arbitrary
+\(z\simeq z'\) in \(\mathsf Z_M\),
+
+\[
+  K_\omega(z,F)
+  \le e^\varepsilon K_\omega(z',F)+\delta
+  \qquad(F\subseteq\mathcal H_{k,N}).
+\tag{17}
+\]
+
+On overflow the two output laws coincide exactly.  On nonoverflow, (17)
+uses Assumption~\ref{assump:central-dp} at most once.  The statement holds
+for arbitrary randomized \(A\); its internal coins are precisely the
+randomness under \(\Pr_A\) in (16), not part of the fixed seed.
+\end{proposition}
+
+\begin{proof}
+The function \(h_0\) belongs to the full output space
+\(\mathcal H_{k,N}\), and \(D_Jh_0=g_0\) for every \(J\).  Thus the first
+line of (16) is an analytical global-output lift of the simulator's actual
+fixed overflow output; it does not call \(A\).
+
+If \(U(\omega)>M\), the seed fixes the same branch for both inputs, and
+
+\[
+  K_\omega(z,F)=\mathbf1\{h_0\in F\}=K_\omega(z',F).
+\tag{18}
+\]
+
+Since \(e^\varepsilon\ge1\) and \(\delta\ge0\), (18) implies (17).  This
+also shows directly that overflow contributes no privacy residual.
+
+Suppose \(U(\omega)\le M\).  By
+Lemma~\ref{lem:step-012-one-row-map},
+\(\mathcal P_\omega(z)=\mathcal P_\omega(z')\) or
+\(\mathcal P_\omega(z)\simeq\mathcal P_\omega(z')\).  In the equality
+case the two laws in (16) coincide, including when \(U=0\) or the changed
+input row is unused.  In the adjacent case, Assumption~\ref{assump:central-dp}
+applied once to the exact size-\(n\) pair and the event \(F\) gives
+
+\[
+\begin{aligned}
+  K_\omega(z,F)
+  &=\Pr_A[A(\mathcal P_\omega(z))\in F]\\
+  &\le e^\varepsilon
+    \Pr_A[A(\mathcal P_\omega(z'))\in F]+\delta\\
+  &=e^\varepsilon K_\omega(z',F)+\delta.
+\end{aligned}
+\tag{19}
+\]
+
+No coin of \(A\) was conditioned on or fixed in (19).  Arbitrary feature
+and label replacements are covered because the premise of (19) is the
+replacement adjacency proved in Lemma~\ref{lem:step-012-one-row-map}, not
+realizability.  There is one invocation of (7), so neither group privacy
+nor sequential composition appears. \end{proof}
+
+\begin{lemma}[Common input-independent mixture and restriction preserve one charge]\label{lem:step-012-postprocess-mixture}
+Under Assumptions~\ref{assump:candidate-regime} and
+\ref{assump:central-dp}, the contradiction hypothesis~\eqref{eq:local-negation}, Lemma~\ref{lem:step-010-public-preprocessing} and
+Proposition~\ref{prop:step-010-simulator}, and
+Proposition~\ref{prop:step-012-fixed-seed-kernel}, let \(\nu\) be the law
+of the input-independent preprocessing seed on its finite seed space
+\(\mathsf\Omega_{\mathrm{pre}}\).  For
+\(G\subseteq\mathsf\Omega_{\mathrm{pre}}\times\mathcal H_{k,N}\), define
+its seed section
+
+\[
+  G_\omega:=\{h\in\mathcal H_{k,N}:(\omega,h)\in G\},
+\tag{20}
+\]
+
+and form the joint seed/global-output kernel
+
+\[
+  \widehat K(z,G)
+  :=\sum_{\omega\in\mathsf\Omega_{\mathrm{pre}}}
+       \nu(\omega)K_\omega(z,G_\omega).
+\tag{21}
+\]
+
+Then \(\widehat K\) is \((\varepsilon,\delta)\)-DP.  Applying only after
+this common mixture the deterministic postprocessing map
+
+\[
+  \Phi(\omega,h):=D_{J(\omega)}h
+\tag{22}
+\]
+
+produces exactly the simulator law.  Consequently (4) holds with
+exactly one additive \(\delta\).
+\end{lemma}
+
+\begin{proof}
+The seed space is finite: Lemma~\ref{lem:step-010-public-preprocessing}
+samples finitely many tags,
+finitely many elements of the finite-support prior, and features from the
+finite domain \([N]\).  For each \(G\), every section \(G_\omega\) in
+(20) is therefore a valid event in the global output space.  Equation
+(21) is a total kernel: all summands are nonnegative, its value on
+\(\mathsf\Omega_{\mathrm{pre}}\times\mathcal H_{k,N}\) is
+\(\sum_\omega\nu(\omega)K_\omega(z,\mathcal H_{k,N})=1\), and finite
+additivity follows by taking disjoint seed sections and using additivity of
+each \(K_\omega\).  The seedwise inequality (17) is uniform in \(\omega\)
+and in the event, so for arbitrary \(z\simeq z'\),
+
+\[
+\begin{aligned}
+  \widehat K(z,G)
+  &=\sum_\omega\nu(\omega)K_\omega(z,G_\omega)\\
+  &\le\sum_\omega\nu(\omega)
+       \bigl(e^\varepsilon K_\omega(z',G_\omega)+\delta\bigr)\\
+  &=e^\varepsilon\sum_\omega\nu(\omega)K_\omega(z',G_\omega)
+    +\delta\sum_\omega\nu(\omega)\\
+  &=e^\varepsilon\widehat K(z',G)+\delta.
+\end{aligned}
+\tag{23}
+\]
+
+Here Lemma \ref{lem:step-010-public-preprocessing} supplies the
+same input-independent weights \(\nu(\omega)\) for \(z\) and \(z'\).  Also,
+\[
+\sum_\omega\nu(\omega)=1.
+\]
+Thus (23) first proves exact DP for the
+common joint mixture.  The overflow subset
+\(\{\omega:U(\omega)>M\}\), the \(U=0\) subset, and every nonoverflow
+subset are determined solely by this common seed.  No input-dependent
+conditioning, normalization, or change of measure occurs.
+
+Now fix \(E\subseteq\mathsf G_N\) and use the one joint-output event
+
+\[
+  G_E:=\Phi^{-1}(E)
+  =\{(\omega,h):D_{J(\omega)}h\in E\}.
+\tag{24}
+\]
+
+On an overflow seed, (15) gives \(\Phi(\omega,h_0)=g_0\), so that seed's
+contribution to \(\widehat K(z,G_E)\) is
+\(\nu(\omega)\mathbf1\{g_0\in E\}\), independently of \(z\).  On a
+nonoverflow seed, its contribution is
+
+\[
+  \nu(\omega)\Pr_A\!\left[
+    D_{J(\omega)}A(\mathcal P_\omega(z))\in E
+  \right],
+\tag{25}
+\]
+
+with all internal randomness of \(A\) retained.  Summing these two exact
+branches is precisely Proposition~\ref{prop:step-010-simulator},
+so
+
+\[
+  B_{\mu_{N,M},A}(z,E)=\widehat K(z,G_E).
+\tag{26}
+\]
+
+Finally apply (23) to \(G=G_E\) and use (26) for both inputs.  This is the
+event-preimage proof of postprocessing after the common mixture and gives
+(4).  The additive term in (23) is \(\delta\), not \(\delta\) times the
+number of seeds, \(n\), \(k\), \(U\), or an overflow factor. \end{proof}
+
+\begin{proposition}[Exact source-cap membership]\label{prop:step-012-source-membership}
+Under Assumptions~\ref{assump:candidate-regime} and
+\ref{assump:central-dp}, the contradiction hypothesis~\eqref{eq:local-negation}, Propositions~\ref{prop:step-005-certificate} and
+\ref{prop:step-010-simulator}, and
+Lemma~\ref{lem:step-012-postprocess-mixture}, define the exact source-cap
+learner set at the present \(N,M\) by
+
+\[
+\begin{aligned}
+  \mathcal K^{\mathrm{src}}_{N,M}:=
+  \bigl\{K:\;&\mathsf Z_M\longrightarrow\mathsf G_N
+      \text{ a total randomized kernel}:\\[-1mm]
+    &K(z,E)\le e^{0.1}K(z',E)+\Delta_M\\[-1mm]
+    &\text{for all }z\simeq z'\text{ in }\mathsf Z_M
+      \text{ and }E\subseteq\mathsf G_N\bigr\}.
+\end{aligned}
+\tag{27}
+\]
+
+Then
+
+\[
+  B_{\mu_{N,M},A}\in\mathcal K^{\mathrm{src}}_{N,M}.
+\tag{28}
+\]
+
+More fully, the same \(N,M\) satisfy the source scalar conditions in
+(8), the simulator has exact input size \(M\), full arbitrary one-block
+output space \(\mathsf G_N\), and is total on all labeled inputs, and its
+event probabilities satisfy (6).  Thus (28) is exact source-interface
+membership, not an inference from the phrase
+"\((\varepsilon,\delta)\)-DP" alone.
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:step-010-simulator} proves that
+\(B_{\mu_{N,M},A}\) is a total randomized kernel with domain exactly
+\(\mathsf Z_M\) and codomain exactly the full improper space
+\(\mathsf G_N\).  Its totality includes overflow, \(U=0\), arbitrary
+corrupt input labels, and unused trailing records.
+
+Proposition~\ref{prop:step-005-certificate}, applied to the same
+\(N,M,\varepsilon,\delta\), gives (8)--(9).  In particular, \(M\ge8\)
+implies \(\log M>0\), so \(\Delta_M\) in (5) is a well-defined positive
+source cap.  Lemma~\ref{lem:step-012-postprocess-mixture} gives, for every
+defining pair and event in (27),
+
+\[
+  B_{\mu_{N,M},A}(z,E)
+  \le e^\varepsilon B_{\mu_{N,M},A}(z',E)+\delta.
+\tag{29}
+\]
+
+Because probabilities are nonnegative, \(\varepsilon\le0.1\), and
+\(\delta<\Delta_M\),
+
+\[
+\begin{aligned}
+  e^\varepsilon B_{\mu_{N,M},A}(z',E)+\delta
+  &\le e^{0.1}B_{\mu_{N,M},A}(z',E)+\delta\\
+  &< e^{0.1}B_{\mu_{N,M},A}(z',E)+\Delta_M.
+\end{aligned}
+\tag{30}
+\]
+
+The weak inequality required in (27) follows.  Equations (8), (27), and
+(30), together with the exact total kernel typing, check every component
+of the source interface separately.  No accuracy, realizability, or
+properness property has been added to that learner set, and no private
+eligibility is inferred without the event-level derivation (29)--(30).
+This proves (28). \end{proof}

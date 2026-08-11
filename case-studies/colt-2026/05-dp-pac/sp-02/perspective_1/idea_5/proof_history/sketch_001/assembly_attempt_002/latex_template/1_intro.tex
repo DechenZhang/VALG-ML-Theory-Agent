@@ -1,0 +1,130 @@
+\section{Theoretical Setup}\label{sec:setup}
+
+\subsection{Problem Setting}
+
+Let \(\log\) denote the natural logarithm.  Let \(\log^*\) denote
+base-two iterated logarithm, with \(\log^*(t)\) the least
+\(j\geq0\) for which the \(j\)-fold iterated base-two logarithm of
+\(t\) is at most \(1\).  For a domain \(X\) and a nonempty finite
+binary concept class \(C\subseteq\{0,1\}^X\), set
+\[
+d(C)=\operatorname{VC}(C),\qquad
+\ell(C)=\operatorname{LD}(C),\qquad
+s(C)=1+\log^*(1+\ell(C)),\qquad
+q(C)=d(C)+s(C).
+\]
+Thus \(q(C)\geq1\).  Finiteness gives the counting bound
+\[
+\ell(C)\leq\log_2|C|.
+\]
+
+Write \(Z_X=X\times\{0,1\}\) and
+\(\mathcal H_X=\{0,1\}^X\).  A distribution \(Q\) on \(Z_X\) is
+realizable by \(C\) if some \(c\in C\) satisfies
+\(Q\{(x,y):y=c(x)\}=1\).  For \(h\in\mathcal H_X\), define
+\[
+R_Q(h)=\Pr_{(x,y)\sim Q}[h(x)\neq y].
+\]
+All randomized algorithms are kernels on output spaces in which the
+singleton hypotheses and output events used below are measurable.
+An equality \(G(S)=h\) is equality as functions on \(X\), and its
+probability includes both the iid sample and all internal randomness.
+
+Two ordered samples of equal size are replacement-adjacent if they
+differ in at most one record.  A kernel
+\(A:Z_X^n\rightsquigarrow\mathcal H_X\) is
+\((\varepsilon,\delta)\)-differentially private if, for every such
+\(S,S'\) and every measurable output event \(E\),
+\[
+\Pr[A(S)\in E]
+\leq e^\varepsilon\Pr[A(S')\in E]+\delta,
+\]
+and the same inequality holds after interchanging \(S,S'\).  It is
+distribution-free realizable \((\alpha,\beta)\)-PAC for \(C\) if,
+for every \(Q\) realizable by \(C\),
+\[
+\Pr_{S\sim Q^n,\,h\sim A(S)}[R_Q(h)>\alpha]\leq\beta.
+\]
+There is no properness, output-representation, or computational
+restriction.  Fix
+\[
+\alpha_0=\frac18,\qquad \beta_0=\frac18,
+\]
+and regard \(\varepsilon_0\in(0,1)\) as an arbitrary fixed constant.
+
+\subsection{Assumption}
+
+\begin{assumption}[Polynomial global-stability profile]
+\label{assump:polynomial-global-stability}
+There is a universal integer \(a\geq1\) such that, for every domain
+\(X\) and every nonempty finite \(C\subseteq\{0,1\}^X\), there are an
+integer
+\[
+1\leq m_C\leq q(C)^a
+\]
+and a single randomized nonprivate producer
+\[
+G_C:Z_X^{m_C}\rightsquigarrow\mathcal H_X,
+\]
+chosen independently of the realizable distribution, with the
+following property.  For every distribution \(Q\) realizable by
+\(C\), there is \(h_{C,Q}\in\mathcal H_X\) such that
+\[
+R_Q(h_{C,Q})\leq\frac{\alpha_0}{2},
+\qquad
+\Pr_{S\sim Q^{m_C},\,G_C}[G_C(S)=h_{C,Q}]
+\geq q(C)^{-a}.
+\tag{GS}
+\]
+The atom may depend on \(Q\), but \(G_C,m_C\), and \(a\) may not.
+Both the producer and the atom may be improper and computationally
+unbounded.
+\end{assumption}
+
+This atom condition is the sole nonstandard primitive hypothesis.
+Private learnability, the stable-selection conversion, its
+quantitative specialization, and all sequence asymptotics are
+conclusions to be proved.
+
+\subsection{Formalized Goal}
+
+For a sequence of nonempty finite classes
+\(\{C_\kappa\}_{\kappa\in\mathbb N}\), write
+\(L_\kappa=\log|C_\kappa|\) and use the corresponding subscripts on
+\(d,\ell,s,q\).  The target is the following conditional statement.
+For every fixed \(\varepsilon_0\in(0,1)\), every sequence satisfying
+\[
+|C_\kappa|\longrightarrow\infty
+\]
+and
+\[
+\forall p\in\mathbb N\ \exists\kappa_0(p)\
+\forall\kappa\geq\kappa_0(p):
+\qquad L_\kappa>d_\kappa^p
+\tag{SP}
+\]
+has, at every index, an arbitrary-output, computationally
+unrestricted, distribution-free realizable
+\((\alpha_0,\beta_0)\)-PAC learner that is
+\((\varepsilon_0,\delta_\kappa)\)-differentially private and uses
+exactly
+\[
+N_\kappa=N_a(q_\kappa,L_\kappa,\varepsilon_0)
+\]
+records, where the functions \(N_a\) and \(\delta_a\) are defined in
+Section~\ref{sec:prelim}.  The required conclusions are
+\[
+N_\kappa=L_\kappa^{o(1)}=o(L_\kappa),
+\qquad
+\delta_\kappa N_\kappa^\rho\longrightarrow0
+\quad\text{for every fixed }\rho>0.
+\]
+The same learner must remain eligible whenever an allowed privacy
+schedule is pointwise no smaller than \(\delta_\kappa\), including
+the standard allowance
+\(c/[N_\kappa^2\log(eN_\kappa)]\) eventually for every fixed
+\(c>0\).  Consequently no eventual positive
+\(\Omega(L_\kappa)\) lower bound can hold on this unrestricted learner
+interface.  The conclusion remains conditional on
+Assumption~\ref{assump:polynomial-global-stability}; the assumption
+itself is not asserted or proved.

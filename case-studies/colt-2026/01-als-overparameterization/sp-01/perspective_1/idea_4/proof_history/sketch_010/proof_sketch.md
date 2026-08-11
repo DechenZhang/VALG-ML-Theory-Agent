@@ -1,0 +1,1480 @@
+# Proof Sketch
+
+## Formalized Setting
+
+This is `perspective_1/idea_4`, sketch attempt 10 (`revise_sketch` after the
+archived sketch-009 review).  The realized tensor is
+
+\[
+T=\sum_{j=1}^r\lambda_j u_j\otimes v_j\otimes w_j,
+\]
+
+where the factors are independently Gaussian-smoothed versions of a
+deterministic, bounded-scale, cumulatively incoherent, nearly balanced base
+triple.  The primitive assumptions are
+`assump:base-scale`, `assump:cumulative-gram`,
+`assump:base-weight-balance`, `assump:gaussian-smoothing`,
+`assump:smoothing-margin`, `assump:subquadratic-rank`,
+`assump:random-initialization`, and `assump:accuracy-confidence` in
+`setting.md`.  Realized norms, Gram row sums, weights, Khatri--Rao spectra,
+proposal coverage, alignment, filtering, clustering, basin membership, and
+convergence are derived outputs.
+
+JEP-ALS uses
+\[
+k=U(r)=\left\lceil C_{\rm rank}r^{5/3}(\log r)^{5/2}\right\rceil
+\]
+independent Gaussian proposal triples.  Each gated proposal performs
+simultaneous old-state normalized rank-one contractions in all three modes for
+\(L_0=\lceil C_0\log r\rceil\) sweeps.  Observable displacement and score
+filtering, followed by all-mode graph clustering, selects active representatives;
+the other \(k-r\) columns remain exactly zero while cyclic CP-ALS refines the
+selected active columns.
+
+## Formalized Goal
+
+The branch is in exact-goal mode.  Uniformly over every deterministic base
+triple satisfying the three primitive base conditions and every exposed
+parameter choice satisfying the remaining setting assumptions, the proof must
+give an instance event of probability at least \(1-\delta_{\rm sm}\).  On
+each such fixed instance, proposal randomness and the prescribed
+\(J=O(\log(1/\delta_{\rm init}))\) independent full runs must yield success
+with probability at least \(1-\delta_{\rm init}\), without changing \(U(r)\),
+and return a rank-\(k\) tensor with relative Frobenius residual at most
+\(\epsilon\).
+
+The dynamic interface that must be exported is the simultaneous, target-relative
+ratio recurrence
+\[
+R_{t+1}\le
+ \left(\frac{\Gamma R_t+q}{1-\Gamma qR_t}\right)^2,
+\qquad
+S_{t+1}\le
+ \frac{(\Gamma R_t+q)(\Gamma(1+q)S_t+q)}
+ {(1-\Gamma qR_t)^2},
+\]
+for \(q=q_{\rm real}\le q_*\), together with an explicit joint
+representative-to-basin bridge.  The orthogonal equal-weight specialization
+must retain the exact map \((A^+,B^+,C^+)=(BC,AC,AB)\), hence
+\(R^+\le R^2\) and \(S^+\le RS\).
+
+## Sketch Identity
+
+- Sketch attempt: 10
+
+## Proof Roadmap
+
+The selected framework is the simultaneous Jacobi ratio/pair-mass framework in
+`technical_survey.md`, repaired after the archived review.  The repair fixes
+ the Gaussian tail constants, the numerical score gap, the joint selected-member
+ certificate with separate column and incoming-row controls, the
+ row/column-controlled reachable tube, the post-update coefficient arithmetic,
+ the diagonal inverse/pseudoinverse branch, and the public rate specialization
+ without changing the setting or protocol.
+It uses the parallel ALS convention from
+*Guarantees for Alternating Least Squares in Overparameterized Tensor
+Decompositions* (NeurIPS 2025), but replaces that paper's quadratic feature-span
+certificate by a windowed rare-entry event.  The terminal local framework is
+Uschmajew, *Local Convergence of the Alternating Least Squares Algorithm for
+Canonical Tensor Approximation*, DOI `10.1137/110843587`, Assumption 1,
+Lemma 3.2, and Theorems 3.3 and 3.5.  A current-notation quantitative wrapper
+around the latter is an explicit proof step; the cited theorem is not used as
+an unqualified random-entry result.
+
+The causal chain is:
+
+1. primitive smoothing margins -> realized geometry and Khatri--Rao spectra;
+2. realized geometry -> correlated Gaussian window event and all-target coverage;
+3. coverage -> simultaneous \(R,S\) contraction and angular/displacement export;
+4. angular/displacement plus stationary-point classification -> score filter and
+   graph clusters;
+5. selected representatives -> member-local coefficients, then the deterministic
+   row-small-gain lemma in `step_007` -> a joint coefficient-matrix bound
+   and a same-target best-scalar residual;
+6. that residual and the realized Khatri--Rao spectra -> quotient-Hessian
+   kernel and an explicit local CP-ALS basin;
+7. local contraction -> arbitrary relative accuracy, restart amplification, and
+   the explicit polynomial runtime.
+
+## Rate Objectives
+
+1. **Smoothed-instance geometry (confidence- and structural-parameter explicit).**
+   - Objective type: confidence-explicit, regularity-explicit, and fixed-time.
+   - Exposed variables: \(n,r,\rho,\kappa_0,\delta_{\rm sm}\).
+   - Hidden constants may depend on: universal Gaussian constants and at most
+     polynomially on the fixed regime exponent for \(\kappa_0\).
+   - Hidden constants may not depend on: the deterministic bases, an unlisted
+     conditioning quantity, \(r\), \(n\), or the realized perturbations.
+   - Fixed quantities: \(q_*=1/4096\), \(a_*=10/9\), \(b_*=19/18\), and the
+     finite exponents \(d_\kappa,d_\rho\).
+   - Probability mode: one event over the once-drawn smoothed instance with
+     probability at least \(1-\delta_{\rm sm}\).
+   - Horizon mode: static, before proposal randomness.
+   - Norm mode: Euclidean column norms, normalized Gram row sums, weight ratio,
+     and Khatri--Rao spectral norm.
+   - Required bridge or simplification obligations: keep the linear directional,
+     quadratic, and normalization perturbations separate, include all row-sum
+     and union-bound factors, and export exactly \(q_{\rm real}\le q_*\),
+     \(\Gamma\le1.01\), and the cyclic Khatri--Rao spectral floor.
+   - Baseline invariance obligations: at zero smoothing around an orthogonal
+     equal-weight base, the exact simultaneous map and zero-residual CP solution
+     remain the reference case.
+
+2. **Subquadratic proposal rank and coverage (structural- and
+   confidence-explicit).**
+   - Objective type: fixed-horizon and confidence-explicit.
+   - Exposed variables: \(r,k,\delta_{\rm init}\) (with \(k\) independent of
+     \(\delta_{\rm init}\)).
+   - Hidden constants may depend on: only universal tail and coupon-collector
+     constants once \(q_*\), \(a_*\), and \(b_*\) are fixed.
+   - Hidden constants may not depend on: the base triple, \(n\), \(\rho\),
+     \(\epsilon\), or an unlisted event.
+   - Fixed quantities: \(c=2/3\), \(a_*=10/9\), \(b_*=19/18\), and the
+     proposal constants.
+   - Probability mode: a constant positive one-run success probability from
+     simultaneous all-target coverage, followed by independent restart
+     amplification conditional on the fixed good instance.
+   - Horizon mode: \(L_0=O(\log r)\) proposal sweeps and
+     \(J=O(\log(1/\delta_{\rm init}))\) full runs.
+   - Norm mode: target-relative coordinate ratios during proposals and relative
+     Frobenius norm at output.
+   - Required bridge or simplification obligations: prove the window event has
+     probability \(\Theta(r^{-5/3}(\log r)^{-3/2})\), allocate the competing
+     pair-product tail, and show \(k p\ge C\log r\) with no confidence factor
+     hidden in \(k\).
+   - Baseline invariance obligations: the coverage argument may specialize to
+     exact orthogonal factors without replacing simultaneous squaring by a
+     conservative remainder.
+
+3. **Proposal alignment and joint basin entry (structural-parameter explicit).**
+   - Objective type: horizon-uniform over the declared proposal horizon and
+     regularity-explicit.
+   - Exposed variables: \(r,q_*,\Gamma,L_0\), and the realized factor scales
+     through \(\kappa_0\).
+   - Hidden constants may depend on: universal numerical margins and at most
+     polynomially on \(\kappa_0\) in the local wrapper.
+   - Hidden constants may not depend on: the base triple, proposal labels, or
+     an assumed basin radius.
+   - Fixed quantities: the numerical thresholds \(64q_*\), \(0.85\),
+     \(1-q_*^2\), and the fixed recurrence constants.
+   - Probability mode: deterministic conditional on the instance and the
+     explicit coverage event.
+   - Horizon mode: all \(0\le t\le L_0\), with a universal burn-in and a
+     remaining \(O(\log r)\) mass-decay horizon.
+   - Norm mode: modewise angle/displacement, coefficient-matrix row and column
+     \(\ell_1\) mass, quotient parameter distance, and relative tensor residual.
+   - Required bridge or simplification obligations: use the \(S_t\) recurrence
+     for outgoing mass, then prove a separate two-sided row/column coefficient
+     recurrence so incoming leakage is not multiplied by \(r\). Compare the
+     resulting best-scalar initialization with an explicit local radius.
+   - Baseline invariance obligations: the row/column bridge reduces to zero
+     leakage in the orthogonal exact case, and the local chart contains the
+     exact zero-residual decomposition.
+
+4. **Terminal accuracy and runtime.**
+   - Objective type: numerical-error explicit, confidence-explicit, and
+     horizon-uniform after local entry.
+   - Exposed variables: \(n,r,k,\kappa_0,\rho^{-1},\epsilon,
+     \delta_{\rm init}\).
+   - Hidden constants may depend on: universal implementation constants and at
+     most polynomially on \(\kappa_0\); not on an unlisted tensor condition
+     number.
+   - Hidden constants may not depend on: the base triple, \(\epsilon\), or
+     either confidence parameter.
+   - Fixed quantities: \(q_*\), the proposal and restart constants, and the
+     finite regime exponents.
+   - Probability mode: nested instance then conditional initialization/restart
+     probability.
+   - Horizon mode: first residual-hitting time after a linear contraction,
+     plus the prescribed restarts.
+   - Norm mode: relative Frobenius residual.
+   - Required bridge or simplification obligations: derive a contraction factor
+     \(\nu<1\), a basin-preserving radius, and an explicit
+     \(O(\log(1/\epsilon))\) stopping bound; account for all proposal,
+     clustering, active ALS, and restart arithmetic.
+   - Baseline invariance obligations: exact data has no error floor; the
+     conclusion remains valid for every \(0<\epsilon<1\) and tends to zero
+     residual as \(\epsilon\downarrow0\).
+
+## Quantitative Interface Instantiations
+
+The following numerical choices are part of the roadmap, rather than hidden
+"large enough" constants.
+
+### Window and coverage constants
+
+Put \(t=\sqrt{a_*\log r}\), \(I_t=[t,t+t^{-1}]\), and
+\[
+c_{\rm win}:=
+ \left(\frac{2e^{-3/2}}{\sqrt{2\pi a_*}}\right)^3.
+\]
+For \(t\ge1\), the one-mode absolute window satisfies
+\[
+ 2\Pr\{Z\in I_t\}
+ \ge \frac{2e^{-3/2}}{\sqrt{2\pi}}t^{-1}e^{-t^2/2},
+\]
+and hence the independent three-mode target-window probability is at least
+\(c_{\rm win}r^{-5/3}(\log r)^{-3/2}\).  Conditional on the three target
+coordinates, every competitor coordinate has mean magnitude at most
+\(q_*(t+t^{-1})\) and variance at most one.  A dyadic product-tail bound for
+two independent conditional competitor coordinates gives, for
+\(B=b_*\log r\),
+\[
+ \Pr\{|XY|>B\mid I_t^3\}
+ \le 8\exp\{-\beta_*\log r\},
+ \qquad
+ \beta_*:=b_*-8q_*\sqrt{a_*b_*}-8a_*q_*^2.
+\]
+The same bound applies to the three mode pairs.  Numerically,
+\(\beta_*>1.05\).  Set
+\[
+r_0:=\left\lceil 96^{1/(\beta_*-1)}\right\rceil.
+\]
+For \(r\ge r_0\), the conditional competitor failure is at most
+\(24r^{1-\beta_*}\le1/4\), so
+\[
+p_{\rm win}\ge \frac{c_{\rm win}}2
+ r^{-5/3}(\log r)^{-3/2}.
+\]
+For the matching upper comparison, the target-window event is contained in
+the three signed Gaussian windows, and the elementary density bound gives
+\[
+ p_{\rm win}\le C_{\rm win}r^{-5/3}(\log r)^{-3/2},
+ \qquad
+ C_{\rm win}:=\left(\frac{2}{\sqrt{2\pi a_*}}\right)^3.
+\]
+This upper bound is literal (the competitor conditions can only reduce the
+event), so the per-slot probability has the claimed polynomial/logarithmic
+order.  For the finitely many \(3\le r<r_0\) cases, the exact Gaussian
+integral over the same window and competitor event is strictly positive; set
+\[
+ c_{\rm fin}:=\min_{3\le r<r_0}
+ r^{5/3}(\log r)^{3/2}p_{\rm win}(r)>0,
+ \qquad
+ c_{\rm all}:=\min\{c_{\rm win}/2,c_{\rm fin}\}.
+\]
+The finite minimum is universal because the covariance and regression
+parameters range over the fixed q-star compact margin, so it introduces no
+base- or parameter-dependent constant.  Thus, for every \(r\ge3\),
+\[
+ c_{\rm all}r^{-5/3}(\log r)^{-3/2}
+ \le p_{\rm win}(r)\le
+ C_{\rm win}r^{-5/3}(\log r)^{-3/2}.
+\]
+Choose
+\[
+C_{\rm rank}\ge 16/c_{\rm all}.
+\]
+Then \(k p_{\rm win}\ge8\log r\), and for each target
+\(\Pr\{\text{target }j\text{ is uncovered}\}\le r^{-8}\).  A union bound over
+the \(r\) targets gives
+\[
+\Pr(E_{\rm cov}\mid E_{\rm sm})\ge1-r^{-7}\ge1/2.
+\]
+The events for a fixed target are independent across slots; no independence
+between different target labels is assumed or needed.  The deterministic
+row-small-gain lemma in `step_007` holds on the same event, so
+\[
+\Pr(E_{\rm cov}\cap E_{\rm row}\mid E_{\rm sm})
+=\Pr(E_{\rm cov}\mid E_{\rm sm})\ge p_0:=1/2.
+\]
+The rank constant remains independent of either confidence parameter.
+
+### Simultaneous recurrence and finite-horizon mass
+
+With \(q\le q_*\) and \(\Gamma\le1.01\), interval arithmetic applied to
+\[
+ f(x)=\left(\frac{\Gamma x+q}{1-\Gamma qx}\right)^2
+\]
+gives \(0\le f([0,19/20])\le0.922\); when \(q>0\), its lower endpoint is
+at least \(q^2\), while at the exact baseline \(q=0\) one has
+\(f_0([0,19/20])=[0,0.9025]\).  For the worst case \(q=q_*\),
+\(f(x)<x\) for \(x\ge6.1\times10^{-8}\), and
+\(f^{10}(19/20)<6.0\times10^{-8}\).  The fixed point is at most
+\(6.0\times10^{-8}\), and the `S` recurrence has coefficient at most
+\(1/4000\) after this tenth sweep.  Thus, for a universal `t_b=10`,
+\[
+ R_{t_b}\le6.0\times10^{-8},\qquad
+ S_{t_b+s}\le 6.1\times10^{-8}+4000^{-s}r.
+\]
+Take `C_0 >= 64`; then, after increasing it by a universal additive constant
+to cover `t_b`,
+\[
+ r\,4000^{-(L_0-t_b)}\le q_*^2/128
+\]
+for every \(r\ge3\).  This is the explicit finite-horizon choice used by
+`step_004` and `step_005`.
+
+### Score, graph, and threshold arithmetic
+
+The perturbative fixed-point lemma in `step_006` is stated with explicit
+errors.  Every covered component proposal obeys
+\[
+ \sigma_{\rm comp}\ge(1-32q_*)\lambda_j,
+ \qquad d\le16q_*.
+\]
+Every low-displacement proposal that is not within the same target chart has
+\[
+ \sigma_{\rm mix}\le(1/\sqrt2+32q_*)\lambda_{\max}.
+\]
+The numerical margin required by the observable filter is
+\[
+ (1/\sqrt2+32q_*)\,1.01
+ <0.723
+ <0.85(1-32q_*)
+ <0.844.
+\]
+Thus a mixture cannot pass the `0.85 sigma_max` test once a covered component
+is present.  Within a target chart, the modewise sine errors are at most
+`8 q_*`, so the graph correlation is at least `1-64 q_*`; across distinct
+targets it is at most `q_*+16q_*<1-64q_*`.  Strict inequalities are used
+before the algorithm's largest-score tie rule, so score ties and equality at
+the graph threshold cannot create an extra or merged target cluster.
+
+### Observable selected-member transfer
+
+The covered slot is used only to prove existence of a retained target-chart
+member.  Fix the proof-only permutation \(\pi\) that assigns one selected
+cluster to each target (the graph separation makes \(\pi\) unique), and align
+the two signs in the first two modes positively, placing the tensor sign in
+the third mode.  For a selected member \(i=\pi^{-1}(j)\), let
+\(G_M=(M^*)^\top M^*\) be the true realized Gram and
+\(C_M=(M^*)^\top\widehat M\) the selected correlation matrix in mode \(M\).
+  Let \(D_M^{\rm dir}=\operatorname{diag}(C_M)\) after sign alignment and put
+  \[
+   \delta^{\rm dir}_{M,j}:=D_M^{\rm dir}(j,j)-1,\qquad
+   E_M:=C_M-G_MD_M^{\rm dir}.
+\]
+For the pair-product coefficient matrix of mode \(M\), with other modes
+\(M',M''\), put
+\[
+ P_M:=C_{M'}\circ C_{M''},\qquad
+ P_M^*:=(G_{M'}\circ G_{M''}),\qquad
+   F_M:=P_M-P_M^*D_{M'}^{\rm dir}D_{M''}^{\rm dir}.
+\]
+Define the member-local direction and coefficient error and its score proxy by
+\[
+   m_i:=\max_{M}\left\{|\delta^{\rm dir}_{M,j}|
+       +\|E_M(:,j)\|_1+\|F_M(:,j)\|_1\right\},\qquad
+ \chi_i:=d_i+m_i.
+\]
+For a matrix \(A\), write
+\(\|A\|_{\rm col,1}:=\max_j\sum_i|A_{ij}|\) and
+\(\|A\|_{\rm row,1}:=\max_i\sum_j|A_{ij}|\).  The following transfer is
+deliberately only a member-local statement; it makes no global row claim.
+If `i_cov(j)` is the covered member for target `j`, the recurrence and
+contraction expansion give the sharper score bound
+`sigma_i_cov(j) >= (1-8 q_*^2) lambda_j`.  If `i` is any retained member
+in the same target chart, the direct last-update calculation and the
+three-mode denominator inversion give
+\[
+ d_i+m_i \le 4(1-\sigma_i/\lambda_j)+24q_*^2. \tag{S1}
+\]
+The inversion step is explicit: the target denominator is at least
+\(1-\Gamma q_*R_t\), the two off-target mode contractions contribute
+\(\|E_M(:,j)\|_1\) and \(\|F_M(:,j)\|_1\), and the diagonal scalar contributes
+\(|\delta^{\rm dir}_{M,j}|\).  Bounding these three terms separately and using
+\(\Gamma\le1.01\) gives the displayed factor four and the \(24q_*^2\)
+normalization/weight budget.  More explicitly, if \(g_{M,j}\) is the
+unnormalized last-update contraction and
+\(\alpha_{M,j}:=\langle m_j^*,g_{M,j}\rangle/\lambda_j\), then
+\(\alpha_{M,j}\ge1-\Gamma q_*R_t\) and the dual-basis expansion gives
+
+\[
+ (1-\Gamma q_*R_t)\bigl(|\delta^{\rm dir}_{M,j}|+\|E_M(:,j)\|_1+\|F_M(:,j)\|_1\bigr)
+ \le 4(1-\sigma_i/\lambda_j)+24q_*^2. \tag{S1a}
+\]
+
+The first term on the right is the score deficit, the second is the two
+off-target contractions, and the remaining terms are respectively the
+normalization and near-balanced-weight defects.  Since
+\(1-\Gamma q_*R_t\ge31/32\).  The factor \(32/31\) is included in the
+following two inequalities (so it is not divided out a second time):
+\[
+d_i\le2(1-\sigma_i/\lambda_j)+4q_*^2,\qquad
+m_i\le2(1-\sigma_i/\lambda_j)+20q_*^2. \tag{S1b}
+\]
+The first inequality is the sign-invariant last-sweep displacement estimate;
+the second is the three-mode coefficient inversion, with the \(E_M\), \(F_M\),
+and direction-scalar terms charged separately.  Adding (S1b) gives (S1)
+with no hidden denominator factor.  In particular it controls the \(E_M\)
+columns as well as the \(F_M\) columns; it is not an inference from a pair
+product alone.  This is a three-mode inversion of the same last-update
+equation, so no member-local quantity is promoted to a global row premise.
+The proof uses the target-chart lower denominator from `step_004`, the Gram
+row sum `q_*`, and the exact old-state contractions, so it does not assume
+that `i` was the covered slot.  Since the selected member is the largest-score
+member of its cluster, `sigma_i >= sigma_i_cov(j)`, and (S1) yields
+\[
+ \chi_i=d_i+m_i\le56q_*^2,\qquad
+ d_i,m_i\le56q_*^2. \tag{S2}
+\]
+This is the only conclusion obtained from score ordering.  A cross-target
+member cannot enter the cluster by the strict graph separation in `step_006`;
+ties are resolved only after (S1) is applied to every target-chart member.
+The global row/column producer is assigned solely to `step_007`; no
+`eta_{\rm in}^{sel}` or `eta_{\rm sel}` output is exported by this step.
+
+### Joint coefficient and residual constants
+
+For a covered proposal trajectory, index the transient after each simultaneous
+update.  Let `m_s^cov` be the maximum off-diagonal coefficient in state
+`h^(s)` after subtracting the static Gram term, and `eta_s^cov` its maximum
+row/column l1 mass.  The first update is handled directly from the entry event;
+no unsupported `m_0<=1` contraction is used.  The direct mode expansion in
+`step_007` is
+\[
+m_{s+1}^{\rm cov}\le4R_s+8q_*^2,\qquad
+\eta_{s+1}^{\rm cov}\le8q_*^2+
+8(q_*+m_s^{\rm cov})\eta_s^{\rm cov}. \tag{Q1}
+\]
+The coefficient-to-ratio comparison gives the first inequality from the
+already proved `R_s` recurrence.  At `s=9`, `R_9 < 4.5e-7`, hence
+`m_10^cov <= 2.3e-6 < 1/64`; the normalized-column bound gives
+`eta_10^cov <= 2r`.
+For `s >= 10`, the coefficient in (Q1) is at most `1/4`, so
+\[
+ \eta_{L_0}^{\rm cov}\le
+ \frac{8q_*^2}{1-1/4}+2r\,4^{-(L_0-10)}\le17q_*^2,
+ \qquad m_{L_0}^{\rm cov}\le16q_*^2. \tag{Q2}
+\]
+ Q2 is used to audit covered trajectories and to prove the local Hadamard
+ constants; it is not substituted for the selected-matrix seed (J3).  For the
+actual data-selected representatives, the balanced best-scalar map has the
+same-target decomposition
+\[
+ \left\|T-
+ \sum_{j=1}^r\theta_j p_j\otimes q_j\otimes s_j\right\|_F
+ \le 256(\eta_{\rm sel}+q_*^2)\|T\|_F,
+\]
+and the corresponding quotient parameter distance is at most
+`256(eta_sel+q_*^2)`.  Since
+\[
+256(81q_*^2)=1.23597\times10^{-3}<1/512,
+\]
+the selected initialization is inside `T_ALS`, but this repair claims only
+direct tube entry, not the stronger `varrho_ALS/4` margin.  The decomposition
+includes separately the diagonal scalar
+error, the three factor-direction errors, the two-factor Gram leakage, and the
+quadratic remainder; each term is bounded by the displayed row/column mass.
+
+### Quotient ALS radius, inverse, and contraction
+
+Use raw balanced exact factors
+\(x_j^*=\lambda_j^{1/3}u_j\),
+\(y_j^*=\lambda_j^{1/3}v_j\), and
+\(z_j^*=\lambda_j^{1/3}w_j\) with the observable sign placed in one mode.
+The symbols \(U^*,V^*,W^*\) below always denote their unit directions; raw
+scales are written \(X^*,Y^*,Z^*\) and are never used as unit Gram matrices.
+Componentwise scaling removes the common factor magnitudes, so all following
+constants are scale-invariant; raw arithmetic bounds retain only the allowed
+polynomial dependence on `kappa_0`.
+
+The quotient chart and tube norm used below are fixed explicitly.  First use
+the unique graph-induced permutation \(\pi\) and the sign rule from
+`step_006`: the first two mode correlations with the assigned target are
+positive and the third mode carries the tensor sign.  For aligned raw columns
+\(\widetilde x_j,\widetilde y_j,\widetilde z_j\), put
+\[
+a_j=\|\widetilde x_j\|_2,\quad b_j=\|\widetilde y_j\|_2,\quad
+c_j=\|\widetilde z_j\|_2,\quad g_j=(a_jb_jc_j)^{1/3},
+\]
+and define the balancing diagonals
+\[
+B_X(j,j)=g_j/a_j,\qquad B_Y(j,j)=g_j/b_j,\qquad
+B_Z(j,j)=g_j/c_j.
+\]
+Then \(B_XB_YB_Z=I\) and all three gauged raw column norms equal \(g_j\).
+This equal-norm rule is the unique positive gauge satisfying product one and
+equal norms.  The tube's relative column radius and the realized norm event
+give \(g_j\ge(2\kappa_0)^{-1}(1-1/512)>0\), so the gauge exists throughout
+`T_ALS`; its logarithmic Jacobian is nonsingular there, and
+\[
+\max_M\left\|B_M(e)B_M(e')^{-1}-I\right\|_\infty
+\le4\|e-e'\|_{\rm col} \tag{G1}
+\]
+throughout the tube.  Thus the pairwise chart does not depend on an
+existential gauge.
+After applying this gauge, write \(M_M(e)\) for the unit-direction matrix
+(\(M\in\{U,V,W\}\)) and \(M_M^*\) for the corresponding exact unit-direction
+matrix.  Let \(D_M^{\rm dir}(e)\) be the positive target-coordinate diagonal of
+the unit-direction correlation matrix and define
+\[
+C_M(e):=(M_M^*)^\top M_M(e),\qquad
+E_M(e):=C_M(e)-G_M D_M^{\rm dir}(e),
+\]
+where \(G_M=(M_M^*)^\top M_M^*\) has diagonal one.  Keep the raw amplitude
+coordinate separate: with \(\widetilde m_j(e)\) the aligned raw column, set
+\[
+A_M(e):=\operatorname{diag}\!\left(
+ {\|\widetilde m_j(e)\|_2\over\|m_j^*\|_2}\right),\qquad
+\delta_M^{\rm amp}(e):=A_M(e)-I .
+\]
+The direction defect is \(\delta_M^{\rm dir}(e):=D_M^{\rm dir}(e)-I\).
+The realized norm event gives \(1/(2\kappa_0)\le A_M(e)_{jj}\le2\kappa_0\);
+all raw/unit conversions below are relative and retain only the allowed
+polynomial dependence on \(\kappa_0\).
+For a matrix \(A\), \(\|A\|_1\) and \(\|A\|_\infty\) denote its maximum column
+and row sums, respectively.  Set
+\[
+\|e\|_{\rm col}:=\max\{\max_{M,j}\|M_M(e)_{:j}-M_M^*{}_{:j}\|_2,
+                         \max_M\|\delta_M^{\rm dir}(e)\|_\infty,
+                         \max_M\|\delta_M^{\rm amp}(e)\|_\infty\},
+\]
+\[
+\eta(e):=\max\{\max_{M\in\{U,V,W\}}\{\|E_M(e)\|_1,\|E_M(e)\|_\infty\},
+                    \max_M\|\delta_M^{\rm dir}(e)\|_\infty,
+                    \max_M\|\delta_M^{\rm amp}(e)\|_\infty\},
+\qquad
+\|e\|_T:=\max\{\|e\|_{\rm col},\eta(e)\}.
+\]
+For a pair \(e,e'\), apply the same permutation/sign rule and equal-norm
+balancing map \(B_M\) to each state, and define
+\[
+\|e-e'\|_T:=\max\left\{
+\max_{M,j}\|M_M(e)_{:j}-M_M(e')_{:j}\|_2,\,
+\max_M\|E_M(e)-E_M(e')\|_1,\,
+\max_M\|E_M(e)-E_M(e')\|_\infty,\,
+\max_M\|\delta_M^{\rm dir}(e)-\delta_M^{\rm dir}(e')\|_\infty,\,
+\max_M\|\delta_M^{\rm amp}(e)-\delta_M^{\rm amp}(e')\|_\infty\right\}.
+\]
+Define
+\[
+\eta_\Delta(e,e'):=\max\left\{
+\max_M\|E_M(e)-E_M(e')\|_1,\,
+\max_M\|E_M(e)-E_M(e')\|_\infty,\,
+\max_M\|\delta_M^{\rm dir}(e)-\delta_M^{\rm dir}(e')\|_\infty,\,
+\max_M\|\delta_M^{\rm amp}(e)-\delta_M^{\rm amp}(e')\|_\infty\right\}.
+\]
+For a normal-equation tuple \(b=(b_{\rm col},b_{\rm row},b_{\rm scal})\),
+\(\|b\|_T\) denotes the maximum of its column Euclidean norm, induced row
+and column l1 norms, and the two scalar sup norms (direction and amplitude)
+after projection to the same canonical chart.  The projection includes the
+linearized equal-norm gauge; by (G1) its gauge component is at most four times
+the column component and is absorbed in this maximum.  In A1--A2 we use
+\(\eta_\Delta(e,e')\) explicitly.
+Thus the norm controls the per-column quotient error, both incoming and
+outgoing coefficient mass, and scalar coordinates in one fixed chart; it is
+not an existential norm.  The residual decomposition in `step_007` exports
+\[
+\|e_{\rm sel}\|_{\rm col}\le128q_*^2,\qquad
+\eta(e_{\rm sel})\le\eta_{\rm sel}\le80q_*^2,\qquad
+\|e_{\rm sel}\|_T\le128q_*^2<1/4096. \tag{G2}
+\]
+
+For an active mode-one update, write the raw factors as
+\(Y=Y^\circ A_Y\), \(Z=Z^\circ A_Z\), where \(Y^\circ,Z^\circ\) are the
+unit-direction matrices from the canonical chart, and set
+\(K=Z\odot Y=K^\circ A_K\), \(K^\circ=Z^\circ\odot Y^\circ\),
+\(A_K=A_ZA_Y\).  The following diagonal conjugation, rather than a
+unit-scale shorthand, is used at every iterate.
+\[
+ K=K^\circ A_K,\quad K^\circ=Z^\circ\odot Y^\circ,\quad
+ G_K=A_K(G_{Z^\circ}\circ G_{Y^\circ})A_K,
+ \quad \lambda_{\min}(G_{Z^\circ}\circ G_{Y^\circ})\ge1-q_*^2.
+\]
+The realized norm event gives
+\((2\kappa_0)^{-1}\le(A_M)_{jj}\le2\kappa_0\); hence the raw diagonal
+conjugation and its inverse have only polynomial \(\kappa_0\) dependence.
+Since \(A_K\) is invertible,
+\((K^\top K)^\dagger=A_K^{-1}(G_{Z^\circ}\circ G_{Y^\circ})^{-1}A_K^{-1}\), so the
+Moore--Penrose update is exactly the unit-direction update followed by the
+quotient scale \(A_K^{-1}\).  This discharges the source's equilibrated scaling
+convention without replacing the consumed tensor target.
+The preserved neighborhood is the reachable row/column tube, not an
+unrestricted max-column ball:
+`T_ALS := { ||e||_col <= 1/4096, eta(e) <= 1/2048 }`, where `eta(e)` is the
+maximum row and column l1 mass of the coefficient error matrices in the true
+factor bases.  The selected initialization satisfies (J3), in fact
+eta_sel <= 80q_*^2.  For every e in this tube, the
+Hadamard row/column estimate gives
+`||G_Kcirc(e)-G_Kcirc(*)||_2 <= 8 eta(e)+4q_*||e||_col+q_*^2 <= 1/16`.
+Hence
+\[
+ \|G_{K^\circ(e)}-G_{K^\circ(*)}\|_2\le1/16,
+ \qquad \lambda_{\min}(G_{K^\circ(e)})\ge7/8.
+\]
+Consequently the Moore--Penrose branch equals the ordinary inverse throughout
+the tube and
+\[
+ \|G_{K^\circ(e)}^{-1}\|_2\le8/7,
+ \|G_{K^\circ(e)}^{-1}-G_{K^\circ(e')}^{-1}\|_2
+ \le(8/7)^2\|G_{K^\circ(e)}-G_{K^\circ(e')}\|_2.
+\]
+For the current-notation wrapper, write the normalized mode-one normal
+equation as \(\Phi_X(e)=G_{K^\circ(e)}^{-1}b_X(e)\), and analogously for
+the other two modes.  The direct difference identity
+\[
+\Phi_X(e)-\Phi_X(e')=
+G_{K^\circ(e)}^{-1}\bigl(b_X(e)-b_X(e')\bigr)
++\bigl(G_{K^\circ(e)}^{-1}-G_{K^\circ(e')}^{-1}\bigr)b_X(e')
+\tag{A1}
+\]
+is evaluated in the canonical gauge above.  Hadamard expansion of the right
+hand side, the gauge bound (G1), and the definitions of the row/column
+components give
+\[
+\|b_X(e)-b_X(e')\|_T
+\le\left(\frac1{300}
++4\|e-e'\|_{\rm col}+4\eta_\Delta(e,e')\right)\|e-e'\|_T,
+\]
+\[
+\left\|\bigl(G_{K^\circ(e)}^{-1}-G_{K^\circ(e')}^{-1}\bigr)b_X(e')\right\|_T
+\le8\bigl(\eta(e)+\eta(e')+\|e\|_{\rm col}+\|e'\|_{\rm col}\bigr)
+\|e-e'\|_T.
+\tag{A2}
+\]
+The same estimates hold cyclically.  On the declared tube,
+\(\|e-e'\|_{\rm col}\le2/4096\) and
+\(\eta_\Delta(e,e')\le2/2048\).  Keeping the \(8/7\) inverse multiplier in
+(A1), the first term is at most
+\((8/7)(1/300+4(2/4096)+4(2/2048))<0.0105\), while (A2) is at most
+\(8(2/2048+2/4096)<0.0118\).  The cyclic sum and the explicitly absorbed
+direction/amplitude gauge components are therefore below \(1/16<1/8\).
+This is a direct normal-equation remainder proof; the cited local theorem is
+used only after (A1)--(A2).
+The dual-basis calculation in `step_008` discharges Uschmajew Assumption 1.
+His Lemma 3.2 identifies the derivative of the cyclic map with the quotient
+block-Gauss--Seidel derivative, and Theorems 3.3 and 3.5 give local linear
+convergence once that kernel condition holds.  In current balanced coordinates,
+the off-diagonal derivative blocks have norm at most
+\(12q_*/(1-q_*^2)<1/300\).  The inverse perturbation bound (A2) and the
+second-derivative estimate hold at every point in `T_ALS` and give the
+one-step inequality
+`||Phi_cyc(e)-Phi_cyc(e')||_T <=
+(1/300+8(eta(e)+eta(e')+||e||_col+||e'||_col))||e-e'||_T`.
+The same normal-equation expansion gives
+`||Phi_cyc(e)||_col <= (1/16)||e||_col+32q_*^2`,
+`eta(Phi_cyc(e)) <= (1/16)eta(e)+32q_*^2`,
+and the scalar-coordinate component obeys the same first inequality.
+For `e,e'` in `T_ALS`, the pairwise coefficient is below `1/8`; the two
+recurrences preserve both tube bounds because their fixed point is below
+`64q_*^2`, far below `1/256`.  Thus the contraction is a reachable-tube
+statement, not an initialization-only estimate.
+Thus the current-notation wrapper exports the same pairwise contraction in
+the tube norm with `nu:=1/8` and preserves `T_ALS`.  This explicitly handles
+the pseudoinverse branch and
+the source's local-neighborhood non-output boundary.
+
+### Public rate specialization
+
+The final bridge fixes the auxiliary constants in the following order:
+`C_rank >= 16/c_all`, `C_0 >= 64`, `C_rep >=
+1/log(1/(1-p_0))`, and `m >= 8 log(2^12/epsilon)` active sweeps.  The
+  smoothing-margin assumptions imply `E_sm`; the window, recurrence, and
+  deterministic row-small-gain bounds imply `E_cov`, `E_row`,
+  `E_ang`, and `E_cluster`; the row/column inequalities imply
+the `1/512` basin condition; and the inverse bounds imply the `nu=1/8`
+contraction.  The probability conversion is kept nested:
+\[
+ \Pr(E_{\rm sm})\ge1-\delta_{\rm sm},
+ \qquad
+ \Pr(\text{all restarts fail}\mid E_{\rm sm})
+ \le(1-p_0)^J\le\delta_{\rm init}.
+\]
+For one run an explicit conservative arithmetic bound is
+\[
+ T_{\rm run}\le C\{kL_0 n^3+k n^3+k^2n
+       +r(n^2+r^2)\log(2^{12}/\epsilon)\},
+\]
+covering proposal contractions, scores, graph comparisons, and active
+normal-equation solves.  With
+\(J\le1+C_{\rm rep}\log(1/\delta_{\rm init})\),
+\(T_{\rm total}=J T_{\rm run}\) is polynomial in the exposed variables;
+substituting `k=U(r)`, `kappa_0=poly(r)`, and `rho^{-1}=poly(r)` gives the
+stated specialized polynomial without inserting either confidence parameter
+into the rank.
+
+## Assumption Provenance Objectives
+
+- `step_001` must derive the realized norm, cumulative-Gram, weight, and
+  Khatri--Rao events from the five primitive data assumptions; none may be
+  listed as an admissibility event.
+- `step_002` and `step_003` must derive the windowed correlated-Gaussian event,
+  its per-slot probability, and all-target coverage from
+  `assump:random-initialization`; target labels are used only in the proof,
+  never by the algorithm.
+- `step_004` must derive finiteness, the denominator invariant, and both
+  recurrences from the old-state update, rather than assume a basin.
+- `step_005` must export modewise angles and displacement, including the
+  orthogonal complement issue (after one contraction every proposal lies in
+  the corresponding true span).
+- `step_006` must derive the high-score/small-displacement classification and
+  the graph membership certificate; a retained aligned proposal cannot be
+  assumed from the filter definition.
+- `step_007` must derive a joint row/column coefficient-matrix bound and a
+  same-target residual for the observable best-scalar representatives.  This
+  is the noncircular bridge controlling incoming cross-target leakage.
+- `step_008` must derive the CP-Jacobian kernel statement and quotient-Hessian
+  margin from the realized Khatri--Rao event, with dual-basis discharge of the
+  source's Assumption 1.
+- `step_009` must turn the source's local theorem into a current-notation
+  quantitative basin wrapper by bounding the normal-equation Jacobian and its
+  Lipschitz remainder; it may not assume an existential neighborhood is large
+  enough.
+- `step_010` must preserve the basin and derive the no-floor linear residual
+  contraction for the active columns, while zero padding remains fixed.
+- `step_011` must derive the positive one-run success probability, restart
+  conversion, and the public polynomial runtime from the earlier outputs.
+
+## Mechanism-Source And Boundary Stress
+
+### `step_001`: realized geometry and conditioning
+
+- Claim class: generated event, norm retention, Gram perturbation, weight
+  balance, and positive Khatri--Rao spectral lower bound.
+- Theorem role: supplies the static instance interface for every dynamic step.
+- Mechanism source: direct Gaussian norm and directional concentration in the
+  exact normalized-column convention of `setting.md`; Schur-product identity
+  for Khatri--Rao Grams.
+- Source-to-claim adequacy: the raw perturbations have covariance
+  \(\rho^2 I/n\).  On the allocated union event, the directional term is
+  \(O(\kappa_0\rho\sqrt{\log(9r^2/\delta_{\rm sm})/n})\), the quadratic term
+  is \(O(\kappa_0^2\rho^2\sqrt{\log(9r^2/\delta_{\rm sm})/n})\), and the
+  normalization correction is \(O(\kappa_0^2\rho^2)\).  The two scalar
+  margins in `assump:smoothing-margin` dominate these terms after the stated
+  row-sum and union factors.  The Schur-product off-diagonal row sum is at
+  most \(q_*^2\), giving the eigenvalue floor \(1-q_*^2\).
+- Residual-to-target adequacy: the produced factors are the same realized
+  factors consumed downstream; the norm/Gram residuals are bounded directly
+  by the primitive slack and require no surrogate transfer.
+- Key positive/control term or structural source: the base norm lower bound
+  \(\kappa_0^{-1}\), base row-sum margin \(q_*/4\), and base weight ratio
+  \(1+1/800\).
+- Opposing defect terms: linear directional perturbations, quadratic
+  perturbations, normalization, and the finite union tail.
+- Closure/dominance/absorption relation: each defect is separately dominated
+  by the displayed smoothing margin; the resulting row sums are below
+  \(q_*\) and the weight ratio below \(1.01\).  No trajectory quantity is
+  used in this step.
+- Accumulation behavior / scope compatibility: static finite collection;
+  union-bound budget is allocated once before proposal randomness.
+- Obligation locality classification: `step-local`.
+- Noncircular closure status: direct primitive-to-event producer; consumers are
+  `step_002`, `step_004`, `step_008`, and `step_009`.
+- Entry-state / first-update stress result: at the exact orthogonal,
+  equal-weight, zero-interference specialization the event gives `q=0` and
+  `Gamma=1`; it does not assert proposal alignment.
+- Baseline conclusion preserved: yes, the exact orthogonal geometry is a
+  special case of the exported event.
+- Producer-consumer provenance: primitive smoothing assumptions -> `step_001`
+  -> extreme event, recurrence, and local Jacobian steps.
+- Null or boundary regime tested: \(\rho\downarrow0\), orthogonal bases, and
+  the smallest allowed base column norm; the explicit lower norm margin keeps
+  normalization defined.
+- Target conclusion false or theorem-critical obstruction present if source
+  vanishes: no; the source is active through the primitive margins.
+- Repair route if source is unsupported: a tighter direct concentration
+  allocation inside `step_001`; no theorem-contract change is needed.
+
+### `step_002` and `step_003`: rare-entry probability and coverage
+
+- Claim class: Gaussian anti-concentration, finite-slot coverage, and a
+  generated initialization event.
+- Theorem role: produce at least one useful proposal for every target with a
+  constant positive one-run probability.
+- Mechanism source: independent Gaussian triples, Gaussian regression under
+  the realized Gram matrices, and product-Gaussian tail bounds.
+- Source-to-claim adequacy: condition on the target coordinates in
+  \([t_r,t_r+t_r^{-1}]\).  Conditional means of competitor coordinates are
+  bounded by \(q_*(t_r+t_r^{-1})\), covariance eigenvalues lie in
+  \([1-q_*,1+q_*]\), and the target windows contribute at least
+  \(c_{\rm win}r^{-5/3}(\log r)^{-3/2}\), with `c_win` fixed explicitly in
+  `Quantitative Interface Instantiations`.  The dyadic product-tail bound has
+  exponent \(\beta_*>1.05\), so the three pair families and `r-1`
+  competitors fail with probability at most `24 r^(1-beta_*)`; for
+  `r >= r_0` this is at most `1/4`, yielding the stated `p_win`.
+- Residual-to-target adequacy: the produced object is a raw coordinate event;
+  `step_004` consumes exactly its pair-product inequalities and no stronger
+  coordinatewise dominance is silently substituted.
+- Key positive/control term or structural source: the target window exponent
+  \(3a_*/2=5/3\), and \(b_*>1\) for competitor products.
+- Opposing defect terms: correlated-coordinate shifts, target-window width,
+  and the union over competitors.
+- Closure/dominance/absorption relation: choose
+  `C_rank >= 16/c_all`, so `k p_win >= 8 log r`; for each fixed target the
+  independent-slot miss probability is at most `r^-8`, and a union bound over
+  `r` targets gives `P(E_cov) >= 1-r^-7 >= 1/2`.  The finitely many
+  `3 <= r < r_0` cases are folded into the same universal constant.  This is
+  a finite coupon event, not an all-time invariant.
+- Accumulation behavior / scope compatibility: finite slot scope; failures
+  are charged independently across slots, and no proposal trajectory is
+  counted as covered until `step_004` succeeds.
+- Obligation locality classification: `step-local`.
+- Noncircular closure status: `step_002` produces the event and `step_003`
+  produces coverage before any score or basin claim consumes it.
+- Entry-state / first-update stress result: the allowed initial state has
+  nonzero target coordinates in all modes; the first simultaneous update is
+  exactly the map used in `step_004`.  No denominator is assumed positive
+  outside the event.
+- Baseline conclusion preserved: in the independent orthogonal limit the
+  event is the ordinary three-mode Gaussian window and feeds exact squaring.
+- Producer-consumer provenance: raw Gaussian slots -> `step_002` ->
+  `step_003` -> `step_004`.
+- Null or boundary regime tested: target coordinates at the lower window edge
+  and competitors at the pair-product threshold; both are included by the
+  one-sided inequalities.
+- Target conclusion false or theorem-critical obstruction present if source
+  vanishes: without coverage the per-run success event is absent, but this is
+  a finite probabilistic failure handled by restarts, not an unproved basin
+  premise.
+- Repair route if source is unsupported: refine the Gaussian comparison and
+  allocate a smaller tail budget; the rank exponent is unchanged.
+
+### `step_004`: simultaneous `R,S` recurrence and invariant
+
+- Claim class: recursive contraction, denominator positivity, and exact
+  baseline specialization.
+- Theorem role: produce a noncircular target-relative alignment source.
+- Mechanism source: direct expansion of the three old-state contractions in
+  the realized factor basis.  For each competitor, the new mode ratios are
+  bounded by the other two old ratios plus Gram leakage; the common target
+  denominator is bounded below by \(1-\Gamma qR_t\).
+- Source-to-claim adequacy: the update uses the same old `(p,q,s)` in all
+  three modes, so the three pair products are exactly the inputs to the three
+  new ratios.  Summing the same expansion gives the displayed `S` recurrence;
+  no cyclicly updated coordinate is reused.
+- Residual-to-target adequacy: `R_t,S_t` are defined in the target-relative
+  coordinates consumed by the next proposal update, so the recurrence exports
+  the exact downstream object.
+- Key positive/control term or structural source: simultaneous squaring of
+  pair products, with `Gamma <= 1.01` and `q <= q_*`.
+- Opposing defect terms: Gram leakage and weight imbalance, absorbed only in
+  the displayed denominator and additive `q` terms.
+- Closure/dominance/absorption relation: starting at `R_0 <= 19/20`, direct
+  numerical interval arithmetic gives `Gamma R_t < 1` for every iterate,
+  `R_t <= 6e-8` after a universal burn-in, and a later `S` coefficient below
+  `1/4000`.  The additive fixed point is `O(q_*^2)`; the finite transient is
+  charged by the contractive recurrence.
+- Accumulation behavior / scope compatibility: dissipative recurrence over
+  exactly `L_0` sweeps.  The one-step map preserves the interval and the
+  forcing term is bounded by the same `q` at every step, so no unbounded
+  adversarial accumulation is hidden.
+- Obligation locality classification: `step-local`.
+- Noncircular closure status: interval invariance is proved from the first
+  entry value before the recurrence is iterated; `step_005` consumes only the
+  resulting finite-horizon bounds.
+- Entry-state / first-update stress result: at `q=0,Gamma=1`, the first
+  update is exactly `(BC,AC,AB)`, so `R^+ <= R^2` and `S^+ <= RS`; the prior
+  cyclic counterexample is not an allowed update here.
+- Baseline conclusion preserved: exact orthogonal squaring and the zero
+  interference limit are preserved verbatim.
+- Producer-consumer provenance: `step_001` geometry + `step_003` coverage ->
+  `step_004` -> `step_005`, `step_006`, and `step_007`.
+- Null or boundary regime tested: `R_0=19/20`, `q=q_*`, `Gamma=1.01` is the
+  worst numerical boundary; the denominator remains strictly positive.  The
+  exact endpoint `q=0,Gamma=1` is handled separately by `f_0(0)=0` and
+  `f_0(x)=x^2`, so the fixed-floor statement is never used to exclude the
+  noiseless baseline.
+- Target conclusion false or theorem-critical obstruction present if source
+  vanishes: if simultaneous old-state use were removed, the first-update
+  mechanism would fail; the algorithm in `setting.md` explicitly enforces the
+  simultaneous convention.
+- Repair route if source is unsupported: none within the current map; a failed
+  exact expansion would be an idea-level defect. The planned expansion is
+  algebraically source-compatible.
+
+### `step_005`: angular and displacement export
+
+- Claim class: modewise angle, span membership, and last-sweep displacement.
+- Theorem role: provide the quantitative input to score filtering and the
+  joint coefficient bridge.
+- Mechanism source: the contraction vectors lie in the corresponding realized
+  factor span after the first update; Gram inversion with row sum `q` converts
+  ratio and pair-mass bounds into angle and displacement bounds.
+- Source-to-claim adequacy: the `S` recurrence bounds the sum of pair products,
+  while the individual update expansion bounds the sum of each new-mode
+  ratios.  The resulting angle deficiency is `O(q_*^2)` plus a transient
+  `O(R_t)` term, and the last-sweep displacement is at most `16 q_*` for a
+  sufficiently large universal burn-in, hence below the filter threshold
+  `64 q_*`.
+- Residual-to-target adequacy: the exported angle is in the same absolute
+  correlation metric used by graph clustering and the quotient basin; no
+  surrogate factor metric is substituted.
+- Key positive/control term or structural source: span projection after the
+  first update and the finite `S` mass.
+- Opposing defect terms: Gram inversion, denominator normalization, and the
+  finite transient from `R_t`.
+- Closure/dominance/absorption relation: choose `C_0` so the transient is below
+  `q_*^2` after the universal burn-in plus `O(log r)` mass-decay sweeps.  The
+  fixed Gram term is `O(q_*^2)`, which is much smaller than `64q_*`.
+- Accumulation behavior / scope compatibility: all-time only over the declared
+  finite proposal horizon; the recurrence in `step_004` is the noncircular
+  preservation mechanism.
+- Obligation locality classification: `step-local`.
+- Noncircular closure status: `step_004` produces the ratio/mass invariant;
+  this step only transfers it to angles and displacement.
+- Entry-state / first-update stress result: the first update removes arbitrary
+  orthogonal-complement components because each contraction is in the true
+  factor span; later angle comparisons are therefore legitimate.
+- Baseline conclusion preserved: in the orthogonal case the angle and
+  displacement converge to zero under exact squaring.
+- Producer-consumer provenance: `step_004` -> `step_005` -> `step_006` and
+  `step_007`.
+- Null or boundary regime tested: a proposal with a vanishing target
+  denominator is assigned infinity by the setting and is excluded by the
+  coverage event; no denominator is silently regularized.
+- Target conclusion false or theorem-critical obstruction present if source
+  vanishes: no; the finite-horizon source remains active from the coverage
+  entry.
+- Repair route if source is unsupported: sharpen the Gram-to-angle conversion,
+  not the theorem contract.
+
+### `step_006`: score/displacement classification and clustering
+
+- Claim class: generated membership, score separation, and one-cluster-per-
+  component certificate.
+- Theorem role: make the representative selection data-only while preserving
+  target coverage.
+- Mechanism source: direct stationary-equation analysis of the simultaneous
+  rank-one map, perturbed from the orthogonal equal-weight case by `q` and
+  `Gamma`.
+- Source-to-claim adequacy: the perturbative stationary-support lemma is
+  stated with the actual constants: a covered slot has
+  \(\sigma_i\ge(1-8q_*^2)\lambda_j\) and `d_i <= 16q_*`; any final proposal
+  with `d_i <= 64q_*` that is not in a unique target chart has score at most
+  \((1/\sqrt2+32q_*)\lambda_{\max}\).  Since
+  \[
+  (1/\sqrt2+32q_*)1.01<0.723<0.85(1-32q_*)<0.844,
+  \]
+  it cannot pass the observable filter once a covered component is present.
+  The proof expands the three fixed-point equations around the exact
+  equal-support orthogonal stationary points and bounds each Gram, weight, and
+  displacement defect by `32q_*`.  The angle bound from `step_005` gives
+  graph edges within a target and excludes cross-target edges using the
+  realized Gram row sum.  The same lemma includes only the observable
+  selected-member transfer (S1)--(S2): every retained target-chart member has
+  the per-column bound `chi_i=d_i+m_i<=56q_*^2`; it exports no global row
+  mass.  The global row/column producer is assigned solely to `step_007`.
+- Residual-to-target adequacy: the produced graph representative is compared
+  to the exact target direction in the same modewise absolute-correlation
+  metric; (S2) supplies its per-column input.  The global row/column mass and
+  same-target residual are produced solely by `step_007`, with error below
+  the tube radius.
+- Key positive/control term or structural source: the orthogonal stationary
+  support classification and the constant score gap `1-1/sqrt(2)`.
+- Opposing defect terms: Gram leakage, weight ratio, finite displacement,
+  and score perturbation.
+- Closure/dominance/absorption relation: the displayed numerical gap is
+  positive by more than `0.12`; it dominates the combined weight, Gram, and
+  displacement defects.  Within a target chart the sine error is at most
+  `8q_*`, hence the graph correlation is at least `1-64q_*`; across distinct
+  targets it is at most `q_*+16q_*<1-64q_*`.  Strict margins are established
+  before the largest-score tie rule, and coverage from `step_003` guarantees
+  every target has a retained member.  For a target cluster, score ordering
+  gives `sigma_selected >= sigma_covered`; substituting this in (S1) closes
+  the per-column transfer without using a hidden target label.  The row/column
+  producer is the separate deterministic `step_007` interface.
+- Accumulation behavior / scope compatibility: finite graph construction; no
+  recursive claim is made after the final proposal.
+- Obligation locality classification: `step-local`.
+- Noncircular closure status: classification uses only the observable final
+  score/displacement and the produced angle bound, not the desired graph
+  correctness itself.
+- Entry-state / first-update stress result: orthogonal mixtures with support
+  size at least two are stationary only at score at most `1/sqrt(2)`; near
+  stationary perturbations cannot cross the `0.85` threshold.
+- Baseline conclusion preserved: exact component proposals remain the unique
+  high-score clusters in the orthogonal equal-weight limit.
+- Producer-consumer provenance: `step_005` + observable filter -> `step_006`
+  -> `step_007`.
+- Null or boundary regime tested: the exact orthogonal stationary supports of
+  size `s >= 2` have score at most `lambda_max/sqrt(2)`; the perturbation lemma
+  treats tied-support and zero-coordinate boundaries by a limiting argument.
+  Score ties and graph-threshold equality are resolved by the stated
+  largest-score representative rule only after the strict numerical margins
+  above have been established.
+- Target conclusion false or theorem-critical obstruction present if source
+  vanishes: without the stationary classification, the data-only filter could
+  retain a spurious high-score mixture; this is the explicit hard lemma in
+  this step, not an assumed condition.
+- Repair route if source is unsupported: a tighter perturbative stationary
+  lemma within the same simultaneous map.
+
+### `step_007`: joint coefficient-matrix and best-scalar bridge
+
+- Claim class: cross-target incoming leakage, same-target residual transfer,
+  and basin-entry initialization.
+- Theorem role: prevent `r`-fold accumulation of per-proposal errors and export
+  the exact active-factor object consumed by local CP-ALS.
+- Mechanism source: the **joint selected-matrix row-small-gain lemma** is the
+  sole producer of the global row/column output.  All matrices here are
+  normalized direction matrices: \(U^*,V^*,W^*\) have unit columns and
+  \(G_M=(M^*)^\top M^*\) has diagonal one.  Raw balanced factors are
+  \(X^*=\lambda^{1/3}U^*\), and the equal-norm gauge and the diagonal
+  conjugation \(D_K\) handle their scales separately; the bounds
+  \((2\kappa_0)^{-1}\le\|a_j\|,\|b_j\|,\|c_j\|\le2\kappa_0\) ensure no hidden
+  raw-scale factor enters the relative quantities below.
+  After the proof-only permutation and sign map from `step_006`, use
+  \(C_M,D_M,E_M,P_M,P_M^*,F_M\) and \(m_i\) defined above, with
+  \(H_M=G_M-I\).  First retain the exact algebraic pair residual
+  \[
+  F_M^{\rm alg}:=P_M-P_M^*D_{M'}^{\rm dir}D_{M''}^{\rm dir}
+   =(H_{M'}D_{M'}^{\rm dir})\circ E_{M''}
+    +E_{M'}\circ(H_{M''}D_{M''}^{\rm dir})
+    +E_{M'}\circ E_{M''}. \tag{J0a}
+  \]
+  This identity follows entrywise from \(C_M=G_MD_M^{\rm dir}+E_M\) and
+  \(E_M(j,j)=0\); in particular it has no nonzero hidden remainder.
+
+  The row producer is a separate E-left last-update equation.  Put
+  \(c^-_{M,\ell j}=\langle m_\ell^*,m_j^-\rangle\) for the direction
+  correlation immediately before the last simultaneous update,
+  \(d^-_{M,j}=c^-_{M,jj}\), and
+  \[
+  \alpha_{M,j}:=d^-_{M',j}d^-_{M'',j}
+    +\sum_{a\ne j}{\lambda_a\over\lambda_j}
+       G_{M,ja}c^-_{M',aj}c^-_{M'',aj},\qquad
+  \alpha_{M,j}\ge1-\Gamma q_*R_t.
+  \]
+  Let \(\mathcal L_M\) be the dual-basis update operator
+  \[
+  (\mathcal L_M X)_{\ell j}:=
+   \alpha_{M,j}^{-1}\left(X_{\ell j}
+     -\sum_{a\ne j}H_{M,\ell a}X_{aj}\right).
+  \]
+  Contracting the exact last-update normal equation with
+  \(\widetilde m_\ell=M^*(G_M^{-1}e_\ell)\) gives the indexed E-left identity
+  \[
+  E_M=\mathcal L_M(F_M^{\rm alg})+Q_M. \tag{J0b}
+  \]
+  The residual is defined entrywise, including the diagonal, by
+  \[
+  Q_M(\ell,j)=\alpha_{M,j}^{-1}
+   \bigl(q^{\rm den}_{M,\ell j}+q^{\rm wt}_{M,\ell j}
+         +q^{\rm 2G}_{M,\ell j}+q^{\rm amp}_{M,\ell j}\bigr),
+  \]
+  where, with \(h_{M,\ell a}=H_M(\ell,a)\),
+  \[
+  \begin{aligned}
+  q^{\rm den}_{M,\ell j}
+    &=(\alpha_{M,j}-1)h_{M',\ell j}h_{M'',\ell j}
+       d^-_{M',j}d^-_{M'',j},\\
+  q^{\rm wt}_{M,\ell j}
+    &=\left({\lambda_\ell\over\lambda_j}-1\right)
+       h_{M',\ell j}h_{M'',\ell j}d^-_{M',j}d^-_{M'',j},\\
+  q^{\rm 2G}_{M,\ell j}
+    &=\sum_{a\notin\{\ell,j\}}h_{M',\ell a}h_{M'',aj}
+       d^-_{M',a}d^-_{M'',a},\\
+  q^{\rm amp}_{M,\ell j}
+    &=\mathbf 1_{\ell=j}\bigl(\delta^{\rm dir}_{M,j}
+                              -\delta^{\rm amp}_{M,j}\bigr).
+  \end{aligned} \tag{J0r}
+  \]
+  Thus every off-diagonal selected error is on the left of (J0b); Q_M
+  contains only denominator, weight, static two-Gram, and explicit amplitude
+  defects.  The induced l1 dual bounds are used once:
+  \[
+  \|\mathcal L_M\|_{1\to1},\|\mathcal L_M\|_{\infty\to\infty}
+   \le {32\over31}(1+q_*),\qquad
+  \|Q_M\|_{\rm row,1},\|Q_M\|_{\rm col,1}\le8q_*^2. \tag{J0c}
+  \]
+  The three off-diagonal charges in (J0r) are \(2q_*^2,2q_*^2,4q_*^2\)
+  after the single \(\alpha^{-1}\) normalization; the diagonal amplitude
+  charge is included in the first two budgets by the best-scalar identity.
+  Absolute values are taken before row or column summation, so no sign law or
+  selected-row closure is used.  At \(q=0\), all four forcing classes vanish.
+  Let \(\eta_{\rm row}:=\max_M\|E_M\|_{\rm row,1}\) and
+  \(\eta_{\rm col}:=\max_M\|E_M\|_{\rm col,1}\).  Applying the induced
+  row/column Hadamard inequality to (J0) gives the deterministic small-gain
+  system
+  \[
+  \eta_{\rm col}\le\chi_{\max},\qquad
+  \eta_{\rm row}\le4q_*\chi_{\max}
+  +q_*\eta_{\rm row}+16q_*^2. \tag{J1}
+  \]
+  The column part is the explicit three-mode inversion consequence of (S1b):
+  \[
+  \eta_{\rm col}:=\max_M\|E_M\|_{\rm col,1}
+   \le\max_{M,j}\bigl(|\delta_{M,j}|+\|E_M(:,j)\|_1+\|F_M(:,j)\|_1\bigr)
+   \le\chi_{\max}. \tag{J1a}
+  \]
+  The row part follows from (J0a), the induced Hadamard inequality, and the
+  same per-column bound before taking a target-index sum; its only self-term
+  is \(q_*\eta_{\rm row}\).  Thus neither inequality infers a row bound from
+  an outgoing pair product alone.
+  Since \(\chi_{\max}\le56q_*^2\) and \(q_*=1/4096\),
+  \[
+  \eta_{\rm row}\le
+  \frac{4q_*\chi_{\max}+16q_*^2}{1-q_*}
+  <17q_*^2. \tag{J2}
+  \]
+  This is an explicitly conditioned deterministic source under
+  \(E_{\rm sm}\cap E_{\rm cov}\cap E_{\rm cluster}\); it remains valid for
+  correlated Gaussian selected factors and for adversarial alignment of all
+  selected columns.  For covered trajectories, the separate audit recurrence
+  remains
+  \[
+  m_{s+1}^{\rm cov}\le4R_s+8q_*^2,\qquad
+  \eta_{s+1}^{\rm cov}\le8q_*^2+
+  8(q_*+m_s^{\rm cov})\eta_s^{\rm cov},
+  \]
+  giving \(m_{10}^{\rm cov}<1/64\) and
+  \(\eta_{L_0}^{\rm cov}\le17q_*^2\); it is not the selected-matrix producer.
+  Define the deterministic generated event
+  \(E_{\rm row}:=\{\eta_{\rm row}<17q_*^2\}\).
+  Then
+  \[
+  \eta_{\rm in}^{\rm sel}:=\max\{\eta_{\rm row},\eta_{\rm col}\}\le17q_*^2,\qquad
+  \eta_{\rm sel}:=\chi_{\max}+\eta_{\rm in}^{\rm sel}\le80q_*^2. \tag{J3}
+  \]
+- Source-to-claim adequacy: the joint selected-matrix lemma is a direct
+  current-notation deterministic row-small-gain derivation.  Its row source is
+  the normal-equation residual bound (J0) plus the contraction inequality (J2),
+  while its column source is the explicitly defined `m_i`; the two
+  controls are proved separately before any target-index sum.  The covered
+  `S_t` recurrence is used only for the finite proposal audit and never as
+  a global row premise.
+- Residual-to-target adequacy: after the permutation, sign alignment, and
+  unique equal-norm gauge below, decompose each selected mode error into
+  \[
+  \Delta_M=M^*E_M+\Delta_M^\perp,\qquad
+  \|\Delta_M^\perp{}_{:j}\|_2\le2\chi_j+8q_*^2,
+  \]
+  and the scalar diagonal error \(\delta_M\) is included in \(m_i\).  The
+  row and column bounds from (J1)--(J3) therefore control every column,
+  every induced row/column norm of \(E_M\), and every scalar delta in
+  `norm_T`.  The four residual contributions are bounded separately:
+  diagonal scalar error \(\le8q_*^2\), three direction errors
+  \(\le3\chi_{\max}\), pair-Gram leakage \(\le4\eta_{\rm in}^{\rm sel}\),
+  and quadratic remainder \(\le8q_*^2\).  Their sum is at most
+  \(256(\eta_{\rm sel}+q_*^2)\).  The exact same-target decomposition is
+  \[
+  \left\|T-\sum_j\theta_jp_j\otimes q_j\otimes s_j\right\|_F
+  \le256(\eta_{\rm sel}+q_*^2)\|T\|_F.
+  \]
+  Thus the produced object is the same realized target tensor, not a surrogate.
+- Key positive/control term or structural source: the symmetric Gram
+  row/column mass, the covered-slot transient represented by `m_t^cov`, and
+  the deterministic row-small-gain source (J0)--(J2); the global incoming row
+  mass is controlled before summing selected labels.
+- Opposing defect terms: proposal-specific transient errors, Gram-forced
+  cross terms, normalization, and best-scalar weight error.
+- Closure/dominance/absorption relation: with `C_0 >= 64`, the covered-slot
+  transient satisfies `2r 4^{-(L_0-10)} <= q_*^2/128`.  The deterministic
+  event (J3) gives `eta_sel <=80q_*^2`;
+  hence the selected quotient distance is
+  at most `256(81q_*^2)=1.23597e-3 < 1/512`.  This is direct entry into
+  the reachable tube, not a radius-quarter claim.
+- Accumulation behavior / scope compatibility: the only repeated contribution
+  is the transient over the finite proposal horizon; its one-step charge is
+  the squaring recurrence.  Persistent Gram forcing is absorbed by the
+  fixed-point small-gain inequality, not summed over `r` columns.
+- Obligation locality classification: `step-local`.
+- Noncircular closure status: `step_004` produces `R_t` for covered slots;
+  (S1)--(S2) in `step_006` produce only per-column `chi_i`.  This
+  step alone produces the deterministic event `E_row` and the global
+  `eta_sel` in (J3); the local basin in `step_009` consumes that
+  output, and no basin property is used to prove it.
+- Entry-state / first-update stress result: at `q=0`, the coefficient error
+  matrix is exactly squared and the row/column mass vanishes; at nonzero `q`,
+  (J0) charges the first update by the explicit `q^2` Gram forcing shown
+  above, without a sign-law assumption.
+- Baseline conclusion preserved: exact balanced representatives and zero
+  residual are recovered in the orthogonal limit.
+- Producer-consumer provenance: `step_005`/`step_006` selected-member
+  transfer -> `step_007` -> `step_008` and `step_009`.
+- Null or boundary regime tested: one target's proposal error concentrated in
+  a single row; the two-sided row/column inequality handles this case without
+  an `r` multiplier beyond the explicitly decaying transient.
+- Target conclusion false or theorem-critical obstruction present if source
+  vanishes: if only outgoing `S_t` were available, incoming leakage could be
+  uncontrolled; the explicit row/column producer is the required repair.
+- Repair route if source is unsupported: tighten the deterministic residual
+  bookkeeping in (J0)--(J2); no new primitive assumption or protocol change is
+  needed.
+
+### `step_008`: Jacobian kernel and quotient-Hessian margin
+
+- Claim class: identifiability, nondegeneracy, and positive curvature modulo
+  scaling.
+- Theorem role: discharge the local ALS source assumption at the selected
+  exact decomposition.
+- Mechanism source: `step_001` gives full column rank and factor Gram spectra
+  in `[1-q_*,1+q_*]`.  For each mode, use the explicit dual vectors
+  \(\widetilde u_j=U(G_U^{-1}e_j)\), and cyclic analogues; then
+  \(\|\widetilde u_j\|\le(1-q_*)^{-1}\) and
+  \(\langle\widetilde u_j,u_\ell\rangle=\delta_{j\ell}\).  Contracting a
+  zero Jacobian tangent with two dual vectors isolates the `j`th scalar and
+  mode-direction terms.  Repeating the contraction in the three modes shows
+  that every orthogonal tangent vanishes and only the componentwise scaling
+  directions remain.
+- Source-to-claim adequacy: at the exact decomposition the Hessian is
+  \(J^*J\), so the displayed dual-basis calculation is exactly the kernel
+  statement in Uschmajew Assumption 1, not merely an identifiability heuristic.
+  The source object is the same exact CP decomposition, balanced scaling
+  quotient, and Frobenius least-squares loss; no equilibrated or whitened
+  surrogate is consumed.  The same contractions give the quantitative
+  quotient bound
+  \(\|J\dot\theta\|_F^2\ge(1-8q_*)\|\dot\theta\|_{\rm quot}^2\) after the
+  componentwise scaling tangent is removed, while the cyclic Khatri--Rao
+  floor supplies the block-normal-equation margin.
+- Residual-to-target adequacy: the quotient norm is the balanced representative
+  norm exported by `step_007`, so the curvature statement applies to the
+  actual active initialization.
+- Key positive/control term or structural source: the Schur-product Gram
+  eigenvalue `1-q_*^2` and full column rank of each mode matrix.
+- Opposing defect terms: scaling kernel, representative perturbation, and
+  cross-component Gram mass.
+- Closure/dominance/absorption relation: quotient out the exact scaling kernel;
+  the remaining Jacobian/Hessian eigenvalues are at least `1-8q_* > 0.998`,
+  and the block Gram eigenvalues are at least `1-q_*^2`.  These two margins
+  are the positive sources used by `step_009`, rather than an assumed local
+  basin.
+- Accumulation behavior / scope compatibility: static local geometry; no
+  repeated-scope claim is assigned here.
+- Obligation locality classification: `step-local`.
+- Noncircular closure status: source assumptions are discharged from
+  `step_001` before the local map is invoked.
+- Entry-state / first-update stress result: at the exact decomposition the
+  cyclic block normal equations are nonsingular; the Moore--Penrose branch in
+  the algorithm agrees with the ordinary inverse on this neighborhood.
+- Baseline conclusion preserved: the orthogonal Hessian is positive definite
+  modulo scaling and contains the exact zero-residual solution.
+- Producer-consumer provenance: `step_001` + `step_007` -> `step_008` ->
+  `step_009`.
+- Null or boundary regime tested: scaling directions are explicitly removed;
+  no claimed positive eigenvalue is assigned to that null space.
+- Target conclusion false or theorem-critical obstruction present if source
+  vanishes: without quotienting scaling, positivity is false; the source and
+  this step use the correct quotient.
+- Repair route if source is unsupported: expand the dual-basis calculation;
+  no change to the algorithm or goal is required.
+
+### `step_009`: quantitative local CP-ALS basin wrapper
+
+- Claim class: basin membership, local map construction, and contraction
+  factor.
+- Theorem role: bridge the selected best-scalar representatives to the cited
+  local ALS theorem with an explicit radius.
+- Mechanism source: map the current balanced active factors to Uschmajew's
+  exact CP factors `(A,B,C)` component by component, with the same Frobenius
+  loss and componentwise scaling quotient.  His Assumption 1 is discharged by
+  `step_008`; Lemma 3.2 (local differentiability and block-Gauss--Seidel
+  derivative) and Theorems 3.3/3.5 (local linear ALS under that kernel
+  condition) are then wrapped by a direct current-notation bound on the block
+  normal equations.
+- Source-to-claim adequacy: the wrapper fixes the source object mapping:
+  active balanced columns map to the exact realized factors; zero padding is
+  held fixed and therefore does not alter the active normal equations.  For
+  every point in the reachable tube `T_ALS`, write
+  `K=K^circ A_K`; the normalized Gram has
+  `lambda_min(G_Kcirc)>=7/8` and inverse difference at most `(8/7)^2`
+  times the Gram difference.  The raw Moore--Penrose update is conjugate by
+  `A_K^(-1)`, whose norm and inverse norm are polynomial in `kappa_0`.
+  Work in the explicitly defined componentwise balanced norm containing
+  direction, row/column, and raw-amplitude coordinates.  The normalized
+  `1-q_*^2` floor and `Gamma <= 1.01` give the explicit tube
+  `||e||_col<=1/4096, eta<=1/2048` and contraction `nu=1/8`.
+  The gauge map satisfies (G1), the normal-equation differences satisfy
+  (A1)--(A2), and the boundary calculation below is valid for every pair in
+  this tube.
+- Residual-to-target adequacy: `step_007` exports (G2) component by component:
+  the selected direction columns, every row and column norm of `E_M`, and
+  both direction and raw-amplitude scalar defects in the canonical
+  equal-norm gauge.  The relative normalization lemma converts the
+  best-scalar residual to `||e_sel||_T<=128q_*^2<1/4096`, so the actual
+  active initialization lies in `T_ALS` (direct tube entry, without a
+  radius-quarter claim).  The tensor residual and parameter distance are
+  related by the same local Jacobian margin, with no error floor.
+- Key positive/control term or structural source: quotient-Hessian margin from
+  `step_008` and bounded derivative of the Khatri--Rao normal equations.
+- Opposing defect terms: representative row/column leakage, scaling choice,
+  Taylor remainder, and possible pseudoinverse branch changes.
+- Closure/dominance/absorption relation: for every `e` in `T_ALS`, the
+  normalized Khatri--Rao Gram has eigenvalue at least `7/8`, the Moore--Penrose
+  branch is the ordinary inverse, and inverse perturbation is bounded by
+  `(8/7)^2`.  The source block-Gauss--Seidel derivative bound plus the
+  pairwise tube inequality is at most `1/16`; the separate column and eta
+  recurrences have coefficient `1/16` and forcing `32q_*^2`, so the tube is
+  invariant under every active sweep.
+- Accumulation behavior / scope compatibility: invariant basin under every
+  active CP-ALS sweep; the one-step contraction plus radius preservation gives
+  a finite all-time closure for the refinement horizon.
+- Obligation locality classification: `step-local`.
+- Noncircular closure status: `step_007` produces the joint selected-matrix
+  entry distance; `step_008` produces the margin; this step proves the
+  tube is invariant before `step_010` consumes the contraction.
+- Entry-state / first-update stress result: start with (G2), apply the
+  equal-norm gauge, and use the diagonal identity for `D_K`; the first active
+  mode update is an ordinary inverse on the tube's `7/8` normalized Gram floor.
+  The direct normal-equation expansion maps the column, row, column, and
+  scalar components of `norm_T` by the displayed `1/16` recurrences plus
+  `32q_*^2`, while (G1) preserves the same quotient target.
+- Baseline conclusion preserved: exact orthogonal balanced factors have
+  `varrho_\mathrm{ALS}>0` and the local map contracts to zero residual.
+- Producer-consumer provenance: `step_007` + `step_008` -> `step_009` ->
+  `step_010`.
+- Null or boundary regime tested: the scaling kernel is removed before the
+  radius calculation; the Moore--Penrose selection is only needed outside the
+  certified nonsingular tube.
+- Target conclusion false or theorem-critical obstruction present if source
+  vanishes: an existential local theorem without this wrapper would not imply
+  basin entry; the wrapper is the explicit required bridge.
+- Repair route if source is unsupported: derive the displayed normal-equation
+  Lipschitz constants directly; a failure would be a localized interface
+  defect, not a reason to weaken the theorem.
+
+### `step_010`: terminal contraction and stopping
+
+- Claim class: recursive convergence, exact-limit behavior, and stopping-time
+  bound.
+- Theorem role: produce the requested relative Frobenius residual and retain
+  the rank and zero-padding guarantees.
+- Mechanism source: the invariant quotient tube and contraction factor `nu<1`
+  from `step_009`, plus the exact CP representation of `step_008`.
+- Source-to-claim adequacy: active cyclic CP-ALS is the same block method as
+  the source theorem; the held-zero columns are not updated and contribute no
+  normal-equation terms.  The local objective gap contracts geometrically,
+  and the local Jacobian margin transfers it to the tensor residual.
+- Residual-to-target adequacy: the consumed metric is exactly
+  \(\|T-\widehat T\|_F/\|T\|_F\); no surrogate residual or stopped positive
+  floor is substituted.
+- Key positive/control term or structural source: `1-nu` and the exact
+  zero-residual CP solution.
+- Opposing defect terms: local Taylor remainder and finite arithmetic
+  stopping tolerance, both absorbed by the basin choice.
+- Closure/dominance/absorption relation: after `m` sweeps the residual is at
+  most `C nu^m`; choose
+  \(m\ge C_{\rm ALS}\log(C/\epsilon)\).  The same inequality preserves the
+  basin at every sweep.
+- Accumulation behavior / scope compatibility: contractive, horizon-uniform;
+  the geometric series of remainders is bounded by the invariant radius.
+- Obligation locality classification: `step-local`.
+- Noncircular closure status: `step_009` is the sole basin producer; this step
+  does not use the stopping conclusion to prove basin membership.
+- Entry-state / first-update stress result: the first active sweep starts in
+  the certified tube and decreases the quotient error; in the exact case it
+  reaches the zero-residual solution in the limiting contraction sense.
+- Baseline conclusion preserved: arbitrary \(\epsilon\) and zero residual in
+  the exact limit are retained.
+- Producer-consumer provenance: `step_009` -> `step_010` -> `step_011` and
+  final theorem assembly.
+- Null or boundary regime tested: \(0<\epsilon<1\) and the exact limit
+  \(\epsilon\downarrow0\); no nonzero noise floor is introduced.
+- Target conclusion false or theorem-critical obstruction present if source
+  vanishes: without the local contraction, only a local stationary statement
+  would remain; the source-compatible wrapper supplies the contraction.
+- Repair route if source is unsupported: sharpen the local contraction
+  constants; do not weaken the residual target.
+
+### `step_011`: restart, probability, and runtime specialization
+
+- Claim class: confidence conversion, generated-output closure, and explicit
+  computational rate (the public Rate Specialization Bridge).
+- Theorem role: combine the instance event, one-run coverage, local refinement,
+  and independent restarts into the public theorem.
+- Mechanism source: independence in `assump:random-initialization`, the
+  positive coverage probability from `step_003`, and the stopping bound from
+  `step_010`.
+- Source-to-claim adequacy: verify the exposed smoothing, rank, and horizon
+  inequalities using the auxiliary choices already fixed in `setting.md`,
+  absorb every transient and local-remainder term using the margins exported
+  by `step_001`--`step_010`, and then convert the nested probabilities.  If one
+  full run succeeds with probability at least
+  `p_0>0`, then the prescribed `J` gives
+  \((1-p_0)^J\le\delta_{\rm init}\) for a universal `C_rep`.  Proposal
+  contractions, score evaluation, graph construction, active ALS, and restart
+  loops have explicit polynomial arithmetic costs.
+- Residual-to-target adequacy: the returned smallest-residual successful run
+  is one of the same-target outputs certified by `step_010`.
+- Key positive/control term or structural source: independent full-run
+  randomness conditional on the fixed tensor and fixed rank `k`.
+- Opposing defect terms: unsuccessful slot coverage, unsuccessful full runs,
+  and the logarithmic restart factor.
+- Closure/dominance/absorption relation: finite failure probability is
+  geometrically reduced by restarts; runtime is multiplied by `J` but `k` is
+  unchanged.  Since `k`, `kappa_0`, and `rho^{-1}` are polynomial in `r`, the
+  specialized runtime is polynomial in the public variables.
+- Accumulation behavior / scope compatibility: finite restart scope; no
+  dependence between runs is assumed beyond conditional independence.
+- Obligation locality classification: `step-local`.
+- Noncircular closure status: all consumed outputs have producers in
+  `step_001`--`step_010`; this step only performs probability and cost
+  aggregation.
+- Entry-state / first-update stress result: each restart starts with fresh
+  Gaussian triples and reuses the same good tensor, exactly as required by the
+  setting.
+- Baseline conclusion preserved: restarts do not enlarge the algorithmic rank
+  and exact-data refinement remains arbitrary-accuracy.
+- Producer-consumer provenance: all prior steps -> `step_011` -> final output.
+- Null or boundary regime tested: `delta_init` near one is covered by the
+  `max{1, ...}` definition of `J`; `epsilon` near zero only affects the
+  logarithmic stopping term.
+- Target conclusion false or theorem-critical obstruction present if source
+  vanishes: without a positive one-run producer, restarts cannot help; the
+  coverage and local chain supply that producer.
+- Repair route if source is unsupported: adjust the universal restart and
+  arithmetic constants, not the rank exponent or theorem target.
+
+## Exported Interface Feasibility
+
+| Exported interface or output target | Producer step or source | Raw controls available before export | Defect terms and controlled/uncontrolled classes | Residual-to-target adequacy | Dominance, transfer, simplification, or absorption relation | Margin, threshold, or slack source | Consumers | Missing-interface blocker |
+| ----------------------------------- | ----------------------- | ------------------------------------ | ----------------------------------------------- | --------------------------- | ---------------------------------------------------------- | ---------------------------------- | --------- | ------------------------- |
+| Realized norms, `q_real <= q_*`, `Gamma <= 1.01`, and cyclic Khatri--Rao floor | `step_001` direct Gaussian/Schur derivation | Base scale, base row sums, base weight balance, three smoothing terms, `delta_sm` | Linear, quadratic, normalization, and union-tail defects are separately controlled; no trajectory defect | Same realized factors are consumed; exact norm and Gram metrics | Smoothing-margin inequalities dominate each perturbation and Schur-product row mass | `q_*/4` base slack, `1/800` weight slack, `1-q_*^2` spectral margin | `step_002`, `step_004`, `step_008`, `step_009` | None |
+| Per-target window event and `R_0 <= 19/20`, `S_0 <= r R_0` | `step_002` | `c_win`, `c_all`, `C_win`, `beta_* > 1.05`, `r_0`, correlated Gaussian regression, target window, competitor pair tails | Conditional means/covariances and finite competitor union are controlled; failure `<=24r^(1-beta_*)` | Produced raw event maps exactly to target-relative ratios in `setting.md` | `c_all r^(-5/3)(log r)^(-3/2) <= p_win <= C_win r^(-5/3)(log r)^(-3/2)`, `b_*/a_*=19/20` | `step_003`, `step_004` | None |
+| All-target coverage at rank `U(r)` | `step_003` | Independent slots and `p_win` | Slot misses are independent across slots; no dynamic claim is hidden | Coverage event is consumed only by the proposal recurrence | `C_rank >= 16/c_all` gives `k p_win >= 8 log r`, union miss `<=r^-7` | `step_004` | None |
+| Finite-horizon `R_t,S_t` invariant and numerical floor | `step_004` direct expansion | `q_real`, `Gamma`, entry margins | Gram leakage is additive and denominator-controlled; no cyclic reuse; at `q=0` the floor is exactly zero | Same target-relative state is consumed by `step_005` | Interval invariance, dissipative map, and bounded fixed point; separate `q=0` endpoint | `R_0 <= 19/20`, `q_*`, `Gamma <=1.01` | `step_005`, `step_007` | None |
+| Modewise angle/displacement certificate | `step_005` | `S_t`, span membership after first update, Gram inversion | Transient and normalization defects are controlled over `L_0` | Exact modewise absolute correlations used by filter and graph | `C_0 log r` makes transient below `q_*^2`; fixed term below `64q_*` | `64q_*` filter threshold | `step_006`, `step_007` | None |
+| One data-driven cluster per target | `step_006` | Observable score/displacement, angle certificate, stationary equations | Mixture branches, Gram leakage, and ties are controlled by the constant score gap | Representatives remain in the exact target direction metric | `(1/sqrt(2)+32q_*)1.01 < 0.723 < 0.85(1-32q_*)`; graph thresholds separate targets | `0.85`, `64q_*`, and row-sum `q_*` | `step_007` | None |
+| Joint representative coefficient row/column mass and best-scalar residual | `step_007` deterministic row-small-gain bridge | Per-member `chi_i`, normalized `E_M,F_M`, residual `Q_M`, and covered `m_s^cov,eta_s^cov` audit | Deterministic `Q_M` row/column budget plus small-gain inequality controls incoming mass before target summation; no sign premise | Frobenius residual relative bound uses `256(eta_sel+q_*^2)`; quotient distance `1.23597e-3<1/512` | `chi_max<=56q_*^2`, `eta_in^sel<=17q_*^2`, `eta_sel<=80q_*^2`; `C_0>=64` for covered audit | `q_*=1/4096` | `step_008`, `step_009` | None |
+| Quotient-Hessian kernel and positive margin | `step_008` direct dual-basis derivation plus Uschmajew Assumption 1 | Khatri--Rao floor and full column rank | Scaling tangent is removed; cross Gram is bounded | Same exact active CP target and Frobenius loss | Dual contractions isolate components; quotient retains a fixed margin | `1-q_*^2` | `step_009` | None |
+| Explicit local basin and contraction factor | `step_009` current-notation wrapper around Uschmajew Lemma 3.2/Theorems 3.3, 3.5 | Reachable-tube normalized Gram, diagonal scales `D_K`, explicit `norm_T`, quotient derivative, and selected residual | Taylor remainder and Moore--Penrose branch are controlled for every point in the tube | Best-scalar active initialization enters `T_ALS`; subsequent iterates stay in it | `varrho_ALS=1/512`, `lambda_min(G_Kcirc(e))>=7/8`, inverse difference `<= (8/7)^2`, one-step coefficient `<=1/8` | Scale-invariant `1/512`, `nu=1/8`; raw diagonal/inverse costs polynomial in `kappa_0` | `step_010` | None |
+| Relative residual and stopping horizon | `step_010` | Basin invariance and contraction | Geometric remainder is summable; no noise floor | Exact target Frobenius residual | `m=O(log(1/epsilon))` absorbs the initial gap | Exact zero-residual CP representation | `step_011`, final theorem | None |
+| Conditional confidence and polynomial runtime | `step_011` | Positive one-run probability, restart independence, all prior cost bounds | Failures are geometrically amplified away; costs multiply by `J` only | Returned output is one of the certified same-target outputs | `(1-p_0)^J <= delta_init`; rank fixed | `C_rep`, fixed `U(r)` | Final assembly | None |
+
+## Generated Output Flow
+
+| Generated output or control | Producer step or source | Consumers | Final theorem use | Dependency path | Provenance class | Missing-flow blocker |
+| --------------------------- | ----------------------- | --------- | ----------------- | --------------- | ---------------- | -------------------- |
+| Realized norm/Gram/weight/Khatri--Rao event | `step_001` direct primitive-source derivation | `step_002`, `step_004`, `step_008`, `step_009` | Instance probability qualification and all later conditioning | Primitive assumptions -> `step_001` -> static/dynamic steps | derived | None |
+| Windowed target event | `step_002` Gaussian regression/tail derivation | `step_003`, `step_004` | Per-slot entry interface | `step_001` -> `step_002` -> coverage and recurrence | derived | None |
+| All-target coverage | `step_003` coupon argument | `step_004`, `step_011` | Positive one-run success source | `step_002` -> `step_003` -> dynamic chain | derived | None |
+| `R,S` recurrence and invariant | `step_004` direct simultaneous contraction expansion | `step_005`, `step_006`, `step_007` | Alignment and joint leakage control | `step_003` -> `step_004` -> angle/filter/matrix bridge | derived | None |
+| Angle/displacement certificate | `step_005` Gram/span transfer | `step_006`, `step_007` | Observable retention and representative accuracy | `step_004` -> `step_005` -> filter and bridge | derived | None |
+| Correct graph clusters and representatives | `step_006` stationary score-gap plus observable selected-member transfer | `step_007` | Active rank-`r` initialization object with per-column certificate | `step_005` -> `step_006` -> (S1)-(S2) | derived | None |
+| Joint coefficient row/column mass and same-target residual | `step_007` deterministic row-small-gain bridge plus covered Q1 audit | `step_008`, `step_009` | Explicit basin-entry interface and `E_row` | `step_004`/`step_006` -> `chi_max`, `Q_M` -> (J0)-(J3) -> local geometry | derived | None |
+| Deterministic `E_row` and `p_0` | `step_007` row-small-gain closure | `step_003`, `step_007` | `E_sm`, `E_cov`, `E_cluster` | Row residual `Q_M` and `q_*` small gain give `E_row` with no extra failure budget | `P(E_row|E_sm,E_cov,E_cluster)=1`, `p_0>=1/2` | `q_*=1/4096` | `step_008`, `step_011` | None |
+| Quotient-Hessian kernel/margin | `step_008` dual-basis derivation and cited source assumption | `step_009` | Local theorem hypothesis and curvature source | `step_001`/`step_007` -> `step_008` -> wrapper | derived | None |
+| Explicit basin and contraction factor | `step_009` reachable-tube scale-conjugated current-notation local wrapper | `step_010` | Basin preservation and local refinement | `step_007`/`step_008` -> tube Gram/inverse and norm_T -> `step_009` -> contraction | derived | None |
+| Relative residual/stopping bound | `step_010` local CP-ALS contraction | `step_011` | Arbitrary-accuracy output | `step_009` -> `step_010` -> final aggregation | derived | None |
+| Restart probability and runtime | `step_011` | final assembly | Public theorem probability, rank, and runtime | all preceding outputs -> `step_011` -> theorem | derived | None |
+
+## Sketch Steps
+
+| Step ID | Intended claim | Depends on | Assumptions used | Technical challenge | Intended proof tool or cited result | Output target | Rate objective | Review status |
+| ------- | -------------- | ---------- | ---------------- | ------------------- | ----------------------------------- | ------------- | -------------- | ------------- |
+| `step_001` | With probability at least `1-delta_sm`, derive norm retention, `q_real <= q_*`, `Gamma <= 1.01`, and all cyclic Khatri--Rao Gram floors, retaining linear/quadratic/normalization terms. | None | `assump:base-scale`, `assump:cumulative-gram`, `assump:base-weight-balance`, `assump:gaussian-smoothing`, `assump:smoothing-margin`, `assump:accuracy-confidence` | Normalized Gaussian perturbation and row-sum union bounds | Direct Gaussian concentration; Schur-product Gram identity | Good-instance event `E_sm` | Objective 1: exact confidence and structural dependence | PENDING |
+| `step_002` | Conditional on `E_sm`, prove the three-mode target window and competitor pair-product event with probability `Theta(r^(-5/3)(log r)^(-3/2))` per slot/target. | `step_001` | `assump:random-initialization`, `assump:accuracy-confidence`; derived `E_sm` | Correlated Gaussian coordinates and product tails | Gaussian regression, covariance comparison, product-Gaussian tail | `E_win(j,i)`, `R_0 <= 19/20`, `S_0 <= r R_0` | Objective 2: per-slot event probability | PENDING |
+| `step_003` | At rank `U(r)`, derive simultaneous all-target coverage with a universal positive one-run probability. | `step_002` | `assump:subquadratic-rank`, `assump:random-initialization` | Dependence across target events and slot allocation | Coupon/negative-association bound and union bound | `E_cov` and `p_run >= p_0` | Objective 2: fixed-rank coverage | PENDING |
+| `step_004` | Derive the simultaneous `R,S` recurrences, denominator invariant, numerical floor, and `O(log r)` mass decay. | `step_001`, `step_002`, `step_003` | Derived `E_sm`, `E_cov`; `Gamma`, `q_real` outputs | Exact old-state expansion and recurrence closure | Direct multilinear contraction expansion plus interval arithmetic | `E_RS`, `R_t`, `S_t` for all `t <= L_0` | Objective 3: horizon-uniform recurrence | PENDING |
+| `step_005` | Convert `E_RS` into three-mode angular and last-sweep-displacement bounds below the observable thresholds. | `step_004` | Derived `E_RS`, `E_sm` | Span projection, Gram inversion, and transient export | Direct coefficient/angle inequalities | `E_ang`, `d_i <= 16 q_*` for covered slots | Objective 3: finite-horizon angle | PENDING |
+| `step_006` | Prove high-score/small-displacement proposals are target-near, establish the component/mixture score gap, certify one graph cluster per target, and transfer only the per-column selected-member bounds (S1)-(S2). | `step_005` | Derived `E_ang`, `E_sm`; observable filter definition | Perturbative stationary-point classification and separation of member-local versus global errors | Orthogonal support classification, direct `q`-perturbation, and last-update identity | `E_cluster`, `chi_i<=56q_*^2`, proof-only permutation/sign map | Objective 3: data-driven membership | PENDING |
+| `step_007` | Define normalized and raw coefficient matrices, prove the deterministic row-small-gain lemma (J0)-(J3) for the selected matrix, and transfer the best-scalar representatives to an explicit same-target quotient residual and `E_row`. | `step_004`, `step_006` | Derived `E_RS`, `E_cluster`, selected-member (S1)-(S2), `E_sm` | Incoming cross-target leakage, raw/unit scale conversion, and `r`-uniform accumulation | Direct normal-equation residual budget, Hadamard small gain, equal-norm gauge, and covered-trajectory Q1 audit | `eta_sel<=80q_*^2`, `E_row` probability one conditional on prior events, quotient distance <=1.23597e-3<1/512 | Objective 3: joint basin bridge | PENDING |
+| `step_008` | Prove the CP-Jacobian kernel is exactly componentwise scaling and export a positive quotient-Hessian margin. | `step_001`, `step_007` | Derived Khatri--Rao floor, representative bridge | Dual-basis identifiability and source convention mapping | Direct dual-basis derivation; Uschmajew Assumption 1 | `mu_quot > 0` and source hypothesis discharge | Objective 3: local regularity | PENDING |
+| `step_009` | Derive a numerical local basin radius and contraction factor for active cyclic CP-ALS, and prove best-scalar initialization lies inside it. | `step_007`, `step_008` | Derived `eta`, `mu_quot`, `Gamma`, `q_real` | Existential source neighborhood to explicit current-notation bridge | Uschmajew Lemma 3.2, Theorems 3.3/3.5 plus direct normal-equation Lipschitz bounds | `varrho_ALS`, `nu < 1`, invariant basin | Objective 3 and 4: explicit regularity | PENDING |
+| `step_010` | Prove geometric active CP-ALS residual contraction to arbitrary `epsilon`, with zero padding fixed and no error floor. | `step_009` | Derived basin and `nu`; `assump:accuracy-confidence` | All-sweep contraction and residual transfer | Local block-Gauss--Seidel contraction and Frobenius equivalence | `m <= C log(1/epsilon)` and final residual | Objective 4: numerical-error explicit | PENDING |
+| `step_011` | Serve as the public Rate Specialization Bridge: verify the exposed smoothing/rank/horizon conditions, absorb all auxiliary terms, combine one-run success and independent restarts, and account for arithmetic costs. | `step_003`, `step_010` | `assump:subquadratic-rank`, `assump:random-initialization`, `assump:accuracy-confidence`, plus all earlier exported margins | Probability conversion, term absorption, and cost accounting | Geometric restart bound, explicit auxiliary inequalities, and direct operation counts | Final `1-delta_init` conditional theorem and polynomial runtime | Objective 2 and 4: confidence/runtime specialization | PENDING |
+
+## Dependency Notes
+
+The graph is acyclic: static instance controls precede the Gaussian window;
+coverage precedes the simultaneous recurrence; the recurrence precedes angle,
+filter, and joint coefficient outputs; those outputs precede the quotient
+Hessian and explicit local basin; local contraction precedes stopping and
+restart aggregation.  In particular, `step_007` is an explicit bridge rather
+than an implicit assumption: it controls incoming row mass and transfers the
+data-only representatives to the same target object used by the local theorem.
+The source local theorem is consumed only after its assumptions and the
+quantitative radius are produced.  The orthogonal/noiseless specialization is
+preserved at `step_004`, `step_008`, and `step_010`, so no conservative remainder
+replaces the exact baseline conclusion.
+
+## Blockers
+
+None.  The remaining hard claims are isolated as lemma-sized steps, with their
+mechanism sources, accumulation relations, source-object mappings, and
+quantitative interfaces exposed above.  In particular, the prior cyclic
+first-update obstruction is removed by the simultaneous old-state update, and
+the joint row/column coefficient bridge prevents the outgoing-only `S_t`
+certificate from being used as an unsupported active-factor basin premise.

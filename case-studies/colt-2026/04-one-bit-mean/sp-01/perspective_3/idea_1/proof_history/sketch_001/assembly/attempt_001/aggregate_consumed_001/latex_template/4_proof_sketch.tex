@@ -1,0 +1,35 @@
+\section{Proof Sketch}
+
+The proof separates localization from refinement.  Proposition~
+\ref{prop:localization} instantiates the non-adaptive coding theorem of
+\citet{lau-scarlett-2026}, maps its source hypotheses to our protocol, and
+recenters the $k$th moment around the decoded grid midpoint.  The localization
+transcript is independent of the full refinement product array.
+
+The dyadic construction is global and precommitted.  Proposition~
+\ref{prop:ring-partition} shows that the decoder merely selects a nested chain
+from this fixed grid, whose child-subtracted rings partition the final padding.
+Lemma~\ref{lem:query-measurability} proves that every masked query is Borel and
+bounded for every realization of the countable masks.
+
+Uniform dithering converts one bit into the value of a bounded query in
+expectation.  Independent Rademacher masks cancel all same-color aliases, while
+the color, branch, type, and level weights invert their selection probabilities.
+Proposition~\ref{prop:mean-telescope} therefore gives the exact truncated mean
+on the selected padding.  Lemma~\ref{lem:activation-ledger} charges every
+target and alias activation at $x$ to $|x-m_0|^k$.  Combining that charge with
+the exact dither square yields Proposition~\ref{prop:conditional-variance};
+the target rings are disjoint, which is what prevents a second logarithm when
+$k=2$.
+
+Proposition~\ref{prop:scale-rate} chooses the terminal scale, controls the
+outer residual by the recentered moment, and evaluates the geometric sum
+$Z_S$ in all three regimes.  Conditional on the complete localization
+transcript, refinement observations remain independent and identically
+distributed.  Chebyshev's inequality within each group and Hoeffding's
+inequality across groups then give Proposition~\ref{prop:conditional-accuracy}.
+Finally, Propositions~\ref{prop:query-legality} and
+\ref{prop:one-bit-accounting} certify the communication model,
+Proposition~\ref{prop:unconditional-pac} integrates the conditional guarantee,
+and Proposition~\ref{prop:rate-specialization-bridge} accounts for every
+ceiling and specializes the exact three-regime rate.

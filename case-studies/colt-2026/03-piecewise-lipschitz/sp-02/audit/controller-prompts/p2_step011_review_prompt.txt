@@ -1,0 +1,27 @@
+You are the distinct step-scoped proof reviewer for perspective_2/idea_1, step_011, unit attempt 1, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+First read <CODEX_SKILLS_ROOT>/proof-step-review/SKILL.md completely and every directly required shared contract/template it names. Then independently review exactly the submitted step_011 proof. Do not trust its COMPLETE status or validation report and do not repair it yourself.
+
+Binding artifacts and hashes:
+- setting.md: 6955a2723694ff60af8d5d40329ff0ad056f9b54780ff02744d8985456222b7e
+- proof_sketch.md: 8b5b22e5000e1c5641e2b5baf0c4d48244ce3389941b0cc9857b47510bbf6c93
+- proof_sketch_review.md: 4288579fa3b8583b31faa2c220f5071879da72f06ac3a1dd3d1889cb1096cb7c, status ACCEPTED
+- target proof.md: 1f9537c74192da8502346ba12b457ccc9c8545fa8485aea22d234e0d594f59f3
+- accepted dependency step_001 proof.md: d55b8e0455d2b2d38b3d72339557df4b1366b5e2cd81cc145fd537dca1e75c11
+- accepted dependency step_001 review.md: dd04491bf12d076e4482faa9dcfb484d671d601a35cf64405f9d2afa4e535899
+- accepted dependency step_008 proof.md: 63c4257a7ec1db6387c7e7c19d467e15c1cc28999e7bcb2c1bdc93466896d12e
+- accepted dependency step_008 review.md: 3a1ff16fd516bda0277f07543d5230c048a39c88cb3e1bed2017ef9055ba68b9
+
+Audit the exact accepted step_011 row and exactly six local units. Independently verify:
+- the proof consumes exactly step_001 and step_008, records their complete current 64-hex proof/review identities, and uses the accepted global diagnostic only as non-evidentiary planning context;
+- for tilde F=(0,1,theta/delta), the declared q=M=m=0, Delta=1, N=2 convention and sole nonzero B_{2,1}=1/delta entry are consistent with the setting and accepted step_001 certificate, including coefficient ordering and any T-dependent terms;
+- the Euclidean derivative of gamma_F(theta)=(1,theta/delta)/sqrt(1+(theta/delta)^2) is computed exactly, has norm 1/[delta(1+(theta/delta)^2)], and has supremum 1/delta attained at theta=0;
+- accepted step_008 is instantiated with R=1, kappa=1/4, A=(2R)^N kappa=1, and N=2, yielding literally the 1/delta upper coefficient while preserving its arbitrary-correlated-law theorem scope;
+- the direct source-example lower calculation uses independence only for the specified uniform product law and proves the full root event on [0,epsilon], not merely an off-axis proxy;
+- the two closed opposite-sign wedges, the alpha_1=0 endpoint-root axis, the alpha_2=0 origin, and equality boundaries are handled exactly; the total area is epsilon/delta and multiplication by density 1/4 gives epsilon/(4delta);
+- division by positive epsilon gives the exact ratio 1/(4delta), with epsilon=delta, delta=1, theta=0, endpoint roots, both sign quadrants, coefficient axes, wedge boundaries, and epsilon down to zero only through positive lengths all correct;
+- the monic baseline remains a separate unaffected clause and step_010 is neither read nor consumed.
+
+Apply target fidelity, dependency, per-unit, assumption-provenance, explicit-rate, baseline-invariance, notation-surface, hidden-subclaim, boundary-case, and target-assembly checks. Verify all theorem-style labels/references and the final inline-math/TeX surface, not just delimiter counts. Use exactly one per-unit audit for unit_001 through unit_006. A local flaw under the unchanged row is REVISE_STEP; a missing row interface is REVISE_SKETCH; a flaw localized to an accepted dependency is BLOCKED_BY_DEPENDENCY.
+
+Write only perspective_2/idea_1/proof_steps/step_011/review.md. Do not edit the proof, dependencies, sketch, trackers, worker log, history, global artifacts, other steps, final TeX, prompts, results, or another branch. Validate binding hashes, controlled fields, reviewed-artifact identity, required headings, six-unit correspondence, ASCII/control bytes, balanced TeX delimiters/braces, Markdown table arity ignoring escaped pipes, and file scope. Report status, smallest retry target, reviewed proof hash, output path, and final review SHA-256.

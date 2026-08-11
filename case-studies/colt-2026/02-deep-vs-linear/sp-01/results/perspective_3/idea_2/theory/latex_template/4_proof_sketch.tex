@@ -1,0 +1,43 @@
+\section{Proof Sketch}
+\label{sec:proof-sketch}
+
+The scalar identity $\sigma(r)-\sigma(-r)=r$ makes the antisymmetric part of
+each realized depth-two network exactly linear.  Summing over the prescribed
+latter-half iterates gives
+$A_\omega(x)=\langle v_\omega,x\rangle$; see
+Proposition~\ref{prop:step-001-aggregate}.
+
+Oddness and the fixed tie rule imply a pointwise pair-error comparison.  If
+$G_\omega$ correctly labels both $x$ and $-x$, one of the two correctness
+conditions is strict even when the other score is zero, so
+$G_\omega(x)-G_\omega(-x)$ has the strict sign of $h(x)$.  Integrating this
+comparison gives Proposition~\ref{prop:step-002-risk-transfer},
+\[
+\mathcal L_{\mathcal D,h}(A_\omega)
+\leq2\mathcal L_{\mathcal D^{\mathrm{sym}},h}(G_\omega).
+\]
+The universal source premise is then invoked on the legal distribution
+$\mathcal D^{\mathrm{sym}}$.  A finite-range expectation argument extracts,
+for every original pair $(\mathcal D,h)$, a deterministic $v$ satisfying
+\[
+\mathcal L_{\mathcal D,h}(x\mapsto\langle v,x\rangle)
+\leq2\varepsilon.
+\]
+
+For a fixed target, $Q_h$ contains exactly the representative labeled
+$-s_0$ from each antipodal pair.  Exact homogeneous representation is
+equivalent to feasibility of the strict system
+$h(q)\langle w,q\rangle>0$ on $Q_h$.  If this system were infeasible, the
+closest point of the convex hull of the signed vectors $h(q)q$ would be zero.
+Affine-dependence pruning reduces the resulting positive convex certificate
+to at most $n+1$ representatives.  On the uniform distribution over those
+representatives, every homogeneous score makes at least one tie-resolved
+error, so its risk is at least $1/(n+1)$.
+
+Applying the deterministic $2\varepsilon$ upper bound to that same witness
+distribution contradicts Assumption~\ref{assump:high-accuracy}.  Thus the
+strict system is feasible for every target and the identity map represents
+the class exactly.  The Dirac law on the identity map then succeeds with
+probability one.  Finally, every deterministic representation induces a
+confident one by taking a point mass, and
+$n\leq m(n+1)=S\leq TS$, which yields the asserted chain.

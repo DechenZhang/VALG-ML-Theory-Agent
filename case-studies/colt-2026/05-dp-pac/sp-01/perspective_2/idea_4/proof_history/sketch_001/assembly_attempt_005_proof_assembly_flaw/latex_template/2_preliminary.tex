@@ -1,0 +1,64 @@
+\section{Preliminaries}
+
+The quotient map $\kappa$ and its recordwise extension $T_N$ are the common
+interface for the three learners.  Every law releases an element of
+$(H_C,\mathcal H_C)$ and applies $\operatorname{Dec}_C$ only after release;
+the exact raw--quotient risk identity is Proposition~\ref{prop:step-002-risk}.
+Fix a deterministic $\bar c_0\in\bar C$ for totalization.
+
+For $d\ge1$, let
+\[
+ (k,m,N,p_0,\ldots,p_d,L,B,\tau_{\rm AT},\tau_{\rm SS})
+\]
+denote the least-feasible positive-branch tuple supplied by
+Lemma~\ref{lem:step-001-calibration} and
+Proposition~\ref{prop:step-001-teacher}.  Thus $k\ge2$, $N=km$,
+$p_r=2^rNd$, the exact source list cap is $L$, and the teacher margin is
+\[
+ \frac{k}{2}-\tau_{\rm AT}\ge B+\tau_{\rm SS}+2.
+\]
+The tuple retains all integer ceilings and the fixed source allocations
+$\varepsilon_{\rm SS}=\varepsilon/8$ and
+$\delta_{\rm SS}=\delta/2$; its finiteness and calibration conditions are
+proved in the cited appendix results, rather than imposed as additional
+assumptions.
+
+The quotient-first law $K_C^{\mathrm{VC\text{-}Lyu}}$ maps a quotient labeled
+sample in $Z_Q^N$ to $H_C$ by using the fixed teacher blocks, the exact valid
+source restrictions and essential-SOA lists at stages $r=0,\ldots,d$, one
+stopped AboveThreshold transcript with threshold $k/2$, and one Sparse Sample
+draw at its first reported stage.  The mechanism uses the independent
+Laplace tests and categorical weights specified in
+Proposition~\ref{prop:step-010-interfaces}; malformed, empty, or failed states
+follow the fixed deterministic continuation and terminate at $\bar c_0$.
+For $d=0$, $N=0$ and the law is the Dirac mass at the unique member of
+$\bar C$.  Its raw pullback is always defined by
+\[
+ A_N(s,E):=K_C^{\mathrm{VC\text{-}Lyu}}(T_N(s),E).
+\]
+
+The old comparison law $K_C^{\mathrm{old\text{-}Lyu}}$ has the same quotient
+input and output interface, fixed-stage mechanisms, and totalization, with
+the independent old-arm least-feasible tuple and $d$-based calibration from
+Lemma~\ref{lem:step-015-dictionary} and
+Proposition~\ref{prop:step-015-teacher}.  Its raw pullback is obtained by
+the same composition with $T_{N_{\rm old}}$; invalid or failed paths return
+$\bar c_0$.
+
+When $M:=|C|<\infty$, the finite comparison law is the everywhere-defined
+quotient exponential-weights kernel
+\[
+K^{\mathrm{fin}}_{C,N}(\bar s,E)=
+\frac{\displaystyle\sum_{\bar h\in\bar C\cap E}
+ \exp\!\left[-\frac{\varepsilon}{2}\sum_{r=1}^N
+ \mathbf1\{\bar h(q_r)\ne y_r\}\right]}
+ {\displaystyle\sum_{\bar g\in\bar C}
+ \exp\!\left[-\frac{\varepsilon}{2}\sum_{r=1}^N
+ \mathbf1\{\bar g(q_r)\ne y_r\}\right]}.
+\]
+It is defined for every quotient input, including $N=0$, and its raw
+pullback is the composition with $T_N$.  If $|C|=\infty$, set
+$R_{\mathrm{fin}}=+\infty$ and construct no finite surrogate.  The three
+laws therefore share the same output space, decoder, privacy quantifier,
+and realizable iid risk mode; the minimum in the main theorem chooses one
+complete law before data are observed.

@@ -1,0 +1,43 @@
+\section{Proof Sketch}\label{sec:proof-sketch}
+
+The argument has five parts.  First, base conditioning gives
+$\|\Lambda_M\|_{\mathrm{op}}\leq\kappa^2$ in each mode and therefore
+$\|Q\|_{\mathrm{op}}\leq\kappa^6$.  Tensor-product linearity and the
+product-one gauge then yield the exact coefficient identity
+\[
+Q(T-\widehat T_t)=D_r+E_\rho-C_t,
+\qquad C_t\in\mathcal S_t.
+\]
+
+Second, orthogonal-projector geometry gives the one-step comparison
+\[
+\operatorname{dist}_F(D_r,\mathcal S_{t+1})
+\geq
+\operatorname{dist}_F(D_r,\mathcal S_t)
+-\|P_{t+1}-P_t\|_{\mathrm{op}}\|D_r\|_F.
+\]
+The first two certificate clauses telescope this inequality over every finite
+horizon and leave the all-time reserve
+$(\delta-L_P)\|D_r\|_F$.
+
+Third, distance to a fixed subspace is $1$-Lipschitz.  The smoothing residual
+therefore costs at most $\zeta\|D_r\|_F$.  The exact coordinate identity,
+$\|Q\|_{\mathrm{op}}\leq\kappa^6$, and
+$\|T\|_F\leq C_T\|D_r\|_F$ give, for every $t$,
+\[
+\|T-\widehat T_t\|_F
+\geq
+\frac{\delta-L_P-\zeta}{\kappa^6C_T}\|T\|_F.
+\]
+
+Fourth, the third certificate clause makes the represented tensors Cauchy:
+the norm of every tail difference is bounded by the corresponding tail of the
+absolutely summable increment series.  Hence $\widehat T_t$ converges, and
+continuity of squared Frobenius distance gives a finite objective limit.
+
+Finally, the residual floor is squared only after checking its nonnegative
+margin, and the resulting all-time scalar lower bound passes to the existing
+finite limit.  This produces the event inclusion without conditioning on the
+event's probability.  When $Q=I$, $E_\rho=0$, and $T=D_r$, the same proof
+removes the smoothing and coordinate losses and yields the stronger baseline
+factor $(\delta-L_P)^2$.

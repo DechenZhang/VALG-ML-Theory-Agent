@@ -1,0 +1,185 @@
+\section{Theoretical Setup}
+\label{sec:theoretical-setup}
+
+\subsection{Problem Setting}
+
+Let \(\mathcal X\) be an arbitrary domain, possibly empty or infinite, and
+let \(\mathcal H\subseteq\{+1,-1\}^{\mathcal X}\).  For a distribution
+\(\mathcal D\) on \(\mathcal X\), a target \(h\in\mathcal H\), and a
+binary predictor \(g:\mathcal X\to\{+1,-1\}\), define
+\begin{equation}
+\mathcal L_{\mathcal D,h}(g)
+:=\Pr_{x\sim\mathcal D}\bigl[g(x)h(x)<0\bigr].
+\label{eq:binary-risk}
+\end{equation}
+All query expectations and risks below are understood in the usual
+statistical-query sense when they arise on an actual execution.  No
+measurability or output behavior is imposed on a prescribed response sequence
+that is not an actual tolerance-valid execution.
+
+The deterministic exact dimension complexity \(\operatorname{dc}(\mathcal
+H)\) is the least \(d\in\mathbb N_0\) for which there is one map
+\(\psi:\mathcal X\to\mathbb R^d\) satisfying
+\begin{equation}
+\forall h\in\mathcal H\ \exists u_h\in\mathbb R^d\ \forall x\in\mathcal X,
+\qquad
+h(x)\langle u_h,\psi(x)\rangle>0.
+\label{eq:dc-definition}
+\end{equation}
+Its value is \(+\infty\) when no finite \(d\) works.  Thus the required
+representation is pointwise and exact, without a distributional exceptional
+set.
+
+An unrestricted SQ query is a bounded function
+\(q:\mathcal X\times\{+1,-1\}\to[-1,1]\).  For fixed
+\((\mathcal D,h)\), an adaptive tolerance-\(\tau\) oracle policy may choose
+each real reply from the reached history, but a reply \(a\) to the current
+query \(q\) must satisfy
+\begin{equation}
+\left|a-\mathbb E_{x\sim\mathcal D}q(x,h(x))\right|\le\tau.
+\label{eq:sq-validity}
+\end{equation}
+Validity and the learner guarantee are required separately for every
+adversarial policy; there is no averaging over policies.
+
+Let \((\Omega,\mathcal F,\mu)\) be the random-tape probability space of a
+learner \(A\), and write \(R\sim\mu\).  The space may be arbitrary, including
+nonatomic.  Once a complete tape \(r\in\Omega\) is fixed, the learner's
+queries, stopping rule, and terminal binary predictor are deterministic,
+although a query may depend on the whole tape and all previous real replies.
+For a tolerance-valid policy \(\mathcal O\), write
+\[
+A_r^{\mathcal O}(\mathcal D,h):\mathcal X\to\{+1,-1\}
+\]
+for the terminal predictor on that actual execution.
+
+For the tolerance \(\tau\), put
+\begin{equation}
+K:=\left\lceil\frac{1}{\tau}\right\rceil,
+\qquad
+G:=\left\{-1+\frac{2j}{K}:0\le j\le K\right\},
+\label{eq:rounding-grid}
+\end{equation}
+and fix before any instance a deterministic nearest-grid map
+\(\rho:[-1,1]\to G\), with a fixed rule for midpoint ties.  Then
+\begin{equation}
+|\rho(v)-v|\le\frac{1}{K}\le\tau
+\qquad (v\in[-1,1]).
+\label{eq:rounding-radius}
+\end{equation}
+For each \((\mathcal D,h)\), define the proof-only exact-center policy
+\begin{equation}
+\mathcal O^{\rho}_{\mathcal D,h}(q)
+:=\rho\!\left(\mathbb E_{x\sim\mathcal D}q(x,h(x))\right).
+\label{eq:canonical-policy}
+\end{equation}
+The learner receives only the rounded reply, not the exact expectation used
+by the oracle.
+
+For an ordered finite catalog \(\mathcal C=(g_1,\ldots,g_L)\), define
+\begin{equation}
+\phi_{\mathcal C}(x):=(g_1(x),\ldots,g_L(x))\in\{+1,-1\}^L,
+\qquad
+\Delta_L:=\left\{w\in[0,1]^L:\sum_{i=1}^Lw_i=1\right\}.
+\label{eq:catalog-map-simplex}
+\end{equation}
+
+\subsection{Assumptions}
+
+\begin{assumption}[SQ and catalog-family parameter regime]
+\label{assump:sq-parameter-regime}
+The parameters satisfy
+\[
+m\in\mathbb N_0,
+\qquad \tau\in(0,\infty),
+\qquad \varepsilon\in[0,1/4),
+\qquad B\in[1,\infty),
+\qquad k\in\mathbb N,\quad k\ge1.
+\]
+The constants \(B\) and \(k\) are fixed parts of the protocol-family
+certificate.  They are independent of \(\mathcal X,\mathcal H\), the learner
+parameters \((m,\tau,\varepsilon)\), the instance \((\mathcal D,h)\), the
+oracle policy and replies, and the learner tape.  The horizon is the fixed
+finite upper bound \(m\), including \(m=0\).
+\end{assumption}
+
+\begin{assumption}[Universal randomized adversarial-SQ learner]
+\label{assump:universal-adversarial-sq}
+One learner \(A\), fixed independently of \((\mathcal D,h)\) and of the
+oracle policy, makes at most \(m\) adaptive unrestricted queries of tolerance
+\(\tau\) and returns a binary predictor.  For every distribution
+\(\mathcal D\) on \(\mathcal X\), every \(h\in\mathcal H\), and every
+adaptive tolerance-valid adversarial policy \(\mathcal O\), the actual-run
+loss is a \(\mu\)-measurable random variable and
+\begin{equation}
+\mathbb E_{R\sim\mu}
+\mathcal L_{\mathcal D,h}
+\bigl(A_R^{\mathcal O}(\mathcal D,h)\bigr)
+\le\varepsilon.
+\label{eq:universal-risk-guarantee}
+\end{equation}
+The expectation is only over the learner tape.  The premise grants neither
+favorable-policy selection nor exact-expectation access to the learner.
+\end{assumption}
+
+\begin{assumption}[Pre-instance canonical-policy output catalog]
+\label{assump:canonical-rounded-output-catalog}
+As part of the certified protocol, there is a specified finite ordered
+catalog
+\begin{equation}
+\mathcal C_A^{\rho}=(g_1,\ldots,g_L),
+\qquad
+1\le L\le B\left(1+\frac{m}{\tau^2}\right)^k,
+\label{eq:catalog-size}
+\end{equation}
+fixed after the protocol and \(\rho\) are fixed but before the current
+distribution, target, oracle interaction, or learner tape, such that
+\begin{equation}
+\forall\mathcal D\ \forall h\in\mathcal H\ \forall r\in\Omega,
+\qquad
+A_r^{\mathcal O^{\rho}_{\mathcal D,h}}(\mathcal D,h)
+\in\mathcal C_A^{\rho}
+\label{eq:catalog-membership-assumption}
+\end{equation}
+as equality of terminal functions on \(\mathcal X\), whenever the displayed
+canonical interaction is an actual tolerance-valid execution.  This
+condition concerns only actual executions against the canonical policy.  It
+imposes no catalog, finiteness, rank, or measurability condition on outputs
+under other valid policies or under prescribed tolerance-invalid response
+strings; the output range under other valid policies may be infinite.
+\end{assumption}
+
+\subsection{Formalized Goal}
+
+Under Assumptions~\ref{assump:sq-parameter-regime},
+\ref{assump:universal-adversarial-sq}, and
+\ref{assump:canonical-rounded-output-catalog}, the objective is to prove that
+the deterministic common map
+\[
+\phi:=\phi_{\mathcal C_A^{\rho}}:\mathcal X\to\mathbb R^L,
+\qquad
+\phi(x)=(g_1(x),\ldots,g_L(x)),
+\]
+is fixed independently of the current distribution, target, valid oracle
+policy, and learner tape, and satisfies
+\begin{equation}
+\forall h\in\mathcal H\ \exists w_h\in\Delta_L\ \forall x\in\mathcal X,
+\qquad
+h(x)\langle w_h,\phi(x)\rangle
+\ge1-2\varepsilon>\frac12>0.
+\label{eq:formalized-margin-goal}
+\end{equation}
+Each \(w_h\) may depend on \(h\), but not on \(\mathcal D\), the oracle
+policy, or the learner tape.  Consequently, the desired exact deterministic
+bound is
+\begin{equation}
+\operatorname{dc}(\mathcal H)
+\le L
+\le B\left(1+\frac{m}{\tau^2}\right)^k.
+\label{eq:formalized-dimension-goal}
+\end{equation}
+This is a conditional result under
+Assumption~\ref{assump:canonical-rounded-output-catalog}.  It does not derive
+that catalog from \((m,\tau)\) alone and does not resolve the unconditional
+open question of obtaining a linear \(O(m/\tau^2)\) dimension bound from the
+unrestricted SQ guarantee alone.

@@ -1,0 +1,39 @@
+You are the distinct step-scoped proof producer for perspective_2/idea_1, step_011, unit attempt 1 under accepted sketch attempt 2, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+Read <CODEX_SKILLS_ROOT>/proof-step/SKILL.md completely and every directly required shared contract/template it names. Prove exactly the accepted sketch-attempt-2 step_011 row. Do not strengthen, weaken, or alter its interface. Write only perspective_2/idea_1/proof_steps/step_011/proof.md. Do not modify the idea, setting, sketch, sketch review, dependency proofs/reviews, global diagnostics, trackers, worker log, controller prompts, proof history, the stale same-step review, downstream steps, final reviews, assembly artifacts, results, or any other file.
+
+Binding controller inputs:
+
+- idea.md: 5209aa21929e84604acb2712d8657460a48463901738fd00ebafaa84d5c43596
+- setting.md: 6955a2723694ff60af8d5d40329ff0ad056f9b54780ff02744d8985456222b7e
+- accepted proof_sketch.md: 41517943f551814aaf87ff8541d5a81b56123cae7d8533b2bceb302a981bfbc4
+- accepted proof_sketch_review.md: a80e7f4ffb1ad57991675810dbf7064bc7b482b8f34b61f10a171ebfc97b43c9
+- controller-open proof_tracker.md: 19b3d4d53e529e318df561df47548606238040acd2b0ddc5f2f621574990d68a
+- accepted dependency step_001 proof.md: 6986e91d1b2a06c451ae6bba842e30747ac507bf3e0eeee09371c1af0b6d4ff8
+- accepted dependency step_001 review.md: 4ec6dfad924606b81aa28203e98ac3989ae15cf573297004efbd7036e4455f55
+- accepted dependency step_008 proof.md: 957f7441096a04d797c31a40b01bdb7bd06e696d79eb5f4439ad535f2d3cc085
+- accepted dependency step_008 review.md: 3bfe1e0e150e31cbff126ba2cbdf735c717506d64bacd73913ebeabc24fd9a19
+
+Verify both dependency reviews bind sketch attempt 2, their exact Step IDs and current unit attempts, the matching proof hashes, and ACCEPTED status before consuming either proof. Do not read or use global_proof.md or global_proof_review.md. The latest prior same-step sketch-1 proof/review are archived byte-identically at perspective_2/idea_1/proof_history/sketch_001/proof_steps/step_011/attempt_001/ with proof SHA-256 1f9537c74192da8502346ba12b457ccc9c8545fa8485aea22d234e0d594f59f3 and review SHA-256 729872c64fb9fbc4da6f7e3f0c16c38118afe705134214a0b2764da2065879c8. You may consult only those two named files as diagnostic same-step material if useful, never as current evidence or authority; do not scan proof_history. The live step_011 proof/review have the same stale hashes before proof overwrite.
+
+The binding target row is:
+
+`step_011`: For F=(1,theta/delta), prove the exact matrix certificate and projective speed, use `step_008` for the 1/delta upper bound, compute the exact epsilon/(4 delta) probability, and record the lower ratio. Dependencies are exactly `step_001` and `step_008`. Assumptions are the primitive specialization of all four setting assumptions plus the named accepted dependency outputs. Include both sign wedges, coefficient-axis null sets, and endpoint cases while ensuring the static annotation records the metric rescaling. Use direct normalized-curve differentiation and planar Lebesgue-area calculation. The output is the complete Counter-example 1 scale-audit clause. Preserve Rate Objective R5 and consistency with R1/R3.
+
+Prove a complete current-sketch artifact with stable paper-ready named local results. At minimum, establish all of the following without changing the source example:
+
+- Specialize N=2, Theta=[-1,1], R=1, kappa=1/4, q=M=m=0, Delta=1, 0<epsilon<=delta<=1, augmented tuple (F_0,F_1,F_2)=(0,1,theta/delta), and original lower coefficient vector (alpha_1,alpha_2) in [-1,1]^2.
+- Give the constant derivative-closure matrix in the accepted row/column convention with sole nonzero entry B_{2,1}=1/delta and derive the literal coefficient-height certificate widehat Lambda_{B,T}=1/delta, independent of the legal containing T.
+- For gamma_F(theta)=(1,theta/delta)/sqrt(1+(theta/delta)^2), differentiate explicitly in the original theta coordinate and prove ||gamma_F'(theta)||_2=1/[delta(1+(theta/delta)^2)], Gamma_proj(F)=1/delta, and the maximum is active at theta=0.
+- Invoke the exact named accepted `step_008` homogeneous interval/capacity interface for every arbitrary possibly correlated law in the declared density class. With A=(2R)^N kappa=1 and N=2, obtain the exact upper coefficient 1/delta. Do not impose independence on this general law class.
+- For the single selected source law with alpha_1 and alpha_2 independent uniform on [-1,1], identify exactly the root event for theta in [0,epsilon]. Include both opposite-sign wedges, theta=0, theta=epsilon, the coefficient axes, and wedge boundaries. Off the null axes the condition is alpha_1 alpha_2<0 and |alpha_1|<=(epsilon/delta)|alpha_2|.
+- Compute both triangular wedge areas by displayed planar slice integration. Their total area is epsilon/delta; multiplying by the exact density 1/4 gives probability epsilon/(4 delta). Explain why the closed boundaries and axes do not alter the value.
+- Divide by the positive interval length epsilon to obtain the exact lower ratio 1/(4 delta), compare it separately with the dependency-supplied upper 1/delta and the raw one-entry Euclidean certificate 1/delta, and preserve the distinct constants. Handle epsilon=delta, delta=1, and epsilon down to zero only as a positive-length limiting audit.
+
+Use the current dependency theorem-style interfaces literally, restating each consumed result with exact assumptions, object mapping, conclusion, and discharge. Keep the particular independent uniform law separate from the arbitrary-correlated upper theorem. Do not infer marginal or conditional density bounds, change the coefficient ordering, rescale theta without tracking the 1/delta derivative factor, omit a sign wedge, replace closed endpoint events by an unjustified open event, clip probability bounds at one, hide delta in a constant, claim equality between the lower and upper coefficients, or assert an optimal constant not present in the accepted row.
+
+The current target is structurally the same Counter-example audit as sketch attempt 1 but requires a fresh attempt-2 proof with current dependency identities and interfaces. Preserve any valid same-step mathematics only after rechecking it against the current sketch and current dependency theorem labels. Prior same-step artifacts remain diagnostic only.
+
+Use the shared proof-step template. Classify assumptions and every helper object, provide a non-atomic local-unit map matching the derivation, keep all theorem-style statements self-contained, expose exact explicit-rate modes and baseline-invariance obligations, and set Step Proof Status=COMPLETE only if all target clauses are proved. Otherwise preserve valid work, set PARTIAL_BLOCKED, and name the exact blocker.
+
+Before returning, reverify all protected hashes, dependency identities, exact target row, local-unit map/derivation correspondence, assumption and constant provenance, arbitrary-correlation versus selected-independent-law scopes, ordinary-probability mode, coefficient dimensions, both wedge signs and boundary branches, exact rate algebra, ASCII/control bytes, TeX delimiter/brace balance, internal references, Markdown table arity ignoring escaped pipes, required headings, and single-output-file scope. Concurrent changes in perspective_1 or perspective_3 are outside your branch-local scope and are not worker violations. Report status, local-unit count and labels, dependency proof/review hashes, final proof SHA-256, and protected-input verification.

@@ -1,0 +1,126 @@
+\begin{lemma}[Impossibility of the negated candidate bound]\label{lem:step-015-negated-target}
+Under Assumptions~\ref{assump:candidate-regime},
+\ref{assump:central-dp}, and
+\ref{assump:distribution-free-realizable-pac},
+Proposition~\ref{prop:step-005-certificate}, and
+Proposition~\ref{prop:step-014-fixed-contradiction}, fix any candidate in
+the order \eqref{eq:candidate-order}--\eqref{eq:candidate-map}, with the
+privacy pair chosen between the integer tuple and the learner. If
+
+\[
+n<ak\log_2^*N,
+\tag{1}
+\]
+
+then the preceding propositions yield a contradiction. Hence no
+such fixed candidate can satisfy (1).
+\end{lemma}
+
+\begin{proof}
+The constants in \eqref{eq:calibration}, including \(a=b_*/16\), and
+\(N_0\) were fixed by
+Proposition~\ref{prop:step-005-certificate} before the present
+candidate was chosen. Apply that proposition to the fixed candidate and the
+strict hypothesis (1). It yields, at the exact integer budget
+
+\[
+M=\max\left\{8,\left\lceil\frac{4n}{k}\right\rceil\right\},
+\]
+
+the strict hard-regime and source-privacy conclusions
+
+\[
+N\ge N_*,\qquad 8\le M<b_*\log_2^*N,
+\qquad 0<\varepsilon\le0.1,
+\qquad 0<\delta<\frac{d_*}{M^2\log M}.
+\tag{2}
+\]
+
+The same proposition retains, rather than replaces, the primitive
+conjunction
+
+\[
+0<\delta\le\frac{1}{n\log(n+1)},
+\qquad
+0<\delta\le\frac{c_\delta}{M^2\log(M+1)}.
+\tag{3}
+\]
+
+The fixed learner still satisfies its exact
+Assumption~\ref{assump:central-dp} and
+Assumption~\ref{assump:distribution-free-realizable-pac} premises; neither
+is altered by the scalar specialization (2). Therefore the complete
+premise package for
+Proposition~\ref{prop:step-014-fixed-contradiction} holds at this identical
+candidate. Applying that proposition, without reopening any of its internal
+dependencies, gives one fixed product instance
+\((P_{\boldsymbol Q^*},c_{\boldsymbol t^*})\) for which
+
+\[
+\mathbb E_{\substack{
+ S\sim(P_{\boldsymbol Q^*}^{c_{\boldsymbol t^*}})^n\\
+ \rho_A}}
+R_{P_{\boldsymbol Q^*}}
+\bigl(A_{\rho_A}(S),c_{\boldsymbol t^*}\bigr)>2^{-9}
+\tag{4}
+\]
+
+and, for literally the same fixed distribution, target, size-\(n\) iid
+sample law, randomized learner, internal-coin law, and population risk,
+
+\[
+\mathbb E_{\substack{
+ S\sim(P_{\boldsymbol Q^*}^{c_{\boldsymbol t^*}})^n\\
+ \rho_A}}
+R_{P_{\boldsymbol Q^*}}
+\bigl(A_{\rho_A}(S),c_{\boldsymbol t^*}\bigr)\le2^{-12}.
+\tag{5}
+\]
+
+But
+
+\[
+2^{-9}=8\cdot2^{-12}>2^{-12},
+\tag{6}
+\]
+
+so no real number can satisfy both (4) and (5). This contradicts (1).
+
+There is no exceptional boundary branch. Proposition~\ref{prop:step-005-certificate} derives (2)--(3) with the same
+strict inequalities when \(N=N_0\), \(M=8\), \(n=1\), \(n<k\), or
+\(k=2\), and Proposition~\ref{prop:step-014-fixed-contradiction} applies to that same
+candidate and exact fixed-instance experiment. No floor, ceiling, endpoint,
+privacy parameter, or sample size is changed in this invocation. \end{proof}
+
+\begin{proposition}[Exact nonasymptotic candidate closure]\label{prop:step-015-exact-closure}
+Fix the universal constants in \eqref{eq:calibration} and the fixed
+\(N_0\) before
+candidate quantification. Under Assumptions~\ref{assump:candidate-regime},
+\ref{assump:central-dp}, and
+\ref{assump:distribution-free-realizable-pac}, every candidate quantified
+in that same candidate order satisfies
+
+\[
+n\ge a k\log_2^*N.
+\tag{7}
+\]
+
+This is a deterministic pointwise implication for the exact candidate. It
+makes no assertion outside the approved candidate regime.
+\end{proposition}
+
+\begin{proof}
+Fix an arbitrary candidate covered by the proposition. If (7) failed, then
+the total order on the real numbers would give its exact strict negation
+
+\[
+n<ak\log_2^*N.
+\tag{8}
+\]
+
+No integer rounding is inserted into this logical negation. But
+Lemma~\ref{lem:step-015-negated-target} proves that (8) is impossible for a
+candidate satisfying the three primitive assumptions. Therefore (7) holds.
+Because the constants were fixed before the arbitrary candidate and the
+candidate was otherwise arbitrary within that order, the conclusion has the
+quantifier order stated in the formalized goal. \end{proof}

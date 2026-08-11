@@ -1,0 +1,2336 @@
+\appendix
+
+\section{Proof Details}
+
+\subsection{Unit-box coefficient envelopes and chain derivatives}
+\label{app:coefficient-envelope}
+
+\begin{lemma}[Literal unit-box coefficient envelope]
+\label{lem:unit-box-envelope}
+Let $m\geq1$ and $d\geq0$ be integers, and let
+\[
+S(z)=\sum_{\nu\in\mathcal A}a_\nu z^\nu,
+\qquad
+\mathcal A\subseteq
+\{\nu\in\mathbb N_0^m:|\nu|_1\leq d\}
+\]
+have finite coefficient support.  Then, for every $z\in[-1,1]^m$,
+\[
+|S(z)|\leq\|\operatorname{coeff}(S)\|_1,
+\qquad
+|\partial_{z_r}S(z)|
+\leq d\,\|\operatorname{coeff}(S)\|_1
+\quad(1\leq r\leq m).
+\]
+These statements include $d=0$, constant polynomials, and the zero
+polynomial without assigning a degree to the zero polynomial.
+\end{lemma}
+
+\begin{proof}
+For $z\in[-1,1]^m$, every monomial satisfies $|z^\nu|\leq1$, and hence
+\[
+|S(z)|
+\leq\sum_{\nu\in\mathcal A}|a_\nu||z^\nu|
+\leq\sum_{\nu\in\mathcal A}|a_\nu|
+=\|\operatorname{coeff}(S)\|_1.
+\]
+For a fixed coordinate $r$, termwise differentiation gives
+\[
+\partial_{z_r}S(z)
+=\sum_{\substack{\nu\in\mathcal A\\\nu_r\geq1}}
+ \nu_r a_\nu z^{\nu-e_r}.
+\]
+Since $\nu_r\leq|\nu|_1\leq d$ and
+$|z^{\nu-e_r}|\leq1$,
+\[
+\begin{aligned}
+|\partial_{z_r}S(z)|
+&\leq
+\sum_{\substack{\nu\in\mathcal A\\\nu_r\geq1}}
+ \nu_r|a_\nu||z^{\nu-e_r}|\\
+&\leq d
+\sum_{\substack{\nu\in\mathcal A\\\nu_r\geq1}}|a_\nu|
+\leq d\,\|\operatorname{coeff}(S)\|_1.
+\end{aligned}
+\]
+No monomial-count factor occurs.  If $d=0$, the differentiated sum is empty;
+if $S=0$, both inequalities are $0\leq0$.
+\end{proof}
+
+\begin{proposition}[Coordinate derivative envelope]
+\label{prop:coordinate-envelope}
+Under Assumptions~\ref{assump:balcan-common-chain} and
+\ref{assump:anchored-unit-range}, define
+\[
+D_*:=\Delta B_Q(1+qB_P).
+\]
+Then $G_i\in C^1([-1,1])$ and
+\[
+|G_i'(x)|\leq D_*
+\qquad
+(x\in[-1,1],\ 1\leq i\leq N).
+\]
+For $q=0$, this is $|G_i'|\leq\Delta B_Q$ with $M=B_P=0$.
+For fixed $B_P$, the bound has degree-zero dependence on $M$.
+\end{proposition}
+
+\begin{proof}
+Fix $x\in[-1,1]$ and $i\leq N$, and write
+\[
+z(x):=(x,\eta_1(x),\ldots,\eta_q(x)).
+\]
+When $P_j$ is evaluated at $z(x)$ it ignores later chain coordinates, as in
+Assumption~\ref{assump:balcan-common-chain}.  The unit-range condition gives
+$z(x)\in[-1,1]^{q+1}$; for $q=0$, this says $z(x)=(x)\in[-1,1]$.
+
+Because $\deg Q_i\leq\Delta$, Lemma~\ref{lem:unit-box-envelope} gives
+\[
+|\partial_xQ_i(z(x))|\leq\Delta B_Q,
+\qquad
+|\partial_{y_j}Q_i(z(x))|\leq\Delta B_Q
+\quad(1\leq j\leq q).
+\]
+For $q\geq1$, the value part of that lemma and the definition of $B_P$ give
+\[
+|P_j(z(x))|
+\leq\|\operatorname{coeff}(P_j)\|_1
+\leq B_P.
+\]
+The constant is one because every monomial has magnitude at most one on the
+actual unit box; neither $M$ nor a monomial count is introduced.
+
+The multivariable chain rule \citep{rudin1976principles} and the chain
+equations yield
+\[
+\begin{aligned}
+G_i'(x)
+&=\partial_xQ_i(z(x))
+ +\sum_{j=1}^q\partial_{y_j}Q_i(z(x))\eta_j'(x)\\
+&=\partial_xQ_i(z(x))
+ +\sum_{j=1}^q\partial_{y_j}Q_i(z(x))P_j(z(x)).
+\end{aligned}
+\]
+Consequently,
+\[
+\begin{aligned}
+|G_i'(x)|
+&\leq |\partial_xQ_i(z(x))|
+ +\sum_{j=1}^q
+ |\partial_{y_j}Q_i(z(x))|\,|P_j(z(x))|\\
+&\leq\Delta B_Q+\sum_{j=1}^q\Delta B_QB_P\\
+&=\Delta B_Q+q\Delta B_QB_P
+=\Delta B_Q(1+qB_P)=D_*.
+\end{aligned}
+\]
+The calculation holds on the interval interior.  Every term is continuous on
+$[-1,1]$, so the same identity and estimate hold at the endpoints by the
+corresponding one-sided limits.
+
+When $q=0$, both sums are empty and
+\[
+G_i'(x)=Q_i'(x),
+\qquad
+|G_i'(x)|\leq\Delta B_Q.
+\]
+If $\Delta=0$, every output is constant and both sides vanish.  A constant or
+zero $Q_i$ has zero derivative even when the global $\Delta$ is positive.  If
+$M=0$ with $q\geq1$, each nonzero $P_j$ is constant and the same value bound
+applies; a zero $P_j$, or $B_P=0$, removes its chain contribution.  These
+cases introduce no additional convention or constant.
+\end{proof}
+
+\subsection{Euclidean normalization and projective speed}
+\label{app:projective-speed}
+
+\begin{lemma}[Derivative of a normalized Euclidean curve]
+\label{lem:normalized-curve}
+Let $J=[a,b]$ be nondegenerate and let
+$v\in C^1(J;\mathbb R^N)$ satisfy $v(t)\neq0$ on $J$.  Define
+\[
+r(t):=\|v(t)\|_2,
+\qquad
+\gamma(t):=\frac{v(t)}{r(t)}.
+\]
+Then $r,\gamma\in C^1(J)$ under the one-sided endpoint convention, and
+\[
+r'(t)=\gamma(t)^{\mathsf T}v'(t),
+\qquad
+\gamma'(t)
+=\frac{(I_N-\gamma(t)\gamma(t)^{\mathsf T})v'(t)}{\|v(t)\|_2}.
+\]
+The matrix $I_N-\gamma\gamma^{\mathsf T}$ is the Euclidean orthogonal
+projector onto $\gamma^\perp$, so
+\[
+\|I_N-\gamma(t)\gamma(t)^{\mathsf T}\|_{2\to2}\leq1,
+\qquad
+\|\gamma'(t)\|_2\leq\frac{\|v'(t)\|_2}{\|v(t)\|_2}.
+\]
+For $N=1$, the projector is zero and $\gamma$ is constant.
+\end{lemma}
+
+\begin{proof}
+Nonvanishing gives $r>0$.  Differentiating
+$r(t)^2=v(t)^{\mathsf T}v(t)$ gives
+\[
+2r(t)r'(t)=2v(t)^{\mathsf T}v'(t),
+\qquad
+r'(t)=\frac{v(t)^{\mathsf T}v'(t)}{r(t)}
+=\gamma(t)^{\mathsf T}v'(t).
+\]
+Differentiating $v/r$ therefore yields
+\[
+\begin{aligned}
+\gamma'(t)
+&=\frac{v'(t)}{r(t)}-\frac{v(t)r'(t)}{r(t)^2}\\
+&=\frac{v'(t)-\gamma(t)\gamma(t)^{\mathsf T}v'(t)}{r(t)}\\
+&=\frac{(I_N-\gamma(t)\gamma(t)^{\mathsf T})v'(t)}{\|v(t)\|_2}.
+\end{aligned}
+\]
+The right sides are continuous, so the interior identities extend to the
+endpoints by one-sided limits.
+
+Put $P=I_N-\gamma\gamma^{\mathsf T}$.  Since $\|\gamma\|_2=1$,
+\[
+P^{\mathsf T}=P,
+\qquad
+P^2=I_N-2\gamma\gamma^{\mathsf T}
+ +\gamma(\gamma^{\mathsf T}\gamma)\gamma^{\mathsf T}=P.
+\]
+Also $P\gamma=0$, while $Pz=z$ for $z\perp\gamma$, so $P$ is the stated
+orthogonal projector.  For every $z\in\mathbb R^N$,
+\[
+\|Pz\|_2^2=z^{\mathsf T}P^2z
+=\|z\|_2^2-(\gamma^{\mathsf T}z)^2
+\leq\|z\|_2^2.
+\]
+This proves the contraction and the derivative bound.  If $N=1$, continuity
+and nonvanishing prevent the unit scalar $\gamma$ from changing sign, and
+algebraically $P=1-\gamma^2=0$.
+\end{proof}
+
+\begin{proposition}[Anchored projective-speed certificate]
+\label{prop:projective-speed}
+Under Assumptions~\ref{assump:parameter-regime} and
+\ref{assump:anchored-unit-range}, and
+Proposition~\ref{prop:coordinate-envelope}, define
+\[
+D_*:=\Delta B_Q(1+qB_P),
+\qquad
+\gamma_G(x):=\frac{G(x)}{\|G(x)\|_2}.
+\]
+Then for every $x\in[-1,1]$ and $\theta\in\Theta$,
+\[
+G_1(x)=F_1(\theta)=1,
+\qquad
+\|G(x)\|_2,\|F(\theta)\|_2\geq1.
+\]
+Both normalized curves are globally $C^1$, and
+\[
+\gamma_G'(x)
+=\frac{(I_N-\gamma_G(x)\gamma_G(x)^{\mathsf T})G'(x)}{\|G(x)\|_2},
+\]
+\[
+\gamma_F(\theta)=\gamma_G\!\left(\frac{\theta-c}{h}\right),
+\qquad
+\gamma_F'(\theta)=\frac1h\gamma_G'\!\left(\frac{\theta-c}{h}\right).
+\]
+In particular,
+\[
+\Gamma_{\mathrm{proj}}(F)
+\leq\frac{\sqrt N\,D_*}{h}
+=\frac{\sqrt N\,\Delta B_Q(1+qB_P)}{h}.
+\]
+\end{proposition}
+
+\begin{proof}
+The literal anchor gives
+\[
+G_1(x)=Q_1(x,\eta_1(x),\ldots,\eta_q(x))=1,
+\qquad
+F_1(\theta)=G_1(x(\theta))=1.
+\]
+Thus
+\[
+\|G(x)\|_2^2=1+\sum_{i=2}^N|G_i(x)|^2\geq1,
+\qquad
+\|F(\theta)\|_2^2=1+\sum_{i=2}^N|F_i(\theta)|^2\geq1,
+\]
+with empty sums when $N=1$.  Nonvanishing is therefore proved before
+Lemma~\ref{lem:normalized-curve} is applied to $v=G$.
+
+Proposition~\ref{prop:coordinate-envelope} gives
+$|G_i'(x)|\leq D_*$ for all $i$.  Since $D_*\geq0$,
+\[
+\|G'(x)\|_2^2
+=\sum_{i=1}^N|G_i'(x)|^2
+\leq\sum_{i=1}^ND_*^2=ND_*^2,
+\qquad
+\|G'(x)\|_2\leq\sqrt N\,D_*.
+\]
+Lemma~\ref{lem:normalized-curve} supplies the displayed projector identity,
+whose denominator is at least one and whose numerator projector has operator
+norm at most one.  Hence
+\[
+\|\gamma_G'(x)\|_2
+\leq\frac{\|G'(x)\|_2}{\|G(x)\|_2}
+\leq\sqrt N\,D_*.
+\]
+
+Since $F(\theta)=G(x(\theta))$, normalization commutes exactly with
+evaluation:
+\[
+\gamma_F(\theta)
+=\frac{G(x(\theta))}{\|G(x(\theta))\|_2}
+=\gamma_G(x(\theta)).
+\]
+The vector chain rule \citep{rudin1976principles} and
+$x'(\theta)=h^{-1}$ give
+\[
+\gamma_F'(\theta)
+=\gamma_G'(x(\theta))x'(\theta)
+=\frac1h\gamma_G'\!\left(\frac{\theta-c}{h}\right),
+\]
+including one-sided endpoints by continuity.  Therefore
+\[
+\|\gamma_F'(\theta)\|_2
+\leq\frac{\sqrt N\,D_*}{h},
+\]
+and taking the defining essential supremum proves the result.
+
+If $N=1$, the anchor forces $F=G=(1)$, so the projector and speed are zero;
+also $\Delta=D_*=0$.  If $q=0$, then $M=B_P=0$ and the rate becomes
+$\sqrt N\Delta B_Q/h$.  If the projector annihilates $G'$, both normalized
+derivatives vanish.  For $G(x)=(1,x/\delta)$ with
+$0<\delta\leq1$, one has
+\[
+B_Q=\frac1\delta,
+\qquad
+D_*=\frac1\delta,
+\qquad
+\gamma_G(x)=\frac{(1,x/\delta)}{\sqrt{1+(x/\delta)^2}},
+\qquad
+\|\gamma_G'(x)\|_2
+=\frac{1/\delta}{1+(x/\delta)^2}.
+\]
+Thus its exact speed supremum is $1/\delta$, while the general certificate is
+$\sqrt2/\delta$; both preserve the required scale.
+\end{proof}
+
+\subsection{Central incidence geometry and coefficient volume}
+\label{app:central-incidence}
+
+\begin{lemma}[Tangential Jacobians of the central incidence]
+\label{lem:incidence-jacobians}
+Under Assumption~\ref{assump:parameter-regime} and
+Proposition~\ref{prop:projective-speed}, let
+$J\subseteq\operatorname{int}(\Theta)$ be open, put
+$K^\circ=(-R,R)^N$, and write $\gamma=\gamma_F$.  Define
+\[
+\mathcal S_J
+:=\{(\theta,a)\in J\times K^\circ:
+       \langle a,\gamma(\theta)\rangle=0\},
+\qquad
+\pi(\theta,a):=a,
+\qquad
+\tau(\theta,a):=\theta.
+\]
+Then $\mathcal S_J$ is an embedded $C^1$, countably $N$-rectifiable
+hypersurface.  With
+\[
+u(\theta,a):=\langle a,\gamma'(\theta)\rangle,
+\qquad
+n(\theta,a):=\frac{(u(\theta,a),\gamma(\theta))}{\sqrt{1+u(\theta,a)^2}},
+\]
+$n$ is a unit normal and
+\[
+J_{\mathcal S_J}\pi
+=\frac{|u|}{\sqrt{1+u^2}},
+\qquad
+J_{\mathcal S_J}\tau
+=\frac1{\sqrt{1+u^2}}.
+\]
+Consequently, including at $u=0$,
+\[
+J_{\mathcal S_J}\pi
+=|\langle a,\gamma_F'(\theta)\rangle|
+ J_{\mathcal S_J}\tau.
+\tag{A.1}
+\]
+\end{lemma}
+
+\begin{proof}
+On $U=J\times\mathbb R^N$, define
+\[
+g(\theta,a):=\langle a,\gamma(\theta)\rangle.
+\]
+Proposition~\ref{prop:projective-speed} gives $\gamma\in C^1$ and
+$\|\gamma\|_2=1$, so
+\[
+\nabla g(\theta,a)
+=(\langle a,\gamma'(\theta)\rangle,\gamma(\theta))=(u,\gamma),
+\qquad
+\|\nabla g(\theta,a)\|_2^2=1+u^2\geq1.
+\]
+The regular-level-set theorem \citep{lee2013smooth} therefore applies at
+every incidence, without a root-transversality premise, and gives the stated
+hypersurface and normal.  Tangent roots $u=0$ remain regular because the
+coefficient gradient is the unit vector $\gamma$.
+
+Let $e_0=(1,0,\ldots,0)\in\mathbb R^{N+1}$ be the $\theta$-direction and
+$T=T_{(\theta,a)}\mathcal S_J=n^\perp$.  Choose an orthonormal basis
+$v_1,\ldots,v_N$ of $T$ and set $s_i=\langle v_i,e_0\rangle$.  Coefficient
+projection deletes only the $e_0$ component, so
+\[
+\langle\pi v_i,\pi v_j\rangle=\delta_{ij}-s_is_j.
+\]
+The determinant of this rank-one perturbation and the orthonormal basis
+$v_1,\ldots,v_N,n$ give
+\[
+\begin{aligned}
+(J_{\mathcal S_J}\pi)^2
+&=\det(I_N-ss^{\mathsf T})=1-\|s\|_2^2,\\
+1=\|e_0\|_2^2
+&=\sum_{i=1}^N\langle e_0,v_i\rangle^2
+ +\langle e_0,n\rangle^2
+=\|s\|_2^2+\langle e_0,n\rangle^2.
+\end{aligned}
+\]
+Therefore
+\[
+J_{\mathcal S_J}\pi
+=|\langle e_0,n\rangle|
+=\frac{|u|}{\sqrt{1+u^2}}.
+\]
+The tangential gradient of the scalar coordinate $\tau$ is $P_Te_0$, and
+hence
+\[
+J_{\mathcal S_J}\tau
+=\|P_Te_0\|_2
+=\sqrt{1-\langle e_0,n\rangle^2}
+=\frac1{\sqrt{1+u^2}}.
+\]
+This quantity is strictly positive for every finite $a$.  Multiplication by
+$|u|$ proves (A.1) without division by $u$ or selection of a root branch.
+\end{proof}
+
+\begin{lemma}[Null boundary and degenerate central classes]
+\label{lem:central-null-classes}
+Under Assumptions~\ref{assump:parameter-regime} and
+\ref{assump:anchored-unit-range}, and
+Proposition~\ref{prop:projective-speed}, let $I\subseteq\Theta$ be an
+interval and write $\gamma=\gamma_F$.  Then:
+\begin{enumerate}
+\item For every $a$ and $\theta\in I$,
+\[
+\langle a,F(\theta)\rangle=0
+\quad\Longleftrightarrow\quad
+\langle a,\gamma(\theta)\rangle=0.
+\tag{A.2}
+\]
+\item Coefficients producing a root in
+$I\setminus\operatorname{int}(I)$ lie in at most two proper linear
+hyperplanes and are Lebesgue-null.
+\item If $I\neq\varnothing$, the set
+\[
+\mathcal Z_I:=\{a:\langle a,F(\theta)\rangle=0
+                  \text{ for every }\theta\in I\}
+\]
+is a proper null linear subspace and has probability zero under every
+absolutely continuous law.
+\item If $L\subseteq\Theta$ is nondegenerate and $\gamma'=0$ on its
+interior, then $\gamma$ is constant on $L$; the root coefficients over $L$
+form one proper hyperplane while the sweep integrand vanishes.
+\item If $N=1$, then $F=\gamma=(1)$, the root coefficient set is $\{0\}$,
+and both sides of Proposition~\ref{prop:central-volume} below are zero for
+every interval.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Proposition~\ref{prop:projective-speed} gives
+$F=\|F\|_2\gamma$ with $\|F\|_2>0$, proving (A.2).
+
+An interval differs from its ordinary interior by at most two endpoints.  At
+a fixed endpoint $t$, the root coefficients form
+\[
+H_t:=\{a:\langle a,\gamma(t)\rangle=0\}=\gamma(t)^\perp.
+\]
+This hyperplane is proper because $\|\gamma(t)\|_2=1$.  An orthogonal change
+of coordinates sends it to $\{a_1=0\}$, which is null by Fubini's theorem
+\citep{bogachev2007measure}; orthogonal
+maps preserve Lebesgue measure, and a finite union remains null.
+
+If $I\neq\varnothing$, choose $t_0\in I$.  The set $\mathcal Z_I$ is an
+intersection of kernels and hence a linear subspace, with
+\[
+\mathcal Z_I\subseteq\{a:\langle a,F(t_0)\rangle=0\}.
+\]
+The containing hyperplane is proper because $F_1(t_0)=1$.  Thus
+$\mathcal Z_I$ is null, and absolute continuity gives its probability-zero
+consequence, including the zero coefficient vector.
+
+If $\gamma'=0$ on the interior of $L$, the scalar mean-value theorem
+\citep{rudin1976principles} applied
+coordinatewise makes $\gamma$ constant there, and continuity extends that
+value to included endpoints.  The root set is then one fixed hyperplane and
+$\langle a,\gamma'\rangle=0$ throughout the interval interior.
+
+For $N=1$, the anchor gives $F=\gamma=(1)$.  A root on a nonempty interval
+exists only for $a=0$; on an empty interval none exists.  The coefficient
+volume is zero.  Also $\gamma'=0$ and
+$\gamma(\theta)^\perp\cap[-R,R]=\{0\}$; although
+$\mathcal H^0(\{0\})=1$, the section integrand is zero.
+\end{proof}
+
+\begin{proposition}[Central root-set coefficient-volume inequality]
+\label{prop:central-volume}
+Under Assumptions~\ref{assump:parameter-regime} and
+\ref{assump:anchored-unit-range}, Proposition~\ref{prop:projective-speed},
+and Lemmas~\ref{lem:incidence-jacobians} and
+\ref{lem:central-null-classes}, every interval $I\subseteq\Theta$, with any
+endpoint convention, satisfies
+\[
+\begin{aligned}
+&\operatorname{Leb}^N
+\{a\in[-R,R]^N:\exists\theta\in I,
+  \ \langle a,F(\theta)\rangle=0\}\\
+&\quad\leq
+\int_I\int_{\gamma_F(\theta)^\perp\cap[-R,R]^N}
+ |\langle\gamma_F'(\theta),a\rangle|
+ \,d\mathcal H^{N-1}(a)\,d\theta.
+\end{aligned}
+\tag{A.3}
+\]
+The bound requires neither simple roots nor transversality.  Tangent
+incidences have null coefficient image, distinct roots increase projection
+multiplicity, and identically zero combinations may have infinite
+multiplicity only on the null subspace in
+Lemma~\ref{lem:central-null-classes}.
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:central-null-classes} proves the assertion for $N=1$, so
+assume $N\geq2$.  Put
+\[
+K=[-R,R]^N,
+\qquad K^\circ=(-R,R)^N,
+\qquad J=\operatorname{int}(I),
+\qquad \gamma=\gamma_F.
+\]
+If $J=\varnothing$, then $I$ is empty or a singleton; its root set is empty
+or a proper hyperplane, and both the coefficient volume and outer integral
+are zero.  Suppose $J\neq\varnothing$.
+
+The root coefficient set is Borel.  Indeed, choose compact intervals
+$J_m\subset J$ with $J_m\uparrow J$.  The zero set of the continuous map
+$(\theta,a)\mapsto\langle a,\gamma(\theta)\rangle$ in $J_m\times K$ is
+compact, so its coefficient projection is compact.  The interior-root set is
+the countable union of these projections; adjoining at most two endpoint
+hyperplanes preserves Borel measurability.
+
+The cube boundary is Lebesgue-null, and endpoint root classes are null by
+Lemma~\ref{lem:central-null-classes}.  The left side of (A.3) therefore has
+the same volume as $\pi(\mathcal S_J)$.  For $a\in\mathbb R^N$, define the
+extended-valued multiplicity
+\[
+\mathcal N_J(a)
+:=\#\{\theta\in J:(\theta,a)\in\mathcal S_J\}.
+\]
+The indicator of a nonempty fiber is at most $\mathcal N_J(a)$, even for an
+infinite fiber.  The area formula for rectifiable sets
+\citep{federer1969gmt} applies because
+Lemma~\ref{lem:incidence-jacobians} supplies a countably rectifiable
+hypersurface and $\pi$ is $1$-Lipschitz.  Hence, in the extended nonnegative
+sense,
+\[
+\begin{aligned}
+\operatorname{Leb}^N(\pi(\mathcal S_J))
+&=\int_{\mathbb R^N}
+  \mathbf1_{\{\mathcal N_J(a)\geq1\}}\,da\\
+&\leq\int_{\mathbb R^N}\mathcal N_J(a)\,da\\
+&=\int_{\mathcal S_J}
+  J_{\mathcal S_J}\pi(\theta,a)\,d\mathcal H^N(\theta,a).
+\end{aligned}
+\tag{A.4}
+\]
+Using (A.1) and then the coarea formula on the rectifiable hypersurface
+\citep{federer1969gmt}, with $\tau(\theta,a)=\theta$, transforms the final
+integral into
+\[
+\begin{aligned}
+&\int_{\mathcal S_J}
+ |\langle a,\gamma'(\theta)\rangle|
+ J_{\mathcal S_J}\tau(\theta,a)
+ \,d\mathcal H^N(\theta,a)\\
+&\quad=
+\int_J\int_{\gamma(\theta)^\perp\cap K^\circ}
+ |\langle\gamma'(\theta),a\rangle|
+ \,d\mathcal H^{N-1}(a)\,d\theta.
+\end{aligned}
+\tag{A.5}
+\]
+The fiber identification is exact: $a\mapsto(\theta,a)$ is an isometry from
+$\gamma(\theta)^\perp\cap K^\circ$ onto the corresponding $\tau$-fiber.
+The coarea hypotheses are met because (A.1) gives the measurable
+nonnegative integrand and $J_{\mathcal S_J}\tau>0$.
+
+Replacing the open cube section in (A.5) by the closed one changes no
+$\mathcal H^{N-1}$ integral.  The cube boundary is the union of $2N$ affine
+faces.  A central hyperplane $\gamma(\theta)^\perp$ cannot contain a face:
+containment would force its tangential normal components to vanish and its
+remaining component times $\pm R$ to be zero, contradicting $R>0$ and
+$\|\gamma(\theta)\|_2=1$.  Its intersection with each face has dimension at
+most $N-2$ and is therefore $\mathcal H^{N-1}$-null.  Replacing $J$ by $I$
+also changes no outer integral because at most two points are added.  Equations
+(A.4)--(A.5) prove (A.3).
+
+To verify the root-type scope, define
+\[
+\mathcal C_J:=\{(\theta,a)\in\mathcal S_J:
+ \langle a,\gamma'(\theta)\rangle=0\}.
+\]
+On this measurable set, Lemma~\ref{lem:incidence-jacobians} gives
+$J_{\mathcal S_J}\pi=0$.  A second area-formula application gives
+\[
+\int_{\mathbb R^N}
+ \#(\mathcal C_J\cap\pi^{-1}(a))\,da
+=\int_{\mathcal C_J}J_{\mathcal S_J}\pi\,d\mathcal H^N=0,
+\]
+so $\operatorname{Leb}^N(\pi(\mathcal C_J))=0$.  At a root,
+\[
+\frac d{d\theta}\langle a,F(\theta)\rangle
+=\|F(\theta)\|_2\langle a,\gamma'(\theta)\rangle,
+\]
+because the term containing $\langle a,\gamma(\theta)\rangle$ vanishes.
+Thus tangent and multiple roots lie in this null image.  Distinct roots add
+preimages and only increase $\mathcal N_J$.  An identically zero combination
+has infinite multiplicity but lies in the proper null subspace from
+Lemma~\ref{lem:central-null-classes}.  Endpoints and stationary pieces were
+also handled there.  No finite-root or transversality restriction has been
+used.
+\end{proof}
+
+\subsection{Cube sections and correlated density conversion}
+\label{app:cube-density}
+
+\begin{lemma}[Scaled central cube section]
+\label{lem:scaled-cube-section}
+Under Assumption~\ref{assump:parameter-regime}, suppose $N\geq2$ and
+$v\in\mathbb R^N$ satisfies $\|v\|_2=1$.  Then
+\[
+\mathcal H^{N-1}(v^\perp\cap[-R,R]^N)
+\leq\sqrt2(2R)^{N-1}.
+\tag{A.6}
+\]
+\end{lemma}
+
+\begin{proof}
+Let $Q_N=[-1/2,1/2]^N$ and $H=v^\perp$.  Ball's cube-slicing theorem
+\citep{ball1986cube} states, in the Euclidean intrinsic-volume convention,
+that every central hyperplane section of this unit-volume cube satisfies
+\[
+\mathcal H^{N-1}(Q_N\cap H)\leq\sqrt2.
+\tag{A.7}
+\]
+Its hypotheses hold: $N\geq2$, and the unit vector $v$ makes $H$ a
+codimension-one Euclidean linear hyperplane through the origin.  No rotation
+of the coefficient law is involved.
+
+Let $D_R(y)=2Ry$.  Since $R>0$,
+\[
+D_R(Q_N)=[-R,R]^N,
+\qquad
+D_R(H)=H,
+\]
+and therefore
+\[
+D_R(Q_N\cap H)=[-R,R]^N\cap H.
+\]
+Euclidean Hausdorff measure scales under this similarity by
+$(2R)^{N-1}$, directly from its covering definition.  Applying the inverse
+dilation supplies the reverse scaling equality, so
+\[
+\begin{aligned}
+\mathcal H^{N-1}(H\cap[-R,R]^N)
+&=(2R)^{N-1}\mathcal H^{N-1}(H\cap Q_N)\\
+&\leq\sqrt2(2R)^{N-1}.
+\end{aligned}
+\]
+The dilation maps the closed cube and all of its faces exactly.  The result
+is orientation-uniform and concerns only central, not translated, sections.
+\end{proof}
+
+\begin{proposition}[Central sweep under a capped joint law]
+\label{prop:central-sweep}
+Under Assumptions~\ref{assump:parameter-regime} and
+\ref{assump:cube-density-laws}, Proposition~\ref{prop:central-volume}, and,
+when $N\geq2$, Lemma~\ref{lem:scaled-cube-section}, every
+$\mu\in\mathcal D_{N,R,\kappa}$ and every interval $I\subseteq\Theta$
+satisfy
+\[
+\Pr_{\alpha\sim\mu}
+[\exists\theta\in I:\langle\alpha,F(\theta)\rangle=0]
+\leq A\sqrt{\frac N2}
+\int_I\|\gamma_F'(\theta)\|_2\,d\theta.
+\tag{A.8}
+\]
+This includes empty, singleton, open, closed, and half-open intervals.
+\end{proposition}
+
+\begin{proof}
+Fix the deterministic presentation, then an arbitrary
+$\mu\in\mathcal D_{N,R,\kappa}$, and then an arbitrary interval $I$.  Define
+the Borel set
+\[
+\mathcal E_I:=\{a\in[-R,R]^N:\exists\theta\in I,
+ \ \langle a,F(\theta)\rangle=0\}.
+\]
+Its measurability is proved in Proposition~\ref{prop:central-volume}.  If
+$f_\mu$ is the full joint density, cube support and
+$f_\mu\leq\kappa$ almost everywhere give the only probability conversion:
+\[
+\Pr_{\alpha\sim\mu}
+[\exists\theta\in I:\langle\alpha,F(\theta)\rangle=0]
+=\int_{\mathcal E_I}f_\mu(a)\,da
+\leq\kappa\operatorname{Leb}^N(\mathcal E_I).
+\tag{A.9}
+\]
+This uses neither conditional densities nor coordinate independence.  The
+nonemptiness of the law class also gives
+\[
+1=\int_{[-R,R]^N}f_\mu(a)\,da
+\leq\kappa(2R)^N=A,
+\]
+although this fact is not used to relax any later coefficient.
+
+If $N=1$, Proposition~\ref{prop:central-volume} gives
+$\operatorname{Leb}^1(\mathcal E_I)=0$: the section is $\{0\}$ and its
+integrand vanishes.  Moreover the unit scalar curve has
+$\gamma_F'=0$.  Thus (A.8) is exactly $0\leq0$, including all interval
+conventions, and Ball's positive-dimensional theorem is not invoked.
+
+Assume $N\geq2$.  Equations (A.3) and (A.9) give
+\[
+\begin{aligned}
+&\Pr_{\alpha\sim\mu}
+[\exists\theta\in I:\langle\alpha,F(\theta)\rangle=0]\\
+&\quad\leq\kappa\int_I
+\int_{\gamma_F(\theta)^\perp\cap[-R,R]^N}
+|\langle\gamma_F'(\theta),a\rangle|
+\,d\mathcal H^{N-1}(a)\,d\theta.
+\end{aligned}
+\tag{A.10}
+\]
+For $a\in[-R,R]^N$, Cauchy--Schwarz
+\citep{rudin1976principles} and cube support give
+\[
+|\langle\gamma_F'(\theta),a\rangle|
+\leq\|\gamma_F'(\theta)\|_2\|a\|_2
+\leq R\sqrt N\,\|\gamma_F'(\theta)\|_2.
+\tag{A.11}
+\]
+Lemma~\ref{lem:scaled-cube-section}, applied to the unit vector
+$\gamma_F(\theta)$, therefore yields
+\[
+\begin{aligned}
+&\int_{\gamma_F(\theta)^\perp\cap[-R,R]^N}
+|\langle\gamma_F'(\theta),a\rangle|
+\,d\mathcal H^{N-1}(a)\\
+&\quad\leq
+R\sqrt N\,\|\gamma_F'(\theta)\|_2
+\mathcal H^{N-1}(\gamma_F(\theta)^\perp\cap[-R,R]^N)\\
+&\quad\leq
+R\sqrt N\,\sqrt2(2R)^{N-1}
+\|\gamma_F'(\theta)\|_2.
+\end{aligned}
+\tag{A.12}
+\]
+Only a central linear section is used.  Substitution into (A.10) gives the
+coefficient
+\[
+\begin{aligned}
+\kappa R\sqrt N\,\sqrt2(2R)^{N-1}
+&=\kappa(2R)^N\frac{\sqrt{2N}}2\\
+&=\kappa(2R)^N\sqrt{\frac N2}
+=A\sqrt{\frac N2},
+\end{aligned}
+\tag{A.13}
+\]
+where $R(2R)^{N-1}=(2R)^N/2$.  This is equality, not a term absorption, and
+proves (A.8).  The upper bound need not be at most one and is not clipped.
+
+Endpoint inclusion does not alter the argument.  Proposition
+~\ref{prop:central-volume} already accounts for endpoint hyperplanes, tangent
+and multiple roots, stationary pieces, infinite fibers, and identically zero
+combinations.  A stationary curve makes its incidence integral and event
+probability zero.  The dilation in Lemma~\ref{lem:scaled-cube-section}
+changes only deterministic section measure; it neither transforms the
+coefficient vector nor its density.  Since the law and interval were
+arbitrary after the deterministic presentation was fixed, the required
+quantifier order follows without a union bound over laws, intervals, roots,
+or orientations.
+\end{proof}
+
+\subsection{Central rates and ordered suprema}
+\label{app:central-rate}
+
+\begin{lemma}[Projective speed controls interval length]
+\label{lem:speed-length}
+Under Assumption~\ref{assump:parameter-regime} and
+Proposition~\ref{prop:projective-speed}, every interval
+$I\subseteq\Theta$, with any endpoint convention, satisfies
+\[
+\int_I\|\gamma_F'(\theta)\|_2\,d\theta
+\leq\Gamma_{\mathrm{proj}}(F)|I|.
+\tag{A.14}
+\]
+\end{lemma}
+
+\begin{proof}
+Proposition~\ref{prop:projective-speed} gives
+$\gamma_F\in C^1(\Theta;\mathbb R^N)$, so
+$\theta\mapsto\|\gamma_F'(\theta)\|_2$ is nonnegative and measurable.  By
+the definition of the essential supremum, outside a null subset of $\Theta$,
+\[
+\|\gamma_F'(\theta)\|_2\leq\Gamma_{\mathrm{proj}}(F).
+\]
+Integration over $I$ gives
+\[
+\int_I\|\gamma_F'(\theta)\|_2\,d\theta
+\leq\int_I\Gamma_{\mathrm{proj}}(F)\,d\theta
+=\Gamma_{\mathrm{proj}}(F)|I|.
+\]
+Changing endpoint inclusion affects neither the integral nor the length, so
+the assertion also includes empty and singleton intervals.
+\end{proof}
+
+\begin{proposition}[Central rate bridge and supremum closure]
+\label{prop:central-rate}
+Under Assumptions~\ref{assump:parameter-regime},
+\ref{assump:balcan-common-chain},
+\ref{assump:anchored-unit-range}, and
+\ref{assump:cube-density-laws}, Propositions~\ref{prop:projective-speed} and
+\ref{prop:central-sweep}, and Lemma~\ref{lem:speed-length}, every
+$\mu\in\mathcal D_{N,R,\kappa}$ and every positive-length interval
+$I\subseteq\Theta$ satisfy
+\[
+\begin{aligned}
+&\Pr_{\alpha\sim\mu}
+[\exists\theta\in I:\langle\alpha,F(\theta)\rangle=0]\\
+&\quad\leq A\sqrt{\frac N2}\,\Gamma_{\mathrm{proj}}(F)|I|\\
+&\quad\leq
+\frac{AN\Delta B_Q(1+qB_P)}{\sqrt2\,h}|I|.
+\end{aligned}
+\tag{A.15}
+\]
+Moreover,
+\[
+C^{\mathrm{Pf}}_{\mathcal D}(F;\Theta)
+\leq A\sqrt{\frac N2}\,\Gamma_{\mathrm{proj}}(F)
+\leq\frac{AN\Delta B_Q(1+qB_P)}{\sqrt2\,h}.
+\tag{A.16}
+\]
+The last coefficient is literally
+\[
+\frac{(2R)^N\kappa N\Delta B_Q(1+qB_P)}{\sqrt2\,h},
+\tag{A.17}
+\]
+has degree-zero dependence on $M$, reduces to
+$AN\Delta B_Q/(\sqrt2 h)$ when $q=0$, and becomes
+$\sqrt2/\delta$ when
+$N=2$, $A=h=\Delta=1$, $q=B_P=0$, and $B_Q=1/\delta$.
+\end{proposition}
+
+\begin{proof}
+Fix the deterministic presentation and full parameter tuple first.  Then fix
+an arbitrary $\mu\in\mathcal D_{N,R,\kappa}$ and an arbitrary interval $I$,
+initially allowing zero length.  Define
+\[
+\mathsf Z_I:=\{\alpha\in\mathbb R^N:\exists\theta\in I,
+ \ \langle\alpha,F(\theta)\rangle=0\}.
+\]
+Proposition~\ref{prop:central-sweep} and
+Lemma~\ref{lem:speed-length} give
+\[
+\begin{aligned}
+\Pr_{\alpha\sim\mu}(\mathsf Z_I)
+&\leq A\sqrt{\frac N2}
+ \int_I\|\gamma_F'(\theta)\|_2\,d\theta\\
+&\leq A\sqrt{\frac N2}\,
+ \Gamma_{\mathrm{proj}}(F)|I|.
+\end{aligned}
+\tag{A.18}
+\]
+Proposition~\ref{prop:projective-speed} applies to the same deterministic
+feature and Euclidean norm.  Multiplying its bound by the nonnegative factor
+$A\sqrt{N/2}|I|$ gives
+\[
+\begin{aligned}
+A\sqrt{\frac N2}\,\Gamma_{\mathrm{proj}}(F)|I|
+&\leq A\sqrt{\frac N2}
+ \frac{\sqrt N\,\Delta B_Q(1+qB_P)}h|I|\\
+&=\frac{AN\Delta B_Q(1+qB_P)}{\sqrt2\,h}|I|,
+\end{aligned}
+\tag{A.19}
+\]
+where the complete simplification is
+\[
+\sqrt{\frac N2}\sqrt N
+=\sqrt{\frac{N^2}{2}}
+=\frac N{\sqrt2}
+\qquad(N\geq1).
+\tag{A.20}
+\]
+No term is dropped.  Equations (A.18)--(A.20) prove (A.15).  If $I$ is
+empty or a singleton, the speed integral and $|I|$ are zero, so the event has
+probability zero before any quotient.  Endpoint variants have the same
+length and integral, while Proposition~\ref{prop:central-sweep} retains the
+root-event boundary handling.
+
+Now restrict to $|I|>0$ and divide (A.15) by this positive length:
+\[
+\frac{\Pr_{\alpha\sim\mu}(\mathsf Z_I)}{|I|}
+\leq A\sqrt{\frac N2}\,\Gamma_{\mathrm{proj}}(F)
+\leq\frac{AN\Delta B_Q(1+qB_P)}{\sqrt2\,h}.
+\tag{A.21}
+\]
+For fixed $\mu$, first take the interval supremum.  The two right sides are
+independent of $I$, so
+\[
+\sup_{\substack{I\subseteq\Theta\ \mathrm{interval}\\|I|>0}}
+\frac{\Pr_{\alpha\sim\mu}(\mathsf Z_I)}{|I|}
+\leq A\sqrt{\frac N2}\,\Gamma_{\mathrm{proj}}(F)
+\leq\frac{AN\Delta B_Q(1+qB_P)}{\sqrt2\,h}.
+\tag{A.22}
+\]
+Only then take the law supremum:
+\[
+\begin{aligned}
+&\sup_{\mu\in\mathcal D_{N,R,\kappa}}
+ \sup_{\substack{I\subseteq\Theta\ \mathrm{interval}\\|I|>0}}
+ \frac{\Pr_{\alpha\sim\mu}(\mathsf Z_I)}{|I|}\\
+&\quad\leq A\sqrt{\frac N2}\,\Gamma_{\mathrm{proj}}(F)
+\leq\frac{AN\Delta B_Q(1+qB_P)}{\sqrt2\,h}.
+\end{aligned}
+\tag{A.23}
+\]
+The left side is the definition of
+$C^{\mathrm{Pf}}_{\mathcal D}(F;\Theta)$, proving (A.16).
+
+Substituting $A=(2R)^N\kappa$ gives (A.17) by equality.  The parameter $M$
+does not occur, so its dependence is degree zero for fixed $B_P$.  At $q=0$,
+$M=B_P=0$ and $1+qB_P=1$.  For
+$N=2$, $A=h=\Delta=1$, $q=B_P=0$, and $B_Q=1/\delta$, the coefficient is
+\[
+\frac{1\cdot2\cdot1\cdot(1/\delta)\cdot1}{\sqrt2\cdot1}
+=\frac{\sqrt2}{\delta}.
+\tag{A.24}
+\]
+If $\Gamma_{\mathrm{proj}}(F)=0$, (A.18) gives zero probability for every
+law and interval, hence zero capacity; no division by speed occurs.  When
+$N=1$, the anchor gives $F=(1)$, $\Delta=0$, and all displayed chains reduce
+to $0\leq0$.  The only division in the closure is by the explicitly positive
+interval length.
+\end{proof}
+
+\subsection{Finite affine charts and measurable exhaustion}
+\label{app:affine-charts}
+
+\begin{lemma}[Finite exhausted-chart legality]
+\label{lem:finite-chart-legality}
+Under Assumptions~\ref{assump:parameter-regime},
+\ref{assump:balcan-common-chain},
+\ref{assump:anchored-unit-range}, and
+\ref{assump:affine-chart-data}, and
+Proposition~\ref{prop:coordinate-envelope}, fix an interval
+$I\subseteq\Theta$, an index $1\leq j\leq N$, and $m\geq1$.  Put
+\[
+E_{j,m}:=\{\theta\in E_j:|F_j(\theta)|\geq1/m\}.
+\]
+Index $\beta\in[-R,R]^{N-1}$ by $i\neq j$, using the zero-dimensional
+singleton convention at $N=1$, and define
+\[
+\Psi_j(\theta,\beta)_i=
+\begin{cases}
+\beta_i,&i\neq j,\\
+T_j(\theta,\beta),&i=j.
+\end{cases}
+\]
+Then $T_j$ and $\Psi_j$ are measurable and Lipschitz on
+$E_{j,m}\times[-R,R]^{N-1}$.  Their restrictions to measurable subsets
+satisfy the regularity hypotheses of the equal-dimensional area formula.  No
+Lipschitz constant uniform in $m$ is asserted.
+\end{lemma}
+
+\begin{proof}
+For every $\theta\in\Theta$, the unit-box coefficient estimate gives
+\[
+|F_i(\theta)|
+=|Q_i(x(\theta),\eta(x(\theta)))|
+\leq\|\operatorname{coeff}(Q_i)\|_1
+\leq B_Q.
+\tag{A.25}
+\]
+Proposition~\ref{prop:coordinate-envelope} and the affine coordinate change
+give
+\[
+|F_i'(\theta)|\leq L_F:=D_*/h.
+\tag{A.26}
+\]
+The proof-local quantities
+\[
+B_H:=\|F_0\|_\infty+(N-1)RB_Q,
+\qquad
+L_H:=\|F_0'\|_\infty+(N-1)RL_F
+\tag{A.27}
+\]
+are finite because $F_0\in C^1(\Theta)$, $\Theta$ is compact, and the
+remaining terms are setting quantities or the bound (A.26).  Define
+\[
+H_j(\theta,\beta)
+:=F_0(\theta)+\sum_{i\neq j}\beta_iF_i(\theta),
+\qquad
+T_j=-H_j/F_j.
+\]
+Then
+\[
+|H_j(\theta,\beta)|\leq B_H,
+\]
+and, for $\theta,s\in\Theta$ and
+$\beta,\zeta\in[-R,R]^{N-1}$,
+\[
+|H_j(\theta,\beta)-H_j(s,\zeta)|
+\leq L_H|\theta-s|+B_Q\|\beta-\zeta\|_1.
+\tag{A.28}
+\]
+If $\theta,s\in E_{j,m}$, both denominators have magnitude at least $1/m$.
+The quotient identity, (A.26), and (A.28) yield
+\[
+\begin{aligned}
+|T_j(\theta,\beta)-T_j(s,\zeta)|
+&\leq m|H_j(\theta,\beta)-H_j(s,\zeta)|\\
+&\quad+m^2|H_j(s,\zeta)|,|F_j(\theta)-F_j(s)|\\
+&\leq(mL_H+m^2B_HL_F)|\theta-s|
+ +mB_Q\|\beta-\zeta\|_1.
+\end{aligned}
+\tag{A.29}
+\]
+Thus $T_j$ is Lipschitz even if the measurable finite-level set is
+disconnected; inserting the unchanged beta coordinates makes $\Psi_j$
+Lipschitz.  At interior points,
+\[
+|\partial_\theta T_j(\theta,\beta)|
+\leq mL_H+m^2B_HL_F,
+\qquad
+|\partial_{\beta_i}T_j(\theta,\beta)|
+\leq mB_Q.
+\tag{A.30}
+\]
+The same bounds hold one-sided at ambient endpoints, and the finite-level
+Jacobian is bounded on its finite product domain.
+
+On the open nonzero-pivot locus in $\operatorname{int}\Theta$, the quotient
+formulas are $C^1$.  Hence at almost every density point of a measurable
+restricted domain, the approximate derivative of the Lipschitz restriction
+agrees with this $C^1$ derivative.  The ambient endpoints are null affine
+slices, as established in Lemma~\ref{lem:affine-null-classes} below.
+Measurability follows from measurability of $E_j$ and continuity of the
+quotient on the nonzero-pivot locus.  When $N=1$, all beta sums and norms are
+empty and the argument is the same scalar quotient estimate.
+\end{proof}
+
+\begin{lemma}[Exact affine coefficient chart and Jacobian]
+\label{lem:affine-chart-jacobian}
+Under the assumptions and fixed objects of
+Lemma~\ref{lem:finite-chart-legality}, define
+\[
+D_{j,m}:=\{(\theta,\beta):\theta\in E_{j,m},
+ \ \beta\in[-R,R]^{N-1},\ |T_j(\theta,\beta)|\leq R\}.
+\]
+Then $D_{j,m}$ is measurable,
+$\Psi_j(D_{j,m})\subseteq[-R,R]^N$, and every point in $D_{j,m}$ satisfies
+\[
+F_0(\theta)+\langle\Psi_j(\theta,\beta),F(\theta)\rangle=0.
+\tag{A.31}
+\]
+Conversely, if $\alpha\in[-R,R]^N$ has a root at
+$\theta\in E_{j,m}$, then, with $\beta=\alpha_{-j}$,
+$(\theta,\beta)\in D_{j,m}$ and $\Psi_j(\theta,\beta)=\alpha$.  At every
+interior chart point,
+\[
+|\det D\Psi_j(\theta,\beta)|
+=|\partial_\theta T_j(\theta,\beta)|.
+\tag{A.32}
+\]
+At a represented root,
+\[
+\frac d{d\theta}
+\bigl(F_0(\theta)+\langle\alpha,F(\theta)\rangle\bigr)
+=-F_j(\theta)\partial_\theta T_j(\theta,\beta),
+\tag{A.33}
+\]
+so tangent roots have zero chart Jacobian.
+\end{lemma}
+
+\begin{proof}
+Measurability follows from Lemma~\ref{lem:finite-chart-legality}.  The domain
+definition places every $\beta_i$ and the inserted coordinate $T_j$ in
+$[-R,R]$, proving cube membership.  By the chart definition,
+\[
+\begin{aligned}
+F_0(\theta)+\langle\Psi_j(\theta,\beta),F(\theta)\rangle
+&=F_0(\theta)+\sum_{i\neq j}\beta_iF_i(\theta)
+ +T_j(\theta,\beta)F_j(\theta)\\
+&=H_j(\theta,\beta)-H_j(\theta,\beta)=0.
+\end{aligned}
+\]
+Conversely, if the affine expression vanishes and $F_j(\theta)\neq0$, solving
+for $\alpha_j$ gives $\alpha_j=T_j(\theta,\alpha_{-j})$.  Cube membership of
+$\alpha$ supplies $\alpha_{-j}\in[-R,R]^{N-1}$ and $|T_j|\leq R$, proving
+the converse.
+
+Permute output coordinates so coordinate $j$ is first, and retain domain
+coordinates $(\theta,(\beta_i)_{i\neq j})$.  The derivative matrix is
+\[
+\begin{pmatrix}
+\partial_\theta T_j&(\partial_{\beta_i}T_j)_{i\neq j}\\
+0&I_{N-1}
+\end{pmatrix}.
+\]
+The coordinate permutation has determinant of magnitude one, proving (A.32).
+For $N=1$, the lower-right block is the $0\times0$ identity with determinant
+one, and the formula becomes $|\Psi_1'|=|T_1'|$.
+
+Differentiate
+$H_j(\theta,\beta)+T_j(\theta,\beta)F_j(\theta)=0$ with beta fixed.  At
+$\alpha=\Psi_j(\theta,\beta)$ this gives
+\[
+F_0'(\theta)+\sum_{i\neq j}\alpha_iF_i'(\theta)
+ +\alpha_jF_j'(\theta)
+=-F_j(\theta)\partial_\theta T_j(\theta,\beta),
+\]
+which is (A.33).  Since the pivot is nonzero, tangency is equivalent to a
+zero chart derivative.
+\end{proof}
+
+\begin{lemma}[Null affine endpoint and degeneracy classes]
+\label{lem:affine-null-classes}
+Under Assumptions~\ref{assump:anchored-unit-range},
+\ref{assump:cube-density-laws}, and
+\ref{assump:affine-chart-data}, let $I\subseteq\Theta$ be nonempty.  For
+every fixed $\theta_0\in I$,
+\[
+\mathcal H_{\theta_0}
+:=\{\alpha\in\mathbb R^N:
+F_0(\theta_0)+\langle\alpha,F(\theta_0)\rangle=0\}
+\]
+is a proper affine hyperplane and has probability zero under every
+$\mu\in\mathcal D_{N,R,\kappa}$.  Hence coefficients having only an included
+endpoint root are law-null.  The set
+\[
+\mathcal Z_I:=\{\alpha:F_0(\theta)+\langle\alpha,F(\theta)\rangle=0
+                 \text{ for every }\theta\in I\}
+\]
+is empty or a proper affine subspace and is also law-null.
+\end{lemma}
+
+\begin{proof}
+The anchor gives $F_1(\theta_0)=1$, so
+\[
+\alpha_1=-F_0(\theta_0)-\sum_{i=2}^N\alpha_iF_i(\theta_0)
+\]
+is a proper affine graph.  For each fixed
+$(\alpha_2,\ldots,\alpha_N)$, its fiber in the first coordinate is a single
+point and is one-dimensional Lebesgue-null.  Tonelli's theorem
+\citep{bogachev2007measure} gives
+$\operatorname{Leb}^N(\mathcal H_{\theta_0})=0$; at $N=1$, the empty-sum
+graph is itself one point.  Absolute continuity gives law nullity.
+
+There are at most two included endpoints, so their root classes lie in a
+finite union of such hyperplanes.  Moreover
+$\mathcal Z_I=\bigcap_{\theta\in I}\mathcal H_\theta$ is empty or affine,
+and for any $\theta_0\in I$ it lies in the proper null hyperplane
+$\mathcal H_{\theta_0}$.  If $I$ is empty, the root event is empty and no
+degenerate exception is needed.  Only the full joint absolute continuity has
+been used.
+\end{proof}
+
+\begin{proposition}[Finite-level chart area and density bound]
+\label{prop:finite-chart-area}
+Under Assumptions~\ref{assump:parameter-regime},
+\ref{assump:balcan-common-chain},
+\ref{assump:anchored-unit-range},
+\ref{assump:cube-density-laws}, and
+\ref{assump:affine-chart-data}, Proposition~\ref{prop:coordinate-envelope},
+and Lemmas~\ref{lem:finite-chart-legality},
+\ref{lem:affine-chart-jacobian}, and
+\ref{lem:affine-null-classes}, fix an interval $I$, $m\geq1$, and
+$\mu\in\mathcal D_{N,R,\kappa}$.  Define
+\[
+\mathcal B_{j,m}:=\Psi_j(D_{j,m}),
+\qquad
+\mathcal R_m:=\bigcup_{j=1}^N\mathcal B_{j,m}.
+\]
+These coefficient sets are measurable in their Lebesgue and $\mu$
+completions, and
+\[
+\begin{aligned}
+\Pr_{\alpha\sim\mu}[\alpha\in\mathcal R_m]
+&\leq\kappa\sum_{j=1}^N
+\int_{E_{j,m}}\int_{[-R,R]^{N-1}}
+\mathbf1_{\{|T_j(\theta,\beta)|\leq R\}}
+|\partial_\theta T_j(\theta,\beta)|
+\,d\beta\,d\theta\\
+&\leq\kappa\sum_{j=1}^N
+\int_{E_{j,m}}\int_{[-R,R]^{N-1}}
+|\partial_\theta T_j(\theta,\beta)|
+\,d\beta\,d\theta.
+\end{aligned}
+\tag{A.34}
+\]
+Both finite-level right sides are finite.  Injectivity and a bound on root
+multiplicity are unnecessary.
+\end{proposition}
+
+\begin{proof}
+If $I$ is empty, every set and integral in (A.34) is empty, so assume $I$ is
+nonempty.  Fix $j$.  Lemma~\ref{lem:finite-chart-legality} makes $\Psi_j$
+Lipschitz on the finite-level domain containing $D_{j,m}$.  Away from the at
+most two endpoints of $\Theta$, its approximate derivative agrees almost
+everywhere with the $C^1$ chart derivative.  Endpoint slices map into the
+null hyperplanes in Lemma~\ref{lem:affine-null-classes}.  The
+equal-dimensional area formula \citep{federer1969gmt} and
+Lemma~\ref{lem:affine-chart-jacobian} therefore give
+\[
+\begin{aligned}
+\operatorname{Leb}^N(\mathcal B_{j,m})
+&\leq\int_{D_{j,m}}
+ |\det D\Psi_j(\theta,\beta)|\,d\beta\,d\theta\\
+&=\int_{E_{j,m}}\int_{[-R,R]^{N-1}}
+ \mathbf1_{\{|T_j(\theta,\beta)|\leq R\}}
+ |\partial_\theta T_j(\theta,\beta)|
+ \,d\beta\,d\theta.
+\end{aligned}
+\tag{A.35}
+\]
+The formula applies to a Lipschitz extension of the map from its measurable
+domain.  If that domain is not Borel, write it as a Borel set plus a null set.
+The equal-dimensional Lipschitz image of the null part is null, while the
+Borel image is analytic and hence universally measurable
+\citep{bogachev2007measure}.  This proves the completed-measure assertion
+without strengthening the assumed measurability of $E_j$.
+
+The area formula integrates the full preimage-counting function.  Multiple
+roots can only increase the right side of (A.35).  By
+Lemma~\ref{lem:affine-chart-jacobian}, tangent roots lie in the zero-Jacobian
+part, whose image is null under the same formula.  Affine-identically-zero
+coefficients are independently law-null by
+Lemma~\ref{lem:affine-null-classes}; neither root simplicity nor
+transversality is used.
+
+Every $\mathcal B_{j,m}$ lies in $[-R,R]^N$.  Finite subadditivity and the
+single full joint-density cap give
+\[
+\mu(\mathcal R_m)
+\leq\kappa\operatorname{Leb}^N(\mathcal R_m)
+\leq\kappa\sum_{j=1}^N\operatorname{Leb}^N(\mathcal B_{j,m}).
+\tag{A.36}
+\]
+Combining (A.35)--(A.36) proves the first line of (A.34); removing the
+indicator proves the second by nonnegativity.  The finite-level derivative
+bounds (A.30) and the finite measure of
+$I\times[-R,R]^{N-1}$ make both right sides finite.  At $N=1$, integration
+over $[-R,R]^0$ has mass one and the same calculation is one-dimensional.
+\end{proof}
+
+\begin{lemma}[Least-level pivot exhaustion]
+\label{lem:affine-exhaustion}
+Under Assumptions~\ref{assump:anchored-unit-range} and
+\ref{assump:affine-chart-data}, and
+Lemma~\ref{lem:affine-chart-jacobian}, define
+\[
+\mathcal R_I:=\{\alpha\in[-R,R]^N:\exists\theta\in I,
+ \ F_0(\theta)+\langle\alpha,F(\theta)\rangle=0\}.
+\]
+With $\mathcal R_m$ as in Proposition~\ref{prop:finite-chart-area}, let
+\[
+C_{j,m}:=E_{j,m}\setminus E_{j,m-1},
+\qquad E_{j,0}:=\varnothing.
+\]
+Then
+\[
+E_{j,m}=\bigsqcup_{\ell=1}^m C_{j,\ell},
+\]
+the cells are measurable, and every $\theta\in E_j$ has a unique least
+finite activation level.  If
+\[
+\widehat D_{j,m}:=D_{j,m}\cap
+ (C_{j,m}\times[-R,R]^{N-1}),
+\]
+then
+\[
+D_{j,m}=\bigsqcup_{\ell=1}^m\widehat D_{j,\ell},
+\qquad
+\mathcal R_m\subseteq\mathcal R_{m+1},
+\qquad
+\mathcal R_I=\bigcup_{m=1}^\infty\mathcal R_m.
+\tag{A.37}
+\]
+The equality includes endpoint, tangent, multiple, and identically-zero
+roots.
+\end{lemma}
+
+\begin{proof}
+Since $1/(m+1)\leq1/m$, the measurable sets satisfy
+$E_{j,m}\subseteq E_{j,m+1}$.  The pairwise disjoint differences telescope
+to $E_{j,m}=\bigsqcup_{\ell=1}^m C_{j,\ell}$.  Intersecting with the
+measurable restriction $|T_j|\leq R$ gives the stated disjoint identity for
+$D_{j,m}$.
+
+For $\theta\in E_j$, the selected pivot is nonzero.  Therefore
+\[
+\{m\geq1:|F_j(\theta)|\geq1/m\}
+\]
+is a nonempty terminal subset of the positive integers and has the unique
+least element
+\[
+m_*(\theta):=\min\{m\geq1:|F_j(\theta)|\geq1/m\}.
+\tag{A.38}
+\]
+Equivalently, $\theta\in C_{j,m_*(\theta)}$.  The partition
+$(E_j)_{j=1}^N$ also assigns a unique chart owner, so $(j,m_*(\theta))$ is
+the unique least finite chart label.  No lower bound uniform in $\theta$ or
+$m$ has been introduced.
+
+The set inclusions imply $D_{j,m}\subseteq D_{j,m+1}$, and the same
+$\Psi_j$ is used at every level, hence
+$\mathcal R_m\subseteq\mathcal R_{m+1}$.  Each chart image consists of root
+coefficients by Lemma~\ref{lem:affine-chart-jacobian}, proving
+$\bigcup_m\mathcal R_m\subseteq\mathcal R_I$.
+
+Conversely, let $\alpha\in\mathcal R_I$ have a witnessing root $\theta$.
+The partition assigns $\theta$ to a unique $E_j$, and its pivot is nonzero.
+At the least level (A.38), put $\beta=\alpha_{-j}$.  The converse part of
+Lemma~\ref{lem:affine-chart-jacobian} gives
+$(\theta,\beta)\in D_{j,m_*(\theta)}$ and
+$\Psi_j(\theta,\beta)=\alpha$.  Thus
+$\alpha\in\mathcal R_{m_*(\theta)}$, proving (A.37).
+
+For measurability, $\mathcal R_I$ is the coefficient projection of the zero
+set of a continuous function on the Borel set
+$I\times[-R,R]^N$; it is analytic and universally measurable
+\citep{bogachev2007measure}.  The finite chart events have the completed
+measurability from Proposition~\ref{prop:finite-chart-area}.  Endpoint and
+degenerate classes are not removed from (A.37); their nullity is a separate
+measure statement.  If $I$ is empty, both sides are empty.
+\end{proof}
+
+\begin{proposition}[General affine chart inequality]
+\label{prop:affine-bound}
+Under Assumptions~\ref{assump:parameter-regime},
+\ref{assump:balcan-common-chain},
+\ref{assump:anchored-unit-range},
+\ref{assump:cube-density-laws}, and
+\ref{assump:affine-chart-data}, Proposition~\ref{prop:coordinate-envelope},
+Proposition~\ref{prop:finite-chart-area}, and
+Lemma~\ref{lem:affine-exhaustion}, every
+$\mu\in\mathcal D_{N,R,\kappa}$ and every interval $I\subseteq\Theta$
+satisfy
+\[
+\begin{aligned}
+&\Pr_{\alpha\sim\mu}
+[\exists\theta\in I:F_0(\theta)+\langle\alpha,F(\theta)\rangle=0]\\
+&\quad\leq\kappa\sum_{j=1}^N
+\int_{E_j}\int_{[-R,R]^{N-1}}
+\mathbf1_{\{|T_j(\theta,\beta)|\leq R\}}
+|\partial_\theta T_j(\theta,\beta)|\,d\beta\,d\theta\\
+&\quad\leq\kappa\sum_{j=1}^N
+\int_{E_j}\int_{[-R,R]^{N-1}}
+|\partial_\theta T_j(\theta,\beta)|\,d\beta\,d\theta.
+\end{aligned}
+\tag{A.39}
+\]
+Both inequalities hold in $[0,+\infty]$.
+\end{proposition}
+
+\begin{proof}
+The set equality in Lemma~\ref{lem:affine-exhaustion} and continuity from
+below \citep{bogachev2007measure} give
+\[
+\mu(\mathcal R_I)=\lim_{m\to\infty}\mu(\mathcal R_m).
+\tag{A.40}
+\]
+Because every admissible law is supported on the coefficient cube, the left
+side is precisely the affine root-event probability.
+
+For each $j$, the nonnegative measurable functions
+\[
+\mathbf1_{E_{j,m}}(\theta)
+\mathbf1_{\{|T_j(\theta,\beta)|\leq R\}}
+|\partial_\theta T_j(\theta,\beta)|
+\]
+increase pointwise on $E_j\times[-R,R]^{N-1}$ to the same expression with
+$E_j$ in place of $E_{j,m}$.  Apply Proposition
+~\ref{prop:finite-chart-area}, then monotone convergence
+\citep{bogachev2007measure} and finiteness of the chart index set:
+\[
+\begin{aligned}
+\mu(\mathcal R_I)
+&\leq\kappa\lim_{m\to\infty}\sum_{j=1}^N
+\int_{E_{j,m}}\int_{[-R,R]^{N-1}}
+\mathbf1_{\{|T_j|\leq R\}}|\partial_\theta T_j|
+\,d\beta\,d\theta\\
+&=\kappa\sum_{j=1}^N
+\int_{E_j}\int_{[-R,R]^{N-1}}
+\mathbf1_{\{|T_j|\leq R\}}|\partial_\theta T_j|
+\,d\beta\,d\theta.
+\end{aligned}
+\tag{A.41}
+\]
+All limits and integrals are in $[0,+\infty]$, so no finiteness of the
+limiting chart integral is required.  If it diverges, the right side is
+$+\infty$.  Dropping the indicator by nonnegativity proves the second
+inequality in (A.39).  The density cap was used only on the full coefficient
+set in Proposition~\ref{prop:finite-chart-area}; no coordinate conditioning
+was introduced.  The preceding results include empty and singleton
+intervals, endpoints, $N=1$, near-zero pivots, tangent and multiple roots,
+infinite fibers, and identically-zero affine combinations.
+\end{proof}
+
+\subsection{Exact monic presentation and chart velocities}
+\label{app:monic-charts}
+
+\begin{proposition}[Exact normalized monic presentation]
+\label{prop:monic-presentation}
+Under Assumptions~\ref{assump:parameter-regime},
+\ref{assump:balcan-common-chain}, and
+\ref{assump:anchored-unit-range}, let $d\geq1$ and let
+$J\subset\mathbb R$ be a bounded interval.  For the specialization with
+$N=d$, there is a nondegenerate interval
+$\Theta=[c-h,c+h]\supseteq J$ for which
+\[
+F_0(\theta)=\theta^d,
+\qquad
+F_{k+1}(\theta)=\theta^k\quad(0\leq k\leq d-1),
+\tag{A.42}
+\]
+has normalized-coordinate representatives
+\[
+Q_0(x)=(c+hx)^d,
+\qquad
+Q_{k+1}(x)=(c+hx)^k\quad(0\leq k\leq d-1).
+\tag{A.43}
+\]
+For every $\theta\in\Theta$ and
+$\alpha=(\alpha_0,\ldots,\alpha_{d-1})\in\mathbb R^d$,
+\[
+F_0(\theta)+\langle\alpha,F(\theta)\rangle
+=\theta^d+\sum_{k=0}^{d-1}\alpha_k\theta^k
+=p_\alpha(\theta).
+\tag{A.44}
+\]
+The specialization tuple is
+\[
+q=0,
+\qquad M=0,
+\qquad B_P=0,
+\qquad N=d,
+\qquad A=(2R)^d\kappa,
+\qquad \Delta_{\mathrm{aug}}=d.
+\tag{A.45}
+\]
+The leading coefficient $1$ is deterministic and is not a coordinate of the
+random lower-coefficient vector.
+\end{proposition}
+
+\begin{proof}
+Since $J$ is bounded, choose finite $L<U$ with $J\subseteq[L,U]$ and put
+\[
+c:=\frac{L+U}{2},
+\qquad
+h:=\frac{U-L}{2}>0.
+\]
+Then $\Theta=[L,U]$ contains $J$.  Empty and singleton intervals are included
+by choosing a strict margin around them.
+
+Set $q=0$.  The chain is empty, so the conventions give
+$M=B_P=0$ and $G_i=Q_i$.  For
+$x(\theta)=(\theta-c)/h$,
+\[
+c+hx(\theta)=c+h\frac{\theta-c}{h}=\theta.
+\]
+This proves (A.42)--(A.43).  In particular
+$Q_1(x)=(c+hx)^0=1$, so the anchor holds and the chain-range clause is
+vacuous.  All outputs are polynomials, hence $F_0\in C^1(\Theta)$, and their
+monomial coefficient budgets are finite static presentation data.
+
+There are exactly $d$ random-feature outputs, indexed by
+$k=0,\ldots,d-1$, so $N=d$ and
+\[
+A=(2R)^N\kappa=(2R)^d\kappa.
+\]
+Because $h>0$, the coefficient of $x^d$ in $(c+hx)^d$ is
+$h^d\neq0$, so $\deg Q_0=d$, while
+$\deg Q_{k+1}=k\leq d-1$.  The same affine coordinate change has nonzero
+slope and preserves these degrees.  Hence
+\[
+\Delta_{\mathrm{aug}}
+:=\max\{\deg F_0,\deg F_1,\ldots,\deg F_d\}=d.
+\]
+Substitution gives (A.44).  The leading coefficient occurs only in the
+deterministic offset $F_0$, leaving exactly the $d$ lower coefficients in
+$\alpha$.
+\end{proof}
+
+\begin{lemma}[Prescribed monic pivot partition]
+\label{lem:monic-pivot-partition}
+Under Assumption~\ref{assump:parameter-regime} and
+Proposition~\ref{prop:monic-presentation}, if $d\geq2$, then
+\[
+E_1=J\cap\{|\theta|\leq1\},
+\qquad
+E_d=J\cap\{|\theta|>1\},
+\qquad
+E_j=\varnothing\quad(j\notin\{1,d\})
+\tag{A.46}
+\]
+is a measurable partition of $J$, with $F_1\neq0$ on $E_1$ and
+$F_d\neq0$ on $E_d$.  If $d=1$, the choice $E_1=J$ is measurable and has
+$F_1\neq0$.  The conclusions include $\theta=0$, $|\theta|=1$, and empty
+cells.
+\end{lemma}
+
+\begin{proof}
+Intervals and the two sets $\{|\theta|\leq1\}$ and
+$\{|\theta|>1\}$ are Borel.  The latter sets are disjoint and cover
+$\mathbb R$, proving the partition and its measurability.  Empty-cell pivot
+conditions are vacuous.
+
+Proposition~\ref{prop:monic-presentation} gives
+$F_1(\theta)=\theta^0=1$.  Thus $0$ and the transition points $\pm1$, when
+present, lie in $E_1$ and have pivot one.  For $d\geq2$,
+\[
+F_d(\theta)=\theta^{d-1},
+\]
+which is nonzero, indeed has magnitude greater than one, on $E_d$.  At
+$d=1$, the sole cell $E_1=J$ has the same constant pivot.  The construction
+does not depend on the location of $J$; an unused regime simply gives an
+empty cell.
+\end{proof}
+
+\begin{lemma}[Constant-pivot chart]
+\label{lem:monic-low-chart}
+Under Assumption~\ref{assump:parameter-regime},
+Proposition~\ref{prop:monic-presentation}, and
+Lemma~\ref{lem:monic-pivot-partition}, if $d\geq2$,
+$\theta\in E_1$, and
+\[
+\beta=(\beta_1,\ldots,\beta_{d-1})\in[-R,R]^{d-1},
+\]
+then
+\[
+T_1(\theta,\beta)
+=-\theta^d-\sum_{k=1}^{d-1}\beta_k\theta^k,
+\tag{A.47}
+\]
+and
+\[
+|\partial_\theta T_1(\theta,\beta)|
+\leq d+R\sum_{k=1}^{d-1}k
+=d+\frac{Rd(d-1)}2.
+\tag{A.48}
+\]
+If $d=1$, then $T_1(\theta)=-\theta$ and
+$|T_1'(\theta)|=1$.
+\end{lemma}
+
+\begin{proof}
+For $d\geq2$, index nonpivot coordinates by polynomial exponent.  On $E_1$,
+the root equation with $\alpha_0$ as pivot is
+\[
+0=\theta^d+\alpha_0+\sum_{k=1}^{d-1}\beta_k\theta^k.
+\]
+Solving gives (A.47), and direct differentiation gives
+\[
+\partial_\theta T_1
+=-d\theta^{d-1}-\sum_{k=1}^{d-1}k\beta_k\theta^{k-1}.
+\]
+Since $|\theta|\leq1$ on $E_1$ and $|\beta_k|\leq R$,
+\[
+\begin{aligned}
+|\partial_\theta T_1|
+&\leq d|\theta|^{d-1}
+ +\sum_{k=1}^{d-1}k|\beta_k||\theta|^{k-1}\\
+&\leq d+R\sum_{k=1}^{d-1}k
+=d+\frac{Rd(d-1)}2.
+\end{aligned}
+\]
+At $\theta=0$, the $k=1$ term has the ordinary factor
+$\theta^0=1$ and all positive powers vanish; this chart contains no negative
+power.  At $d=1$, the equation is $\theta+\alpha_0=0$, so the beta tuple and
+sum are empty, $T_1=-\theta$, and its speed is one, equal to
+$1+R\cdot1\cdot0/2$.
+\end{proof}
+
+\begin{lemma}[Highest-lower-degree monic chart]
+\label{lem:monic-high-chart}
+Under Assumption~\ref{assump:parameter-regime},
+Proposition~\ref{prop:monic-presentation}, and
+Lemma~\ref{lem:monic-pivot-partition}, if $d\geq2$,
+$\theta\in E_d$, and
+$\beta=(\beta_0,\ldots,\beta_{d-2})\in[-R,R]^{d-1}$, then
+\[
+T_d(\theta,\beta)
+=-\theta-\sum_{k=0}^{d-2}\beta_k\theta^{k-d+1},
+\tag{A.49}
+\]
+and
+\[
+|\partial_\theta T_d(\theta,\beta)|
+\leq1+R\sum_{k=0}^{d-2}(d-1-k)
+=1+\frac{Rd(d-1)}2
+\leq d+\frac{Rd(d-1)}2.
+\tag{A.50}
+\]
+All negative powers are confined to $E_d\subset\{|\theta|>1\}$.
+\end{lemma}
+
+\begin{proof}
+Index nonpivot coordinates by exponent.  The active pivot is
+$F_d(\theta)=\theta^{d-1}\neq0$, so the root equation
+\[
+0=\theta^d+\sum_{k=0}^{d-2}\beta_k\theta^k
+ +\alpha_{d-1}\theta^{d-1}
+\]
+can be divided by $\theta^{d-1}$, giving (A.49).  Differentiating on the
+strict high cell gives
+\[
+\partial_\theta T_d
+=-1+\sum_{k=0}^{d-2}(d-1-k)\beta_k\theta^{k-d}.
+\]
+Here $k-d<0$ and $|\theta|>1$, hence $|\theta^{k-d}|\leq1$.  Thus
+\[
+\begin{aligned}
+|\partial_\theta T_d|
+&\leq1+\sum_{k=0}^{d-2}(d-1-k)
+ |\beta_k||\theta|^{k-d}\\
+&\leq1+R\sum_{k=0}^{d-2}(d-1-k)\\
+&=1+\frac{Rd(d-1)}2.
+\end{aligned}
+\]
+Since $d\geq2$, $1\leq d$, proving (A.50).
+
+At $d=2$, the two formulas reduce visibly to
+\[
+T_1=-\theta^2-\beta_1\theta,
+\qquad
+|T_1'|\leq2+R
+\quad(|\theta|\leq1),
+\]
+and
+\[
+T_2=-\theta-\beta_0\theta^{-1},
+\qquad
+T_2'=-1+\beta_0\theta^{-2},
+\qquad
+|T_2'|\leq1+R\leq2+R
+\quad(|\theta|>1).
+\]
+The negative powers are never evaluated at $0$ or $|\theta|=1$; those
+points belong to the constant-pivot cell.
+\end{proof}
+
+\subsection{Lossless affine-monic specialization}
+\label{app:monic-specialization}
+
+\begin{proposition}[Lossless monic transfer through the affine bound]
+\label{prop:monic-affine-transfer}
+Under Assumptions~\ref{assump:parameter-regime} and
+\ref{assump:cube-density-laws}, Proposition~\ref{prop:affine-bound},
+Proposition~\ref{prop:monic-presentation}, and
+Lemma~\ref{lem:monic-pivot-partition}, let $d\geq1$,
+$\mu\in\mathcal D_{d,R,\kappa}$, and let $J\subset\mathbb R$ be a bounded
+interval.  For the monic presentation and pivot cells in
+Proposition~\ref{prop:monic-presentation} and
+Lemma~\ref{lem:monic-pivot-partition},
+\[
+\begin{aligned}
+&\Pr_{\alpha\sim\mu}
+[\exists\theta\in J:p_\alpha(\theta)=0]\\
+&\quad\leq\kappa\sum_{j=1}^d
+\int_{E_j}\int_{[-R,R]^{d-1}}
+|\partial_\theta T_j(\theta,\beta)|\,d\beta\,d\theta.
+\end{aligned}
+\tag{A.51}
+\]
+The random vector has exactly $d$ coordinates, all lower coefficients, and
+the leading monic coefficient is deterministic.
+\end{proposition}
+
+\begin{proof}
+Fix $d$, then an arbitrary $\mu\in\mathcal D_{d,R,\kappa}$, and then an
+arbitrary bounded $J$.  Proposition~\ref{prop:monic-presentation} supplies a
+nondegenerate deterministic $\Theta\supseteq J$, sets $N=d$, and proves the
+pointwise identity
+\[
+F_0(\theta)+\langle\alpha,F(\theta)\rangle
+=\theta^d+\sum_{k=0}^{d-1}\alpha_k\theta^k
+=p_\alpha(\theta).
+\tag{A.52}
+\]
+Thus the affine event equals, rather than contains, the polynomial-root
+event.  The same proposition supplies deterministic $C^1$ data and keeps
+$\alpha=(\alpha_0,\ldots,\alpha_{d-1})\in\mathbb R^d$ without a leading
+coordinate.
+
+Lemma~\ref{lem:monic-pivot-partition} supplies the measurable partition of
+$J$ and proves that every selected pivot is nonzero.  All interval,
+dimension, object, regularity, and pivot hypotheses of
+Proposition~\ref{prop:affine-bound} therefore hold with $I=J$ and $N=d$.
+Assumption~\ref{assump:cube-density-laws} supplies its one full
+$d$-dimensional density cap, with arbitrary correlation.  Applying that
+proposition gives (A.51).  No chart union bound, coordinate conditioning,
+law factorization, or root count is added; cube faces and endpoint
+conventions remain in the affine interface.
+\end{proof}
+
+\begin{lemma}[Coefficient-one two-cell ledger]
+\label{lem:monic-two-cell-ledger}
+Under Assumption~\ref{assump:parameter-regime} and
+Lemmas~\ref{lem:monic-pivot-partition},
+\ref{lem:monic-low-chart}, and
+\ref{lem:monic-high-chart}, if $d\geq2$ and $J$ is bounded, then
+\[
+\sum_{j=1}^d\int_{E_j}\int_{[-R,R]^{d-1}}
+|\partial_\theta T_j(\theta,\beta)|\,d\beta\,d\theta
+\leq(2R)^{d-1}
+\left(d+\frac{Rd(d-1)}2\right)|J|.
+\tag{A.53}
+\]
+The sharper high-chart speed is retained until its coefficient-one
+domination; no chart-count factor occurs.
+\end{lemma}
+
+\begin{proof}
+Define within this proof
+\[
+V_d:=d+\frac{Rd(d-1)}2,
+\qquad
+W_d:=1+\frac{Rd(d-1)}2.
+\]
+The closed beta cube has the exact product volume
+\[
+\operatorname{Leb}^{d-1}([-R,R]^{d-1})
+=\prod_{\ell=1}^{d-1}(2R)=(2R)^{d-1}.
+\tag{A.54}
+\]
+Cube faces are included and do not alter either this identity or the
+pointwise velocity estimates.
+
+All cells other than $E_1$ and $E_d$ are empty.  The two chart lemmas give
+\[
+\int_{E_1}\int_{[-R,R]^{d-1}}
+|\partial_\theta T_1|\,d\beta\,d\theta
+\leq(2R)^{d-1}V_d|E_1|,
+\tag{A.55}
+\]
+\[
+\int_{E_d}\int_{[-R,R]^{d-1}}
+|\partial_\theta T_d|\,d\beta\,d\theta
+\leq(2R)^{d-1}W_d|E_d|.
+\tag{A.56}
+\]
+Neither cell length has been replaced by $|J|$.  Since $d\geq2$,
+\[
+V_d-W_d=d-1\geq0,
+\qquad W_d\leq V_d.
+\tag{A.57}
+\]
+Therefore
+\[
+\begin{aligned}
+&\sum_{j=1}^d\int_{E_j}\int_{[-R,R]^{d-1}}
+|\partial_\theta T_j|\,d\beta\,d\theta\\
+&\quad\leq(2R)^{d-1}
+ (V_d|E_1|+W_d|E_d|)\\
+&\quad\leq(2R)^{d-1}V_d(|E_1|+|E_d|).
+\end{aligned}
+\tag{A.58}
+\]
+The non-strict low condition assigns both transition points to $E_1$ and the
+strict complementary condition assigns every other point to $E_d$.  Hence,
+for every endpoint convention,
+\[
+|E_1|+|E_d|=|J|.
+\tag{A.59}
+\]
+Substituting (A.59) in (A.58) proves (A.53).  If either cell is empty, its
+integral and length vanish.  The calculation is independent of the location
+of $J$.
+\end{proof}
+
+\begin{proposition}[Zero-dimensional linear branch]
+\label{prop:monic-linear-branch}
+Under Assumptions~\ref{assump:parameter-regime} and
+\ref{assump:cube-density-laws}, Proposition~\ref{prop:monic-affine-transfer},
+Proposition~\ref{prop:monic-presentation}, and
+Lemmas~\ref{lem:monic-pivot-partition} and
+\ref{lem:monic-low-chart}, if $d=1$,
+$\mu\in\mathcal D_{1,R,\kappa}$, and $J$ is bounded, then
+\[
+\Pr_{\alpha_0\sim\mu}
+[\exists\theta\in J:\theta+\alpha_0=0]
+\leq\kappa|J|
+=\kappa(2R)^0
+ \left(1+\frac{R\cdot1\cdot0}{2}\right)|J|.
+\tag{A.60}
+\]
+\end{proposition}
+
+\begin{proof}
+At $d=1$, Proposition~\ref{prop:monic-presentation} gives $N=1$,
+$\alpha=(\alpha_0)$, and $p_\alpha(\theta)=\theta+\alpha_0$, with a
+deterministic coefficient of $\theta$.  The prescribed partition is
+$E_1=J$, and there are no nonpivot coordinates:
+\[
+[-R,R]^0=\{()\},
+\qquad
+\operatorname{Leb}^0([-R,R]^0)=1=(2R)^0.
+\]
+Lemma~\ref{lem:monic-low-chart} gives
+$T_1(\theta)=-\theta$ and $|T_1'(\theta)|=1$.  Therefore
+\[
+\int_{E_1}\int_{[-R,R]^0}|T_1'(\theta)|
+\,d\operatorname{Leb}^0(\beta)\,d\theta
+=\int_J1\,d\theta=|J|.
+\tag{A.61}
+\]
+Proposition~\ref{prop:monic-affine-transfer} gives the first inequality in
+(A.60), and $1+R\cdot1\cdot0/2=1$ gives the equality.  There is no high
+chart, second cell, or positive-dimensional cube factor.  Empty and
+singleton intervals are included by the affine interface.
+\end{proof}
+
+\begin{proposition}[Exact affine-monic probability bound]
+\label{prop:monic-probability}
+Under Assumptions~\ref{assump:parameter-regime} and
+\ref{assump:cube-density-laws}, Propositions
+~\ref{prop:monic-affine-transfer} and
+\ref{prop:monic-linear-branch}, and
+Lemma~\ref{lem:monic-two-cell-ledger}, every $d\geq1$, every
+$\mu\in\mathcal D_{d,R,\kappa}$, and every bounded interval
+$J\subset\mathbb R$ satisfy
+\[
+\Pr_{\alpha\sim\mu}
+[\exists\theta\in J:p_\alpha(\theta)=0]
+\leq\kappa(2R)^{d-1}
+\left(d+\frac{Rd(d-1)}2\right)|J|.
+\tag{A.62}
+\]
+The leading coefficient remains deterministic, and arbitrary correlation
+among the lower coefficients is allowed.
+\end{proposition}
+
+\begin{proof}
+Fix $d$, then an arbitrary admissible law, and then a bounded interval with
+its literal endpoint convention.  Proposition
+~\ref{prop:monic-affine-transfer} applies the general affine inequality to
+the identical monic event, the exact $d$-dimensional lower-coefficient
+vector, and the prescribed cells.
+
+If $d\geq2$, Lemma~\ref{lem:monic-two-cell-ledger} bounds its complete chart
+sum by the right side of (A.53).  Its calculation first uses the sharper
+high-chart speed, then (A.57), and only then the disjoint length ledger
+(A.59), so it introduces no factor for the number of charts.  Multiplication
+by the literal affine coefficient $\kappa$ proves (A.62).
+
+If $d=1$, Proposition~\ref{prop:monic-linear-branch} gives the same formula
+from zero-dimensional volume one and speed one.  These cases exhaust all
+$d\geq1$.  The result uses ordinary probability, the original joint density,
+and the deterministic leading coefficient; it contains no independent root
+theorem, probability-mode conversion, auxiliary threshold, conservative
+remainder, or location-dependent constant.
+\end{proof}
+
+\subsection{Counter-example presentation and scale certificate}
+\label{app:counter-example}
+
+\begin{proposition}[Counter-example presentation and projective speed]
+\label{prop:counter-presentation}
+Under Assumptions~\ref{assump:parameter-regime},
+\ref{assump:balcan-common-chain},
+\ref{assump:anchored-unit-range}, and
+\ref{assump:cube-density-laws}, suppose
+\[
+0<\delta\leq1,
+\qquad
+\Theta=[-1,1],
+\qquad
+Q_1(x)=1,
+\qquad
+Q_2(x)=x/\delta,
+\]
+with $c=0$, $h=1$, $q=0$, and the uniform law on $[-1,1]^2$.  Then
+\[
+F(\theta)=\left(1,\frac{\theta}{\delta}\right),
+\qquad
+\langle\alpha,F(\theta)\rangle
+=\alpha_1F_1(\theta)+\alpha_2F_2(\theta),
+\]
+and
+\[
+q=0,
+\quad M=0,
+\quad B_P=0,
+\quad \Delta=1,
+\quad N=2,
+\quad R=1,
+\quad \kappa=\frac14,
+\quad A=1,
+\quad B_Q=\frac1\delta,
+\quad h=1.
+\tag{A.63}
+\]
+Moreover,
+\[
+\gamma_F(\theta)
+=\frac{(\delta,\theta)}{\sqrt{\delta^2+\theta^2}},
+\qquad
+\gamma_F'(\theta)
+=\frac{(-\delta\theta,\delta^2)}
+       {(\delta^2+\theta^2)^{3/2}},
+\tag{A.64}
+\]
+and
+\[
+\|\gamma_F'(\theta)\|_2
+=\frac{\delta}{\delta^2+\theta^2},
+\qquad
+\Gamma_{\mathrm{proj}}(F)=\frac1\delta.
+\tag{A.65}
+\]
+\end{proposition}
+
+\begin{proof}
+Here $x(\theta)=\theta$.  Since $q=0$, the conventions give
+$M=B_P=0$.  The two coefficient norms are
+\[
+\|\operatorname{coeff}(Q_1)\|_1=1,
+\qquad
+\|\operatorname{coeff}(Q_2)\|_1=\frac1\delta,
+\]
+and $0<\delta\leq1$ implies $B_Q=1/\delta$.  The output degrees are zero
+and one, so $\Delta=1$, and $N=2$.  The literal first feature leaves the
+original coefficient ordering unchanged.
+
+The density
+\[
+f_\square(a_1,a_2)
+=\frac14\mathbf1_{[-1,1]^2}(a_1,a_2)
+\]
+is supported on the square, has essential supremum $1/4$, and integrates to
+one.  Thus $\mu_\square\in\mathcal D_{2,1,1/4}$ and
+\[
+A=(2R)^N\kappa=2^2\cdot\frac14=1,
+\]
+proving (A.63).
+
+Multiplying numerator and denominator of $F/\|F\|_2$ by $\delta>0$ gives
+the first identity in (A.64), and direct differentiation gives the second.
+Consequently,
+\[
+\begin{aligned}
+\|\gamma_F'(\theta)\|_2
+&=\frac{\sqrt{\delta^2\theta^2+\delta^4}}
+        {(\delta^2+\theta^2)^{3/2}}\\
+&=\frac{\delta\sqrt{\delta^2+\theta^2}}
+        {(\delta^2+\theta^2)^{3/2}}
+=\frac{\delta}{\delta^2+\theta^2}.
+\end{aligned}
+\]
+This continuous speed is maximized at $\theta=0$, where it is $1/\delta$;
+its maximum and essential supremum coincide.  At $\theta=\pm1$ its value is
+$\delta/(\delta^2+1)$, so no endpoint or finiteness condition is hidden.
+\end{proof}
+
+\begin{lemma}[Exact closed coefficient wedges]
+\label{lem:counter-wedges}
+Under the assumptions of Proposition~\ref{prop:counter-presentation}, let
+$0<\epsilon\leq\delta\leq1$ and set
+\[
+t:=\frac\epsilon\delta\in(0,1].
+\]
+Define
+\[
+W_+(t):=\{(a_1,a_2)\in[-1,1]^2:
+0\leq a_2\leq1,\ -ta_2\leq a_1\leq0\},
+\tag{A.66}
+\]
+\[
+W_-(t):=\{(a_1,a_2)\in[-1,1]^2:
+-1\leq a_2\leq0,\ 0\leq a_1\leq-ta_2\}.
+\tag{A.67}
+\]
+Then
+\[
+\{a\in[-1,1]^2:\exists\theta\in[0,\epsilon],
+ \ a_1+a_2\theta/\delta=0\}
+=W_+(t)\cup W_-(t),
+\tag{A.68}
+\]
+$W_+(t)\cap W_-(t)=\{(0,0)\}$, and
+\[
+\Pr_{\alpha\sim\mu_\square}
+[\exists\theta\in[0,\epsilon]:
+ \alpha_1+\alpha_2\theta/\delta=0]
+=\frac{\epsilon}{4\delta}.
+\tag{A.69}
+\]
+\end{lemma}
+
+\begin{proof}
+For $\theta\in[0,\epsilon]$, put $s=\theta/\delta$.  Then
+$s\in[0,t]$.  If $a_2\neq0$, the unique candidate is
+\[
+s_*=-\frac{a_1}{a_2},
+\]
+and it lies in the interval precisely when
+\[
+0\leq-\frac{a_1}{a_2}\leq t.
+\tag{A.70}
+\]
+For $a_2>0$, this becomes $-ta_2\leq a_1\leq0$; for $a_2<0$, it becomes
+$0\leq a_1\leq-ta_2$.  These are the two wedges.
+
+The coefficient axes make (A.68) exact, not only almost everywhere.  If
+$a_1=0$ and $a_2\neq0$, the root is the included left endpoint
+$\theta=0$, and the appropriate closed wedge contains it.  If $a_2=0$ and
+$a_1\neq0$, no root exists and both wedges exclude it.  At the origin the
+combination vanishes for every $\theta$, and both wedges contain it.  For
+nonzero opposite-sign coefficients, $|a_1|=t|a_2|$ is precisely the right
+endpoint $\theta=\epsilon$; strict inequality gives an interior root.
+Same-sign nonzero coefficients have no root for $s\geq0$.
+
+The complete triangle boundaries are
+\[
+\begin{aligned}
+\partial W_+(t)
+={}&\{(0,u):0\leq u\leq1\}
+\cup\{(-tu,u):0\leq u\leq1\}\\
+&\cup\{(v,1):-t\leq v\leq0\},
+\end{aligned}
+\tag{A.71}
+\]
+\[
+\begin{aligned}
+\partial W_-(t)
+={}&\{(0,u):-1\leq u\leq0\}
+\cup\{(-tu,u):-1\leq u\leq0\}\\
+&\cup\{(v,-1):0\leq v\leq t\}.
+\end{aligned}
+\tag{A.72}
+\]
+They include the coefficient-axis edges, roots at $\epsilon$, square-support
+edges, and all vertices.  The triangles can overlap only at $a_2=0$, where
+their inequalities force $a_1=0$.  Each boundary is a finite union of line
+segments and the overlap is one point, so all are planar-null while remaining
+part of the exact event.
+
+Direct integration gives
+\[
+\operatorname{Leb}^2(W_+(t))=\int_0^1tu\,du=\frac t2,
+\qquad
+\operatorname{Leb}^2(W_-(t))=\int_{-1}^0t|u|\,du=\frac t2.
+\]
+The null overlap gives
+\[
+\operatorname{Leb}^2(W_+(t)\cup W_-(t))=t.
+\tag{A.73}
+\]
+Multiplication by the constant density $1/4$ proves (A.69).
+When $\epsilon=\delta$, $t=1$, each wedge has area $1/2$, the union has
+area one, and the probability is $1/4$.  When $\delta=1$, the probability
+is $\epsilon/4$ for every $0<\epsilon\leq1$.  Thus all parameter boundaries
+and both interval endpoints are included without a limit.
+\end{proof}
+
+\begin{proposition}[Counter-example lower certificate and upper scales]
+\label{prop:counter-scale}
+Under Assumptions~\ref{assump:parameter-regime},
+\ref{assump:balcan-common-chain},
+\ref{assump:anchored-unit-range}, and
+\ref{assump:cube-density-laws}, Proposition~\ref{prop:central-rate},
+Proposition~\ref{prop:counter-presentation}, and
+Lemma~\ref{lem:counter-wedges}, the Counter-example specialization with
+$\mathcal D=\mathcal D_{2,1,1/4}$ satisfies
+\[
+\frac1{4\delta}
+\leq C^{\mathrm{Pf}}_{\mathcal D}(F;[-1,1])
+\leq\frac1\delta
+\leq\frac{\sqrt2}{\delta}.
+\tag{A.74}
+\]
+The middle value is the central projective coefficient and the final value is
+the raw-presentation coefficient.  No equality or optimality conclusion for
+the capacity is asserted.
+\end{proposition}
+
+\begin{proof}
+Fix any $0<\epsilon\leq\delta$.  Proposition
+~\ref{prop:counter-presentation} gives
+$\mu_\square\in\mathcal D_{2,1,1/4}$, and
+$[0,\epsilon]\subseteq[-1,1]$ has length $\epsilon$.  By
+Lemma~\ref{lem:counter-wedges},
+\[
+\frac{
+\Pr_{\alpha\sim\mu_\square}
+[\exists\theta\in[0,\epsilon]:
+ \langle\alpha,F(\theta)\rangle=0]}
+{|[0,\epsilon]|}
+=\frac{\epsilon/(4\delta)}\epsilon
+=\frac1{4\delta}.
+\tag{A.75}
+\]
+The capacity supremum contains this law--interval pair, so
+\[
+C^{\mathrm{Pf}}_{\mathcal D}(F;[-1,1])
+\geq\frac1{4\delta}.
+\tag{A.76}
+\]
+
+For the upper comparison, Proposition~\ref{prop:central-rate} and the tuple
+and speed in Proposition~\ref{prop:counter-presentation} give
+\[
+A\sqrt{\frac N2}\,\Gamma_{\mathrm{proj}}(F)
+=1\cdot\sqrt{\frac22}\cdot\frac1\delta
+=\frac1\delta,
+\tag{A.77}
+\]
+\[
+\frac{AN\Delta B_Q(1+qB_P)}{\sqrt2\,h}
+=\frac{1\cdot2\cdot1\cdot(1/\delta)\cdot1}
+       {\sqrt2\cdot1}
+=\frac{\sqrt2}{\delta}.
+\tag{A.78}
+\]
+Combining (A.76)--(A.78) proves (A.74).  At $\delta=1$, the three scales
+are $1/4$, $1$, and $\sqrt2$; at $\epsilon=\delta$, the witness probability
+is $1/4$ and the quotient remains $1/(4\delta)$.  Neither boundary changes
+the law, coefficient convention, deterministic feature, ordinary-probability
+mode, or Euclidean norm.
+\end{proof}
+
+\subsection{Joint central, affine, monic, and scale conclusions}
+\label{app:full-conjunction}
+
+\begin{proposition}[Joint anchored sweep conclusions]
+\label{prop:full-conjunction}
+Under Assumptions~\ref{assump:parameter-regime},
+\ref{assump:balcan-common-chain}, and
+\ref{assump:anchored-unit-range}, with
+Assumption~\ref{assump:cube-density-laws} in every probabilistic clause and
+Assumption~\ref{assump:affine-chart-data} in the general affine clause, the
+following conclusions hold simultaneously.
+
+First, with $D_*=\Delta B_Q(1+qB_P)$,
+\[
+|G_i'(x)|\leq D_*,
+\qquad
+\|G'(x)\|_2\leq\sqrt N\,D_*,
+\]
+$G_1=F_1=1$, and
+\[
+\gamma_G'
+=\frac{(I_N-\gamma_G\gamma_G^{\mathsf T})G'}{\|G\|_2},
+\qquad
+\gamma_F'(\theta)
+=\frac1h\gamma_G'\!\left(\frac{\theta-c}{h}\right),
+\qquad
+\Gamma_{\mathrm{proj}}(F)
+\leq\frac{\sqrt N\,D_*}{h}.
+\tag{A.79}
+\]
+This includes one-sided endpoints, $q=0$, $N=1$, $\Delta=0$, and stationary
+normalized curves, with degree-zero dependence on $M$ for fixed $B_P$.
+
+Second, after fixing the deterministic presentation, every
+$\mu\in\mathcal D_{N,R,\kappa}$ and then every positive-length
+$I\subseteq\Theta$ satisfy
+\[
+\Pr_{\alpha\sim\mu}
+[\exists\theta\in I:\langle\alpha,F(\theta)\rangle=0]
+\leq A\sqrt{\frac N2}\,\Gamma_{\mathrm{proj}}(F)|I|
+\leq\frac{AN\Delta B_Q(1+qB_P)}{\sqrt2 h}|I|,
+\tag{A.80}
+\]
+and
+\[
+C^{\mathrm{Pf}}_{\mathcal D}(F;\Theta)
+\leq A\sqrt{\frac N2}\,\Gamma_{\mathrm{proj}}(F)
+\leq\frac{AN\Delta B_Q(1+qB_P)}{\sqrt2 h}.
+\tag{A.81}
+\]
+The capacity retains the interval-then-law supremum order.  Before division,
+empty and singleton intervals have zero right side.  All endpoint,
+multiplicity, stationary, and identically-zero cases are included.
+
+Third, for every affine invocation and every
+$\mu\in\mathcal D_{N,R,\kappa}$,
+\[
+\begin{aligned}
+&\Pr_{\alpha\sim\mu}
+[\exists\theta\in I:F_0(\theta)+\langle\alpha,F(\theta)\rangle=0]\\
+&\quad\leq\kappa\sum_{j=1}^N
+\int_{E_j}\int_{[-R,R]^{N-1}}
+|\partial_\theta T_j(\theta,\beta)|\,d\beta\,d\theta,
+\end{aligned}
+\tag{A.82}
+\]
+in $[0,+\infty]$.  The original coefficient dimension, arbitrary
+correlation, near-zero pivots, all root multiplicities, $N=1$, and divergent
+integrals remain admissible.
+
+Fourth, for every $d\geq1$ and bounded $J\subset\mathbb R$, there is a
+nondegenerate $\Theta=[c-h,c+h]\supseteq J$ with
+\[
+Q_0(x)=(c+hx)^d,
+\quad Q_{k+1}(x)=(c+hx)^k,
+\quad F_0(\theta)=\theta^d,
+\quad F_{k+1}(\theta)=\theta^k,
+\]
+\[
+p_\alpha(\theta)=\theta^d+\sum_{k=0}^{d-1}\alpha_k\theta^k,
+\qquad
+(q,M,B_P,N,A,\Delta_{\mathrm{aug}})
+=(0,0,0,d,(2R)^d\kappa,d).
+\tag{A.83}
+\]
+The monic coefficient is deterministic.  For $d\geq2$, the prescribed cells
+are those in (A.46), and
+\[
+T_1=-\theta^d-\sum_{k=1}^{d-1}\beta_k\theta^k,
+\qquad
+|\partial_\theta T_1|
+\leq d+\frac{Rd(d-1)}2
+\quad(|\theta|\leq1),
+\tag{A.84}
+\]
+\[
+T_d=-\theta-\sum_{k=0}^{d-2}\beta_k\theta^{k-d+1},
+\qquad
+|\partial_\theta T_d|
+\leq1+\frac{Rd(d-1)}2
+\leq d+\frac{Rd(d-1)}2
+\quad(|\theta|>1).
+\tag{A.85}
+\]
+At $d=1$, $E_1=J$, $T_1=-\theta$, and $|T_1'|=1$.  Every possibly
+correlated $\mu\in\mathcal D_{d,R,\kappa}$ satisfies
+\[
+\Pr_{\alpha\sim\mu}
+[\exists\theta\in J:p_\alpha(\theta)=0]
+\leq\kappa(2R)^{d-1}
+\left(d+\frac{Rd(d-1)}2\right)|J|.
+\tag{A.86}
+\]
+
+Fifth, for $0<\delta\leq1$, the uniform-square specialization has
+\[
+(h,q,M,\Delta,N,R,\kappa,A,B_P,B_Q)
+=\left(1,0,0,1,2,1,\frac14,1,0,\frac1\delta\right),
+\]
+\[
+\gamma_F(\theta)
+=\frac{(\delta,\theta)}{\sqrt{\delta^2+\theta^2}},
+\qquad
+\|\gamma_F'(\theta)\|_2
+=\frac{\delta}{\delta^2+\theta^2},
+\qquad
+\Gamma_{\mathrm{proj}}(F)=\frac1\delta.
+\tag{A.87}
+\]
+For every $0<\epsilon\leq\delta$,
+\[
+\Pr[\exists\theta\in[0,\epsilon]:
+ \alpha_1+\alpha_2\theta/\delta=0]
+=\frac{\epsilon}{4\delta},
+\tag{A.88}
+\]
+and therefore
+\[
+\frac1{4\delta}
+\leq C^{\mathrm{Pf}}_{\mathcal D_{2,1,1/4}}(F;[-1,1])
+\leq\frac1\delta
+\leq\frac{\sqrt2}{\delta}.
+\tag{A.89}
+\]
+The last chain does not claim equality or optimality for the capacity.
+
+All displayed constants are literal and have no hidden dependence.  The
+probability mode is ordinary probability under a fixed full joint law; the
+central horizon mode is per interval followed only where displayed by the
+interval supremum and then the law supremum.  Central vector and operator
+norms are Euclidean, chart velocities are scalar, and coefficient and
+interval measures use the conventions in Section~\ref{sec:prelim}.  No confidence
+parameter, independence assumption, asymptotic horizon, or normalization
+beyond the declared anchored setting is present.
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:coordinate-envelope} gives the coordinatewise part of
+(A.79), including the endpoint and degree-zero branches.
+Proposition~\ref{prop:projective-speed} gives anchor-derived nonvanishing,
+the normalized-projector identity, the exact coordinate change, and the
+remaining projective-speed assertions in (A.79).
+
+Proposition~\ref{prop:central-rate} gives (A.80)--(A.81) with the same
+deterministic feature, ordinary-probability mode, literal constants, and
+ordered suprema.  Proposition~\ref{prop:affine-bound} gives (A.82) in the
+original coefficient dimension and extended-real mode.
+
+Proposition~\ref{prop:monic-presentation} gives the objects and tuple in
+(A.83).  Lemma~\ref{lem:monic-pivot-partition} gives the prescribed cells,
+and Lemmas~\ref{lem:monic-low-chart} and
+\ref{lem:monic-high-chart} give (A.84)--(A.85), including the transition
+behavior and the zero-dimensional convention.  Proposition
+~\ref{prop:monic-probability} supplies only the probability conclusion
+(A.86), on the same monic object and lower-coefficient law.
+
+Proposition~\ref{prop:counter-presentation} gives the tuple and speed in
+(A.87), Lemma~\ref{lem:counter-wedges} gives (A.88) with all closed
+boundaries, and Proposition~\ref{prop:counter-scale} gives (A.89).  Each
+clause is therefore a conclusion of the named result in the identical
+object, dimension, law, interval, norm, and probability mode.  Their logical
+conjunction proves the proposition without an additional estimate,
+assumption, probability conversion, or mode change.
+\end{proof}
+
+\subsection{Proof of the Main Theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+The primitive derivative and projective clauses follow from
+Propositions~\ref{prop:coordinate-envelope} and
+\ref{prop:projective-speed}.  The central probability and capacity clauses,
+including the literal algebraic bridge and the interval-then-law supremum
+order, are Proposition~\ref{prop:central-rate}.  The general affine clause is
+Proposition~\ref{prop:affine-bound}.
+
+For the detailed monic interface, use
+Proposition~\ref{prop:monic-presentation},
+Lemma~\ref{lem:monic-pivot-partition}, and
+Lemmas~\ref{lem:monic-low-chart} and
+\ref{lem:monic-high-chart}; the exact monic probability rate is
+Proposition~\ref{prop:monic-probability}, whose two dimensional branches are
+implemented by Lemma~\ref{lem:monic-two-cell-ledger} and
+Proposition~\ref{prop:monic-linear-branch}.
+
+For Counter-example 1, Proposition~\ref{prop:counter-presentation} supplies
+the tuple and Euclidean speed, Lemma~\ref{lem:counter-wedges} supplies the
+closed-event probability, and Proposition~\ref{prop:counter-scale} supplies
+the three distinct scale comparisons.  Proposition
+~\ref{prop:full-conjunction} verifies that these named conclusions have the
+same assumption bases, objects, dimensions, law and interval scopes, norm
+conventions, and ordinary-probability mode as the clauses in
+Theorem~\ref{thm:main}.
+Their direct conjunction is precisely Theorem~\ref{thm:main}.
+\end{proof}

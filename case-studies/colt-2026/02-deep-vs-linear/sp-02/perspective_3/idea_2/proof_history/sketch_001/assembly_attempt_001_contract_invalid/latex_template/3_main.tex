@@ -1,0 +1,40 @@
+\section{Main Theorem}\label{sec:main-theorem}
+
+\begin{theorem}[Conditional polynomial catalog theorem]\label{thm:main}
+Under Assumptions~\ref{assump:source-parameter-regime}--
+\ref{assump:polynomial-catalog-budget}, the single deterministic catalog map
+$\phi_G:X\to\mathbb R^L$ satisfies
+\[
+\forall h\in H\ \exists w_h\in\Delta_L\ \forall x\in X,qquad
+h(x)\langle w_h,\phi_G(x)\rangle
+\ge 1-2\varepsilon=\rho>\frac12.
+\]
+The map is fixed independently of $D,h$, every valid reply policy, all replies
+and transcripts, and the learner tape.  Each $w_h$ may depend only on
+$h,G$, and $\varepsilon$.  Consequently the signs are exact pointwise and
+\[
+\operatorname{dc}(H)le L
+\le B\left(1+\frac{m}{\tau^2}\right)^k.
+\]
+The conclusion is deterministic, fixed-horizon for executions of depth at
+most $m$, and uses the exact pointwise signed inner product and the dimension
+notion in \eqref{eq:dc-definition}.  Its exposed quantities are
+$\varepsilon,\rho,L,B,k,m,\tau$, and $\operatorname{dc}(H)$; there are no
+hidden constants.  The constants $B,k$ are fixed exactly as in
+Assumption~\ref{assump:polynomial-catalog-budget}, and no asymptotic limit or
+probability conversion is taken.  For each theorem instance, the learner
+specification and its catalog are fixed quantities, while
+$m,\tau,\varepsilon$, and $L$ remain exposed as displayed.
+
+At $\varepsilon=0$ the pointwise signed margin is exactly $1$.  At $m=0$
+the bound is $\operatorname{dc}(H)\le L\le B$ for every finite $\tau>0$.
+The same statement retains the unique simplex weight when $L=1$, the literal
+bound with no multiplier when $B=1$, and $\operatorname{dc}(H)=0$ when
+$X=\varnothing$.
+\end{theorem}
+
+Theorem~\ref{thm:main} is conditional on the static finite-output
+factorization and its polynomial budget.  It does not imply that an arbitrary
+unrestricted adaptive SQ response tree admits such a catalog.  Establishing a
+boundary-corrected catalog-free linear dimension bound from $m$ and $\tau$
+alone is the remaining full source gap.

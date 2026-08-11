@@ -1,0 +1,27 @@
+You are the distinct step-scoped proof producer for perspective_2/idea_1, step_011, unit attempt 1, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+First read <CODEX_SKILLS_ROOT>/proof-step/SKILL.md completely and every directly required shared contract/template it names. Then prove exactly the accepted step_011 row. Do not add assumptions, rates, conclusions, or an independent root theorem.
+
+Binding artifacts and hashes:
+- setting.md: 6955a2723694ff60af8d5d40329ff0ad056f9b54780ff02744d8985456222b7e
+- proof_sketch.md: 8b5b22e5000e1c5641e2b5baf0c4d48244ce3389941b0cc9857b47510bbf6c93
+- proof_sketch_review.md: 4288579fa3b8583b31faa2c220f5071879da72f06ac3a1dd3d1889cb1096cb7c, status ACCEPTED
+- global_proof.md: c7529eb3ef73cdb215c7ecfb9bad5fdfee639d9eea3c0d91060b4a0aaac03fb0
+- global_proof_review.md: cd76bd4102c0e811947104173dcc29cd325f2082ae53865d6c8bb25b20b9bb4e, status ACCEPTED
+- accepted dependency step_001 proof.md: d55b8e0455d2b2d38b3d72339557df4b1366b5e2cd81cc145fd537dca1e75c11
+- accepted dependency step_001 review.md: dd04491bf12d076e4482faa9dcfb484d671d601a35cf64405f9d2afa4e535899
+- accepted dependency step_008 proof.md: 63c4257a7ec1db6387c7e7c19d467e15c1cc28999e7bcb2c1bdc93466896d12e
+- accepted dependency step_008 review.md: 3a1ff16fd516bda0277f07543d5230c048a39c88cb3e1bed2017ef9055ba68b9
+
+Prove the exact Counter-example 1 upper/lower scale audit for F(theta)=(1,theta/delta), theta in [-1,1], delta in (0,1], and independent uniform coefficients only for this required source example:
+- in the augmented tuple tilde F=(0,1,theta/delta), q=M=m=0, Delta=1, N=2, and the sole nonzero derivative-closure matrix entry is B_{2,1}=1/delta, giving the exact certificate widehat Lambda=1/delta;
+- with x=theta/delta, derive ||gamma_F'(theta)||_2=1/[delta(1+x^2)] and hence Gamma_proj=1/delta, including the active entry value at theta=0;
+- instantiate accepted step_008 with A=1 and N=2 to obtain its exact 1/delta upper coefficient, without turning the example's independence into a general theorem assumption;
+- for every 0<epsilon<=delta, prove that a root in [0,epsilon], off coefficient-axis null sets, is exactly the union of both opposite-sign wedges |alpha_1|<=(epsilon/delta)|alpha_2|; compute their total square area as epsilon/delta and multiply by density 1/4 to obtain exactly epsilon/(4delta);
+- divide by |I|=epsilon to obtain the exact lower ratio 1/(4delta), so the normalization quantitatively records the source obstruction.
+
+Audit all boundary and source interfaces: epsilon=delta, epsilon down to zero only as the positive-length ratio limit, delta=1, theta=0, both sign quadrants, coefficient axes, equality wedge boundaries, endpoint roots, exact coefficient ordering, Euclidean norm, and the distinction between the direct lower calculation and the dependency-supplied upper theorem. Preserve arbitrary-correlation scope for the general theorem: independence is used only because Counter-example 1 itself specifies the uniform product law. Preserve the exact monic baseline as a separate unaffected clause and do not consume step_010.
+
+Use global_proof.md only as diagnostic planning context paired with its accepted review, never as evidence. Write only perspective_2/idea_1/proof_steps/step_011/proof.md. Do not edit trackers, worker_log, dependencies, final TeX, history, prompts, results, or another branch. Use every required proof-step section. Expose every independent calculation as a stable paper-ready local unit with explicit assumption basis, exact conclusion, matching derivation, complete current 64-hex dependency identities, exact assumption provenance, target-step assembly, explicit-rate and baseline audits, blockers, and notation/public-surface classifications.
+
+Validate binding hashes, ASCII/control bytes, balanced TeX delimiters/braces, Markdown table arity while ignoring escaped pipes, local-unit correspondence, required headings, and file scope before reporting status, path, local-unit count, dependency hashes, and final SHA-256.

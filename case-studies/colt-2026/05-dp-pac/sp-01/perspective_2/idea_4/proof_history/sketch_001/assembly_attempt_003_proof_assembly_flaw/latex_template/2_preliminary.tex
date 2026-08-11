@@ -1,0 +1,93 @@
+\section{Preliminaries}
+
+The quotient map $\kappa$ and its recordwise extension $T_N$ are the common
+interface for all three learners.  Every learner releases an element of
+$(H_C,\mathcal H_C)$ and applies $\operatorname{Dec}_C$ only after release;
+the raw and quotient risks are compared through the identity proved in the
+appendix.
+
+Fix a deterministic $\bar c_0\in\bar C$.  For the positive-dimensional VC
+arm, let $C_{\mathrm{blk}}\ge1$ and $c_{\mathrm{AT}}\ge1$ be universal
+calibration constants, and put
+\[
+\gamma=\alpha/16,\quad
+\beta_{\mathrm{tr}}=\beta_{\mathrm{AT}}=\beta_{\mathrm{SS}}
+ =\beta_{\mathrm{gen}}=\beta/4,\quad
+\delta_{\mathrm{AT}}=\delta_{\mathrm{SS}}=\delta/2,
+\]
+\[
+g_\delta=\log(4/\delta),\quad
+\eta=\frac{\varepsilon}{4c_{\mathrm{AT}}(\sqrt{g_\delta}+g_\delta)},
+\quad \varepsilon_{\mathrm{SS}}=\varepsilon/8.
+\]
+For each integer $t\ge2$, define
+\[
+a(t)=v+\log(4t/\beta),\quad
+Q(t)=e+\frac{etd^2a(t)}{\alpha v},\quad
+m(t)=\left\lceil C_{\mathrm{blk}}\frac{d^2}{\alpha}a(t)\log Q(t)\right\rceil,
+\quad n(t)=tm(t),
+\]
+\[
+p_r(t)=2^rn(t)d\quad(0\le r\le d),\quad
+L(t)=p_d(t)^d2^{d^2},\quad
+B(t)=\left\lceil\frac{10\log(L(t)/\delta_{\mathrm{SS}})}{\varepsilon_{\mathrm{SS}}}\right\rceil,
+\]
+\[
+\tau_{\mathrm{AT}}=\eta^{-1}\log((d+1)/\beta_{\mathrm{AT}}),\qquad
+\tau_{\mathrm{SS}}(t)=\varepsilon_{\mathrm{SS}}^{-1}
+ \log((tL(t)+1)/\beta_{\mathrm{SS}}).
+\]
+When $d\ge1$, let $k$ be the least integer $t\ge2$ satisfying
+\[
+\frac{t}{2}-\tau_{\mathrm{AT}}\ge B(t)+\tau_{\mathrm{SS}}(t)+2,
+\]
+and set $m=m(k)$, $n_0=N=n(k)$, $p_r=p_r(k)$, and $L=L(k)$,
+$B=B(k)$.  The pointwise law $K_C^{\mathrm{VC\text{-}Lyu}}$ applies the
+record map to the quotient data, uses the fixed teacher blocks of size $m$,
+the exact source restrictions and essential-SOA lists with cap $L$ at stages
+$r=0,\ldots,d$, one stopped AboveThreshold run with threshold $k/2$, and
+one Sparse Sample draw at the first reported stage.  Every empty, invalid,
+or failed state is assigned a deterministic continuation and every terminal
+fallback is the fixed output $\bar c_0$.  For $d=0$, define $N=0$ and let the
+law be the Dirac mass at the unique member of $\bar C$.  The appendix proves
+that this everywhere-defined pointwise law is a Markov kernel and that its
+raw pullback is
+\[
+A_N(s,E)=K_C^{\mathrm{VC\text{-}Lyu}}(T_N(s),E).
+\]
+
+The old comparison law uses the same quotient interface and totalization
+from Lyu~\citep{lyu2025},
+with
+\[
+a_{\mathrm o}(t)=d+\log(4t/\beta),\qquad
+Q_{\mathrm o}(t)=e+\frac{etd^2a_{\mathrm o}(t)}{\alpha d},qquad
+m_{\mathrm o}(t)=\left\lceil C_{\mathrm o}\frac{d^2}{\alpha}
+ a_{\mathrm o}(t)\log Q_{\mathrm o}(t)\right\rceil,
+\quad C_{\mathrm o}=2^{20},
+\]
+and the corresponding
+\(p_{\mathrm o,r},L_{\mathrm o},B_{\mathrm o},
+\tau_{\mathrm{AT,o}},\tau_{\mathrm{SS,o}}\) obtained by replacing the VC
+dictionary's $v$ by $d$ and using the same displayed privacy allocations.
+Its teacher count is the least integer satisfying the corresponding margin,
+and $N_{\mathrm{old}}=k_{\mathrm o}m_{\mathrm o}$.  Invalid or failed paths
+also return $\bar c_0$.
+
+When $M:=|C|<\infty$, the finite comparison law is the everywhere-defined
+quotient exponential-weights kernel
+\[
+K^{\mathrm{fin}}_{C,N}(\bar s,E)=
+\frac{\displaystyle\sum_{\bar h\in\bar C\cap E}
+ \exp\!\left[-\frac{\varepsilon}{2}\sum_{r=1}^N
+ \mathbf1\{\bar h(q_r)\ne y_r\}\right]}
+ {\displaystyle\sum_{\bar g\in\bar C}
+ \exp\!\left[-\frac{\varepsilon}{2}\sum_{r=1}^N
+ \mathbf1\{\bar g(q_r)\ne y_r\}\right]}.
+\]
+It is defined on arbitrary quotient labels, including $N=0$, and its raw
+pullback is obtained by composing with $T_N$.  Set $R_{\mathrm{fin}}=+\infty$
+when $|C|=\infty$; no finite surrogate is introduced.  The three laws have
+the same output space, decoder, privacy quantifier, and realizable iid risk
+mode, so a deterministic minimum of their certified sample sizes selects
+one learner before data are observed.

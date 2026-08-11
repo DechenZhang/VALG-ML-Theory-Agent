@@ -1,0 +1,1541 @@
+\appendix
+
+\section{Proof Details}
+
+\subsection{Inner derivative and image length}
+\label{app:inner-certificate}
+
+\begin{lemma}[Inner-sweep derivative and Lipschitz control]
+\label{lem:inner-derivative}
+Under Assumptions~\ref{assump:indexed-regime} and
+\ref{assump:compact-cube-support}, if $d\geq1$, $R\geq1$, and
+$\alpha_{1:d-1}\in[-R,R]^{d-1}$, then for every $\theta\in[-1,1]$,
+\[
+\partial_\theta s_0(\theta;\alpha_{1:d-1})
+=-d\theta^{d-1}-\sum_{j=1}^{d-1}j\alpha_j\theta^{j-1}
+\]
+and
+\[
+\bigl|\partial_\theta s_0(\theta;\alpha_{1:d-1})\bigr|
+\leq d+\frac{Rd(d-1)}2=B_0(d,R).
+\]
+Consequently, for all $x,z\in[-1,1]$,
+\[
+|s_0(x;\alpha_{1:d-1})-s_0(z;\alpha_{1:d-1})|
+\leq B_0(d,R)|x-z|.
+\]
+\end{lemma}
+
+\begin{proof}
+The definition
+\[
+s_0(\theta;\alpha_{1:d-1})
+=-\theta^d-\sum_{j=1}^{d-1}\alpha_j\theta^j
+\]
+is polynomial in $\theta$, so termwise differentiation gives the asserted
+formula on all of $\R$.  First suppose $d\geq2$.  For
+$\theta\in[-1,1]$, Assumption~\ref{assump:compact-cube-support} and the
+triangle inequality give
+\[
+\begin{aligned}
+\bigl|\partial_\theta s_0(\theta;\alpha_{1:d-1})\bigr|
+&\leq d|\theta|^{d-1}
+ +\sum_{j=1}^{d-1}j|\alpha_j||\theta|^{j-1}\\
+&\leq d+R\sum_{j=1}^{d-1}j\\
+&=d+\frac{Rd(d-1)}2
+=B_0(d,R).
+\end{aligned}
+\]
+No term has been absorbed.  For distinct $x,z\in[-1,1]$, the closed segment
+between them lies in $[-1,1]$; the mean-value theorem therefore yields the
+Lipschitz inequality.  It is immediate when $x=z$, and the argument includes
+both endpoints $-1$ and $1$.
+
+When $d=1$, the coefficient tuple and every displayed sum are empty.  Without
+using a $0^0$ convention,
+\[
+s_0(\theta)=-\theta,\qquad s_0'(\theta)=-1,
+\qquad B_0(1,R)=1,
+\]
+so the derivative and Lipschitz conclusions remain exact.  At the radius
+boundary $R=1$, the same computation uses $|\alpha_j|\leq1$ and gives
+$B_0(d,1)=d+d(d-1)/2$; no strict radius inequality or limiting argument is
+needed.
+\end{proof}
+
+\begin{lemma}[Inner interval image length]
+\label{lem:inner-image-length}
+Under Assumptions~\ref{assump:indexed-regime} and
+\ref{assump:compact-cube-support} and Lemma~\ref{lem:inner-derivative}, if
+$d\geq1$, $R\geq1$, $\alpha_{1:d-1}\in[-R,R]^{d-1}$, and
+$J\subseteq[-1,1]$ is an interval with any endpoint convention, then
+$s_0(J;\alpha_{1:d-1})$ is an interval or is empty, and
+\[
+\lambda\bigl(s_0(J;\alpha_{1:d-1})\bigr)
+\leq B_0(d,R)|J|.
+\]
+This includes empty and singleton $J$, intervals containing either boundary
+point, and $d=1$.
+\end{lemma}
+
+\begin{proof}
+If $J=\varnothing$, its image is empty and both lengths are zero.  If
+$J=\{\theta_0\}$, its image is a singleton and again both lengths are zero.
+Suppose now that $J$ has at least two points.  Every real interval is
+connected, regardless of endpoint inclusion.  Since $s_0$ is continuous,
+its image is connected and hence is an interval in $\R$.  It is bounded
+because Lemma~\ref{lem:inner-derivative} makes $s_0$ Lipschitz on the bounded
+set $[-1,1]$.
+
+For arbitrary $u,v$ in the image, choose $x,z\in J$ with
+$u=s_0(x;\alpha_{1:d-1})$ and $v=s_0(z;\alpha_{1:d-1})$.  Then
+\[
+|u-v|\leq B_0(d,R)|x-z|
+\leq B_0(d,R)\diam(J).
+\]
+Taking the supremum over $u,v$ gives
+\[
+\diam\bigl(s_0(J;\alpha_{1:d-1})\bigr)
+\leq B_0(d,R)\diam(J).
+\]
+The Lebesgue length of any nonempty bounded real interval equals its diameter,
+independently of whether either endpoint is included.  Hence
+\[
+\begin{aligned}
+\lambda\bigl(s_0(J;\alpha_{1:d-1})\bigr)
+&=\diam\bigl(s_0(J;\alpha_{1:d-1})\bigr)\\
+&\leq B_0(d,R)\diam(J)
+=B_0(d,R)|J|.
+\end{aligned}
+\]
+This proves the complete inner deterministic certificate.  No monotonicity,
+injectivity, transversality, or simple-root condition is used.  In degree one
+the image is exactly $-J$, so equality holds with $B_0(1,R)=1$.
+\end{proof}
+
+\subsection{Positive and negative outer certificates}
+\label{app:outer-certificates}
+
+\begin{proposition}[Positive outer pivot and image certificate]
+\label{prop:positive-outer-certificate}
+Under Assumptions~\ref{assump:indexed-regime} and
+\ref{assump:compact-cube-support}, fix $\alpha\in[-R,R]^d$.  If
+$J\subseteq(1,\infty)$ is an interval with any endpoint convention, including
+an empty or singleton interval, then for every $\theta\in J$,
+\[
+\phi_\alpha(\theta)=0
+\quad\Longleftrightarrow\quad
+\alpha_{d-1}=s_\infty(\theta;\alpha_{0:d-2})
+=-\theta-\sum_{j=0}^{d-2}\alpha_j\theta^{j-d+1}.
+\]
+Moreover,
+\[
+\partial_\theta s_\infty(\theta;\alpha_{0:d-2})
+=-1+\sum_{j=0}^{d-2}(d-1-j)\alpha_j\theta^{j-d},
+\]
+\[
+\bigl|\partial_\theta s_\infty(\theta;\alpha_{0:d-2})\bigr|
+\leq B_\infty(d,R),\qquad B_\infty(d,R)=1+\frac{Rd(d-1)}2,
+\]
+and
+\[
+\lambda\bigl(s_\infty(J;\alpha_{0:d-2})\bigr)
+\leq B_\infty(d,R)|J|.
+\]
+The conclusions remain valid as an endpoint approaches $1$ from above, and
+for $d=1$ they reduce to $s_\infty=-\theta$ and exact image length $|J|$.
+\end{proposition}
+
+\begin{proof}
+For $\theta>1$, the divisor $\theta^{d-1}$ is nonzero.  Separating the
+coefficient of degree $d-1$ gives the reversible chain
+\[
+\begin{aligned}
+\phi_\alpha(\theta)=0
+&\Longleftrightarrow \frac{\phi_\alpha(\theta)}{\theta^{d-1}}=0\\
+&\Longleftrightarrow
+\theta+\sum_{j=0}^{d-2}\alpha_j\theta^{j-d+1}
++\alpha_{d-1}=0\\
+&\Longleftrightarrow
+\alpha_{d-1}=-\theta-\sum_{j=0}^{d-2}\alpha_j\theta^{j-d+1}.
+\end{aligned}
+\]
+Termwise differentiation yields
+\[
+\begin{aligned}
+\partial_\theta s_\infty(\theta;\alpha_{0:d-2})
+&=-1-\sum_{j=0}^{d-2}(j-d+1)\alpha_j\theta^{j-d}\\
+&=-1+\sum_{j=0}^{d-2}(d-1-j)\alpha_j\theta^{j-d}.
+\end{aligned}
+\]
+For $d\geq2$, every exponent in the last sum satisfies $j-d\leq-2$ and
+$|\theta^{j-d}|\leq1$.  Therefore
+\[
+\begin{aligned}
+|\partial_\theta s_\infty(\theta;\alpha_{0:d-2})|
+&\leq1+\sum_{j=0}^{d-2}(d-1-j)|\alpha_j||\theta^{j-d}|\\
+&\leq1+R\sum_{j=0}^{d-2}(d-1-j)\\
+&=1+R\sum_{k=1}^{d-1}k
+=1+\frac{Rd(d-1)}2=B_\infty(d,R).
+\end{aligned}
+\]
+The final identity also covers $d=1$, when both sums are empty.
+
+If $|J|=\infty$, the image-length inequality holds in the extended
+nonnegative reals.  If $J$ is empty or a singleton, both sides have length
+zero.  Otherwise, every segment joining two points of $J$ remains in
+$(1,\infty)$.  The mean-value theorem gives the
+$B_\infty(d,R)$-Lipschitz bound there.  The continuous image of the connected
+set $J$ is an interval, and the length-diameter identity for real intervals
+gives
+\[
+\begin{aligned}
+\lambda\bigl(s_\infty(J;\alpha_{0:d-2})\bigr)
+&=\diam\bigl(s_\infty(J;\alpha_{0:d-2})\bigr)\\
+&\leq B_\infty(d,R)\diam(J)
+=B_\infty(d,R)|J|.
+\end{aligned}
+\]
+This is unchanged by inclusion or exclusion of a finite endpoint.
+
+The one-sided limits
+\[
+\begin{aligned}
+\lim_{\theta\downarrow1}s_\infty(\theta;\alpha_{0:d-2})
+&=-1-\sum_{j=0}^{d-2}\alpha_j,\\
+\lim_{\theta\downarrow1}\partial_\theta s_\infty(\theta;\alpha_{0:d-2})
+&=-1+\sum_{j=0}^{d-2}(d-1-j)\alpha_j
+\end{aligned}
+\]
+are finite and satisfy the same derivative bound.  Thus approaching the
+excluded endpoint adds no length term; the point $1$ itself belongs to the
+inner chart.  When $d=1$, division is by $\theta^0=1$, all sums are empty,
+$\phi_\alpha(\theta)=\theta+\alpha_0$, and all stated identities are exact.
+\end{proof}
+
+\begin{proposition}[Negative outer pivot and image certificate]
+\label{prop:negative-outer-certificate}
+Under Assumptions~\ref{assump:indexed-regime} and
+\ref{assump:compact-cube-support}, fix $\alpha\in[-R,R]^d$.  If
+$J\subseteq(-\infty,-1)$ is an interval with any endpoint convention,
+including an empty or singleton interval, then for every $\theta\in J$,
+\[
+\phi_\alpha(\theta)=0
+\quad\Longleftrightarrow\quad
+\alpha_{d-1}=s_\infty(\theta;\alpha_{0:d-2})
+=-\theta-\sum_{j=0}^{d-2}\alpha_j\theta^{j-d+1}.
+\]
+The exact derivative is
+\[
+\partial_\theta s_\infty(\theta;\alpha_{0:d-2})
+=-1+\sum_{j=0}^{d-2}(d-1-j)\alpha_j\theta^{j-d},
+\]
+and it satisfies
+\[
+|\partial_\theta s_\infty(\theta;\alpha_{0:d-2})|
+\leq B_\infty(d,R),
+\qquad
+\lambda\bigl(s_\infty(J;\alpha_{0:d-2})\bigr)
+\leq B_\infty(d,R)|J|.
+\]
+These conclusions preserve the negative-$\theta$ parity signs, remain valid
+as an endpoint approaches $-1$ from below, and specialize exactly at $d=1$.
+\end{proposition}
+
+\begin{proof}
+For $\theta<-1$, the number $\theta^{d-1}$ is nonzero.  It may be negative,
+but it divides an equality rather than an inequality, so
+\[
+\begin{aligned}
+\phi_\alpha(\theta)=0
+&\Longleftrightarrow \frac{\phi_\alpha(\theta)}{\theta^{d-1}}=0\\
+&\Longleftrightarrow
+\theta+\sum_{j=0}^{d-2}\alpha_j\theta^{j-d+1}
++\alpha_{d-1}=0\\
+&\Longleftrightarrow
+\alpha_{d-1}=-\theta-\sum_{j=0}^{d-2}\alpha_j\theta^{j-d+1}.
+\end{aligned}
+\]
+Multiplication by the same nonzero divisor proves the converse.  Direct
+differentiation gives the derivative displayed in the proposition.
+
+To retain every parity sign, orient this connected chart by $u=-\theta>1$
+and put
+\[
+g(u):=s_\infty(-u;\alpha_{0:d-2})
+=u-\sum_{j=0}^{d-2}\alpha_j(-u)^{j-d+1}.
+\]
+The chain rule gives
+\[
+\begin{aligned}
+g'(u)
+&=-\partial_\theta s_\infty(-u;\alpha_{0:d-2})\\
+&=1-\sum_{j=0}^{d-2}(d-1-j)\alpha_j(-u)^{j-d}\\
+&=1-\sum_{j=0}^{d-2}(d-1-j)\alpha_j
+(-1)^{d-j}u^{j-d}.
+\end{aligned}
+\]
+Here $(-u)^{j-d}=(-1)^{j-d}u^{j-d}=(-1)^{d-j}u^{j-d}$ because the exponents
+are integers.  Thus orientation reversal gives exactly
+$g'(u)=-s_\infty'(-u)$ and assigns no favorable sign to a coefficient term.
+
+For $d\geq2$, $j-d\leq-2$ and
+$|\theta^{j-d}|=|\theta|^{-(d-j)}\leq1$.  Consequently,
+\[
+\begin{aligned}
+|\partial_\theta s_\infty(\theta;\alpha_{0:d-2})|
+&\leq1+\sum_{j=0}^{d-2}(d-1-j)|\alpha_j||\theta^{j-d}|\\
+&\leq1+R\sum_{j=0}^{d-2}(d-1-j)\\
+&=1+R\sum_{k=1}^{d-1}k
+=1+\frac{Rd(d-1)}2=B_\infty(d,R).
+\end{aligned}
+\]
+The same bound holds for $|g'(u)|$, and the triangular-sum identity includes
+the empty $d=1$ sum.
+
+If $|J|=\infty$, the length conclusion is immediate in the extended reals.
+Empty and singleton intervals give $0\leq0$.  Otherwise, every segment
+joining points of $J$ stays inside $(-\infty,-1)$ and crosses neither $-1$
+nor zero.  The mean-value theorem, connectedness, and the length-diameter
+identity therefore give
+\[
+\begin{aligned}
+\lambda\bigl(s_\infty(J;\alpha_{0:d-2})\bigr)
+&=\diam\bigl(s_\infty(J;\alpha_{0:d-2})\bigr)\\
+&\leq B_\infty(d,R)\diam(J)
+=B_\infty(d,R)|J|.
+\end{aligned}
+\]
+
+Finally, the relevant one-sided limits are
+\[
+\begin{aligned}
+\lim_{\theta\uparrow-1}s_\infty(\theta;\alpha_{0:d-2})
+&=1-\sum_{j=0}^{d-2}\alpha_j(-1)^{j-d+1},\\
+\lim_{\theta\uparrow-1}\partial_\theta s_\infty(\theta;\alpha_{0:d-2})
+&=-1+\sum_{j=0}^{d-2}(d-1-j)\alpha_j(-1)^{j-d},\\
+\lim_{u\downarrow1}g'(u)
+&=1-\sum_{j=0}^{d-2}(d-1-j)\alpha_j(-1)^{j-d}.
+\end{aligned}
+\]
+The last two quantities are negatives and each has absolute value at most
+$B_\infty(d,R)$.  Thus approaching $-1$ introduces neither a blow-up nor an
+endpoint correction; $-1$ belongs to the inner chart.  In degree one all
+sums are empty, division is by $1$, and $s_\infty=-\theta$ on this chart as
+well.  The two outer propositions have treated the connected components
+separately and nowhere join points across zero.
+\end{proof}
+
+\subsection{Measurable caps, Borel sections, and matching disintegration}
+\label{app:disintegration}
+
+\begin{lemma}[Measurable endpoint-kernel caps]
+\label{lem:kernel-caps}
+Under Assumptions~\ref{assump:indexed-regime},
+\ref{assump:compact-cube-support}, and
+\ref{assump:mean-endpoint-conditional-caps}, let
+$\mu\in\mathcal D_{d,R,\eta}$.  For $d\geq2$, define
+\[
+(X_0,Y_0):=(\alpha_0,\alpha_{1:d-1}),\qquad
+(X_\infty,Y_\infty):=(\alpha_{d-1},\alpha_{0:d-2}),
+\]
+let $\nu_i$ be the law of $Y_i$, and fix a regular conditional kernel
+$Q^i_y=\mathcal L(X_i\mid Y_i=y)$ for $i\in\{0,\infty\}$.  For $d=1$,
+take both pairs to be $(\alpha_0,\varnothing)$ and use the same unconditional
+kernel on $\R^0=\{\varnothing\}$.
+
+There exist extended nonnegative measurable functions $\widehat K_i$ and
+$\nu_i$-full measurable sets $G_i$ such that every $y\in G_i$ is
+support-compatible and
+\[
+Q^i_y\ll\lambda,\qquad Q^i_y([-R,R])=1,\qquad
+\widehat K_i(y)=\left\|\frac{\dd Q^i_y}{\dd\lambda}\right\|_{L^\infty(\R)}
+<\infty.
+\]
+On the same set, simultaneously for every Borel $A\subseteq\R$,
+\begin{equation}
+Q^i_y(A)\leq\widehat K_i(y)\lambda(A).
+\label{eq:kernel-domination}
+\end{equation}
+Furthermore,
+\begin{equation}
+\widehat K_0(Y_0)=K_0^\mu,\qquad
+\widehat K_\infty(Y_\infty)=K_\infty^\mu
+\quad\mu\text{-a.s.},
+\label{eq:cap-identities}
+\end{equation}
+and
+\begin{equation}
+\mathbb E_\mu\widehat K_0(Y_0)\leq\bar\kappa_0,
+\qquad
+\mathbb E_\mu\widehat K_\infty(Y_\infty)\leq\bar\kappa_\infty.
+\label{eq:mean-cap-bounds}
+\end{equation}
+The representatives are unchanged almost surely if a conditional-kernel or
+density version is changed.  In degree one the two kernels and caps coincide.
+\end{lemma}
+
+\begin{proof}
+Fix one index $i$, retaining its own conditioning marginal $\nu_i$ and
+kernel $Q^i$ throughout.  The argument will then be applied independently to
+$i=0$ and $i=\infty$.
+
+By Assumption~\ref{assump:mean-endpoint-conditional-caps}, $Q^i_y\ll\lambda$
+outside a $\nu_i$-null set.  Write $S_i$ for the conditioning space, namely
+$\R^{d-1}$ when $d\geq2$ and $\R^0$ when $d=1$.  The marginal $\nu_i$ is a
+probability measure on $S_i$, and $Q^i$ is a probability kernel from $S_i$
+to $\R$.  The measure--kernel product theorem
+\citep[Chapter~1]{Kallenberg2002}, applied to these objects, defines on
+$S_i\times\R$ the measure
+\[
+\gamma_i(C):=\int Q^i_y(C_y)\,\nu_i(\dd y),
+\qquad C_y:=\{x:(y,x)\in C\}.
+\]
+It supplies the measurability of the section integral and countable
+additivity.  Moreover,
+\[
+\gamma_i(S_i\times\R)
+=\int Q^i_y(\R)\,\nu_i(\dd y)=\int1\,\dd\nu_i=1,
+\]
+so $\gamma_i$ is a probability before the Radon--Nikodym theorem is invoked.
+For every Borel rectangle $D\times A$, regular conditionality gives
+\[
+\gamma_i(D\times A)
+=\int_D Q^i_y(A)\,\nu_i(\dd y)
+=\mu(Y_i\in D,X_i\in A).
+\]
+Rectangles form a $\pi$-system containing the whole product and generate its
+product sigma-algebra.  The finite measures $\gamma_i$ and
+$\mathcal L_\mu(Y_i,X_i)$ have the same whole-space mass and agree on every
+rectangle.  Finite-measure uniqueness therefore identifies the current
+objects exactly:
+\[
+\gamma_i=\mathcal L_\mu(Y_i,X_i).
+\]
+
+If $(\nu_i\otimes\lambda)(C)=0$, Tonelli's theorem
+\citep[Chapter~2]{Folland1999} gives
+$\lambda(C_y)=0$ for $\nu_i$-almost every $y$.  Conditional absolute
+continuity then gives $Q^i_y(C_y)=0$, and hence
+$\gamma_i\ll\nu_i\otimes\lambda$.  The ordinary product measure
+$\beta_i:=\nu_i\otimes\lambda$ is sigma-finite before Radon--Nikodym is
+used: the sets $S_i\times[-n,n]$, $n\geq1$, cover the whole product and
+\[
+\beta_i(S_i\times[-n,n])
+=\nu_i(S_i)\lambda([-n,n])=2n<\infty.
+\]
+This remains true when $S_i=\R^0$ and requires no density of the possibly
+singular marginal $\nu_i$.  Since $\gamma_i$ is finite and
+$\gamma_i\ll\beta_i$, the Radon--Nikodym theorem
+\citep[Chapter~3]{Folland1999} supplies a
+nonnegative jointly measurable $q_i(y,x)$ such that
+\[
+\gamma_i(\dd y,\dd x)=q_i(y,x)\nu_i(\dd y)\lambda(\dd x).
+\]
+The whole-space calculation also gives
+$\int q_i\,\dd(\nu_i\otimes\lambda)=1$.
+Choose the explicit countable family
+\[
+\mathscr P_{\mathbb Q}:=\{\varnothing,\R\}
+ \cup\{(a,b]:a,b\in\mathbb Q,\ a<b\}
+\subseteq\mathcal B(\R),
+\]
+which is a $\pi$-system, contains the whole pivot space, and generates
+$\mathcal B(\R)$.  Intersections remain in the family or become empty, and
+every open interval is a countable union of rational half-open members.  For
+every $B\in\mathscr P_{\mathbb Q}$ and Borel $D\subseteq S_i$, comparison on
+$D\times B$ gives
+\[
+\int_DQ^i_y(B)\,\nu_i(\dd y)
+=\int_D\!\left(\int_Bq_i(y,x)\dd x\right)\nu_i(\dd y).
+\]
+Both integrands are nonnegative and integrable.  Equality on every $D$
+implies equality almost everywhere.  Intersect the resulting full-measure
+sets over the countable $\mathscr P_{\mathbb Q}$.  On that common set define
+\[
+\widetilde Q^i_y(B):=\int_Bq_i(y,x)\dd x.
+\]
+The member $B=\R$ gives
+$Q^i_y(\R)=\widetilde Q^i_y(\R)=1$.  Thus the two fiber measures are finite,
+have equal whole-space mass, and agree on the generating $\pi$-system.
+The $\pi$--$\lambda$ theorem and its finite-measure uniqueness consequence
+\citep[Chapter~1]{Folland1999} extend their equality to every Borel set.
+Hence $q_i(y,\cdot)$ is a probability density of $Q^i_y$ on one
+$\nu_i$-full set.
+
+Let
+\[
+\mathscr J_{\mathbb Q}:=\{(a,b):a,b\in\mathbb Q, a<b\},
+\qquad
+\widehat K_i(y):=\sup_{J\in\mathscr J_{\mathbb Q}}
+\frac{Q^i_y(J)}{|J|}.
+\]
+For each fixed $J$, the kernel property makes $y\mapsto Q^i_y(J)$
+measurable.  The family is countable, so $\widehat K_i$ is measurable on the
+whole conditioning space, including fibers on which no density was chosen.
+
+Fix a density fiber, write its density as $q$, and set
+$m=\|q\|_{L^\infty(\R)}$, allowing $m=+\infty$.  For every rational interval,
+\[
+\frac{Q^i_y(J)}{|J|}=\frac1{|J|}\int_Jq(x)\dd x\leq m,
+\]
+so $\widehat K_i(y)\leq m$.  If $m=0$, nonnegativity gives equality.
+Otherwise take a finite nonnegative $a<m$.  The set $\{x:q(x)>a\}$ has
+positive measure and therefore contains a Lebesgue point of $q$ by the
+Lebesgue differentiation theorem \citep[Chapter~3]{Folland1999}.  Some
+bounded open interval $L$ around that point satisfies
+\[
+\frac1{|L|}\int_Lq(t)\dd t>a.
+\]
+Put
+\[
+\delta:=\int_Lq\dd\lambda-a|L|>0,
+\qquad
+\rho(E):=\int_E|q|\dd\lambda.
+\]
+The measure $\rho$ is finite because $q$ is a probability density.  Its
+continuity on sets of small Lebesgue measure follows from the explicit
+truncation inequality: for every measurable $E$ and every $N\geq1$,
+\[
+\rho(E)
+\leq N\lambda(E)+\int_{\{|q|>N\}}|q|\dd\lambda.
+\]
+Indeed, split $E$ between $\{|q|\leq N\}$ and its complement.  Moreover,
+$|q|\1_{\{|q|\leq N\}}\uparrow|q|$, so monotone convergence
+\citep[Chapter~2]{Folland1999} makes the tail integral tend to zero.  Given
+$\varepsilon>0$, choose $N$ so that the tail is below $\varepsilon/2$; then
+$\lambda(E)<\varepsilon/(2N)$ implies $\rho(E)<\varepsilon$.
+
+Choose rational endpoints $r_n,s_n$ tending to the endpoints of $L$, with
+$r_n<s_n$, and set $J_n=(r_n,s_n)$.  Then
+$\lambda(L\mathbin\triangle J_n)\to0$ and $|J_n|\to|L|$.  The preceding
+continuity and the definition of $\delta$ give
+\[
+\begin{aligned}
+\int_{J_n}q\dd\lambda-a|J_n|
+&\geq \int_Lq\dd\lambda-a|L|
+ -\rho(L\mathbin\triangle J_n)-a\bigl||J_n|-|L|\bigr|\\
+&=\delta-\rho(L\mathbin\triangle J_n)
+ -a\bigl||J_n|-|L|\bigr|.
+\end{aligned}
+\]
+The last two terms tend to zero.  For all sufficiently large $n$, the
+right-hand side is positive, so some rational interval has average strictly
+larger than $a$ and $\widehat K_i(y)>a$.  Letting $a\uparrow m$, or taking
+arbitrarily large finite $a$ when $m=+\infty$, gives
+\begin{equation}
+\widehat K_i(y)=\|q\|_{L^\infty(\R)}
+\label{eq:rational-cap-identity}
+\end{equation}
+on every density fiber.
+
+Two densities of the same fiber law agree $\lambda$-almost everywhere by
+Radon--Nikodym uniqueness \citep[Chapter~3]{Folland1999}, so their essential
+suprema agree.  If $Q^i$ and $\widetilde Q^i$ are two regular conditional
+kernels for the same pair $(X_i,Y_i)$, then for every Borel
+$D\subseteq S_i$ and every $J\in\mathscr J_{\mathbb Q}$,
+\[
+\int_DQ^i_y(J)\,\nu_i(\dd y)
+=\mu(Y_i\in D,X_i\in J)
+=\int_D\widetilde Q^i_y(J)\,\nu_i(\dd y).
+\]
+Apply this equality to the measurable set on which one of the two bounded
+integrands is strictly larger than the other, and then reverse their roles.
+It follows that $Q^i_y(J)=\widetilde Q^i_y(J)$ almost everywhere.  Countability
+gives one common full-measure set for all rational intervals, and the defining
+supremum gives the same cap there.  This proves both density-version and
+kernel-version independence without selecting values on null fibers.
+
+On a density fiber with finite cap,
+$q(x)\leq\widehat K_i(y)$ for $\lambda$-almost every $x$.  Consequently,
+for every Borel $A$ on that same fiber, with no $A$-dependent exceptional
+set,
+\[
+Q^i_y(A)=\int_Aq(x)\dd x
+\leq\widehat K_i(y)\lambda(A).
+\]
+Equation~\eqref{eq:rational-cap-identity} identifies the random cap with the
+one in the definition of $\mathcal D_{d,R,\eta}$, proving
+\eqref{eq:cap-identities}.  The primitive mean inequalities give
+\eqref{eq:mean-cap-bounds} without changing constants.  Their finite right
+sides imply that both caps are finite almost surely.
+
+It remains to put conditional support on the same full-measure set.  By
+Assumption~\ref{assump:compact-cube-support},
+\[
+0=\mu(X_i\notin[-R,R])
+=\int Q^i_y(\R\setminus[-R,R])\nu_i(\dd y).
+\]
+The nonnegative integrand vanishes almost everywhere, and $Y_i$ lies in its
+corresponding $(d-1)$-dimensional cube almost surely.  Intersecting the
+full-measure sets for density, finite cap, and support produces $G_i$.
+Applying the construction separately to $0$ and $\infty$ proves the result
+for $d\geq2$.
+
+For $d=1$, the conditioning marginal is the unit mass on $\R^0$.  The kernel
+at its sole point is the unconditional law of $\alpha_0$, and the same kernel
+is used for both endpoint labels.  The rational-interval formula therefore
+produces one cap, and all preceding identities give both required
+inequalities for it.
+\end{proof}
+
+\begin{lemma}[Borel root events and exact chart sections]
+\label{lem:borel-sections}
+Under Assumptions~\ref{assump:compact-parameter-domain},
+\ref{assump:indexed-regime}, and \ref{assump:compact-cube-support}, let
+$J\subseteq\Theta$ be an interval with any endpoint convention, possibly
+empty or a singleton.  Then $H_{d,J}$ is Borel.  For $d\geq2$, define
+\[
+T_0(x,y):=(x,y_1,\ldots,y_{d-1}),\qquad
+T_\infty(x,y):=(y_0,\ldots,y_{d-2},x),
+\]
+and $E^i_J:=T_i^{-1}(H_{d,J})$.  For $d=1$, define both maps by
+$T_i(x,\varnothing)=(x)$.  The sets $E^i_J$ and all their pivot sections
+$(E^i_J)_y:=\{x:(x,y)\in E^i_J\}$ are Borel.  If $J\subseteq[-1,1]$, then
+\begin{equation}
+(E^0_J)_y=
+\begin{cases}
+[-R,R]\cap s_0(J;y),&y\in[-R,R]^{d-1},\\
+\varnothing,&y\notin[-R,R]^{d-1},
+\end{cases}
+\label{eq:inner-section}
+\end{equation}
+and if $J\subseteq(1,\infty)$ or $J\subseteq(-\infty,-1)$, then
+\begin{equation}
+(E^\infty_J)_y=
+\begin{cases}
+[-R,R]\cap s_\infty(J;y),&y\in[-R,R]^{d-1},\\
+\varnothing,&y\notin[-R,R]^{d-1}.
+\end{cases}
+\label{eq:outer-section}
+\end{equation}
+For $d=1$, both right sides mean $[-R,R]\cap(-J)$.
+\end{lemma}
+
+\begin{proof}
+Assumption~\ref{assump:compact-parameter-domain} makes $J$ bounded.  The
+empty interval is a countable union of empty compact sets, and a singleton is
+compact.  Otherwise write $a=\inf J<b=\sup J$.  For all sufficiently large
+$n$, set
+\[
+a_n:=\begin{cases}a,&a\in J,\\a+1/n,&a\notin J,\end{cases}
+\qquad
+b_n:=\begin{cases}b,&b\in J,\\b-1/n,&b\notin J,\end{cases}
+\]
+and let $K_n=[a_n,b_n]$ when $a_n\leq b_n$, taking $K_n=\varnothing$
+otherwise.  After reindexing, the compact sets $K_n$ increase to $J$.  This
+construction preserves open, closed, and half-open endpoint conventions.
+
+For every $n$, define
+\[
+Z_n:=\{(\alpha,\theta)\in[-R,R]^d\times K_n:
+\phi_\alpha(\theta)=0\}.
+\]
+The polynomial evaluation map is continuous.  The finite-product,
+closed-subset, and continuous-image compactness facts
+\citep[Sections~24 and~26]{Munkres2000} show that $Z_n$ is compact and that
+its coefficient projection is compact and Borel.  Exact existential
+quantification gives
+\[
+H_{d,J}=\bigcup_{n=1}^\infty\operatorname{proj}_\alpha Z_n.
+\]
+Thus $H_{d,J}$ is Borel.  The proof projects compact sets before taking a
+countable union; it does not rely on projections of arbitrary Borel sets.
+
+The reconstruction maps are continuous, so each $E^i_J$ is Borel.  Sections
+of product Borel sets are Borel: rectangles have Borel sections, and this
+property is closed under complements and countable unions.
+
+For an inner interval and support-compatible $y$,
+\[
+\phi_{T_0(x,y)}(\theta)=0
+\Longleftrightarrow
+x=-\theta^d-\sum_{j=1}^{d-1}y_j\theta^j=s_0(\theta;y).
+\]
+The coefficient cube then gives \eqref{eq:inner-section}; an incompatible
+$y$ gives an empty section.  On either outer chart, $\theta\neq0$, and
+\[
+\begin{aligned}
+\phi_{T_\infty(x,y)}(\theta)=0
+&\Longleftrightarrow
+\theta+\sum_{j=0}^{d-2}y_j\theta^{j-d+1}+x=0\\
+&\Longleftrightarrow x=s_\infty(\theta;y),
+\end{aligned}
+\]
+where division is only by the nonzero $\theta^{d-1}$.  This proves
+\eqref{eq:outer-section} on both signs.  In degree one both sums are empty
+and both reconstructions are $(x)$.
+
+Only the zero-set identity is used, so tangencies and multiple roots need no
+extra case.  Empty and singleton intervals and every endpoint convention
+were included in the compact exhaustion.  In particular, $\pm1$ occur only
+in the inner chart when they belong to $J$.
+\end{proof}
+
+\begin{proposition}[Matching-kernel Borel disintegration]
+\label{prop:matching-disintegration}
+Under Assumptions~\ref{assump:compact-parameter-domain},
+\ref{assump:indexed-regime}, \ref{assump:compact-cube-support}, and
+\ref{assump:mean-endpoint-conditional-caps}, and under
+Lemmas~\ref{lem:kernel-caps} and \ref{lem:borel-sections}, use the pairs,
+kernels, marginals, full-measure sets, and reconstruction events defined
+there.  For every inner-chart interval $J\subseteq\Theta\cap[-1,1]$,
+\begin{equation}
+\mu(H_{d,J})=\int Q^0_y((E^0_J)_y)\nu_0(\dd y),
+\label{eq:inner-disintegration}
+\end{equation}
+the integrand is measurable, and for every $y\in G_0$,
+\begin{equation}
+Q^0_y((E^0_J)_y)=Q^0_y(s_0(J;y))
+\leq\widehat K_0(y)\lambda(s_0(J;y)).
+\label{eq:inner-fiber-bound}
+\end{equation}
+For every interval $J$ in either outer chart,
+\begin{equation}
+\mu(H_{d,J})=\int Q^\infty_y((E^\infty_J)_y)\nu_\infty(\dd y),
+\label{eq:outer-disintegration}
+\end{equation}
+the integrand is measurable, and for every $y\in G_\infty$,
+\begin{equation}
+Q^\infty_y((E^\infty_J)_y)=Q^\infty_y(s_\infty(J;y))
+\leq\widehat K_\infty(y)\lambda(s_\infty(J;y)).
+\label{eq:outer-fiber-bound}
+\end{equation}
+For $d\geq2$ the two displays use their distinct conditioning kernels; for
+$d=1$ they use the single unconditional kernel of $\alpha_0$.
+\end{proposition}
+
+\begin{proof}
+We first prove parameterized measurability and disintegration in the exact
+product order used by the chart events.  Fix a probability kernel $Q_y$ from
+$S$ to $\R$, where $S=\R^{d-1}$ or, for $d=1$, $S=\R^0$.  Put
+$W:=\R\times S$ and
+\[
+\mathscr R:=\{A\times B:A\in\mathcal B(\R),\ B\in\mathcal B(S)\}.
+\]
+This is a $\pi$-system, explicitly contains $W$, and generates the Borel
+sigma-algebra of $W$.  Indeed, Borel rectangles are Borel, and every open
+subset of $W$ is a countable union of open rectangles from countable bases
+of $\R$ and the Euclidean space $S$; the one-point case is immediate.
+
+Let $\mathcal M$ be the class of Borel sets $E\subseteq W$ for which
+$y\mapsto Q_y(E_y)$ is measurable.  The whole product belongs to
+$\mathcal M$ because $Q_y(W_y)=Q_y(\R)=1$.  Rectangles belong to
+$\mathcal M$ because
+\[
+Q_y((A\times B)_y)=\1_B(y)Q_y(A).
+\]
+The class is closed under complements relative to $W$, since
+$Q_y((E^c)_y)=1-Q_y(E_y)$, and under countable disjoint unions, since kernel
+countable additivity gives
+\[
+Q_y\left(\left(\bigcup_nE_n\right)_y\right)
+=\sum_nQ_y((E_n)_y),
+\]
+whose partial sums are measurable and converge pointwise.  Thus $\mathcal M$
+is a $\lambda$-system containing $\mathscr R$, including its whole-space
+member.  The $\pi$--$\lambda$ theorem \citep[Chapter~1]{Folland1999} gives
+$\mathcal M=\mathcal B(\R)\otimes\mathcal B(S)$.
+
+Now suppose $Q_y$ is a regular conditional law of $X$ given $Y$, and let
+$\nu=\mathcal L(Y)$.  Let $\mathcal D$ be the class of Borel
+$E\subseteq W$ for which
+\[
+\mathbb P((X,Y)\in E)=\int Q_y(E_y)\,\nu(\dd y).
+\]
+The preceding argument makes the integrand legal for every Borel $E$.  The
+whole product belongs to $\mathcal D$, because both sides equal one.  Every
+rectangle belongs to $\mathcal D$, since regular conditionality gives
+\[
+\mathbb P((X,Y)\in A\times B)
+=\int_BQ_y(A)\,\nu(\dd y)
+=\int Q_y((A\times B)_y)\,\nu(\dd y).
+\]
+Complements remain in $\mathcal D$ by subtraction from the equal
+whole-space mass.  If $(E_n)$ are pairwise disjoint members of $\mathcal D$,
+their sections are pairwise disjoint.  Kernel countable additivity and
+monotone convergence \citep[Chapter~2]{Folland1999} give
+\[
+\begin{aligned}
+\int Q_y\!\left(\left(\bigcup_nE_n\right)_y\right)\nu(\dd y)
+&=\int\sum_nQ_y((E_n)_y)\,\nu(\dd y)\\
+&=\lim_{N\to\infty}\sum_{n=1}^N
+  \int Q_y((E_n)_y)\,\nu(\dd y)\\
+&=\sum_n\mathbb P((X,Y)\in E_n)\\
+&=\mathbb P\!\left((X,Y)\in\bigcup_nE_n\right).
+\end{aligned}
+\]
+Thus $\mathcal D$ is a $\lambda$-system containing $\mathscr R$, again with
+the whole product explicitly verified.  A second $\pi$--$\lambda$ argument
+extends the identity to every Borel $E\subseteq W$:
+\begin{equation}
+\mathbb P((X,Y)\in E)=\int Q_y(E_y)\nu(\dd y).
+\label{eq:general-disintegration}
+\end{equation}
+
+Apply \eqref{eq:general-disintegration} to $(X_0,Y_0)$ and the Borel set
+$E^0_J$.  Since $T_0(X_0,Y_0)=\alpha$, this proves
+\eqref{eq:inner-disintegration}.  For $y\in G_0$,
+Lemma~\ref{lem:borel-sections} gives
+$(E^0_J)_y=[-R,R]\cap s_0(J;y)$, while Lemma~\ref{lem:kernel-caps} gives
+$Q^0_y([-R,R])=1$.  Intersecting with the cube therefore does not change
+conditional probability.  The continuous image of an interval is an
+interval and hence Borel, so \eqref{eq:kernel-domination} applied to
+$s_0(J;y)$ proves \eqref{eq:inner-fiber-bound}.
+
+Apply the same general identity separately to $(X_\infty,Y_\infty)$ and
+$E^\infty_J$.  The outer section formula, support of $Q^\infty_y$, and the
+same Borel-set domination prove \eqref{eq:outer-disintegration} and
+\eqref{eq:outer-fiber-bound}.  No inner kernel enters this calculation, and
+no outer kernel enters the inner calculation.
+
+When $d=1$, both coordinate pairs are $(\alpha_0,\varnothing)$, both
+reconstruction maps coincide, and the conditioning marginal is a unit mass.
+The kernel identification in Lemma~\ref{lem:kernel-caps} then makes all four
+displays the correct unconditional identities.  Empty chart pieces give
+empty images, and singleton pieces give singleton images; conditional
+absolute continuity assigns the latter probability zero.  This completes
+the measurable conditional interface used below.
+\end{proof}
+
+\subsection{Inner, positive, and negative chart probability controls}
+\label{app:chart-probabilities}
+
+\begin{proposition}[Inner chart probability control]
+\label{prop:inner-chart-probability}
+Under Assumptions~\ref{assump:indexed-regime},
+\ref{assump:compact-cube-support}, and
+\ref{assump:mean-endpoint-conditional-caps}, and under
+Lemmas~\ref{lem:inner-image-length} and \ref{lem:kernel-caps} and
+Proposition~\ref{prop:matching-disintegration}, fix
+$\mu\in\mathcal D_{d,R,\eta}$ and $I\in\mathcal I(\Theta)$.  With
+$I_0=I\cap[-1,1]$,
+\[
+\mu(H_{d,I_0})\leq\bar\kappa_0B_0(d,R)|I_0|.
+\]
+If $I_0$ is empty or a singleton, then $\mu(H_{d,I_0})=0$.
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:matching-disintegration} gives a measurable integrand,
+and the full-measure set $G_0$ from Lemma~\ref{lem:kernel-caps} permits us to
+write, without using a cap on a null fiber,
+\[
+\begin{aligned}
+\mu(H_{d,I_0})
+&=\int_{G_0}Q^0_y((E^0_{I_0})_y)\nu_0(\dd y)\\
+&=\int_{G_0}Q^0_y(s_0(I_0;y))\nu_0(\dd y).
+\end{aligned}
+\]
+For every $y\in G_0$, Lemma~\ref{lem:kernel-caps} supplies finite
+$\widehat K_0(y)$ and simultaneous Borel-set domination, while
+Lemma~\ref{lem:inner-image-length} supplies
+\[
+\lambda(s_0(I_0;y))\leq B_0(d,R)|I_0|.
+\]
+Consequently, pointwise on $G_0$,
+\[
+Q^0_y((E^0_{I_0})_y)
+\leq\widehat K_0(y)\lambda(s_0(I_0;y))
+\leq\widehat K_0(y)B_0(d,R)|I_0|.
+\]
+The rightmost function is measurable because $\widehat K_0$ is measurable
+and $B_0(d,R)|I_0|$ is a fixed finite scalar.  We therefore integrate only
+this measurable majorant, rather than requiring a separate measurability
+claim for the conditioning-dependent image length:
+\[
+\begin{aligned}
+\mu(H_{d,I_0})
+&\leq\int_{G_0}\widehat K_0(y)B_0(d,R)|I_0|\nu_0(\dd y)\\
+&= B_0(d,R)|I_0|\int_{G_0}\widehat K_0(y)\nu_0(\dd y)\\
+&\leq B_0(d,R)|I_0|\mathbb E_\mu\widehat K_0(Y_0)\\
+&\leq\bar\kappa_0B_0(d,R)|I_0|.
+\end{aligned}
+\]
+If $I_0=\varnothing$, the event is empty.  If $I_0$ is a singleton, its
+image is a singleton and has Lebesgue measure zero; on $G_0$ the finite cap
+then gives conditional probability zero.  Thus the degenerate conclusion
+does not involve a zero-times-infinity product, even when
+$\bar\kappa_0=0$.
+\end{proof}
+
+\begin{proposition}[Positive outer chart probability control]
+\label{prop:positive-chart-probability}
+Under Assumptions~\ref{assump:indexed-regime},
+\ref{assump:compact-cube-support}, and
+\ref{assump:mean-endpoint-conditional-caps}, and under
+Propositions~\ref{prop:positive-outer-certificate},
+\ref{prop:matching-disintegration}, and Lemma~\ref{lem:kernel-caps}, fix
+$\mu\in\mathcal D_{d,R,\eta}$ and $I\in\mathcal I(\Theta)$.  With
+$I_+=I\cap(1,\infty)$,
+\[
+\mu(H_{d,I_+})\leq\bar\kappa_\infty B_\infty(d,R)|I_+|.
+\]
+If $I_+$ is empty or a singleton, then $\mu(H_{d,I_+})=0$.
+\end{proposition}
+
+\begin{proof}
+The positive-chart instance of Proposition~\ref{prop:matching-disintegration}
+and the full-measure property of $G_\infty$ give
+\[
+\begin{aligned}
+\mu(H_{d,I_+})
+&=\int_{G_\infty}Q^\infty_y((E^\infty_{I_+})_y)\nu_\infty(\dd y)\\
+&=\int_{G_\infty}Q^\infty_y(s_\infty(I_+;y))\nu_\infty(\dd y).
+\end{aligned}
+\]
+For $d\geq2$, $y\in[-R,R]^{d-1}$ on $G_\infty$; appending the pivot value
+zero gives a support-compatible coefficient vector, so the deterministic
+outer certificate applies.  For $d=1$ the empty-tuple specialization applies
+directly.  Thus
+Proposition~\ref{prop:positive-outer-certificate} gives
+\[
+\lambda(s_\infty(I_+;y))\leq B_\infty(d,R)|I_+|.
+\]
+Combining this bound with finite-cap domination gives, pointwise on
+$G_\infty$,
+\[
+Q^\infty_y((E^\infty_{I_+})_y)
+\leq\widehat K_\infty(y)\lambda(s_\infty(I_+;y))
+\leq\widehat K_\infty(y)B_\infty(d,R)|I_+|.
+\]
+The rightmost expression is a measurable cap times a fixed finite scalar.
+Integrating only that measurable majorant and then using the mean bound gives
+\[
+\begin{aligned}
+\mu(H_{d,I_+})
+&\leq\int_{G_\infty}\widehat K_\infty(y)B_\infty(d,R)|I_+|
+       \nu_\infty(\dd y)\\
+&= B_\infty(d,R)|I_+|
+       \int_{G_\infty}\widehat K_\infty(y)\nu_\infty(\dd y)\\
+&\leq B_\infty(d,R)|I_+|
+       \mathbb E_\mu\widehat K_\infty(Y_\infty)\\
+&\leq\bar\kappa_\infty B_\infty(d,R)|I_+|.
+\end{aligned}
+\]
+For an empty piece the event is empty.  For a singleton, the image is a
+singleton and the finite-cap domination on $G_\infty$ gives zero conditional
+probability.  No conditioning-null fiber is used.
+\end{proof}
+
+\begin{proposition}[Negative outer chart probability control]
+\label{prop:negative-chart-probability}
+Under Assumptions~\ref{assump:indexed-regime},
+\ref{assump:compact-cube-support}, and
+\ref{assump:mean-endpoint-conditional-caps}, and under
+Propositions~\ref{prop:negative-outer-certificate},
+\ref{prop:matching-disintegration}, and Lemma~\ref{lem:kernel-caps}, fix
+$\mu\in\mathcal D_{d,R,\eta}$ and $I\in\mathcal I(\Theta)$.  With
+$I_-=I\cap(-\infty,-1)$,
+\[
+\mu(H_{d,I_-})\leq\bar\kappa_\infty B_\infty(d,R)|I_-|.
+\]
+If $I_-$ is empty or a singleton, then $\mu(H_{d,I_-})=0$.
+\end{proposition}
+
+\begin{proof}
+The negative-chart instance of Proposition~\ref{prop:matching-disintegration}
+gives, after restriction to the finite-cap set,
+\[
+\begin{aligned}
+\mu(H_{d,I_-})
+&=\int_{G_\infty}Q^\infty_y((E^\infty_{I_-})_y)\nu_\infty(\dd y)\\
+&=\int_{G_\infty}Q^\infty_y(s_\infty(I_-;y))\nu_\infty(\dd y).
+\end{aligned}
+\]
+For $d\geq2$, appending pivot value zero to the support-compatible $y$ gives
+a coefficient vector in the cube; for $d=1$, use the exact empty-tuple
+specialization.  The specifically negative certificate gives
+\[
+\lambda(s_\infty(I_-;y))\leq B_\infty(d,R)|I_-|,
+\]
+and finite-cap domination gives, pointwise on $G_\infty$,
+\[
+Q^\infty_y((E^\infty_{I_-})_y)
+\leq\widehat K_\infty(y)\lambda(s_\infty(I_-;y))
+\leq\widehat K_\infty(y)B_\infty(d,R)|I_-|.
+\]
+The rightmost expression is measurable because it is the measurable cap
+times a fixed finite scalar.  Integrating only this majorant gives
+\[
+\begin{aligned}
+\mu(H_{d,I_-})
+&\leq\int_{G_\infty}\widehat K_\infty(y)B_\infty(d,R)|I_-|
+       \nu_\infty(\dd y)\\
+&= B_\infty(d,R)|I_-|
+       \int_{G_\infty}\widehat K_\infty(y)\nu_\infty(\dd y)\\
+&\leq B_\infty(d,R)|I_-|
+       \mathbb E_\mu\widehat K_\infty(Y_\infty)\\
+&\leq\bar\kappa_\infty B_\infty(d,R)|I_-|.
+\end{aligned}
+\]
+An empty piece has an empty event, and a singleton has a singleton image of
+zero length; finite-cap domination makes its conditional probability zero.
+This is a separate negative-chart calculation and does not use a sign
+symmetry.
+
+Together, the three propositions in this subsection give the three matching
+chart inequalities simultaneously.  Each outer piece uses the mean outer cap
+once for its own event; no factor two has entered any individual estimate.
+When $d=1$, Lemma~\ref{lem:kernel-caps} identifies the inner and outer labels
+with the same unconditional coefficient law and the same finite density cap,
+while $s_0=s_\infty=-\theta$ and $B_0(1,R)=B_\infty(1,R)=1$.  The inner
+proposition nevertheless invokes the primitive bound with $\bar\kappa_0$,
+and each outer proposition invokes the primitive bound with
+$\bar\kappa_\infty$.  Thus coincidence of the degree-one kernel does not
+merge the two cap hypotheses or either higher-degree conditioning interface.
+\end{proof}
+
+\subsection{Three-piece decomposition and exact maximum}
+\label{app:three-piece}
+
+\begin{lemma}[Three-piece parameter and event decomposition]
+\label{lem:three-piece-decomposition}
+Under Assumptions~\ref{assump:compact-parameter-domain} and
+\ref{assump:indexed-regime}, for $I\in\mathcal I(\Theta)$ define
+$I_0,I_+,I_-$ as in Section~\ref{sec:preliminaries}.  Then, with every
+endpoint convention,
+\[
+I=I_0\mathbin{\dot\cup}I_+\mathbin{\dot\cup}I_-,
+\qquad
+|I|=|I_0|+|I_+|+|I_-|,
+\]
+the points $1$ and $-1$ belong only to $I_0$ when they belong to $I$, and
+\[
+H_{d,I}=H_{d,I_0}\cup H_{d,I_+}\cup H_{d,I_-}.
+\]
+\end{lemma}
+
+\begin{proof}
+The sets $[-1,1]$, $(1,\infty)$, and $(-\infty,-1)$ are pairwise disjoint
+and partition $\R$.  Intersecting this exact partition with $I$ preserves
+the endpoint convention and gives the disjoint union.  In particular, an
+included $1$ or $-1$ occurs only in $I_0$; an excluded boundary point occurs
+in none of the pieces.  Finite additivity of Lebesgue measure gives the
+length identity, including empty and singleton pieces.
+
+For a fixed coefficient vector, a root in $I$ lies in exactly one of the
+three pieces, proving the forward event inclusion.  A root in any piece is a
+root in $I$, proving the reverse inclusion.  The three events need not be
+disjoint, since one polynomial can have roots in multiple pieces; the identity
+is an event union, not a probability-additivity assertion.
+\end{proof}
+
+\begin{proposition}[Weighted chart union bound]
+\label{prop:weighted-chart-bound}
+Under Assumptions~\ref{assump:compact-parameter-domain} and
+\ref{assump:indexed-regime}, Lemma~\ref{lem:three-piece-decomposition}, and
+Propositions~\ref{prop:inner-chart-probability},
+\ref{prop:positive-chart-probability}, and
+\ref{prop:negative-chart-probability}, for every
+$\mu\in\mathcal D_{d,R,\eta}$ and $I\in\mathcal I(\Theta)$,
+\[
+\mu(H_{d,I})
+\leq\bar\kappa_0B_0(d,R)|I_0|
+ +\bar\kappa_\infty B_\infty(d,R)(|I_+|+|I_-|).
+\]
+If a piece is empty or a singleton, its event probability and weighted term
+are zero.
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{lem:three-piece-decomposition} and finite subadditivity,
+\[
+\mu(H_{d,I})
+\leq\mu(H_{d,I_0})+\mu(H_{d,I_+})+\mu(H_{d,I_-}).
+\]
+Applying the three chart propositions gives
+\[
+\begin{aligned}
+\mu(H_{d,I})
+&\leq\bar\kappa_0B_0(d,R)|I_0|
+ +\bar\kappa_\infty B_\infty(d,R)|I_+|\\
+&\qquad+\bar\kappa_\infty B_\infty(d,R)|I_-|,
+\end{aligned}
+\]
+which is the claimed factored form.  Empty and singleton cases are already
+handled in the three preceding propositions and in the length identity; in
+particular, singleton boundary pieces at $\pm1$ require no correction.
+\end{proof}
+
+\begin{proposition}[Exact two-chart maximum bound]
+\label{prop:exact-chart-maximum}
+Under Assumptions~\ref{assump:compact-parameter-domain} and
+\ref{assump:indexed-regime}, Lemma~\ref{lem:three-piece-decomposition}, and
+Proposition~\ref{prop:weighted-chart-bound}, every
+$\mu\in\mathcal D_{d,R,\eta}$ and $I\in\mathcal I(\Theta)$ satisfy
+\[
+\mu(H_{d,I})\leq M_\eta(d,R)|I|,
+\qquad
+M_\eta(d,R)=\max\{\bar\kappa_0B_0(d,R),
+\bar\kappa_\infty B_\infty(d,R)\}.
+\]
+\end{proposition}
+
+\begin{proof}
+For this scalar calculation set
+\[
+A:=\bar\kappa_0B_0(d,R),\qquad
+C:=\bar\kappa_\infty B_\infty(d,R),\qquad
+x:=|I_0|,\ y:=|I_+|,\ z:=|I_-|.
+\]
+The cap parameters are nonnegative and $d\geq1$, $R\geq1$, so
+$A,C,x,y,z\geq0$.  With $m=\max\{A,C\}$,
+\[
+Ax+C(y+z)\leq mx+m(y+z)=\max\{A,C\}(x+y+z).
+\]
+Lemma~\ref{lem:three-piece-decomposition} gives
+$x+y+z=|I|$, and Proposition~\ref{prop:weighted-chart-bound} gives the
+left-hand side.  Since $\max\{A,C\}=M_\eta(d,R)$, the conclusion follows.
+This is the exact maximum of the chart coefficients; replacing it by $A+C$
+would be a strictly weaker estimate and is not needed.
+\end{proof}
+
+\subsection{Class supremum and fixed-parameter polynomial specialization}
+\label{app:class-and-rate}
+
+\begin{proposition}[Class-supremum closure]
+\label{prop:class-supremum}
+Under Assumption~\ref{assump:indexed-regime} and
+Proposition~\ref{prop:exact-chart-maximum}, for every $d\geq1$ and $R\geq1$,
+\[
+C_{\mathcal D_{d,R,\eta}}\leq M_\eta(d,R).
+\]
+This includes the convention that $C_{\mathcal D_{d,R,\eta}}=0$ if either
+$\mathcal D_{d,R,\eta}$ or $\mathcal I(\Theta)$ is empty.
+\end{proposition}
+
+\begin{proof}
+The quantities $B_0$ and $B_\infty$ are nonnegative for the indexed regime,
+so $M_\eta(d,R)\geq0$.  If both indexing sets are nonempty, then for every
+admissible $\mu$ and every $I$ the preceding proposition gives
+\[
+\frac{\mu(H_{d,I})}{|I|}\leq M_\eta(d,R),
+\]
+because $|I|>0$.  Taking first the interval supremum and then the law
+supremum preserves this inequality and yields the definition of
+$C_{\mathcal D_{d,R,\eta}}$.  If either indexing set is empty, the stipulated
+value of $C_{\mathcal D_{d,R,\eta}}$ is zero, which is still at most the
+nonnegative $M_\eta(d,R)$.  No witness or lower cap threshold is used.
+\end{proof}
+
+\begin{lemma}[Inner coefficient domination]
+\label{lem:inner-polynomial-domination}
+Under Assumption~\ref{assump:indexed-regime}, for every $d\geq1$ and $R\geq1$,
+\[
+\bar\kappa_0B_0(d,R)\leq P_\eta(d,R).
+\]
+\end{lemma}
+
+\begin{proof}
+By definition, $0\leq\bar\kappa_0\leq\bar\kappa_*$.  Therefore
+\[
+\begin{aligned}
+\bar\kappa_0B_0(d,R)
+&=\bar\kappa_0d+\frac{\bar\kappa_0}{2}Rd(d-1)\\
+&\leq\bar\kappa_*d+\frac{\bar\kappa_*}{2}Rd(d-1)\\
+&\leq\bar\kappa_*d+\frac{\bar\kappa_*}{2}Rd^2
+=P_\eta(d,R),
+\end{aligned}
+\]
+where the second inequality is the pointwise comparison
+$d(d-1)\leq d^2$.  All multipliers are nonnegative, including at
+$\bar\kappa_*=0$.
+\end{proof}
+
+\begin{lemma}[Outer coefficient domination]
+\label{lem:outer-polynomial-domination}
+Under Assumption~\ref{assump:indexed-regime}, for every $d\geq1$ and $R\geq1$,
+\[
+\bar\kappa_\infty B_\infty(d,R)\leq P_\eta(d,R).
+\]
+\end{lemma}
+
+\begin{proof}
+Since $0\leq\bar\kappa_\infty\leq\bar\kappa_*$, $1\leq d$, and
+$d(d-1)\leq d^2$, we have
+\[
+\begin{aligned}
+\bar\kappa_\infty B_\infty(d,R)
+&=\bar\kappa_\infty+\frac{\bar\kappa_\infty}{2}Rd(d-1)\\
+&\leq\bar\kappa_*+\frac{\bar\kappa_*}{2}Rd(d-1)\\
+&\leq\bar\kappa_*d+\frac{\bar\kappa_*}{2}Rd^2
+=P_\eta(d,R).
+\end{aligned}
+\]
+The inequality remains valid at the zero-cap boundary.
+\end{proof}
+
+\begin{proposition}[Fixed-$\eta$ polynomial specialization]
+\label{prop:fixed-eta-polynomial-specialization}
+Under Assumption~\ref{assump:indexed-regime} and
+Lemmas~\ref{lem:inner-polynomial-domination} and
+\ref{lem:outer-polynomial-domination}, for every $d\geq1$ and $R\geq1$,
+\[
+M_\eta(d,R)\leq P_\eta(d,R)
+=\bar\kappa_*d+\frac{\bar\kappa_*}{2}Rd^2.
+\]
+\end{proposition}
+
+\begin{proof}
+The two preceding lemmas bound both entries of the maximum defining
+$M_\eta(d,R)$ by the same $P_\eta(d,R)$.  Maximum monotonicity therefore
+gives
+\[
+\max\{\bar\kappa_0B_0(d,R),\bar\kappa_\infty B_\infty(d,R)\}
+\leq\max\{P_\eta(d,R),P_\eta(d,R)\}=P_\eta(d,R).
+\]
+This is pointwise for every allowed index, not asymptotic.  For fixed $\eta$,
+$P_\eta$ has monomials $d$ and $Rd^2$, total degree at most three in
+$(d,R)$, and its displayed coefficients depend only on $\eta$.  If
+$\bar\kappa_*=0$, it is the zero polynomial and the same comparison holds.
+The proof also verifies every technical condition used by the public
+fixed-cap corollary: $d\geq1$, $R\geq1$, nonnegative cap parameters, and the
+two explicit inequalities $1\leq d$ and $d(d-1)\leq d^2$.  The passage from
+the per-law inequality to the class constant is deterministic and was
+already proved in Proposition~\ref{prop:class-supremum}; no probability,
+horizon, or norm conversion is hidden in this specialization.
+\end{proof}
+
+\subsection{Witness kernels, support, dependence, and membership}
+\label{app:witness}
+
+\begin{proposition}[Degree-one endpoint kernels]
+\label{prop:degree-one-witness-kernels}
+Under Assumption~\ref{assump:indexed-regime}, if $d=1$ and
+$\mu^{\mathrm{wit}}_{1,R}$ is the witness law defined above, then both
+regular conditional laws in the definition of
+$\mathcal D_{1,R,\eta}$ are the marginal law
+\[
+\nu_R(A):=\frac{\lambda(A\cap[-R,R])}{2R}
+=\int_Au_R(x)\dd x,
+\qquad
+u_R(x):=\frac1{2R}\1_{[-R,R]}(x).
+\]
+Consequently,
+\[
+K_0^{\mu^{\mathrm{wit}}_{1,R}}
+=K_\infty^{\mu^{\mathrm{wit}}_{1,R}}
+=\frac1{2R}
+\quad\text{almost surely}.
+\]
+\end{proposition}
+
+\begin{proof}
+For $d=1$, the sole coefficient is uniform on $[-R,R]$, so its law and
+density are exactly $\nu_R$ and $u_R$.  Both conditioning tuples are empty;
+equivalently, the conditioning space is the one-point space $\R^0$, and the
+conditional law at that point is the marginal $\nu_R$.  Since $R\geq1$,
+$[-R,R]$ has positive length and
+\[
+\|u_R\|_{L^\infty(\R)}=\frac1{2R}.
+\]
+Every other density version agrees with $u_R$ almost everywhere and has the
+same essential supremum.  Both setting-defined caps therefore equal the
+displayed deterministic value.
+\end{proof}
+
+\begin{proposition}[Degree-two full-complement kernels]
+\label{prop:degree-two-witness-kernels}
+Under Assumption~\ref{assump:indexed-regime}, if $d=2$ and
+$\mu^{\mathrm{wit}}_{2,R}$ is the witness law, then a regular conditional
+law of $\alpha_0$ given $\alpha_1$ and a regular conditional law of
+$\alpha_1$ given $\alpha_0$ are both the constant kernel $\nu_R$, whose
+density is $u_R=(2R)^{-1}\1_{[-R,R]}$.  Consequently,
+\[
+K_0^{\mu^{\mathrm{wit}}_{2,R}}
+=K_\infty^{\mu^{\mathrm{wit}}_{2,R}}
+=\frac1{2R}
+\quad\text{almost surely}.
+\]
+\end{proposition}
+
+\begin{proof}
+Here $\alpha_0$ and $\alpha_1$ are independent with common law $\nu_R$.
+For every Borel $A\subseteq\R$, define the constant kernels
+\[
+Q^0_y(A):=\nu_R(A),\qquad Q^\infty_x(A):=\nu_R(A)
+\quad(x,y\in\R).
+\]
+They are measurable in their conditioning variables.  For Borel
+$A,C\subseteq\R$, independence gives
+\[
+\begin{aligned}
+\mathbb P(\alpha_0\in A,\alpha_1\in C)
+&=\nu_R(A)\mathbb P(\alpha_1\in C)
+=\int_CQ^0_y(A)\mathbb P_{\alpha_1}(\dd y),\\
+\mathbb P(\alpha_1\in A,\alpha_0\in C)
+&=\nu_R(A)\mathbb P(\alpha_0\in C)
+=\int_CQ^\infty_x(A)\mathbb P_{\alpha_0}(\dd x).
+\end{aligned}
+\]
+Thus they are regular conditional laws after conditioning on the full
+nonpivot coordinate.  Each has density $u_R$ and essential supremum
+$1/(2R)$.  The integral identities determine regular conditional laws on a
+full conditioning-marginal set \cite[Theorem~6.3]{Kallenberg2002};
+Radon--Nikodym uniqueness \cite[Theorem~3.8]{Folland1999} then makes the
+density norm independent of the permissible versions.  Hence both random
+caps have the asserted value almost surely.
+\end{proof}
+
+\begin{proposition}[Higher-degree full-complement kernels]
+\label{prop:higher-degree-witness-kernels}
+Under Assumption~\ref{assump:indexed-regime}, if $d\geq3$ and
+$\mu^{\mathrm{wit}}_{d,R}$ is the witness law, then a regular conditional
+law of $\alpha_0$ given all coordinates $\alpha_{1:d-1}$ and a regular
+conditional law of $\alpha_{d-1}$ given all coordinates
+$\alpha_{0:d-2}$ are both the constant uniform kernel $\nu_R$, with density
+$u_R=(2R)^{-1}\1_{[-R,R]}$.  Consequently,
+\[
+K_0^{\mu^{\mathrm{wit}}_{d,R}}
+=K_\infty^{\mu^{\mathrm{wit}}_{d,R}}
+=\frac1{2R}
+\quad\text{almost surely}.
+\]
+\end{proposition}
+
+\begin{proof}
+The construction is
+\[
+\alpha_0=U_0,\qquad
+\alpha_j=RS\ (1\leq j\leq d-2),\qquad
+\alpha_{d-1}=U_\infty,
+\]
+where $U_0,U_\infty\sim\nu_R$, $S$ is Rademacher, and all three variables
+are mutually independent.  The complete conditioning tuples are
+\[
+\alpha_{1:d-1}=(RS,\ldots,RS,U_\infty),\qquad
+\alpha_{0:d-2}=(U_0,RS,\ldots,RS).
+\]
+The first is a measurable function of $(S,U_\infty)$ and is independent of
+$U_0=\alpha_0$.  The second is a measurable function of $(U_0,S)$ and is
+independent of $U_\infty=\alpha_{d-1}$.  Although either complement reveals
+$S$ on the witness support, it does not reveal the corresponding endpoint
+pivot.
+
+For all $y,z\in\R^{d-1}$, define
+\[
+Q^0_y(A):=\nu_R(A),\qquad Q^\infty_z(A):=\nu_R(A).
+\]
+For Borel $C\subseteq\R^{d-1}$, the two independence statements give
+\[
+\begin{aligned}
+\mathbb P(\alpha_0\in A,\alpha_{1:d-1}\in C)
+&=\nu_R(A)\mathbb P(\alpha_{1:d-1}\in C)\\
+&=\int_CQ^0_y(A)\mathbb P_{\alpha_{1:d-1}}(\dd y),
+\end{aligned}
+\]
+and
+\[
+\mathbb P(\alpha_{d-1}\in A,\alpha_{0:d-2}\in C)
+=\int_CQ^\infty_z(A)\mathbb P_{\alpha_{0:d-2}}(\dd z).
+\]
+The constant kernels are measurable, so these identities verify them as
+regular conditional laws on the full complement spaces, even at conditioning
+values outside the witness support.  Their common density is $u_R$, whose
+essential supremum is $1/(2R)$.  Almost-sure uniqueness of conditional laws
+\cite[Theorem~6.3]{Kallenberg2002} and of Radon--Nikodym densities
+\cite[Theorem~3.8]{Folland1999} shows that every permissible version has the
+same realized cap.  Thus the two caps are exactly, rather than merely at
+most, $1/(2R)$.
+\end{proof}
+
+\begin{proposition}[Cube support and ambient singularity]
+\label{prop:witness-support-singularity}
+Under Assumption~\ref{assump:indexed-regime}, the witness satisfies
+\[
+\mu^{\mathrm{wit}}_{d,R}([-R,R]^d)=1
+\quad\text{for every }d\geq1.
+\]
+For every $d\geq3$, it is singular with respect to $d$-dimensional Lebesgue
+measure.
+\end{proposition}
+
+\begin{proof}
+For $d=1$, the only coordinate is uniform on $[-R,R]$.  For $d=2$, both
+coordinates are uniform on this interval.  For $d\geq3$, the two endpoints
+lie in $[-R,R]$ almost surely and every middle coordinate is
+$RS\in\{-R,R\}$.  This proves cube support in all three regimes.
+
+For $d\geq3$, set
+\[
+A_{d,R}:=[-R,R]\times
+\{(R,\ldots,R),(-R,\ldots,-R)\}\times[-R,R]\subseteq\R^d,
+\]
+where each middle vector has $d-2\geq1$ entries.  This is a closed Borel set
+and $\mu^{\mathrm{wit}}_{d,R}(A_{d,R})=1$.  Its middle factor is a finite
+subset of $\R^{d-2}$ and has $(d-2)$-dimensional Lebesgue measure zero.
+Product measure on the two product rectangles comprising $A_{d,R}$
+\cite[Theorem~2.37]{Folland1999} gives
+\[
+\lambda_d(A_{d,R})=0.
+\]
+Thus a Lebesgue-null Borel set carries all witness mass.  The argument
+includes $d=3$, where the middle factor is the two-point set $\{-R,R\}$.
+\end{proof}
+
+\begin{proposition}[Dependence of the middle coordinates]
+\label{prop:witness-middle-dependence}
+Under Assumption~\ref{assump:indexed-regime}, if $d\geq4$, then the middle
+coordinates of $\mu^{\mathrm{wit}}_{d,R}$ are dependent; in particular,
+$\alpha_1$ and $\alpha_2$ are not independent.
+\end{proposition}
+
+\begin{proof}
+Both coordinates exist when $d\geq4$, and
+$\alpha_1=RS=\alpha_2$ almost surely.  Since $R\geq1$, the values $R$ and
+$-R$ are distinct.  Hence
+\[
+\mathbb P(\alpha_1=R)=\mathbb P(\alpha_2=R)=\frac12,
+\qquad
+\mathbb P(\alpha_1=R,\alpha_2=R)=\frac12.
+\]
+The joint probability is not the product $1/4$ of the marginals, proving
+dependence.
+\end{proof}
+
+\begin{lemma}[Witness-cap threshold comparison]
+\label{lem:witness-threshold}
+Under Assumption~\ref{assump:indexed-regime}, suppose that the applicable
+one of Propositions~\ref{prop:degree-one-witness-kernels},
+\ref{prop:degree-two-witness-kernels}, and
+\ref{prop:higher-degree-witness-kernels} gives
+\[
+K_0^{\mu^{\mathrm{wit}}_{d,R}}
+=K_\infty^{\mu^{\mathrm{wit}}_{d,R}}
+=\frac1{2R}\quad\text{almost surely}.
+\]
+If, only for this witness clause,
+$\bar\kappa_0,\bar\kappa_\infty\geq1/2$, then
+\[
+\mathbb E K_0^{\mu^{\mathrm{wit}}_{d,R}}\leq\bar\kappa_0,
+\qquad
+\mathbb E K_\infty^{\mu^{\mathrm{wit}}_{d,R}}\leq\bar\kappa_\infty.
+\]
+\end{lemma}
+
+\begin{proof}
+Each cap is the deterministic value $1/(2R)$.  Since $R\geq1$,
+\[
+\mathbb E K_0^{\mu^{\mathrm{wit}}_{d,R}}
+=\mathbb E K_\infty^{\mu^{\mathrm{wit}}_{d,R}}
+=\frac1{2R}
+\leq\frac12
+\leq\min\{\bar\kappa_0,\bar\kappa_\infty\}.
+\]
+This is the only use of either lower threshold on the cap parameters.
+\end{proof}
+
+\begin{proposition}[Witness membership]
+\label{prop:witness-membership}
+Under Assumption~\ref{assump:indexed-regime} and
+Propositions~\ref{prop:degree-one-witness-kernels}--\ref{prop:witness-middle-dependence}
+and Lemma~\ref{lem:witness-threshold}, if
+$\bar\kappa_0,\bar\kappa_\infty\geq1/2$, then for every $d\geq1$ and
+$R\geq1$,
+\[
+\mu^{\mathrm{wit}}_{d,R}\in\mathcal D_{d,R,\eta},
+\qquad
+K_0^{\mu^{\mathrm{wit}}_{d,R}}
+=K_\infty^{\mu^{\mathrm{wit}}_{d,R}}
+=\frac1{2R}\quad\text{almost surely}.
+\]
+The witness is ambiently singular for $d\geq3$ and has dependent middle
+coordinates for $d\geq4$.
+\end{proposition}
+
+\begin{proof}
+Fix $(d,R)$ and impose the lower thresholds only for this membership
+statement.
+
+If $d=1$, Proposition~\ref{prop:degree-one-witness-kernels} supplies the two
+conditional densities and exact caps for the empty conditioning tuples.
+Proposition~\ref{prop:witness-support-singularity} supplies support on
+$[-R,R]$, and Lemma~\ref{lem:witness-threshold} supplies both mean-cap
+inequalities.
+
+If $d=2$, Proposition~\ref{prop:degree-two-witness-kernels} supplies the two
+full-complement conditional densities and caps, now conditioning each
+endpoint on the other.  Proposition~\ref{prop:witness-support-singularity}
+gives support on $[-R,R]^2$, and Lemma~\ref{lem:witness-threshold} supplies
+the mean inequalities.
+
+If $d\geq3$, Proposition~\ref{prop:higher-degree-witness-kernels} supplies
+both full-complement conditional densities and caps even though the
+complement contains the Rademacher middle block.
+Proposition~\ref{prop:witness-support-singularity} gives cube support and
+ambient singularity.  When $d\geq4$,
+Proposition~\ref{prop:witness-middle-dependence} additionally proves the
+middle-coordinate dependence.  Lemma~\ref{lem:witness-threshold} again gives
+the two mean-cap inequalities.
+
+In every degree regime, the witness is the law of a Borel measurable
+Euclidean random vector and hence is a Borel probability law on $\R^d$.  The
+preceding results verify every item in the definition of
+$\mathcal D_{d,R,\eta}$: cube support, almost-sure existence of both endpoint
+conditional densities, and both mean-cap inequalities.  This proves
+membership and the exact cap identities.  Singularity and middle dependence
+show that neither an ambient joint density nor coordinate independence has
+been used as a hidden membership condition.  The threshold comparison is
+isolated in Lemma~\ref{lem:witness-threshold} and has no role in the general
+root-hitting argument.
+\end{proof}
+
+\subsection{Proof of the Main Theorem}
+\label{app:main-proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Fix the finite $\eta$ first, and then fix arbitrary $d\geq1$, $R\geq1$,
+$\mu\in\mathcal D_{d,R,\eta}$, and $I\in\mathcal I(\Theta)$.
+Proposition~\ref{prop:weighted-chart-bound} gives the exact weighted
+three-piece estimate
+\[
+\mu(H_{d,I})
+\leq\bar\kappa_0B_0(d,R)|I_0|
+ +\bar\kappa_\infty B_\infty(d,R)(|I_+|+|I_-|).
+\]
+Proposition~\ref{prop:exact-chart-maximum} then gives
+\[
+\mu(H_{d,I})\leq M_\eta(d,R)|I|.
+\]
+The first proposition uses only the finite union bound after the exact event
+decomposition, and the second uses the scalar maximum inequality, so the
+coefficient is the maximum of the two chart constants rather than their sum.
+
+Proposition~\ref{prop:class-supremum} divides by the positive interval length
+and takes the interval and law suprema, while also treating either empty
+indexing set.  Hence
+\[
+C_{\mathcal D_{d,R,\eta}}\leq M_\eta(d,R).
+\]
+Proposition~\ref{prop:fixed-eta-polynomial-specialization} proves, pointwise
+for every allowed $d,R$,
+\[
+M_\eta(d,R)\leq P_\eta(d,R)
+=\bar\kappa_*d+\frac{\bar\kappa_*}{2}Rd^2.
+\]
+This completes the root-hitting and class-uniform conclusions without any
+lower bound on $\bar\kappa_0$ or $\bar\kappa_\infty$.
+
+Under the separate hypothesis
+$\bar\kappa_0,\bar\kappa_\infty\geq1/2$,
+Proposition~\ref{prop:witness-membership} gives, simultaneously for every
+$d\geq1$ and $R\geq1$,
+\[
+\mu^{\mathrm{wit}}_{d,R}\in\mathcal D_{d,R,\eta},
+\qquad
+K_0^{\mu^{\mathrm{wit}}_{d,R}}
+=K_\infty^{\mu^{\mathrm{wit}}_{d,R}}
+=\frac1{2R}\quad\text{almost surely}.
+\]
+This proves the independent nonemptiness clause.
+
+Every constant used above is one of the displayed setting-derived
+$B_0,B_\infty,M_\eta,P_\eta$.  The chart estimates are per-law deterministic
+probability inequalities, and the remaining operations are deterministic
+finite addition, scalar domination, and suprema.  Thus no confidence
+parameter, horizon upgrade, limiting argument, norm conversion, or hidden
+dependence is introduced.  The exposed quantities and the static
+Lebesgue-length and conditional-$L^\infty$ modes are exactly those stated in
+Theorem~\ref{thm:main}.
+\end{proof}

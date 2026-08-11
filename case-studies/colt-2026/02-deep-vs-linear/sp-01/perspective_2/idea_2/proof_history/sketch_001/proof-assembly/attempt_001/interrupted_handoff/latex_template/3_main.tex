@@ -1,0 +1,51 @@
+\section{Main Theorem}
+\label{sec:main-theorem}
+
+\begin{theorem}[Conditional deterministic dimension amplification]
+\label{thm:main}
+Under Assumptions~\ref{assump:source-regime},
+\ref{assump:universal-sgd-success}, and
+\ref{assump:tie-resolved-confident-map},
+\[
+\operatorname{dc}(\mathcal H)\leq 7TSd.
+\]
+The conclusion is deterministic and gives exact tie-resolved representation on
+every point of $\mathcal X$.  It is nonasymptotic and uses the fixed finite
+horizon $T$.  The exposed variables in the rate are $S,T,d$; there is no
+hidden constant, and the numerical factor $7$ is independent of
+$n,\mathcal H,L,(n_i)_{i=0}^L,S,\eta,T,\varepsilon,d$, and $\mathcal P$.
+The probability and expectation in the assumptions are used only to prove
+deterministic structural and existence statements; no confidence parameter,
+approximation error, margin, or norm change occurs in the conclusion.
+\end{theorem}
+
+The theorem is conditional on the target-independent confident-map premise.
+It does not assert that exact SGD success by itself produces that premise or a
+polynomial value of $d$.
+
+\begin{corollary}[Polynomial specialization under a separate dimension bound]
+\label{cor:main-polynomial-specialization}
+Under the assumptions of Theorem~\ref{thm:main}, suppose a separate result
+establishes an explicit polynomial expression $p(S,T)$ satisfying
+$d\leq p(S,T)$ at the current parameters, with all coefficients and auxiliary
+dependence exposed and with no hidden dependence on $n$ or $\eta$.  Then
+\[
+\operatorname{dc}(\mathcal H)\leq7TSp(S,T).
+\]
+This is a deterministic, fixed-horizon, exact tie-resolved specialization and
+does not claim that the additional inequality follows from SGD.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:main} gives
+$\operatorname{dc}(\mathcal H)\leq7TSd$.  Assumption
+\ref{assump:source-regime} and the positive widths give $T,S\geq1$, while
+$d\leq p(S,T)$ gives $p(S,T)-d\geq0$.  Therefore
+\[
+7TSp(S,T)-7TSd=7TS\bigl(p(S,T)-d\bigr)\geq0,
+\]
+and the displayed conclusion follows.  This scalar substitution changes no
+probability mode, horizon, representation map, score, or tie convention.  If
+$d=0$, the exact dimension-zero representation proved below remains the
+baseline; if $p(S,T)=d$, the bridge is equality.
+\end{proof}

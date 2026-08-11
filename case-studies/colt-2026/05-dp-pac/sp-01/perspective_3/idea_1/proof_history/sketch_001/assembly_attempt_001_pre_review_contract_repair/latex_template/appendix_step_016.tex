@@ -1,0 +1,422 @@
+For compactness in the following proof, write
+
+\[
+T_s=\operatorname{Tow}_2(s)\qquad(s\ge1)
+\]
+
+\begin{lemma}[Exact tower inversion and floor arithmetic]\label{lem:step-016-tower-arithmetic}
+Under the tower and iterated-logarithm definitions in
+Section~\ref{sec:setup}, the map
+\(s\mapsto T_s\) is strictly increasing and unbounded, with
+\(T_s\ge2^s\) for every integer \(s\ge1\). The function
+\(u\mapsto\log_2^*u\) is nondecreasing on \((0,\infty)\). Moreover, for
+every integer \(r\ge1\),
+
+\[
+\log_2^*T_r=r
+\tag{1}
+\]
+
+and, for every integer \(r\ge2\),
+
+\[
+\left\lfloor\log_2(T_r+1)\right\rfloor=T_{r-1}.
+\tag{2}
+\]
+\end{lemma}
+
+\begin{proof}
+Because \(T_1=2\) and \(T_{s+1}=2^{T_s}\), induction gives
+\(T_s\ge2^s\). Indeed, the claim is true at \(s=1\), and the elementary
+induction \(2^s\ge s+1\) gives
+
+\[
+T_{s+1}=2^{T_s}\ge2^{2^s}\ge2^{s+1}.
+\]
+
+Also \(2^m>m\) for every integer \(m\ge2\), so
+\(T_{s+1}>T_s\). Thus the tower is strictly increasing and, from
+\(T_s\ge2^s\), unbounded.
+
+For monotonicity of log-star, first note that for \(u>1\),
+
+\[
+\log_2^*u=1+\log_2^*(\log_2u).
+\tag{3}
+\]
+
+If \(0<u\le v\), induction on \(\log_2^*v\), using the monotonicity of
+\(\log_2\) and (3), gives \(\log_2^*u\le\log_2^*v\). The base case
+\(\log_2^*v=0\) means \(v\le1\), so also \(u\le1\), and both log-star
+values are zero. In the induction step, \(u\le1\) is immediate; if
+\(u>1\), apply the induction hypothesis to
+\(0<\log_2u\le\log_2v\) in (3).
+
+For \(0\le j\le r-1\), repeated use of the tower recursion yields
+
+\[
+\log_2^{(j)}T_r=T_{r-j}.
+\tag{4}
+\]
+
+In particular, the \((r-1)\)-fold iterate equals \(T_1=2>1\), whereas
+the \(r\)-fold iterate equals \(\log_2 2=1\). By the minimum in the
+definition of log-star, (1) follows exactly.
+
+Finally, put \(q=T_{r-1}\). Then \(T_r=2^q>1\), and hence
+
+\[
+2^q<T_r+1<2T_r=2^{q+1}.
+\]
+
+Taking base-two logarithms gives
+
+\[
+q<\log_2(T_r+1)<q+1.
+\]
+
+Since \(q\) is an integer, its floor is exactly \(q=T_{r-1}\), proving
+(2). \end{proof}
+
+\begin{proposition}[Exact diagonal structural identities]\label{prop:step-016-structural-diagonal}
+Under the primitive diagonal specialization \(r\in\mathbb Z_{\ge2}\),
+\(k=r\), \(N=T_r\), Lemma~\ref{lem:step-001-cardinality}, Lemma~\ref{lem:step-001-vc}, Proposition~\ref{prop:step-001-product-ld}, and
+Lemma~\ref{lem:step-016-tower-arithmetic},
+
+\[
+\operatorname{VC}(C_{r,T_r})=r,
+\qquad
+\operatorname{LD}(C_{r,T_r})=rT_{r-1},
+\qquad
+|C_{r,T_r}|=(T_r+1)^r.
+\tag{5}
+\]
+
+With the setting convention that unadorned \(\log\) is natural,
+
+\[
+rT_{r-1}\log2
+  <\log|C_{r,T_r}|
+  <\frac32rT_{r-1}\log2.
+\tag{6}
+\]
+
+In particular,
+\(\log|C_{r,T_r}|=\Theta(rT_{r-1})\) with universal hidden constants.
+\end{proposition}
+
+\begin{proof}
+The structural identities give, after the exact substitution
+\(k=r,N=T_r\),
+
+\[
+\operatorname{VC}(C_{r,T_r})=r,
+\]
+
+\[
+\operatorname{LD}(C_{r,T_r})
+=r\left\lfloor\log_2(T_r+1)\right\rfloor,
+\]
+
+and \(|C_{r,T_r}|=(T_r+1)^r\). Equation (2) in
+Lemma~\ref{lem:step-016-tower-arithmetic} turns the middle display into
+\(rT_{r-1}\), proving every exact identity in (5).
+
+For (6), write \(T_r=2^{T_{r-1}}\). The same strict comparison used for
+the floor gives
+
+\[
+T_{r-1}\log2
+  <\log(T_r+1)
+  <(T_{r-1}+1)\log2.
+\]
+
+Since \(r\ge2\) implies \(T_{r-1}\ge T_1=2\),
+\(T_{r-1}+1\le(3/2)T_{r-1}\). Multiplication by \(r\) and the exact
+identity \(\log|C_{r,T_r}|=r\log(T_r+1)\) prove (6). The constants
+\(\log2\) and \((3/2)\log2\) are absolute and independent of \(r\).
+\end{proof}
+
+\begin{lemma}[Iterated logarithm of the diagonal Littlestone dimension]\label{lem:step-016-ld-logstar}
+Under Lemma~\ref{lem:step-016-tower-arithmetic} and
+Proposition~\ref{prop:step-016-structural-diagonal}, for every integer
+\(r\ge2\),
+
+\[
+r-1
+\le
+\log_2^*\operatorname{LD}(C_{r,T_r})
+\le r.
+\tag{7}
+\]
+
+Consequently,
+
+\[
+\frac r2
+\le
+\log_2^*\operatorname{LD}(C_{r,T_r})
+\le r,
+\tag{8}
+\]
+
+so \(\log_2^*\operatorname{LD}(C_{r,T_r})=\Theta(r)\) with constants
+\(1/2\) and \(1\), independent of \(r\).
+\end{lemma}
+
+\begin{proof}
+Let \(q=T_{r-1}\). Proposition~\ref{prop:step-016-structural-diagonal}
+gives
+
+\[
+\operatorname{LD}(C_{r,T_r})=rq\ge q=T_{r-1}.
+\tag{9}
+\]
+
+We next prove the upper comparison \(rq\le T_r=2^q\). At \(r=2\),
+\(q=T_1=2\) and both sides equal \(4\). For \(r\ge3\), induction gives
+\(T_{r-1}\ge r\): the base is \(T_2=4\ge3\), and
+\(T_s\ge s+1\) implies \(T_{s+1}=2^{T_s}\ge2^{s+1}\ge s+2\).
+Also, \(2^x\ge x^2\) for every integer \(x\ge4\); this follows by
+induction from equality at \(x=4\) and
+\(2x^2\ge(x+1)^2\) for \(x\ge3\). Therefore, for \(r\ge3\),
+
+\[
+T_r=2^q\ge q^2\ge rq.
+\tag{10}
+\]
+
+Combining (9)--(10), monotonicity of log-star from
+Lemma~\ref{lem:step-016-tower-arithmetic}, and its exact tower inversion
+gives
+
+\[
+\log_2^*T_{r-1}=r-1
+\le\log_2^*(rq)
+\le\log_2^*T_r=r,
+\]
+
+which is (7). Finally, \(r-1\ge r/2\) for every \(r\ge2\), yielding
+(8) and the stated uniform \(\Theta\)-constants. \end{proof}
+
+\begin{proposition}[Tower-diagonal Rate Specialization Bridge]\label{prop:step-016-rate-bridge}
+Fix the universal constants
+\[
+a,c_\delta,\varepsilon_0,\alpha_0,\beta_0,N_0
+\]
+from Proposition \ref{prop:step-015-exact-closure}, before any candidate is
+chosen. Thus \(a=b_*/16\), \(c_\delta=d_*\), \(\varepsilon_0=0.1\), and
+\(\alpha_0=\beta_0=2^{-13}\). Define
+the finite deterministic index
+
+\[
+r_0=\min\{s\in\mathbb Z_{\ge2}:T_s\ge N_0\}.
+\tag{11}
+\]
+
+Under Assumptions~\ref{assump:candidate-regime},
+\ref{assump:central-dp}, and
+\ref{assump:distribution-free-realizable-pac}, every diagonal candidate
+with integer \(r\ge r_0\), \(k=r\), and \(N=T_r\) satisfies
+
+\[
+n\ge ar^2
+\tag{12}
+\]
+
+and
+
+\[
+n\ge
+a\,\operatorname{VC}(C_{r,T_r})
+   \log_2^*\operatorname{LD}(C_{r,T_r}).
+\tag{13}
+\]
+
+Moreover,
+
+\[
+\frac12r^2
+\le
+\operatorname{VC}(C_{r,T_r})
+\log_2^*\operatorname{LD}(C_{r,T_r})
+\le r^2.
+\tag{14}
+\]
+
+Thus (12)--(13) are exactly
+\(n=\Omega(r^2)=\Omega(\operatorname{VC}\log_2^*\operatorname{LD})\),
+with constants independent of \(r\), and only within the approved
+candidate/privacy/PAC regime.
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:step-016-tower-arithmetic} proves that \(T_s\) is
+increasing and unbounded, so the set in (11) is nonempty and \(r_0\) is a
+finite integer depending only on the already-fixed \(N_0\). For every
+\(r\ge r_0\), one has \(r\ge2\) and \(T_r\ge T_{r_0}\ge N_0\).
+Therefore \(k=r,N=T_r\) meet the structural range of Proposition~\ref{prop:step-015-exact-closure}.
+
+No privacy condition is absorbed in this substitution. The candidate has
+the exact budget
+
+\[
+m_{n,r}=\max\left\{8,\left\lceil\frac{4n}{r}\right\rceil\right\},
+\]
+
+and Assumption~\ref{assump:candidate-regime} remains exactly
+
+\[
+n\in\mathbb Z_{\ge1},
+\quad 0<\varepsilon\le\varepsilon_0,
+\quad
+0<\delta\le
+\min\left\{
+\frac1{n\log(n+1)},
+\frac{c_\delta}{m_{n,r}^2\log(m_{n,r}+1)}
+\right\}.
+\tag{15}
+\]
+
+The learner remains an arbitrary randomized map
+
+\[
+A:(X_{r,T_r}\times\{0,1\})^n
+  \longrightarrow\{0,1\}^{X_{r,T_r}}
+\]
+
+satisfying the exact central replacement-DP and distribution-free
+realizable-PAC assumptions at this same candidate. Proposition~\ref{prop:step-015-exact-closure} therefore applies without a
+mode or scope conversion and gives
+
+\[
+n\ge ar\log_2^*T_r.
+\]
+
+Equation (1) in Lemma~\ref{lem:step-016-tower-arithmetic} makes the
+right-hand side exactly \(ar^2\), proving (12). No asymptotic term is
+dropped in this equality.
+
+By Proposition~\ref{prop:step-016-structural-diagonal} and
+Lemma~\ref{lem:step-016-ld-logstar},
+
+\[
+\operatorname{VC}(C_{r,T_r})=r,
+\qquad
+\frac r2
+\le\log_2^*\operatorname{LD}(C_{r,T_r})\le r.
+\]
+
+Multiplication proves (14). In particular, the upper half of (14) and
+(12) give
+
+\[
+n\ge ar^2
+\ge
+a\,\operatorname{VC}(C_{r,T_r})
+   \log_2^*\operatorname{LD}(C_{r,T_r}),
+\]
+
+which is (13) with the same inherited constant \(a\).
+
+The finite initial indices are not hidden inside an \(r\)-dependent
+constant. At \(r=2\), the arithmetic itself is exact:
+
+\[
+T_1=2,\qquad T_2=4,\qquad \log_2^*T_2=2,\qquad
+\lfloor\log_2(5)\rfloor=2,
+\]
+
+and hence \(\operatorname{VC}=2\), \(\operatorname{LD}=4\),
+\(|C|=25\), and \(\log_2^*\operatorname{LD}=2\). The same structural
+identities hold for every \(2\le r<r_0\). By the minimality of \(r_0\)
+and monotonicity of the tower, every such index has \(T_r<N_0\). Therefore
+Proposition~\ref{prop:step-015-exact-closure} is inapplicable, so no learning
+lower-bound conclusion is asserted for those indices. The asymptotic statements begin
+at the single fixed index \(r_0\). \end{proof}
+
+\begin{proposition}[Diagonal separation and unresolved scales]\label{prop:step-016-scale-comparison}
+Under Proposition~\ref{prop:step-016-structural-diagonal} and
+Lemma~\ref{lem:step-016-ld-logstar}, for every integer \(r\ge2\),
+
+\[
+2r-1
+\le
+\operatorname{VC}(C_{r,T_r})
++\log_2^*\operatorname{LD}(C_{r,T_r})
+\le2r,
+\tag{16}
+\]
+
+and
+
+\[
+r2^{r-1}
+\le
+\operatorname{VC}(C_{r,T_r})
+2^{\log_2^*\operatorname{LD}(C_{r,T_r})}
+\le r2^r.
+\tag{17}
+\]
+
+Consequently, the established lower-bound scale \(r^2\) exceeds the
+additive expression by an unbounded factor, but
+
+\[
+r^2
+=o\!\left(
+\operatorname{VC}(C_{r,T_r})
+2^{\log_2^*\operatorname{LD}(C_{r,T_r})}
+\right)
+\tag{18}
+\]
+
+and
+
+\[
+r^2=o(\log|C_{r,T_r}|).
+\tag{19}
+\]
+
+These comparisons concern the size of the proved lower-bound expression;
+they are not upper bounds on the true sample complexity.
+\end{proposition}
+
+\begin{proof}
+Substitute \(\operatorname{VC}=r\) and the two bounds in (7). Addition
+gives (16), and exponentiation followed by multiplication by \(r\) gives
+(17). In particular,
+
+\[
+\frac{r^2}{
+ \operatorname{VC}(C_{r,T_r})
+ +\log_2^*\operatorname{LD}(C_{r,T_r})}
+\ge\frac r2\longrightarrow\infty,
+\]
+
+which proves the unbounded-factor comparison with the additive scale.
+
+For the first remaining scale, the lower half of (17) gives
+
+\[
+0\le
+\frac{r^2}{
+ \operatorname{VC}(C_{r,T_r})
+ 2^{\log_2^*\operatorname{LD}(C_{r,T_r})}}
+\le\frac r{2^{r-1}}.
+\tag{20}
+\]
+
+The right-hand side tends to zero: its ratio at consecutive indices is
+\((r+1)/(2r)\le3/4\) for \(r\ge2\). This proves (18).
+
+For cardinality, (6) and \(T_{r-1}\ge2^{r-1}\) from
+Lemma~\ref{lem:step-016-tower-arithmetic} yield
+
+\[
+0\le\frac{r^2}{\log|C_{r,T_r}|}
+<\frac{r}{T_{r-1}\log2}
+\le\frac{r}{2^{r-1}\log2}\longrightarrow0,
+\]
+
+which proves (19). \end{proof}

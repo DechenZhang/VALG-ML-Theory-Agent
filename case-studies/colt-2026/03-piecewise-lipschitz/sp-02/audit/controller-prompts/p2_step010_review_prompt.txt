@@ -1,0 +1,29 @@
+You are the distinct step-scoped proof reviewer for perspective_2/idea_1, step_010, unit attempt 1, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+First read <CODEX_SKILLS_ROOT>/proof-step-review/SKILL.md completely and every directly required shared contract/template it names. Then independently review exactly the submitted step_010 proof. Do not trust the producer's COMPLETE status or validation report.
+
+Binding artifacts and hashes:
+- setting.md: 6955a2723694ff60af8d5d40329ff0ad056f9b54780ff02744d8985456222b7e
+- proof_sketch.md: 8b5b22e5000e1c5641e2b5baf0c4d48244ce3389941b0cc9857b47510bbf6c93
+- proof_sketch_review.md: 4288579fa3b8583b31faa2c220f5071879da72f06ac3a1dd3d1889cb1096cb7c, status ACCEPTED
+- target proof.md: 46985d925710c381063b71fb3f47af13680586a5648e2bfbbaea6b44bdf40707
+- accepted dependency step_003 proof.md: 637b6b01d6041dc9b797a04e4a387713dff823f5ee51bd1e872801a5ee119312
+- accepted dependency step_003 review.md: 253d7c4f469580dafd08647358cff7696bcc1e31a8da63ad7e54d8e6451c421a
+- accepted dependency step_009 proof.md: 241aff9f7902ac53f4bbfbaa561c92d077f6827911a597eb6087aca664e00e7c
+- accepted dependency step_009 review.md: d0c991fb67d7b8f34d718ed897982178dc4f9d1fc8596efda3482e678a6a6abc
+
+Audit the exact accepted step_010 row and all three local units. Independently verify:
+- the proof consumes exactly step_003 and step_009 and records complete, current 64-hex dependency proof/review identities;
+- the step_003 indicator-dropped chart inequality is instantiated on the exact d-dimensional lower-coefficient vector, not on a singular (d+1)-dimensional augmented law;
+- F_0=theta^d is deterministic, F_{k+1}=theta^k pairs with alpha_k, and the produced affine event is exactly the consumed p_alpha root event with zero residual;
+- the nonpivot cube volume is exactly (2R)^(d-1), including lambda_0({()})=(2R)^0=1 for d=1;
+- for d>=2, E_1 and E_d are measurable, disjoint, exhaustive, and have total length |J| with transition points assigned only once; empty cells and arbitrary interval location are harmless;
+- both accepted chart velocities are bounded by V_d=d+R d(d-1)/2, including negative outer theta and d=1, without a chart-count factor;
+- the full joint-density cap is applied directly, preserving arbitrary correlation and introducing exactly kappa and no marginal/conditional-density premise;
+- the positive-length calculation yields literally kappa(2R)^(d-1)V_d|J| with no hidden constant or auxiliary loss;
+- the separate zero-length argument is valid for every length-zero bounded interval, uses the constant feature to make the singleton root event a proper affine hyperplane, and does not smuggle in an independent polynomial-root theorem;
+- the final target-step assembly cites paper-ready named results and proves the exact full-progress baseline clause without changing probability, interval, norm, or dependence modes.
+
+Apply target fidelity, dependency, local-unit, assumption-provenance, explicit-rate, baseline-invariance, notation-surface, hidden-subclaim, boundary-case, and target-assembly checks. Use exactly one per-unit audit for unit_001 through unit_003. A local flaw under the unchanged row is REVISE_STEP; a missing row interface is REVISE_SKETCH; a flaw localized to an accepted dependency is BLOCKED_BY_DEPENDENCY. Do not repair anything yourself.
+
+Write only perspective_2/idea_1/proof_steps/step_010/review.md. Do not edit the proof, dependencies, sketch, trackers, worker log, history, global artifacts, other steps, final TeX, another branch, prompt, or results. Validate binding hashes, controlled fields, reviewed-artifact identity, required headings, ASCII/control bytes, balanced TeX delimiters/braces, Markdown table arity ignoring escaped pipes, and file scope. Report status, smallest retry target, reviewed proof hash, path, and final review SHA-256.

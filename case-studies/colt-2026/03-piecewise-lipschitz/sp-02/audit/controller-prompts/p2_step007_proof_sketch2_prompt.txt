@@ -1,0 +1,38 @@
+You are the fresh step-scoped producer handoff for perspective_2/idea_1, step_007, unit attempt 1, sketch attempt 2, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+Read <CODEX_SKILLS_ROOT>/proof-step/SKILL.md completely and every directly required shared contract/template it names. Prove exactly the accepted sketch-attempt-2 step_007 row and overwrite only perspective_2/idea_1/proof_steps/step_007/proof.md. Do not modify the sketch, review, tracker, worker log, dependency artifacts, history, prompts, final artifacts, or any other file.
+
+Binding SHA-256 values: idea 5209aa21929e84604acb2712d8657460a48463901738fd00ebafaa84d5c43596; setting 6955a2723694ff60af8d5d40329ff0ad056f9b54780ff02744d8985456222b7e; accepted sketch 41517943f551814aaf87ff8541d5a81b56123cae7d8533b2bceb302a981bfbc4; accepted sketch review a80e7f4ffb1ad57991675810dbf7064bc7b482b8f34b61f10a171ebfc97b43c9; accepted global proof bb35e66556b216cac02945e249c92fac526b5b021104daa0f32b0ce7691a22fc; accepted global review c990e29c701a493a71e87aef1aa5c099ed26c6f8132a03f15bc0c7e5fb3c0146; controller-open tracker 1ea059704e04162950148891320802ea00eee0d29439795f7100a089d888660a.
+
+The exact declared dependency pairs are current and accepted:
+
+- step_004 proof 91736da20ac3e8c97693b158e1a528f5ac2ed3bab6ef61b14185ab2beae76ef4 and review 45285c72a3ea65948cdd60b0148c44526384f53c9e35bae2a86b9a09d2964389;
+- step_005 proof a3c503cdc2b19acb74d9598fe8d674c185715ef20ea11ea28322eee62827ab63 and review 3c12da50c102fe5562cec9e3681b80250defa6d4f88a32f05c3b462349f94ad0;
+- step_006 proof 130dbada8d3b451575971240d58a54992c32de30eb740707d3184ed9e3deb954 and review cfcd012a07f15b84d9b41e50d24eed881dc6ef1a7309154681e5f3228dc03dae.
+
+Each dependency review must record sketch attempt 2, its matching Step ID and unit attempt, ACCEPTED status, and the matching current proof digest before the dependency is consumed. Do not read or consume any undeclared step artifact. The accepted global pair is optional planning context only and never proof evidence; omit it because the exact local composition is already fixed by the accepted sketch.
+
+Prove exactly the current step_007 row. Under primitive assump:cube-density-laws and the setting parameter definitions, combine only the exact accepted outputs of step_004, step_005, and step_006. For every admissible arbitrarily correlated law mu and every interval I subset Theta with |I|>0, retain the coordinate-free inequality from step_004 and prove the literal chain
+
+Pr[there exists theta in I with phi_alpha(theta)=0]
+<= kappa integral_I integral_{H_theta intersect [-R,R]^N}
+   |F_0'(theta)+<a,F'(theta)>|/||F(theta)||_2 dH^{N-1}(a) dtheta
+<= kappa sqrt(2) (2R)^(N-1) (1+N R^2) widehat Lambda_{B,T} |I|
+= A(1+N R^2) widehat Lambda_{B,T}|I|/(sqrt(2)R).
+
+The second inequality must use the actual translated-section measure bound from step_005 and the actual root-section normal-velocity bound from step_006 on the identical section, coefficient vector, feature tuple, matrix certificate, Euclidean norm, and Hausdorff measure convention. Show the final equality directly from A=(2R)^N kappa and primitive R>0. Do not add a chart-count factor, residual, surrogate object, second density domination, or hidden absorption.
+
+Then divide only by positive |I| and take exactly the setting-defined inner interval supremum followed by the outer law supremum to prove
+
+C^{aff}_D(F_0,F;Theta)
+<= A(1+N R^2) widehat Lambda_{B,T}/(sqrt(2)R).
+
+Preserve ordinary probability, every-law/every-positive-length-interval uniformity, arbitrary coefficient correlation, and the exact N,R,A,kappa,widehat Lambda_{B,T} dependence. Additional q,M,Delta dependence is exactly degree zero once the supplied certificate is fixed. Do not introduce a global amplitude bound, transversality, independence, a uniform pivot margin, root simplicity, a new probability conversion, an auxiliary tolerance, a confidence parameter, or any law/interval union bound.
+
+Audit N=1 with the accepted zero-dimensional section convention, empty root sections, widehat Lambda_{B,T}=0, endpoints inherited through the accepted pointwise interfaces, and arbitrarily short positive-length intervals. In the zero-certificate case the accepted chain gives the exact zero probability conclusion for each law and interval; distinguish this from a vacuous empty-section bound and do not import step_002 as an undeclared dependency. Do not consume the sharper homogeneous step_008, monic steps, Counter-example 1, or final assembly.
+
+This is a rate-bearing Rate Specialization Bridge. Expose A,N,R,kappa,widehat Lambda_{B,T}, and |I|; state that there are no hidden constants. Record fixed deterministic presentation data, ordinary-probability mode, static every-interval horizon mode, Euclidean/Hausdorff norm and measure modes, exact admissibility conditions, no auxiliary tolerances, the displayed multiplication and A-algebra, and the precise probability-to-capacity supremum conversion. Preserve the general affine output as the only public-facing interface consumed by step_012.
+
+The pre-overwrite live step_007 proof and review are consumed sketch-attempt-1 artifacts with SHA-256 values 8be2df25871ae6e1737861b3bd138011f1027951988250dc688e7233e94434e6 and 6794ada25352a9328461aa9312532fbe8fae96a5d7a747b11f38c9677e6b0256. Byte-identical copies exist at perspective_2/idea_1/proof_history/sketch_001/proof_steps/step_007/attempt_001/. They are archival diagnostic material, never current evidence. Prefer not to read the stale proof; regenerate every identity, local unit, theorem label, dependency mapping, and derivation for sketch attempt 2.
+
+Use every required proof-step template section, stable theorem-style labels, complete dependency restatements and assumption discharge, explicit assumption/constant/rate provenance, target-step assembly, boundary audits, and honest blockers. Set Step Proof Status = COMPLETE only if the exact target is proved. Validate sketch/step/unit identity, local-unit table arity, all three dependency proof/review identities, assumption IDs, labels/references, ASCII/control bytes, TeX balance, protected-artifact hashes, archived byte identity, and single-file scope. Report status, local-unit count, blockers, and final SHA-256.

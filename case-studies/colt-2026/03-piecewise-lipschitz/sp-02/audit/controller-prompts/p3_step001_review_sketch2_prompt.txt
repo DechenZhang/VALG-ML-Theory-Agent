@@ -1,0 +1,28 @@
+You are the distinct step-scoped reviewer for perspective_3/idea_1, step_001, unit attempt 1, sketch attempt 2, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+First read <CODEX_SKILLS_ROOT>/proof-step-review/SKILL.md completely and every directly required shared contract/template it names. Then independently review exactly the current attempt-2 step_001 proof. Do not repair the proof inside the review.
+
+Binding controller artifacts and hashes:
+- setting.md: 91119d2600ee2f787eb873796569ab53e35201e499bf81658d8a0bc1a8e7c79e
+- proof_sketch.md: aabcf6f6302d5cfab51cc1495d683cfa353390df7bf0fa81c3beecfcb076d108
+- proof_sketch_review.md: 56d6b16524f0935fbfeee3802f4f6fe748cf0eebfdcfcdf1a66ddce763ebc88c, status ACCEPTED
+- optional diagnostic global_proof.md: fcb7dc635362de5be5c61bbaf858c09ed9795863e8cdd5598247666d45b178b0
+- paired global_proof_review.md: 51006b10c890f501de7e1f6dd672a2ce07502b82251fcd58bbeef81ea006805b, status ACCEPTED
+- reviewed proof_steps/step_001/proof.md: 0a5355f86a9086ad945b96629d8e05f2dd8e77c9abcc1faa855a54dfd5e8d252, status COMPLETE
+- dependencies: None
+
+Review exactly three local units, unit_001 through unit_003, line by line. Verify unit_001 proves every cube-supported root lies in compact K_R and that K_R empty makes the supported-root event empty and Gamma_piv=0. Verify unit_002 uses assump:no-forced-root on K_R, continuity, and compactness to prove
+
+rho := min_{theta in K_R} max_j |F_j(theta)| > 0
+
+without assuming a theorem-facing norm margin. Verify unit_003 defines finite proof-local B_0 and B_1, selects a pointwise largest coordinate, applies the quotient rule separately to b/F_j and every F_i/F_j, and proves exactly
+
+min_j V_j(theta) <= 2 B_0 B_1 rho^(-2) (1 + R(N-1))
+
+on K_R and hence fixed-family finiteness of Gamma_piv.
+
+Audit exact use of only assump:shared-pfaffian-chain and assump:no-forced-root; assump:joint-density-cap must not be used. Check K_R empty/nonempty, N=1, coordinate zeros, pivot ties, endpoints, B_0=0, B_1=0, and a hypothetical forced root. Verify B_0, B_1, and rho are proof-local finiteness witnesses, never divisors except rho after its positivity proof, and never hidden theorem-rate constants. The binding progress type is material_partial: reject any claim or implication of polynomial general-instance control of Gamma_piv from q, M, Delta_rnd, Delta_aff, N, R, A, or other Pfaffian-format descriptors.
+
+Independently inspect the complete proof, not only the producer report. The accepted global diagnostic is planning context only and must not be used as proof evidence. The pre-existing live review is a stale sketch-attempt-1 artifact whose already-consumed copy is preserved at proof_history/sketch_001/proof_steps/step_001/attempt_001/review.md; overwrite the fixed live review path with a fresh attempt-2 review and do not consume proof_history as evidence.
+
+Write only perspective_3/idea_1/proof_steps/step_001/review.md. Do not edit the proof, sketch/global artifacts, trackers, worker_log.md, assembly/final artifacts, or another branch. Use every required proof-step-review section and exactly one Per-Lemma Audit subsection for each of unit_001, unit_002, and unit_003. Use raw controlled fields. ACCEPTED is allowed only if there are no blocking issues and Smallest Retry Target is None. Before reporting, validate all binding hashes, exact proof identity, required headings, local-unit correspondence, theorem-style label existence, table arity ignoring escaped pipes, ASCII/control bytes, balanced TeX delimiters/braces/environments, and file scope. Report status, smallest retry target, path, and final SHA-256.

@@ -1,0 +1,25 @@
+You are the distinct step-scoped proof producer for perspective_1/idea_1, step_008, unit attempt 1, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+First read <CODEX_SKILLS_ROOT>/proof-step/SKILL.md completely and every directly required shared contract/template it names. Then prove exactly the accepted step_008 row.
+
+Binding artifacts and hashes:
+- setting.md: f77d11e1a559e22a96b14de1936d50c691c79d5a4a15e5806ddf4e6d119ada83
+- proof_sketch.md: e7035d01ff910e55426d09e1add806b49103404582df2cf3e998000a8eebe898
+- proof_sketch_review.md: ccc24fd25cd6ac468831c0cd84f8aea642d7584e7cd402686da3bb6f82a86561, status ACCEPTED
+- dependency step_006 proof.md: 1e5b411f11a795a4bf42f383c748f4f2c9bb9164efef4786d1385d119bdc6488
+- dependency step_006 review.md: 1f945740984079d404309c917115e57bb70da724b1ad94b04286d978fe1c5d1c, status ACCEPTED
+- dependency step_007 proof.md: 5dba630be80c55c5d786ee7bb622a3da2c9240ef9ac6b0907a9fcd237746d85f
+- dependency step_007 review.md: acd4136a2148099118f3ac31136190ac5587a6c50b4c078671789085bb8e5e0d, status ACCEPTED
+
+Apply the exact general affine chart inequality from accepted step_006 to the exact normalized monic presentation, coefficient identity, prescribed pivot partition, and two chart velocities from accepted step_007. For every integer d>=1, every bounded interval J, and every arbitrary possibly correlated law of the d random lower coefficients supported on [-R,R]^d with full joint density at most kappa, prove exactly
+
+Pr[there exists theta in J: p_alpha(theta)=0]
+<= kappa (2R)^(d-1) (d + R d(d-1)/2) |J|.
+
+Use N=d and V_d=d+R d(d-1)/2. Verify directly that integrating each chart over its nonpivot beta cube produces exactly (2R)^(d-1), that the prescribed cells are disjoint with |E_1|+|E_d|=|J| (with empty pieces allowed and transition points assigned as in step_007), and that the smaller high-pivot cap is bounded by V_d without any extra factor. For d=1, use the single prescribed constant-pivot cell, the zero-dimensional beta cube of volume (2R)^0=1, empty-sum convention, and speed one, so the bound becomes kappa|J|. Preserve the deterministic monic leading coefficient outside the d-dimensional probability space and prove that the event consumed from step_006 is exactly the target polynomial-root event. Retain arbitrary correlation, ordinary probability, exact law dimension, exact interval, all constants, and every relevant boundary/empty-cell convention.
+
+Do not introduce independence, a union bound, a chart-count factor, an auxiliary loss, a second probability conversion, a root-counting theorem, a random leading coefficient, a singular leading-coordinate chart, an interval enlargement loss, a hidden constant, or any later step. This is the complete R4 baseline Rate Specialization Bridge and progress type remains full.
+
+Use only primitive assump:cube-density-laws in dimension d plus accepted steps 006 and 007 and setting parameter definitions. Export only the exact affine-monic baseline conclusion consumed by step_010.
+
+Write only perspective_1/idea_1/proof_steps/step_008/proof.md. Do not edit trackers, worker log, dependencies, or another branch. Use all required proof-step sections, exact assumption provenance, a complete local lemma map, dependency applications, detailed derivations, target-step assembly, explicit-rate and baseline-reduction audit, blockers, and notation/public-surface classifications. Validate binding hashes, ASCII/control bytes, structurally balanced TeX delimiters and braces, Markdown table arity while ignoring escaped pipes, local-unit correspondence, required headings, and file scope before reporting status, path, local-unit count, and final SHA-256.

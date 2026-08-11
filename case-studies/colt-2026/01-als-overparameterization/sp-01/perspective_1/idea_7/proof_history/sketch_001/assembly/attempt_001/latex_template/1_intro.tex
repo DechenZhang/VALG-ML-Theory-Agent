@@ -1,0 +1,154 @@
+\section{Theoretical Setup}\label{sec:setup}
+
+\subsection{Realized tensor and objective}
+
+Fix $r\ge 3$ and $n$. Let $q_*:=1/4096$, $a_*:=10/9$, and
+$b_*:=19/18$. Let $\kappa _0\ge1$, smoothing scale $\rho>0$,
+accuracy $0<\epsilon<1$, and confidence levels
+$\delta_{\rm sm},\delta_{\rm init}\in(0,1)$. For deterministic matrices
+$\bar A=[\bar a_1,\ldots,\bar a_r]$,
+$\bar B=[\bar b_1,\ldots,\bar b_r]$, and
+$\bar C=[\bar c_1,\ldots,\bar c_r]\in\mathbb R^{n\times r}$ with nonzero
+columns, define
+\[
+ \bar u_j={\bar a_j\over\|\bar a_j\|_2},\qquad
+ \bar v_j={\bar b_j\over\|\bar b_j\|_2},\qquad
+ \bar w_j={\bar c_j\over\|\bar c_j\|_2},
+\]
+and write $\bar U=[\bar u_j]$, $\bar V=[\bar v_j]$,
+$\bar W=[\bar w_j]$, and
+$\bar\lambda_j=\|\bar a_j\|_2\|\bar b_j\|_2\|\bar c_j\|_2$. For a
+unit-column matrix $M=[m_1,\ldots,m_r]$, put
+\[
+ q(M):=\max_j\sum_{\ell\ne j}|\langle m_j,m_\ell\rangle|,
+ \qquad \bar q:=\max_{M\in\{\bar U,\bar V,\bar W\}}q(M).
+\]
+
+Draw independent perturbations
+$g_j^{(A)},g_j^{(B)},g_j^{(C)}\sim{\cal N}(0,\rho^2I_n/n)$ and set
+\[
+ a_j=\bar a_j+g_j^{(A)},\qquad b_j=\bar b_j+g_j^{(B)},\qquad
+ c_j=\bar c_j+g_j^{(C)},
+ \qquad T=\sum_{j=1}^r a_j\otimes b_j\otimes c_j.
+\]
+On the generated nonvanishing event define
+\[
+ u_j={a_j\over\|a_j\|_2},\quad v_j={b_j\over\|b_j\|_2},\quad
+ w_j={c_j\over\|c_j\|_2},\quad
+ \lambda_j=\|a_j\|_2\|b_j\|_2\|c_j\|_2,
+\]
+with $U=[u_j]$, $V=[v_j]$, $W=[w_j]$,
+$D_\lambda=\operatorname{diag}(\lambda_1,\ldots,\lambda_r)$,
+$\Gamma=\max_j\lambda_j/\min_j\lambda_j$, and
+$q_{\rm real}=\max\{q(U),q(V),q(W)\}$. Thus
+\[
+ T=\sum_{j=1}^r\lambda_j u_j\otimes v_j\otimes w_j.
+\]
+For factor matrices $X,Y,Z\in\mathbb R^{n\times k}$, with columns
+$x_i,y_i,z_i$, the rank-$k$ objective is
+\[
+ {\cal L}_k(X,Y,Z):={1\over2}\left\|T-
+ \sum_{i=1}^k x_i\otimes y_i\otimes z_i\right\|_F^2.
+\]
+
+\subsection{The proposed procedure}
+
+Choose universal positive constants and set
+\[
+ k=U(r):=\left\lceil C_{\rm rank}r^{5/3}(\log r)^{5/2}\right\rceil,
+ \quad L_{\rm burn}:=\lceil C_{\rm burn}\log r\rceil,
+ \quad L_{\rm cert}:=\lceil C_{\rm cert}\log r\rceil,
+\]
+\[
+ L_{\rm prop}=L_{\rm burn}+L_{\rm cert},\qquad
+ \tau_r={q_*^2\over10^4r},\qquad \omega=q_*^2+r\tau_r.
+\]
+Each proposal slot starts from three independent normalized standard
+Gaussians. A simultaneous old-state Jacobi commit maps a unit-vector state
+$h=(p,q,s)$ to
+\[
+ {\cal J}(h)=\left({T(\cdot,q,s)\over\|T(\cdot,q,s)\|_2},
+ {T(p,\cdot,s)\over\|T(p,\cdot,s)\|_2},
+ {T(p,q,\cdot)\over\|T(p,q,\cdot)\|_2}\right),
+\]
+whenever the contractions are nonzero. The first $L_{\rm burn}$ commits are
+made without a decision; the first subsequent state with
+$\zeta(h):=\max_M\min_{\varepsilon\in\{\pm1\}}
+\|h_M-\varepsilon{\cal J}_M(h)\|_2\le\tau_r$ is stored. Slots without
+such a state are discarded. Scores, the absolute-inner-product graph, and
+connected components select exactly $r$ representatives when the run is
+successful; this rule uses no target labels.
+
+For the representatives, form the equal-norm observable seed
+\[
+ x_a^0=|\theta_a|^{1/3}p_a,\quad y_a^0=|\theta_a|^{1/3}q_a,\quad
+ z_a^0=\operatorname{sgn}(\theta_a)|\theta_a|^{1/3}s_a,
+ \qquad \theta_a=\langle T,p_a\otimes q_a\otimes s_a\rangle,
+\]
+and set the remaining $k-r$ columns to zero permanently. Before any
+landing output is committed, freeze this seed and form all three designs
+\[
+ H_U^0=Z^0\odot Y^0,\qquad H_V^0=Z^0\odot X^0,\qquad
+ H_W^0=Y^0\odot X^0.
+\]
+The three Moore--Penrose solves are evaluated from this same frozen input,
+committed jointly, and followed by one positive-norm rebalance preserving
+each rank-one product. Subsequent cyclic ALS updates are applied only to the
+active $r$ columns; inactive columns remain zero. The algorithm stops when
+the original relative Frobenius residual is at most $\epsilon$, or at the
+pre-registered cap, and repeats independent completed runs as prescribed by
+$C_{\rm rep}$ and $\delta_{\rm init}$.
+
+\subsection{Primitive assumptions}
+
+\begin{assumption}[Bounded deterministic base scales]\label{assump:base-scale}
+Every base column in every mode has norm in
+$[\kappa _0^{-1},\kappa _0]$, with
+$1\le\kappa _0\le r^{d_\kappa}$ for a fixed finite $d_\kappa$.
+\end{assumption}
+
+\begin{assumption}[Primitive cumulative Gram interference]\label{assump:cumulative-gram}
+$\bar q\le q_*/4$.
+\end{assumption}
+
+\begin{assumption}[Near-balanced base weights]\label{assump:base-weight-balance}
+\[
+ {\max_j\bar\lambda_j\over\min_j\bar\lambda_j}\le1+{1\over800}.
+\]
+\end{assumption}
+
+\begin{assumption}[Source Gaussian perturbations]\label{assump:gaussian-smoothing}
+The $3r$ perturbations are mutually independent and each has law
+${\cal N}(0,\rho^2I_n/n)$, with $0<\rho\le1$ and
+$\rho^{-1}\le r^{d_\rho}$ for a fixed finite $d_\rho$.
+\end{assumption}
+
+\begin{assumption}[Scale-aware smoothing and dimension margin]\label{assump:smoothing-margin}
+With $L_{\rm sm}=\log(9r^2/\delta_{\rm sm})$,
+\[
+ \kappa _0\rho\le {q_*\over128},\qquad
+ r(\kappa _0\rho+\kappa _0^2\rho^2)
+ \sqrt{\frac{L_{\rm sm}}n}\le {q_*\over32}.
+\]
+\end{assumption}
+
+\begin{assumption}[Exact strictly subquadratic rank]\label{assump:subquadratic-rank}
+The displayed value of $k=U(r)$ satisfies $r<k\le n$.
+\end{assumption}
+
+\begin{assumption}[Independent proposal and restart randomness]\label{assump:random-initialization}
+Conditional on the once-drawn tensor, all raw Gaussian triples are mutually
+independent across slots, modes, and full runs, and independent of the
+smoothing perturbations. Restarts reuse the tensor but not proposal
+randomness.
+\end{assumption}
+
+\begin{assumption}[Accuracy and separate confidence levels]\label{assump:accuracy-confidence}
+$0<\epsilon<1$ and $0<\delta_{\rm sm},\delta_{\rm init}<1$; the two
+confidence levels apply respectively to the smoothed instance and to the
+conditional initialization/restart randomness.
+\end{assumption}
+
+The generated events, selected representatives, coefficient fields, landing
+reserves, target-span chart, and contraction properties used below are
+conclusions of the appendix results, not additional assumptions.

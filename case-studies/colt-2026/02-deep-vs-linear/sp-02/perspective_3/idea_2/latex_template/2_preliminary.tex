@@ -1,0 +1,20 @@
+\section{Preliminaries}\label{sec:preliminaries}
+
+For the fixed catalog in Assumption~\ref{assump:finite-terminal-catalog}, let
+\[
+[L]:=\{1,\ldots,L\},\qquad
+\Delta_L:=\left\{w\in\mathbb R_+^L:\sum_{i=1}^Lw_i=1\right\}.
+\]
+The simplex records mixtures of terminal catalog functions and supplies the
+target-dependent vectors in the main theorem.  Define the catalog-coordinate
+map and its mixture score by
+\[
+\phi_G(x):=(g_1(x),\ldots,g_L(x))\in\mathbb R^L,
+\qquad
+s_w(x):=\langle w,\phi_G(x)\rangle
+=\sum_{i=1}^Lw_i g_i(x).
+\]
+This notation is derived solely from the fixed catalog.  The map $\phi_G$ is
+the common map in Theorem~\ref{thm:main}, while $s_w$ is used to state its signed-margin
+conclusion.  All other helper objects are introduced only inside the proofs
+where they are needed.

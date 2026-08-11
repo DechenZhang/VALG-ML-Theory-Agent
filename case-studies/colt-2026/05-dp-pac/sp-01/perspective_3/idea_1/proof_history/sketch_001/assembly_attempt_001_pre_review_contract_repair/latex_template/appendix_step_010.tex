@@ -1,0 +1,338 @@
+\begin{lemma}[Input-independent public preprocessing]\label{lem:step-010-public-preprocessing}
+Under Assumption~\ref{assump:candidate-regime}, the contradiction hypothesis~\eqref{eq:local-negation},
+Propositions~\ref{prop:step-004-finite-hard-prior},
+\ref{prop:step-005-certificate}, and
+\ref{prop:step-009-overflow}, the following ordered procedure defines a
+preprocessing seed \(\Omega_{\mathrm{pre}}\) before any input coordinate is
+evaluated:
+
+\begin{enumerate}
+\item Draw \(J\sim\operatorname{Unif}[k]\).
+\item Draw \(I_1,\ldots,I_n\) independently and uniformly from \([k]\),
+independently of \(J\).
+\item Conditional on \(J\), independently draw
+   \[
+     \Theta_i=(T_i,Q_i)\sim\mu_{N,M},
+     \qquad i\in[k]\setminus\{J\};
+   \]
+\item Conditional on \(J,I_{1:n},(\Theta_i)_{i\ne J}\), independently draw
+   \[
+     X_r^\circ\sim Q_{I_r}
+     \quad\text{for every }r\in[n]\text{ with }I_r\ne J,
+   \]
+   and set
+   \[
+     Y_r^\circ:=\tau_{T_{I_r}}(X_r^\circ).
+   \]
+\end{enumerate}
+
+The seed consists of precisely these realized objects. Its distribution
+depends only on the public tuple
+\((k,N,n,M,\mu_{N,M})\), is independent of every
+\(z\in\mathsf Z_M\), and contains neither a hidden instance
+\((t,Q)\), a block-instance draw \(\Theta_J\), nor a synthetic feature or
+label at a position whose tag equals \(J\). Conditional on the realized
+selector, tags, and nonhidden instances, the nonhidden labeled
+rows
+
+\[
+  \left((I_r,X_r^\circ),Y_r^\circ\right),
+  \qquad r:I_r\ne J,
+\tag{6}
+\]
+
+are mutually independent, and each row with tag \(i\ne J\) has labeled law
+\(Q_i^{\tau_{T_i}}\) after its tag is suppressed.
+\end{lemma}
+
+\begin{proof}
+Proposition~\ref{prop:step-005-certificate} discharges the exact
+\(N,M\) conditions for Proposition~\ref{prop:step-004-finite-hard-prior}, so the finite public law
+\(\mu_{N,M}\) exists before the present simulator is defined. The first two
+draws use the selector/tag product kernel certified by Proposition~\ref{prop:step-009-overflow}. Once \(J=j\) is fixed, the finite
+product law
+
+\[
+  \bigotimes_{i\in[k]\setminus\{j\}}\mu_{N,M}
+\]
+
+defines all nonhidden instances. Each realized \(Q_i\) is a probability
+distribution on the finite set \([N]\), so the further finite conditional
+product
+
+\[
+  \bigotimes_{\substack{r\in[n]\\ I_r\ne J}}Q_{I_r}
+\tag{7}
+\]
+
+defines the nonhidden feature draws. For any fixed values
+\((x_r)_{r:I_r\ne J}\), (7) gives the exact conditional mass
+
+\[
+  \prod_{\substack{r\in[n]\\ I_r\ne J}}Q_{I_r}(x_r),
+\tag{8}
+\]
+
+which proves conditional mutual independence and the stated marginal
+kernels. Applying the deterministic threshold label
+\(\tau_{T_{I_r}}\) gives exactly the labeled law in the lemma.
+
+All four randomization stages are completed without referring to an input
+argument. In particular, the sampling code knows the public distribution
+\(\mu_{N,M}\) and its own realized nonhidden pairs
+\((T_i,Q_i)\), but it neither draws nor receives \((T_J,Q_J)\).
+A later hidden pair \((t,Q)\) is therefore not an input to this procedure.
+Endpoint draws \(T_i=1\) and \(T_i=N+1\) are executable: their deterministic
+labels are respectively all one and all zero. Point-mass \(Q_i\)'s are also
+valid factors in (7).
+
+The internal randomness used by \(A\) is intentionally not a component of
+\(\Omega_{\mathrm{pre}}\). It remains the fresh internal randomization of
+the one call to the kernel \(A\), if that call is reached. Thus every
+random choice belonging to preprocessing is fixed before input access,
+without converting randomized \(A\) into a deterministic map.
+\end{proof}
+
+\begin{proposition}[Exact hidden-blind size-\(n\) row construction]\label{prop:step-010-row-construction}
+Under Lemma~\ref{lem:step-010-public-preprocessing}, fix any realization
+\(\omega\) of \(\Omega_{\mathrm{pre}}\) and any arbitrary labeled input
+
+\[
+  z=(z_1,\ldots,z_M)\in\mathsf Z_M,
+  \qquad z_\ell=(x_\ell,y_\ell).
+\tag{9}
+\]
+
+Define, using only the selector and tags in \(\omega\),
+
+\[
+  L_r:=\sum_{s=1}^r\mathbf1\{I_s=J\},
+  \qquad
+  U:=L_n.
+\tag{10}
+\]
+
+The value of \(U\) is computed before any \(z_\ell\) is evaluated. If
+\(U>M\), the row-construction procedure stops immediately and evaluates no
+input coordinate. If \(U\le M\), it defines an ordered size-\(n\) labeled
+product dataset
+
+\[
+  \mathcal P_\omega(z)
+  =(\widetilde z_1,\ldots,\widetilde z_n)\in\mathsf S_n
+\tag{11}
+\]
+
+by the exact rule
+
+\[
+  \widetilde z_r=
+  \begin{cases}
+    ((J,x_{L_r}),y_{L_r}), & I_r=J,\\[2mm]
+    ((I_r,X_r^\circ),Y_r^\circ), & I_r\ne J.
+  \end{cases}
+\tag{12}
+\]
+
+Thus, on nonoverflow, the \(\ell\)-th input row is used exactly at the
+\(\ell\)-th hidden-tag occurrence for every \(\ell\in[U]\), every
+nonhidden row is the pre-drawn row (6), and the rule requires no knowledge
+of a hidden \(t\) or \(Q\). It is valid for every binary label pattern in
+(9), including patterns inconsistent with every threshold.
+\end{proposition}
+
+\begin{proof}
+The seed is drawn before the input is accessed by
+Lemma~\ref{lem:step-010-public-preprocessing}. Both \(L_r\) and \(U\) are
+functions only of the already drawn \(J,I_1,\ldots,I_n\). Consequently the
+comparison \(U>M\) can be resolved before evaluating any coordinate of
+(9). On overflow, the procedure takes no later row-construction action, so
+it never attempts to access a nonexistent \((M+1)\)-st record.
+
+Suppose \(U\le M\). For each position \(r\) with \(I_r=J\), (10) gives
+
+\[
+  1\le L_r\le U\le M.
+\tag{13}
+\]
+
+Hence \(z_{L_r}\) is an available input record. Since
+\(x_{L_r}\in[N]\), \(J\in[k]\), and \(y_{L_r}\in\{0,1\}\), the first line
+of (12) lies in \(X_{k,N}\times\{0,1\}\), regardless of whether
+\(y_{L_r}=\tau_t(x_{L_r})\) for any \(t\).
+
+For each position with \(I_r\ne J\), the seed already contains
+\(X_r^\circ\in[N]\) and
+\(Y_r^\circ=\tau_{T_{I_r}}(X_r^\circ)\in\{0,1\}\), so the second line of
+(12) has the same required type. There is one and only one applicable line
+of (12) for every \(r\in[n]\). Thus (11) has exactly \(n\) ordered labeled
+rows and belongs to the full domain \(\mathsf S_n\) of \(A\).
+
+If \(r\) is the \(\ell\)-th occurrence of tag \(J\), then by definition
+\(L_r=\ell\), so the first line of (12) uses \(z_\ell\), including its raw
+label. This is why no hidden threshold \(t\) is needed. The feature
+distribution \(Q\) of a later hidden input law is likewise unnecessary:
+the procedure takes hidden features directly from the input records.
+Nonhidden features and labels use only the simulator's publicly drawn
+instances, whose exact conditional kernels were proved in
+Lemma~\ref{lem:step-010-public-preprocessing}.
+\end{proof}
+
+\begin{lemma}[Ordered one-use input incidence]\label{lem:step-010-one-use}
+Under Proposition~\ref{prop:step-010-row-construction}, for every fixed
+preprocessing seed \(\omega\) and every arbitrary input
+\(z\in\mathsf Z_M\), the following statements hold pathwise.
+
+\begin{itemize}
+\item If \(U>M\), no coordinate of \(z\) is evaluated.
+\item If \(U\le M\), let
+  \[
+    r_\ell:=\min\left\{r\in[n]:
+      \sum_{s=1}^r\mathbf1\{I_s=J\}=\ell\right\},
+    \qquad \ell=1,\ldots,U.
+  \tag{14}
+  \]
+  Then
+  \[
+    1\le r_1<\cdots<r_U\le n,
+    \qquad
+    \widetilde z_{r_\ell}=((J,x_\ell),y_\ell).
+  \tag{15}
+  \]
+  No row of \(\mathcal P_\omega(z)\) other than row \(r_\ell\) depends on
+  input coordinate \(z_\ell\); coordinates \(z_{U+1},\ldots,z_M\) are not
+  evaluated at all.
+\end{itemize}
+
+In particular, each input record has at most one image row. If \(U=0\), the
+input-access set is empty and all \(n\) rows are nonhidden pre-drawn rows.
+If \(U=M\), every input record has exactly one image row. The statement is
+about row incidence only and makes no differential-privacy claim.
+\end{lemma}
+
+\begin{proof}
+On overflow, the first bullet is part of the control flow proved in
+Proposition~\ref{prop:step-010-row-construction}. Now fix \(U\le M\). The
+running count \(L_r\) in (10) starts at zero, is nondecreasing, and
+increases by exactly one precisely at the positions with \(I_r=J\).
+Because its terminal value is \(U\), it hits each integer
+\(\ell=1,\ldots,U\) at a unique first position \(r_\ell\), and those
+positions are strictly increasing. At \(r_\ell\), one has
+\(I_{r_\ell}=J\) and \(L_{r_\ell}=\ell\), so the first line of (12) gives
+the identity in (15).
+
+At a hidden position \(r\), the only input coordinate named by (12) is
+\(z_{L_r}\). The map from hidden positions to positive running counts is
+the bijection \(r_\ell\mapsto\ell\). At a nonhidden position, the second
+line of (12) is already fixed by \(\omega\) and names no input coordinate.
+Therefore \(z_\ell\), for \(\ell\le U\), occurs in exactly row \(r_\ell\),
+and every \(\ell>U\) occurs in no row. This proves the one-use incidence
+claim for arbitrary features and labels, without any realizability premise.
+\end{proof}
+
+\begin{proposition}[Total executable improper one-block simulator]\label{prop:step-010-simulator}
+Under Assumption~\ref{assump:candidate-regime}, the contradiction hypothesis~\eqref{eq:local-negation},
+Propositions~\ref{prop:step-004-finite-hard-prior},
+\ref{prop:step-005-certificate}, and
+\ref{prop:step-009-overflow}, Lemma~\ref{lem:step-007-restriction-legality}, and
+Lemma~\ref{lem:step-010-public-preprocessing},
+Proposition~\ref{prop:step-010-row-construction}, and
+Lemma~\ref{lem:step-010-one-use}, the following algorithm defines a
+total randomized kernel
+\[
+  B_{\mu_{N,M},A}:\mathsf Z_M\longrightarrow\mathsf G_N
+\]
+for every arbitrary randomized \(A\) in (4).
+
+On input \(z\in\mathsf Z_M\):
+
+\begin{enumerate}
+\item Sample the complete seed \(\Omega_{\mathrm{pre}}\) in the order stated
+by Lemma~\ref{lem:step-010-public-preprocessing}.
+\item Compute \(U\) from \(J,I_1,\ldots,I_n\), without evaluating \(z\).
+\item If \(U>M\), return the fixed hypothesis
+   \[
+     g_0(x):=0\quad(x\in[N])
+   \tag{16}
+   \]
+   immediately, without evaluating any coordinate of \(z\) and without
+   invoking \(A\);
+\item If \(U\le M\), construct the exact
+   \(\mathcal P_{\Omega_{\mathrm{pre}}}(z)\in\mathsf S_n\) from (12), draw
+   \[
+     H\sim A(\mathcal P_{\Omega_{\mathrm{pre}}}(z))
+   \]
+   using \(A\)'s own fresh internal randomness, and return \(D_JH\).
+\end{enumerate}
+
+This simulator has exact input size \(M\), makes at most one call to \(A\)
+and only with exact input size \(n\), uses each input row at most once, and
+is defined on every arbitrary size-\(M\) labeled input. It does not know a
+hidden \(t,Q\), does not require \(A\) to be proper or tag-symmetric, and
+does not infer privacy or an ideal-law coupling.
+\end{proposition}
+
+\begin{proof}
+The seed law is a valid input-independent probability kernel by
+Lemma~\ref{lem:step-010-public-preprocessing}. On the overflow branch,
+\(g_0\) is a fixed member of \(\mathsf G_N\); the control flow reaches (16)
+before any input dereference or call to \(A\). Thus this branch is total and
+input-independent even when the supplied input has arbitrary corrupt
+labels.
+
+On the nonoverflow branch,
+Proposition~\ref{prop:step-010-row-construction} proves that the argument of
+\(A\) is a valid member of its complete domain \(\mathsf S_n\) and has
+exactly \(n\) rows. Therefore the randomized map \(A\) returns some
+\(H\in\mathcal H_{k,N}\). Since \(J\in[k]\), Lemma~\ref{lem:step-007-restriction-legality} gives
+\(D_JH\in\mathsf G_N\), regardless of whether \(H\) is a threshold,
+monotone, proper, symmetric, deterministic, or tag-asymmetric.
+
+Equivalently, if \(E\subseteq\mathsf G_N\) and
+\(A(s,h)\) denotes the output probability assigned by \(A\) to
+\(h\in\mathcal H_{k,N}\) on \(s\in\mathsf S_n\), then the simulator kernel
+is the well-defined finite expectation
+
+\[
+B_{\mu_{N,M},A}(z,E)
+=
+\mathbb E_{\Omega_{\mathrm{pre}}}
+\left[
+\begin{cases}
+  \mathbf1\{g_0\in E\}, & U>M,\\[1mm]
+  \displaystyle
+  \sum_{h\in\mathcal H_{k,N}}
+    A(\mathcal P_{\Omega_{\mathrm{pre}}}(z),h)
+    \mathbf1\{D_Jh\in E\}, & U\le M.
+\end{cases}
+\right].
+\tag{17}
+\]
+
+Every term is nonnegative, the expression equals one when
+\(E=\mathsf G_N\), and it is additive over disjoint events. Because all
+input and output spaces are finite, (17) is a total randomized kernel on
+every \(z\in\mathsf Z_M\). Formula (17) is a mathematical description of
+the procedural branches; on \(U>M\) it contains no evaluation of
+\(\mathcal P_\omega(z)\) and no \(A\)-term.
+
+Lemma~\ref{lem:step-010-one-use} proves the exact access pattern. In
+particular:
+
+\begin{itemize}
+\item At \(U=0\), no input row is read, all \(n\) rows come from the realized
+  nonhidden instances, and \(A\) is called once on that size-\(n\) dataset;
+\item At \(1\le U\le M\), precisely the first \(U\) input rows are read once
+  each, in their original order, and all trailing rows are ignored;
+\item At \(U=M\), all \(M\) rows are used once if that event is possible.
+\item At \(U>M\), no row is read and \(A\) is not called.
+\end{itemize}
+
+The same clauses apply to endpoint labels, point-mass nonhidden
+distributions, and arbitrary nonrealizable input labels. For \(k=2,3\),
+Proposition~\ref{prop:step-009-overflow} says the overflow branch
+has probability zero, but the branch remains defined. No step of this proof
+uses Assumption~\ref{assump:central-dp}, compares two input datasets,
+identifies an ideal sample law, or evaluates population risk. Those are
+separate downstream obligations.
+\end{proof}

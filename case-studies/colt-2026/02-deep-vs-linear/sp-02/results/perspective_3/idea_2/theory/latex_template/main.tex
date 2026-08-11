@@ -1,0 +1,34 @@
+\documentclass[11pt, letterpaper]{article}
+\usepackage{arxiv}
+\usepackage{tikz}
+\usepackage{adjustbox}
+\usepackage{cancel}
+\usetikzlibrary{positioning, arrows.meta}
+
+\title{\LARGE Conditional Polynomial Dimension from a Finite SQ Output Catalog}
+
+\author{}
+\date{\small{\today}}
+
+\newif\ifusebibliography
+\usebibliographytrue
+
+\begin{document}
+
+\maketitle
+
+\input{1_intro.tex}
+\input{2_preliminary.tex}
+\input{3_main.tex}
+\input{4_proof_sketch.tex}
+
+\ifusebibliography
+\newpage
+\bibliographystyle{ims}
+\bibliography{reference}
+\fi
+
+\newpage
+\input{5_appendix.tex}
+
+\end{document}

@@ -1,0 +1,35 @@
+You are the fresh independent step reviewer for perspective_2/idea_1, step_007, unit attempt 1 under accepted sketch attempt 2, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+Read <CODEX_SKILLS_ROOT>/proof-step-review/SKILL.md completely and every directly required shared contract and template it names. Review the submitted current proof independently. Write only perspective_2/idea_1/proof_steps/step_007/review.md. Do not modify the proof, idea, setting, sketch, sketch review, dependency artifacts, global diagnostics, trackers, worker log, controller prompts, proof history, final review artifacts, assembly artifacts, results, or any other file.
+
+Binding controller inputs:
+
+- idea.md: 5209aa21929e84604acb2712d8657460a48463901738fd00ebafaa84d5c43596
+- setting.md: 6955a2723694ff60af8d5d40329ff0ad056f9b54780ff02744d8985456222b7e
+- accepted proof_sketch.md: 41517943f551814aaf87ff8541d5a81b56123cae7d8533b2bceb302a981bfbc4
+- accepted proof_sketch_review.md: a80e7f4ffb1ad57991675810dbf7064bc7b482b8f34b61f10a171ebfc97b43c9
+- controller-open proof_tracker.md: 1ea059704e04162950148891320802ea00eee0d29439795f7100a089d888660a
+- submitted step_007 proof.md: 2ba350ac72e62a8d20587d2afc7a5f5c7bbb0ec30aca55764bcea39ad4701037
+
+The exact accepted dependencies are:
+
+- step_004 proof: 91736da20ac3e8c97693b158e1a528f5ac2ed3bab6ef61b14185ab2beae76ef4
+- step_004 review: 45285c72a3ea65948cdd60b0148c44526384f53c9e35bae2a86b9a09d2964389
+- step_005 proof: a3c503cdc2b19acb74d9598fe8d674c185715ef20ea11ea28322eee62827ab63
+- step_005 review: 3c12da50c102fe5562cec9e3681b80250defa6d4f88a32f05c3b462349f94ad0
+- step_006 proof: 130dbada8d3b451575971240d58a54992c32de30eb740707d3184ed9e3deb954
+- step_006 review: cfcd012a07f15b84d9b41e50d24eed881dc6ef1a7309154681e5f3228dc03dae
+
+Each dependency review must record sketch attempt 2, its matching Step ID and unit attempt 1, the matching proof digest, and ACCEPTED status. Verify those identities before using dependency conclusions.
+
+The live review.md is a stale sketch-attempt-1 artifact with SHA-256 6794ada25352a9328461aa9312532fbe8fae96a5d7a747b11f38c9677e6b0256. A byte-identical archival copy already exists at perspective_2/idea_1/proof_history/sketch_001/proof_steps/step_007/attempt_001/review.md. You may hash-check this provenance, but do not read or use the stale review or proof_history as review evidence. Replace only the fixed live review.md output path.
+
+The binding target is the exact sketch-attempt-2 step_007 row: combine the accepted step_004 coordinate-free affine swept-area probability inequality, step_005 translated cube-section certificate, and step_006 actual-section velocity bound to prove both displayed general affine inequalities and C_D^aff <= A(1+NR^2) Lambda_hat_{B,T}/(sqrt(2) R), uniformly over arbitrary correlated admissible laws and positive-length intervals. Preserve the literal constants, ordinary probability, interval-then-law supremum order, Euclidean and Hausdorff conventions, N=1 and empty-section cases, arbitrarily short intervals, degree-zero extra Pfaffian-format dependence after the supplied certificate is fixed, and the exact zero-certificate probability conclusion.
+
+Audit every line of the three submitted local units. In particular, independently verify the same-target identity of all three dependency interfaces, the product kappa * sqrt(2)(2R)^(N-1) * (1+NR^2)Lambda_hat_{B,T}, the equality kappa sqrt(2)(2R)^(N-1)=A/(sqrt(2)R), the order and legality of the two suprema, arbitrary-correlation scope, absence of a second density conversion or union bound, the Lambda_hat_{B,T}=0 implication, and all boundary cases. Check target fidelity, assumption and constant provenance, Explicit Rate Contract, public-surface classification, hidden subclaims, theorem-style references, dependency closure, and Target-Step Assembly. Do not silently repair the proof.
+
+Use the shared proof-step-review template. Record exactly Sketch attempt 2, Step ID step_007, Unit attempt 1, and Reviewed proof artifact as the full submitted proof path plus SHA-256 2ba350ac72e62a8d20587d2afc7a5f5c7bbb0ec30aca55764bcea39ad4701037. Include one Per-Lemma Audit subsection for each of unit_001, unit_002, and unit_003, plus the required Hidden Subclaim Scan, Target Claim Audit, Explicit Rate Audit, Notation Surface Audit, Target-Step Assembly Audit, and Review Rationale.
+
+Emit exactly one controlled Step-Review Status: ACCEPTED, REVISE_STEP, REVISE_SKETCH, or BLOCKED_BY_DEPENDENCY. Align Smallest Retry Target exactly. Blocking Issues must be None only for ACCEPTED; otherwise list every material blocker with location, defect, downstream effect, and smallest repair. Do not include Retry Mode or a numeric score.
+
+Before returning, validate all protected input hashes, the exact review identity, required headings and per-unit audits, controlled-field alignment, ASCII/control bytes, TeX delimiter balance, internal references, and single-output-scope discipline. Report the status, retry target, blockers, final review SHA-256, and protected-input verification.

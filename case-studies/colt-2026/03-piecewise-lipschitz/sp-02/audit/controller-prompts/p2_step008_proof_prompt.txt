@@ -1,0 +1,40 @@
+You are the distinct step-scoped proof producer for perspective_2/idea_1, step_008, unit attempt 1, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+First read <CODEX_SKILLS_ROOT>/proof-step/SKILL.md completely and every directly required shared contract/template it names. Then prove exactly the accepted step_008 row.
+
+Binding artifacts and hashes:
+- setting.md: 6955a2723694ff60af8d5d40329ff0ad056f9b54780ff02744d8985456222b7e
+- proof_sketch.md: 8b5b22e5000e1c5641e2b5baf0c4d48244ce3389941b0cc9857b47510bbf6c93
+- proof_sketch_review.md: 4288579fa3b8583b31faa2c220f5071879da72f06ac3a1dd3d1889cb1096cb7c, status ACCEPTED
+- dependency step_001 proof.md: d55b8e0455d2b2d38b3d72339557df4b1366b5e2cd81cc145fd537dca1e75c11
+- dependency step_001 review.md: dd04491bf12d076e4482faa9dcfb484d671d601a35cf64405f9d2afa4e535899, status ACCEPTED
+- dependency step_004 proof.md: cbda35c61b01723ae2ccf9c9e052048bdafc6e8d87a108436c750c8a6574a064
+- dependency step_004 review.md: 9c9587b882088cca10d00e7bb53d040f55f2ba0425cd4c6e44c5d82647e671f3, status ACCEPTED
+- dependency step_005 proof.md: 0eba9c6000ae4a34731f05af239e19ec350024534167b173a5af4ba42e1e2641
+- dependency step_005 review.md: 24153f0140d1a31a23d213a3882795ccb244f47c8f844d0696df6e28b0a6b4be, status ACCEPTED
+
+In the exact specialization F_0 identically zero, use the accepted coordinate-free affine swept-area inequality from step_004, the central cube-section certificate from step_005, and the projective identity and bound from step_001. Write r(theta)=||F(theta)||_2 and gamma_F=F/r. On the actual root section H_theta=F(theta)^perp=gamma_F(theta)^perp, differentiate F=r gamma_F and prove the exact radial cancellation
+
+|<a,F'(theta)>|/||F(theta)||_2 = |<a,gamma_F'(theta)>|.
+
+Then use ||a||_2<=R sqrt(N), the central section bound sqrt(2)(2R)^(N-1), and ordinary nonnegative integration to prove for every admissible possibly correlated law and every positive-length interval I
+
+Pr[there exists theta in I: <alpha,F(theta)>=0]
+<= A sqrt(N/2) Gamma_proj(F) |I|
+<= A sqrt(N/2) widehat Lambda_{B,T} |I|.
+
+Prove the literal constant identity
+
+kappa R sqrt(N) sqrt(2)(2R)^(N-1) = A sqrt(N/2)
+
+directly from A=(2R)^N kappa and R>0. Use Gamma_proj(F)=sup_{theta in Theta}||gamma_F'(theta)||_2 exactly, then substitute the accepted certificate Gamma_proj(F)<=widehat Lambda_{B,T}. Divide only by positive |I| and take exactly the defining interval supremum followed by the law supremum to obtain
+
+C^Pf_D(F;Theta) <= A sqrt(N/2) widehat Lambda_{B,T}.
+
+Preserve arbitrary coefficient correlation, ordinary probability, exact Euclidean and Hausdorff conventions, uniformity over all laws and positive-length intervals, and exact N,R,kappa,A dependence. Explicitly handle N=1 with H^0, empty central sections, Gamma_proj(F)=0/stationary projective curves (including the static proper-hyperplane law-null event rather than assuming the section empty), and arbitrarily short positive intervals. The deterministic scale/radial motion must cancel rather than be bounded by an amplitude assumption.
+
+Edelman--Kostlan Theorem 5.1 may be used only as the source-convention cross-check already authorized by the accepted sketch; if mentioned or used, restate it in current notation with source identity, exact role, object mapping, nonoutputs, and complete assumption discharge. It must not replace the accepted affine chart theorem, Ball factor, or projective certificate.
+
+Do not introduce independence, a union bound, a second probability conversion, an affine offset, a global amplitude bound, a chart-count factor, an auxiliary tolerance, a hidden constant, a monic specialization, Counter-example 1, or final assembly. Use exactly primitive assump:cube-density-laws and assump:anchored-derivative-closure as allocated, plus accepted steps 001, 004, and 005 and setting definitions. This is the complete R3 homogeneous Rate Specialization Bridge, preserves the R5 delta-scale path for its later legal consumer, and progress type remains full. Export only the sharper homogeneous probability chain and C^Pf clause consumed downstream.
+
+Write only perspective_2/idea_1/proof_steps/step_008/proof.md. Do not edit trackers, worker log, dependencies, or another branch. Use all required proof-step sections, exact assumption provenance, a complete local lemma map, dependency/cited-result applications, detailed derivations, target-step assembly, explicit-rate and baseline-reduction audit, blockers, and notation/public-surface classifications. Validate binding hashes, ASCII/control bytes, structurally balanced TeX delimiters and braces, Markdown table arity while ignoring escaped pipes, local-unit correspondence, required headings, and file scope before reporting status, path, local-unit count, and final SHA-256.

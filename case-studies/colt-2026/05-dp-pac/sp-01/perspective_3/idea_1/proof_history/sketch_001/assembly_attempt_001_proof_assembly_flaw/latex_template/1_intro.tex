@@ -1,0 +1,106 @@
+\section{Theoretical Setup}\label{sec:setup}
+
+\subsection{Tagged threshold products}
+
+For a positive integer $q$, write $[q]=\{1,\ldots,q\}$.  Fix integers
+$k\ge2$ and $N\ge2$, and define
+\[
+X_{k,N}=[k]\times[N],
+\qquad
+\tau_t(x)=\mathbf 1\{x\ge t\}
+\quad(t\in[N+1],\ x\in[N]).
+\]
+The tagged threshold-product class and the unrestricted improper output space
+are
+\[
+C_{k,N}=\{c_{\boldsymbol t}:\boldsymbol t\in[N+1]^k\},
+\qquad
+c_{\boldsymbol t}(i,x)=\tau_{t_i}(x),
+\qquad
+\mathcal H_{k,N}=\{0,1\}^{X_{k,N}}.
+\]
+No properness, representation, or computational restriction is imposed.
+
+For a distribution $P$ on $X_{k,N}$, a target
+$c_{\boldsymbol t}\in C_{k,N}$, and $h\in\mathcal H_{k,N}$, let
+\[
+R_P(h,c_{\boldsymbol t})
+=\Pr_{Z\sim P}\{h(Z)\ne c_{\boldsymbol t}(Z)\}.
+\]
+Write $P^{c_{\boldsymbol t}}$ for the realizable labeled law of
+$(Z,c_{\boldsymbol t}(Z))$ with $Z\sim P$.  Thus
+$S\sim(P^{c_{\boldsymbol t}})^n$ always denotes exactly $n$ independent
+labeled examples.
+
+A candidate learner is an arbitrary randomized map
+\[
+A:(X_{k,N}\times\{0,1\})^n\longrightarrow\mathcal H_{k,N}.
+\]
+Two ordered size-$n$ labeled datasets are adjacent, denoted $S\simeq S'$,
+when they differ in at most one row by replacement.  Every unadorned $\log$
+is natural, and
+\[
+\log_2^*u
+=\min\{j\in\mathbb Z_{\ge0}:\log_2^{(j)}u\le1\},
+\qquad
+m_{n,k}=\max\left\{8,\left\lceil\frac{4n}{k}\right\rceil\right\}.
+\]
+We use the tower convention
+\[
+\operatorname{Tow}_2(1)=2,
+\qquad
+\operatorname{Tow}_2(r+1)=2^{\operatorname{Tow}_2(r)}.
+\]
+
+\subsection{Assumptions}
+
+The constants in the following assumptions are fixed before the candidate
+parameters and learner are chosen.
+
+\begin{assumption}[Primitive candidate regime]\label{assump:candidate-regime}
+For fixed $c_\delta,\varepsilon_0>0$ and $N_0\in\mathbb Z_{\ge2}$, the
+candidate parameters satisfy
+\[
+k\ge2,
+\qquad N\ge N_0,
+\qquad n\in\mathbb Z_{\ge1},
+\qquad 0<\varepsilon\le\varepsilon_0,
+\]
+and, with $M=m_{n,k}$,
+\[
+0<\delta\le
+\min\left\{
+\frac{1}{n\log(n+1)},
+\frac{c_\delta}{M^2\log(M+1)}
+\right\}.
+\]
+\end{assumption}
+
+\begin{assumption}[Central approximate differential privacy]\label{assump:central-dp}
+For every $S\simeq S'$ in $(X_{k,N}\times\{0,1\})^n$ and every event
+$E\subseteq\mathcal H_{k,N}$,
+\[
+\Pr\{A(S)\in E\}
+\le e^\varepsilon\Pr\{A(S')\in E\}+\delta,
+\]
+where the probabilities are over only the internal randomness of $A$.
+\end{assumption}
+
+\begin{assumption}[Distribution-free realizable PAC guarantee]\label{assump:distribution-free-realizable-pac}
+For fixed $\alpha_0,\beta_0\in(0,1/2)$, every
+$\boldsymbol t\in[N+1]^k$ and every distribution $P$ on $X_{k,N}$ satisfy
+\[
+\Pr_{\substack{S\sim(P^{c_{\boldsymbol t}})^n\\A}}
+\left\{R_P(A(S),c_{\boldsymbol t})\le\alpha_0\right\}
+\ge1-\beta_0.
+\]
+The probability includes the exact i.i.d. sample and the learner's internal
+randomness.
+\end{assumption}
+
+\subsection{Objective}
+
+We seek a deterministic, pointwise-in-$n$ lower-bound implication.  Its
+probabilistic premise is the fixed-size PAC guarantee above; its conclusion
+does not average over candidate sample sizes, targets, or distributions.  The
+loss throughout is population zero-one risk.

@@ -1,0 +1,38 @@
+\documentclass[11pt, letterpaper]{article}
+% The shared style requests both legacy subfigure and subcaption.  This paper
+% uses neither, so suppress the incompatible second load without changing the
+% shared support file.
+\makeatletter
+\@namedef{ver@subcaption.sty}{2023/01/01}
+\@namedef{opt@subcaption.sty}{}
+\@namedef{ver@algorithm.sty}{2023/01/01}
+\@namedef{opt@algorithm.sty}{}
+\@namedef{ver@algorithmic.sty}{2023/01/01}
+\@namedef{opt@algorithmic.sty}{}
+\makeatother
+\usepackage{arxiv}
+\emergencystretch=3em
+
+\title{\LARGE Order-Optimal Non-Adaptive One-Bit Mean Estimation\\
+in General Moment Classes}
+
+\author{}
+\date{\small{\today}}
+
+\begin{document}
+
+\maketitle
+
+\input{1_intro.tex}
+\input{2_preliminary.tex}
+\input{3_main.tex}
+\input{4_proof_sketch.tex}
+
+\newpage
+\bibliographystyle{ims}
+\bibliography{reference}
+
+\newpage
+\input{5_appendix.tex}
+
+\end{document}

@@ -1,0 +1,46 @@
+schema_version: 1
+
+run:
+  case_study: "Online optimization of piecewise-Lipschitz functions"
+  subproblem_id: "sp-01"
+  source_label: "Open Question 1"
+  title: "Polynomial coefficient laws for root anti-concentration"
+
+known:
+  controller_skill: ml-theory-research-agent
+  worker_model_profile: gpt-5.6-sol
+  reasoning_effort: max
+  settings_evidence: worker_log.md
+  run_mode: interactive
+  research_brief: RESEARCH_BRIEF.md
+  source_pdf: ../source.pdf
+  accepted_branch_count: 2
+  accepted_branches:
+    - branch: "perspective_1/idea_1"
+      result_path: "results/perspective_1/idea_1/theory"
+      internal_status: workflow_accepted
+      independent_status: partial_finite_averaged_density_condition
+      refined_weighted_score: 7.05
+    - branch: "perspective_2/idea_1"
+      result_path: "results/perspective_2/idea_1/theory"
+      internal_status: workflow_accepted
+      independent_status: partial_class_uniform_polynomial_condition
+      refined_weighted_score: 8.00
+  independent_evaluation:
+    date: "2026-08-08"
+    audit: "../../evaluation/audits/online_evaluation.md"
+    overall_status: partial_sufficient_conditions
+
+unknown:
+  controller_argument: unknown
+  exact_model_snapshot: unknown
+  run_started_at: unknown
+  run_completed_at: unknown
+  exact_random_seeds: unknown
+
+publication:
+  published_from_commit: 3b9ce95df6bb227edc1be8cbacd2ada31b683181
+  reproducibility_level: rerunnable_not_bit_reproducible
+  sanitization:
+    status: sanitized_for_publication
+    note: "Machine-specific paths were normalized and OS/TeX build residue was omitted; mathematical, provenance, and audit artifacts were preserved."

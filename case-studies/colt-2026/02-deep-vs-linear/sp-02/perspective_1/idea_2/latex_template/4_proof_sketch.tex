@@ -1,0 +1,37 @@
+\section{Proof Sketch}\label{sec:proof-sketch}
+
+Lemma~\ref{lem:step-001-grid-rounding} shows that the endpoint grid has
+covering radius \(1/K\le\tau\).  Proposition
+\ref{prop:step-001-canonical-oracle} applies this bound separately at each
+adaptively selected query, and Proposition
+\ref{prop:step-001-padded-path} constructs the resulting unique response
+path without treating the unread suffix as an oracle reply.
+
+For every complete tape, Proposition~\ref{prop:step-002-total-replay}
+replays all response strings and proves suffix invariance below terminal
+nodes.  Lemma~\ref{lem:step-002-response-count} counts the common index set,
+and Proposition~\ref{prop:step-002-feature-map} forms the corresponding
+binary feature map.  Proposition~\ref{prop:step-002-preinstance-law}
+constructs a measurable pushforward law before the instance is chosen.  Its
+finite tie-pattern reduction makes the exact pointwise weight infimum
+measurable, while its tape-side formulation avoids selecting a tape or a
+coordinate from a noninjective map fiber.
+
+Lemma~\ref{lem:step-003-prefix-synchronization} proves by finite induction
+that actual canonical interaction and prescribed-string replay have the same
+state after every read reply.  Propositions
+\ref{prop:step-003-terminal-replay} and
+\ref{prop:step-003-one-hot-score} identify the selected response-tree
+coordinate with the actual binary output.  Proposition
+\ref{prop:step-003-tie-free-transfer} then uses the binary range to show
+that the tie-error and strict binary-error events coincide exactly.
+
+Finally, Proposition~\ref{prop:step-004-infimum-pushforward} evaluates the
+mapwise infimum at the tape-specific basis vector and transfers expectation
+through the pre-instance law.  Proposition
+\ref{prop:step-004-canonical-risk} invokes the learner guarantee at the
+valid canonical oracle, and Proposition
+\ref{prop:step-004-dimension-certificate} takes the instance suprema and
+uses the exact response-string count.  All transfers are exact, so no
+rounding-risk term, hidden constant, probability conversion, or horizon
+upgrade appears.

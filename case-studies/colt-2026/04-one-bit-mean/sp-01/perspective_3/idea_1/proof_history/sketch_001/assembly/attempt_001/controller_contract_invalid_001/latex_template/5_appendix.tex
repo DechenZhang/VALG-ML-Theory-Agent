@@ -1,0 +1,2186 @@
+\appendix
+
+\section{Proof Details}
+
+\subsection{Coding localization, grid rounding, and recentering}
+
+\begin{proposition}[Verified non-adaptive localization and scalar wrapper]
+\label{prop:localization}
+Under Assumptions~\ref{assump:parameter-domain}--
+\ref{assump:precommitted-protocol}, set $\eta=\delta/4$.  There is a
+deterministic precommitted localization block using one Borel-set bit per
+sample and a decoder defined on every transcript such that, with
+$c=\operatorname{mid}(I)$ and $\mu=\mu(D)$,
+\[
+ \mathcal E_{\rm loc}:=\{|c-\mu|\leq50\sigma\},
+ \qquad \Pr_D(\mathcal E_{\rm loc})\geq1-\frac\delta4.
+\]
+Moreover, with $C_{{\rm loc},k}=10001$,
+\[
+ N_{\rm loc}\leq C_{{\rm loc},k}
+ \left[1+\log\frac\lambda\sigma+\log\frac4\delta\right].
+\]
+In the trivial source branch $I=[-\lambda,\lambda]$, $c=0$, and
+$N_{\rm loc}=0$.  In the nontrivial branch the fixed minimum-index Hamming
+tie rule, $I$, and $c$ remain defined even when localization fails.
+\end{proposition}
+
+\begin{proof}
+We instantiate Theorem~16 of \citet{lau-scarlett-2026}, whose source label is
+\texttt{thm: alternative localization}, together with the construction in
+the source appendix labeled \texttt{appendix: two-stage}.  That result assumes
+$\lambda\geq\sigma>0$, $\eta\in(0,1/2)$, iid observations with
+$\mu\in[-\lambda,\lambda]$, and $\mathbb E|X-\mu|\leq\sigma$.
+Assumptions~\ref{assump:parameter-domain} and \ref{assump:moment-class}
+give all but the last condition.  Holder's inequality supplies it directly:
+\[
+ \mathbb E|X-\mu|
+ \leq\bigl(\mathbb E|X-\mu|^k\bigr)^{1/k}
+       \bigl(\mathbb E1^{k/(k-1)}\bigr)^{(k-1)/k}
+ \leq\sigma.
+\]
+Assumption~\ref{assump:independent-samples} gives the iid source block, and
+Assumption~\ref{assump:precommitted-protocol} gives its fixed placement in
+the full protocol.
+
+For completeness, the numerical source interface is as follows.  Put
+$h_{\rm src}=20\sigma$.  If $2\lambda\leq h_{\rm src}$, the construction
+asks no query and returns $I=[-\lambda,\lambda]$.  Thus
+\[
+ |I|=2\lambda\leq20\sigma,\qquad
+ |c-\mu|=|\mu|\leq\lambda\leq10\sigma,
+\]
+so $\mathcal E_{\rm loc}$ occurs deterministically and $N_{\rm loc}=0$.
+
+If $2\lambda>h_{\rm src}$, define
+\[
+ N_{\rm src}=\left\lceil\frac{2\lambda}{h_{\rm src}}\right\rceil,
+ \qquad
+ \Delta=\frac{2\lambda}{N_{\rm src}},
+ \qquad
+ \ell=\left\lceil10000\left(
+    \log N_{\rm src}+\log\frac1\eta\right)\right\rceil.
+\]
+Then $h_{\rm src}/2\leq\Delta\leq h_{\rm src}$.  With
+$e_j^{\rm src}=-\lambda+(j-1)\Delta$, use the half-open bins
+$K_j^{\rm src}=[e_j^{\rm src},e_{j+1}^{\rm src})$, closing only the final
+right endpoint, and clip observations outside $[-\lambda,\lambda]$ to the
+first or last bin.  Hence every boundary has a unique bin index.  The source
+fixes a deterministic balanced binary codeword of length $\ell$ for every
+bin, queries coordinate $t$ of the codeword of the clipped bin containing
+$X_t$, decodes a minimum-Hamming-score bin with the minimum-index tie rule,
+and returns the union of that bin and at most its two neighbors on each side.
+The interval is therefore defined on every word and obeys
+\[
+ |I|\leq5\Delta\leq100\sigma.
+\]
+The source guarantee gives
+$\Pr_D\{\mu\in I\}\geq1-\eta=1-\delta/4$.  On $\{\mu\in I\}$,
+\[
+ |c-\mu|\leq\frac{|I|}{2}\leq50\sigma,
+\]
+which proves the required probability statement.  The source's
+location-dependent refinement stage is not used.
+
+To map each source bit into our query model, fix the promised codebook, take
+$R_{\rm loc}$ to be degenerate, and put
+$\mathcal B_t=Q_t^{-1}(\{1\})$.  The clipped-bin map is constant on finitely
+many half-open or closed intervals and on the two outer rays; hence every
+$\mathcal B_t$ is Borel and
+$Y_t^{\rm loc}=\mathbf1\{X_t\in\mathcal B_t\}=Q_t(X_t)$.  The bins,
+queries, codebook, sample count, and tie rule depend only on the known
+parameters and are fixed before any response.
+
+Finally, in the nontrivial branch
+\[
+ N_{\rm src}=\left\lceil\frac\lambda{10\sigma}\right\rceil\geq2.
+\]
+For $x=\lambda/(10\sigma)>1$,
+\[
+ N_{\rm src}=\lceil x\rceil\leq x+1\leq2x
+ =\frac\lambda{5\sigma}\leq\frac\lambda\sigma,
+\]
+and therefore
+\[
+\begin{aligned}
+ N_{\rm loc}
+ &\leq1+10000\left(\log\frac\lambda\sigma+log\frac4\delta\right)\\
+ &\leq10001\left(1+\log\frac\lambda\sigma+log\frac4\delta\right).
+\end{aligned}
+\]
+This proves the proposition in both branches, including every tie and failure
+transcript.
+\end{proof}
+
+\begin{lemma}[Midpoint-to-grid core bridge]\label{lem:localization-core}
+Under Assumption~\ref{assump:parameter-domain} and
+Proposition~\ref{prop:localization}, define $h_0=a_k\sigma$ and use the
+minimum-index nearest-center rule.  Every realized $c$ satisfies
+\[
+ |c-m_0|\leq\frac{h_0}{2}.
+\]
+If also $|c-\mu(D)|\leq50\sigma$ and $a_k\geq200$, then
+\[
+ |m_0-\mu(D)|\leq\frac{3h_0}{4},\qquad
+ \mu(D)\in[m_0-3h_0/4,m_0+3h_0/4]
+ \subseteq J_{0,j_0(c)}.
+\]
+The conclusion includes both source branches and every grid tie.
+\end{lemma}
+
+\begin{proof}
+Let $q=\lfloor c/h_0\rfloor$.  The candidate
+$m_{0,q}=(q+1/2)h_0$ is at distance at most $h_0/2$ from $c$, so the same
+is true of a nearest center.  At a Voronoi boundary both candidates are at
+exactly that distance and the smaller-index rule preserves the bound.  In
+fact
+\[
+ j_0(c)=\left\lceil\frac c{h_0}\right\rceil-1,
+\]
+so the rule is Borel and also covers negative $c$.
+
+On $\mathcal E_{\rm loc}$, Proposition~\ref{prop:localization} and
+$a_k\geq200$ give
+\[
+\begin{aligned}
+ |m_0-\mu(D)|
+ &\leq|m_0-c|+|c-\mu(D)|\\
+ &\leq\frac{h_0}{2}+50\sigma
+ =\left(\frac12+\frac{50}{a_k}\right)h_0
+ \leq\frac{3h_0}{4}.
+\end{aligned}
+\]
+The closed core is contained in
+$J_{0,j_0}=[m_0-3h_0/2,m_0+3h_0/2)$, including its two core endpoints.
+\end{proof}
+
+\begin{lemma}[Recentered moment certificate]\label{lem:recentered-moment}
+Under Assumptions~\ref{assump:parameter-domain} and
+\ref{assump:moment-class} and Lemma~\ref{lem:localization-core}, if
+$|c-\mu(D)|\leq50\sigma$ and $a_k\geq200$, then
+\[
+ M_k(c):=\int_{\mathbb R}|x-m_0(c)|^kD(dx)
+ \leq C_k^{\rm rec}\sigma^k,
+ \qquad
+ C_k^{\rm rec}:=2^{k-1}\left[1+\left(\frac{3a_k}{4}\right)^k\right].
+\]
+In particular, the recentered moment is finite and its constant depends only
+on the fixed $k$.
+\end{lemma}
+
+\begin{proof}
+For fixed $c$ on $\mathcal E_{\rm loc}$, the power-triangle inequality gives
+\[
+ |x-m_0|^k
+ \leq2^{k-1}\bigl(|x-\mu(D)|^k+|\mu(D)-m_0|^k\bigr).
+\]
+Indeed, this follows from convexity because
+$(|u|+|v|)^k\leq2^{k-1}(|u|^k+|v|^k)$.  Integrating and applying
+Assumption~\ref{assump:moment-class} and Lemma~
+\ref{lem:localization-core} yields
+\[
+\begin{aligned}
+ M_k(c)
+ &\leq2^{k-1}\left(\mathbb E_D|X-\mu(D)|^k
+          +|\mu(D)-m_0|^k\right)\\
+ &\leq2^{k-1}\left[\sigma^k+(3h_0/4)^k\right]
+ =C_k^{\rm rec}\sigma^k.
+\end{aligned}
+\]
+\end{proof}
+
+\begin{proposition}[Independent refinement product law]
+\label{prop:refinement-independence}
+Under Assumptions~\ref{assump:parameter-domain}--
+\ref{assump:precommitted-protocol} and Proposition~\ref{prop:localization},
+let $\mathscr L_{\rm loc}$ be the sigma-field generated by the complete
+localization block, including its local samples, seed, fixed queries, bits,
+interval $I$, and outputs $c,m_0$.  It is independent of the sigma-field
+generated by all refinement samples, levels, colors, branches, types, masks,
+dithers, and group assignments.  The variables $c,m_0$,
+$\mathcal E_{\rm loc}$ and, for fixed $D$, $M_k(c)$ are
+$\mathscr L_{\rm loc}$-measurable.  Conditional on
+$\mathscr L_{\rm loc}$, the per-sample refinement tuples retain their
+original independent product law; for every bounded measurable function $g$
+of the complete refinement block,
+\[
+ \mathbb E_D[g\mid\mathscr L_{\rm loc}]=\mathbb E_Dg
+ \quad\text{almost surely}.
+\]
+\end{proposition}
+
+\begin{proof}
+Every localization query, bit, $I$, $c$, and $m_0$ is a measurable function
+of the localization samples and the deterministic source objects.  The event
+$\mathcal E_{\rm loc}$ is therefore $\mathscr L_{\rm loc}$-measurable.
+For fixed $D$, consider
+\[
+ \Phi_D(m)=\left(\int_{\mathbb R}|x-m|^kD(dx)\right)^{1/k}.
+\]
+Minkowski's inequality and Assumption~\ref{assump:moment-class} give
+\[
+ \Phi_D(m)\leq\|X-\mu(D)\|_{L_k(D)}+|m-\mu(D)|
+ \leq\sigma+|m-\mu(D)|<\infty.
+\]
+The reverse triangle inequality in $L_k(D)$ gives, for all $m,m'\in\mathbb R$,
+\[
+ |\Phi_D(m)-\Phi_D(m')|
+ \leq\|(X-m)-(X-m')\|_{L_k(D)}=|m-m'|.
+\]
+Thus $\Phi_D$ is Borel.  Since $c\mapsto m_0(c)$ is Borel by
+Lemma~\ref{lem:localization-core},
+$M_k(c)=\Phi_D(m_0(c))^k$ is $\mathscr L_{\rm loc}$-measurable.
+
+Assumption~\ref{assump:independent-samples} makes the complete refinement
+sample-and-seed family independent of the complete localization block.
+Measurable localization transformations preserve that independence.
+Conditioning on the first sigma-field therefore leaves the second sigma-field's
+joint law unchanged; this law is a product across sample indices by the same
+assumption and the precommitted construction.  The conditional expectation
+identity follows, including on localization-failure transcripts.
+
+Together, Proposition~\ref{prop:localization}, Lemmas~
+\ref{lem:localization-core} and \ref{lem:recentered-moment}, and this product
+law give the complete localization interface: midpoint radius $50\sigma$,
+the selected-core certificate, the explicit recentered moment, and an
+independent refinement array, with the source and grid ceilings already
+included in $N_{\rm loc}$.
+\end{proof}
+\subsection{Dyadic ancestry, ring partition, and Borel query geometry}
+
+\begin{lemma}[Dyadic ancestor and outer-radius geometry]
+\label{lem:dyadic-ancestor}
+Under Assumption~\ref{assump:parameter-domain} and
+Proposition~\ref{prop:localization}, let $c\in\mathbb R$ be any realized
+decoder value and define $j_0,j_s,b_s,m_s,d_s$ as in
+Section~\ref{sec:preliminaries}.  For every $1\leq s\leq S$,
+\[
+ j_{s-1}=2j_s+b_s,qquad b_s\in\{0,1\},qquad
+ J_{s-1,j_{s-1}}\subseteq J_{s,j_s}.
+\]
+Moreover,
+\[
+ |d_s|<\frac{h_s}{2}\leq h_s,qquad
+ [m_0-H,m_0+H]\subset J_{S,j_S}.
+\]
+These statements hold for positive and negative indices, both child values,
+and every nearest-center or half-open-grid tie.
+\end{lemma}
+
+\begin{proof}
+Put $t=c/h_0$.  The integer $j_0=\lceil t\rceil-1$ satisfies
+$j_0<t\leq j_0+1$.  If the last inequality is strict, its center is the
+unique nearest center; if equality holds, the centers indexed by $j_0$ and
+$j_0+1$ tie and $j_0$ is selected.  This covers negative $t$ as well.
+
+For $s\geq1$ define the Euclidean remainder
+\[
+ r_s=j_0-2^s\left\lfloor\frac{j_0}{2^s}\right\rfloor
+     =j_0-2^sj_s.
+\]
+The floor inequalities give $r_s\in\{0,1,\ldots,2^s-1\}$, including for
+$j_0<0$, and hence
+\[
+\begin{aligned}
+ j_{s-1}
+ &=\left\lfloor\frac{2^sj_s+r_s}{2^{s-1}}\right\rfloor
+ =2j_s+\left\lfloor\frac{r_s}{2^{s-1}}\right\rfloor,\\
+ b_s&=\left\lfloor\frac{r_s}{2^{s-1}}\right\rfloor\in\{0,1\}.
+\end{aligned}
+\]
+Since $h_s=2h_{s-1}$, direct endpoint calculation gives
+\[
+\begin{aligned}
+ J_{s,j}&=[(j-1)h_s,(j+2)h_s),\\
+ J_{s-1,2j}&=[(j-\tfrac12)h_s,(j+1)h_s),\\
+ J_{s-1,2j+1}&=[jh_s,(j+\tfrac32)h_s).
+\end{aligned}
+\]
+Both child paddings lie in $J_{s,j}$.  Substitution of $j_s,b_s$ and
+iteration prove
+$J_{0,j_0}\subseteq\cdots\subseteq J_{S,j_S}$.
+
+The same remainder identity yields
+\[
+ m_0=(j_s+\vartheta_s)h_s,qquad
+ \vartheta_s=\frac{r_s+1/2}{2^s}\in(0,1).
+\]
+Consequently
+\[
+ d_s=(\tfrac12-\vartheta_s)h_s,qquad |d_s|<h_s/2.
+\]
+At $s=S$, $H=h_S$ and
+\[
+ (j_S-1)H<m_0-H\leq m_0+H<(j_S+2)H.
+\]
+Thus both endpoints of the closed radius-$H$ interval lie in the half-open
+padding $J_{S,j_S}$.
+\end{proof}
+
+\begin{proposition}[Exact padded-ring partition]\label{prop:ring-partition}
+Under Assumption~\ref{assump:parameter-domain} and
+Lemma~\ref{lem:dyadic-ancestor}, for every $c\in\mathbb R$ the target rings
+are pairwise disjoint and
+\[
+ \mathop{\dot\bigcup}_{s=0}^S R_s(c)=J_{S,j_S},
+ \qquad
+ \sum_{s=0}^S\mathbf1\{x\in R_s(c)\}
+ =\mathbf1\{x\in J_{S,j_S}\}
+\]
+for every $x\in\mathbb R$.  Every $x\in J_{0,j_0}$ belongs to no target
+ring $R_s(c)$ with $s\geq1$.
+\end{proposition}
+
+\begin{proof}
+Write $\mathbf J_s=J_{s,j_s}$.  The exact child identity in
+Lemma~\ref{lem:dyadic-ancestor} gives, for $s\geq1$,
+\[
+ R_s(c)=\mathcal R_{s,j_s,b_s}
+ =J_{s,j_s}\setminus J_{s-1,2j_s+b_s}
+ =\mathbf J_s\setminus\mathbf J_{s-1},
+\]
+whereas $R_0(c)=\mathbf J_0$.  Therefore
+\[
+ \mathbf J_s=\mathbf J_{s-1}\mathbin{\dot\cup}R_s(c).
+\]
+Iterating this identity yields the asserted disjoint union.  Equivalently,
+if $t<s$, then
+$R_t(c)\subseteq\mathbf J_t\subseteq\mathbf J_{s-1}$, whereas
+$R_s(c)\cap\mathbf J_{s-1}=\varnothing$.  This also proves the pointwise
+indicator identity at every half-open endpoint.  Finally, if
+$x\in\mathbf J_0$, nesting puts $x$ in every $\mathbf J_{s-1}$, so it is
+in none of the differences $\mathbf J_s\setminus\mathbf J_{s-1}$.
+\end{proof}
+
+\begin{lemma}[Four-color support, endpoint, and amplitude geometry]
+\label{lem:four-color}
+Under Assumption~\ref{assump:parameter-domain} and
+Lemma~\ref{lem:dyadic-ancestor}, fix $0\leq s\leq S$ and
+$\ell\in\{0,1,2,3\}$.  The paddings
+$\{J_{s,j}:j\equiv\ell\pmod4\}$ are pairwise disjoint, and so are the
+rings at any fixed branch.  All these sets are Borel and
+\[
+ \left|\frac{x-m_{s,j}}{2h_s}\right|\leq\frac34
+ \quad\text{on every such ring},
+\]
+while the mass amplitude is one.  If $s\geq1$ and
+$x\in J_{0,j_0}$, then $x$ lies in neither the target ring nor any alias
+$\mathcal R_{s,j,b_s}$ with $j\equiv j_s\pmod4$.
+\end{lemma}
+
+\begin{proof}
+The padding is $J_{s,j}=[(j-1)h_s,(j+2)h_s)$.  If $j<j'$ have the same
+residue modulo four, then $j'\geq j+4$, so the right endpoint of the first
+padding is $(j+2)h_s$ and the left endpoint of the second is at least
+$(j+3)h_s$.  They are disjoint with a gap of at least one cell.  This
+calculation is unchanged for negative indices.
+
+For $s\geq1$, the child-padding formulas give
+\[
+\begin{aligned}
+ \mathcal R_{s,j,0}
+ &=[(j-1)h_s,(j-\tfrac12)h_s)
+   \cup[(j+1)h_s,(j+2)h_s),\\
+ \mathcal R_{s,j,1}
+ &=[(j-1)h_s,jh_s)
+   \cup[(j+\tfrac32)h_s,(j+2)h_s).
+\end{aligned}
+\]
+At level zero, $\mathcal R_{0,j}=J_{0,j}$.  Thus all sets are Borel and
+the formulas settle each boundary.  For $x\in J_{s,j}$,
+\[
+ -\frac{3h_s}{2}\leq x-m_{s,j}<\frac{3h_s}{2},
+\]
+which proves the coordinate bound after division by $2h_s$; equality at the
+included left endpoint is allowed.
+
+For the final assertion, take $x\in J_{0,j_0}$.  Nesting puts it in
+$J_{s,j_s}$ and, more strongly, in $J_{s-1,j_{s-1}}$, excluding it from
+$\mathcal R_{s,j_s,b_s}$.  Every other $j\equiv j_s\pmod4$ has padding
+disjoint from $J_{s,j_s}$, so its ring cannot contain $x$.  These cases
+exhaust the retained color and branch.
+\end{proof}
+
+\begin{lemma}[Jointly Borel bounded precommitted query map]
+\label{lem:query-measurability}
+Under Assumptions~\ref{assump:parameter-domain} and
+\ref{assump:precommitted-protocol} and Lemma~\ref{lem:four-color}, the
+formula for each $F_i$ is jointly Borel in the sample and its complete
+precommitted level, color, type, branch, and countable mask seed.  For every
+seed realization and every $x\in\mathbb R$,
+\[
+ |F_i(x)|\leq1.
+\]
+Consequently each realized $F_i$ is Borel and every dithered superlevel set
+$\{x:F_i(x)\geq u\}$, $u\in[-1,1]$, is Borel.  Neither map contains the
+decoder output $c$.
+\end{lemma}
+
+\begin{proof}
+For fixed $i$, let
+\[
+ \mathcal M_i=\{-1,+1\}^{\{0,\ldots,S\}\times\mathbb Z}
+\]
+carry its countable product Borel sigma-field.  The query-seed space is the
+finite disjoint union
+\[
+\begin{aligned}
+ \Omega_i^{\rm qry}
+ :=&\ \bigl(\{0\}\times\{0,1,2,3\}\times\mathcal M_i\bigr)\\
+ &\mathbin{\dot\cup}\mathop{\dot\bigcup}_{s=1}^S
+ \bigl(\{s\}\times\{0,1,2,3\}
+ \times\{{\rm coord},{\rm mass}\}\times\{0,1\}\times\mathcal M_i\bigr),
+\end{aligned}
+\]
+with finite coordinates discrete.  The level-zero component correctly has no
+child variable.
+
+Fix $s,\ell$ and truncate the relevant sum to indices
+$j\equiv\ell\pmod4$ with $|j|\leq N$.  Each summand is the product of a
+mask coordinate, a continuous affine function or the constant one, and the
+indicator of a Borel ring from Lemma~\ref{lem:four-color}.  Every finite
+partial sum is jointly Borel.  Same-color disjointness implies that at each
+$(x,\rho)$ at most one summand of the full countable sum is nonzero; the
+partial sums therefore stabilize pointwise.  Their limit is jointly Borel.
+Finite case distinctions over $L_i,C_i,T_i,B_i$ preserve this property.
+
+The same uniqueness proves the range bound.  With no active ring the value is
+zero; on a coordinate ring the unique summand has magnitude at most $3/4$;
+on a mass ring it is a Rademacher sign and has magnitude one.  This covers
+every mask realization and half-open endpoint without an absolute-summability
+assumption.
+
+For fixed seed $\omega$, $x\mapsto F_i(x,\omega)$ is Borel, and more
+strongly
+\[
+ \{(x,\omega,u):F_i(x,\omega)-u\geq0\}
+\]
+is Borel in
+$\mathbb R\times\Omega_i^{\rm qry}\times[-1,1]$.  Assumption~
+\ref{assump:precommitted-protocol} places $\omega,u$ before the first response,
+and the formula contains no $c$ or response bit.
+
+Lemma~\ref{lem:dyadic-ancestor}, Proposition~\ref{prop:ring-partition},
+Lemma~\ref{lem:four-color}, and this measurability result jointly give the
+negative-index-safe nested path, exact ring partition, retained-ring
+inactivity on $J_{0,j_0}$, and a bounded Borel query for every countable-mask
+realization.
+\end{proof}
+
+\subsection{Dither inversion, mask projection, and the mean telescope}
+
+\begin{lemma}[Exact centered-uniform dither moments]\label{lem:dither-moments}
+Under Assumption~\ref{assump:independent-samples}, let
+$U\sim{\rm Unif}[-1,1]$ and fix $f\in[-1,1]$ independently of $U$.  Define
+\[
+ \Delta_f(U)=\mathbf1\{f\geq U\}-\mathbf1\{0\geq U\}.
+\]
+Then, including $f=-1,0,1$,
+\[
+ \mathbb E_U\Delta_f(U)=\frac f2,
+ \qquad
+ \mathbb E_U\Delta_f(U)^2=\frac{|f|}{2}.
+\]
+If a random $F\in[-1,1]$ is independent of $U$, both identities hold
+conditionally on $F$.
+\end{lemma}
+
+\begin{proof}
+For $0\leq f\leq1$,
+$\Delta_f(u)=\mathbf1_{(0,f]}(u)$, whereas for $-1\leq f<0$,
+$\Delta_f(u)=-\mathbf1_{(f,0]}(u)$.  At $f=0$ the two indicators agree
+identically.  Uniform measure on $[-1,1]$ has density $1/2$, so integrating
+the signed interval gives $f/2$, while squaring removes its sign and gives
+$|f|/2$.  The threshold endpoints are correct and have zero uniform mass.
+Conditioning on an independent random $F$ fixes its value and applies the
+same pointwise calculation.
+\end{proof}
+
+\begin{lemma}[Fresh-mask projection and exact alias cancellation]
+\label{lem:mask-projection}
+Under Assumption~\ref{assump:independent-samples}, Lemmas~
+\ref{lem:dither-moments}, \ref{lem:four-color}, and
+\ref{lem:query-measurability}, fix a level, color class, and, at a higher
+level, branch and type.  Let $(E_j)_{j\in\mathcal J}$ be the resulting
+pairwise-disjoint rings, let $(\rho_j)_{j\in\mathcal J}$ be independent
+Rademacher masks, and write
+\[
+ F_\rho(x)=\sum_{j\in\mathcal J}
+ \rho_j a_j(x)\mathbf1_{E_j}(x)\in[-1,1].
+\]
+For any target $j_\star\in\mathcal J$ and independent uniform dither $U$,
+\[
+ \mathbb E_{\rho,U}\left[
+ \rho_{j_\star}\Delta_{F_\rho(x)}(U)\right]
+ =\frac12a_{j_\star}(x)\mathbf1_{E_{j_\star}}(x)
+\]
+for every $x$.  In particular, a uniquely active alias $j\neq j_\star$
+contributes exactly zero.
+\end{lemma}
+
+\begin{proof}
+Conditioning first on the complete mask family and applying
+Lemma~\ref{lem:dither-moments} gives
+\[
+ \mathbb E_{\rho,U}
+ [\rho_{j_\star}\Delta_{F_\rho(x)}(U)]
+ =\frac12\mathbb E_\rho[\rho_{j_\star}F_\rho(x)].
+\]
+At fixed $x$, Lemma~\ref{lem:four-color} leaves either no active summand or
+one active index $q$.  In the first case both sides vanish.  In the second,
+the last expectation is
+\[
+ \frac12a_q(x)\mathbf1_{E_q}(x)
+ \mathbb E[\rho_{j_\star}\rho_q]
+ =\frac12a_q(x)\mathbf1_{E_q}(x)\mathbf1\{q=j_\star\},
+\]
+because a mask squares to one and distinct masks are independent and
+centered.  No countable sum is exchanged with expectation.
+\end{proof}
+
+\begin{proposition}[Exact per-level importance inversion]
+\label{prop:level-inversion}
+Under Assumptions~\ref{assump:independent-samples} and
+\ref{assump:precommitted-protocol}, Propositions~
+\ref{prop:refinement-independence} and \ref{prop:ring-partition}, and
+Lemmas~\ref{lem:dyadic-ancestor}, \ref{lem:four-color},
+\ref{lem:query-measurability}, and \ref{lem:mask-projection}, fix a decoder
+value $c$ independent of the refinement block.  For every $x\in\mathbb R$,
+put
+\[
+ K_s(x,c)=\mathbb E[W_i(c)\mathbf1\{L_i=s\}\mid X_i=x,c].
+\]
+Then
+\[
+ K_0(x,c)=(x-m_0)\mathbf1_{R_0(c)}(x),
+\]
+and, for $1\leq s\leq S$,
+\[
+ K_s(x,c)=\bigl[(x-m_s)+d_s\bigr]\mathbf1_{R_s(c)}(x)
+ =(x-m_0)\mathbf1_{R_s(c)}(x).
+\]
+Every same-color alias contributes zero.
+\end{proposition}
+
+\begin{proof}
+Fix $c,x$.  Proposition~\ref{prop:refinement-independence} leaves every
+level and seed law unchanged and
+\[
+ \Delta Y_i
+ =\mathbf1\{F_i(x)\geq U_i\}-\mathbf1\{0\geq U_i\}
+ =\Delta_{F_i(x)}(U_i).
+\]
+At level zero, $W_i(c)$ vanishes unless $C_i=\kappa_0$, an event of
+probability $1/4$.  Conditional on it, Lemma~\ref{lem:mask-projection}, with
+target $j_0$ and amplitude $(x-m_{0,j})/(2h_0)$, yields
+\[
+ \mathbb E_{\rho,U}[\rho_{i,0,j_0}\Delta Y_i
+ \mid x,c,L_i=0,C_i=\kappa_0]
+ =\frac{x-m_0}{4h_0}\mathbf1_{R_0(c)}(x).
+\]
+All aliases have already vanished.  Substitution gives the complete ledger
+\[
+\begin{aligned}
+ K_0(x,c)
+ &=p_0\cdot\frac14\cdot\frac{16h_0}{p_0}
+   \cdot\frac{x-m_0}{4h_0}\mathbf1_{R_0(c)}(x)\\
+ &=(x-m_0)\mathbf1_{R_0(c)}(x).
+\end{aligned}
+\]
+Thus the coefficient inverts the level, color, dither, and coordinate
+normalization; no branch or type exists at level zero.
+
+Now fix $s\geq1$.  The statistic vanishes unless
+$C_i=\kappa_s$ and $B_i=b_s$, whose probabilities are $1/4$ and $1/2$.
+For coordinate type, Lemma~\ref{lem:mask-projection} gives
+\[
+ \mathbb E_{\rho,U}[\rho_{i,s,j_s}\Delta Y_i
+ \mid x,c,L_i=s,C_i=\kappa_s,B_i=b_s,T_i={\rm coord}]
+ =\frac{x-m_s}{4h_s}\mathbf1_{R_s(c)}(x).
+\]
+For mass type it gives
+\[
+ \mathbb E_{\rho,U}[\rho_{i,s,j_s}\Delta Y_i
+ \mid x,c,L_i=s,C_i=\kappa_s,B_i=b_s,T_i={\rm mass}]
+ =\frac12\mathbf1_{R_s(c)}(x).
+\]
+Both expressions vanish for an active alias.  Since each type has probability
+$1/2$, the coordinate contribution is
+\[
+\begin{aligned}
+ &p_s\cdot\frac14\cdot\frac12\cdot\frac12
+ \cdot\frac{16}{p_s}\cdot4h_s
+ \cdot\frac{x-m_s}{4h_s}\mathbf1_{R_s(c)}(x)\\
+ &\hspace{8em}=(x-m_s)\mathbf1_{R_s(c)}(x),
+\end{aligned}
+\]
+and the mass contribution is
+\[
+\begin{aligned}
+ &p_s\cdot\frac14\cdot\frac12\cdot\frac12
+ \cdot\frac{16}{p_s}\cdot2d_s
+ \cdot\frac12\mathbf1_{R_s(c)}(x)\\
+ &\hspace{8em}=d_s\mathbf1_{R_s(c)}(x).
+\end{aligned}
+\]
+These displays invert every level, color, branch, type, dither, and coordinate
+factor separately.  Adding the mutually exclusive types and using
+$d_s=m_s-m_0$ proves the result, including $d_s=0$.
+\end{proof}
+
+\begin{proposition}[Exact padded-ring mean telescope and residual]
+\label{prop:mean-telescope}
+Under Assumptions~\ref{assump:independent-samples} and
+\ref{assump:precommitted-protocol}, Propositions~
+\ref{prop:refinement-independence}, \ref{prop:ring-partition}, and
+\ref{prop:level-inversion}, and Lemma~\ref{lem:four-color}, every decoder
+value $c$ independent of the refinement block satisfies, for all $x$,
+\[
+ \mathbb E[W_i(c)\mid X_i=x,c]
+ =(x-m_0)\mathbf1\{x\in J_{S,j_S}\}.
+\]
+Writing $\theta(c)=\mathbb E[W_i(c)\mid c]$, one has
+\[
+ \theta(c)=\mathbb E_D[(X-m_0)\mathbf1\{X\in J_{S,j_S}\}\mid c]
+\]
+and
+\[
+ \mu(D)-m_0=\theta(c)+
+ \mathbb E_D[(X-m_0)\mathbf1\{X\notin J_{S,j_S}\}\mid c].
+\]
+There is no localization, fine-scale, ring-gap, or alias residual.  If
+$D(J_{0,j_0})=1$, every retained higher correction is seedwise zero and the
+outer residual is zero.  If $D\{m_0\}=1$, then $W_i(c)=0$ for every seed
+realization.
+\end{proposition}
+
+\begin{proof}
+The level events form a finite partition.  Proposition~
+\ref{prop:level-inversion} and the exact ring partition give pointwise
+\[
+\begin{aligned}
+ \mathbb E[W_i(c)\mid X_i=x,c]
+ &=\sum_{s=0}^S K_s(x,c)\\
+ &=(x-m_0)\sum_{s=0}^S\mathbf1_{R_s(c)}(x)\\
+ &=(x-m_0)\mathbf1_{J_{S,j_S}}(x).
+\end{aligned}
+\]
+This equality is exact at every half-open boundary.  A same-color alias is
+zero already by Lemma~\ref{lem:mask-projection}.
+
+Proposition~\ref{prop:refinement-independence} and the tower rule now yield
+\[
+ \theta(c)=\int_{J_{S,j_S}}(x-m_0)D(dx).
+\]
+For fixed $c$, $m_0,J_{S,j_S}$ are deterministic, and $X-m_0$ is integrable.
+Splitting its integral gives
+\[
+\begin{aligned}
+ \mu(D)-m_0
+ &=\int_{\mathbb R}(x-m_0)D(dx)\\
+ &=\int_{J_{S,j_S}}(x-m_0)D(dx)
+  +\int_{J_{S,j_S}^c}(x-m_0)D(dx),
+\end{aligned}
+\]
+so the second integral is the sole residual.
+
+If $D(J_{0,j_0})=1$, Lemma~\ref{lem:four-color} shows that for every
+$s\geq1$ neither the target nor any retained alias ring can be active.  A
+mismatched retained color or branch makes $W_i(c)=0$ directly; when they
+match, $F_i(X_i)=0$ and hence $\Delta Y_i=0$.  Thus every higher correction
+is seedwise zero.  Nesting gives $J_{0,j_0}\subseteq J_{S,j_S}$, so the
+outer residual is also zero and the level-zero identity supplies
+$\theta(c)=\mu(D)-m_0$.  If $X_i=m_0$, the target level-zero coordinate is
+zero as well, so every retained $\Delta Y_i$ and every $W_i(c)$ vanishes for
+all seeds.
+
+Thus Lemmas~\ref{lem:dither-moments} and \ref{lem:mask-projection},
+Proposition~\ref{prop:level-inversion}, and the preceding finite telescope
+account for every dither, mask, level, color, branch, and type factor and
+leave exactly the displayed outer residual, with both exact baselines intact.
+\end{proof}
+
+\subsection{Target and alias distance with the all-ring activation ledger}
+
+\begin{lemma}[Target-child exclusion forces residual distance]
+\label{lem:target-distance}
+Under Assumption~\ref{assump:parameter-domain} and
+Lemma~\ref{lem:dyadic-ancestor}, let $c,x\in\mathbb R$ and
+$1\leq s\leq S$.  If
+\[
+ x\in\mathcal R_{s,j_s,b_s}
+ =J_{s,j_s}\setminus J_{s-1,j_{s-1}},
+\]
+then
+\[
+ |x-m_0|>\frac{h_s}{2},\qquad h_s<2|x-m_0|.
+\]
+This holds for both branches, signs of the path index, and all half-open
+child-padding endpoints.
+\end{lemma}
+
+\begin{proof}
+Define
+\[
+ a_s=j_0-2^sj_s
+ =j_0-2^s\left\lfloor\frac{j_0}{2^s}\right\rfloor
+ \in\{0,\ldots,2^s-1\}.
+\]
+Then
+\[
+ m_0=(j_s+\theta_s)h_s,
+ \qquad \theta_s=\frac{a_s+1/2}{2^s},
+\]
+and
+\[
+ b_s=j_{s-1}-2j_s
+ =\left\lfloor\frac{a_s}{2^{s-1}}\right\rfloor.
+\]
+These Euclidean-remainder identities remain valid for negative $j_0$.
+
+If $b_s=0$, then $0\leq a_s\leq2^{s-1}-1$ and
+\[
+ \frac1{2^{s+1}}\leq\theta_s
+ \leq\frac12-\frac1{2^{s+1}}.
+\]
+Since
+$J_{s-1,j_{s-1}}=[(j_s-\tfrac12)h_s,(j_s+1)h_s)$,
+\[
+\begin{aligned}
+ m_0-\frac{h_s}{2}&=(j_s-\tfrac12+\theta_s)h_s
+ >(j_s-\tfrac12)h_s,\\
+ m_0+\frac{h_s}{2}&=(j_s+\tfrac12+\theta_s)h_s
+ <(j_s+1)h_s.
+\end{aligned}
+\]
+Thus the closed radius-$h_s/2$ interval lies strictly inside the selected
+child padding.
+
+If $b_s=1$, then $2^{s-1}\leq a_s\leq2^s-1$ and
+\[
+ \frac12+\frac1{2^{s+1}}\leq\theta_s
+ \leq1-\frac1{2^{s+1}}.
+\]
+Now $J_{s-1,j_{s-1}}=[j_sh_s,(j_s+\tfrac32)h_s)$ and
+\[
+\begin{aligned}
+ m_0-\frac{h_s}{2}&=(j_s-\tfrac12+\theta_s)h_s>j_sh_s,\\
+ m_0+\frac{h_s}{2}&=(j_s+\tfrac12+\theta_s)h_s
+ <(j_s+\tfrac32)h_s.
+\end{aligned}
+\]
+The same strict containment holds.  In either branch, a point in the target
+ring lies outside the selected child padding and therefore outside this closed
+interval.  Hence $|x-m_0|>h_s/2$.  The strict containment also handles the
+asymmetric included-left and excluded-right endpoints.
+\end{proof}
+
+\begin{lemma}[Same-color aliases are separated from the path center]
+\label{lem:alias-distance}
+Under Assumption~\ref{assump:parameter-domain} and Lemmas~
+\ref{lem:dyadic-ancestor} and \ref{lem:four-color}, let
+$c,x\in\mathbb R$, $1\leq s\leq S$, and
+$q\in\mathbb Z\setminus\{0\}$.  If
+$x\in\mathcal R_{s,j_s+4q,b_s}$, then
+\[
+ |x-m_0|>2h_s,
+ \qquad h_s<\frac{|x-m_0|}{2}.
+\]
+The conclusion is uniform over the retained branch, all index signs, and all
+half-open boundaries.
+\end{lemma}
+
+\begin{proof}
+Lemma~\ref{lem:dyadic-ancestor} places $m_0$ strictly in the path cell:
+\[
+ j_sh_s<m_0<(j_s+1)h_s.
+\]
+Every branch ring lies in its padding, so
+\[
+ \mathcal R_{s,j_s+4q,b_s}
+ \subseteq[(j_s+4q-1)h_s,(j_s+4q+2)h_s).
+\]
+If $q\geq1$, activation implies
+$x\geq(j_s+4q-1)h_s\geq(j_s+3)h_s$; since
+$m_0<(j_s+1)h_s$, this gives $x-m_0>2h_s$.  Strictness remains at the
+included left endpoint when $q=1$.
+
+If $q\leq-1$, activation and the excluded right endpoint give
+$x<(j_s+4q+2)h_s\leq(j_s-2)h_s$.  Since $m_0>j_sh_s$,
+$m_0-x>2h_s$.  This is strict for $q=-1$ because the alias padding is
+right-open and $m_0$ is strictly inside the path cell.  The two cases exhaust
+all nonzero integers and are insensitive to the sign of $j_s$ or the branch.
+\end{proof}
+
+\begin{lemma}[Uniform all-ring activation ledger]
+\label{lem:activation-ledger}
+Under Assumptions~\ref{assump:parameter-domain} and
+\ref{assump:precommitted-protocol}, Lemmas~\ref{lem:dyadic-ancestor},
+\ref{lem:four-color}, \ref{lem:target-distance}, and
+\ref{lem:alias-distance}, define
+\[
+ \Gamma_s(c)=\bigcup_{q\in\mathbb Z}
+ \mathcal R_{s,j_s+4q,b_s},\qquad 1\leq s\leq S.
+\]
+For every $c,x$, with $r=|x-m_0|$,
+\[
+ x\in\Gamma_s(c)\quad\Longrightarrow\quad h_s\leq2r,
+\]
+and
+\[
+ \sum_{s=1}^S h_s^k\mathbf1\{x\in\Gamma_s(c)\}
+ \leq C_{{\rm act},k}r^k,
+ \qquad C_{{\rm act},k}=\frac{2^k}{1-2^{-k}}.
+\]
+At each level at most one ring is active, so the sum charges every retained
+target and alias.  It is exactly zero when $r=0$ and for every
+$x\in J_{0,j_0}$.
+\end{lemma}
+
+\begin{proof}
+Every integer congruent to $j_s$ modulo four is uniquely $j_s+4q$.
+Lemma~\ref{lem:four-color} makes the active index unique at each level.  For
+$q=0$, Lemma~\ref{lem:target-distance} gives $h_s<2r$; for $q\neq0$,
+Lemma~\ref{lem:alias-distance} gives the stronger $h_s<r/2$.  Thus no
+retained ring is omitted and
+\[
+ \sum_{s=1}^S h_s^k\mathbf1\{x\in\Gamma_s(c)\}
+ \leq\sum_{\substack{1\leq s\leq S\\h_s\leq2r}}h_s^k.
+\]
+If the index set is empty, the result is immediate.  Otherwise let $t$ be
+its largest element.  Since $h_s=2^{s-t}h_t$,
+\[
+\begin{aligned}
+ \sum_{\substack{1\leq s\leq S\\h_s\leq2r}}h_s^k
+ &=\sum_{s=1}^t h_s^k
+ =h_t^k\sum_{u=0}^{t-1}2^{-ku}\\
+ &\leq\frac{h_t^k}{1-2^{-k}}
+ \leq\frac{(2r)^k}{1-2^{-k}}
+ =C_{{\rm act},k}r^k.
+\end{aligned}
+\]
+The denominator is positive because $k>1$, and the constant is independent
+of the path, branch, level count, decoder value, and sample point.
+
+If $r=0$, no positive $h_s$ can satisfy $h_s\leq2r$, so the ledger is
+zero.  If $x\in J_{0,j_0}$, nesting puts it in every selected child padding,
+so the target ring is inactive; it also lies in $J_{s,j_s}$, which is
+disjoint from every $q\neq0$ alias padding.  Hence the entire higher-level
+ledger vanishes pointwise, including at all half-open endpoints.
+
+The target and alias distance lemmas exhaust the retained ring indices, and
+the geometric summation above therefore charges all higher-level target and
+alias activations with the explicit constant $C_{{\rm act},k}$.
+\end{proof}
+
+\subsection{All-alias square ledgers and conditional variance}
+
+For this subsection only, write
+\[
+ E_{0,q}(c)=\mathcal R_{0,j_0+4q},\qquad
+ \Gamma_0(c)=\bigcup_{q\in\mathbb Z}E_{0,q}(c),
+\]
+and, for $1\leq s\leq S$,
+\[
+ E_{s,q}(c)=\mathcal R_{s,j_s+4q,b_s},\qquad
+ \Gamma_s(c)=\bigcup_{q\in\mathbb Z}E_{s,q}(c).
+\]
+At fixed $(s,x,c)$, Lemma~\ref{lem:four-color} makes at most one term over
+$q$ nonzero.
+
+\begin{lemma}[Exact level-zero all-alias square ledger]
+\label{lem:level-zero-square}
+Under Assumptions~\ref{assump:independent-samples} and
+\ref{assump:precommitted-protocol}, Proposition~
+\ref{prop:refinement-independence}, and Lemmas~\ref{lem:four-color},
+\ref{lem:query-measurability}, and \ref{lem:dither-moments}, every
+$c,x\in\mathbb R$ satisfies
+\[
+\begin{aligned}
+ &\mathbb E[W_i(c)^2\mathbf1\{L_i=0\}\mid X_i=x,c]\\
+ &\quad=\frac{16h_0}{p_0}\sum_{q\in\mathbb Z}
+ |x-m_{0,j_0+4q}|\mathbf1_{E_{0,q}(c)}(x)\\
+ &\quad\leq\frac{24h_0^2}{p_0}\mathbf1_{\Gamma_0(c)}(x).
+\end{aligned}
+\]
+The equality includes the target $q=0$ and every level-zero alias.
+\end{lemma}
+
+\begin{proof}
+On $\{L_i=0,C_i=\kappa_0\}$, unique activity gives
+\[
+ F_i(x)=\sum_{q\in\mathbb Z}\rho_{i,0,j_0+4q}
+ \frac{x-m_{0,j_0+4q}}{2h_0}\mathbf1_{E_{0,q}(c)}(x).
+\]
+Although $W_i(c)$ uses the target mask, its square contains
+$\rho_{i,0,j_0}^2=1$.  Conditional on all masks, the dither-square identity
+and unique activity yield
+\[
+ \mathbb E_{U_i}[\Delta Y_i^2]
+ =\sum_{q\in\mathbb Z}
+ \frac{|x-m_{0,j_0+4q}|}{4h_0}\mathbf1_{E_{0,q}(c)}(x).
+\]
+No mask cancellation occurs in this nonnegative square; an alias produces
+the same absolute-amplitude term as the target.
+
+Proposition~\ref{prop:refinement-independence} retains
+$\Pr\{L_i=0\}=p_0$ and $\Pr\{C_i=\kappa_0\}=1/4$.  Therefore
+\[
+\begin{aligned}
+ &p_0\cdot\frac14\left(\frac{16h_0}{p_0}\right)^2
+ \sum_q\frac{|x-m_{0,j_0+4q}|}{4h_0}
+  \mathbf1_{E_{0,q}(c)}(x)\\
+ &\qquad=\frac{16h_0}{p_0}\sum_q|x-m_{0,j_0+4q}|
+  \mathbf1_{E_{0,q}(c)}(x).
+\end{aligned}
+\]
+The factor $p_0^{-1}$ remains explicit.  On an active level-zero ring,
+$|x-m_{0,j}|\leq3h_0/2$ by Lemma~\ref{lem:four-color}; at most one $q$
+is active.  This proves the factor-$24$ bound.  No branch or type probability
+appears because neither variable exists at level zero.
+\end{proof}
+
+\begin{lemma}[Exact higher-level coordinate-mass all-alias square ledger]
+\label{lem:higher-square}
+Under Assumptions~\ref{assump:independent-samples} and
+\ref{assump:precommitted-protocol}, Proposition~
+\ref{prop:refinement-independence}, and Lemmas~\ref{lem:dyadic-ancestor},
+\ref{lem:four-color}, \ref{lem:query-measurability}, and
+\ref{lem:dither-moments}, every $c,x\in\mathbb R$ and
+$1\leq s\leq S$ satisfy
+\[
+\begin{aligned}
+ &\mathbb E[W_i(c)^2\mathbf1\{L_i=s\}\mid X_i=x,c]\\
+ &\quad=\frac{64h_s}{p_s}\sum_{q\in\mathbb Z}
+ |x-m_{s,j_s+4q}|\mathbf1_{E_{s,q}(c)}(x)
+ +\frac{32d_s^2}{p_s}\mathbf1_{\Gamma_s(c)}(x)\\
+ &\quad\leq\frac{128h_s^2}{p_s}\mathbf1_{\Gamma_s(c)}(x).
+\end{aligned}
+\]
+Every target and alias appears in the exact sum; zero alias mean does not
+remove its square.
+\end{lemma}
+
+\begin{proof}
+On the retained color and branch, the two types are mutually exclusive, so
+\[
+ \left[4h_s\mathbf1\{T_i={\rm coord}\}
+ +2d_s\mathbf1\{T_i={\rm mass}\}\right]^2
+ =16h_s^2\mathbf1\{T_i={\rm coord}\}
+ +4d_s^2\mathbf1\{T_i={\rm mass}\}.
+\]
+There is no coordinate-mass cross term.  For coordinate type, unique activity
+and Lemma~\ref{lem:dither-moments} give
+\[
+ \mathbb E_{U_i}[\Delta Y_i^2]
+ =\sum_q\frac{|x-m_{s,j_s+4q}|}{4h_s}
+  \mathbf1_{E_{s,q}(c)}(x),
+\]
+whereas for mass type they give
+\[
+ \mathbb E_{U_i}[\Delta Y_i^2]
+ =\frac12\mathbf1_{\Gamma_s(c)}(x).
+\]
+These quantities are independent of mask signs, and the target mask in
+$W_i(c)^2$ squares to one even when an alias is active.
+
+The exact probabilities of the level, retained color, retained branch, and
+either type are $p_s,1/4,1/2,1/2$.  Hence the coordinate square is
+\[
+\begin{aligned}
+ &p_s\cdot\frac14\cdot\frac12\cdot\frac12
+ \left(\frac{16}{p_s}4h_s\right)^2\\[-0.2em]
+ &\quad{}\times
+ \sum_q\frac{|x-m_{s,j_s+4q}|}{4h_s}
+  \mathbf1_{E_{s,q}(c)}(x)\\
+ &=\frac{64h_s}{p_s}\sum_q|x-m_{s,j_s+4q}|\\[-0.2em]
+ &\quad{}\times\mathbf1_{E_{s,q}(c)}(x),
+\end{aligned}
+\]
+and the mass square is
+\[
+\begin{aligned}
+ &p_s\cdot\frac14\cdot\frac12\cdot\frac12
+ \left(\frac{16}{p_s}2d_s\right)^2
+ \frac12\mathbf1_{\Gamma_s(c)}(x)\\
+ &\qquad=\frac{32d_s^2}{p_s}\mathbf1_{\Gamma_s(c)}(x).
+\end{aligned}
+\]
+Exactly one factor $p_s^{-1}$ remains after selection averaging.
+
+On an active coordinate ring,
+$|x-m_{s,j}|\leq3h_s/2$, so the coordinate term is at most
+$96h_s^2p_s^{-1}\mathbf1_{\Gamma_s(c)}(x)$.  The displacement bound
+$|d_s|\leq h_s$ makes the mass term at most
+$32h_s^2p_s^{-1}\mathbf1_{\Gamma_s(c)}(x)$.  Their sum proves the stated
+constant.  The exact mass term vanishes when $d_s=0$.
+\end{proof}
+
+\begin{proposition}[Pointwise all-level second-moment budget]
+\label{prop:pointwise-square}
+Under Assumptions~\ref{assump:independent-samples} and
+\ref{assump:precommitted-protocol}, Lemmas~\ref{lem:level-zero-square},
+\ref{lem:higher-square}, and \ref{lem:activation-ledger}, every fixed
+$c,x\in\mathbb R$ satisfies
+\[
+ \mathbb E[W_i(c)^2\mid X_i=x,c]
+ \leq Z_S\left[24h_0^k+128C_{{\rm act},k}|x-m_0|^k\right].
+\]
+This inequality sums all target and alias squares before taking expectation
+over $X_i$.
+\end{proposition}
+
+\begin{proof}
+The level events are mutually exclusive and exhaustive.  Lemmas~
+\ref{lem:level-zero-square} and \ref{lem:higher-square} give
+\[
+\begin{aligned}
+ \mathbb E[W_i(c)^2\mid X_i=x,c]
+ &\leq\frac{24h_0^2}{p_0}\mathbf1_{\Gamma_0(c)}(x)
+ +128\sum_{s=1}^S\frac{h_s^2}{p_s}
+   \mathbf1_{\Gamma_s(c)}(x).
+\end{aligned}
+\]
+For every level,
+\[
+ p_s^{-1}=Z_Sh_s^{k-2},
+ \qquad \frac{h_s^2}{p_s}=Z_Sh_s^k.
+\]
+Substitution without asymptotic notation yields
+\[
+\begin{aligned}
+ \mathbb E[W_i(c)^2\mid X_i=x,c]
+ &\leq Z_S\left[24h_0^k\mathbf1_{\Gamma_0(c)}(x)
+ +128\sum_{s=1}^S h_s^k\mathbf1_{\Gamma_s(c)}(x)\right]\\
+ &\leq Z_S\left[24h_0^k
+ +128C_{{\rm act},k}|x-m_0|^k\right].
+\end{aligned}
+\]
+The last line uses only $\mathbf1_{\Gamma_0(c)}\leq1$ and
+Lemma~\ref{lem:activation-ledger}.  Every within-level ring sum has at most
+one active term and the level sum is finite, so no expectation or supremum is
+interchanged with a countable ring sum.
+\end{proof}
+
+\begin{proposition}[Conditional variance and the single middle-regime factor]
+\label{prop:conditional-variance}
+Under Assumption~\ref{assump:moment-class}, Propositions~
+\ref{prop:refinement-independence} and \ref{prop:pointwise-square}, and
+Lemma~\ref{lem:recentered-moment}, suppose $a_k\geq200$ and fix a realized
+localization output with $|c-\mu(D)|\leq50\sigma$.  Then
+\[
+ \operatorname{Var}(W_i(c)\mid c)
+ \leq C_k^{\rm var}\sigma^kZ_S,
+\]
+where
+\[
+ C_k^{\rm var}=24a_k^k+128C_{{\rm act},k}C_k^{\rm rec}<\infty.
+\]
+The constant depends only on fixed $k$.  At $k=2$ the derivation contains
+exactly one factor $Z_S=S+1$ and no second factor proportional to $S$.
+\end{proposition}
+
+\begin{proof}
+Conditional on $c$, Proposition~\ref{prop:refinement-independence} leaves
+$X_i$ with law $D$.  Integrating Proposition~\ref{prop:pointwise-square}
+only after its pointwise level summation gives
+\[
+\begin{aligned}
+ \mathbb E[W_i(c)^2\mid c]
+ &\leq Z_S\left[24h_0^k+128C_{{\rm act},k}
+   \int|x-m_0(c)|^kD(dx)\right]\\
+ &=Z_S\left[24h_0^k+128C_{{\rm act},k}M_k(c)\right].
+\end{aligned}
+\]
+On $\mathcal E_{\rm loc}$, Lemma~\ref{lem:recentered-moment} and
+$h_0=a_k\sigma$ imply
+\[
+\begin{aligned}
+ \mathbb E[W_i(c)^2\mid c]
+ &\leq Z_S\left[24a_k^k\sigma^k
+ +128C_{{\rm act},k}C_k^{\rm rec}\sigma^k\right]\\
+ &=C_k^{\rm var}\sigma^kZ_S.
+\end{aligned}
+\]
+This proves conditional square integrability, and
+$\operatorname{Var}(W_i(c)\mid c)\leq\mathbb E[W_i(c)^2\mid c]$ gives the
+variance bound.
+
+At $k=2$,
+\[
+ Z_S=\sum_{s=0}^S h_s^0=S+1,
+ \qquad p_s=\frac1{S+1},
+ \qquad \frac{h_s^2}{p_s}=(S+1)h_s^2.
+\]
+Consequently Lemma~\ref{lem:higher-square} and the activation ledger, still
+pointwise in $x$, give
+\[
+\begin{aligned}
+ \sum_{s=1}^S\mathbb E[W_i(c)^2\mathbf1\{L_i=s\}\mid X_i=x,c]
+ &\leq128(S+1)\sum_{s=1}^S h_s^2
+   \mathbf1_{\Gamma_s(c)}(x)\\
+ &\leq128C_{{\rm act},2}(S+1)|x-m_0|^2.
+\end{aligned}
+\]
+The separate level-zero term is at most
+\[
+ 24(S+1)h_0^2\mathbf1_{\Gamma_0(c)}(x).
+\]
+After expectation and recentering,
+\[
+\begin{aligned}
+ \operatorname{Var}(W_i(c)\mid c)
+ &\leq(S+1)\left[24h_0^2+128C_{{\rm act},2}M_2(c)\right]\\
+ &\leq C_2^{\rm var}\sigma^2(S+1)
+ =C_2^{\rm var}\sigma^2Z_S.
+\end{aligned}
+\]
+Thus only the factor arising from $p_s^{-1}$ remains; the pointwise ledger
+is uniform in $S$ and contributes no second factor.
+
+If $D(J_{0,j_0})=1$, Lemma~\ref{lem:activation-ledger} makes every higher
+target and alias square exactly zero, leaving only
+Lemma~\ref{lem:level-zero-square}.  If $D\{m_0\}=1$, that exact formula
+also vanishes and the conditional variance is zero.  These are exact
+reductions, not remainder bounds.
+
+The separate level-zero and higher-level square identities, their pointwise
+sum, and the final conditional integration account for every alias square
+and every importance factor.  In particular, the displayed middle-regime
+calculation proves that the sole level cost is $Z_S=S+1$.
+\end{proof}
+
+\subsection{Outer scale, tail control, and three-regime normalization}
+
+\begin{lemma}[Admissible dyadic outer scale and exact rounding]
+\label{lem:outer-scale}
+Under Assumption~\ref{assump:parameter-domain} and
+Lemma~\ref{lem:recentered-moment}, take $a_k\geq200$ and define
+\[
+ b_k=\max\left\{a_k,(4C_k^{\rm rec})^{1/(k-1)}\right\}.
+\]
+Choose
+\[
+ 0<c_k\leq\min\left\{\frac12,
+   \left(\frac{b_k}{2a_k}\right)^{k-1}\right\}.
+\]
+For every $0<\epsilon\leq c_k\sigma$,
+\[
+ \frac{H_\star}{h_0}\geq2,qquad S\geq1,qquad
+ H_\star\leq H<2H_\star.
+\]
+At $H_\star/h_0=2$ one has $S=1$ and $H=H_\star$; conversely, under
+this admissibility condition $S=1$ only at $H_\star/h_0=2$.
+\end{lemma}
+
+\begin{proof}
+The choices depend only on fixed $k$ and give
+\[
+ b_k\geq a_k,qquad b_k^{k-1}\geq4C_k^{\rm rec}.
+\]
+Put
+\[
+ x=\frac\sigma\epsilon,qquad
+ R=\frac{H_\star}{h_0}=\frac{b_k}{a_k}x^{1/(k-1)}.
+\]
+The parameter domain and the choice of $c_k$ imply
+\[
+ R\geq\frac{b_k}{a_k}c_k^{-1/(k-1)}
+ \geq\frac{b_k}{a_k}\frac{2a_k}{b_k}=2.
+\]
+Also $c_k\leq1/2$ gives $x\geq2$.  Let $q=\log_2R$.  The exact ceiling
+$S=\lceil q\rceil$ gives $q\leq S<q+1$, whence
+\[
+ H_\star=h_0R\leq h_02^S=H<2h_0R=2H_\star.
+\]
+Since $R\geq2$, $S\geq1$.  If $R=2$, then $q=S=1$ and
+$H=H_\star$.  Conversely $S=1$ gives $q\leq1$, while $R\geq2$ gives
+$q\geq1$, so $R=2$.  No strict inequality in the parameter domain was used,
+and the calculation includes $\epsilon=c_k\sigma$.
+\end{proof}
+
+\begin{proposition}[Outer residual at the target scale]\label{prop:tail-bound}
+Under Assumptions~\ref{assump:parameter-domain} and
+\ref{assump:moment-class}, Lemmas~\ref{lem:recentered-moment},
+\ref{lem:dyadic-ancestor}, and \ref{lem:outer-scale}, and
+Proposition~\ref{prop:mean-telescope}, every localization transcript in
+$\mathcal E_{\rm loc}$ satisfies
+\[
+ |\mu(D)-m_0-\theta(c)|
+ \leq\frac{M_k(c)}{H^{k-1}}
+ \leq C_k^{\rm rec}\frac{\sigma^k}{H^{k-1}}
+ \leq\frac\epsilon4.
+\]
+If $D(J_{S,j_S})=1$, the left side is exactly zero.  This holds in
+particular when $D(J_{0,j_0})=1$, preserving the exact level-zero reduction.
+\end{proposition}
+
+\begin{proof}
+For a fixed transcript in $\mathcal E_{\rm loc}$,
+Proposition~\ref{prop:mean-telescope} gives
+\[
+ \mu(D)-m_0-\theta(c)=\int_{J_{S,j_S}^c}(x-m_0)D(dx).
+\]
+Writing $r=|x-m_0|$, Lemma~\ref{lem:dyadic-ancestor} gives the strict set
+inclusion
+\[
+ \{x:x\notin J_{S,j_S}\}\subseteq\{x:r>H\},
+\]
+because every point with $r\leq H$, including both equality points, lies in
+the padding.  Hence
+\[
+\begin{aligned}
+ |\mu(D)-m_0-\theta(c)|
+ &\leq\int r\mathbf1\{x\notin J_{S,j_S}\}D(dx)\\
+ &\leq\int r\mathbf1\{r>H\}D(dx)\\
+ &\leq\int\frac{r^k}{H^{k-1}}D(dx)
+ =\frac{M_k(c)}{H^{k-1}}.
+\end{aligned}
+\]
+The third line uses $r\leq r^k/H^{k-1}$ on $r>H$.  Lemma~
+\ref{lem:recentered-moment} gives the second inequality.  Since
+$H\geq H_\star$ and $k-1>0$,
+\[
+\begin{aligned}
+ C_k^{\rm rec}\frac{\sigma^k}{H^{k-1}}
+ &\leq C_k^{\rm rec}\frac{\sigma^k}{H_\star^{k-1}},\\
+ H_\star^{k-1}
+ &=b_k^{k-1}\sigma^{k-1}\frac\sigma\epsilon
+ =b_k^{k-1}\frac{\sigma^k}{\epsilon}.
+\end{aligned}
+\]
+Thus
+\[
+ C_k^{\rm rec}\frac{\sigma^k}{H^{k-1}}
+ \leq C_k^{\rm rec}b_k^{1-k}\epsilon\leq\frac\epsilon4,
+\]
+where the last threshold is exactly $b_k^{k-1}\geq4C_k^{\rm rec}$.
+No tail event is introduced.
+
+The half-open boundary cases are also exact.  Since
+$J_{S,j_S}=[(j_S-1)H,(j_S+2)H)$ and
+$m_0=(j_S+\vartheta_S)H$ with $0<\vartheta_S<1$, an atom at the included
+left boundary is more than $H$ from $m_0$ but remains in the truncated
+integral; an atom at the excluded right boundary is more than $H$ away and
+is charged by the tail inequality.  Atoms at $m_0\pm H$ lie strictly inside
+the padding.  If $D(J_{S,j_S})=1$, the exact residual integral is zero before
+any inequality.  Nesting gives this from $D(J_{0,j_0})=1$, and
+Proposition~\ref{prop:mean-telescope} then leaves only the exact level-zero
+mean.
+\end{proof}
+
+\begin{lemma}[Exact finite normalizer in the three moment regimes]
+\label{lem:normalizer}
+Under Assumption~\ref{assump:parameter-domain} and
+Lemma~\ref{lem:outer-scale}, write $x=\sigma/\epsilon$.  For $k>2$,
+\[
+ Z_S=h_0^{2-k}\frac{1-2^{(2-k)(S+1)}}{1-2^{2-k}},
+\]
+and
+\[
+ a_k^{2-k}\sigma^{2-k}\leq Z_S
+ \leq\frac{a_k^{2-k}}{1-2^{2-k}}\sigma^{2-k}.
+\]
+For $k=2$,
+\[
+ Z_S=S+1,
+ \qquad
+ \frac{\log x}{\log2}\leq Z_S
+ <\frac{3+\log_2(b_2/a_2)}{\log2}\log x.
+\]
+For $1<k<2$,
+\[
+ Z_S=h_0^{2-k}\frac{2^{(2-k)(S+1)}-1}{2^{2-k}-1},
+\]
+\[
+ H^{2-k}\leq Z_S\leq\frac{H^{2-k}}{1-2^{k-2}},
+\]
+and
+\[
+\begin{aligned}
+ b_k^{2-k}\sigma^{2-k}x^{(2-k)/(k-1)}
+ &\leq Z_S\\
+ &<\frac{2^{2-k}b_k^{2-k}}{1-2^{k-2}}
+ \sigma^{2-k}x^{(2-k)/(k-1)}.
+\end{aligned}
+\]
+Every formula includes the minimum legal case $S=1$.
+\end{lemma}
+
+\begin{proof}
+Since $h_s=2^sh_0$,
+\[
+ Z_S=h_0^{2-k}\sum_{s=0}^S2^{(2-k)s}.
+\]
+For $k>2$, let $\rho=2^{2-k}\in(0,1)$.  Finite multiplication gives
+$(1-\rho)\sum_{s=0}^S\rho^s=1-\rho^{S+1}$, proving the exact formula.
+Moreover,
+\[
+ 1\leq\sum_{s=0}^S\rho^s
+ \leq\sum_{s=0}^\infty\rho^s=\frac1{1-\rho}.
+\]
+Multiplication by
+$h_0^{2-k}=a_k^{2-k}\sigma^{2-k}$ proves both bounds.  The denominator
+is positive for fixed $k>2$; no uniform limit as $k\downarrow2$ is claimed.
+
+At $k=2$, every term is one.  Put
+\[
+ R=\frac{H_\star}{h_0}=\frac{b_2}{a_2}x,
+ \qquad q=\log_2R.
+\]
+The scale lemma gives $b_2/a_2\geq1$, $x\geq2$, and
+$q\leq S<q+1$.  Therefore
+\[
+ Z_S=S+1\geq q+1\geq\log_2x=\frac{\log x}{\log2}.
+\]
+For the upper bound,
+\[
+\begin{aligned}
+ Z_S&<q+2
+ =\log_2x+\log_2(b_2/a_2)+2\\
+ &\leq[3+\log_2(b_2/a_2)]\log_2x
+ =\frac{3+\log_2(b_2/a_2)}{\log2}\log x.
+\end{aligned}
+\]
+The absorption is explicit because
+\[
+ [3+\log_2(b_2/a_2)]\log_2x
+ -[\log_2x+\log_2(b_2/a_2)+2]
+ =[2+\log_2(b_2/a_2)](\log_2x-1)\geq0.
+\]
+
+For $1<k<2$, let $\rho=2^{2-k}>1$.  The finite identity
+$\sum_{s=0}^S\rho^s=(\rho^{S+1}-1)/(\rho-1)$ gives the exact formula.
+Factoring out the last term yields
+\[
+\begin{aligned}
+ Z_S&=H^{2-k}\sum_{t=0}^S2^{(k-2)t},\\
+ 1&\leq\sum_{t=0}^S2^{(k-2)t}
+ \leq\sum_{t=0}^\infty2^{(k-2)t}
+ =\frac1{1-2^{k-2}}.
+\end{aligned}
+\]
+Because $2-k>0$ and $H_\star\leq H<2H_\star$,
+\[
+ H_\star^{2-k}\leq H^{2-k}<2^{2-k}H_\star^{2-k},
+\]
+while
+\[
+ H_\star^{2-k}=b_k^{2-k}\sigma^{2-k}
+ x^{(2-k)/(k-1)}.
+\]
+Combining the displays proves the last bounds.  The denominator is positive
+for fixed $1<k<2$.  When $H_\star/h_0=2$, the scale lemma gives
+$S=1,H=H_\star$, and the formulas reduce to the two-term sum
+$h_0^{2-k}+H^{2-k}$, or to $2$ at $k=2$, with no endpoint exception.
+\end{proof}
+
+\begin{proposition}[Three-regime refinement scale and nondegeneracy]
+\label{prop:scale-rate}
+Under Assumption~\ref{assump:parameter-domain} and Lemmas~
+\ref{lem:outer-scale} and \ref{lem:normalizer}, define
+\[
+ A_k=\frac{\sigma^kZ_S}{\epsilon^2},
+ \qquad x=\frac\sigma\epsilon.
+\]
+For $k>2$,
+\[
+ a_k^{2-k}x^2\leq A_k
+ \leq\frac{a_k^{2-k}}{1-2^{2-k}}x^2.
+\]
+For $k=2$,
+\[
+ \frac{x^2\log x}{\log2}\leq A_2
+ <\frac{3+\log_2(b_2/a_2)}{\log2}x^2\log x.
+\]
+For $1<k<2$,
+\[
+ b_k^{2-k}x^{k/(k-1)}\leq A_k
+ <\frac{2^{2-k}b_k^{2-k}}{1-2^{k-2}}x^{k/(k-1)}.
+\]
+Consequently
+\[
+ A_k\asymp_k
+ \begin{cases}
+ \sigma^2/\epsilon^2,&k>2,\\
+ (\sigma^2/\epsilon^2)\log(\sigma/\epsilon),&k=2,\\
+ (\sigma/\epsilon)^{k/(k-1)},&1<k<2,
+ \end{cases}
+\]
+and $A_k$ has a positive explicit $k$-only lower bound.
+\end{proposition}
+
+\begin{proof}
+For $k>2$, multiplying the normalizer bounds by
+$\sigma^k/\epsilon^2$ uses
+\[
+ \frac{\sigma^k}{\epsilon^2}\sigma^{2-k}
+ =\frac{\sigma^2}{\epsilon^2}=x^2,
+\]
+and proves the first pair with every geometric factor retained.  At $k=2$,
+$A_2=x^2Z_S$, so multiplying the two exact logarithmic bounds proves the
+second pair; the additive ceiling term has already been controlled.
+
+For $1<k<2$,
+\[
+\begin{aligned}
+ \frac{\sigma^k}{\epsilon^2}\sigma^{2-k}
+ x^{(2-k)/(k-1)}
+ &=x^2x^{(2-k)/(k-1)}\\
+ &=x^{2+(2-k)/(k-1)}=x^{k/(k-1)},
+\end{aligned}
+\]
+which proves the last pair with its rounding factor and denominator intact.
+
+Finally $x\geq2$ by Lemma~\ref{lem:outer-scale}.  Thus
+\[
+ A_k\geq\underline A_k:=
+ \begin{cases}
+ 4a_k^{2-k},&k>2,\\
+ 4,&k=2,\\
+ 2^{k/(k-1)}b_k^{2-k},&1<k<2.
+ \end{cases}
+\]
+Every branch is finite, positive, and $k$-only.  All substitutions remain
+valid at $\epsilon=c_k\sigma$, $S=1$, and $\lambda=\sigma$.  Constants are
+allowed to deteriorate as a fixed off-middle $k$ approaches two; no continuity
+through the separately evaluated middle case is asserted.
+
+Together with Proposition~\ref{prop:tail-bound}, the scale and normalizer
+lemmas therefore provide the exact $\epsilon/4$ residual certificate, every
+dyadic boundary case, all three finite-sum formulas, and the positive
+$k$-only lower interface for $A_k$ used by the count ceilings.
+\end{proof}
+
+\subsection{Conditional iid refinement and median amplification}
+
+\begin{proposition}[Full-transcript conditional iid refinement law]
+\label{prop:conditional-iid}
+Under Assumptions~\ref{assump:independent-samples} and
+\ref{assump:precommitted-protocol}, Propositions~
+\ref{prop:refinement-independence}, \ref{prop:mean-telescope}, and
+\ref{prop:conditional-variance}, conditional on the full localization
+sigma-field $\mathscr L_{\rm loc}$, the family
+$(W_i(c))_{i\in I_{\rm ref}}$ is iid and
+\[
+ \mathbb E[W_i(c)\mid\mathscr L_{\rm loc}]=\theta(c)
+ \quad\text{almost surely}.
+\]
+On $\mathcal E_{\rm loc}$, its common conditional variance satisfies
+\[
+ v(c):=\operatorname{Var}(W_i(c)\mid\mathscr L_{\rm loc})
+ \leq C_k^{\rm var}\sigma^kZ_S
+ \quad\text{almost surely}.
+\]
+Both moments average over every refinement sample and all refinement seeds;
+no assertion conditional on frozen refinement coins is made.
+\end{proposition}
+
+\begin{proof}
+Let $\Xi_i$ denote the complete refinement tuple, assigning fixed dummy
+values to $T_i,B_i$ on the level-zero branch.  Proposition~
+\ref{prop:refinement-independence} supplies a version of the conditional law
+with
+\[
+ \mathcal L((\Xi_i)_{i\in I_{\rm ref}}\mid\mathscr L_{\rm loc})
+ =Q^{\otimes N_{\rm ref}},
+\]
+where $Q$ is the common refinement sample-and-seed law and is independent of
+the localization transcript.  The statistic is the common measurable map
+\[
+ W_i(c)=w(c,\Xi_i),
+\]
+where the transcript enters only through its measurable output $c$ and the
+resulting decoder path.  For a transcript realization $\ell$,
+\[
+ \mathcal L((W_i(c))_{i\in I_{\rm ref}}\mid\mathscr L_{\rm loc})(\ell)
+ =\bigotimes_{i\in I_{\rm ref}}
+ \mathcal L_Q(w(c(\ell),\Xi_i)).
+\]
+All factors are identical, proving conditional iid under the full transcript.
+
+The conditional mean is
+\[
+ \int w(c(\ell),\xi)Q(d\xi)=\theta(c(\ell))
+\]
+by Proposition~\ref{prop:mean-telescope}.  On
+$\mathcal E_{\rm loc}$ the same kernel gives
+\[
+ v(c(\ell))=\int(w(c(\ell),\xi)-\theta(c(\ell)))^2Q(d\xi),
+\]
+which Proposition~\ref{prop:conditional-variance} bounds by
+$C_k^{\rm var}\sigma^kZ_S$.  This equality comes from the explicit
+transcript-independent kernel and the dependence of $w$ only through $c$;
+it does not invoke the generally false claim that enlarging a conditioning
+sigma-field preserves conditional variance.
+
+If $v(c)=0$, the displayed integral shows
+$W_i(c)=\theta(c)$ $Q$-almost surely.  Fixed disjoint groups use disjoint
+tuple families and are therefore conditionally independent.
+\end{proof}
+
+\begin{lemma}[One-group accuracy at the stochastic target]
+\label{lem:block-accuracy}
+Under Assumption~\ref{assump:parameter-domain} and
+Propositions~\ref{prop:conditional-iid} and \ref{prop:scale-rate}, choose
+\[
+ \beta_k\geq16C_k^{\rm var},
+ \qquad B_{\rm ref}=\lceil\beta_kA_k\rceil.
+\]
+For every fixed group $G_g$, almost surely on $\mathcal E_{\rm loc}$,
+\[
+ \Pr\left\{\left|\overline W_g(c)-\theta(c)\right|>\frac\epsilon2
+ \ \middle|\ \mathscr L_{\rm loc}\right\}\leq\frac14.
+\]
+This includes zero variance and every value of the block ceiling.
+\end{lemma}
+
+\begin{proof}
+Proposition~\ref{prop:scale-rate} gives $A_k>0$, and the explicit variance
+constant is positive.  Thus the choice is legal and
+\[
+ 1\leq B_{\rm ref},
+ \qquad B_{\rm ref}\geq\beta_kA_k
+ =\beta_k\frac{\sigma^kZ_S}{\epsilon^2}.
+\]
+Conditional on a transcript in $\mathcal E_{\rm loc}$, Proposition~
+\ref{prop:conditional-iid} and the exact group size give
+\[
+ \mathbb E[\overline W_g(c)\mid\mathscr L_{\rm loc}]=\theta(c),
+ \qquad
+ \operatorname{Var}(\overline W_g(c)\mid\mathscr L_{\rm loc})
+ =\frac{v(c)}{B_{\rm ref}}.
+\]
+Conditional Chebyshev at threshold $\epsilon/2$ yields
+\[
+\begin{aligned}
+ \Pr\left\{|\overline W_g(c)-\theta(c)|>\frac\epsilon2
+ \ \middle|\ \mathscr L_{\rm loc}\right\}
+ &\leq\frac{4v(c)}{B_{\rm ref}\epsilon^2}\\
+ &\leq\frac{4C_k^{\rm var}\sigma^kZ_S}
+ {B_{\rm ref}\epsilon^2}\\
+ &=\frac{4C_k^{\rm var}A_k}{B_{\rm ref}}
+ \leq\frac{4C_k^{\rm var}}{\beta_k}\leq\frac14.
+\end{aligned}
+\]
+If $v(c)=0$, every group mean equals $\theta(c)$ conditionally almost surely,
+and the failure probability is exactly zero.  No path or cell union bound is
+taken.
+\end{proof}
+
+\begin{lemma}[Odd-median amplification with exact confidence constants]
+\label{lem:median-amplification}
+Under Assumption~\ref{assump:parameter-domain}, Proposition~
+\ref{prop:conditional-iid}, and Lemma~\ref{lem:block-accuracy}, choose
+\[
+ \alpha_k=4,
+ \qquad G_\delta=2\left\lceil4\log\frac8\delta\right\rceil+1.
+\]
+Define the median as the $(G_\delta+1)/2$-th order statistic, retaining
+repeated values.  Almost surely on $\mathcal E_{\rm loc}$,
+\[
+\begin{aligned}
+ &\Pr\left\{
+ \left|\mathop{\rm median}_{1\leq g\leq G_\delta}\overline W_g(c)
+ -\theta(c)\right|>\frac\epsilon2
+ \ \middle|\ \mathscr L_{\rm loc}\right\}\\
+ &\hspace{10em}\leq e^{-G_\delta/8}\leq\frac\delta2.
+\end{aligned}
+\]
+\end{lemma}
+
+\begin{proof}
+Write $G=G_\delta$ and define
+\[
+ I_g=\mathbf1\left\{|\overline W_g(c)-\theta(c)|>\frac\epsilon2\right\},
+ \qquad S_G=\sum_{g=1}^GI_g.
+\]
+The fixed disjoint groups are conditionally independent by Proposition~
+\ref{prop:conditional-iid}; hence the $I_g$ are conditionally independent
+Bernoulli variables.  Lemma~\ref{lem:block-accuracy} gives, on
+$\mathcal E_{\rm loc}$,
+\[
+ \mathbb E[I_g\mid\mathscr L_{\rm loc}]\leq\frac14,
+ \qquad
+ \mathbb E[S_G\mid\mathscr L_{\rm loc}]\leq\frac G4.
+\]
+
+The chosen $G$ is odd.  More generally, write $r=(G+1)/2$ and order the
+group means as $z_{(1)}\leq\cdots\leq z_{(G)}$.  If
+$z_{(r)}>\theta(c)+\epsilon/2$, the entries $r,\ldots,G$ give at least $r$
+bad groups; if $z_{(r)}<\theta(c)-\epsilon/2$, the entries $1,\ldots,r$
+do so.  Therefore
+\[
+ \left\{|z_{(r)}-\theta(c)|>\frac\epsilon2\right\}
+ \subseteq\left\{S_G\geq\frac{G+1}{2}\right\}
+ \subseteq\left\{S_G\geq\frac G2\right\}.
+\]
+An exact tie at either threshold is successful because failure is strict;
+repeated values do not affect the fixed odd rank.
+
+On the failure event,
+\[
+ S_G-\mathbb E[S_G\mid\mathscr L_{\rm loc}]
+ \geq\frac G2-\frac G4=\frac G4.
+\]
+Conditional Hoeffding for independent variables in $[0,1]$ gives
+\[
+\begin{aligned}
+ \Pr\left\{|z_{(r)}-\theta(c)|>\frac\epsilon2
+ \ \middle|\ \mathscr L_{\rm loc}\right\}
+ &\leq\Pr\left\{S_G-\mathbb E[S_G\mid\mathscr L_{\rm loc}]
+ \geq\frac G4\ \middle|\ \mathscr L_{\rm loc}\right\}\\
+ &\leq\exp\left(-\frac{2(G/4)^2}{G}\right)=e^{-G/8}.
+\end{aligned}
+\]
+With $L_\delta=\log(8/\delta)>0$,
+\[
+ G_\delta=2\lceil4L_\delta\rceil+1\geq8L_\delta+1,
+\]
+and hence
+\[
+ e^{-G_\delta/8}\leq e^{-1/8}e^{-L_\delta}
+ =e^{-1/8}\frac\delta8<\frac\delta2.
+\]
+This includes all $\delta\in(0,1/2)$, including the limiting smallest legal
+ceiling as $\delta\uparrow1/2$.  If $v(c)=0$, every $I_g$ is conditionally
+zero and the median failure probability is exactly zero.
+\end{proof}
+
+\begin{proposition}[Conditional refinement accuracy at the common target]
+\label{prop:conditional-accuracy}
+Under Assumption~\ref{assump:parameter-domain}, Proposition~
+\ref{prop:tail-bound}, and Lemma~\ref{lem:median-amplification}, define
+\[
+ \mathcal E_{\rm ref}=\left\{
+ \left|\mathop{\rm median}_{1\leq g\leq G_\delta}\overline W_g(c)
+ -\theta(c)\right|\leq\frac\epsilon2\right\}.
+\]
+Then, almost surely,
+\[
+ \mathbf1_{\mathcal E_{\rm loc}}
+ \Pr(\mathcal E_{\rm ref}^c\mid\mathscr L_{\rm loc})
+ \leq\frac\delta2\mathbf1_{\mathcal E_{\rm loc}}.
+\]
+On $\mathcal E_{\rm loc}\cap\mathcal E_{\rm ref}$,
+\[
+ |\widehat\mu-\mu(D)|\leq\frac{3\epsilon}{4}<\epsilon.
+\]
+Equivalently,
+\[
+ \mathbf1_{\mathcal E_{\rm loc}}
+ \Pr\left\{|\widehat\mu-\mu(D)|>\frac{3\epsilon}{4}
+ \ \middle|\ \mathscr L_{\rm loc}\right\}
+ \leq\frac\delta2\mathbf1_{\mathcal E_{\rm loc}},
+\]
+and the same inequality holds with threshold $\epsilon$.
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:median-amplification} gives the first conditional inequality
+on each successful localization transcript.  On the same transcript,
+Proposition~\ref{prop:tail-bound} gives the deterministic bound
+\[
+ |\theta(c)-(\mu(D)-m_0)|\leq\frac\epsilon4.
+\]
+On $\mathcal E_{\rm ref}$, the exact estimator definition and the triangle
+inequality give
+\[
+\begin{aligned}
+ |\widehat\mu-\mu(D)|
+ &=\left|\mathop{\rm median}_{g}\overline W_g(c)
+ -(\mu(D)-m_0)\right|\\
+ &\leq\left|\mathop{\rm median}_{g}\overline W_g(c)-\theta(c)\right|
+ +|\theta(c)-(\mu(D)-m_0)|\\
+ &\leq\frac\epsilon2+\frac\epsilon4
+ =\frac{3\epsilon}{4}<\epsilon.
+\end{aligned}
+\]
+The stochastic error and deterministic outer residual each appear exactly
+once.  There is no additional localization term because localization only
+provides the event on which the recentered variance and tail bounds hold.
+Thus total-error failure on $\mathcal E_{\rm loc}$ is contained in
+$\mathcal E_{\rm ref}^c$, proving both indicator-valued inequalities without
+yet integrating out localization.
+
+If $D(J_{0,j_0(c)})=1$, Proposition~\ref{prop:mean-telescope} makes every
+higher statistic seedwise zero and sets $\theta(c)=\mu(D)-m_0$, while
+Proposition~\ref{prop:tail-bound} makes the residual zero.  The median proof
+then amplifies only the level-zero correction.  If $D\{m_0\}=1$, every
+$W_i(c)$, group mean, and median is zero, so
+$\widehat\mu=m_0=\mu(D)$ exactly.
+
+Proposition~\ref{prop:conditional-iid}, Lemmas~\ref{lem:block-accuracy} and
+\ref{lem:median-amplification}, and this same-target inequality give the
+full-localization-transcript conditional interface: failure at most
+$\delta/2$ and total error $3\epsilon/4<\epsilon$, including zero variance
+and the smallest legal odd group count.
+\end{proof}
+
+\subsection{Query legality, unconditional accuracy, and the rate bridge}
+
+\begin{proposition}[Precommitted Borel query certificate]
+\label{prop:query-legality}
+Under Assumptions~\ref{assump:parameter-domain} and
+\ref{assump:precommitted-protocol}, Proposition~\ref{prop:localization} and
+Lemma~\ref{lem:query-measurability}, every query set used by the two-block
+protocol is Borel and fixed before the first response.  This includes every
+countable mask realization.  The later decoder choice of
+$c,j_0,(j_s,b_s),m_s,d_s,R_s(c)$ and the coefficients in $W_i(c)$ changes
+no query and introduces no new query.
+\end{proposition}
+
+\begin{proof}
+For localization, Proposition~\ref{prop:localization} converts every
+deterministic source bit into the Borel inverse image
+$\mathcal B_i(R_{\rm loc})$.  Its codebook, clipped bins, minimum-index tie
+rule, sample count, and degenerate seed depend only on known
+$(\lambda,\sigma,\delta)$ and are fixed before any response.  In the
+zero-query branch $N_{\rm loc}=0$, so the query family is empty.
+
+For refinement index $i$, the complete seed
+\[
+ (L_i,C_i,T_i,B_i,(\rho_{i,s,j})_{s,j},U_i),
+\]
+with inapplicable level-zero variables omitted or given dummy values, is
+drawn before any message.  Lemma~\ref{lem:query-measurability} proves that
+the countable sum $F_i$ is jointly Borel, stabilizes pointwise because at
+most one same-color ring is active, and obeys $|F_i(x)|\leq1$.  Hence
+\[
+ A_i=\{x\in\mathbb R:F_i(x)\geq U_i\}
+\]
+is Borel for every realized seed and dither.  Its formula contains the
+global grid and pre-drawn level, color, type, branch, masks, and dither, but
+no $c$, localization bit, selected path, or earlier response.
+
+Only after both complete transcripts have arrived does the decoder evaluate
+the Borel map $c\mapsto(j_0,j_s,b_s,m_s,d_s,R_s(c))$ and use it to retain
+already-received bits and form $W_i(c)$.  No sample is queried then and no
+fixed set $\mathcal B_i$ or $A_i$ changes.  This covers localization failure
+and atoms at every half-open boundary.
+\end{proof}
+
+\begin{proposition}[Exact one-bit communication and fixed horizon]
+\label{prop:one-bit-accounting}
+Under Assumption~\ref{assump:precommitted-protocol} and
+Proposition~\ref{prop:query-legality}, the protocol has deterministic
+non-stopping horizon
+\[
+ n=N_{\rm loc}+N_{\rm ref},
+ \qquad N_{\rm ref}=G_\delta B_{\rm ref}.
+\]
+Each of these independent samples transmits exactly one bit.  The baseline
+$Y_i^0=\mathbf1\{0\geq U_i\}$ is computed from stored public randomness
+and transmits no bit; decoder path selection and weighting transmit and query
+nothing further.
+\end{proposition}
+
+\begin{proof}
+The localization horizon is selected from known parameters.  In the
+nontrivial branch each $i\in I_{\rm loc}$ sends only
+\[
+ Y_i^{\rm loc}=\mathbf1\{X_i\in\mathcal B_i(R_{\rm loc})\}\in\{0,1\}.
+\]
+In the trivial branch $N_{\rm loc}=0$, so no unused sample remains.
+
+The values $B_{\rm ref},G_\delta$, the set $I_{\rm ref}$, and its equal
+group partition are deterministic functions of known parameters and fixed
+$k$-only choices.  Each $i\in I_{\rm ref}$ sends only
+\[
+ Y_i=\mathbf1\{X_i\in A_i\}\in\{0,1\}.
+\]
+The decoder already stores $U_i$ and computes $Y_i^0$, $\Delta Y_i$, the
+selected path, $W_i(c)$, group means, their median, and $\widehat\mu$
+locally.  Public seeds are not sample messages.  Hence every used sample
+sends one bit and the horizon cannot stop or change with data, messages,
+seeds, or localization success.
+\end{proof}
+
+\begin{proposition}[Unconditional uniform PAC conversion]
+\label{prop:unconditional-pac}
+Under Assumptions~\ref{assump:parameter-domain}--
+\ref{assump:precommitted-protocol}, Propositions~\ref{prop:localization} and
+\ref{prop:conditional-accuracy} imply, for every
+$D\in\mathcal D(k,\lambda,\sigma)$,
+\[
+ \Pr_D\{|\widehat\mu-\mu(D)|>\epsilon\}
+ \leq\frac\delta4+\frac\delta2
+ =\frac{3\delta}{4}\leq\delta.
+\]
+The probability is unconditional over both sample blocks and every protocol
+seed, and the inequality is uniform over the unrestricted moment class.
+\end{proposition}
+
+\begin{proof}
+Fix an admissible $D$ and set
+$\mathcal A=\{|\widehat\mu-\mu(D)|>\epsilon\}$.  The event
+$\mathcal E_{\rm loc}$ is $\mathscr L_{\rm loc}$-measurable by
+Proposition~\ref{prop:refinement-independence}, and Proposition~
+\ref{prop:conditional-accuracy} states almost surely that
+\[
+ \mathbf1_{\mathcal E_{\rm loc}}
+ \Pr_D(\mathcal A\mid\mathscr L_{\rm loc})
+ \leq\frac\delta2\mathbf1_{\mathcal E_{\rm loc}}.
+\]
+The tower property with this measurable multiplier gives
+\[
+\begin{aligned}
+ \Pr_D(\mathcal A\cap\mathcal E_{\rm loc})
+ &=\mathbb E_D[\mathbf1_{\mathcal E_{\rm loc}}\mathbf1_{\mathcal A}]\\
+ &=\mathbb E_D\left[\mathbf1_{\mathcal E_{\rm loc}}
+   \Pr_D(\mathcal A\mid\mathscr L_{\rm loc})\right]\\
+ &\leq\frac\delta2\Pr_D(\mathcal E_{\rm loc})\leq\frac\delta2.
+\end{aligned}
+\]
+Proposition~\ref{prop:localization} gives
+$\Pr_D(\mathcal E_{\rm loc}^c)\leq\delta/4$.  Hence
+\[
+\begin{aligned}
+ \Pr_D(\mathcal A)
+ &\leq\Pr_D(\mathcal E_{\rm loc}^c)
+ +\Pr_D(\mathcal A\cap\mathcal E_{\rm loc})\\
+ &\leq\frac\delta4+\frac\delta2
+ =\frac{3\delta}{4}\leq\delta.
+\end{aligned}
+\]
+All remaining refinement samples and seeds are integrated inside the
+conditional probability.  No union bound over cells or paths is used.  The
+estimator is defined on $\mathcal E_{\rm loc}^c$, and that whole event is
+paid.  Since $D$ was arbitrary and every constant is class-uniform, the
+supremum over $\mathcal D(k,\lambda,\sigma)$ follows.
+\end{proof}
+
+\begin{proposition}[All-ceiling technical sample bound]
+\label{prop:technical-count}
+Under Assumption~\ref{assump:parameter-domain}, Propositions~
+\ref{prop:localization} and \ref{prop:scale-rate}, and Lemmas~
+\ref{lem:outer-scale}, \ref{lem:block-accuracy}, and
+\ref{lem:median-amplification}, there is a finite $\widetilde C_k$ depending
+only on fixed $k$ such that
+\[
+ N_{\rm loc}+N_{\rm ref}
+ \leq\widetilde C_k\left[
+ \log\frac\lambda\sigma+A_k\log\frac1\delta\right].
+\]
+The bound includes the dyadic, localization, block, and group ceilings and
+absorbs $1+\log(4/\delta)$ through a positive $k$-only lower bound on $A_k$.
+\end{proposition}
+
+\begin{proof}
+Use the complete legal design
+\[
+ a_k\geq200,
+ \qquad b_k=\max\{a_k,(4C_k^{\rm rec})^{1/(k-1)}\},
+\]
+\[
+ 0<c_k\leq\min\left\{\frac12,
+ \left(\frac{b_k}{2a_k}\right)^{k-1}\right\},
+ \qquad \beta_k=16C_k^{\rm var},
+ \qquad \alpha_k=4.
+\]
+Every quantity depends only on fixed $k$.  Lemma~\ref{lem:outer-scale}
+proves from the exact ceiling that
+\[
+ \frac{H_\star}{h_0}\geq2,qquad S\geq1,qquad
+ H_\star\leq H<2H_\star.
+\]
+The threshold $b_k^{k-1}\geq4C_k^{\rm rec}$ gives outer bias at most
+$\epsilon/4$ by Proposition~\ref{prop:tail-bound}; the choices of
+$\beta_k$ and $\alpha_k$ give group failure at most $1/4$ and conditional
+median failure at most $\delta/2$.
+
+Put
+\[
+ L_\delta=\log\frac1\delta,
+ \qquad \ell_{\lambda,\sigma}=\log\frac\lambda\sigma.
+\]
+Assumption~\ref{assump:parameter-domain} gives
+$L_\delta\geq\log2>0$ and $\ell_{\lambda,\sigma}\geq0$.
+Proposition~\ref{prop:scale-rate} proves
+\[
+ A_k\geq\underline A_k>0,
+ \qquad
+ \underline A_k=
+ \begin{cases}
+ 4a_k^{2-k},&k>2,\\
+ 4,&k=2,\\
+ 2^{k/(k-1)}b_k^{2-k},&1<k<2.
+ \end{cases}
+\]
+Every branch is positive and depends only on fixed $k$.
+
+The block ceiling obeys
+\[
+\begin{aligned}
+ \beta_kA_k
+ &\leq B_{\rm ref}=\lceil\beta_kA_k\rceil
+ <\beta_kA_k+1\\
+ &\leq(\beta_k+\underline A_k^{-1})A_k.
+\end{aligned}
+\]
+Set $C_{B,k}=\beta_k+\underline A_k^{-1}$.  The odd-group ceiling obeys
+\[
+ G_\delta=2\left\lceil4\log\frac8\delta\right\rceil+1
+ <8\log\frac8\delta+3.
+\]
+Because
+\[
+ \log\frac8\delta=L_\delta+3\log2\leq4L_\delta,
+ \qquad 3\leq\frac3{\log2}L_\delta,
+\]
+we have
+\[
+ G_\delta<C_GL_\delta,
+ \qquad C_G=32+\frac3{\log2}.
+\]
+Thus both refinement ceilings are retained in
+\[
+ N_{\rm ref}=G_\delta B_{\rm ref}
+ \leq C_GC_{B,k}A_kL_\delta.
+\]
+
+Proposition~\ref{prop:localization}, which already includes the source bin
+and code-length ceilings, gives
+\[
+ N_{\rm loc}\leq C_{{\rm loc},k}
+ [1+\ell_{\lambda,\sigma}+\log(4/\delta)],
+ \qquad C_{{\rm loc},k}=10001.
+\]
+Furthermore,
+\[
+ \log\frac4\delta=L_\delta+2\log2\leq3L_\delta,
+ \qquad 1\leq\frac{L_\delta}{\log2}.
+\]
+With $C_L=3+1/\log2$,
+\[
+ 1+\log\frac4\delta
+ \leq C_LL_\delta
+ \leq\frac{C_L}{\underline A_k}A_kL_\delta.
+\]
+This is the required localization-confidence absorption.  Therefore
+\[
+ N_{\rm loc}\leq C_{{\rm loc},k}\ell_{\lambda,\sigma}
+ +\frac{C_{{\rm loc},k}C_L}{\underline A_k}A_kL_\delta.
+\]
+Adding both blocks yields
+\[
+\begin{aligned}
+ N_{\rm loc}+N_{\rm ref}
+ &\leq C_{{\rm loc},k}\ell_{\lambda,\sigma}\\
+ &\quad+\left[
+ \frac{C_{{\rm loc},k}C_L}{\underline A_k}+C_GC_{B,k}
+ \right]A_kL_\delta.
+\end{aligned}
+\]
+The proposition follows with
+\[
+ \widetilde C_k=\max\left\{C_{{\rm loc},k},
+ \frac{C_{{\rm loc},k}C_L}{\underline A_k}+C_GC_{B,k}\right\}.
+\]
+No additive term remains outside
+$\ell_{\lambda,\sigma}+A_kL_\delta$.
+\end{proof}
+
+\begin{proposition}[Rate Specialization Bridge]
+\label{prop:rate-specialization-bridge}
+Under Assumptions~\ref{assump:parameter-domain}--
+\ref{assump:precommitted-protocol}, take
+\[
+ a_k\geq200,
+ \quad b_k=\max\{a_k,(4C_k^{\rm rec})^{1/(k-1)}\},
+ \quad \beta_k=16C_k^{\rm var},
+ \quad \alpha_k=4,
+\]
+and choose
+\[
+ 0<c_k\leq\min\left\{\frac12,
+ \left(\frac{b_k}{2a_k}\right)^{k-1}\right\}.
+\]
+Then all scale, tail, block, group, confidence, and probability conditions
+of Propositions~\ref{prop:tail-bound}, \ref{prop:conditional-accuracy},
+\ref{prop:unconditional-pac}, and \ref{prop:technical-count} hold, and there
+is a finite $C_k>0$, depending only on fixed $k$, such that
+\[
+ N_{\rm loc}+N_{\rm ref}
+ \leq C_kr_k(\lambda,\sigma,\epsilon,\delta).
+\]
+The probability mode is unconditional over all samples and seeds, the horizon
+is fixed and non-stopping, the norm is absolute value on $\mathbb R$, and the
+hidden constant is independent of $D,\lambda,\sigma,\epsilon,\delta$ and all
+realized protocol objects.
+\end{proposition}
+
+\begin{proof}
+The displayed choices are $k$-only.  Lemma~\ref{lem:outer-scale} verifies
+\[
+ H_\star/h_0\geq2,qquad S\geq1,qquad H_\star\leq H<2H_\star,
+\]
+and the choice of $b_k$ verifies the tail threshold
+\[
+ C_k^{\rm rec}\frac{\sigma^k}{H^{k-1}}leq\frac\epsilon4.
+\]
+Lemmas~\ref{lem:block-accuracy} and \ref{lem:median-amplification} verify the
+group threshold $\beta_k=16C_k^{\rm var}$, the odd-group choice
+$\alpha_k=4$, conditional group failure at most $1/4$, and conditional
+median failure at most $e^{-G_\delta/8}\leq\delta/2$.  Proposition~
+\ref{prop:conditional-accuracy} then gives total conditional error
+$\epsilon/2+\epsilon/4=3\epsilon/4<\epsilon$.
+
+The block, group, localization, and confidence ceilings were retained in
+Proposition~\ref{prop:technical-count}.  In particular,
+\[
+ A_k\geq\underline A_k>0,
+ \quad B_{\rm ref}<(\beta_k+\underline A_k^{-1})A_k,
+ \quad G_\delta<\left(32+\frac3{\log2}\right)\log\frac1\delta,
+\]
+and
+\[
+ 1+\log\frac4\delta
+ \leq\frac{3+1/\log2}{\underline A_k}
+ A_k\log\frac1\delta.
+\]
+Consequently
+\[
+ N_{\rm loc}+N_{\rm ref}
+ \leq\widetilde C_k\left[
+ \log\frac\lambda\sigma+A_k\log\frac1\delta\right].
+\]
+
+Define
+\[
+ Q_k(\sigma,\epsilon)=
+ \begin{cases}
+ \sigma^2/\epsilon^2,&k>2,\\
+ (\sigma^2/\epsilon^2)\log(\sigma/\epsilon),&k=2,\\
+ (\sigma/\epsilon)^{k/(k-1)},&1<k<2.
+ \end{cases}
+\]
+Proposition~\ref{prop:scale-rate} gives, without asymptotic substitution,
+\[
+ A_k\leq U_kQ_k(\sigma,\epsilon),
+\]
+where
+\[
+ U_k=
+ \begin{cases}
+ \dfrac{a_k^{2-k}}{1-2^{2-k}},&k>2,\\[0.8em]
+ \dfrac{3+\log_2(b_2/a_2)}{\log2},&k=2,\\[0.8em]
+ \dfrac{2^{2-k}b_k^{2-k}}{1-2^{k-2}},&1<k<2.
+ \end{cases}
+\]
+For each fixed regime the denominator is positive and $U_k$ is finite and
+$k$-only.  The middle expression comes from the exact identity $Z_S=S+1$
+and contains exactly one factor $\log(\sigma/\epsilon)$.  Substitution gives
+\[
+\begin{aligned}
+ N_{\rm loc}+N_{\rm ref}
+ &\leq\widetilde C_k\left[
+ \log\frac\lambda\sigma+U_kQ_k(\sigma,\epsilon)\log\frac1\delta\right]\\
+ &\leq\widetilde C_k\max\{1,U_k\}
+ \left[\log\frac\lambda\sigma
+ +Q_k(\sigma,\epsilon)\log\frac1\delta\right]\\
+ &=C_kr_k(\lambda,\sigma,\epsilon,\delta),
+\end{aligned}
+\]
+with $C_k=\widetilde C_k\max\{1,U_k\}$.  Its dependence is only through
+fixed-$k$ design and geometric constants.
+
+The probability conversion is also explicit.  Proposition~
+\ref{prop:unconditional-pac} integrates the complete localization sigma-field:
+\[
+ \Pr_D(\mathcal A\cap\mathcal E_{\rm loc})
+ =\mathbb E_D[\mathbf1_{\mathcal E_{\rm loc}}
+ \Pr_D(\mathcal A\mid\mathscr L_{\rm loc})]\leq\frac\delta2,
+\]
+and then
+\[
+ \Pr_D(\mathcal A)\leq\frac\delta4+\frac\delta2
+ =\frac{3\delta}{4}\leq\delta.
+\]
+No path union bound appears.  The substitutions remain valid at
+$\lambda=\sigma$, $\epsilon=c_k\sigma$, $S=1$, and as
+$\delta\uparrow1/2$, because $\log(1/\delta)\geq\log2$ supplies the explicit
+absorption.  No continuity through $k=2$ is asserted.
+\end{proof}
+
+\begin{proposition}[Exact supported-cell and point-mass baselines]
+\label{prop:baseline-reductions}
+Under Propositions~\ref{prop:ring-partition}, \ref{prop:mean-telescope},
+\ref{prop:conditional-variance}, \ref{prop:tail-bound}, and
+\ref{prop:conditional-accuracy}, and Lemmas~\ref{lem:four-color} and
+\ref{lem:activation-ledger}, fix any decoder output $c$.  If
+$D(J_{0,j_0(c)})=1$, every retained higher correction is seedwise zero, the
+higher activation and variance charges vanish, the outer residual is zero,
+and the estimator is exactly the level-zero unbiased dither correction with
+the same fixed median aggregation.  If $D\{m_0(c)\}=1$, every $W_i(c)=0$
+seedwise and $\widehat\mu=m_0(c)=\mu(D)$.
+\end{proposition}
+
+\begin{proof}
+Suppose $D(J_{0,j_0(c)})=1$.  Path nesting places $J_{0,j_0}$ inside every
+selected child padding, so every higher target ring is inactive.  Four-color
+separation excludes every retained alias.  A mismatched decoder color or
+branch indicator makes $W_i(c)=0$ directly.  When the indicators match, the
+sample lies on no retained ring, so $F_i(X_i)=0$, $Y_i=Y_i^0$, and again
+$W_i(c)=0$.  This is seedwise equality, not cancellation in expectation.
+
+Thus the higher activation and square ledgers are identically zero.
+Proposition~\ref{prop:mean-telescope} reduces to
+$\theta(c)=\mu(D)-m_0$ using level zero alone.  Since
+$J_{0,j_0}\subseteq J_{S,j_S}$, the outer residual is zero before its
+moment bound.  Hence
+\[
+ \widehat\mu=m_0+\mathop{\rm median}_{1\leq g\leq G_\delta}
+ \left[\frac1{B_{\rm ref}}\sum_{i\in G_g}
+ W_i(c)\mathbf1\{L_i=0\}\right].
+\]
+This is exactly the same level-zero dither estimate and fixed median; the
+conditional concentration proof adds no higher-ring or tail remainder.
+
+If $D\{m_0(c)\}=1$, the retained target level-zero amplitude
+$(X_i-m_0)/(2h_0)$ is zero, while every higher ring is inactive.  Whenever a
+decoder coefficient is nonzero, $F_i(X_i)=0$ and $\Delta Y_i=0$.  Thus
+$W_i(c)=0$ for every sample and every public seed.  All group means and the
+median are zero, and the point-mass condition gives
+$\widehat\mu=m_0(c)=\mu(D)$ with no artificial importance, tail,
+localization, or confidence residual.
+\end{proof}
+
+\subsection{Proof of the Main Theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Choose $a_k,b_k,c_k,\alpha_k,\beta_k$ as in Proposition~
+\ref{prop:rate-specialization-bridge}.  Proposition~\ref{prop:localization}
+provides the always-defined localization output and its fixed cost, while
+Lemma~\ref{lem:query-measurability} and Proposition~
+\ref{prop:query-legality} prove that all localization and refinement queries
+are Borel and simultaneously precommitted.  Proposition~
+\ref{prop:one-bit-accounting} proves exactly one transmitted bit per used
+independent sample and the deterministic non-stopping horizon
+$N_{\rm loc}+N_{\rm ref}$.
+
+Proposition~\ref{prop:mean-telescope} identifies the exact truncated target,
+Proposition~\ref{prop:conditional-variance} controls its refinement variance,
+and Proposition~\ref{prop:tail-bound} bounds the sole outer residual by
+$\epsilon/4$.  Proposition~\ref{prop:conditional-accuracy} gives conditional
+error at most $3\epsilon/4<\epsilon$ with conditional failure at most
+$\delta/2$.  Proposition~\ref{prop:unconditional-pac} integrates the full
+localization sigma-field and combines this with localization failure
+$\delta/4$, proving
+\[
+ \sup_{D\in\mathcal D(k,\lambda,\sigma)}
+ \Pr_D\{|\widehat\mu-\mu(D)|>\epsilon\}\leq\delta.
+\]
+
+Proposition~\ref{prop:rate-specialization-bridge} checks every auxiliary
+threshold and ceiling and proves
+\[
+ N_{\rm loc}+N_{\rm ref}
+ \leq C_kr_k(\lambda,\sigma,\epsilon,\delta)
+\]
+with $C_k$ depending only on fixed $k$, including exactly one
+$\log(\sigma/\epsilon)$ in the middle regime.  Finally,
+Proposition~\ref{prop:baseline-reductions} gives the stated supported-cell
+level-zero reduction and exact point-mass recovery.  These conclusions are
+precisely all clauses of Theorem~\ref{thm:main}.
+\end{proof}

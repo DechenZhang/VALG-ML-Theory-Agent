@@ -1,0 +1,38 @@
+\section{Proof Sketch}
+
+The proof uses two coefficient pivots.  On $[-1,1]$, solve the root equation
+for $\alpha_0$.  Lemma~\ref{lem:inner-derivative} bounds the derivative of
+the resulting sweep, and Lemma~\ref{lem:inner-image-length} converts this
+into an image-length estimate.  On each connected outer component, divide by
+$\theta^{d-1}$ and solve for $\alpha_{d-1}$.
+Propositions~\ref{prop:positive-outer-certificate} and
+\ref{prop:negative-outer-certificate} establish the same certificate
+separately on the two signs, without crossing zero or assigning $\pm1$ to an
+outer chart.
+
+The probabilistic interface requires some care because the hypotheses bound
+only the means of random conditional-density caps.  Lemma~\ref{lem:kernel-caps}
+constructs measurable, version-independent representatives of those caps and
+proves simultaneous domination of all Borel pivot sets.  Lemma~\ref{lem:borel-sections}
+proves that the root events are Borel and identifies their exact conditional
+sections.  Proposition~\ref{prop:matching-disintegration} then matches each
+section to the correct regular conditional kernel.
+
+Propositions~\ref{prop:inner-chart-probability},
+\ref{prop:positive-chart-probability}, and
+\ref{prop:negative-chart-probability} integrate the deterministic image
+bounds against their matching random caps.  Lemma~\ref{lem:three-piece-decomposition}
+partitions the parameter interval exactly, and
+Propositions~\ref{prop:weighted-chart-bound} and
+\ref{prop:exact-chart-maximum} combine the three event controls into the
+weighted estimate and then the exact maximum.  Finally,
+Proposition~\ref{prop:class-supremum} takes the two suprema, while
+Proposition~\ref{prop:fixed-eta-polynomial-specialization} gives the explicit
+polynomial envelope.
+
+The nonemptiness clause is independent of the root-hitting argument.  Three
+degree-specific kernel propositions compute both witness caps as $1/(2R)$.
+The remaining witness propositions verify cube support, ambient singularity,
+and middle-coordinate dependence, and Lemma~\ref{lem:witness-threshold}
+isolates the only use of the threshold $1/2$.  The final appendix proof
+assembles these results into Theorem~\ref{thm:main}.

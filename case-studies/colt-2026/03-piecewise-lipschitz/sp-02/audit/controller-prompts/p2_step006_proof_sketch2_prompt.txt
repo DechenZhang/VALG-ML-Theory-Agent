@@ -1,0 +1,32 @@
+You are the fresh step-scoped producer handoff for perspective_2/idea_1, step_006, unit attempt 1, sketch attempt 2, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+Read <CODEX_SKILLS_ROOT>/proof-step/SKILL.md completely and every directly required shared contract/template it names. Prove exactly the accepted sketch-attempt-2 step_006 row and overwrite only perspective_2/idea_1/proof_steps/step_006/proof.md. Do not modify the sketch, review, tracker, worker log, dependency artifacts, history, prompts, final artifacts, or any other file.
+
+Binding SHA-256 values: idea 5209aa21929e84604acb2712d8657460a48463901738fd00ebafaa84d5c43596; setting 6955a2723694ff60af8d5d40329ff0ad056f9b54780ff02744d8985456222b7e; accepted sketch 41517943f551814aaf87ff8541d5a81b56123cae7d8533b2bceb302a981bfbc4; accepted sketch review a80e7f4ffb1ad57991675810dbf7064bc7b482b8f34b61f10a171ebfc97b43c9; accepted global proof bb35e66556b216cac02945e249c92fac526b5b021104daa0f32b0ce7691a22fc; accepted global review c990e29c701a493a71e87aef1aa5c099ed26c6f8132a03f15bc0c7e5fb3c0146; controller-open tracker 527de008b76d2360ab66bb04234add582c1c3c02cb64432b3783cedb262b1c2f. The sole declared dependency is accepted step_001 proof 6986e91d1b2a06c451ae6bba842e30747ac507bf3e0eeee09371c1af0b6d4ff8 with matching accepted review 4ec6dfad924606b81aa28203e98ac3989ae15cf573297004efbd7036e4455f55.
+
+Prove exactly this row. Under primitive assump:parameter-regime and assump:anchored-derivative-closure, and using only the exact matrix-bound conclusion from accepted step_001, for every theta and every a in the actual affine root section H_theta intersect [-R,R]^N, prove
+
+|F_0(theta)| = |<a,F(theta)>| <= R sqrt(N) ||F(theta)||_2,
+
+||tilde F(theta)||_2 <= sqrt(1+N R^2) ||F(theta)||_2,
+
+and
+
+|F_0'(theta)+<a,F'(theta)>| / ||F(theta)||_2
+<= (1+N R^2) widehat Lambda_{B,T}.
+
+The accepted setting anchor gives ||F(theta)||_2 >= 1, so every displayed normalization is legal. Derive the first inequality only from the actual root equation F_0+<a,F>=0, cube membership ||a||_2<=R sqrt(N), and Cauchy--Schwarz; do not assume a free deterministic-offset amplitude bound. Derive the augmented-vector bound exactly from the first inequality. Use the exact closure identity tilde F'=B tilde F to prove
+
+F_0'+<a,F'> = <(1,a),B tilde F>,
+
+then combine ||(1,a)||_2<=sqrt(1+N R^2), the augmented-vector bound, and the accepted step_001 certificate sup_Theta ||B||_op<=widehat Lambda_{B,T}. Display the two sqrt(1+N R^2) factors and their exact product; do not drop or absorb a term.
+
+Keep the output pointwise, deterministic, and on the identical a, theta, F_0, F, B, Euclidean norm, and affine normal-velocity integrand consumed by step_007. There is no surrogate object or residual. Do not read or consume step_004, step_005, step_007, or any other undeclared step artifact. The accepted global pair is optional planning context only and never proof evidence; omitting it is preferred because the exact local derivation is already fixed by the sketch.
+
+Audit N=1, F_0=0, a=0, empty sections, theta at compact-interval endpoints, R>0, and widehat Lambda_{B,T}=0. In the zero-certificate branch, derive the consequences from the exact closure and anchor; do not claim a zero root-event probability inside this local velocity step unless it is both necessary and proved from allowed inputs. Preserve arbitrary coefficient correlation by making no law-level statement at all. Do not assume transversality, root simplicity, a pivot margin, a section measure, a density, or a probability conclusion.
+
+This is a rate-bearing certificate. Expose N, R, and widehat Lambda_{B,T}; state that there are no hidden constants, confidence parameters, auxiliary tolerances, or unrecorded Pfaffian-format dependence. Record deterministic pointwise scope, Euclidean norm mode, and exact multiplication of the two square-root factors. Export only the affine normal-velocity certificate required by step_007.
+
+The pre-overwrite live step_006 proof and review are consumed sketch-attempt-1 artifacts with SHA-256 values 5795f2ed4685bc1f60ea1f02206d64fd14dc344a6634b9506c7e8aa8d0715da0 and 9919776062a8f13452ce1570df329fdae4bc610a46bdff4c0422afbc7c4b362a. Byte-identical copies exist at perspective_2/idea_1/proof_history/sketch_001/proof_steps/step_006/attempt_001/. They may be consulted only as latest same-step diagnostic material and never as current evidence. Regenerate every identity, local unit, theorem label, dependency mapping, and derivation for sketch attempt 2.
+
+Use every required proof-step template section, stable theorem-style labels, complete dependency restatement and assumption discharge, explicit assumption/constant/rate provenance, target-step assembly, boundary audits, and honest blockers. Set Step Proof Status = COMPLETE only if the exact target is proved. Validate sketch/step/unit identity, local-unit table arity, dependency proof/review identities, assumption IDs, labels/references, ASCII/control bytes, TeX balance, protected-artifact hashes, archived byte identity, and single-file scope. Report status, local-unit count, blockers, and final SHA-256.

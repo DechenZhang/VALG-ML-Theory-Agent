@@ -1,0 +1,39 @@
+\section{Main Theorem}
+
+\begin{theorem}[Conditional static mean-response-rank theorem]
+\label{thm:main}
+Under Assumptions~\ref{assump:parameter-regime}--\ref{assump:mean-response-rank},
+there is a basis \(\psi_1,\ldots,\psi_{r_A}\) of \(V_A\), chosen once from
+the fixed domain, learner, seed law, horizon, tolerance, complete-response
+interface, and a fixed basis choice, such that the deterministic map
+\[
+\varphi_A(x):=(\psi_1(x),\ldots,\psi_{r_A}(x))
+\in\mathbb R^{r_A}
+\]
+is independent of every \(\mathcal D\), target, tolerance-valid response
+policy, and realized learner seed.  For every \(h\in\mathcal H\), there is a
+weight \(w_h\in\mathbb R^{r_A}\) satisfying
+\[
+h(x)\langle w_h,\varphi_A(x)\rangle
+\ge 1-2\varepsilon=\rho>\frac12>0
+\qquad\text{for every }x\in\mathcal X.
+\]
+Consequently,
+\[
+\operatorname{dc}(\mathcal H)
+\le r_A
+\le B\bigl(1+m/\tau^2\bigr)^k.
+\]
+The conclusion is deterministic, pointwise, and fixed-horizon, with no hidden
+constants or domain-cardinality dependence.  If \(\mathcal X=\varnothing\)
+or \(\mathcal H=\varnothing\), then \(\operatorname{dc}(\mathcal H)=0\).
+If both are nonempty, then \(r_A\ge1\).  At \(m=0\), the bound specializes
+to \(r_A\le B\); at \(\varepsilon=0\), the signed margin is exactly \(1\);
+and \(B=k=1\) gives \(r_A\le1+m/\tau^2\).
+\end{theorem}
+
+The theorem is conditional: Assumption~\ref{assump:mean-response-rank} is an
+additional static protocol-family certificate.  The argument does not derive
+that certificate from \(m\) and \(\tau\) alone and does not establish the
+unconditional universal linear dimension bound.  Those source-level questions
+remain open.

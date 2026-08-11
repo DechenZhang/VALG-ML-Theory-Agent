@@ -1,0 +1,98 @@
+\section{Theoretical Setup}
+\label{sec:setup}
+
+\subsection{Problem setting}
+
+For an integer $r\geq 1$, write $[r]=\{1,\ldots,r\}$.  The logarithm
+$\log$ is natural, while $\log^*$ is the base-two iterated logarithm;
+changing either base changes only universal constants.  For $t\in[N]$,
+define the lower-oriented threshold
+\[
+\tau_t(q)=\mathbf 1\{q\leq t\},\qquad q\in[N].
+\]
+Let $X$ be an arbitrary domain and let $C\subseteq\{0,1\}^X$ be finite.
+A $(k,N)$ disjoint-threshold minor consists of injections
+$\phi_j:[N]\to X$, $j\in[k]$, having pairwise disjoint images, and
+concepts $c_{\mathbf t}\in C$, indexed by
+$\mathbf t=(t_1,\ldots,t_k)\in[N]^k$, such that
+\[
+c_{\mathbf t}(\phi_j(q))=\tau_{t_j}(q)
+\quad\text{for every }j\in[k]\text{ and }q\in[N].
+\]
+
+For a labeled distribution $Q$ on $Z_X:=X\times\{0,1\}$ and a hypothesis
+$h:X\to\{0,1\}$, its zero-one risk is
+\[
+L_Q(h)=\Pr_{(x,y)\sim Q}\{h(x)\neq y\}.
+\]
+Two ordered samples of the same size are replacement adjacent when they
+differ in at most one record.  The hypothesis space is equipped with a
+sigma-algebra for which every coordinate evaluation is measurable.  A
+randomized kernel $A:Z_X^m\rightsquigarrow\{0,1\}^X$ is
+$(\varepsilon,\delta)$-differentially private if, for every measurable
+event $E$ and every replacement-adjacent $S,S'\in Z_X^m$,
+\[
+A(S)(E)\leq e^\varepsilon A(S')(E)+\delta,
+\qquad
+A(S')(E)\leq e^\varepsilon A(S)(E)+\delta.
+\]
+No properness, output-representation, or computational restriction is
+imposed.
+
+For $c\in C$ and a distribution $P$ on $X$, let $Q_{P,c}$ be the law of
+$(x,c(x))$ for $x\sim P$.  The learner receives exactly $m$ iid labeled
+examples; all probabilities below include both sample and learner
+randomness.
+
+\subsection{Assumptions}
+
+\begin{assumption}[Disjoint-threshold restriction table]
+\label{assump:minor-table}
+Integers $k\geq1$ and $N\geq2$ and the finite class $C$ admit injections
+$\phi_1,\ldots,\phi_k$ and concepts $c_{\mathbf t}$ forming a $(k,N)$
+disjoint-threshold minor as defined above.  This is a static restriction-table
+condition.
+\end{assumption}
+
+\begin{assumption}[Unrestricted private PAC antecedent]
+\label{assump:unrestricted-private-pac}
+For an integer $m\geq1$, the kernel
+$A:Z_X^m\rightsquigarrow\{0,1\}^X$ is replacement-adjacency
+$(\varepsilon_0,\delta_m)$-differentially private and is distribution-free
+realizable $(\alpha_0,\beta_0)$-PAC: for every $c\in C$ and every
+distribution $P$ on $X$,
+\[
+\Pr_{S\sim Q_{P,c}^m,\ h\sim A(S)}
+\bigl\{L_{Q_{P,c}}(h)>\alpha_0\bigr\}\leq\beta_0.
+\]
+The output may be improper, and the learner may be computationally
+unbounded.
+\end{assumption}
+
+\begin{assumption}[Fixed PAC and approximate-privacy scale]
+\label{assump:fixed-parameter-scale}
+The accuracy, confidence, and privacy parameters satisfy
+\[
+\alpha_0=\frac1{128},\qquad
+\beta_0=\frac1{32},\qquad
+0<\varepsilon_0\leq1,
+\qquad
+0\leq\delta_m\leq
+\frac{c_\delta}{m^2\log(em)},
+\]
+where $c_\delta>0$ is a scalar parameter.  Thus this assumption is
+parameterized by $c_\delta$; every theorem citing it specifies the value
+being used.
+\end{assumption}
+
+\subsection{Formalized goal}
+
+The objective is a fixed-sample lower bound in zero-one risk with a
+high-probability, distribution-free realizable-PAC antecedent.  We prove that
+universal constants $c,c_\delta>0$ and $N_0\geq2$ can be chosen so that every
+learner satisfying Assumptions~\ref{assump:minor-table}--
+\ref{assump:unrestricted-private-pac} and
+Assumption~\ref{assump:fixed-parameter-scale} instantiated with that same
+$c_\delta$, for every $k\geq1$ and $N\geq N_0$,
+must satisfy $m\geq c k\log^*N$.  The constants are independent of
+$C,X,k,N,m,\varepsilon_0,\delta_m$, the learner, and the minor embeddings.

@@ -1,0 +1,56 @@
+\section{Proof Sketch}\label{sec:proof-sketch}
+
+The quotient map preserves every finite factor labeling pattern and
+every finite Littlestone tree, while the full Cartesian restriction map
+preserves independent factor choices.  The structural results in
+Proposition~\ref{prop:step-001-structural-certificate} therefore give
+the exact quotient dimensions, the product VC and Littlestone
+identities, measurable decoded outputs, and the risk identity
+\eqref{eq:prelim-exact-risk}.
+
+For the upper bound, each countable quotient supports a fully totalized
+measurable VC-one factor kernel.  A common random permutation turns a
+one-record change into at most one factor-summary replacement, and
+Proposition~\ref{prop:step-003-joint-composition} shows that routing
+affects at most two factors.  Their two half-budget privacy costs compose
+to \((\varepsilon,\delta)\), including on nonrealizable inputs.
+The utility proof does not ask every factor to receive its quota.
+Instead, Proposition~\ref{prop:step-004-weighted-shortage} controls the
+total distribution mass of short factors, and
+Proposition~\ref{prop:step-005-pac-closure} combines this with the
+unpadded factor guarantee to obtain the exact global PAC event.
+Proposition~\ref{prop:step-006-public-quota-bridge} then sums the
+heterogeneous quotas and absorbs every ceiling into the public rate.
+
+For the lower bound, the additive VC obstruction first pays for the
+total mass of factors with small iterated-log complexity.  Each
+remaining factor has a subcritical exact budget and satisfies the
+one-factor delta cap.  The compact finite game in
+Proposition~\ref{prop:step-010-hard-prior} fixes a hard task prior
+before seeing the global learner.  A one-use simulator embeds each
+factor input row into at most one global row and is therefore private on
+all factor inputs.  The only discrepancy between this simulator and the
+ideal product experiment is sample-count overflow, whose marginal
+probability is bounded by
+\(\eta_0=e^7(2/9)^9<3/2048\).
+
+All active factor risks are marginals of one common product-prior
+experiment.  Lemma~\ref{lem:step-013-exact-risk-sum} gives an exact
+pointwise weighted risk identity, and
+Proposition~\ref{prop:step-013-tensorization} charges each overflow
+residual once by its factor weight.  The resulting expected global risk
+is separated from the PAC expectation ceiling by the exact rational
+calculation in Lemma~\ref{lem:step-014-rational-gap}.  Finite
+conditioning then selects one deterministic full-product target and
+legal mixture with strict PAC failure, yielding
+Proposition~\ref{prop:step-014-candidate-closure}.
+
+Finally, Proposition~\ref{prop:step-015-global-upper} establishes the
+arbitrary-\(\delta\) upper theorem and finiteness of the least successful
+sample size.  Proposition~\ref{prop:step-015-candidate-lower} retains
+both lower delta conditions at one fixed candidate.
+Proposition~\ref{prop:step-015-conditional-sandwich} combines the two
+only after those conditions are checked at the attained sample
+complexity.  Propositions~\ref{prop:step-015-one-factor-upper} and
+\ref{prop:step-015-one-factor-lower} separately verify the unpadded
+upper rule and zero-overflow unrestricted lower baseline when \(k=1\).

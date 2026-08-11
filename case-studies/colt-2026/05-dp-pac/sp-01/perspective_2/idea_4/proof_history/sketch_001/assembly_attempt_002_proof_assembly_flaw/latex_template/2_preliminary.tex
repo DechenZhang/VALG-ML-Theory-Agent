@@ -1,0 +1,51 @@
+\section{Preliminaries}
+
+The quotient map $\kappa$ is the only interface between the raw and coded
+experiments.  We use $T_N$ for its recordwise extension and use
+$\operatorname{Dec}_C$ only after a private release.  The exact equality
+between raw and quotient risks is proved in Proposition~\ref{prop:step-002-risk}.
+
+For $d\ge1$, set $\gamma=\alpha/16$ and split the confidence budget as
+\[
+ \beta_{\mathrm{tr}}=\beta_{\mathrm{AT}}=\beta_{\mathrm{SS}}
+ =\beta_{\mathrm{gen}}=\beta/4,qquad
+ \delta_{\mathrm{AT}}=\delta_{\mathrm{SS}}=\delta/2.
+\]
+The quotient-first VC-sensitive law $K_C^{\mathrm{VC\text{-}Lyu}}$ uses the
+fixed-block source construction on $\bar C$: it chooses the least feasible
+teacher count $k\ge2$, block size $m$, master size $n_0=km$, and $N=n_0$;
+forms the $d+1$ exact source restrictions and essential lists on quotient
+records; runs one AboveThreshold process over the stage scores; and invokes
+Sparse Sample once after the first successful stage.  Empty, invalid, or
+failed states are totalized to a fixed $\bar c_0\in\bar C$.  For $d=0$ it
+uses $N=0$ and the unique quotient concept.  These scalar choices and all
+their ceiling inequalities are proved in the first appendix subsection and
+are not additional assumptions.
+
+For a fixed quotient master sample $\bar S$ and a data-independent uniform
+partition into $k$ blocks, write
+\[
+ \mathcal E_{\bar C}(\bar S)=
+ \left\{(\mathbf 1\{\bar c(q_r)\ne y_r\})_{r=1}^{n_0}:\bar c\in\bar C\right\},
+ \qquad
+ \Pi_{\bar C}(n)=\max_{\bar S\in Z_Q^n}|\mathcal E_{\bar C}(\bar S)|.
+\]
+This notation is introduced to state the finite VC trace bound; it is a
+finite-sample trace family, not a measurability assumption on an infinite
+class.  The appendix proves
+$|\mathcal E_{\bar C}(\bar S)|\le(en_0/v)^v$ on the positive branch.
+
+When an actual output is produced, an analysis-only occurrence mark
+$J\in\{0,1,\ldots,k\}$ records one producer block whose all-stage candidate
+union contains the output; $J=0$ is reserved for fallback paths.  The marked
+law is used only for the finite holdout proof.  Proposition~\ref{prop:step-004-projection}
+proves that summing over $J$ gives exactly the released marginal, so the
+mark is not part of the learner output or its privacy interface.
+
+The two comparison laws use the same quotient input, output space, decoder,
+and raw pullback.  $K_C^{\mathrm{old\text{-}Lyu}}$ uses the source coarse
+$d$-trace calibration, while $K_C^{\mathrm{fin}}$ is the finite-class
+exponential-weight law on $\bar C$ when $|C|<\infty$ and is disabled by the
+convention $R_{\mathrm{fin}}=+\infty$ otherwise.  Their independent privacy
+and PAC certificates are proved before the minimum is taken.
+

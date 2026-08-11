@@ -1,0 +1,114 @@
+\section{Preliminaries}\label{sec:preliminaries}
+
+\paragraph{Risk and unrestricted learners.}
+A target is any \(c=(c_1,\ldots,c_k)\in C\).  For an arbitrary
+probability measure \(D\) on \((X,\Sigma)\), let
+\(\rho_i=D(X_i)\).  When \(\rho_i>0\), let
+\[
+D_i=D(\,\cdot\mid X_i),
+\qquad
+\bar D_i=(\kappa_i)_\#D_i.
+\]
+There is no balance, positive-mass, product-distribution,
+finite-support, or public-knowledge condition on these objects.  For a
+\(\Sigma\)-measurable binary hypothesis \(h\), define
+\[
+R_D(h,c)=\Pr_{x\sim D}[h(x)\ne c(x)].
+\]
+For every quotient tuple \(\bar h\), the exact risk identity is
+\begin{equation}\label{eq:prelim-exact-risk}
+\begin{aligned}
+R_D(h_{\bar h},c)
+&=\sum_{i:\rho_i>0}\rho_i
+  \Pr_{q\sim\bar D_i}[\bar h_i(q)\ne\bar c_i(q)]\\
+&=\sum_{i=1}^k\sum_{q\in Q_i}
+  D(\kappa_i^{-1}(\{q\}))
+  \mathbf1\{\bar h_i(q)\ne\bar c_i(q)\}.
+\end{aligned}
+\end{equation}
+Thus the quotient output preserves raw factor and global risk exactly.
+
+Let \(Z=X\times\{0,1\}\), with sigma-field
+\(\Sigma\otimes2^{\{0,1\}}\).  Datasets have fixed size, and
+\(S,S'\in Z^n\) are adjacent when one record is replaced.  An
+unrestricted randomized learner may use any measurable output space
+\((\Omega,\mathscr F)\), any Markov kernel
+\(A_n:Z^n\rightsquigarrow\Omega\), and any decoder
+\(\omega\mapsto h_\omega\) into the measurable binary hypotheses,
+provided all finite-evaluation cylinders are in \(\mathscr F\) and
+every asserted risk event is measurable.  It may be randomized, joint
+across factors, improper, and computationally unbounded.  It is
+replacement-\((\varepsilon,\delta)\)-DP if, for all adjacent
+\(S,S'\), including nonrealizable inputs, and every \(E\in\mathscr F\),
+\begin{equation}\label{eq:prelim-dp}
+A_n(S,E)\le e^\varepsilon A_n(S',E)+\delta.
+\end{equation}
+
+Let \(D_c\) be the law of \((x,c(x))\) for \(x\sim D\).  With accuracy
+and failure probability fixed at
+\[
+\alpha_0=\beta_0=\frac1{16},
+\]
+define \(\operatorname{SC}_{\varepsilon,\delta}(C)\) as the least
+\(n\in\mathbb N\) for which an unrestricted private learner satisfies,
+for every \(c\in C\) and every probability measure \(D\),
+\begin{equation}\label{eq:prelim-sc}
+\Pr_{\substack{S\sim D_c^n\\
+                \Omega\sim A_n(S,\cdot)}}
+\left[R_D(h_\Omega,c)\le\frac1{16}\right]
+\ge\frac{15}{16}.
+\end{equation}
+
+\paragraph{The routed quotient-first learner.}
+Fix
+\[
+\alpha_{\rm fac}=\frac1{64},
+\qquad
+\beta_{\rm fac}=\frac1{4096},
+\qquad
+\varepsilon_{\rm fac}=\frac\varepsilon2,
+\qquad
+\delta_{\rm fac}=\frac\delta2.
+\]
+Let \(K_Y>0\) be the universal constant obtained from the audited
+VC-one private-median and choosing construction of
+\citet{yan2025vc1}.  Define the exact factor quotas
+\begin{equation}\label{eq:prelim-quotas}
+q_i=\left\lceil
+K_Y\frac{s_i}{\varepsilon}
+\log^2\!\left(\frac{e s_i}{\varepsilon\delta}\right)
+\right\rceil,
+\qquad
+Q_\oplus=\sum_{i=1}^kq_i.
+\end{equation}
+Independently of the target and data, fix a reference
+\(\bar f_i^\circ\in\bar C_i\), an enumeration of \(Q_i\), and a padding
+record
+\(\bar z_i^\circ=(\xi_i^\circ,b_i^\circ)\in Q_i\times\{0,1\}\).
+
+Given \(S=((x_j,y_j))_{j=1}^n\), let
+\[
+J_i(S)=|\{j:x_j\in X_i\}|.
+\]
+Form
+\(\bar T_i(S)\in(Q_i\times\{0,1\})^{q_i}\) from the first \(q_i\)
+routed records \((\kappa_i(x_j),y_j)\) with \(x_j\in X_i\), in sample
+order, padding any shortage with \(\bar z_i^\circ\).  On
+\(\bar T_i(S)\), run the fixed permutation-symmetrized and fully
+totalized quotient-first VC-one transition rule
+\[
+\bar A_i^{\rm Yan}:
+(Q_i\times\{0,1\})^{q_i}\rightsquigarrow\mathcal H_i
+\]
+at privacy
+\((\varepsilon_{\rm fac},\delta_{\rm fac})\).  The fixed enumeration
+and reference specify tie-breaking and fallback outputs on every
+inconsistent or otherwise partial branch.  With independent internal
+randomness across factors, define
+\begin{equation}\label{eq:prelim-routed-kernel}
+\bar A_n^{\oplus,Q}(S)
+=\bigl(\bar A_i^{\rm Yan}(\bar T_i(S))\bigr)_{i=1}^k
+\in\mathcal H^\oplus
+\end{equation}
+and decode it by \eqref{eq:setup-decoder}.  Factor utility is invoked
+only when \(J_i(S)\ge q_i\), where no padding occurs.

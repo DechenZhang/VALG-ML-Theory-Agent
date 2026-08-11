@@ -1,0 +1,14 @@
+You are the distinct step-scoped proof producer for perspective_1/idea_1, step_003, unit attempt 1, sketch attempt 2, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+Read <CODEX_SKILLS_ROOT>/proof-step/SKILL.md completely and every directly required shared contract/template it names. Then run /proof-step step_003.
+
+Binding SHA-256 values: setting f77d11e1a559e22a96b14de1936d50c691c79d5a4a15e5806ddf4e6d119ada83; accepted sketch 2fa48ee16cca9a8d0379071f448d1e72ce98ae46d624482d772e74b97649c74a; accepted sketch review 40b66331aa50a66607d068e266c545a865044bd175a56d81f012542e6d17d6f8; accepted global diagnostic 45e93d102aa948c0d80886e5f21cf3bdaa412dfaa25611684eb363d48fa1f5b9 paired with accepted global review cd86cc68e3982c55aeb16fcafbda0759bb71464aee405c4a158bd41a308463db; accepted dependency step_002 proof b59794f374d66ec07e21b8662c438251ef1d9ba42c8a4db03894d62c8560e69c; accepted dependency review 71bec34a7f197cb6480973516a1a47c5a30c196eb5144676c7fa5d5be8563a37.
+
+Prove exactly the accepted step_003 row: for every interval I, establish the central root-incidence coefficient-volume inequality
+
+Leb^N{a in [-R,R]^N: exists theta in I with <a,F(theta)>=0}
+<= integral_I integral_{gamma_F(theta)^perp intersect [-R,R]^N} |<gamma_F'(theta),a>| dH^{N-1}(a) dtheta,
+
+with the exact Euclidean incidence/coarea and projection-area Jacobians. Cover projection multiplicity, tangent and multiple roots, interval endpoints, identically-zero combinations, stationary normalized segments, arbitrary intervals, and N=1 without assuming simple roots, transversality, a positive Jacobian margin, independence, or a probability event. Map any standard area/coarea result and the Edelman--Kostlan Theorem 5.1 convention cross-check precisely to the current incidence hypersurface and state all source nonoutputs. Preserve the exact coefficient object, Euclidean norms and Hausdorff/Lebesgue measures, and no hidden constant or residual.
+
+The attempt-1 live step_003 proof and review are stale; their consumed copies are archived at perspective_1/idea_1/proof_history/sketch_001/proof_steps/step_003/attempt_001/. Reprove freshly and do not cite the archive as evidence. The global diagnostic is planning context only. Write only perspective_1/idea_1/proof_steps/step_003/proof.md. Set sketch attempt 2, step_003, unit attempt 1. Use all required sections and theorem-style local units. Validate binding hashes, dependency identity, headings, stable assumption IDs, table arity, ASCII/control bytes, TeX balance, exact target and boundary preservation, and file scope. Report status, local-unit count, blockers, and final SHA-256.

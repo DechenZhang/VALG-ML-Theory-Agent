@@ -1,0 +1,195 @@
+\section{Theoretical Setup}\label{sec:setup}
+
+\subsection{Problem Setting}
+
+Fix an integer $N\geq 1$, a support radius $R>0$, a density cap
+$\kappa\in(0,\infty)$, and a compact interval $\Theta\subset\mathbb R$.
+Let
+\[
+b:\Theta\to\mathbb R,
+\qquad
+F=(F_1,\ldots,F_N):\Theta\to\mathbb R^N,
+\qquad
+\phi_\alpha(\theta)=b(\theta)+\langle\alpha,F(\theta)\rangle.
+\]
+Write $\|x\|_1=\sum_i|x_i|$, and write $|I|$ for the Lebesgue length of
+an interval $I$.  Define
+\[
+A=(2R)^N\kappa.
+\]
+Let $\mathcal D_{N,R,\kappa}$ be the class of probability laws $\mu$ on
+$\mathbb R^N$ having a Lebesgue density $f_\mu$ such that $f_\mu=0$
+almost everywhere outside $[-R,R]^N$ and
+$\|f_\mu\|_{L^\infty(\mathbb R^N)}\leq\kappa$.  No product structure or
+coordinate independence is part of this definition.
+
+The common one-dimensional Pfaffian representation used here has the form
+\[
+\eta_j'(\theta)
+=P_j(\theta,\eta_1(\theta),\ldots,\eta_j(\theta)),
+\qquad 1\leq j\leq q,
+\]
+with
+\[
+b(\theta)=Q_0(\theta,\eta(\theta)),
+\qquad
+F_i(\theta)=Q_i(\theta,\eta(\theta)),
+\quad 1\leq i\leq N.
+\]
+In ambient parameter dimension $p=1$, we use the degree descriptors
+\[
+M=\max_{1\leq j\leq q}\deg P_j,
+\qquad
+\Delta_{\rm rnd}=\max_{1\leq i\leq N}\deg Q_i,
+\qquad
+\Delta_{\rm aff}=\max_{0\leq i\leq N}\deg Q_i.
+\]
+When $q=0$, the chain is absent and $M=0$.  The deterministic offset $b$
+is counted in $\Delta_{\rm aff}$ but is not a random coefficient.
+
+The root-feasible set is
+\[
+K_R=\{\theta\in\Theta:|b(\theta)|\leq R\|F(\theta)\|_1\}.
+\]
+For each coordinate $j$, let
+$U_j=\{\theta\in\Theta:F_j(\theta)\neq0\}$ and define on $U_j$
+\[
+V_j(\theta)
+=\left|\left(\frac b{F_j}\right)'(\theta)\right|
++R\sum_{i\neq j}
+ \left|\left(\frac{F_i}{F_j}\right)'(\theta)\right|.
+\]
+For minimization, extend $V_j$ by $+\infty$ on $\Theta\setminus U_j$ and
+set
+\[
+\Gamma_{\rm piv}(b,F;R)
+=
+\begin{cases}
+\displaystyle
+\sup_{\theta\in K_R}\min_{1\leq j\leq N}V_j(\theta),
+&K_R\neq\varnothing,\\[1ex]
+0,&K_R=\varnothing.
+\end{cases}
+\]
+This is a static, pre-sampling conditioning functional.  Its finiteness is
+a conclusion below, not an additional assumption.
+
+For the adaptive sweep, let $j_*(\theta)$ be the least index attaining
+$\min_jV_j(\theta)$ on $K_R$, and put
+\[
+E_j=\{\theta\in K_R:j_*(\theta)=j\},
+\qquad
+E_{j,m}=E_j\cap\{|F_j|\geq 1/m\},\quad m\geq1.
+\]
+For $\beta=\alpha_{-j}\in[-R,R]^{N-1}$, define on $E_j$
+\[
+T_j(\theta,\beta)
+=-\frac{b(\theta)+\sum_{i\neq j}\beta_iF_i(\theta)}{F_j(\theta)}.
+\]
+The sweep applies the area formula to
+$(\theta,\beta)\mapsto(\beta,T_j(\theta,\beta))$ in original coefficient
+order, restricted by $|T_j|\leq R$, and then exhausts in $m$.  The sets
+$E_j$ are disjoint in the parameter $\theta$, so the resulting estimate is
+a sum of chart integrals rather than an $N$-fold union bound.
+
+Two fixed families will be used.  For $\delta\in(0,1]$, the scale-stress
+family on $[-1,1]$ is
+\[
+b_\delta(\theta)=0,
+\qquad
+F_\delta(\theta)=(1,\theta/\delta),
+\qquad R=1.
+\]
+For an integer $d\geq1$, the exact monic family is
+\[
+b_d(\theta)=\theta^d,
+\qquad
+F_d(\theta)=(1,\theta,\ldots,\theta^{d-1}),
+\qquad
+p_\alpha(\theta)=\theta^d+\sum_{k=0}^{d-1}\alpha_k\theta^k.
+\]
+Only $\alpha=(\alpha_0,\ldots,\alpha_{d-1})\in[-R,R]^d$ is random.
+Write $V_{\rm const}$ for the constant-coordinate pivot and
+$V_{\rm top}$ for the $\theta^{d-1}$ pivot; these are the same coordinate
+when $d=1$.  This family has
+\[
+q=0,
+\quad M=0,
+\quad N=d,
+\quad \Delta_{\rm rnd}=d-1,
+\quad \Delta_{\rm aff}=d,
+\quad A=(2R)^d\kappa.
+\]
+
+\subsection{Assumptions}
+
+\begin{assumption}[Shared one-dimensional Pfaffian regularity]
+\label{assump:shared-pfaffian-chain}
+The functions $b,F_1,\ldots,F_N$ are $C^1$ on $\Theta$ and have the common
+triangular Pfaffian representation and the
+$(q,M,\Delta_{\rm rnd},\Delta_{\rm aff},p=1)$ degree convention specified
+above.
+\end{assumption}
+
+\begin{assumption}[Primitive no-forced-root nondegeneracy]
+\label{assump:no-forced-root}
+For every $\theta\in\Theta$,
+\[
+(b(\theta),F(\theta))\neq(0,0).
+\]
+Equivalently, no parameter value is a root for every coefficient vector.
+Points with $F(\theta)=0$ and $b(\theta)\neq0$ remain admissible and are
+root-free.  In particular, $F(\theta)\neq0$ for every $\theta\in K_R$.
+\end{assumption}
+
+\begin{assumption}[Arbitrarily correlated bounded joint density]
+\label{assump:joint-density-cap}
+The coefficient law is any $\mu\in\mathcal D_{N,R,\kappa}$.  Thus the cap
+is on the full joint density and imposes no coordinate independence.
+\end{assumption}
+
+\subsection{Formalized Goal}
+
+The objective is to prove, under
+Assumptions~\ref{assump:shared-pfaffian-chain}--\ref{assump:joint-density-cap},
+that $\Gamma_{\rm piv}(b,F;R)<\infty$ and that every
+$\mu\in\mathcal D_{N,R,\kappa}$ and every interval $I\subseteq\Theta$ with
+$|I|>0$ satisfy
+\[
+\Pr_{\alpha\sim\mu}\!\left[
+  \exists\theta\in I:\phi_\alpha(\theta)=0
+\right]
+\leq
+\kappa(2R)^{N-1}\Gamma_{\rm piv}(b,F;R)|I|
+=\frac{A\Gamma_{\rm piv}(b,F;R)}{2R}|I|.
+\]
+The same constant must bound the law- and interval-uniform
+probability-to-length ratio.  The scale-stress family must have
+$\Gamma_{\rm piv}(b_\delta,F_\delta;1)=1/\delta$.  The monic family must
+satisfy
+\[
+\Gamma_{\rm piv}(b_d,F_d;R)
+\leq d+\frac{Rd(d-1)}2
+\]
+and, for every bounded interval $I\subset\mathbb R$ and every admissible law
+on the lower coefficients,
+\[
+\Pr_{\alpha\sim\mu}\!\left[
+  \exists\theta\in I:p_\alpha(\theta)=0
+\right]
+\leq
+\kappa(2R)^{d-1}
+\left(d+\frac{Rd(d-1)}2\right)|I|.
+\]
+These are ordinary-probability bounds, uniform over the stated laws and
+intervals, with no hidden constant, horizon, or asymptotic qualification.
+The exposed quantities are $N,R,\kappa,A,\Gamma_{\rm piv}$, and $|I|$;
+$q,M,\Delta_{\rm rnd},\Delta_{\rm aff}$ are fixed family descriptors and
+do not enter as an additional factor.  The norm modes are the $\ell_1$
+feasibility test in $K_R$ and the coordinate-ratio variation in
+$\Gamma_{\rm piv}$.
+
+This is a material-partial objective.  It proves a fixed-family theorem and
+the exact monic baseline, while leaving unresolved any polynomial
+general-instance control of $\Gamma_{\rm piv}$ from
+$q,M,\Delta_{\rm rnd},\Delta_{\rm aff}$ or other Pfaffian-format data.

@@ -1,0 +1,179 @@
+\section{Theoretical Setup}\label{sec:setup}
+
+We study estimation of a real mean from one bit per independent sample.
+The exponent \(k>1\), the range bound \(\lambda\), the moment scale
+\(\sigma\), the target accuracy \(\epsilon\), and the confidence level
+\(\delta\) are public.  A protocol is fully noninteractive if every query
+set, including every randomized query set, is fixed before the first
+response is observed.
+
+\subsection{Assumptions}
+
+\begin{assumption}[Parameter domain]\label{assump:parameter-domain}
+The exponent \(k>1\) is fixed and known, \(\lambda\geq\sigma>0\) are known,
+\(\delta\in(0,1/2)\), and \(0<\epsilon\leq c_k\sigma\), where
+\(c_k\in(0,1)\) depends only on \(k\) and is fixed in
+Theorem~\ref{thm:technical}.
+\end{assumption}
+
+\begin{assumption}[Unrestricted central moment class]\label{assump:moment-class}
+The samples have a common law \(D\) with mean
+\(\mu=\mathbb E_DX\in[-\lambda,\lambda]\) and
+\[
+\mathbb E_D|X-\mu|^k\leq\sigma^k.
+\]
+No support, symmetry, density, likelihood, or additional tail condition is
+imposed.
+\end{assumption}
+
+\begin{assumption}[Independent samples and precommitted seeds]\label{assump:iid-independent-randomness}
+All samples are mutually independent with common law \(D\).  All public
+random variables used below are mutually independent and independent of the
+samples.  The sample split, the median blocks, and every query-generating
+random variable are fixed before any response bit is observed.
+\end{assumption}
+
+\subsection{Coded localization}
+
+The sample indices are split into disjoint localization and refinement sets
+\(I_{\rm loc}\) and \(I_{\rm ref}\).  Localization uses confidence
+\(\eta=\delta/4\) and the deterministic coding construction underlying
+\citet[Theorem~16]{lau2026orderoptimal}.
+
+If \(2\lambda\leq20\sigma\), take \(I_{\rm loc}=\varnothing\), issue no
+localization query, return \(I=[-\lambda,\lambda]\), and set \(c=0\).  If
+\(2\lambda>20\sigma\), put
+\[
+N=\left\lceil\frac{2\lambda}{20\sigma}\right\rceil,\qquad
+\Delta=\frac{2\lambda}{N},\qquad
+a_v=-\lambda+(v-1)\Delta\quad(1\leq v\leq N+1),
+\]
+and define bins
+\[
+K_v=[a_v,a_{v+1})\quad(v<N),\qquad K_N=[a_N,a_{N+1}].
+\]
+The clipped cells are
+\[
+C_1=(-\infty,a_2),\qquad
+C_v=[a_v,a_{v+1})\ (1<v<N),\qquad
+C_N=[a_N,\infty).
+\]
+Let \(b(x)\) be the unique cell index satisfying \(x\in C_{b(x)}\).  Choose
+the deterministic balanced codewords
+\(\mathsf c_1,\ldots,\mathsf c_N\in\{0,1\}^{N_{\rm loc}}\) from the cited
+construction, where
+\[
+N_{\rm loc}
+=\left\lceil10000\left(
+\log N+\log\frac4\delta\right)\right\rceil.
+\]
+For \(r\in I_{\rm loc}\), the precommitted query and response are
+\[
+\mathcal B_r=\bigcup_{v:\,\mathsf c_{v,r}=1}C_v,\qquad
+Y_r=\mathbf1\{X_r\in\mathcal B_r\}.
+\]
+The decoder forms
+\[
+H_v=\sum_{r\in I_{\rm loc}}\mathbf1\{Y_r\neq\mathsf c_{v,r}\},
+\qquad
+\widehat i=\min\operatorname*{argmin}_{v\in[N]}H_v,
+\]
+returns the union of the bins whose indices are within two of
+\(\widehat i\), clipped to \([N]\), and lets \(c\) be the midpoint of that
+interval.  Thus, in both branches, \(c\) is always defined and uses no
+additional query.
+
+\subsection{Precommitted refinement bank}
+
+Given \(k\)-only design constants \(\gamma_k\in(0,1)\) and \(b_k\geq1\),
+define
+\[
+h_0=\gamma_k\epsilon,\qquad
+H_*=b_k\sigma\left(\frac{\sigma}{\epsilon}\right)^{1/(k-1)},\qquad
+J=\left\lceil\log_2\frac{H_*}{h_0}\right\rceil,
+\]
+\[
+h_j=2^jh_0\quad(0\leq j\leq J),\qquad H=h_J.
+\]
+The sampled levels are \(0,\ldots,J-1\).  Split them into
+\[
+\mathcal J_{\rm f}=\{j:h_j\leq\sigma\},\qquad
+\mathcal J_{\rm c}=\{j:h_j>\sigma\}.
+\]
+For a nonempty group \(G\in\{\mathcal J_{\rm f},\mathcal J_{\rm c}\}\),
+put
+\[
+w_j=
+\begin{cases}
+h_j/\sigma,&j\in\mathcal J_{\rm f},\\
+(h_j/\sigma)^{2-k},&j\in\mathcal J_{\rm c},
+\end{cases}
+\qquad
+W_G=\sum_{\ell\in G}w_\ell.
+\]
+If \(m\in\{1,2\}\) groups are nonempty, set
+\[
+p_j=\frac1m\frac{w_j}{W_G}\qquad(j\in G).
+\]
+An empty group contributes no indices and no normalizer is evaluated.
+
+Let \(\mathcal S=\{0,1/4,1/2,3/4\}\).  For \(a,b\in\mathcal S\), define
+\[
+Q_{j,a}(x)
+=a h_j+h_j\left\lfloor\frac{x-a h_j}{h_j}\right\rfloor,
+\qquad
+F_{j,a,b}(x)=Q_{j,a}(x)-Q_{j+1,b}(x).
+\]
+Independently for every \(i\in I_{\rm ref}\), draw before communication
+\[
+L_i\sim(p_0,\ldots,p_{J-1}),\qquad
+A_i,B_i\mathrel{\stackrel{\rm iid}{\sim}}\operatorname{Unif}(\mathcal S),
+\qquad
+U_i\sim\operatorname{Unif}[-1,2].
+\]
+The encoder sends the single bit
+\[
+Y_i=\mathbf1\{X_i\in\mathcal A_i\},\qquad
+\mathcal A_i=
+\left\{x:\frac{F_{L_i,A_i,B_i}(x)}{h_{L_i}}\geq U_i\right\}.
+\]
+Every set \(\mathcal A_i\) is determined by its public seed and contains no
+occurrence of \(c\).
+
+\subsection{Decoder}
+
+For every \(0\leq j\leq J\), let \(a_j(c)\) be the unique element of
+\(\mathcal S\) satisfying
+\[
+\left\{\frac{c}{h_j}-a_j(c)\right\}\in[3/8,5/8),
+\]
+where braces denote fractional part.  Write
+\[
+Q_j^c=Q_{j,a_j(c)},\qquad
+D_j^c=Q_j^c-Q_{j+1}^c
+=F_{j,a_j(c),a_{j+1}(c)}.
+\]
+The decoder computes, without another message,
+\[
+\begin{split}
+Z_i(c)
+&=\frac{16}{p_{L_i}}\,
+\mathbf1\{(A_i,B_i)=(a_{L_i}(c),a_{L_i+1}(c))\}\,3h_{L_i}\\
+&\quad{}\times\left[
+Y_i-\mathbf1\left\{
+\frac{F_{L_i,A_i,B_i}(c)}{h_{L_i}}\geq U_i
+\right\}\right].
+\end{split}
+\]
+Choose integers \(s,q\geq1\), with \(q\) odd, before communication, set
+\(N_{\rm ref}=qs\), and partition \(I_{\rm ref}\) into fixed blocks
+\(G_1,\ldots,G_q\) of size \(s\).  With
+\[
+\overline Z_g(c)=\frac1s\sum_{i\in G_g}Z_i(c),
+\]
+the final estimate is
+\[
+\widehat\mu
+=c+\operatorname{median}\bigl(
+\overline Z_1(c),\ldots,\overline Z_q(c)\bigr).
+\]

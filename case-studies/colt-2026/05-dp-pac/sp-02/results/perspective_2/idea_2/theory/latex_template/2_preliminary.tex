@@ -1,0 +1,14 @@
+\section{Preliminaries}
+\label{sec:preliminaries}
+
+For $x>1$, define $\log_2^{(0)}x=x$ and
+$\log_2^{(r+1)}x=\log_2(\log_2^{(r)}x)$ whenever the latter is defined.
+We use
+\[
+\log^*x:=\min\{r\geq0:\log_2^{(r)}x\leq1\}.
+\]
+This is the only asymptotic scale in the main theorem.  The lower bound is
+deterministic once the fixed-sample PAC and privacy antecedents hold; the
+probability in the antecedent is the joint probability over the iid sample
+and the learner's internal randomness, and the relevant metric is zero-one
+risk $L_Q$.

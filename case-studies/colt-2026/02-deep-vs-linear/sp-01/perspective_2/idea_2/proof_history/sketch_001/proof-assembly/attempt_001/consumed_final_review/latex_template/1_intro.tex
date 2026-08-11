@@ -1,0 +1,137 @@
+\section{Theoretical Setup}
+\label{sec:setup}
+
+\subsection{Problem setting}
+
+Fix a tie label $\tau\in\{-1,+1\}$, equal to the convention used for
+$\operatorname{sign}(0)$ in the learning protocol, and define
+\[
+\operatorname{sgn}_{\tau}(z):=
+\begin{cases}
++1,&z>0,\\
+-1,&z<0,\\
+\tau,&z=0.
+\end{cases}
+\]
+Let $\mathcal X=\{-1,+1\}^n$, let $\Delta(\mathcal X)$ denote the set of
+probability distributions on $\mathcal X$, and let
+$\mathcal H\subseteq\{-1,+1\}^{\mathcal X}$.  Since $\mathcal X$ is
+finite, $\mathcal H$ is finite.  Its deterministic dimension complexity is
+\[
+\operatorname{dc}(\mathcal H)
+:=\min\left\{q\in\mathbb Z_{\geq0}:
+\begin{array}{l}
+\exists\Phi:\mathcal X\to\mathbb R^q\ \forall h\in\mathcal H\
+\exists u_h\in\mathbb R^q\ \forall x\in\mathcal X,\\[1mm]
+\operatorname{sgn}_{\tau}(\langle u_h,\Phi(x)\rangle)=h(x)
+\end{array}
+\right\}.
+\]
+We set $\operatorname{dc}(\varnothing)=0$ and use
+$\mathbb R^0=\{0\}$ and $\langle0,0\rangle=0$.
+
+Fix a fully connected, bias-free ReLU architecture with $n_0=n$, $n_L=1$,
+positive integer widths $n_1,\ldots,n_{L-1}$, parameter matrices
+$\theta_i\in\mathbb R^{n_i\times n_{i-1}}$, and parameter count
+\[
+S:=\sum_{i=1}^{L}n_i n_{i-1}.
+\]
+For $z_0=x$, set $z_i=\sigma(\theta_i z_{i-1})$ for $1\leq i<L$, where
+$\sigma(a)=\max\{0,a\}$ coordinatewise, and set
+$f_\theta(x)=\theta_Lz_{L-1}$.  Initialize independently according to
+\[
+(\theta_i^{(0)})_{ab}\sim\mathcal N(0,1/n_{i-1}).
+\]
+At ReLU kinks, $\nabla^{\mathrm{src}}$ denotes the fixed gradient or
+subgradient convention of the protocol; it makes the recursion single-valued
+without assuming that kinks are avoided.  Given $\mathcal D\in\Delta(\mathcal
+X)$ and $h^\star\in\mathcal H$, draw
+$x^{(0)},\ldots,x^{(T-1)}\stackrel{\mathrm{iid}}{\sim}\mathcal D$ and perform
+\[
+\theta^{(t+1)}=\theta^{(t)}-
+\eta\nabla^{\mathrm{src}}_\theta
+\ell\!\left(h^\star(x^{(t)})f_{\theta^{(t)}}(x^{(t)})\right),
+\qquad
+\ell(z)=\log(1+e^{-z}),
+\quad 0\leq t<T.
+\]
+The latter-half aggregate and returned classifier are
+\[
+A_{\mathcal D,h^\star}(x)
+:=\sum_{t=\lceil T/2\rceil}^{T}f_{\theta^{(t)}}(x),
+\qquad
+\widehat h_{\mathcal D,h^\star}(x)
+:=\operatorname{sgn}_{\tau}(A_{\mathcal D,h^\star}(x)).
+\]
+For any binary classifier $g$, write
+\[
+\mathcal L_{\mathcal D,h}(g)
+:=\Pr_{x\sim\mathcal D}[g(x)h(x)<0]
+=\Pr_{x\sim\mathcal D}[g(x)\neq h(x)].
+\]
+
+\subsection{Assumptions}
+
+\begin{assumption}[Source parameter regime]
+\label{assump:source-regime}
+The integers $n,L,T$ are positive, all network widths are positive integers
+with $n_0=n$ and $n_L=1$, $\eta>0$, $0\leq\varepsilon<1/4$, and the
+confident-map dimension $d\in\mathbb Z_{\geq0}$ is an exposed parameter.
+\end{assumption}
+
+\begin{assumption}[Universal exact-SGD success]
+\label{assump:universal-sgd-success}
+The architecture, $\eta$, and $T$ are fixed before the distribution and
+target are chosen, and
+\[
+\forall\mathcal D\in\Delta(\mathcal X)\ \forall h^\star\in\mathcal H,
+\qquad
+\mathbb E_{\theta^{(0)},\,
+x^{(0:T-1)}\stackrel{\mathrm{iid}}{\sim}\mathcal D}
+\left[
+\mathcal L_{\mathcal D,h^\star}
+(\widehat h_{\mathcal D,h^\star})
+\right]
+\leq\varepsilon.
+\]
+The expectation is over exactly the Gaussian initialization and the one-sample
+SGD draws described above; the loss, update, architecture, and returned
+predictor are unchanged.
+\end{assumption}
+
+\begin{assumption}[Target-independent tie-resolved confident map]
+\label{assump:tie-resolved-confident-map}
+There exists one probability law $\mathcal P$ on maps
+$\phi:\mathcal X\to\mathbb R^d$, selected before $\mathcal D$ and $h$, such
+that
+\[
+\exists\mathcal P\ \forall\mathcal D\in\Delta(\mathcal X)\
+\forall h\in\mathcal H,
+\qquad
+\Pr_{\phi\sim\mathcal P}\!\left[
+\exists w\in\mathbb R^d\ \forall x\in\mathcal X,
+\ \operatorname{sgn}_{\tau}(\langle w,\phi(x)\rangle)=h(x)
+\right]\geq\frac12.
+\]
+Thus $\mathcal P$ is independent of the subsequently quantified distribution
+and target, whereas $w$ may depend on $(\phi,h)$.  The event is exact and
+tie-resolved; no nonzero margin or avoidance of zero scores is assumed.
+\end{assumption}
+
+\subsection{Formalized goal}
+
+The objective is the following conditional deterministic amplification
+statement with the explicit universal constant $7$:
+\[
+\operatorname{dc}(\mathcal H)\leq 7TSd.
+\]
+The constant must have no dependence on
+$n,\mathcal H,L,(n_i)_{i=0}^L,S,\eta,T,\varepsilon,d$, or $\mathcal P$.
+The proof must derive $\operatorname{VC}(\mathcal H)<2T$, the finite-class
+count, and one deterministic common feature map.  If a separate result also
+establishes an explicit polynomial bound $d\leq p(S,T)$ with no hidden
+$n$- or $\eta$-dependence, the same theorem specializes to
+$\operatorname{dc}(\mathcal H)\leq7TSp(S,T)$.
+Assumption~\ref{assump:tie-resolved-confident-map}, and in particular such a polynomial
+bound on $d$, is an additional conditional premise; it is not claimed to
+follow from Assumption~\ref{assump:universal-sgd-success}.

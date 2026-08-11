@@ -1,0 +1,19 @@
+You are the distinct step-scoped producer for perspective_1/idea_1, step_004, unit attempt 1, sketch attempt 2, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+Read <CODEX_SKILLS_ROOT>/proof-step/SKILL.md completely and every directly required shared contract/template it names. Prove exactly the accepted sketch-attempt-2 `step_004` row and write only perspective_1/idea_1/proof_steps/step_004/proof.md. Do not modify any other file.
+
+Binding SHA-256 values: setting f77d11e1a559e22a96b14de1936d50c691c79d5a4a15e5806ddf4e6d119ada83; accepted sketch 2fa48ee16cca9a8d0379071f448d1e72ce98ae46d624482d772e74b97649c74a; accepted sketch review 40b66331aa50a66607d068e266c545a865044bd175a56d81f012542e6d17d6f8; accepted global proof 45e93d102aa948c0d80886e5f21cf3bdaa412dfaa25611684eb363d48fa1f5b9; accepted global review cd86cc68e3982c55aeb16fcafbda0759bb71464aee405c4a158bd41a308463db; accepted dependency step_003 proof 648841deed8e205ff9dcbf7b74267a77bdbb7d519a7ce1f9833de0d88f503cf5; accepted dependency step_003 review 456aa120c700edc7e711f09f283845c3e7eeee8036951fafdd1212e5682b2ec0.
+
+Prove exactly, for every admissible arbitrary correlated law mu and interval I, the central all-law bound
+
+Pr[there exists theta in I with <a,F(theta)>=0] <= A sqrt(N/2) integral_I ||gamma_F'(theta)||_2 dtheta.
+
+Start only from the exact central incidence-volume interface exported by accepted step_003, the full joint-density cap in `assump:cube-density-laws`, cube support, and the setting definitions. Map Ball, "Cube Slicing in R^n", main theorem, DOI 10.1090/S0002-9939-1986-0840631-0, from its unit-volume central cube convention to gamma_F(theta)^perp intersect [-R,R]^N, obtaining the literal section bound sqrt(2)(2R)^(N-1), with Euclidean Hausdorff measure and orientation compatibility checked explicitly. On each section prove |<gamma_F',a>| <= R sqrt(N)||gamma_F'||_2, apply the full joint-density cap without independence or marginal arguments, and expose the exact identity
+
+kappa R sqrt(N) sqrt(2)(2R)^(N-1) = A sqrt(N/2),  A=(2R)^N kappa.
+
+Handle N=1 directly rather than misapplying a positive-dimensional cube-section statement; also handle empty/zero-length intervals, endpoints, stationary gamma_F, tangent/multiple/infinite-fiber and identically-zero cases inherited through step_003, closed cube faces, bounds above one, all orientations, and the nonempty-law implication A>=1 without using it in the algebra. Preserve ordinary probability, interval uniformity, exact original coefficient coordinates, no union bound, no confidence conversion, and no hidden factor. Do not claim the central result replaces the separate affine-monic route.
+
+Treat the accepted global pair only as diagnostic planning context, never proof evidence. The pre-overwrite live step_004 proof/review are stale sketch-1 artifacts with hashes 4e5a3c69a4f43b5e18bbc4d530dd6dd6142e14578dc9eaf1999e835fa9636ac5 and 69f88a79fa061835b2d831fc1678552ff496ccea274f775463935e6c0cc7c89b; byte-identical consumed copies already exist under perspective_1/idea_1/proof_history/sketch_001/proof_steps/step_004/attempt_001/. They may be consulted only as permitted latest same-step diagnostics, never current evidence or acceptance.
+
+Use every required template section, stable local-unit IDs, paper-ready theorem labels, full citation/source-object/hypothesis/conclusion mapping, explicit assumption and constant provenance, target-step assembly, and exact rate audit. Set COMPLETE only if the exact target is proved. Validate hashes, identity, headings, tables, assumption IDs, labels/references, source mapping, constants, quantifiers, boundary cases, ASCII/control bytes, TeX balance, and single-file scope. Report status, local-unit count, blockers, and final SHA-256.

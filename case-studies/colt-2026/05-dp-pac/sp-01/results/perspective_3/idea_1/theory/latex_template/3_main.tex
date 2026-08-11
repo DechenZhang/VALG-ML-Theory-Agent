@@ -1,0 +1,94 @@
+\section{Main Theorem}\label{sec:main-theorem}
+
+\begin{theorem}[Tagged threshold-product lower bound]\label{thm:main}
+There exist absolute constants
+\[
+a>0,
+\qquad c_\delta>0,
+\qquad N_0\in\mathbb Z_{\ge2},
+\]
+for which one may fix
+\[
+\varepsilon_0=0.1,
+\qquad
+\alpha_0=\beta_0=2^{-13},
+\]
+with the following property.  Choose, in this order, integers
+$k\ge2$, $N\ge N_0$, and $n\ge1$; a privacy pair
+$(\varepsilon,\delta)$; and an arbitrary randomized, computationally
+unrestricted, possibly improper map
+\[
+A:(X_{k,N}\times\{0,1\})^n\longrightarrow\mathcal H_{k,N}.
+\]
+If Assumptions~\ref{assump:candidate-regime},
+\ref{assump:central-dp}, and
+\ref{assump:distribution-free-realizable-pac} hold for this same candidate,
+then
+\[
+n\ge a k\log_2^*N.
+\tag{1}\label{eq:main-nonasymptotic}
+\]
+
+For the diagonal specialization, put
+$T_s=\operatorname{Tow}_2(s)$ and
+\[
+r_0=\min\{s\in\mathbb Z_{\ge2}:T_s\ge N_0\}.
+\]
+For every integer $r\ge2$,
+\[
+\VC(C_{r,T_r})=r,
+\qquad
+\LD(C_{r,T_r})=rT_{r-1},
+\qquad
+|C_{r,T_r}|=(T_r+1)^r,
+\tag{2}\label{eq:main-structure}
+\]
+and
+\[
+r-1\le\log_2^*\LD(C_{r,T_r})\le r.
+\tag{3}\label{eq:main-ld-logstar}
+\]
+Consequently,
+\[
+\frac12r^2
+\le
+\VC(C_{r,T_r})\log_2^*\LD(C_{r,T_r})
+\le r^2.
+\tag{4}\label{eq:main-product-scale}
+\]
+For every $r\ge r_0$, every diagonal candidate with
+$k=r$, $N=T_r$ satisfying the same three assumptions obeys
+\[
+n\ge ar^2
+\qquad\text{and}\qquad
+n\ge a\,\VC(C_{r,T_r})\log_2^*\LD(C_{r,T_r}).
+\tag{5}\label{eq:main-diagonal}
+\]
+All constants are fixed before $r,k,N,n,\varepsilon,\delta$, and $A$.
+
+The deterministic comparison with the additive expression is
+\[
+2r-1
+\le \VC(C_{r,T_r})+\log_2^*\LD(C_{r,T_r})
+\le2r.
+\tag{6}\label{eq:main-additive}
+\]
+At the same time,
+\[
+r^2=o\!\left(
+\VC(C_{r,T_r})2^{\log_2^*\LD(C_{r,T_r})}
+\right)
+\qquad\text{and}\qquad
+r^2=o(\log|C_{r,T_r}|).
+\tag{7}\label{eq:main-remaining-scales}
+\]
+\end{theorem}
+
+Theorem~\ref{thm:main} is a lower bound for this explicit class family in
+the stated candidate regime.  It does not prove the stronger
+$\Omega(\VC\,2^{\log_2^*\LD})$ milestone, an
+$\Omega(\log|C|)$ lower bound, a universal upper bound, or a matching
+combinatorial characterization for every class of finite Littlestone
+dimension.  The comparisons in \eqref{eq:main-remaining-scales} concern
+expressions on the tower diagonal; they are not upper bounds on the true
+sample complexity.

@@ -1,0 +1,248 @@
+\section{Theoretical Setup}\label{sec:setup}
+
+\subsection{Smoothed tensor and objective}
+
+Fix $\kappa\geq 1$, integers $n,r,k$, and a fixed $q\geq4$.  Let
+$\bar A,\bar B,\bar C\in\mathbb R^{n\times r}$ be deterministic, with
+columns $\bar a_j,\bar b_j,\bar c_j$.  For a mode matrix $\bar M$, write
+\[
+  D_M=\operatorname{diag}(\|\bar m_1\|_2,\ldots,\|\bar m_r\|_2),
+  \qquad \bar M^\circ=\bar M D_M^{-1}.
+\]
+Independently over modes and columns, draw
+$\xi_j^a,\xi_j^b,\xi_j^c\sim\mathcal N(0,r^{-2q}I_n/n)$ and set
+\[
+  a_j=\bar a_j+\xi_j^a,\qquad
+  b_j=\bar b_j+\xi_j^b,\qquad
+  c_j=\bar c_j+\xi_j^c.
+\]
+Let $A=[a_1\ \cdots\ a_r]$, and define $B,C$ analogously.  With
+\[
+  D_r=\sum_{j=1}^r e_j\otimes e_j\otimes e_j,
+\]
+the realized target is
+\[
+  T=\sum_{j=1}^r a_j\otimes b_j\otimes c_j
+   =(A\otimes B\otimes C)D_r.
+\]
+
+For $X=[x_1\ \cdots\ x_k]$, $Y=[y_1\ \cdots\ y_k]$, and
+$Z=[z_1\ \cdots\ z_k]$, put
+\[
+  S(X,Y,Z)=\sum_{i=1}^k x_i\otimes y_i\otimes z_i,
+  \qquad F(X,Y,Z)=\|T-S(X,Y,Z)\|_F^2.
+\]
+Under the fixed matricization convention, the Khatri--Rao columns in the
+$X,Y,Z$ updates are respectively $z_i\otimes y_i$, $z_i\otimes x_i$, and
+$y_i\otimes x_i$.
+
+For a raw component $(\widetilde x,\widetilde y,\widetilde z)$ with three
+positive norms, let
+\[
+  g=(\|\widetilde x\|_2\|\widetilde y\|_2
+       \|\widetilde z\|_2)^{1/3}
+\]
+and replace the component by
+\[
+  \left(g\frac{\widetilde x}{\|\widetilde x\|_2},
+        g\frac{\widetilde y}{\|\widetilde y\|_2},
+        g\frac{\widetilde z}{\|\widetilde z\|_2}\right).
+\]
+If one factor is zero, leave the raw triple unchanged.  Denote this
+columnwise, product-preserving map by $\mathcal G$.  Draw the entries of
+$X_0^{\rm raw},Y_0^{\rm raw},Z_0^{\rm raw}$ independently from
+$\mathcal N(0,1/n)$, independently of the smoothing, and set
+$\theta_0=(X_0,Y_0,Z_0)=\mathcal G(X_0^{\rm raw},Y_0^{\rm raw},Z_0^{\rm raw})$.
+For $\theta_t=(X_t,Y_t,Z_t)$, perform the simultaneous full-batch updates
+\[
+\begin{aligned}
+  \widetilde X_{t+1}&=X_t-\eta\nabla_XF(\theta_t),\\
+  \widetilde Y_{t+1}&=Y_t-\eta\nabla_YF(\theta_t),\\
+  \widetilde Z_{t+1}&=Z_t-\eta\nabla_ZF(\theta_t),\\
+  \theta_{t+1}&=\mathcal G(\widetilde X_{t+1},
+       \widetilde Y_{t+1},\widetilde Z_{t+1}),
+  \qquad \eta=(nkr)^{-12}.
+\end{aligned}
+\]
+There is no projection, clipping, weight decay, sparsification, restart, or
+early stopping.
+
+\subsection{Coefficient geometry and generated events}
+
+On the event that $A,B,C$ have full column rank, define
+\[
+  \alpha_{i,t}=A^\dagger x_{i,t},\qquad
+  \beta_{i,t}=B^\dagger y_{i,t},\qquad
+  \gamma_{i,t}=C^\dagger z_{i,t},
+\]
+and normalized initial coordinates
+\[
+  \bar\alpha_{i,0}=\sqrt{n/r}\,\alpha_{i,0},\quad
+  \bar\beta_{i,0}=\sqrt{n/r}\,\beta_{i,0},\quad
+  \bar\gamma_{i,0}=\sqrt{n/r}\,\gamma_{i,0}.
+\]
+Set
+\[
+  \widehat D_0=\sum_{i=1}^k
+    \alpha_{i,0}\otimes\beta_{i,0}\otimes\gamma_{i,0},
+  \qquad \delta_0=\frac18.
+\]
+The raw tangent span is
+\[
+\begin{aligned}
+\mathscr S_0^{\rm raw}=\operatorname{span}\{&
+ u\otimes\beta_{i,0}\otimes\gamma_{i,0},
+ \alpha_{i,0}\otimes v\otimes\gamma_{i,0},
+ \alpha_{i,0}\otimes\beta_{i,0}\otimes w:\\
+&u,v,w\in\mathbb R^r,\ i\in[k]\},
+\end{aligned}
+\]
+and $\mathscr S_0^{\rm norm}$ is defined by replacing fixed coefficient
+vectors by their barred versions.  Multiplication of each generating block by
+its nonzero normalization scalar leaves its range unchanged, so
+$\mathscr S_0^{\rm raw}=\mathscr S_0^{\rm norm}$; this definition-level
+identity is verified explicitly in
+Proposition~\ref{prop:step-002-balancing-invariance}.  Write their common
+value as $\mathscr S_0$.  Normalization is used only for the certificate
+geometry: $D_r$, $\widehat D_0$, and the physical residual remain raw.
+
+Let $\kappa_1=2\kappa^2$.  Define the realized-factor event
+\[
+  \mathcal E_{\rm cond}=
+  \bigcap_{M\in\{A,B,C\}}
+  \{\|M\|_{\rm op}\le\kappa_1,
+    \ \sigma_{\min}(M)\ge\kappa_1^{-1}\}.
+\]
+For the normalized pair matrices, for example
+\[
+  \bar K_0^{\bar\beta\bar\gamma}
+  =[\bar\beta_{1,0}\otimes\bar\gamma_{1,0}\ \cdots\
+    \bar\beta_{k,0}\otimes\bar\gamma_{k,0}],
+\]
+let $\mathcal E_{\rm gram}^{\rm norm}$ be the event that every eigenvalue of
+each of the three normalized pair Grams lies in $[r^{-20},r^{20}]$.  The raw
+and normalized pair Grams obey the exact identity
+\[
+  G_{\rm raw}^{pq}=(r/n)^2G_{\rm norm}^{pq}
+  \quad(pq\in\{\beta\gamma,\alpha\gamma,\alpha\beta\}).
+\]
+Define
+\[
+\begin{aligned}
+  \mathcal E_{\rm deficit}
+  =\{\exists W_0:\ &\|W_0\|_F=1,\ W_0\perp\mathscr S_0,\\
+  &\langle D_r-\widehat D_0,W_0\rangle_F
+     \ge\delta_0\|D_r\|_F\},
+\end{aligned}
+\]
+and
+\[
+  \mathcal E_{\rm size}
+  =\left\{\max_{i\in[k],\,m\in\{x,y,z\}}\|m_{i,0}\|_2\le2\right\}.
+\]
+The generated initialization event is
+\[
+  \mathcal E_{\rm init\_norm}
+  =\mathcal E_{\rm cond}\cap\mathcal E_{\rm gram}^{\rm norm}
+   \cap\mathcal E_{\rm deficit}\cap\mathcal E_{\rm size}.
+\]
+
+Define the raw coefficient map
+\[
+  \Psi_{A,B,C}(X,Y,Z)
+  =\sum_{i=1}^k(A^\dagger x_i)\otimes(B^\dagger y_i)
+       \otimes(C^\dagger z_i),
+\]
+and the balanced-representative distance and total path length
+\[
+\begin{aligned}
+ d_{\rm bal}(\theta,\theta')
+ &=\bigl(\|X-X'\|_F^2+\|Y-Y'\|_F^2+\|Z-Z'\|_F^2\bigr)^{1/2},\\
+ E_{\rm path}&=\sum_{t\ge0}d_{\rm bal}(\theta_{t+1},\theta_t).
+\end{aligned}
+\]
+With
+\[
+  C_{\rm CP}(\kappa,R)=\kappa_1^3(1+3R),
+  \qquad
+  E_\star=\min\left\{1,
+   \sqrt{\frac{\delta_0}{16C_{\rm CP}(\kappa,3)}}\right\},
+\]
+the sole trajectory certificate is
+\[
+  \mathcal C_{\rm path}=\{E_{\rm path}\le E_\star\}.
+\]
+It contains no convergence, boundedness, Gram, trapping, or positive-loss
+clause.  Finally, with $P_M=MM^\dagger$,
+\[
+  (P_A\otimes P_B\otimes P_C)(T-S(\theta))
+  =(A\otimes B\otimes C)(D_r-\Psi_{A,B,C}(\theta)).
+\]
+
+\subsection{Assumptions}
+
+\begin{assumption}[Well-conditioned deterministic bases]
+\label{assump:base_conditioning}
+Every base column is nonzero and satisfies
+$\kappa^{-1}\le\|\bar m_j\|_2\le\kappa$.  For
+$M\in\{\bar A,\bar B,\bar C\}$, every singular value of $M^\circ$ lies in
+$[\kappa^{-1},\kappa]$.
+\end{assumption}
+
+\begin{assumption}[Smoothed dimension regime]
+\label{assump:dimension}
+The integer $q\ge4$ is fixed, $r$ is sufficiently large for the asymptotic
+statement, and $n\ge C(\kappa,q)r^4\log r$, with no upper restriction on $n$.
+\end{assumption}
+
+\begin{assumption}[Universal superlinear rank window]
+\label{assump:rank_window}
+The exponent is $c=1/4$ and
+$r<k\le\lfloor r^{5/4}\rfloor$.
+\end{assumption}
+
+\begin{assumption}[Independent Gaussian smoothing]
+\label{assump:gaussian_smoothing}
+All smoothing vectors are mutually independent with law
+$\mathcal N(0,r^{-2q}I_n/n)$ and are independent of initialization.
+\end{assumption}
+
+\begin{assumption}[Gaussian initialization]
+\label{assump:independent_initialization}
+Before balancing, all entries of
+$X_0^{\rm raw},Y_0^{\rm raw},Z_0^{\rm raw}$ are independent
+$\mathcal N(0,1/n)$ variables.
+\end{assumption}
+
+\begin{assumption}[Fixed balanced gradient-descent protocol]
+\label{assump:gd_step}
+The simultaneous full-batch update, step size $\eta=(nkr)^{-12}$, and
+product-preserving map $\mathcal G$ are exactly those specified above, with no
+additional optimization operation.
+\end{assumption}
+
+\subsection{Formalized goal}
+
+The objective is a conditional theorem.  Uniformly over the stated dimension
+and rank ranges and every admissible deterministic base triple, the generated
+event must satisfy
+\[
+  \mathbb P(\mathcal E_{\rm init\_norm})\ge1-r^{-10}.
+\]
+On $\mathcal E_{\rm init\_norm}\cap\mathcal C_{\rm path}$, the balanced
+iterates must converge to a finite $\theta_\infty$ and have a strictly positive
+relative limiting loss.  If $\mathcal F_+$ denotes this
+convergence-and-positive-limit event, the required probability statement is
+\[
+\begin{aligned}
+ \mathbb P(\mathcal F_+)
+ &\ge \mathbb P(\mathcal E_{\rm init\_norm}\cap\mathcal C_{\rm path})\\
+ &=\mathbb P(\mathcal E_{\rm init\_norm})
+   \mathbb P(\mathcal C_{\rm path}\mid\mathcal E_{\rm init\_norm})\\
+ &\ge(1-r^{-10})
+   \mathbb P(\mathcal C_{\rm path}\mid\mathcal E_{\rm init\_norm}).
+\end{aligned}
+\]
+No positive lower bound for the final conditional factor is claimed.  Proving
+such a uniform lower bound remains the source-level gap; in particular, the
+result below does not solve the original unconditional open problem.

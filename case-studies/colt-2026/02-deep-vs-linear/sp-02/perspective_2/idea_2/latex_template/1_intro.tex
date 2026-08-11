@@ -1,0 +1,150 @@
+\section{Theoretical Setup}
+
+\subsection{Problem Setting}
+
+Let \(\mathcal X\) be an arbitrary, possibly empty or infinite, domain, and
+let \(\mathcal H\subseteq\{-1,+1\}^{\mathcal X}\).  Write
+\(\mathcal P(\mathcal X)\) for the probability laws on \(\mathcal X\); in
+particular, all finitely supported laws and all point masses on a nonempty
+domain are available.  Protocol maps are assumed measurable whenever needed
+for the expectations below.  For \(\mathcal D\in\mathcal P(\mathcal X)\),
+\(h\in\mathcal H\), and \(g:\mathcal X\to\{-1,+1\}\), set
+\[
+\mathcal L_{\mathcal D,h}(g)
+:=\Pr_{x\sim\mathcal D}[g(x)\ne h(x)].
+\]
+
+We use exact sign representation only with nonzero scores.  Thus
+\(\varphi:\mathcal X\to\mathbb R^d\) represents \(h\) with weight
+\(w_h\in\mathbb R^d\) when
+\(h(x)\langle w_h,\varphi(x)\rangle>0\) for every \(x\).  With the infimum
+of the empty set understood as \(+\infty\), define
+\[
+\operatorname{dc}(\mathcal H)
+:=\inf\!\left\{d\in\mathbb N_0:
+\begin{array}{l}
+\exists\varphi:\mathcal X\to\mathbb R^d\ \ \forall h\in\mathcal H\ 
+\exists w_h\in\mathbb R^d\ \ \forall x\in\mathcal X,\\[-2pt]
+h(x)\langle w_h,\varphi(x)\rangle>0
+\end{array}\right\}.
+\]
+
+Represent all randomness of one fixed learner \(A\) by a seed
+\(U\sim\mu_A\) on a seed space \(\Omega_A\).  Conditional on \(U=u\), at
+each round \(t\le m\), the learner either stops or selects, as a function of
+\(u\) and the preceding public query-response transcript, an unrestricted
+bounded query
+\[
+q_t:\mathcal X\times\{-1,+1\}\to[-1,1].
+\]
+After at most \(m\) queries it returns a binary predictor.  The seed contains
+all query-selection and output randomness.
+
+Put \(I_\tau=[-1-\tau,1+\tau]\).  A deterministic complete response rule
+\(R\) assigns a value in \(I_\tau\) to every public query-bearing history
+\((q_1,v_1,\ldots,q_{t-1},v_{t-1},q_t)\) admitted by \(A\), including
+histories not reached for a particular seed or preceding reply sequence.  It
+observes the public queries and replies but not the hidden seed except through
+that public transcript.  Let \(\mathfrak R_A^{\mathrm{all}}\) denote all such
+rules.  For \(m=0\), this family contains the unique empty rule.  For
+\(u\in\Omega_A\) and \(R\in\mathfrak R_A^{\mathrm{all}}\), let
+\(g_{u,R}:\mathcal X\to\{-1,+1\}\) be the terminal predictor.
+
+For \(\mathcal D\in\mathcal P(\mathcal X)\) and \(h\in\mathcal H\), call
+\(R\) \((\mathcal D,h,\tau)\)-valid if, at every round reached by every
+seed interacting with \(R\),
+\[
+\left|v_t-\mathbb E_{x\sim\mathcal D}q_t(x,h(x))\right|\le\tau.
+\]
+Write \(\mathfrak R_{A,\tau}(\mathcal D,h)\) for these valid complete rules.
+This is an adaptive adversarial policy class: the accuracy premise below is
+pointwise in \(R\), and no distribution over responses is introduced.
+Any randomized response policy is covered conditionally on each realization
+of its own randomness.
+
+For every complete rule define its pre-instance, seed-averaged terminal
+response
+\[
+F_R(x):=\mathbb E_{U\sim\mu_A}[g_{U,R}(x)]\in[-1,1]
+\]
+and the static mean-response space and rank
+\[
+V_A:=\operatorname{span}_{\mathbb R}
+\{F_R:R\in\mathfrak R_A^{\mathrm{all}}\}
+\subseteq\mathbb R^{\mathcal X},
+\qquad
+r_A:=\dim V_A\in\mathbb N_0\cup\{\infty\}.
+\]
+These objects are fixed before any distribution, target, valid policy, or
+realized seed is selected.  When \(r_A<\infty\), define in the unique
+finite-dimensional topology of \(V_A\)
+\[
+K_A:=\overline{\operatorname{conv}}
+\{F_R:R\in\mathfrak R_A^{\mathrm{all}}\}\subseteq V_A.
+\]
+
+\subsection{Assumptions}
+
+\begin{assumption}[Primitive parameter regime]
+\label{assump:parameter-regime}
+The parameters satisfy \(m\in\mathbb N_0\), \(\tau>0\), and
+\(\varepsilon\in[0,1/4)\).  The numerical constants \(B,k\in\mathbb R\)
+satisfy \(B\ge1\) and \(k\ge1\), are fixed before the learner instance, and
+are fixed independently of
+\(\mathcal X,\mathcal H,m,\tau,\varepsilon,\mathcal D,h\), all response
+rules, and all learner seeds.
+\end{assumption}
+
+\begin{assumption}[Fixed randomized adaptive unrestricted-SQ interface]
+\label{assump:adaptive-sq-interface}
+The learner \(A\), fixed before \(\mathcal D\), \(h\), and the response
+policy, has seed law \(\mu_A\), makes at most \(m\) adaptive bounded
+unrestricted queries of the form above, may use the complete preceding
+real-valued public transcript, and returns a binary predictor.  Interaction
+with every deterministic complete response rule is well defined, and all seed
+averages and displayed population expectations exist.  No additional
+restriction is imposed on the query family, adaptivity, response precision,
+seed space, or terminal-predictor span.
+\end{assumption}
+
+\begin{assumption}[Every-valid-policy universal guarantee]
+\label{assump:universal-adversarial-guarantee}
+For every \(\mathcal D\in\mathcal P(\mathcal X)\), every
+\(h\in\mathcal H\), and every
+\(R\in\mathfrak R_{A,\tau}(\mathcal D,h)\),
+\[
+\mathbb E_{U\sim\mu_A}
+\mathcal L_{\mathcal D,h}(g_{U,R})\le\varepsilon.
+\]
+The response rule is universally quantified and adversarial; the sole
+averaging is over \(U\).
+\end{assumption}
+
+\begin{assumption}[Static polynomial mean-response-rank certificate]
+\label{assump:mean-response-rank}
+The rank over all deterministic complete response rules is finite and obeys
+\[
+r_A=\dim\operatorname{span}_{\mathbb R}
+\{F_R:R\in\mathfrak R_A^{\mathrm{all}}\}
+\le B\bigl(1+m/\tau^2\bigr)^k.
+\]
+This certificate is fixed before \(\mathcal D,h\), a selected valid rule, and
+the learner seed.  It constrains only the seed-averaged responses \(F_R\), not
+the cardinality or span of the individual terminal predictors, and it does
+not assume a representation of \(\mathcal H\).
+\end{assumption}
+
+\subsection{Formalized Goal}
+
+The objective is to choose one basis of \(V_A\), independently of every
+learning instance, whose coordinate map represents every \(h\in\mathcal H\)
+with deterministic pointwise signed margin \(1-2\varepsilon\), and to prove
+the exact dimension chain
+\[
+\operatorname{dc}(\mathcal H)
+\le r_A\le B\bigl(1+m/\tau^2\bigr)^k.
+\]
+Only the target weight may depend on \(h\).  The desired statement is
+conditional on Assumption~\ref{assump:mean-response-rank}, has no probability
+qualification or domain-size dependence, and must cover empty domains or
+classes, zero rank, \(m=0\), \(\varepsilon=0\), \(B=1\), and \(k=1\).

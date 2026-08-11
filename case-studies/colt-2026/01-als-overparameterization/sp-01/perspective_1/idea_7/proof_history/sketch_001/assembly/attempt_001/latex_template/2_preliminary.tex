@@ -1,0 +1,104 @@
+\section{Preliminaries}\label{sec:preliminaries}
+
+For a matrix $H$, use the induced row and column masses
+\[
+ \|H\|_{\rm row,1}:=\max_i\sum_j|H_{ij}|,qquad
+ \|H\|_{\rm col,1}:=\max_j\sum_i|H_{ij}|.
+\]
+For unit-column matrices $A$ and $B$, the Khatri--Rao product $A\odot B$
+has column $a_j\otimes b_j$. Thus
+\[
+ (A\odot B)^\top(A\odot B)=(A^\top A)\circ(B^\top B),
+\]
+where $\circ$ denotes the Hadamard product. This identity is used for the
+three target designs in the static and landing arguments.
+
+For a target index $j$ and a state $h=(p,q,s)$ with nonzero target
+correlations, write
+\[
+ A_{\ell\mid j}(p)={|\langle u_\ell,p\rangle|\over
+ |\langle u_j,p\rangle|},\quad
+ B_{\ell\mid j}(q)={|\langle v_\ell,q\rangle|\over
+ |\langle v_j,q\rangle|},\quad
+ C_{\ell\mid j}(s)={|\langle w_\ell,s\rangle|\over
+ |\langle w_j,s\rangle|}.
+\]
+The associated generated trajectory quantities are
+\[
+ R_j(h):=\max_{\ell\ne j}\max\{A_\ell B_\ell,A_\ell C_\ell,B_\ell C_\ell\},
+\]
+\[
+ S_j(h):=\max\left\{\sum_{\ell\ne j}A_\ell B_\ell,
+ \sum_{\ell\ne j}A_\ell C_\ell,
+ \sum_{\ell\ne j}B_\ell C_\ell\right\}.
+\]
+They are used only after the denominator-persistence result has established
+that the displayed ratios are defined.
+
+For selected representatives, let $P_U=P$, $P_V=Q$, $P_W=S$ and
+$G_U=U$, $G_V=V$, $G_W=W$. The same-state coefficient and residual arrays
+are defined by
+\[
+ K_M=D_\lambda\bigl((G_{M'}^\top P_{M'})\circ
+ (G_{M''}^\top P_{M''})\bigr),qquad
+ D_M=\operatorname{diag}(\|G_MK_M(:,a)\|_2).
+\]
+After the proof-only product-one gauge, the exact identity is
+\[
+ P_MD_M=G_MK_M+{\cal R}_M.
+\]
+The appendix derives its row and column consequences; the identity itself is
+not used as an unproved invariant in the theorem statement.
+
+The observable balanced seed has positive scales
+\[
+ d_{M,j}^0=\|X_M^0(:,j)\|_2,qquad
+ D_M^0=\operatorname{diag}(d_{M,j}^0),qquad
+ P_M^0=X_M^0(D_M^0)^{-1},
+\]
+and common represented products
+$\gamma_j^0=d_{U,j}^0d_{V,j}^0d_{W,j}^0$.  The logarithmic product error is
+$s_j^0=\log(\gamma_j^0/\lambda_j)$ and
+$E^0=\operatorname{diag}(e^{s_j^0/3})$, so the exact balance convention is
+\[
+ D_U^0=D_V^0=D_W^0=D_\lambda^{1/3}E^0.
+\]
+On the generated target-span seed, the exact orthogonal decomposition used
+in the landing bridge is written
+\[
+ P_M^0=G_M(I+C_M^0)+N_M^0,qquad G_M^\top N_M^0=0.
+\]
+This equation defines the coefficient and perpendicular fields; their
+numerical bounds are conclusions of the certificate and seed results, not
+assumptions in the main theorem.
+
+For a positive balanced target-span state, the quotient distance used in the
+landing and cyclic arguments is the maximum of the modewise coefficient
+errors and the absolute product-log error.  If
+$e=(C_U,C_V,C_W,s)$ and $\widetilde e=(\widetilde C_U,widetilde C_V,
+\widetilde C_W,\widetilde s)$, define
+\[
+d_Q(e,\widetilde e):=\max\left\{
+\max_{M\in\{U,V,W\}}\left(
+\|C_M-\widetilde C_M\|_{\rm row,1}\vee
+\|C_M-\widetilde C_M\|_{\rm col,1}\vee
+\max_j\|G_M(C_M-\widetilde C_M)(:,j)\|_2\right),
+\|s-\widetilde s\|_\infty\right\}.
+\]
+The exact target quotient is $0=(0,0,0,0)$; the cyclic refresh map is
+defined by the active ALS updates in the appendix.  No quotient condition is
+assumed here.
+
+The fixed cyclic chart radius used by the procedure is
+$\rho_{\rm ALS}:=1/1024$.  The inequality
+$4096\omega<\rho_{\rm ALS}/3$ is proved by the landing result and is not a
+primitive admissibility condition.
+
+Finally, the original stopping metric is
+\[
+ \operatorname{res}(X,Y,Z):=
+ {\left\|T-\sum_{i=1}^k x_i\otimes y_i\otimes z_i\right\|_F\over\|T\|_F},
+\]
+whenever $\|T\|_F>0$.  All public rates below use the ambient Frobenius norm,
+the one-drawn instance probability $1-\delta_{\rm sm}$, and conditional
+restart probability $1-\delta_{\rm init}$.

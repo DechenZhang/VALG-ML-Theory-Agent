@@ -1,0 +1,1837 @@
+\appendix
+
+\section{Proof Details}
+\setlength{\emergencystretch}{3em}
+
+\subsection{Root Feasibility and Finite Pivot Conditioning}
+
+\begin{lemma}[Compact feasibility of cube-supported roots]
+\label{lem:root-feasible-compact}
+Under Assumption~\ref{assump:shared-pfaffian-chain}, for $N\geq1$, $R>0$,
+and compact interval $\Theta$, the set
+\[
+K_R=\left\{\theta\in\Theta:
+ |b(\theta)|\leq R\sum_{i=1}^N|F_i(\theta)|\right\}
+\]
+is compact.  For every $\alpha\in[-R,R]^N$ and $\theta\in\Theta$,
+$\phi_\alpha(\theta)=0$ implies $\theta\in K_R$.  If $K_R=\varnothing$,
+then
+\[
+\{\alpha\in[-R,R]^N:\exists\theta\in\Theta,
+ \ \phi_\alpha(\theta)=0\}=\varnothing,
+\qquad
+\Gamma_{\rm piv}(b,F;R)=0.
+\]
+\end{lemma}
+
+\begin{proof}
+Assumption~\ref{assump:shared-pfaffian-chain} makes $b,F_1,\ldots,F_N$
+continuous.  Hence
+\[
+\theta\longmapsto |b(\theta)|-R\sum_{i=1}^N|F_i(\theta)|
+\]
+is continuous, and $K_R$ is its inverse image of $(-\infty,0]$.  It is
+closed relative to compact $\Theta$, and therefore compact.  This relative
+topology argument retains both endpoints of $\Theta$.
+
+If $\alpha\in[-R,R]^N$ and $\phi_\alpha(\theta)=0$, then
+$b(\theta)=-\sum_i\alpha_iF_i(\theta)$, so the finite triangle inequality
+gives
+\[
+\begin{aligned}
+|b(\theta)|
+&=\left|\sum_{i=1}^N\alpha_iF_i(\theta)\right|\\
+&\leq\sum_{i=1}^N|\alpha_i|\,|F_i(\theta)|\\
+&\leq R\sum_{i=1}^N|F_i(\theta)|
+=R\|F(\theta)\|_1.
+\end{aligned}
+\]
+Thus $\theta\in K_R$.  When $K_R$ is empty, this implication rules out
+every cube-supported root.  The second branch in the definition of
+$\Gamma_{\rm piv}$ then gives zero; no empty-supremum convention is being
+used here.
+\end{proof}
+
+\begin{lemma}[Positive available-pivot margin]
+\label{lem:positive-pivot-margin}
+Under Assumptions~\ref{assump:shared-pfaffian-chain} and
+\ref{assump:no-forced-root} and Lemma~\ref{lem:root-feasible-compact}, if
+$K_R\neq\varnothing$, then $F(\theta)\neq0$ for every $\theta\in K_R$ and
+\[
+\rho:=\min_{\theta\in K_R}\max_{1\leq j\leq N}|F_j(\theta)|>0.
+\]
+At each $\theta\in K_R$, every index attaining the displayed coordinate
+maximum is a legal pivot and has $|F_j(\theta)|\geq\rho$.
+\end{lemma}
+
+\begin{proof}
+If $\theta\in K_R$ and $F(\theta)=0$, feasibility gives
+\[
+|b(\theta)|\leq R\|F(\theta)\|_1=0.
+\]
+Then $(b(\theta),F(\theta))=(0,0)$, contrary to
+Assumption~\ref{assump:no-forced-root}.  This argument is confined to
+$K_R$; a point outside $K_R$ with $F=0$ and $b\neq0$ remains admissible and
+root-free.
+
+The function
+\[
+g(\theta)=\max_{1\leq j\leq N}|F_j(\theta)|
+\]
+is continuous as a finite maximum of continuous functions, and it is
+strictly positive on $K_R$.  Lemma~\ref{lem:root-feasible-compact} makes
+$K_R$ nonempty and compact in the present branch, so $g$ attains a minimum
+at some $\theta_*\in K_R$.  That minimum is
+$\rho=g(\theta_*)>0$.  The finite coordinate set has a maximizer at each
+point, and every maximizer has magnitude $g(\theta)\geq\rho$.
+
+Coordinates may vanish and maximizers may tie; at least one maximizer is
+nonzero.  The choice here is pointwise, with no assertion of a continuous
+or measurable global index.  When $N=1$, the sole coordinate is the
+maximizer and is nonzero on $K_R$.  Compact-set endpoints are included and
+no transversality condition is used.
+\end{proof}
+
+\begin{proposition}[Crude fixed-family pivot-variation bound]
+\label{prop:fixed-family-pivot-bound}
+Under Assumptions~\ref{assump:shared-pfaffian-chain} and
+\ref{assump:no-forced-root} and Lemmas~\ref{lem:root-feasible-compact} and
+\ref{lem:positive-pivot-margin}, suppose $K_R\neq\varnothing$ and define
+\[
+B_0:=\max_{\theta\in\Theta}
+\max\{|b(\theta)|,|F_1(\theta)|,\ldots,|F_N(\theta)|\},
+\]
+\[
+B_1:=\max_{\theta\in\Theta}
+\max\{|b'(\theta)|,|F_1'(\theta)|,\ldots,|F_N'(\theta)|\}.
+\]
+Then $B_0,B_1<\infty$, and for every $\theta\in K_R$,
+\[
+\min_{1\leq k\leq N}V_k(\theta)
+\leq2B_0B_1\rho^{-2}\bigl(1+R(N-1)\bigr).
+\]
+Consequently,
+\[
+\Gamma_{\rm piv}(b,F;R)
+\leq2B_0B_1\rho^{-2}\bigl(1+R(N-1)\bigr)<\infty.
+\]
+\end{proposition}
+
+\begin{proof}
+The functions $b,F_i,b',F_i'$ are continuous on compact $\Theta$, so the
+two displayed maxima exist and are finite.  Nonempty feasibility also gives
+$B_0\geq\rho>0$, although we never divide by $B_0$; $B_1$ need not be
+positive.
+
+Fix $\theta\in K_R$ and choose an index $j$ attaining
+$\max_k|F_k(\theta)|$.  Lemma~\ref{lem:positive-pivot-margin} gives
+$|F_j(\theta)|\geq\rho>0$.  The quotient rule and the two-term triangle
+inequality give
+\[
+\begin{aligned}
+\left|\left(\frac b{F_j}\right)'(\theta)\right|
+&=\frac{|b'(\theta)F_j(\theta)-b(\theta)F_j'(\theta)|}
+{|F_j(\theta)|^2}\\
+&\leq\frac{|b'(\theta)|\,|F_j(\theta)|
+ +|b(\theta)|\,|F_j'(\theta)|}{|F_j(\theta)|^2}\\
+&\leq\frac{B_1B_0+B_0B_1}{\rho^2}
+=\frac{2B_0B_1}{\rho^2}.
+\end{aligned}
+\]
+For each $i\neq j$, the separate quotient calculation is
+\[
+\begin{aligned}
+\left|\left(\frac{F_i}{F_j}\right)'(\theta)\right|
+&=\frac{|F_i'(\theta)F_j(\theta)-F_i(\theta)F_j'(\theta)|}
+{|F_j(\theta)|^2}\\
+&\leq\frac{|F_i'(\theta)|\,|F_j(\theta)|
+ +|F_i(\theta)|\,|F_j'(\theta)|}{|F_j(\theta)|^2}\\
+&\leq\frac{2B_0B_1}{\rho^2}.
+\end{aligned}
+\]
+There is one offset ratio and exactly $N-1$ feature ratios.  Therefore
+\[
+\begin{aligned}
+V_j(\theta)
+&=\left|\left(\frac b{F_j}\right)'(\theta)\right|
+ +R\sum_{i\neq j}\left|\left(\frac{F_i}{F_j}\right)'(\theta)\right|\\
+&\leq\frac{2B_0B_1}{\rho^2}
+ +R(N-1)\frac{2B_0B_1}{\rho^2}\\
+&=2B_0B_1\rho^{-2}\bigl(1+R(N-1)\bigr).
+\end{aligned}
+\]
+Although zero pivots have extended speed $+\infty$, the selected $j$ is
+nonzero; hence $\min_kV_k(\theta)\leq V_j(\theta)<\infty$.  Taking the
+supremum over nonempty $K_R$ proves the result.
+
+If an unselected $F_i(\theta)$ vanishes, its numerator term
+$F_iF_j'$ is zero while $F_i'F_j$ is covered by the displayed bound.  If
+$b(\theta)=0$, its corresponding term vanishes; if $b\equiv0$, then
+$b'\equiv0$ and the offset-ratio derivative is zero.  When $B_1=0$, every
+displayed derivative is zero.  For $N=1$ the feature-ratio sum is empty and
+$1+R(N-1)=1$.  The $C^1$ convention includes endpoints.  This certificate
+is fixed-family: it gives no bound for $B_0,B_1$, or $\rho^{-1}$ in terms of
+$q,M,\Delta_{\rm rnd},\Delta_{\rm aff}$ or other general presentation data.
+\end{proof}
+
+\begin{proposition}[Root feasibility and finite pivot conditioning]
+\label{prop:root-feasibility-finite-conditioning}
+Under Assumptions~\ref{assump:shared-pfaffian-chain} and
+\ref{assump:no-forced-root}, every root generated by
+$\alpha\in[-R,R]^N$ lies in compact $K_R$, a legal pivot is available at
+every feasible point, and
+\[
+0\leq\Gamma_{\rm piv}(b,F;R)<\infty.
+\]
+If $K_R=\varnothing$, the supported-root event is empty and
+$\Gamma_{\rm piv}=0$; otherwise the bound in
+Proposition~\ref{prop:fixed-family-pivot-bound} holds.
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:root-feasible-compact} gives compactness, the supported-root
+implication, and the complete empty branch.  In the nonempty branch,
+Lemma~\ref{lem:positive-pivot-margin} gives $\rho>0$ and a nonzero
+largest-coordinate pivot at each point.  Proposition~\ref{prop:fixed-family-pivot-bound}
+bounds all quotient terms for such a pivot and then takes the defining
+supremum.  These two branches prove every assertion.  The quantities
+$B_0,B_1,\rho$ witness finiteness but are not additional public rate
+factors.
+\end{proof}
+
+\subsection{Measurable Adaptive Coordinate Charts}
+
+\begin{lemma}[Borel measurability of extended pivot speeds]
+\label{lem:extended-speed-borel}
+Under Assumption~\ref{assump:shared-pfaffian-chain} and
+Proposition~\ref{prop:root-feasibility-finite-conditioning}, every extension
+$V_j:\Theta\to[0,+\infty]$ is Borel.  If $K_R\neq\varnothing$, then for
+every $\theta\in K_R$,
+\[
+\min_{1\leq i\leq N}V_i(\theta)
+\leq\Gamma_{\rm piv}(b,F;R)<\infty.
+\]
+For empty $K_R$ the pointwise statement is vacuous and
+$\Gamma_{\rm piv}=0$.
+\end{lemma}
+
+\begin{proof}
+Fix $j$.  Continuity of $F_j$ makes
+$U_j=\{\theta:F_j(\theta)\neq0\}$ relatively open and Borel.  On $U_j$,
+\[
+\left(\frac b{F_j}\right)'=\frac{b'F_j-bF_j'}{F_j^2},
+\qquad
+\left(\frac{F_i}{F_j}\right)'=
+\frac{F_i'F_j-F_iF_j'}{F_j^2}\quad(i\neq j).
+\]
+All numerator factors are continuous and the denominator is nonzero there,
+so
+\[
+W_j(\theta)=
+\left|\left(\frac b{F_j}\right)'(\theta)\right|
+ +R\sum_{i\neq j}\left|\left(\frac{F_i}{F_j}\right)'(\theta)\right|
+\]
+is finite and continuous on $U_j$, including in the relative topology at
+endpoints.  Since $V_j=W_j$ on $U_j$ and $V_j=+\infty$ elsewhere, for every
+finite $a$,
+\[
+\{\theta:V_j(\theta)<a\}=\{\theta\in U_j:W_j(\theta)<a\},
+\]
+which is Borel.  Finite strict sublevel sets generate the Borel structure on
+$[0,+\infty]$, so $V_j$ is Borel.  The same argument proves
+\[
+V_j(\theta)<+\infty\quad\Longleftrightarrow\quad F_j(\theta)\neq0.
+\]
+
+For nonempty $K_R$, Proposition~\ref{prop:root-feasibility-finite-conditioning}
+provides a finite ordinary speed at each feasible point.  A finite list with
+one finite entry has a finite attained minimum, and the definition of
+$\Gamma_{\rm piv}$ gives the displayed bound.  The empty branch follows
+from the same proposition.  No continuity across a zero of $F_j$ is
+asserted.
+\end{proof}
+
+\begin{proposition}[Borel lexicographic pivot partition]
+\label{prop:lexicographic-pivot-partition}
+Under Lemma~\ref{lem:extended-speed-borel} and
+Lemma~\ref{lem:root-feasible-compact}, define for $\theta\in K_R$
+\[
+j_*(\theta)=\min\operatorname*{arg\,min}_{1\leq i\leq N}V_i(\theta).
+\]
+Then $j_*:K_R\to\{1,\ldots,N\}$ is Borel.  Its fibers
+$E_j=\{\theta\in K_R:j_*(\theta)=j\}$ obey
+\[
+E_j=K_R\cap\{V_j<+\infty\}
+\cap\bigcap_{i<j}\{V_j<V_i\}
+\cap\bigcap_{i>j}\{V_j\leq V_i\}.
+\tag{A1}\label{eq:a1}
+\]
+They are Borel, pairwise disjoint, and cover $K_R$.  On $E_j$,
+\[
+V_j(\theta)=\min_iV_i(\theta)<+\infty,
+\qquad F_j(\theta)\neq0.
+\]
+These conclusions also hold for empty $K_R$, with empty fibers.
+\end{proposition}
+
+\begin{proof}
+For extended-real Borel functions $f,g$,
+\[
+\{f<g\}=\bigcup_{r\in\mathbb Q}
+\bigl(\{f<r\}\cap\{g>r\}\bigr),
+\qquad
+\{f\leq g\}=\Theta\setminus\{g<f\}.
+\tag{A2}\label{eq:a2}
+\]
+The first equality follows by rational separation when $g$ is finite and,
+when $g=+\infty$, by choosing a finite rational larger than $f$.  Thus all
+comparisons in \eqref{eq:a1} are Borel, as are $K_R$ and
+$\{V_j<+\infty\}$.
+
+At each $\theta\in K_R$, Lemma~\ref{lem:extended-speed-borel} gives a
+finite attained minimum.  If $j$ is its least attaining index, then
+$V_j<V_i$ for $i<j$ and $V_j\leq V_i$ for $i>j$, placing the point in
+$E_j$.  Conversely, \eqref{eq:a1} makes $j$ the least minimizer.  This
+proves coverage and uniqueness, hence disjointness.  Each singleton fiber
+of $j_*$ is Borel; inverse images of subsets of the finite discrete target
+are finite unions of these fibers, so $j_*$ is Borel.  Finiteness of $V_j$
+on its fiber and Lemma~\ref{lem:extended-speed-borel} give $F_j\neq0$.
+
+When $N=1$, both comparison intersections are empty, $E_1=K_R$, and the
+selector is one on its domain.  Empty $K_R$ gives the unique empty map.
+Zeros in unselected coordinates are unrestricted.
+\end{proof}
+
+\begin{lemma}[Exact denominator exhaustion]
+\label{lem:denominator-exhaustion}
+Under Assumption~\ref{assump:shared-pfaffian-chain} and
+Proposition~\ref{prop:lexicographic-pivot-partition}, for $m\geq1$ define
+\[
+E_{j,m}=E_j\cap\{\theta\in\Theta:|F_j(\theta)|\geq1/m\}.
+\]
+Then every $E_{j,m}$ is Borel and
+\[
+E_{j,m}\subseteq E_{j,m+1},
+\qquad
+\bigcup_{m=1}^\infty E_{j,m}=E_j.
+\tag{A3}\label{eq:a3}
+\]
+Every selected point enters at a finite level.
+\end{lemma}
+
+\begin{proof}
+Continuity of $F_j$ makes $\{|F_j|\geq1/m\}$ relatively closed, hence
+Borel; intersecting with Borel $E_j$ preserves Borelness.  Since
+$1/(m+1)\leq1/m$, the sets increase.  Their union is contained in $E_j$.
+For the reverse inclusion, if $\theta\in E_j$ then
+$x=|F_j(\theta)|>0$ by Proposition~\ref{prop:lexicographic-pivot-partition}.
+There is a finite integer $m$ with $1/m\leq x$, so
+$\theta\in E_{j,m}$.  The weak threshold retains equality points.  An
+arbitrarily small positive pivot may enter late but leaves no remainder;
+empty cells satisfy the same identity.
+\end{proof}
+
+\begin{proposition}[Root chart in the original coefficient coordinates]
+\label{prop:original-coordinate-chart}
+Under Assumption~\ref{assump:shared-pfaffian-chain} and
+Proposition~\ref{prop:lexicographic-pivot-partition}, fix $j$ and set
+$J_j=\{1,\ldots,N\}\setminus\{j\}$, ordered increasingly.  For
+$\beta=(\beta_i)_{i\in J_j}$ define
+\[
+T_j(\theta,\beta)
+=-\frac{b(\theta)+\sum_{i\in J_j}\beta_iF_i(\theta)}{F_j(\theta)}.
+\tag{A4}\label{eq:a4}
+\]
+This function is well-defined and jointly Borel on
+$E_j\times[-R,R]^{J_j}$.  If
+\[
+\alpha_i^{(j)}(\theta,\beta)=
+\begin{cases}
+T_j(\theta,\beta),&i=j,\\
+\beta_i,&i\in J_j,
+\end{cases}
+\]
+then
+\[
+b(\theta)+\langle\alpha^{(j)}(\theta,\beta),F(\theta)\rangle=0.
+\tag{A5}\label{eq:a5}
+\]
+The conclusion does not assert $T_j\in[-R,R]$.
+\end{proposition}
+
+\begin{proof}
+The selected cell lies in $U_j$.  On
+$U_j\times\mathbb R^{J_j}$, rewrite \eqref{eq:a4} as
+\[
+-\frac{b(\theta)}{F_j(\theta)}
+-\sum_{i\in J_j}\beta_i\frac{F_i(\theta)}{F_j(\theta)}.
+\]
+The coefficient ratios are continuous on $U_j$ and the expression is
+finite affine in $\beta$, hence jointly continuous.  Its restriction to
+the stated Borel domain is Borel.  Direct substitution gives
+\[
+\begin{aligned}
+b+\langle\alpha^{(j)},F\rangle
+&=b+T_jF_j+\sum_{i\in J_j}\beta_iF_i\\
+&=b-\left(b+\sum_{i\in J_j}\beta_iF_i\right)
+ +\sum_{i\in J_j}\beta_iF_i=0.
+\end{aligned}
+\]
+Thus the residual vanishes in the original coefficient vector; there is no
+weighted or transformed target.  Unselected features may vanish.  If
+$N=1$, $J_1=\varnothing$, the beta space is the singleton
+$\mathbb R^0$, both sums are empty, and \eqref{eq:a5} reads
+$b+(-b/F_1)F_1=0$.  Empty cells give empty domains, and the relative $C^1$
+convention includes interval endpoints.
+\end{proof}
+
+\begin{proposition}[Selected-chart velocity]
+\label{prop:selected-chart-velocity}
+Under Assumption~\ref{assump:shared-pfaffian-chain},
+Proposition~\ref{prop:root-feasibility-finite-conditioning},
+Proposition~\ref{prop:lexicographic-pivot-partition}, and
+Proposition~\ref{prop:original-coordinate-chart}, the following holds for
+every $\theta\in E_j$ and every $\beta\in[-R,R]^{J_j}$:
+\[
+\partial_\theta T_j(\theta,\beta)
+=-\left(\frac b{F_j}\right)'(\theta)
+-\sum_{i\in J_j}\beta_i
+ \left(\frac{F_i}{F_j}\right)'(\theta),
+\tag{A6}\label{eq:a6}
+\]
+and
+\[
+|\partial_\theta T_j(\theta,\beta)|
+\leq V_j(\theta)
+=\min_{1\leq i\leq N}V_i(\theta)
+\leq\Gamma_{\rm piv}(b,F;R)<\infty.
+\tag{A7}\label{eq:a7}
+\]
+The same conclusions hold on every exhausted domain
+$E_{j,m}\times[-R,R]^{J_j}$.
+\end{proposition}
+
+\begin{proof}
+The selected denominator is nonzero.  On $U_j$, the quotient identities
+used in Lemma~\ref{lem:extended-speed-borel} hold.  Differentiating the
+finite affine expression \eqref{eq:a4} at fixed $\beta$ gives
+\eqref{eq:a6} without interchanging any limit or infinite sum.  At an
+endpoint this is the derivative in the stated $C^1$ convention.
+
+Using $|\beta_i|\leq R$ separately for every nonpivot coordinate,
+\[
+\begin{aligned}
+|\partial_\theta T_j|
+&\leq\left|\left(\frac b{F_j}\right)'\right|
+ +\sum_{i\in J_j}|\beta_i|
+  \left|\left(\frac{F_i}{F_j}\right)'\right|\\
+&\leq\left|\left(\frac b{F_j}\right)'\right|
+ +R\sum_{i\in J_j}
+  \left|\left(\frac{F_i}{F_j}\right)'\right|=V_j.
+\end{aligned}
+\]
+Cell membership gives $V_j=\min_iV_i$, and
+$E_j\subseteq K_R$ together with
+Proposition~\ref{prop:root-feasibility-finite-conditioning} gives the last
+bound in \eqref{eq:a7}.  There is one literal factor $R$ per nonpivot term
+and no sum over chart indices.  Restriction to $E_{j,m}$ changes no formula
+and introduces no $m$-dependent constant.  For $N=1$ the sum is empty and
+$|-(b/F_1)'|=V_1$.  If $K_R$ is empty, the domain is empty and
+$\Gamma_{\rm piv}=0$.
+\end{proof}
+
+\begin{proposition}[Measurable adaptive coordinate charts]
+\label{prop:measurable-adaptive-charts}
+Under Assumptions~\ref{assump:shared-pfaffian-chain} and
+\ref{assump:no-forced-root}, the least finite-speed selector gives a Borel
+disjoint partition $K_R=\bigsqcup_{j=1}^NE_j$ with nonzero selected
+denominators, the Borel sets $E_{j,m}$ increase exactly to $E_j$, and the
+original-coordinate chart \eqref{eq:a4} satisfies \eqref{eq:a5} and
+\eqref{eq:a7}.  These conclusions include ties, zero unselected features,
+endpoints, empty $K_R$, and $N=1$.
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:extended-speed-borel} provides extended-real Borel speeds and
+a finite minimum at every feasible point.
+Proposition~\ref{prop:lexicographic-pivot-partition} applies the
+strict-before and weak-after comparisons in \eqref{eq:a1}, resolving all
+ties by the least index.  Lemma~\ref{lem:denominator-exhaustion} proves both
+inclusions in \eqref{eq:a3} and finite-level entry.  Finally,
+Proposition~\ref{prop:original-coordinate-chart} gives the same-object root
+identity, while Proposition~\ref{prop:selected-chart-velocity}
+differentiates that expression and proves the literal $R$-weighted bound.
+No probability law, area estimate, or chart-count factor is used here.
+\end{proof}
+
+\subsection{Measurable Swept Coefficient Volume}
+
+\begin{lemma}[Analytic exhausted charts and root event]
+\label{lem:analytic-chart-events}
+Under Assumption~\ref{assump:shared-pfaffian-chain} and
+Proposition~\ref{prop:measurable-adaptive-charts}, let
+$I\subseteq\Theta$ be any interval.  For
+\[
+J_j=\{1,\ldots,N\}\setminus\{j\},
+\qquad B_j=[-R,R]^{J_j},
+\]
+identify $\mathbb R^{J_j}$ with $\mathbb R^{N-1}$ in increasing original
+coordinate order and define
+\[
+\Psi_j(\theta,\beta)_i=
+\begin{cases}
+T_j(\theta,\beta),&i=j,\\
+\beta_i,&i\in J_j.
+\end{cases}
+\tag{A8}\label{eq:a8}
+\]
+For $m\geq1$, set
+\[
+D_{j,m}=\{(\theta,\beta):
+ \theta\in I\cap E_{j,m},\ \beta\in B_j,\
+ |T_j(\theta,\beta)|\leq R\}.
+\tag{A9}\label{eq:a9}
+\]
+Then $D_{j,m}$ is Borel in
+$\mathbb R\times\mathbb R^{J_j}\cong\mathbb R^N$, and $\Psi_j$ is the
+restriction of a $C^1$, locally Lipschitz map on an ambient open
+nonzero-pivot chart.  Every $\Psi_j(D_{j,m})$ is analytic and Lebesgue
+measurable.  The set
+\[
+S_I=\{\alpha\in[-R,R]^N:\exists\theta\in I,\
+ b(\theta)+\langle\alpha,F(\theta)\rangle=0\}
+\tag{A10}\label{eq:a10}
+\]
+is also analytic and Lebesgue measurable.  This includes open, closed,
+half-open, empty, and singleton intervals; endpoints of $\Theta$; cube
+faces and corners; empty chart domains; and $N=1$.
+\end{lemma}
+
+\begin{proof}
+Write $\Theta=[\theta_-,\theta_+]$.  When $\Theta$ is nondegenerate, extend
+each $g\in\{b,F_1,\ldots,F_N\}$ to $\mathbb R$ by
+\[
+\widetilde g(x)=
+\begin{cases}
+g(\theta_-)+g'(\theta_-)(x-\theta_-),&x<\theta_-,\\
+g(x),&\theta_-\leq x\leq\theta_+,\\
+g(\theta_+)+g'(\theta_+)(x-\theta_+),&x>\theta_+.
+\end{cases}
+\tag{A11}\label{eq:a11}
+\]
+Values and first derivatives agree at both endpoints, so $\widetilde g$ is
+$C^1$.  If $\Theta$ is a singleton, use the single affine expression based
+at that point and its derivative in the endpoint-inclusive $C^1$
+convention.  These extensions agree with the original values and
+derivatives throughout $\Theta$.
+
+For each $j$, let
+\[
+O_j=\{(\theta,\beta)\in
+ \mathbb R\times\mathbb R^{J_j}:\widetilde F_j(\theta)\neq0\}.
+\tag{A12}\label{eq:a12}
+\]
+This set is open.  Replacing the functions in \eqref{eq:a4} by their
+extensions defines a $C^1$ function $\widetilde T_j$ on $O_j$, and insertion
+as in \eqref{eq:a8} defines a $C^1$ map
+$\widetilde\Psi_j:O_j\to\mathbb R^N$.  On the selected original chart these
+maps equal $T_j$ and $\Psi_j$.  Consequently, even when $\theta$ is an
+endpoint, every point of $D_{j,m}$ has an ambient open $C^1$ neighborhood.
+This construction imposes no uniform lower bound on a prescribed pivot.
+
+Every interval in $\mathbb R$ is Borel,
+Lemma~\ref{lem:denominator-exhaustion} makes $E_{j,m}$ Borel, and $B_j$ is
+closed.  Proposition~\ref{prop:lexicographic-pivot-partition} gives
+$E_{j,m}\subseteq E_j\subseteq\{F_j\neq0\}$, so the base product in
+\eqref{eq:a9} is a Borel subset of $O_j$.  The final condition in
+\eqref{eq:a9} is the inverse image of $[-R,R]$ under the continuous ambient
+map $\widetilde T_j$.  Thus $D_{j,m}$ is Borel and the restricted map is
+Borel.
+
+Kechris's Proposition~14.4 states that if $X$ and $Y$ are Polish spaces,
+$f:X\to Y$ is Borel, and $A\subseteq X$ is analytic, then $f(A)$ is
+analytic \citep[Section~14, Proposition~14.4, p.~86]{Kechris1995}.  Here
+$O_j$ is an open Polish subspace of
+$\mathbb R\times\mathbb R^{J_j}$, the Borel set $D_{j,m}\subseteq O_j$ is
+analytic in $O_j$, and the global map
+$\widetilde\Psi_j:O_j\to\mathbb R^N$ is $C^1$ and hence Borel.  Therefore
+$\Psi_j(D_{j,m})=\widetilde\Psi_j(D_{j,m})$ is analytic.
+
+For the full event, define the incidence set
+\[
+Z_I=\{(\theta,\alpha)\in I\times[-R,R]^N:
+ b(\theta)+\langle\alpha,F(\theta)\rangle=0\}.
+\tag{A13}\label{eq:a13}
+\]
+The evaluation map is continuous and the containing product is Borel, so
+$Z_I$ is Borel, and hence analytic, in the Polish space
+$\Theta\times\mathbb R^N$.  The global coefficient projection
+$\pi_\alpha:\Theta\times\mathbb R^N\to\mathbb R^N$ is continuous and
+satisfies $\pi_\alpha(Z_I)=S_I$.  The same cited proposition therefore makes
+$S_I$ analytic without relying on the graph-coverage identity proved below.
+These two applications supply analyticity only; universal and Lebesgue
+measurability are obtained separately next, and the coverage, Jacobian, and
+volume conclusions are proved later without attribution to Proposition~14.4.
+
+Every set just shown analytic lies in $C=[-R,R]^N$: this is explicit in
+\eqref{eq:a10}, and \eqref{eq:a9} puts the beta coordinates and the
+inserted $T_j$ coordinate in $C$.  Every analytic subset of a Polish space
+is universally measurable
+\citep[Section~21, Theorem~21.10, p.~155]{Kechris1995}.  Apply this to the
+Borel probability measure
+\[
+\nu_C(B)=\frac{\lambda_N(B\cap C)}{(2R)^N}.
+\]
+If $A_0\subseteq C$ is one of the analytic sets, universal measurability
+gives a Borel set $B_0$ and a Borel $\nu_C$-null envelope $M$ with
+$A_0\mathbin\triangle B_0\subseteq M$.  Since $A_0\subseteq C$,
+\[
+A_0\mathbin\triangle(B_0\cap C)\subseteq M\cap C,
+\qquad \lambda_N(M\cap C)=0.
+\]
+Hence $A_0$ is Lebesgue measurable in $\mathbb R^N$.
+
+No endpoint or coefficient boundary was removed: the original interval,
+closed beta cube, and weak inequality $|T_j|\leq R$ remain in
+\eqref{eq:a9}.  For $N=1$, $J_1=\varnothing$ and
+$\mathbb R^{J_1}=\mathbb R^0=\{()\}$; the source is still
+one-dimensional and the same arguments apply.  Empty domains, images, and
+events are analytic and measurable.
+\end{proof}
+
+\begin{proposition}[Localized equal-dimensional area sweep]
+\label{prop:localized-area-sweep}
+Under Assumption~\ref{assump:shared-pfaffian-chain},
+Propositions~\ref{prop:original-coordinate-chart} and
+\ref{prop:selected-chart-velocity}, and
+Lemma~\ref{lem:analytic-chart-events}, order the source coordinates as
+\[
+\bigl(\theta,\beta_1,\ldots,\beta_{j-1},
+\beta_{j+1},\ldots,\beta_N\bigr)
+\]
+and retain target order $(\alpha_1,\ldots,\alpha_N)$.  For every $j$ and
+$m\geq1$,
+\[
+\int_{D_{j,m}}|\det D\Psi_j(x)|\,d\lambda_N(x)
+=\int_{\mathbb R^N}N(\Psi_j,D_{j,m},a)\,d\lambda_N(a),
+\tag{A14}\label{eq:a14}
+\]
+where
+\[
+N(\Psi_j,D_{j,m},a)
+=\#(D_{j,m}\cap\Psi_j^{-1}(a))
+\in\{0,1,2,\ldots\}\cup\{+\infty\}.
+\]
+Moreover,
+\[
+|\det D\Psi_j(\theta,\beta)|
+=|\partial_\theta T_j(\theta,\beta)|,
+\tag{A15}\label{eq:a15}
+\]
+and
+\[
+\lambda_N(\Psi_j(D_{j,m}))
+\leq\int_{D_{j,m}}|\partial_\theta T_j|\,d\lambda_N
+\leq(2R)^{N-1}\int_{I\cap E_{j,m}}V_j(\theta)\,d\theta.
+\tag{A16}\label{eq:a16}
+\]
+No injectivity, finite-fiber, regular-value, transversality, or simple-root
+condition is imposed.  For $N=1$, \eqref{eq:a15} is scalar and the
+zero-dimensional beta measure in \eqref{eq:a16} is one.
+\end{proposition}
+
+\begin{proof}
+On the open set $O_j$ from Lemma~\ref{lem:analytic-chart-events}, every
+target component other than $j$ is its corresponding beta coordinate and
+target component $j$ is $\widetilde T_j$.  Move target row $j$ to the first
+row, leaving all other target rows in their relative order.  The row
+permutation has determinant $(-1)^{j-1}$, and the permuted derivative is
+\[
+\begin{pmatrix}
+\partial_\theta\widetilde T_j&\nabla_\beta\widetilde T_j\\
+0&I_{N-1}
+\end{pmatrix}.
+\]
+It has determinant $\partial_\theta\widetilde T_j$, and therefore in the
+original target order
+\[
+\det D\widetilde\Psi_j
+=(-1)^{j-1}\partial_\theta\widetilde T_j.
+\]
+Restriction to the original chart proves \eqref{eq:a15}.  The beta
+derivatives occupy only the upper-right block and contribute no determinant
+factor.
+
+We next reduce local Lipschitz regularity to the global interface of the
+area formula.  Cover $O_j$ by a countable family of open balls
+$(\mathcal B_\ell)_{\ell\geq1}$ with rational centers and radii and with
+$\overline{\mathcal B_\ell}$ compactly contained in $O_j$.  The derivative
+of $\widetilde\Psi_j$ is bounded on each compact closure, so integration of
+the derivative along line segments in the convex ball makes
+$\widetilde\Psi_j$ Lipschitz there.  Define disjoint Borel layers
+\[
+\mathcal L_\ell
+=\mathcal B_\ell\setminus\bigcup_{r<\ell}\mathcal B_r,
+\qquad
+D_{j,m}^{(\ell)}=D_{j,m}\cap\mathcal L_\ell.
+\tag{A17}\label{eq:a17}
+\]
+They partition $D_{j,m}$.
+
+For a scalar $L$-Lipschitz coordinate $u$ on $\mathcal B_\ell$, the formula
+\[
+\widehat u(x)=\inf_{z\in\mathcal B_\ell}
+\{u(z)+L|x-z|\}
+\tag{A18}\label{eq:a18}
+\]
+defines a global $L$-Lipschitz extension agreeing with $u$ on the ball.
+Applying \eqref{eq:a18} coordinatewise gives a global Lipschitz map
+$\widehat\Psi_{j,\ell}:\mathbb R^N\to\mathbb R^N$ that agrees with
+$\widetilde\Psi_j$ throughout $\mathcal B_\ell$, and hence has the same
+derivative on $D_{j,m}^{(\ell)}$.
+
+The area formula with extended multiplicity, applied to this global map and
+the Borel domain piece, gives
+\citep[Section~3.2.3, p.~243]{Federer1969}
+\[
+\int_{D_{j,m}^{(\ell)}}|\det D\Psi_j|\,d\lambda_N
+=\int_{\mathbb R^N}
+\#(D_{j,m}^{(\ell)}\cap\Psi_j^{-1}(a))\,d\lambda_N(a).
+\tag{A19}\label{eq:a19}
+\]
+Here source and target both have Euclidean dimension $N$; Federer's
+normalized $N$-dimensional Hausdorff measure is $\lambda_N$ in this
+setting.  Both sides of \eqref{eq:a19} are nonnegative extended integrals.
+Summing over $\ell$, exchanging the sum with the nonnegative integral, and
+using disjointness of \eqref{eq:a17} yields
+\[
+\begin{aligned}
+\int_{D_{j,m}}|\det D\Psi_j|\,d\lambda_N
+&=\int_{\mathbb R^N}\sum_{\ell\geq1}
+ \#(D_{j,m}^{(\ell)}\cap\Psi_j^{-1}(a))\,d\lambda_N(a)\\
+&=\int_{\mathbb R^N}
+ \#(D_{j,m}\cap\Psi_j^{-1}(a))\,d\lambda_N(a),
+\end{aligned}
+\]
+which proves \eqref{eq:a14} with no localization count or constant.
+
+Lemma~\ref{lem:analytic-chart-events} makes the image measurable.  The
+multiplicity in \eqref{eq:a14} is at least one on that image, even when it
+is infinite.  Thus \eqref{eq:a14} and \eqref{eq:a15} give the first
+inequality in \eqref{eq:a16}.  For the second, nonnegative product
+integration and Proposition~\ref{prop:selected-chart-velocity} give
+\[
+\begin{aligned}
+\int_{D_{j,m}}|\partial_\theta T_j|\,d\lambda_N
+&=\int_{I\cap E_{j,m}}\int_{B_j}
+ \mathbf 1_{\{|T_j(\theta,\beta)|\leq R\}}
+ |\partial_\theta T_j(\theta,\beta)|
+ \,d\lambda_{N-1}(\beta)\,d\theta\\
+&\leq\int_{I\cap E_{j,m}}\int_{B_j}V_j(\theta)
+ \,d\lambda_{N-1}(\beta)\,d\theta\\
+&=\lambda_{N-1}(B_j)
+ \int_{I\cap E_{j,m}}V_j(\theta)\,d\theta\\
+&=(2R)^{N-1}\int_{I\cap E_{j,m}}V_j(\theta)\,d\theta.
+\end{aligned}
+\tag{A20}\label{eq:a20}
+\]
+All faces of $B_j$ and the two faces $T_j=\pm R$ remain in the domain.
+For $N=1$, $B_1=[-R,R]^0=\{()\}$ and
+$\lambda_0(B_1)=1=(2R)^0$.
+
+For completeness, let $a=\Psi_j(\theta,\beta)$.  Differentiating the root
+identity at fixed $\beta$ gives
+\[
+\partial_\theta T_j(\theta,\beta)
+=-\frac{\phi_a'(\theta)}{F_j(\theta)}.
+\tag{A21}\label{eq:a21}
+\]
+Tangent and differentiably multiple roots are therefore critical
+preimages.  The Borel critical subset
+$D_{j,m}\cap\{\partial_\theta T_j=0\}$ has zero Jacobian, and applying the
+already established image inequality to that subset makes its image
+$N$-dimensionally null.  If $\phi_a$ vanishes identically on an interval,
+the represented fiber may be uncountable.  Finite, countably infinite, and
+interval-sized fibers are all permitted by the extended multiplicity in
+\eqref{eq:a14}.  Distinct or repeated roots add preimages; the proof never
+uses an inverse change of variables.
+\end{proof}
+
+\begin{lemma}[Original-coordinate exhausted coverage]
+\label{lem:exact-root-event-coverage}
+Under Lemma~\ref{lem:root-feasible-compact},
+Proposition~\ref{prop:lexicographic-pivot-partition},
+Lemma~\ref{lem:denominator-exhaustion}, and
+Proposition~\ref{prop:original-coordinate-chart}, for every interval
+$I\subseteq\Theta$ and every $j$,
+\[
+\begin{aligned}
+D_{j,m}&\subseteq D_{j,m+1},\\
+\Psi_j(D_{j,m})&\subseteq\Psi_j(D_{j,m+1}),
+\end{aligned}
+\tag{A22}\label{eq:a22}
+\]
+and
+\[
+S_I=\bigcup_{j=1}^N\bigcup_{m=1}^\infty\Psi_j(D_{j,m})
+\tag{A23}\label{eq:a23}
+\]
+as literal equality in the original coefficient cube.  This includes
+interval and cube boundaries, least-index ties, arbitrarily small nonzero
+selected pivots, any number of roots, empty $I$, singleton $I$, empty
+$K_R$, empty cells, and $N=1$.
+\end{lemma}
+
+\begin{proof}
+Only the condition $\theta\in E_{j,m}$ in \eqref{eq:a9} depends on $m$.
+Lemma~\ref{lem:denominator-exhaustion} gives
+$E_{j,m}\subseteq E_{j,m+1}$; $I,B_j,T_j$, and the weak range condition
+remain fixed.  This proves domain nesting, and a fixed map sends nested
+domains to nested images.
+
+Take $a\in S_I$.  A witness $\theta\in I$ satisfies $\phi_a(\theta)=0$.
+Lemma~\ref{lem:root-feasible-compact} gives $\theta\in K_R$, and
+Proposition~\ref{prop:lexicographic-pivot-partition} assigns it to exactly
+one least-index cell $E_j$ with $F_j(\theta)\neq0$.  Set
+$\beta=a_{-j}\in B_j$ in increasing original-coordinate order.  The root
+equation gives
+\[
+a_j=-\frac{b(\theta)+\sum_{i\neq j}a_iF_i(\theta)}{F_j(\theta)}
+=T_j(\theta,\beta).
+\tag{A24}\label{eq:a24}
+\]
+Lemma~\ref{lem:denominator-exhaustion} puts this individual nonzero pivot in
+some finite $E_{j,m}$.  Since $|a_j|\leq R$, the pair belongs to
+$D_{j,m}$, and \eqref{eq:a8} yields $\Psi_j(\theta,\beta)=a$.  This proves
+one inclusion in \eqref{eq:a23}.
+
+Conversely, suppose $a=\Psi_j(\theta,\beta)$ with
+$(\theta,\beta)\in D_{j,m}$.  The beta coordinates lie in the closed cube
+and $|T_j|\leq R$, so $a\in[-R,R]^N$ coordinate by coordinate, including
+faces and corners.  Also $\theta\in I\cap E_{j,m}$, and
+Proposition~\ref{prop:original-coordinate-chart} gives
+$b(\theta)+\langle a,F(\theta)\rangle=0$.  Thus $a\in S_I$.
+
+The proof chooses an arbitrary existential witness and does not require an
+isolated, unique, simple, or regular root.  Images may overlap despite the
+parameter-cell tie rule, which does not alter set equality.  A selected
+denominator may approach zero, but each nonzero value enters a finite weak
+threshold.  Empty $K_R$ makes both sides empty by
+Lemma~\ref{lem:root-feasible-compact}; empty or singleton intervals retain
+their actual points.  For $N=1$, beta is the empty tuple and
+\eqref{eq:a24} is $a_1=-b/F_1$.
+\end{proof}
+
+\begin{proposition}[Root-event coefficient-volume certificate]
+\label{prop:root-event-volume}
+Under Assumptions~\ref{assump:shared-pfaffian-chain} and
+\ref{assump:no-forced-root}, Propositions~\ref{prop:root-feasibility-finite-conditioning}
+and \ref{prop:measurable-adaptive-charts},
+Lemma~\ref{lem:analytic-chart-events},
+Proposition~\ref{prop:localized-area-sweep}, and
+Lemma~\ref{lem:exact-root-event-coverage}, every interval
+$I\subseteq\Theta$ satisfies
+\[
+\lambda_N(S_I)
+\leq(2R)^{N-1}\Gamma_{\rm piv}(b,F;R)|I|.
+\tag{A25}\label{eq:a25}
+\]
+The conclusion retains all boundary, zero-denominator-limit, noninjective,
+tangent, multiple-root, infinite-fiber, empty-set, and $N=1$ regimes, with
+no chart-count, localization-count, multiplicity, or boundary factor.
+\end{proposition}
+
+\begin{proof}
+Fix $j$ and set
+\[
+A_{j,m}=\Psi_j(D_{j,m}),
+\qquad A_j=\bigcup_{m=1}^\infty A_{j,m}.
+\]
+Lemmas~\ref{lem:analytic-chart-events} and
+\ref{lem:exact-root-event-coverage} make the $A_{j,m}$ measurable and
+increasing.  Continuity of measure from below and
+Proposition~\ref{prop:localized-area-sweep} give
+\[
+\begin{aligned}
+\lambda_N(A_j)
+&=\lim_{m\to\infty}\lambda_N(A_{j,m})\\
+&\leq(2R)^{N-1}\lim_{m\to\infty}
+ \int_{I\cap E_{j,m}}V_j(\theta)\,d\theta.
+\end{aligned}
+\tag{A26}\label{eq:a26}
+\]
+To avoid any undefined product $0\cdot(+\infty)$, define
+\[
+h_{j,m}(\theta)=
+\begin{cases}
+V_j(\theta),&\theta\in I\cap E_{j,m},\\
+0,&\theta\notin I\cap E_{j,m}.
+\end{cases}
+\]
+Proposition~\ref{prop:lexicographic-pivot-partition} makes $V_j$ finite on
+$E_j$, and Lemma~\ref{lem:denominator-exhaustion} makes the domains increase
+to $E_j$.  Thus $h_{j,m}$ are nonnegative Borel functions increasing to the
+function equal to $V_j$ on $I\cap E_j$ and zero elsewhere.  Passing to the
+limit in their nonnegative integrals turns \eqref{eq:a26} into
+\[
+\lambda_N(A_j)
+\leq(2R)^{N-1}\int_{I\cap E_j}V_j(\theta)\,d\theta.
+\tag{A27}\label{eq:a27}
+\]
+Every denominator boundary is recovered, and $1/m$ leaves no tolerance or
+remainder.
+
+By \eqref{eq:a23}, finite subadditivity, and \eqref{eq:a27},
+\[
+\lambda_N(S_I)
+\leq(2R)^{N-1}\sum_{j=1}^N
+\int_{I\cap E_j}V_j(\theta)\,d\theta.
+\tag{A28}\label{eq:a28}
+\]
+On $E_j$, Propositions~\ref{prop:lexicographic-pivot-partition} and
+\ref{prop:selected-chart-velocity} give
+$V_j=\min_iV_i\leq\Gamma_{\rm piv}$.  The Borel cells are disjoint and
+cover $K_R$, so
+\[
+\begin{aligned}
+\sum_{j=1}^N\int_{I\cap E_j}V_j(\theta)\,d\theta
+&\leq\Gamma_{\rm piv}(b,F;R)\sum_{j=1}^N|I\cap E_j|\\
+&=\Gamma_{\rm piv}(b,F;R)|I\cap K_R|\\
+&\leq\Gamma_{\rm piv}(b,F;R)|I|.
+\end{aligned}
+\tag{A29}\label{eq:a29}
+\]
+Equations \eqref{eq:a28}--\eqref{eq:a29} prove \eqref{eq:a25}.  Chart
+images may overlap, but the parameter cells do not; the sum costs one copy
+of $|I\cap K_R|$, not $N|I|$.
+
+If $K_R=\varnothing$, Lemma~\ref{lem:root-feasible-compact} gives
+$S_I=\varnothing$ and $\Gamma_{\rm piv}=0$.  Empty cells contribute zero.
+If $I$ is empty or a singleton, $|I|=0$ and \eqref{eq:a29} makes all chart
+integrals zero, so $S_I$ is $N$-dimensionally null.  For $N=1$ there is one
+cell and the beta factor is $(2R)^0=1$.  The extended multiplicity already
+retains all remaining fiber pathologies.
+\end{proof}
+
+\begin{proposition}[Measurable swept coefficient volume]
+\label{prop:measurable-swept-volume}
+Under Assumptions~\ref{assump:shared-pfaffian-chain} and
+\ref{assump:no-forced-root}, for every interval $I\subseteq\Theta$, the
+original-coordinate root set $S_I$ in \eqref{eq:a10} is analytic and
+Lebesgue measurable and satisfies \eqref{eq:a25}.
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:analytic-chart-events} verifies the descriptive-set
+interfaces and measurability.  Proposition~\ref{prop:localized-area-sweep}
+uses countable disjoint Lipschitz localization to obtain the extended
+multiplicity identity, determinant \eqref{eq:a15}, and beta-cube factor.
+Lemma~\ref{lem:exact-root-event-coverage} proves both inclusions in
+\eqref{eq:a23} in the original coefficient coordinates.
+Proposition~\ref{prop:root-event-volume} then performs the increasing limit
+and uses the disjoint-cell identity \eqref{eq:a29}.  The separate strict
+finiteness of $\Gamma_{\rm piv}$ remains the conclusion of
+Proposition~\ref{prop:root-feasibility-finite-conditioning}; the present
+result exports measurability and coefficient volume.
+\end{proof}
+
+\subsection{Joint-Density Transfer and Ordered Suprema}
+
+\begin{proposition}[Joint-density transfer for the swept root event]
+\label{prop:joint-density-transfer}
+Under Assumption~\ref{assump:joint-density-cap} and
+Proposition~\ref{prop:measurable-swept-volume}, every
+$\mu\in\mathcal D_{N,R,\kappa}$ and every interval $I\subseteq\Theta$ with
+$|I|>0$ satisfy
+\[
+\begin{aligned}
+\Pr_\mu(S_I)
+&\leq\kappa\lambda_N(S_I)\\
+&\leq\kappa(2R)^{N-1}\Gamma_{\rm piv}(b,F;R)|I|\\
+&=\frac{A\Gamma_{\rm piv}(b,F;R)}{2R}|I|.
+\end{aligned}
+\tag{A30}\label{eq:a30}
+\]
+Moreover,
+\[
+\Pr_{\alpha\sim\mu}\!\left[\exists\theta\in I:
+\phi_\alpha(\theta)=0\right]=\Pr_\mu(S_I).
+\tag{A31}\label{eq:a31}
+\]
+These are ordinary probability statements under the completed law.  They
+do not require independence, marginal densities, a conditioning event, a
+confidence parameter, or a small-interval threshold.
+\end{proposition}
+
+\begin{proof}
+Fix $\mu$ and $I$, and write $C=[-R,R]^N$ within this proof.
+Assumption~\ref{assump:joint-density-cap} gives a nonnegative full joint
+density with
+\[
+f_\mu=0\quad\lambda_N\text{-a.e. on }C^c,
+\qquad
+f_\mu\leq\kappa\quad\lambda_N\text{-a.e. on }\mathbb R^N.
+\tag{A32}\label{eq:a32}
+\]
+Proposition~\ref{prop:measurable-swept-volume} makes $S_I\subseteq C$
+Lebesgue measurable.  Absolute continuity and completion therefore give
+\[
+\Pr_\mu(S_I)
+=\int_{S_I}f_\mu(\alpha)\,d\lambda_N(\alpha)
+\leq\kappa\lambda_N(S_I).
+\tag{A33}\label{eq:a33}
+\]
+This uses the cap on the full joint density directly; no coordinate is
+integrated out and arbitrary coordinate dependence contributes no term.
+
+The volume certificate in Proposition~\ref{prop:measurable-swept-volume}
+applies to the identical set in the identical coefficient coordinates.
+Substituting it into \eqref{eq:a33} gives the first two lines of
+\eqref{eq:a30}.  Since $R>0$,
+\[
+\kappa(2R)^{N-1}
+=\frac{\kappa(2R)^N}{2R}
+=\frac A{2R},
+\tag{A34}\label{eq:a34}
+\]
+which proves the last line without hiding, dropping, or absorbing a term.
+
+Equation \eqref{eq:a32} also gives $\mu(C^c)=0$.  The unrestricted root
+event in \eqref{eq:a31} differs from $S_I$ only by a subset of $C^c$; that
+subset belongs to the completed law and has probability zero.  This proves
+\eqref{eq:a31} without changing the event on the law's support.
+
+If $K_R=\varnothing$, Lemma~\ref{lem:root-feasible-compact} makes $S_I$
+empty and the definition gives $\Gamma_{\rm piv}=0$.  If $S_I$ is empty
+for another reason, its volume and probability vanish.  If
+$\Gamma_{\rm piv}=0$ with nonempty $K_R$, the volume certificate forces
+$\lambda_N(S_I)=0$, and \eqref{eq:a33} forces zero probability.  For
+$N=1$, $(2R)^{N-1}=1$ and $A/(2R)=\kappa$.  Endpoints, cube faces,
+tangent and multiple roots, identically zero affine combinations, and
+finite or infinite fibers all remain in $S_I$ and were handled before the
+density integration.  The right side of \eqref{eq:a30} may exceed one; it
+remains a valid bound and is not clipped.
+\end{proof}
+
+\begin{lemma}[Nonemptiness threshold for the law class]
+\label{lem:law-class-nonempty}
+For $N\geq1$, $R>0$, $\kappa\in(0,\infty)$, and
+$A=(2R)^N\kappa$,
+\[
+\mathcal D_{N,R,\kappa}\neq\varnothing
+\quad\Longleftrightarrow\quad A\geq1.
+\tag{A35}\label{eq:a35}
+\]
+The boundary $A=1$ is included, while $A<1$ makes the class empty.
+\end{lemma}
+
+\begin{proof}
+If $\mu\in\mathcal D_{N,R,\kappa}$ and $C=[-R,R]^N$, then
+\[
+\begin{aligned}
+1
+&=\int_{\mathbb R^N}f_\mu(\alpha)\,d\lambda_N(\alpha)\\
+&=\int_Cf_\mu(\alpha)\,d\lambda_N(\alpha)\\
+&\leq\kappa\lambda_N(C)
+=\kappa(2R)^N=A.
+\end{aligned}
+\tag{A36}\label{eq:a36}
+\]
+Thus nonemptiness implies $A\geq1$, and correlation cannot alter this
+integral constraint.
+
+Conversely, suppose $A\geq1$ and define
+\[
+f_{\rm unif}(\alpha)=(2R)^{-N}\mathbf 1_{[-R,R]^N}(\alpha).
+\tag{A37}\label{eq:a37}
+\]
+The cube has volume $(2R)^N$, so \eqref{eq:a37} integrates to one and
+vanishes outside the cube.  Moreover,
+\[
+(2R)^{-N}\leq\kappa
+\quad\Longleftrightarrow\quad1\leq\kappa(2R)^N=A.
+\tag{A38}\label{eq:a38}
+\]
+Thus it defines an admissible law.  At $A=1$, \eqref{eq:a38} is equality,
+proving the sharp boundary without adding $A\geq1$ as an assumption.
+\end{proof}
+
+\begin{lemma}[Nonemptiness threshold for positive-length intervals]
+\label{lem:interval-class-nonempty}
+For a compact interval $\Theta\subset\mathbb R$,
+\[
+\{I\subseteq\Theta:I\text{ is an interval and }|I|>0\}
+\neq\varnothing
+\quad\Longleftrightarrow\quad|\Theta|>0.
+\tag{A39}\label{eq:a39}
+\]
+\end{lemma}
+
+\begin{proof}
+If the class on the left is nonempty, choose $I$ in it.  Monotonicity of
+Lebesgue measure gives $0<|I|\leq|\Theta|$.  Conversely, if
+$|\Theta|>0$, the interval $I=\Theta$ belongs to the class.  Hence a
+zero-length compact interval has no positive-length subinterval, while a
+positive-length compact interval supplies one.  Endpoint and openness
+conventions do not affect the equivalence.
+\end{proof}
+
+\begin{proposition}[Ordered suprema with nonempty and vacuous semantics]
+\label{prop:ordered-suprema}
+Under Assumptions~\ref{assump:shared-pfaffian-chain},
+\ref{assump:no-forced-root}, and \ref{assump:joint-density-cap}, and under
+Propositions~\ref{prop:root-feasibility-finite-conditioning} and
+\ref{prop:joint-density-transfer}, the following exhaustive alternatives
+hold.  If $A\geq1$ and $|\Theta|>0$, then
+\[
+0\leq
+\sup_{\mu\in\mathcal D_{N,R,\kappa}}
+\sup_{\substack{I\subseteq\Theta,\ I\text{ an interval}\\|I|>0}}
+\frac{\Pr_{\alpha\sim\mu}[\exists\theta\in I:
+\phi_\alpha(\theta)=0]}{|I|}
+\leq\frac{A\Gamma_{\rm piv}(b,F;R)}{2R}<\infty.
+\tag{A40}\label{eq:a40}
+\]
+The middle quantity is a finite nonnegative real.  If $A<1$ or
+$|\Theta|=0$, then, under $\sup\varnothing=-\infty$,
+\[
+\sup_{\mu\in\mathcal D_{N,R,\kappa}}
+\sup_{\substack{I\subseteq\Theta,\ I\text{ an interval}\\|I|>0}}
+\frac{\Pr_{\alpha\sim\mu}[\exists\theta\in I:
+\phi_\alpha(\theta)=0]}{|I|}
+=-\infty
+\leq\frac{A\Gamma_{\rm piv}(b,F;R)}{2R}.
+\tag{A41}\label{eq:a41}
+\]
+The value in \eqref{eq:a41} is a vacuous extended-real consequence, not a
+finite nonnegative capacity.  Proposition~\ref{prop:joint-density-transfer}
+remains a universal pairwise statement in every branch.
+\end{proposition}
+
+\begin{proof}
+Suppose first that $A\geq1$ and $|\Theta|>0$.
+Lemmas~\ref{lem:law-class-nonempty} and
+\ref{lem:interval-class-nonempty} show that both index classes are
+nonempty.  For fixed $\mu$, Proposition~\ref{prop:joint-density-transfer}
+gives for each indexed interval
+\[
+0\leq
+\frac{\Pr_{\alpha\sim\mu}[\exists\theta\in I:
+\phi_\alpha(\theta)=0]}{|I|}
+\leq\frac{A\Gamma_{\rm piv}(b,F;R)}{2R},
+\tag{A42}\label{eq:a42}
+\]
+where division is legal because $|I|>0$.  First take the supremum over
+intervals for this fixed law:
+\[
+0\leq
+\sup_{\substack{I\subseteq\Theta,\ I\text{ an interval}\\|I|>0}}
+\frac{\Pr_{\alpha\sim\mu}[\exists\theta\in I:
+\phi_\alpha(\theta)=0]}{|I|}
+\leq\frac{A\Gamma_{\rm piv}(b,F;R)}{2R}.
+\tag{A43}\label{eq:a43}
+\]
+Then take the supremum over admissible laws.  This preserves the stated
+inner-then-outer order and is not a union bound over either index.
+Proposition~\ref{prop:root-feasibility-finite-conditioning} gives
+$0\leq\Gamma_{\rm piv}<\infty$ in both feasible-set branches.  Since $A$
+is finite and positive and $R>0$, the right side is finite.  Nonempty index
+classes and nonnegative ratios make the ordered supremum nonnegative.  If
+$\Gamma_{\rm piv}=0$, every ratio is zero and the supremum is zero.
+
+If $A<1$, Lemma~\ref{lem:law-class-nonempty} makes the outer class empty,
+so its supremum is $-\infty$, irrespective of the inner class.  If
+$|\Theta|=0$, Lemma~\ref{lem:interval-class-nonempty} makes every inner
+class empty.  When laws exist, the outer supremum of the constant value
+$-\infty$ remains $-\infty$; when the law class is also empty, the outer
+empty supremum has the same value.  This covers both single-empty and
+double-empty branches.  At $A=1$, the uniform cube law from
+\eqref{eq:a37} exists, so the boundary belongs to \eqref{eq:a40} whenever
+$|\Theta|>0$.  No branch condition is inserted into the pairwise theorem.
+\end{proof}
+
+\begin{proposition}[Density conversion and branch-qualified uniform consequence]
+\label{prop:density-and-uniform-consequence}
+Under Assumptions~\ref{assump:shared-pfaffian-chain},
+\ref{assump:no-forced-root}, and \ref{assump:joint-density-cap}, every
+admissible law and positive-length interval satisfy \eqref{eq:a30}--
+\eqref{eq:a31}, while the ordered law-then-interval expression has the
+semantics in \eqref{eq:a40}--\eqref{eq:a41}, with the interval supremum
+taken first.  A finite nonnegative capacity interpretation is valid only
+when $A\geq1$ and $|\Theta|>0$.
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:measurable-swept-volume} supplies the measurable
+original-coordinate event and its coefficient-volume bound.
+Proposition~\ref{prop:joint-density-transfer} integrates that same event
+against the same capped full joint density and proves the pairwise result
+with the algebraic identity \eqref{eq:a34}.  The sharp index classifications
+are Lemmas~\ref{lem:law-class-nonempty} and
+\ref{lem:interval-class-nonempty}.  Proposition~\ref{prop:ordered-suprema}
+then takes the two suprema in their declared order, using strict finiteness
+only from Proposition~\ref{prop:root-feasibility-finite-conditioning}.
+It retains $-\infty$ whenever an index class is empty and does not reinterpret
+that value as a capacity.
+\end{proof}
+
+\subsection{Exact Scale-Stress Conditioning}
+
+\begin{lemma}[Root-feasible set for the scale-stress family]
+\label{lem:scale-root-feasible}
+For $0<\delta\leq1$, let
+\[
+\Theta=[-1,1],
+\qquad b_\delta(\theta)=0,
+\qquad F_\delta(\theta)=\left(1,\frac\theta\delta\right),
+\qquad R=1.
+\]
+This family satisfies Assumptions~\ref{assump:shared-pfaffian-chain} and
+\ref{assump:no-forced-root}, its feasible set is $K_1=\Theta$, and its
+first feature is a legal pivot everywhere on $K_1$.
+\end{lemma}
+
+\begin{proof}
+For fixed $\delta>0$, the three scalar functions are $C^1$ polynomials in
+$\theta$ with a vacuous chain, and the first feature is identically one.
+Thus the two stated assumptions hold.  The definition of the feasible set
+gives
+\[
+\begin{aligned}
+K_1
+&=\{\theta\in\Theta:
+ |b_\delta(\theta)|\leq\|F_\delta(\theta)\|_1\}\\
+&=\left\{\theta\in\Theta:
+ 0\leq1+\frac{|\theta|}{\delta}\right\}=\Theta.
+\end{aligned}
+\tag{A44}\label{eq:a44}
+\]
+Both inclusions are literal: the inequality holds because $\delta>0$, and
+the set comprehension already restricts to $\Theta$.  Hence $K_1$ contains
+$0$ and both endpoints.  Since $F_{\delta,1}(\theta)=1$, coordinate one is
+nonzero everywhere.  This realizes the legal-pivot conclusion of
+Proposition~\ref{prop:root-feasibility-finite-conditioning} without imposing
+a global-pivot condition on general families.
+\end{proof}
+
+\begin{lemma}[Extended pivot speeds for the scale-stress family]
+\label{lem:scale-pivot-speeds}
+Under Lemma~\ref{lem:scale-root-feasible}, for every $0<\delta\leq1$,
+\[
+V_1(\theta)=\frac1\delta\quad(\theta\in\Theta),
+\qquad
+V_2(\theta)=
+\begin{cases}
+\displaystyle\frac\delta{\theta^2},&\theta\neq0,\\
++\infty,&\theta=0.
+\end{cases}
+\tag{A45}\label{eq:a45}
+\]
+\end{lemma}
+
+\begin{proof}
+Write
+$F_{\delta,1}(\theta)=1$ and
+$F_{\delta,2}(\theta)=\theta/\delta$.  The first coordinate is nonzero on
+all of $\Theta$.  With $N=2$ and $R=1$,
+\[
+V_1(\theta)=
+\left|\left(\frac{b_\delta}{F_{\delta,1}}\right)'(\theta)\right|
++\left|\left(\frac{F_{\delta,2}}{F_{\delta,1}}\right)'(\theta)\right|.
+\]
+Keeping every quotient-rule numerator and denominator visible,
+\[
+\left(\frac{b_\delta}{F_{\delta,1}}\right)'
+=\frac{0\cdot1-0\cdot0}{1^2}=0,
+\qquad
+\left(\frac{F_{\delta,2}}{F_{\delta,1}}\right)'
+=\frac{(1/\delta)\cdot1-(\theta/\delta)\cdot0}{1^2}
+=\frac1\delta.
+\]
+Since $\delta>0$, this proves $V_1=1/\delta$ everywhere, including zero
+and both endpoints.
+
+If $\theta\neq0$, then $F_{\delta,2}(\theta)\neq0$ and
+\[
+V_2(\theta)=
+\left|\left(\frac{b_\delta}{F_{\delta,2}}\right)'(\theta)\right|
++\left|\left(\frac{F_{\delta,1}}{F_{\delta,2}}\right)'(\theta)\right|.
+\]
+The two quotient derivatives are
+\[
+\left(\frac{b_\delta}{F_{\delta,2}}\right)'
+=\frac{0\cdot(\theta/\delta)-0\cdot(1/\delta)}
+{(\theta/\delta)^2}=0
+\]
+and
+\[
+\begin{aligned}
+\left(\frac{F_{\delta,1}}{F_{\delta,2}}\right)'
+&=\frac{0\cdot(\theta/\delta)-1\cdot(1/\delta)}
+{(\theta/\delta)^2}\\
+&=-\frac{1/\delta}{\theta^2/\delta^2}
+=-\frac\delta{\theta^2}.
+\end{aligned}
+\]
+Thus $V_2(\theta)=\delta/\theta^2$ off zero.  At zero, the second feature
+vanishes, so its quotient is not differentiated; the definition instead
+sets $V_2(0)=+\infty$.  Endpoint derivatives use the same $C^1$
+convention.
+\end{proof}
+
+\begin{proposition}[Exact scale-stress pivot conditioning]
+\label{prop:scale-stress-specialization}
+Under Proposition~\ref{prop:root-feasibility-finite-conditioning} and
+Lemmas~\ref{lem:scale-root-feasible} and \ref{lem:scale-pivot-speeds}, the
+following holds for every $0<\delta\leq1$, including $\delta=1$:
+\[
+\Gamma_{\rm piv}(b_\delta,F_\delta;1)=\frac1\delta.
+\tag{A46}\label{eq:a46}
+\]
+\end{proposition}
+
+\begin{proof}
+For every $\theta\in\Theta$,
+\[
+\min\{V_1(\theta),V_2(\theta)\}
+\leq V_1(\theta)=\frac1\delta.
+\tag{A47}\label{eq:a47}
+\]
+At $\theta=0$,
+\[
+\min\{V_1(0),V_2(0)\}
+=\min\left\{\frac1\delta,+\infty\right\}
+=\frac1\delta.
+\tag{A48}\label{eq:a48}
+\]
+Lemma~\ref{lem:scale-root-feasible} gives $K_1=\Theta$ and $0\in K_1$.
+Consequently,
+\[
+\frac1\delta
+=\min\{V_1(0),V_2(0)\}
+\leq\sup_{\theta\in K_1}\min\{V_1(\theta),V_2(\theta)\}
+\leq\frac1\delta.
+\tag{A49}\label{eq:a49}
+\]
+The nonempty branch of the definition of $\Gamma_{\rm piv}$ turns
+\eqref{eq:a49} into \eqref{eq:a46}.
+
+At zero only pivot one has finite speed.  Away from zero the two speeds tie
+exactly when
+\[
+\frac1\delta=\frac\delta{\theta^2},
+\quad\text{that is,}\quad\theta=\pm\delta.
+\]
+These points lie in $[-1,1]$ for the full range $0<\delta\leq1$; for
+$\delta=1$ they are the endpoints.  The least-index convention chooses
+pivot one at a tie but does not change the pointwise minimum or supremum.
+The coefficient in \eqref{eq:a46} is exactly one.  This is a deterministic
+conditioning identity and asserts no additional probability bound.
+\end{proof}
+
+\subsection{Exact Affine-Monic Recovery}
+
+\begin{proposition}[Original-space monic presentation]
+\label{prop:monic-presentation}
+Fix $d\geq1$, $R>0$, $\kappa>0$, and a compact interval
+$\Theta\subset\mathbb R$.  Under Assumption~\ref{assump:joint-density-cap},
+let $\mu$ be any Borel probability law on $\mathbb R^d$ with full joint
+density supported almost everywhere on $[-R,R]^d$ and bounded almost
+everywhere by $\kappa$.  Define
+\[
+p_\alpha(\theta)=\theta^d+\sum_{k=0}^{d-1}\alpha_k\theta^k,
+\qquad
+b_d(\theta)=\theta^d,
+\qquad
+F_d(\theta)=(1,\theta,\ldots,\theta^{d-1}).
+\tag{A50}\label{eq:a50}
+\]
+Then for every $\alpha\in\mathbb R^d$ and $\theta\in\Theta$,
+\[
+b_d(\theta)+\langle\alpha,F_d(\theta)\rangle=p_\alpha(\theta)
+\tag{A51}\label{eq:a51}
+\]
+in the original $d$-dimensional lower-coefficient space.  This family
+satisfies Assumptions~\ref{assump:shared-pfaffian-chain} and
+\ref{assump:no-forced-root}, and its descriptor tuple is
+\[
+q=0,
+\qquad M=0,
+\qquad\Delta_{\rm rnd}=d-1,
+\qquad\Delta_{\rm aff}=d,
+\qquad N=d,
+\qquad A=(2R)^d\kappa.
+\tag{A52}\label{eq:a52}
+\]
+\end{proposition}
+
+\begin{proof}
+Index the features from one to $d$, so $(F_d)_i(\theta)=\theta^{i-1}$.
+Then
+\[
+\langle\alpha,F_d(\theta)\rangle
+=\sum_{i=1}^d\alpha_{i-1}\theta^{i-1}
+=\sum_{k=0}^{d-1}\alpha_k\theta^k,
+\]
+and adding $b_d(\theta)=\theta^d$ proves \eqref{eq:a51}.  This is equality
+for the same $\alpha=(\alpha_0,\ldots,\alpha_{d-1})$.  The leading
+coefficient one remains deterministic in $b_d$; there is no additional
+coordinate, transformed law, singular augmentation, or coefficient-space
+change.
+
+For Assumption~\ref{assump:shared-pfaffian-chain}, take the vacuous-chain
+presentation $q=0$, with no $\eta$ and no chain polynomials.  The convention
+gives $M=0$, and the output polynomials are
+\[
+Q_0(\theta)=\theta^d,
+\qquad Q_i(\theta)=\theta^{i-1}\quad(1\leq i\leq d).
+\]
+They are $C^1$ on every compact interval and, in the same scalar convention
+$p=1$,
+\[
+\max_{1\leq i\leq d}\deg Q_i=d-1,
+\qquad
+\max_{0\leq i\leq d}\deg Q_i=d.
+\]
+This includes $d=1$, for which the only random feature is the degree-zero
+constant.  Hence $\Delta_{\rm rnd}=d-1$, $\Delta_{\rm aff}=d$, and there
+are $N=d$ random lower coefficients.
+
+For Assumption~\ref{assump:no-forced-root}, the first feature obeys
+$(F_d)_1(\theta)=1$ everywhere.  Hence $F_d(\theta)\neq0$, including at
+zero and at both endpoints.  The law hypothesis is the full joint-density
+cap in the same coefficient space, with only almost-everywhere cube support.
+Substituting $N=d$ into $A=(2R)^N\kappa$ completes \eqref{eq:a52}.  No
+coordinate independence has been used or inferred.
+\end{proof}
+
+\begin{lemma}[Constant-pivot velocity on the closed unit region]
+\label{lem:monic-constant-pivot}
+Under Proposition~\ref{prop:monic-presentation}, the constant feature is a
+legal pivot at every $\theta$.  If $d=1$, its speed is exactly
+\[
+V_{\rm const}(\theta)=1.
+\tag{A53}\label{eq:a53}
+\]
+If $d\geq2$ and $|\theta|\leq1$, then
+\[
+V_{\rm const}(\theta)
+=d|\theta|^{d-1}+R\sum_{k=1}^{d-1}k|\theta|^{k-1}
+\leq d+R\frac{d(d-1)}2.
+\tag{A54}\label{eq:a54}
+\]
+Thus the displayed upper bound holds for every $d\geq1$ throughout the
+closed unit region, with exact speed one for the entire $d=1$ branch.
+\end{lemma}
+
+\begin{proof}
+The authoritative pivot definition gives
+\[
+V_{\rm const}(\theta)
+=\left|\left(\frac{b_d}{1}\right)'(\theta)\right|
++R\sum_{k=1}^{d-1}
+ \left|\left(\frac{\theta^k}{1}\right)'(\theta)\right|.
+\tag{A55}\label{eq:a55}
+\]
+There are exactly $d-1$ nonpivot features; the deterministic leading
+monomial appears only in the first term.  For $d=1$, \eqref{eq:a55} is
+\[
+|\theta'|+R\sum_{k=1}^0(\cdots)=1,
+\]
+which proves \eqref{eq:a53}.
+
+For $d\geq2$, direct differentiation gives
+\[
+|(d\theta^{d-1})|=d|\theta|^{d-1},
+\qquad
+|(k\theta^{k-1})|=k|\theta|^{k-1},
+\]
+for both signs of $\theta$, proving equality in \eqref{eq:a54}.  At
+$\theta=0$ this is read directly: the leading derivative is zero, the
+$k=1$ feature derivative is one, and all $k\geq2$ derivatives are zero.
+No $0^0$ convention is used.
+
+For $|\theta|\leq1$, every displayed power is at most one, and so
+\[
+V_{\rm const}(\theta)\leq d+R\sum_{k=1}^{d-1}k.
+\]
+The arithmetic remains explicit:
+\[
+2\sum_{k=1}^{d-1}k
+=\sum_{k=1}^{d-1}\bigl(k+(d-k)\bigr)
+=d(d-1),
+\qquad
+\sum_{k=1}^{d-1}k=\frac{d(d-1)}2.
+\tag{A56}\label{eq:a56}
+\]
+This proves \eqref{eq:a54}.  Both points $\theta=1$ and $\theta=-1$ stay
+in this constant chart; they are not reassigned to the top chart.
+\end{proof}
+
+\begin{proposition}[Top-pivot velocity and global monic conditioning]
+\label{prop:monic-global-pivot}
+Under Proposition~\ref{prop:root-feasibility-finite-conditioning},
+Proposition~\ref{prop:monic-presentation}, and
+Lemma~\ref{lem:monic-constant-pivot}, if $d\geq2$ and $|\theta|>1$, then
+the top feature $(F_d)_d(\theta)=\theta^{d-1}$ is nonzero and
+\[
+V_{\rm top}(\theta)
+=1+R\sum_{m=1}^{d-1}\frac{m}{|\theta|^{m+1}}
+\leq1+R\frac{d(d-1)}2
+\leq d+R\frac{d(d-1)}2.
+\tag{A57}\label{eq:a57}
+\]
+For every $d\geq1$, $R>0$, and compact interval $\Theta$, the exact
+feasible set of the restricted monic family is
+\[
+K_R=\left\{\theta\in\Theta:
+ |\theta|^d\leq R\sum_{k=0}^{d-1}|\theta|^k\right\},
+\tag{A58}\label{eq:a58}
+\]
+and
+\[
+\Gamma_{\rm piv}(b_d,F_d;R)
+\leq d+R\frac{d(d-1)}2.
+\tag{A59}\label{eq:a59}
+\]
+The bound is independent of $\Theta$.
+\end{proposition}
+
+\begin{proof}
+Assume first $d\geq2$ and $|\theta|>1$.  Then $\theta\neq0$, so the top
+feature is a legal pivot.  Its offset ratio is
+\[
+\frac{b_d(\theta)}{(F_d)_d(\theta)}
+=\frac{\theta^d}{\theta^{d-1}}=\theta,
+\qquad
+\left|\left(\frac{b_d}{(F_d)_d}\right)'(\theta)\right|=1.
+\tag{A60}\label{eq:a60}
+\]
+The lower nonpivot exponents are $k=0,\ldots,d-2$.  Reindex them by
+\[
+m=d-1-k\in\{1,\ldots,d-1\},
+\qquad k-(d-1)=-m.
+\tag{A61}\label{eq:a61}
+\]
+Then
+\[
+\frac{\theta^k}{\theta^{d-1}}=\theta^{-m},
+\qquad
+| (\theta^{-m})' |
+=|-m\theta^{-m-1}|
+=\frac{m}{|\theta|^{m+1}}.
+\tag{A62}\label{eq:a62}
+\]
+Substituting \eqref{eq:a60}--\eqref{eq:a62} into the definition of $V_j$
+gives equality in \eqref{eq:a57} for both signs of $\theta$.  Since
+$|\theta|>1$, each $m/|\theta|^{m+1}\leq m$; equation \eqref{eq:a56}
+gives the first inequality, and $1\leq d$ gives the second.  There is no
+remainder or large-radius threshold.
+
+Substitution of the monic objects into the definition of $K_R$ gives
+\[
+|b_d(\theta)|=|\theta|^d,
+\qquad
+\|F_d(\theta)\|_1
+=\sum_{k=0}^{d-1}|\theta^k|
+=\sum_{k=0}^{d-1}|\theta|^k,
+\]
+which is \eqref{eq:a58}.  At every point of this set take the minimum over
+legal pivots.  When $d=1$, the constant feature is the sole feature and
+Lemma~\ref{lem:monic-constant-pivot} gives
+\[
+\min_{j:(F_1)_j(\theta)\neq0}V_j(\theta)
+=1=d+R\frac{d(d-1)}2.
+\tag{A63}\label{eq:a63}
+\]
+When $d\geq2$ and $|\theta|\leq1$, the constant feature is legal and
+\[
+\min_{j:(F_d)_j(\theta)\neq0}V_j(\theta)
+\leq V_{\rm const}(\theta)
+\leq d+R\frac{d(d-1)}2.
+\tag{A64}\label{eq:a64}
+\]
+When $d\geq2$ and $|\theta|>1$, the top feature is legal and
+\[
+\min_{j:(F_d)_j(\theta)\neq0}V_j(\theta)
+\leq V_{\rm top}(\theta)
+\leq d+R\frac{d(d-1)}2.
+\tag{A65}\label{eq:a65}
+\]
+At $|\theta|=1$, only \eqref{eq:a64} is used, so there is no duplicated
+boundary or chart-count cost.
+
+If $K_R$ is nonempty, taking its defining supremum in
+\eqref{eq:a63}--\eqref{eq:a65} proves \eqref{eq:a59}.  If it is empty,
+the definition and Proposition~\ref{prop:root-feasibility-finite-conditioning}
+give $\Gamma_{\rm piv}=0$.  A chart region may itself be empty and then
+contributes nothing.
+
+For $d=2$, the two branches reduce explicitly to
+\[
+V_{\rm const}(\theta)=2|\theta|+R\leq2+R
+\quad(|\theta|\leq1),
+\]
+\[
+V_{\rm top}(\theta)=1+\frac R{|\theta|^2}
+\leq1+R\leq2+R
+\quad(|\theta|>1).
+\]
+Thus the first nontrivial dimension is covered.  The right side of
+\eqref{eq:a59} depends only on $d$ and $R$, not the location, diameter, or
+endpoints of $\Theta$.
+\end{proof}
+
+\begin{proposition}[Positive-length monic probability transfer]
+\label{prop:monic-positive-interval}
+Under Assumption~\ref{assump:joint-density-cap},
+Propositions~\ref{prop:monic-presentation}, \ref{prop:monic-global-pivot},
+and \ref{prop:joint-density-transfer}, let $I\subset\mathbb R$ be a bounded
+interval with $|I|>0$.  For the same arbitrary full joint law $\mu$ on the
+original $d$ lower coefficients,
+\[
+\Pr_{\alpha\sim\mu}\!\left[\exists\theta\in I:p_\alpha(\theta)=0\right]
+\leq\kappa(2R)^{d-1}
+\left(d+R\frac{d(d-1)}2\right)|I|.
+\tag{A66}\label{eq:a66}
+\]
+Equivalently,
+\[
+\kappa(2R)^{d-1}
+\left(d+R\frac{d(d-1)}2\right)|I|
+=\frac A{2R}
+\left(d+R\frac{d(d-1)}2\right)|I|.
+\tag{A67}\label{eq:a67}
+\]
+\end{proposition}
+
+\begin{proof}
+Set $a=\inf I$ and $c=\sup I$.  Boundedness makes both finite.  If $a=c$,
+the between-points property of an interval would make $I$ contain at most
+one point and hence have length zero, contrary to the hypothesis.  Thus
+$a<c$, and the interval property gives $\overline I=[a,c]$.  Use the
+nondegenerate compact localization $\Theta=[a,c]$.
+
+Every hypothesis of Proposition~\ref{prop:joint-density-transfer} now holds
+for one fixed admissible pair.  Proposition~\ref{prop:monic-presentation}
+gives $N=d\geq1$, the $C^1$ vacuous-chain presentation on this $\Theta$,
+and no-forced-root nondegeneracy from the constant feature.  The given law
+has the capped full joint density in the same original coefficient space,
+with almost-everywhere support on $[-R,R]^d$ and no independence premise.
+The interval $I$ lies in $\Theta$ and has positive length.
+Proposition~\ref{prop:monic-global-pivot} applies to this restriction and
+gives
+\[
+\Gamma_{\rm piv}(b_d,F_d;R)
+\leq d+R\frac{d(d-1)}2,
+\]
+independently of the chosen localization.  Finally, \eqref{eq:a51}
+identifies the affine event with the polynomial event for the same
+$\alpha,\theta,I$, and $\mu$.
+
+Applying \eqref{eq:a30} with $N=d$ therefore gives
+\[
+\begin{aligned}
+\Pr_{\alpha\sim\mu}[\exists\theta\in I:p_\alpha(\theta)=0]
+&=\Pr_{\alpha\sim\mu}[\exists\theta\in I:
+ b_d(\theta)+\langle\alpha,F_d(\theta)\rangle=0]\\
+&\leq\kappa(2R)^{d-1}
+ \Gamma_{\rm piv}(b_d,F_d;R)|I|\\
+&\leq\kappa(2R)^{d-1}
+ \left(d+R\frac{d(d-1)}2\right)|I|,
+\end{aligned}
+\]
+which is \eqref{eq:a66}.  Because $R>0$,
+\[
+\kappa(2R)^{d-1}
+=\frac{\kappa(2R)^d}{2R}=\frac A{2R},
+\]
+proving \eqref{eq:a67} while preserving the requested $\kappa$ form.
+
+If $I\cap K_R=\varnothing$, Lemma~\ref{lem:root-feasible-compact} rules out
+roots on $I$ for every coefficient in the cube.  Almost-everywhere cube
+support assigns probability one to that cube, so the unrestricted event has
+probability zero.  This includes empty $K_R$ and shows that no nonemptiness
+condition entered the argument.  The right side of \eqref{eq:a66} may
+exceed one; no clipping, small-interval condition, or probability-mode
+change is made.  The ordered supremum and its capacity interpretation are
+not used in this specialization.
+\end{proof}
+
+\begin{proposition}[Complete exact monic baseline]
+\label{prop:complete-monic-baseline}
+Under Assumption~\ref{assump:joint-density-cap},
+Proposition~\ref{prop:monic-presentation}, and
+Proposition~\ref{prop:monic-positive-interval}, every bounded interval
+$I\subset\mathbb R$, including $|I|=0$, satisfies
+\[
+\Pr_{\alpha\sim\mu}\!\left[\exists\theta\in I:p_\alpha(\theta)=0\right]
+\leq\kappa(2R)^{d-1}
+\left(d+R\frac{d(d-1)}2\right)|I|.
+\tag{A68}\label{eq:a68}
+\]
+For a singleton interval, its coefficient root set is a proper affine
+hyperplane of $\mathbb R^d$ and has both $d$-dimensional Lebesgue measure
+and $\mu$-probability zero, including $d=1$.
+\end{proposition}
+
+\begin{proof}
+Positive-length intervals are covered by
+Proposition~\ref{prop:monic-positive-interval}.  It remains to treat zero
+length.  If a real interval contained two distinct points $x<y$, it would
+contain $(x,y)$ and have length at least $y-x>0$.  Hence a zero-length
+interval is empty or a singleton.  The root event is empty when
+$I=\varnothing$.
+
+Suppose $I=\{\theta_0\}$.  Equation \eqref{eq:a51} gives the coefficient
+root set
+\[
+\begin{aligned}
+H_{\theta_0}
+&=\{\alpha\in\mathbb R^d:p_\alpha(\theta_0)=0\}\\
+&=\left\{\alpha\in\mathbb R^d:
+ \alpha_0=-\theta_0^d-\sum_{k=1}^{d-1}\alpha_k\theta_0^k\right\}.
+\end{aligned}
+\tag{A69}\label{eq:a69}
+\]
+The coefficient of $\alpha_0$ is one.  Equivalently, this is an affine
+level set with nonzero normal
+$F_d(\theta_0)=(1,\theta_0,\ldots,\theta_0^{d-1})$.  It is therefore
+proper for every $\theta_0$, including zero and $d=1$.
+
+We prove nullity in these coordinates.  If $d=1$, then
+$H_{\theta_0}=\{-\theta_0\}$.  For every $\varepsilon>0$, this point is
+covered by an interval of length $\varepsilon$, so its outer measure is at
+most $\varepsilon$; letting $\varepsilon\downarrow0$ gives
+$\lambda_1(H_{\theta_0})=0$.
+
+If $d\geq2$, write
+$\beta=(\alpha_1,\ldots,\alpha_{d-1})\in\mathbb R^{d-1}$.  The set in
+\eqref{eq:a69} is the graph of the continuous affine function
+\[
+\beta\longmapsto-\theta_0^d-
+\sum_{k=1}^{d-1}\beta_k\theta_0^k.
+\]
+It is closed and Lebesgue measurable.  For fixed $\beta$, its
+$\alpha_0$-section is a singleton and has one-dimensional measure zero.
+Nonnegative product integration of its indicator yields
+\[
+\begin{aligned}
+\lambda_d(H_{\theta_0})
+&=\int_{\mathbb R^{d-1}}\int_{\mathbb R}
+ \mathbf 1_{H_{\theta_0}}(\alpha_0,\beta)
+ \,d\alpha_0\,d\beta\\
+&=\int_{\mathbb R^{d-1}}0\,d\beta=0.
+\end{aligned}
+\tag{A70}\label{eq:a70}
+\]
+Thus nullity is derived rather than assumed.
+
+The full joint density now gives
+\[
+\Pr_{\alpha\sim\mu}[p_\alpha(\theta_0)=0]
+=\mu(H_{\theta_0})
+=\int_{H_{\theta_0}}f_\mu\,d\lambda_d=0.
+\tag{A71}\label{eq:a71}
+\]
+No marginal density or independence is used.  Almost-everywhere cube
+support creates no exceptional mass because the law is absolutely
+continuous.  The right side of \eqref{eq:a68} is also zero when
+$|I|=0$, completing the empty and singleton branches.
+\end{proof}
+
+\begin{proposition}[Exact affine-monic specialization and baseline bridge]
+\label{prop:exact-monic-recovery}
+Under Assumption~\ref{assump:joint-density-cap},
+Proposition~\ref{prop:root-feasibility-finite-conditioning}, and the
+pairwise probability result in Proposition~\ref{prop:joint-density-transfer},
+the monic family in \eqref{eq:a50} has the original-space identity and
+descriptors \eqref{eq:a51}--\eqref{eq:a52}, obeys the conditioning bound
+\eqref{eq:a59} for every compact restriction, and satisfies the all-bounded-
+interval probability bound \eqref{eq:a68}.  The coefficient is literally
+\[
+\kappa(2R)^{d-1}\left(d+R\frac{d(d-1)}2\right),
+\]
+with no hidden constant, transformed probability, random leading
+coefficient, independence condition, or conservative remainder.
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:monic-presentation} keeps the leading coefficient in
+$b_d$, keeps exactly $d$ lower coefficients in the random vector, proves
+$b_d+\langle\alpha,F_d\rangle=p_\alpha$, checks both deterministic
+assumptions, and computes the descriptor tuple.  Lemma~\ref{lem:monic-constant-pivot}
+computes the closed-unit-region speed, including $d=1$, zero, both signs,
+and $|\theta|=1$.  Proposition~\ref{prop:monic-global-pivot} computes the
+top-pivot speed with the reindexing \eqref{eq:a61}, takes the pointwise
+minimum over legal pivots, and then takes the supremum over the exact
+$K_R$, proving \eqref{eq:a59} with no localization dependence.
+
+For positive-length bounded intervals,
+Proposition~\ref{prop:monic-positive-interval} checks the compact
+localization and every premise of the pairwise probability result, then
+uses the same objects and same law to obtain \eqref{eq:a66} and the exact
+algebra \eqref{eq:a67}.  Proposition~\ref{prop:complete-monic-baseline}
+adds empty and singleton intervals by the explicit nullity calculation
+\eqref{eq:a69}--\eqref{eq:a71}.  No ordered-supremum or capacity branch is
+used.  The bridge has ordinary probability for each arbitrary full joint
+law, static uniformity over bounded intervals, the scalar pivot-variation
+and full $d$-dimensional Lebesgue modes, and no auxiliary parameter or
+hidden constant.
+
+This fixed-family bridge does not give polynomial general-instance control
+of $\Gamma_{\rm piv}$ in the descriptors
+\[
+q,\quad M,\quad\Delta_{\rm rnd},\quad\Delta_{\rm aff},
+\]
+or in any other general Pfaffian presentation data.  That source-direction
+gap remains unresolved.
+\end{proof}
+
+\subsection{Proof of the Main Theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Proposition~\ref{prop:root-feasibility-finite-conditioning} proves, from
+Assumptions~\ref{assump:shared-pfaffian-chain} and
+\ref{assump:no-forced-root}, that every cube-supported root is feasible.  It
+also proves, including the empty-$K_R$ branch, that
+\[
+0\leq\Gamma_{\rm piv}(b,F;R)<\infty.
+\]
+This is the first assertion of Theorem~\ref{thm:main}.
+
+Proposition~\ref{prop:measurable-adaptive-charts} constructs the disjoint
+Borel pivot cells, their complete finite-denominator exhaustion, and the
+original-coordinate graph maps from that finite-conditioning interface.
+Using precisely those charts, Proposition~\ref{prop:measurable-swept-volume}
+proves measurability of the root event and its coefficient-volume bound.
+Proposition~\ref{prop:density-and-uniform-consequence} combines that volume
+result with the primitive full joint-density cap, while using
+Proposition~\ref{prop:root-feasibility-finite-conditioning} directly for
+strict finiteness.  Its pairwise statement is
+\[
+\Pr_{\alpha\sim\mu}[\exists\theta\in I:\phi_\alpha(\theta)=0]
+\leq\kappa(2R)^{N-1}\Gamma_{\rm piv}(b,F;R)|I|
+=\frac{A\Gamma_{\rm piv}(b,F;R)}{2R}|I|,
+\]
+which is \eqref{eq:t1}.  Its sharp law- and interval-index classifications
+then give \eqref{eq:t2} with a finite nonnegative value exactly when
+$A\geq1$ and $|\Theta|>0$, and with the literal value $-\infty$ in every
+empty-index branch.
+
+Proposition~\ref{prop:scale-stress-specialization}, based on the common
+finite-conditioning result and the two explicit specialized pivot speeds,
+proves \eqref{eq:t3} for the entire range $0<\delta\leq1$.
+Proposition~\ref{prop:exact-monic-recovery} uses the same common
+root-feasibility result and only the pairwise probability statement of
+Proposition~\ref{prop:joint-density-transfer}.  It proves the two-pivot
+bound \eqref{eq:t4}, preserves the deterministic leading coefficient, and
+derives \eqref{eq:t5} for positive-length intervals before completing empty
+and singleton intervals by full-joint-density nullity.
+
+All coefficients in these cited propositions are displayed literally:
+there is no hidden constant, probability-mode conversion, horizon upgrade,
+independence premise, or suppressed norm change.  Their fixed-family scope
+also leaves the stated absence of a polynomial general Pfaffian-format
+bound intact.  This proves every clause of Theorem~\ref{thm:main}.
+\end{proof}

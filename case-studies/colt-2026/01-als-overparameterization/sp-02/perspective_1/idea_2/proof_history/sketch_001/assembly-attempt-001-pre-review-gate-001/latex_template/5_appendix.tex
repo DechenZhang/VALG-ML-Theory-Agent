@@ -1,0 +1,1617 @@
+\appendix
+
+\section{Proof Details}
+
+\subsection{Gaussian initialization and fixed-span preservation}\label{app:step-001}
+
+\begin{lemma}[Admissible dimensions and Gaussian full rank]\label{lem:step-001-full-rank}
+Under Assumptions~\ref{assump:dimension}, \ref{assump:rank_window}, and
+\ref{assump:joint_initialization},
+\[
+ \frac{k}{n}\le\frac18<1,
+\]
+and
+\[
+ \mathbb P\!\left(
+ \operatorname{rank}G_x^{\mathrm{cALS}}=k
+ \text{ and }
+ \operatorname{rank}G_x^{\mathrm{cGD}}=k
+ \right)=1.
+\]
+\end{lemma}
+
+\begin{proof}
+Assumptions~\ref{assump:dimension} and \ref{assump:rank_window} give
+\[
+ 0<k\le r^{5/4}\le\frac n8,
+\]
+so $k/n\le1/8$ and $k<n$.
+
+We first recall the elementary polynomial fact needed below.  The zero set of
+a nonzero real polynomial has Lebesgue measure zero.  In one variable this
+follows because a nonzero polynomial has finitely many roots.  Inductively,
+write a polynomial in $d$ variables as a polynomial in its last variable,
+with coefficient polynomials in the first $d-1$ variables.  At least one
+coefficient is nonzero.  The common zero set of the nonzero coefficients has
+measure zero by induction; outside it, the last-variable polynomial is
+nonzero and has finitely many roots.  Fubini's theorem proves the assertion in
+dimension $d$.
+
+Fix $M\in\{\mathrm{cALS},\mathrm{cGD}\}$ and let $B_M$ be the leading
+$k\times k$ block of $G_x^M$, which exists because $k<n$.  The polynomial
+$B\mapsto\det B$ is not identically zero, since it equals one at $I_k$.
+The entries of $B_M$ have a joint density, and therefore
+\[
+ \mathbb P(\det B_M=0)=0.
+\]
+Whenever $B_M$ is nonsingular, the $k$ columns of $G_x^M$ are linearly
+independent.  Thus each matrix has column rank $k$ almost surely.  A finite
+union of the two null complements proves the simultaneous statement;
+independence is not needed for this last intersection.
+\end{proof}
+
+\begin{lemma}[Haar initialization spans and independence]\label{lem:step-001-haar-independence}
+Under Assumptions~\ref{assump:dimension}, \ref{assump:rank_window}, and
+\ref{assump:joint_initialization}, on the probability-one event of
+Lemma~\ref{lem:step-001-full-rank}, each
+\[
+ \mathcal S_M=\operatorname{range}(G_x^M),
+ \qquad M\in\{\mathrm{cALS},\mathrm{cGD}\},
+\]
+is Haar-uniform on the Grassmannian $\operatorname{Gr}(k,n)$.  The random
+elements $\mathcal S_{\mathrm{cALS}}$, $\mathcal S_{\mathrm{cGD}}$, and $T$
+are mutually independent.  A regular conditional law of the pair of spans
+given $T=T_0$ may be chosen, for every $T_0$, as
+\[
+ \operatorname{Haar}_{k,n}\otimes\operatorname{Haar}_{k,n}.
+\]
+The corresponding subspace projectors, tensor subspaces, and tensor
+projectors inherit these independence properties.
+\end{lemma}
+
+\begin{proof}
+Fix a method $M$ and $U\in O(n)$.  If $g_i$ is a column of $G_x^M$, then
+\[
+ Ug_i\sim\mathcal N\!\left(0,U(n^{-1}I_n)U^{\mathsf T}\right)
+ =\mathcal N(0,n^{-1}I_n).
+\]
+The columns remain independent, and hence
+\[
+ UG_x^M\stackrel{d}=G_x^M.
+\]
+On the full-rank event,
+\[
+ \operatorname{range}(UG_x^M)=U\operatorname{range}(G_x^M)=U\mathcal S_M,
+\]
+so the law of $\mathcal S_M$ is invariant under every orthogonal
+transformation.
+
+For completeness, this invariant law is unique.  Let $\lambda$ be normalized
+Haar measure on the compact group $O(n)$ and let $\mathcal S_0$ be a fixed
+$k$-plane.  The pushforward of $\lambda$ under $U\mapsto U\mathcal S_0$ is
+invariant.  If $\mu$ is any other invariant probability on
+$\operatorname{Gr}(k,n)$ and $h$ is bounded Borel, then
+\[
+ \int h(\mathcal S)\,d\mu(\mathcal S)
+ =\int\!\int h(U\mathcal S)\,d\lambda(U)\,d\mu(\mathcal S).
+\]
+For every $\mathcal S=V\mathcal S_0$, right invariance of $\lambda$ makes
+the inner integral equal to
+$\int h(U\mathcal S_0)\,d\lambda(U)$, independently of $\mathcal S$.
+Thus $\mu$ equals the indicated pushforward.  It follows that
+$\mathcal S_M$ is Haar-uniform.
+
+Let $\Xi$ denote the complete collection of smoothing variables used to form
+$T$.  Assumption~\ref{assump:joint_initialization} makes
+\[
+ G_x^{\mathrm{cALS}},\qquad G_x^{\mathrm{cGD}},\qquad\Xi
+\]
+mutually independent.  The spans, represented by their measurable
+projectors, are measurable functions of the first two matrices, and $T$ is a
+polynomial, hence measurable, function of $\Xi$.  Measurable images preserve
+independence, so the two spans and $T$ are mutually independent.
+
+Let $\mu=\operatorname{Haar}_{k,n}\otimes\operatorname{Haar}_{k,n}$.
+For Borel sets $A\subseteq\operatorname{Gr}(k,n)^2$ and
+$B\subseteq\mathbb R^{n\times n\times n}$,
+\[
+ \begin{aligned}
+ &\mathbb P\!\left(
+ (\mathcal S_{\mathrm{cALS}},\mathcal S_{\mathrm{cGD}})\in A,
+ T\in B\right)\\
+ &\qquad=\mu(A)\mathbb P(T\in B)
+ =\int_B\mu(A)\,\mathbb P_T(dT_0).
+ \end{aligned}
+\]
+Therefore the constant kernel $T_0\mapsto\mu$ is a regular conditional law
+for every $T_0$.  The projector and tensor-subspace assertions follow because
+they are measurable functions of the spans.
+\end{proof}
+
+\begin{lemma}[First-factor membership lifts to tensor membership]\label{lem:step-001-tensor-lift}
+Let $Q\in\mathbb R^{n\times k}$ have orthonormal columns, set
+$\mathcal S=\operatorname{range}(Q)$, and define
+\[
+ \mathcal H=\mathcal S\otimes\mathbb R^n\otimes\mathbb R^n,
+ \qquad
+ P_{\mathcal H}=QQ^{\mathsf T}\otimes I_n\otimes I_n.
+\]
+If $D\in\mathbb R^{k\times k}$, $X=QD$, and
+$Y,Z\in\mathbb R^{n\times k}$, then
+\[
+ S(X,Y,Z)\in\mathcal H,
+ \qquad
+ P_{\mathcal H}S(X,Y,Z)=S(X,Y,Z),
+ \qquad
+ (I-P_{\mathcal H})S(X,Y,Z)=0.
+\]
+\end{lemma}
+
+\begin{proof}
+Write $D=[d_1,\ldots,d_k]$.  Then $x_i=Qd_i\in\mathcal S$, and hence
+\[
+ x_i\otimes y_i\otimes z_i
+ \in\mathcal S\otimes\mathbb R^n\otimes\mathbb R^n=\mathcal H
+\]
+for every $i$.  Their sum lies in $\mathcal H$.  Since $QQ^{\mathsf T}$ is
+the orthogonal projector onto $\mathcal S$, the tensor-product projector
+fixes every summand and therefore fixes the sum.  The complementary-projector
+identity is equivalent.
+\end{proof}
+
+\begin{proposition}[Exact fixed-span preservation]\label{prop:step-001-fixed-span}
+Under Assumptions~\ref{assump:dimension} and \ref{assump:rank_window}, and
+under Assumption~\ref{assump:joint_initialization}, consider the
+probability-one event in Lemma~\ref{lem:step-001-full-rank}.  Every defined
+iterate of either constrained method has a matrix
+$D_t^M\in\mathbb R^{k\times k}$ for which
+\[
+ X_t^M=Q_MD_t^M.
+\]
+Consequently, for every such index,
+\[
+ S_t^M\in\mathcal H_M,
+ \qquad
+ P_{\mathcal H_M}S_t^M=S_t^M,
+ \qquad
+ (I-P_{\mathcal H_M})S_t^M=0.
+\]
+\end{proposition}
+
+\begin{proof}
+On the simultaneous full-rank event, every $Q_M$ has $k$ orthonormal columns
+spanning $\mathcal S_M$.
+
+For constrained ALS, initialization gives
+\[
+ X_0^{\mathrm{cALS}}
+ =Q_{\mathrm{cALS}}Q_{\mathrm{cALS}}^{\mathsf T}
+ G_x^{\mathrm{cALS}}
+ =Q_{\mathrm{cALS}}D_0^{\mathrm{cALS}},
+ \qquad
+ D_0^{\mathrm{cALS}}
+ =Q_{\mathrm{cALS}}^{\mathsf T}G_x^{\mathrm{cALS}}.
+\]
+Whenever the next sweep is evaluated, its constrained block has the exact
+form
+\[
+ X_{t+1}^{\mathrm{cALS}}=Q_{\mathrm{cALS}}D_{t+1}^{\mathrm{cALS}},
+\]
+where
+\[
+ D_{t+1}^{\mathrm{cALS}}
+ =Q_{\mathrm{cALS}}^{\mathsf T}T_{(1)}K_t^x
+ \bigl((K_t^x)^{\mathsf T}K_t^x\bigr)^\dagger.
+\]
+Every finite real matrix has a Moore--Penrose pseudoinverse: an SVD defines
+it by reciprocating the nonzero singular values.  Thus this factorization
+remains meaningful when the Gram matrix is singular or zero.  The later
+$Y$- and $Z$-updates do not alter $X_{t+1}$.
+
+For constrained GD,
+\[
+ Q_{\mathrm{cGD}}C_0
+ =Q_{\mathrm{cGD}}Q_{\mathrm{cGD}}^{\mathsf T}G_x^{\mathrm{cGD}}
+ =G_x^{\mathrm{cGD}}=X_0^{\mathrm{cGD}},
+\]
+and at every later defined index the method defines
+$X_t^{\mathrm{cGD}}=Q_{\mathrm{cGD}}C_t$.  Therefore one may take
+$D_t^{\mathrm{cGD}}=C_t$.  Lemma~\ref{lem:step-001-tensor-lift} now gives
+the three tensor-membership identities for both methods.
+
+This argument is deliberately scoped to defined indices.  It does not assume
+termination of future line searches; that all-index existence is proved
+separately below.
+\end{proof}
+
+\begin{proposition}[Initialization and zero-leakage certificate]\label{prop:step-001-certificate}
+Under Assumptions~\ref{assump:dimension}, \ref{assump:rank_window}, and
+\ref{assump:joint_initialization}, the two initialization spans are mutually
+independent Haar $k$-planes independent of $T$, conditionally retain the
+constant product-Haar law given every $T=T_0$, and every defined represented
+tensor of either constrained method has zero leakage from its fixed tensor
+subspace.
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:step-001-full-rank} gives simultaneous full rank with
+probability one and the exact arithmetic $k/n\le1/8<1$.
+Lemma~\ref{lem:step-001-haar-independence} gives the Haar and conditional
+independence statements.  Proposition~\ref{prop:step-001-fixed-span} gives
+zero leakage at every defined index.
+
+All boundary regimes are included.  Equality $k/n=1/8$ still gives $k<n$.
+The measurable orthonormalization may choose arbitrary signs or orientations,
+because only the span and projector are used.  Singular or zero constrained
+ALS designs do not affect the left factor $Q_{\mathrm{cALS}}$.  No rank or
+size condition on $Y_t,Z_t$ is required by
+Lemma~\ref{lem:step-001-tensor-lift}.  At a currently undefined future GD
+index no assertion is made, while each existing index has the exact
+coefficient representation.  The conclusions do not depend on the value of
+$T$ and remain exact at $T=0$ and in exact or zero-smoothing specializations.
+Finally, the mechanism is active at initialization and at the first defined
+transition: $X_0^M=Q_MD_0^M$, the first constrained ALS update is
+$Q_MD_1^M$, and the first constrained GD update changes only its coefficient
+matrix.
+\end{proof}
+
+\subsection{Conditional Haar projection margin}\label{app:step-002}
+
+\begin{lemma}[Conditional Haar projector isotropy and tensor energy]\label{lem:step-002-projector-energy}
+Under Assumptions~\ref{assump:dimension}, \ref{assump:rank_window}, and
+\ref{assump:joint_initialization}, and Lemma~\ref{lem:step-001-haar-independence},
+fix $M\in\{\mathrm{cALS},\mathrm{cGD}\}$ and
+$T_0\in\mathbb R^{n\times n\times n}$.  Under the regular conditional law
+given $T=T_0$,
+\[
+ \mathbb E[P_{\mathcal S_M}\mid T=T_0]=\frac{k}{n}I_n
+\]
+and
+\[
+ \mathbb E\!\left[\|P_{\mathcal H_M}T\|_F^2\mid T=T_0\right]
+ =\frac{k}{n}\|T_0\|_F^2.
+\]
+Consequently,
+\[
+ \mathbb E\!\left[\|P_{\mathcal H_M}T\|_F^2\mid T\right]
+ =\frac{k}{n}\|T\|_F^2.
+\]
+\end{lemma}
+
+\begin{proof}
+Let
+\[
+ \overline P_M=\mathbb E[P_{\mathcal S_M}\mid T=T_0].
+\]
+Haar invariance gives
+$U\overline P_MU^{\mathsf T}=\overline P_M$ for every $U\in O(n)$.
+Conjugation by coordinate sign flips makes every off-diagonal entry zero, and
+conjugation by coordinate permutations makes all diagonal entries equal.
+Thus $\overline P_M=\lambda I_n$.  Since every realization is a rank-$k$
+orthogonal projector,
+\[
+ n\lambda=\operatorname{tr}(\overline P_M)
+ =\mathbb E[\operatorname{tr}(P_{\mathcal S_M})\mid T=T_0]=k,
+\]
+which proves the first identity.
+
+The tensor projector acts in the first mode, so
+\[
+ (P_{\mathcal H_M}T_0)_{(1)}=P_{\mathcal S_M}(T_0)_{(1)}.
+\]
+Using symmetry and idempotence,
+\[
+ \begin{aligned}
+ \|P_{\mathcal H_M}T_0\|_F^2
+ &=\|P_{\mathcal S_M}(T_0)_{(1)}\|_F^2\\
+ &=\operatorname{tr}\!\left(
+ P_{\mathcal S_M}(T_0)_{(1)}(T_0)_{(1)}^{\mathsf T}\right).
+ \end{aligned}
+\]
+Taking conditional expectation yields
+\[
+ \begin{aligned}
+ \mathbb E[\|P_{\mathcal H_M}T\|_F^2\mid T=T_0]
+ &=\operatorname{tr}\!\left(
+ \frac{k}{n}I_n(T_0)_{(1)}(T_0)_{(1)}^{\mathsf T}\right)\\
+ &=\frac{k}{n}\|(T_0)_{(1)}\|_F^2
+ =\frac{k}{n}\|T_0\|_F^2.
+ \end{aligned}
+\]
+The conditional kernel is valid for every $T_0$, giving the final identity.
+\end{proof}
+
+\begin{lemma}[Zero-safe per-method projection event]\label{lem:step-002-markov-event}
+Under Assumptions~\ref{assump:dimension}, \ref{assump:rank_window}, and
+\ref{assump:joint_initialization}, Lemma~\ref{lem:step-001-haar-independence},
+and Lemma~\ref{lem:step-002-projector-energy}, define
+\[
+ E_M=\left\{
+ \|P_{\mathcal H_M}T\|_F^2
+ \le2\frac{k}{n}\|T\|_F^2
+ \right\}.
+\]
+Then, for every $T_0$,
+\[
+ \mathbb P(E_M\mid T=T_0)\ge\frac12.
+\]
+If $T_0=0$, this conditional probability is one.
+\end{lemma}
+
+\begin{proof}
+Suppose first that $T_0\ne0$ and set
+$X_M=\|P_{\mathcal H_M}T_0\|_F^2\ge0$.  The threshold
+$2(k/n)\|T_0\|_F^2$ is positive and
+Lemma~\ref{lem:step-002-projector-energy} gives
+\[
+ \mathbb E[X_M\mid T=T_0]=\frac{k}{n}\|T_0\|_F^2.
+\]
+Markov's inequality, which follows from
+$a\mathbf 1_{\{X_M\ge a\}}\le X_M$ for $a>0$, gives
+\[
+ \begin{aligned}
+ \mathbb P(E_M^c\mid T=T_0)
+ &\le\mathbb P\!\left(
+ X_M\ge2\frac{k}{n}\|T_0\|_F^2\,\middle|\,T=T_0\right)\\
+ &\le\frac{(k/n)\|T_0\|_F^2}
+ {2(k/n)\|T_0\|_F^2}=\frac12.
+ \end{aligned}
+\]
+If $T_0=0$, both sides of the inequality defining $E_M$ are zero for every
+span, so $E_M$ is sure and no division is used.
+\end{proof}
+
+\begin{lemma}[Exact orthogonal-complement margin]\label{lem:step-002-residual-margin}
+Under Assumptions~\ref{assump:dimension} and \ref{assump:rank_window}, on
+$E_M$ one has
+\[
+ \|(I-P_{\mathcal H_M})T\|_F^2
+ \ge\left(1-2\frac{k}{n}\right)\|T\|_F^2
+ \ge\frac34\|T\|_F^2.
+\]
+The assertion includes $T=0$ and the boundary $k/n=1/8$.
+\end{lemma}
+
+\begin{proof}
+Orthogonality of $P_{\mathcal H_M}$ gives
+\[
+ \|T\|_F^2
+ =\|P_{\mathcal H_M}T\|_F^2
+ +\|(I-P_{\mathcal H_M})T\|_F^2.
+\]
+On $E_M$,
+\[
+ \|(I-P_{\mathcal H_M})T\|_F^2
+ \ge\left(1-2\frac{k}{n}\right)\|T\|_F^2.
+\]
+The assumptions give
+\[
+ \frac{k}{n}\le\frac{r^{5/4}}{8r^{5/4}}=\frac18,
+ \qquad
+ 1-2\frac{k}{n}\ge1-2\left(\frac18\right)=\frac34.
+\]
+All quantities vanish when $T=0$, and equality at $k/n=1/8$ is allowed.
+\end{proof}
+
+\begin{proposition}[Joint conditional and unconditional projection event]\label{prop:step-002-joint-event}
+Under Assumptions~\ref{assump:dimension}, \ref{assump:rank_window}, and
+\ref{assump:joint_initialization}, Lemma~\ref{lem:step-001-haar-independence},
+Lemma~\ref{lem:step-002-markov-event}, and
+Lemma~\ref{lem:step-002-residual-margin}, the events
+$E_{\mathrm{cALS}}$ and $E_{\mathrm{cGD}}$ are conditionally independent
+given $T$.  For every $T_0$,
+\[
+ \begin{aligned}
+ &\mathbb P(E_{\mathrm{cALS}}\cap E_{\mathrm{cGD}}\mid T=T_0)\\
+ &\qquad=\mathbb P(E_{\mathrm{cALS}}\mid T=T_0)
+ \mathbb P(E_{\mathrm{cGD}}\mid T=T_0)\ge\frac14.
+ \end{aligned}
+\]
+Moreover,
+\[
+ \mathbb P(E_{\mathrm{cALS}}\cap E_{\mathrm{cGD}})\ge\frac14,
+\]
+and on this joint event, simultaneously for both methods,
+\[
+ \|(I-P_{\mathcal H_M})T\|_F^2
+ \ge\left(1-2\frac{k}{n}\right)\|T\|_F^2
+ \ge\frac34\|T\|_F^2.
+\]
+\end{proposition}
+
+\begin{proof}
+Fix $T_0$.  The event $E_M$ is then a measurable function only of the
+method-specific span, because its threshold is deterministic on this fiber.
+Lemma~\ref{lem:step-001-haar-independence} supplies the product-Haar
+conditional law.  Hence
+\[
+ \mathbb P(E_{\mathrm{cALS}}\cap E_{\mathrm{cGD}}\mid T=T_0)
+ =\prod_{M\in\{\mathrm{cALS},\mathrm{cGD}\}}
+ \mathbb P(E_M\mid T=T_0)
+ \ge\frac12\cdot\frac12=\frac14.
+\]
+This includes the $T_0=0$ fiber, on which each factor is one.  The tower
+property then gives
+\[
+ \begin{aligned}
+ \mathbb P(E_{\mathrm{cALS}}\cap E_{\mathrm{cGD}})
+ &=\mathbb E\!\left[
+ \mathbb P(E_{\mathrm{cALS}}\cap E_{\mathrm{cGD}}\mid T)\right]\\
+ &\ge\mathbb E\!\left[\frac14\right]=\frac14.
+ \end{aligned}
+\]
+On the intersection, Lemma~\ref{lem:step-002-residual-margin} applies to
+each method.  Only the two initial spans are conditionally independent; the
+complete trajectories need not be independent.  The argument is pointwise in
+$T_0$ and uses no concentration or nondegeneracy property of the tensor law.
+The simultaneous rank-failure null set was already removed by
+Lemma~\ref{lem:step-001-full-rank}.
+\end{proof}
+
+\subsection{Exact fixed-witness objective floor}\label{app:step-003}
+
+\begin{proposition}[Exact same-target Pythagorean floor]\label{prop:step-003-pythagorean-floor}
+Under Proposition~\ref{prop:step-001-fixed-span}, fix one of the two methods,
+denote it by $M$, and fix an index $t$ for which its iterate is defined.  Set
+\[
+ R_M=(I-P_{\mathcal H_M})T.
+\]
+Then
+\[
+ T-S_t^M=R_M+(P_{\mathcal H_M}T-S_t^M),
+ \qquad
+ R_M\perp(P_{\mathcal H_M}T-S_t^M),
+\]
+and therefore
+\[
+ \|T-S_t^M\|_F^2
+ =\|(I-P_{\mathcal H_M})T\|_F^2
+ +\|P_{\mathcal H_M}T-S_t^M\|_F^2.
+\]
+Equivalently,
+\[
+ F_M(t)=\frac12\|R_M\|_F^2
+ +\frac12\|P_{\mathcal H_M}T-S_t^M\|_F^2
+ \ge\frac12\|(I-P_{\mathcal H_M})T\|_F^2.
+\]
+The bound holds at every defined index with the same fixed residual $R_M$.
+\end{proposition}
+
+\begin{proof}
+Write $P=P_{\mathcal H_M}$.  Proposition~\ref{prop:step-001-fixed-span}
+gives $PS_t^M=S_t^M$, so $PT-S_t^M\in\mathcal H_M$.  On the other hand,
+\[
+ PR_M=P(I-P)T=(P-P^2)T=0,
+\]
+and hence $R_M\in\mathcal H_M^\perp$.  Thus
+$\langle R_M,PT-S_t^M\rangle_F=0$, while algebraically
+\[
+ T-S_t^M=(I-P)T+PT-S_t^M=R_M+(PT-S_t^M).
+\]
+Expanding the squared Frobenius norm proves the equality.  Multiplying by the
+objective coefficient $1/2$ gives the exact objective decomposition, and
+discarding only its displayed nonnegative in-subspace term gives the floor.
+The residual $R_M$ depends only on $T$ and the fixed initialization subspace,
+so no recurrence, accumulated error, horizon constant, or factor-size
+condition is present.
+\end{proof}
+
+\begin{lemma}[Fixed normalized witness in the nonzero-residual branch]\label{lem:step-003-fixed-witness}
+Under Proposition~\ref{prop:step-001-fixed-span} and
+Proposition~\ref{prop:step-003-pythagorean-floor}, if $\|R_M\|_F>0$, then
+\[
+ W_M=\frac{R_M}{\|R_M\|_F}
+\]
+is a fixed unit tensor in $\mathcal H_M^\perp$ satisfying, for every defined
+iterate,
+\[
+ \langle W_M,S_t^M\rangle_F=0,
+ \qquad
+ \langle W_M,T-S_t^M\rangle_F
+ =\langle W_M,T\rangle_F=\|R_M\|_F,
+\]
+and hence $\|T-S_t^M\|_F\ge\|R_M\|_F$.  If $\|R_M\|_F=0$, no normalized
+witness is defined or used, while
+Proposition~\ref{prop:step-003-pythagorean-floor} remains valid.
+\end{lemma}
+
+\begin{proof}
+In the positive-denominator branch, normalization gives
+$\|W_M\|_F=1$ and, because $R_M\in\mathcal H_M^\perp$,
+$W_M\in\mathcal H_M^\perp$.  Proposition~\ref{prop:step-001-fixed-span}
+gives $S_t^M\in\mathcal H_M$, so
+$\langle W_M,S_t^M\rangle_F=0$.  Also
+\[
+ \begin{aligned}
+ \langle W_M,T\rangle_F
+ &=\langle W_M,R_M+P_{\mathcal H_M}T\rangle_F\\
+ &=\frac{\langle R_M,R_M\rangle_F}{\|R_M\|_F}
+ =\|R_M\|_F.
+ \end{aligned}
+\]
+Subtracting the zero inner product with $S_t^M$ proves the witness identity.
+For completeness, Cauchy--Schwarz follows by applying nonnegativity of
+$\|A-\lambda B\|_F^2$ at
+$\lambda=\langle A,B\rangle_F/\|B\|_F^2$ when $B\ne0$; the zero case is
+immediate.  Applying it with $A=W_M$ gives
+\[
+ \|R_M\|_F
+ =|\langle W_M,T-S_t^M\rangle_F|
+ \le\|T-S_t^M\|_F.
+\]
+Both $R_M$ and $W_M$ are fixed before the trajectory evolves.  When
+$\|R_M\|_F=0$, the quotient is not assigned a value and the unconditional
+Pythagorean identity is used instead.
+\end{proof}
+
+\begin{proposition}[Boundary-complete fixed obstruction]\label{prop:step-003-certificate}
+Under Proposition~\ref{prop:step-001-fixed-span}, the Pythagorean floor in
+Proposition~\ref{prop:step-003-pythagorean-floor} holds for every defined
+iterate, including all zero-residual and degenerate factor cases, and the
+normalized certificate in Lemma~\ref{lem:step-003-fixed-witness} is used only
+on its positive-denominator branch.
+\end{proposition}
+
+\begin{proof}
+The two cited results prove the asserted fixed floor and witness statement.
+If $T=0$, then $R_M=0$ and the identity becomes
+$\|S_t^M\|_F^2=0+\|S_t^M\|_F^2$.  If
+$T\in\mathcal H_M$, the same zero-residual reduction applies.  The algebra
+also remains valid at the literal full-span boundary $P_{\mathcal H_M}=I$,
+although the current rank assumptions give $k<n$.  If
+$S_t^M=P_{\mathcal H_M}T$, equality holds in the objective floor.  The
+membership producer includes initialization and every first defined update,
+so no burn-in is needed.  A nonexistent future GD iterate is not quantified
+here; all-index existence is established later.  Finally, zero,
+rank-deficient, or arbitrarily large finite factors do not change the
+orthogonal decomposition once the represented tensor belongs to
+$\mathcal H_M$.
+\end{proof}
+
+\subsection{Sequential constrained ALS descent and scalar convergence}\label{app:step-004}
+
+\begin{lemma}[Exact CP mode-matricization identities]\label{lem:step-004-cp-matricization}
+For every finite $X,Y,Z\in\mathbb R^{n\times k}$, under the fixed
+Khatri--Rao ordering,
+\[
+ S(X,Y,Z)_{(1)}=X(Z\odot Y)^{\mathsf T},
+ \quad
+ S(X,Y,Z)_{(2)}=Y(Z\odot X)^{\mathsf T},
+ \quad
+ S(X,Y,Z)_{(3)}=Z(Y\odot X)^{\mathsf T}.
+\]
+Consequently, each matricized block least-squares objective is exactly the
+tensor objective $F$.
+\end{lemma}
+
+\begin{proof}
+The $i$th column of $Z\odot Y$ is $z_i\otimes y_i$, while the mode-1
+matricization of $x_i\otimes y_i\otimes z_i$ is
+$x_i(z_i\otimes y_i)^{\mathsf T}$.  Hence
+\[
+ \sum_{i=1}^k x_i(z_i\otimes y_i)^{\mathsf T}
+ =X(Z\odot Y)^{\mathsf T}.
+\]
+The same coordinate calculation in modes 2 and 3 uses the ordered columns
+$z_i\otimes x_i$ and $y_i\otimes x_i$.  Matricization permutes entries and
+therefore preserves the Frobenius norm, proving exact equality of the matrix
+and tensor residual objectives.
+\end{proof}
+
+\begin{lemma}[Singular-design Moore--Penrose least squares]\label{lem:step-004-pseudoinverse-ls}
+Let $A\in\mathbb R^{p\times m}$ and $K\in\mathbb R^{m\times k}$ be finite.
+Then
+\[
+ \phi(U)=\frac12\|A-UK^{\mathsf T}\|_F^2,
+ \qquad U\in\mathbb R^{p\times k},
+\]
+is minimized by
+\[
+ U_\star=AK(K^{\mathsf T}K)^\dagger,
+\]
+and $U_\star$ is the unique minimizer of smallest Frobenius norm.  If
+$K=U_K\Sigma V_K^{\mathsf T}$ is a compact SVD of positive rank and
+$P_K=V_KV_K^{\mathsf T}$, every minimizer has the form
+$U_\star+R(I_k-P_K)$.  If $K=0$, every $U$ minimizes $\phi$ and $U_\star=0$
+is the unique minimum-norm minimizer.
+\end{lemma}
+
+\begin{proof}
+First suppose $s=\operatorname{rank}(K)>0$, and extend $U_K,V_K$ to
+orthogonal bases $[U_K\ U_0]$ of $\mathbb R^m$ and $[V_K\ V_0]$ of
+$\mathbb R^k$.  Since $K^{\mathsf T}=V_K\Sigma U_K^{\mathsf T}$,
+right multiplication by $[U_K\ U_0]$ gives
+\[
+ \begin{aligned}
+ \|A-UK^{\mathsf T}\|_F^2
+ &=\|(A-UV_K\Sigma U_K^{\mathsf T})[U_K\ U_0]\|_F^2\\
+ &=\|AU_K-UV_K\Sigma\|_F^2+\|AU_0\|_F^2.
+ \end{aligned}
+\]
+The second term is independent of $U$, and the first is minimized exactly
+when
+\[
+ UV_K=AU_K\Sigma^{-1}.
+\]
+Thus all minimizers are
+\[
+ U=AU_K\Sigma^{-1}V_K^{\mathsf T}+R(I_k-P_K).
+\]
+The compact SVD also gives
+\[
+ \begin{aligned}
+ K(K^{\mathsf T}K)^\dagger
+ &=U_K\Sigma V_K^{\mathsf T}
+ V_K\Sigma^{-2}V_K^{\mathsf T}\\
+ &=U_K\Sigma^{-1}V_K^{\mathsf T},
+ \end{aligned}
+\]
+so the first term is $U_\star$.  Orthogonality of the two right subspaces
+gives
+\[
+ \|U\|_F^2=\|UV_K\|_F^2+\|U(I_k-P_K)\|_F^2.
+\]
+The unique smallest norm is obtained by setting the free component to zero.
+If $s=0$, then $K=0$ and
+$\phi(U)=\frac12\|A\|_F^2$ for every $U$, while the pseudoinverse formula
+returns $U_\star=0$.  This proves the result at every rank without a
+conditioning assumption.
+\end{proof}
+
+\begin{lemma}[Constrained orthogonal-basis block minimizer]\label{lem:step-004-constrained-block}
+Let $A\in\mathbb R^{p\times m}$, $K\in\mathbb R^{m\times k}$, and
+$Q\in\mathbb R^{p\times k}$ satisfy $Q^{\mathsf T}Q=I_k$.  Then
+\[
+ \min_{\operatorname{col}(X)\subseteq\operatorname{range}(Q)}
+ \frac12\|A-XK^{\mathsf T}\|_F^2
+\]
+has the minimum-Frobenius-norm minimizer
+\[
+ X_\star=Q(Q^{\mathsf T}AK)(K^{\mathsf T}K)^\dagger.
+\]
+The conclusion holds for every rank of $K$, including $K=0$.
+\end{lemma}
+
+\begin{proof}
+Every feasible matrix has a unique representation $X=QC$, with
+$C=Q^{\mathsf T}X$.  Put $P=QQ^{\mathsf T}$.  Then
+\[
+ A-QCK^{\mathsf T}
+ =(I_p-P)A+Q(Q^{\mathsf T}A-CK^{\mathsf T}).
+\]
+The two terms are Frobenius-orthogonal because $(I_p-P)Q=0$, and
+$\|QB\|_F=\|B\|_F$.  Therefore
+\[
+ \|A-QCK^{\mathsf T}\|_F^2
+ =\|(I_p-P)A\|_F^2
+ +\|Q^{\mathsf T}A-CK^{\mathsf T}\|_F^2.
+\]
+The first term is independent of $C$.  Applying
+Lemma~\ref{lem:step-004-pseudoinverse-ls} to $Q^{\mathsf T}A$ and $K$
+gives
+\[
+ C_\star=(Q^{\mathsf T}A)K(K^{\mathsf T}K)^\dagger.
+\]
+Since $\|QC\|_F=\|C\|_F$, its minimum-norm property transfers to the
+feasible matrix $X_\star$.  The same calculation includes the zero design.
+\end{proof}
+
+\begin{proposition}[Exact finite constrained ALS block updates]\label{prop:step-004-block-updates}
+At any finite constrained ALS state with
+$Q=Q_{\mathrm{cALS}}$, $Q^{\mathsf T}Q=I_k$, and
+$X_t\in\operatorname{range}(Q)$, define in sequential order
+\[
+ K_t^x=Z_t\odot Y_t,
+ \qquad K_t^y=Z_t\odot X_{t+1},
+ \qquad K_t^z=Y_{t+1}\odot X_{t+1}.
+\]
+The three displayed updates are finite minimum-Frobenius-norm minimizers of
+their current block problems, and
+\[
+ \begin{aligned}
+ F(X_{t+1},Y_t,Z_t)&\le F(X_t,Y_t,Z_t),\\
+ F(X_{t+1},Y_{t+1},Z_t)&\le F(X_{t+1},Y_t,Z_t),\\
+ F(X_{t+1},Y_{t+1},Z_{t+1})&\le F(X_{t+1},Y_{t+1},Z_t).
+ \end{aligned}
+\]
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{lem:step-004-cp-matricization}, the $X$-block objective is
+\[
+ \frac12\|T_{(1)}-X(K_t^x)^{\mathsf T}\|_F^2.
+\]
+Lemma~\ref{lem:step-004-constrained-block}, with $A=T_{(1)}$ and
+$K=K_t^x$, gives exactly
+\[
+ X_{t+1}=Q\left[Q^{\mathsf T}T_{(1)}K_t^x
+ \bigl((K_t^x)^{\mathsf T}K_t^x\bigr)^\dagger\right].
+\]
+Because $X_t$ is feasible, the constrained minimum is no larger than its
+value at $X_t$, proving the first inequality.
+
+With $X_{t+1}$ fixed, Lemmas~\ref{lem:step-004-cp-matricization} and
+\ref{lem:step-004-pseudoinverse-ls} give
+\[
+ Y_{t+1}=T_{(2)}K_t^y
+ \bigl((K_t^y)^{\mathsf T}K_t^y\bigr)^\dagger
+\]
+as the minimum-norm $Y$-block minimizer, proving the second inequality.  With
+$X_{t+1},Y_{t+1}$ fixed, the same lemmas give
+\[
+ Z_{t+1}=T_{(3)}K_t^z
+ \bigl((K_t^z)^{\mathsf T}K_t^z\bigr)^\dagger
+\]
+as the minimum-norm $Z$-block minimizer, proving the third.  Every finite
+Gram matrix has a finite Moore--Penrose inverse even when singular or zero,
+so the selected updates are finite.
+\end{proof}
+
+\begin{proposition}[Well-defined sequential constrained ALS descent]\label{prop:step-004-sequential-descent}
+For every finite constrained ALS initialization on the stipulated
+orthonormal-basis domain, every sweep is defined,
+$X_t\in\operatorname{range}(Q_{\mathrm{cALS}})$ for every $t$, and
+\[
+ F_{\mathrm{cALS}}(t+1)\le F_{\mathrm{cALS}}(t).
+\]
+More precisely, if
+\[
+ F_t^x=F(X_{t+1},Y_t,Z_t),
+ \qquad
+ F_t^y=F(X_{t+1},Y_{t+1},Z_t),
+\]
+then
+\[
+ F_{\mathrm{cALS}}(t+1)\le F_t^y\le F_t^x
+ \le F_{\mathrm{cALS}}(t).
+\]
+\end{proposition}
+
+\begin{proof}
+At initialization,
+\[
+ X_0=G_x^{\mathrm{cALS}}
+ \in\operatorname{range}(G_x^{\mathrm{cALS}})
+ =\operatorname{range}(Q_{\mathrm{cALS}}).
+\]
+Assume $X_t,Y_t,Z_t$ are finite and $X_t$ is feasible.
+Proposition~\ref{prop:step-004-block-updates} gives a finite
+$X_{t+1}=Q_{\mathrm{cALS}}C_{t+1}$, so the new $X$ remains feasible.  Then
+$K_t^y$ is finite and the same proposition gives finite $Y_{t+1}$; next
+$K_t^z$ is finite and it gives finite $Z_{t+1}$.  This closes the induction.
+
+The three block inequalities are composed in the actual update order:
+\[
+ \begin{aligned}
+ F_{\mathrm{cALS}}(t+1)
+ &=F(X_{t+1},Y_{t+1},Z_{t+1})\\
+ &\le F_t^y\le F_t^x
+ \le F(X_t,Y_t,Z_t)=F_{\mathrm{cALS}}(t).
+ \end{aligned}
+\]
+The $Y$-block uses the newly minimized $X_{t+1}$, and the $Z$-block uses
+both newly minimized factors.  No simultaneous update is substituted.
+Nonuniqueness at a rank-deficient design does not change these inequalities,
+because the selected pseudoinverse solution is still an exact minimizer.
+\end{proof}
+
+\begin{lemma}[Finite constrained ALS scalar limit and drop budget]\label{lem:step-004-scalar-limit}
+Under Proposition~\ref{prop:step-004-sequential-descent},
+\[
+ L_{\mathrm{cALS}}
+ :=\lim_{t\to\infty}F_{\mathrm{cALS}}(t)
+ =\inf_{t\ge0}F_{\mathrm{cALS}}(t)
+\]
+exists as a finite real number.  For every $N\ge1$,
+\[
+ \sum_{t=0}^{N-1}
+ \bigl(F_{\mathrm{cALS}}(t)-F_{\mathrm{cALS}}(t+1)\bigr)
+ =F_{\mathrm{cALS}}(0)-F_{\mathrm{cALS}}(N)
+ \le F_{\mathrm{cALS}}(0).
+\]
+\end{lemma}
+
+\begin{proof}
+The squared-loss definition gives $F_{\mathrm{cALS}}(t)\ge0$, and
+Proposition~\ref{prop:step-004-sequential-descent} gives a nonincreasing
+finite sequence.  Let
+\[
+ L=\inf_{t\ge0}F_{\mathrm{cALS}}(t),
+ \qquad 0\le L\le F_{\mathrm{cALS}}(0)<\infty.
+\]
+For $\varepsilon>0$, choose $N$ with
+$F_{\mathrm{cALS}}(N)<L+\varepsilon$.  For every $t\ge N$,
+\[
+ L\le F_{\mathrm{cALS}}(t)
+ \le F_{\mathrm{cALS}}(N)<L+\varepsilon,
+\]
+which proves convergence to $L$.  Summing the successive differences
+telescopes, and $F_{\mathrm{cALS}}(N)\ge0$ gives the stated budget.
+No factor convergence or stationarity conclusion is used.
+\end{proof}
+
+\begin{proposition}[Constrained ALS scalar-limit certificate]\label{prop:step-004-certificate}
+Under the finite constrained ALS definitions, every sweep is well-defined,
+each displayed block update is an exact minimum-Frobenius-norm minimizer,
+$F_{\mathrm{cALS}}(t)$ is nonnegative and nonincreasing, and its finite
+scalar limit exists.  These conclusions require no Khatri--Rao rank,
+conditioning, factor bound, or convergence-rate assumption.
+\end{proposition}
+
+\begin{proof}
+Lemmas~\ref{lem:step-004-cp-matricization}--\ref{lem:step-004-constrained-block}
+identify the actual block objectives and prove the singular-design formulas.
+Propositions~\ref{prop:step-004-block-updates} and
+\ref{prop:step-004-sequential-descent} give finite sequential descent, and
+Lemma~\ref{lem:step-004-scalar-limit} gives the scalar limit.
+
+If a design is zero, its block objective is independent of that factor and
+the pseudoinverse selects the zero factor, the unique minimum-norm choice.  A
+nonzero singular design retains only its row-space component.  The first
+sweep is covered because $X_0$ is feasible by construction.  Tied minima and
+zero drops are allowed.  If an objective value is zero, every later block
+minimum remains zero by nonnegativity.  Factors or pseudoinverses may be
+arbitrarily large at a finite time; the result asserts finite arrays at every
+finite step but no uniform norm bound or continuity of the update map.
+\end{proof}
+
+\subsection{Coefficient Armijo descent and scalar convergence}\label{app:step-005}
+
+Fix $Q=Q_{\mathrm{cGD}}$ and abbreviate
+\[
+ f_Q(C,Y,Z)=F(QC,Y,Z).
+\]
+We use the finite-dimensional product space
+\[
+ \mathcal U=\mathbb R^{k\times k}\times\mathbb R^{n\times k}
+ \times\mathbb R^{n\times k}
+\]
+with inner product
+\[
+ \langle(C,Y,Z),(C',Y',Z')\rangle_{\mathcal U}
+ =\langle C,C'\rangle_F+\langle Y,Y'\rangle_F+\langle Z,Z'\rangle_F.
+\]
+Its norm is exactly the block Frobenius norm used by the line search.
+
+\begin{lemma}[Pointwise Taylor control for the coefficient loss]\label{lem:step-005-local-taylor}
+If $u=(C,Y,Z)\in\mathcal U$ is finite and $g=\nabla f_Q(u)$, then $g$ is
+finite and
+\[
+ L(u)=\max_{0\le s\le1}
+ \|\nabla^2f_Q(u-sg)\|_{\mathrm{op}}<\infty.
+\]
+For every $0\le\eta\le1$,
+\[
+ f_Q(u-\eta g)
+ \le f_Q(u)-\eta\|g\|_{\mathcal U}^2
+ +\frac{L(u)\eta^2}{2}\|g\|_{\mathcal U}^2.
+ \tag{A.1}\label{eq:step-005-taylor}
+\]
+\end{lemma}
+
+\begin{proof}
+For tensor indices $a,b,c$,
+\[
+ S(QC,Y,Z)_{abc}
+ =\sum_{i=1}^k\sum_{\ell=1}^k
+ Q_{a\ell}C_{\ell i}Y_{bi}Z_{ci}.
+\]
+Every entry of $T-S(QC,Y,Z)$ is therefore a polynomial in the entries of
+$(C,Y,Z)$, and
+\[
+ f_Q(C,Y,Z)=\frac12\sum_{a,b,c}
+ \bigl(T-S(QC,Y,Z)\bigr)_{abc}^2
+\]
+is a finite polynomial.  Thus it is $C^2$, and its gradient and Hessian have
+finite entries at every finite state.
+
+The map $s\mapsto u-sg$ sends the compact interval $[0,1]$ continuously to
+a compact segment.  The function
+$v\mapsto\|\nabla^2f_Q(v)\|_{\mathrm{op}}$ is continuous, so it attains a
+finite maximum on that segment.  This proves the assertion about $L(u)$.
+
+For $0\le\eta\le1$, define $\phi(s)=f_Q(u-sg)$.  Then
+\[
+ \phi'(0)=-\|g\|_{\mathcal U}^2,
+ \qquad
+ \phi''(s)=\langle g,\nabla^2f_Q(u-sg)g\rangle_{\mathcal U}.
+\]
+Applying the fundamental theorem of calculus twice gives the integral
+remainder formula
+\[
+ \phi(\eta)=\phi(0)+\eta\phi'(0)
+ +\int_0^\eta(\eta-s)\phi''(s)\,ds.
+\]
+Therefore
+\[
+ \begin{aligned}
+ f_Q(u-\eta g)
+ &=f_Q(u)-\eta\|g\|_{\mathcal U}^2
+ +\int_0^\eta(\eta-s)
+ \langle g,\nabla^2f_Q(u-sg)g\rangle_{\mathcal U}\,ds\\
+ &\le f_Q(u)-\eta\|g\|_{\mathcal U}^2
+ +\int_0^\eta(\eta-s)L(u)\|g\|_{\mathcal U}^2\,ds,
+ \end{aligned}
+\]
+which is exactly \eqref{eq:step-005-taylor}.
+\end{proof}
+
+\begin{proposition}[Finite dyadic Armijo acceptance]\label{prop:step-005-armijo}
+Under Lemma~\ref{lem:step-005-local-taylor}, if $u\in\mathcal U$ is finite,
+$g=\nabla f_Q(u)$, and the line search tests $\eta_j=2^{-j}$, then an
+acceptable trial occurs at a finite index.  The first acceptable $\eta$ is
+well-defined, $u^+=u-\eta g$ is finite, and
+\[
+ f_Q(u^+)\le f_Q(u)-\frac{\eta}{2}\|g\|_{\mathcal U}^2.
+ \tag{A.2}\label{eq:step-005-armijo}
+\]
+\end{proposition}
+
+\begin{proof}
+If $g=0$, the first trial $\eta_0=1$ leaves $u$ unchanged and satisfies the
+Armijo inequality with equality.  Suppose $g\ne0$ and write $L=L(u)<\infty$.
+If $L=0$, take $\eta_*=1$.  If $L>0$, set
+\[
+ j_*=\max\{0,\lceil\log_2L\rceil\},
+ \qquad \eta_*=2^{-j_*}.
+\]
+Then $0<\eta_*\le1$ and $L\eta_*\le1$.  In both cases,
+Lemma~\ref{lem:step-005-local-taylor} gives
+\[
+ \begin{aligned}
+ f_Q(u-\eta_*g)
+ &\le f_Q(u)-\eta_*\|g\|_{\mathcal U}^2
+ +\frac{L\eta_*^2}{2}\|g\|_{\mathcal U}^2\\
+ &=f_Q(u)-\eta_*
+ \left(1-\frac{L\eta_*}{2}\right)\|g\|_{\mathcal U}^2\\
+ &\le f_Q(u)-\frac{\eta_*}{2}\|g\|_{\mathcal U}^2.
+ \end{aligned}
+\]
+Thus a trial no later than $j_*$ is acceptable.  The first acceptable trial
+therefore occurs after finitely many tests and obeys
+\eqref{eq:step-005-armijo}.  Since $u,g,$ and $\eta$ are finite, so is
+$u^+=u-\eta g$.
+\end{proof}
+
+\begin{proposition}[Well-defined coefficient GD iterates]\label{prop:step-005-well-defined}
+For the coefficient initialization above and the dyadic Armijo rule, every
+integer $t\ge0$ has a finite state
+\[
+ u_t=(C_t,Y_t,Z_t),
+\]
+a finite accepted line-search index, and a step size $\eta_t\in(0,1]$ for
+which
+\[
+ u_{t+1}=u_t-\eta_t\nabla f_Q(u_t)
+\]
+is finite and
+\[
+ f_Q(u_{t+1})
+ \le f_Q(u_t)-\frac{\eta_t}{2}
+ \|\nabla f_Q(u_t)\|_{\mathcal U}^2.
+ \tag{A.3}\label{eq:step-005-alltime-armijo}
+\]
+Consequently $X_t=QC_t$ and the represented tensor are defined at every
+finite index.
+\end{proposition}
+
+\begin{proof}
+The formal initialization
+\[
+ u_0=(Q^{\mathsf T}G_x^{\mathrm{cGD}},
+ G_y^{\mathrm{cGD}},G_z^{\mathrm{cGD}})
+\]
+is a finite element of $\mathcal U$ on the probability-one domain on which
+the method is instantiated.  If $u_t$ is finite,
+Proposition~\ref{prop:step-005-armijo} produces a finite accepted trial,
+a finite $u_{t+1}$, and \eqref{eq:step-005-alltime-armijo}.  Induction proves
+the assertion at every finite index.  Since $Q$ is fixed and finite,
+$X_t=QC_t$ and all inputs to the next iteration are finite as well.
+\end{proof}
+
+\begin{proposition}[Monotone constrained GD objective and finite scalar limit]\label{prop:step-005-scalar-limit}
+Under Proposition~\ref{prop:step-005-well-defined}, for every $t\ge0$,
+\[
+ 0\le F_{\mathrm{cGD}}(t+1)\le F_{\mathrm{cGD}}(t)<\infty.
+ \tag{A.4}\label{eq:step-005-monotone}
+\]
+For every $N\ge1$,
+\[
+ 0\le\sum_{t=0}^{N-1}\frac{\eta_t}{2}
+ \|\nabla f_Q(u_t)\|_{\mathcal U}^2
+ \le F_{\mathrm{cGD}}(0)-F_{\mathrm{cGD}}(N)
+ \le F_{\mathrm{cGD}}(0).
+ \tag{A.5}\label{eq:step-005-budget}
+\]
+The finite scalar
+\[
+ L_{\mathrm{cGD}}=\inf_{t\ge0}F_{\mathrm{cGD}}(t)
+ \in[0,F_{\mathrm{cGD}}(0)]
+\]
+satisfies
+\[
+ \lim_{t\to\infty}F_{\mathrm{cGD}}(t)=L_{\mathrm{cGD}}.
+ \tag{A.6}\label{eq:step-005-limit}
+\]
+\end{proposition}
+
+\begin{proof}
+The coefficient and actual objectives agree exactly:
+\[
+ f_Q(u_t)=F(QC_t,Y_t,Z_t)=F_{\mathrm{cGD}}(t).
+ \tag{A.7}\label{eq:step-005-objective-identity}
+\]
+This finite polynomial is one half of a squared Frobenius norm and is
+therefore nonnegative.  Substituting
+\eqref{eq:step-005-objective-identity} into
+\eqref{eq:step-005-alltime-armijo} proves
+\eqref{eq:step-005-monotone}.  Summation telescopes and gives
+\eqref{eq:step-005-budget}.
+
+The nonincreasing sequence is bounded below by zero.  For
+$L_{\mathrm{cGD}}=\inf_tF_{\mathrm{cGD}}(t)$ and $\varepsilon>0$, choose
+$N$ with
+$F_{\mathrm{cGD}}(N)<L_{\mathrm{cGD}}+\varepsilon$.  For $t\ge N$,
+\[
+ L_{\mathrm{cGD}}\le F_{\mathrm{cGD}}(t)
+ \le F_{\mathrm{cGD}}(N)<L_{\mathrm{cGD}}+\varepsilon,
+\]
+which proves \eqref{eq:step-005-limit}.
+
+If $\nabla f_Q(u_t)=0$, the first trial is accepted and the state is
+stationary.  If $f_Q(u_t)=0$, differentiability and nonnegativity force
+$\nabla f_Q(u_t)=0$: otherwise, as $s\downarrow0$,
+\[
+ f_Q(u_t-s\nabla f_Q(u_t))
+ =-s\|\nabla f_Q(u_t)\|_{\mathcal U}^2+o(s)<0,
+\]
+a contradiction.  Thus an exact zero objective remains zero.
+\end{proof}
+
+\begin{proposition}[Coefficient Armijo scalar-limit certificate]\label{prop:step-005-certificate}
+For constrained GD in coefficient variables, every dyadic line search
+terminates and every finite-index iterate exists.  Its objective values are
+nonnegative and nonincreasing, and their finite scalar limit exists.  No
+trajectory boundedness, global Lipschitz constant, uniform Hessian bound,
+positive all-time step-size lower bound, or parameter convergence is required.
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:step-005-local-taylor} supplies a finite Hessian bound only on
+the current search segment.  Proposition~\ref{prop:step-005-armijo} converts
+that bound into finite one-step acceptance, and
+Proposition~\ref{prop:step-005-well-defined} closes the local finiteness
+condition by induction.  Proposition~\ref{prop:step-005-scalar-limit}
+transfers the accepted coefficient decrease to the actual tensor objective,
+telescopes the decreases, and proves scalar convergence.
+
+The local numbers $L(u_t)$ may grow without bound, Armijo step sizes may
+tend to zero, and factor norms may be unbounded over time.  None of these
+possibilities prevents finite acceptance at a fixed finite state.  The same
+proof applies at $T=0$, at zero gradient, and at zero objective, with exact
+preservation of the zero baseline.
+\end{proof}
+
+\subsection{Why the fixed witness does not transfer to unconstrained updates}\label{app:step-006}
+
+\begin{proposition}[Exact first-update leakage for unconstrained GD and ALS]\label{prop:step-006-first-update}
+On the probability-one full-rank domain of
+Lemma~\ref{lem:step-001-full-rank}, fix either method-specific initial triple
+and suppress its method superscript.  Let
+\[
+ \mathcal S_0=\operatorname{range}(X_0),
+ \qquad P_0=P_{\mathcal S_0},
+ \qquad K_0=Z_0\odot Y_0.
+\]
+For one full-variable Euclidean gradient step with finite step size $\eta_0$,
+\[
+ X_1^{\mathrm{uGD}}
+ =X_0-\eta_0\nabla_XF(X_0,Y_0,Z_0),
+\]
+one has
+\[
+ (I-P_0)X_1^{\mathrm{uGD}}
+ =\eta_0(I-P_0)T_{(1)}K_0.
+ \tag{A.8}\label{eq:step-006-gd-leakage}
+\]
+For the minimum-Frobenius-norm unconstrained ALS $X$-block update,
+\[
+ X_1^{\mathrm{uALS}}
+ =T_{(1)}K_0(K_0^{\mathsf T}K_0)^\dagger,
+\]
+one has
+\[
+ (I-P_0)X_1^{\mathrm{uALS}}
+ =(I-P_0)T_{(1)}K_0(K_0^{\mathsf T}K_0)^\dagger.
+ \tag{A.9}\label{eq:step-006-als-leakage}
+\]
+Thus first-step fixed-span preservation is equivalent to the vanishing of the
+corresponding displayed forcing term; it is not implied merely by
+$X_0\in\mathcal S_0$.
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:step-004-cp-matricization} gives
+\[
+ S(X,Y_0,Z_0)_{(1)}=XK_0^{\mathsf T},
+ \qquad
+ F(X,Y_0,Z_0)=\frac12\|T_{(1)}-XK_0^{\mathsf T}\|_F^2.
+\]
+For any $H\in\mathbb R^{n\times k}$,
+\[
+ \begin{aligned}
+ \frac{d}{d\epsilon}F(X+\epsilon H,Y_0,Z_0)\bigg|_{\epsilon=0}
+ &=\langle XK_0^{\mathsf T}-T_{(1)},HK_0^{\mathsf T}\rangle_F\\
+ &=\langle(XK_0^{\mathsf T}-T_{(1)})K_0,H\rangle_F.
+ \end{aligned}
+\]
+Therefore
+\[
+ \nabla_XF(X_0,Y_0,Z_0)
+ =X_0K_0^{\mathsf T}K_0-T_{(1)}K_0,
+\]
+and
+\[
+ X_1^{\mathrm{uGD}}
+ =X_0(I_k-\eta_0K_0^{\mathsf T}K_0)+\eta_0T_{(1)}K_0.
+\]
+Since $(I-P_0)X_0=0$, left multiplication by $I-P_0$ proves
+\eqref{eq:step-006-gd-leakage}.  The calculation is unchanged if the other
+two factor components are updated simultaneously, because it uses the
+$X$-gradient at the common initial triple.
+
+For ALS, let $K_0=U\Sigma V^{\mathsf T}$ be an SVD.  The same rowwise
+least-squares calculation as in
+Lemma~\ref{lem:step-004-pseudoinverse-ls} gives the minimum-norm minimizer
+$T_{(1)}(K_0^{\mathsf T})^\dagger$.  The SVD yields
+\[
+ (K_0^{\mathsf T})^\dagger
+ =U\Sigma^\dagger V^{\mathsf T}
+ =K_0(K_0^{\mathsf T}K_0)^\dagger,
+\]
+including rank-deficient and zero $K_0$.  Applying $I-P_0$ proves
+\eqref{eq:step-006-als-leakage}.
+
+The identities do not assert that either right-hand side is always nonzero.
+It may vanish when $K_0=0$, when the target contraction lies in
+$\mathcal S_0$, through rank deficiency, or by accidental cancellation.
+Conversely, neither unconstrained update contains the fixed left factor that
+enforces zero leakage in Proposition~\ref{prop:step-001-fixed-span}.
+\end{proof}
+
+\begin{proposition}[Exact outside-span residual decomposition]\label{prop:step-006-residual-decomposition}
+Let $P_0$ be any orthogonal projector on $\mathbb R^n$, and define
+\[
+ \mathcal H_0=\operatorname{range}(P_0)\otimes\mathbb R^n\otimes\mathbb R^n,
+ \qquad
+ \Pi_0=P_0\otimes I_n\otimes I_n.
+\]
+For arbitrary finite factors $X_t,Y_t,Z_t$, set
+\[
+ S_t=S(X_t,Y_t,Z_t),
+ \qquad
+ R_0=(I-\Pi_0)T,
+ \qquad
+ \Lambda_t=(I-\Pi_0)S_t.
+\]
+Then
+\[
+ \Lambda_t=S((I-P_0)X_t,Y_t,Z_t),
+ \tag{A.10}\label{eq:step-006-tensor-leakage}
+\]
+and
+\[
+ T-S_t=(R_0-\Lambda_t)+(\Pi_0T-\Pi_0S_t),
+ \tag{A.11}\label{eq:step-006-residual-split}
+\]
+is an orthogonal decomposition.  Consequently,
+\[
+ \|T-S_t\|_F^2
+ =\|R_0-\Lambda_t\|_F^2
+ +\|\Pi_0T-\Pi_0S_t\|_F^2,
+ \tag{A.12}\label{eq:step-006-residual-pythagoras}
+\]
+and
+\[
+ F(X_t,Y_t,Z_t)
+ =\frac12\|R_0-\Lambda_t\|_F^2
+ +\frac12\|\Pi_0T-\Pi_0S_t\|_F^2.
+ \tag{A.13}\label{eq:step-006-objective-split}
+\]
+If $\|R_0\|_F>0$ and $W_0=R_0/\|R_0\|_F$, then
+\[
+ \langle W_0,T-S_t\rangle_F
+ =\|R_0\|_F-\langle W_0,\Lambda_t\rangle_F.
+ \tag{A.14}\label{eq:step-006-witness-subtraction}
+\]
+\end{proposition}
+
+\begin{proof}
+Writing factor columns as $x_{t,i},y_{t,i},z_{t,i}$ and using
+$I-\Pi_0=(I-P_0)\otimes I_n\otimes I_n$ gives
+\[
+ \begin{aligned}
+ (I-\Pi_0)S_t
+ &=\sum_{i=1}^k((I-P_0)x_{t,i})\otimes y_{t,i}\otimes z_{t,i}\\
+ &=S((I-P_0)X_t,Y_t,Z_t),
+ \end{aligned}
+\]
+which proves \eqref{eq:step-006-tensor-leakage}.  Nonzero leaking factor
+columns may cancel in the represented tensor, so no converse is asserted.
+
+Insert $I=\Pi_0+(I-\Pi_0)$ separately on $T$ and $S_t$:
+\[
+ \begin{aligned}
+ T-S_t
+ &=(I-\Pi_0)T-(I-\Pi_0)S_t+\Pi_0T-\Pi_0S_t\\
+ &=(R_0-\Lambda_t)+(\Pi_0T-\Pi_0S_t).
+ \end{aligned}
+\]
+The first summand lies in $\mathcal H_0^\perp$ and the second in
+$\mathcal H_0$.  Their inner product vanishes, proving
+\eqref{eq:step-006-residual-pythagoras} and, after multiplication by $1/2$,
+\eqref{eq:step-006-objective-split}.
+
+In the branch $\|R_0\|_F>0$, $W_0$ is a unit tensor in
+$\mathcal H_0^\perp$ and is orthogonal to the in-span residual.  Therefore
+\[
+ \begin{aligned}
+ \langle W_0,T-S_t\rangle_F
+ &=\langle W_0,R_0-\Lambda_t\rangle_F\\
+ &=\|R_0\|_F-\langle W_0,\Lambda_t\rangle_F.
+ \end{aligned}
+\]
+Orthogonal projection supplies no sign for the last inner product.
+\end{proof}
+
+\begin{proposition}[Fixed-witness non-transfer certificate]\label{prop:step-006-nontransfer}
+Under Propositions~\ref{prop:step-001-fixed-span},
+\ref{prop:step-003-pythagorean-floor},
+\ref{prop:step-006-first-update}, and
+\ref{prop:step-006-residual-decomposition}, the fixed-witness proof for the
+two constrained methods does not transfer to the ordinary unconstrained
+comparison dynamics from these interfaces alone.  More precisely:
+\begin{enumerate}[label=(\roman*)]
+ \item For the constrained methods, $\Lambda_t=0$, so the fixed term
+ $\|R_0\|_F^2$ is recovered exactly.
+ \item For either unconstrained comparison,
+ \[
+ F(X_t,Y_t,Z_t)
+ \ge\frac12\|R_0-\Lambda_t\|_F^2
+ \ge\frac12\bigl(\max\{\|R_0\|_F-\|\Lambda_t\|_F,0\}\bigr)^2.
+ \]
+ \item If an additional estimate
+ $\|\Lambda_t\|_F\le\gamma\|R_0\|_F$ held for some $0\le\gamma<1$, then
+ \[
+ F(X_t,Y_t,Z_t)\ge\frac12(1-\gamma)^2\|R_0\|_F^2.
+ \]
+ No such estimate follows from the preceding results for unconstrained
+ iterates.
+ \item If $R_0-\Lambda_t\ne0$, the endogenous tensor
+ \[
+ \widetilde W_t=\frac{R_0-\Lambda_t}{\|R_0-\Lambda_t\|_F}
+ \in\mathcal H_0^\perp
+ \]
+ satisfies
+ \[
+ \langle\widetilde W_t,T-S_t\rangle_F=\|R_0-\Lambda_t\|_F.
+ \]
+ It yields a positive theorem-level floor only after a separate lower bound
+ on its generated residual norm.
+\end{enumerate}
+These statements show only that the constrained proof interface is absent.
+They do not assert that unconstrained iterates always leak, that cancellation
+occurs, or that unconstrained ALS or gradient descent succeeds or fails.
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:step-001-fixed-span} gives $\Lambda_t=0$ in the
+constrained methods.  Substitution in
+Proposition~\ref{prop:step-006-residual-decomposition} reproduces the exact
+Pythagorean floor of Proposition~\ref{prop:step-003-pythagorean-floor}.
+
+For an unconstrained represented tensor, discard only the nonnegative
+in-span term in \eqref{eq:step-006-objective-split}.  The reverse triangle
+inequality gives
+\[
+ \|R_0-\Lambda_t\|_F
+ \ge\max\{\|R_0\|_F-\|\Lambda_t\|_F,0\},
+\]
+which proves the second assertion.  Substituting the displayed conditional
+$\gamma$-bound proves the third.  This parameter identifies one sufficient
+missing interface; it is not an assumption of the constrained theorem.
+
+When $R_0-\Lambda_t\ne0$, both terms lie in $\mathcal H_0^\perp$, so the
+normalized difference lies there and is orthogonal to the in-span residual.
+Pairing it with \eqref{eq:step-006-residual-split} proves the endogenous
+witness identity.  Its right-hand side can vanish or be arbitrarily smaller
+than $\|R_0\|_F$ without additional trajectory control.
+
+Equations~\eqref{eq:step-006-gd-leakage} and
+\eqref{eq:step-006-als-leakage} show that zero leakage is not enforced by an
+unconstrained update; it requires an additional equality involving the target
+contraction.  Accidental first-step vanishing is not an all-time invariant.
+
+All degenerate regimes are consistent with this conclusion.  If $T=0$, then
+$R_0=0$, both displayed first-update forcing terms vanish, and no normalized
+fixed witness is defined.  If $K_0=0$, both first-update leakage terms also
+vanish; singular $K_0$ is covered by the pseudoinverse.  Factor leakage need
+not imply tensor leakage because rank-one terms can vanish or cancel.  Exact
+complement cancellation $R_0=\Lambda_t$ is algebraically allowed but not
+claimed to occur.  If $R_0=0$ or $P_0=I_n$, every outside-span expression
+reduces to zero and normalization is omitted.  The endogenous witness is
+likewise omitted at its zero denominator.  No smoothing-error term appears:
+the non-transfer issue is exactly the absence of an unconstrained span
+control in the same Frobenius geometry.
+\end{proof}
+
+\subsection{Joint probability and positive-limit assembly}\label{app:step-007}
+
+\begin{proposition}[Joint-event residual and all-time objective floors]\label{prop:step-007-joint-floor}
+Under Assumptions~\ref{assump:dimension} and \ref{assump:rank_window},
+Proposition~\ref{prop:step-002-joint-event},
+Proposition~\ref{prop:step-003-pythagorean-floor},
+Proposition~\ref{prop:step-004-sequential-descent}, and
+Proposition~\ref{prop:step-005-well-defined}, define
+\[
+ \mathcal E=E_{\mathrm{cALS}}\cap E_{\mathrm{cGD}}.
+\]
+On $\mathcal E$, for every $M\in\{\mathrm{cALS},\mathrm{cGD}\}$ and every
+integer $t\ge0$,
+\[
+ \|(I-P_{\mathcal H_M})T\|_F^2
+ \ge\left(1-2\frac{k}{n}\right)\|T\|_F^2
+ \ge\frac34\|T\|_F^2
+ \tag{A.15}\label{eq:step-007-residual-floor}
+\]
+and
+\[
+ F_M(t)\ge\frac38\|T\|_F^2.
+ \tag{A.16}\label{eq:step-007-objective-floor}
+\]
+If $T\ne0$, then $W_M$ is well-defined, fixed in $t$, and certifies the same
+residual obstruction at every finite index.  If $T=0$, no normalized witness
+is used and both inequalities remain valid with zero right-hand side.
+\end{proposition}
+
+\begin{proof}
+The dimension and rank assumptions give
+\[
+ \frac{k}{n}\le\frac{r^{5/4}}{8r^{5/4}}=\frac18.
+ \tag{A.17}\label{eq:step-007-ratio}
+\]
+Proposition~\ref{prop:step-002-joint-event} gives on $\mathcal E$, for both
+methods,
+\[
+ \|(I-P_{\mathcal H_M})T\|_F^2
+ \ge\left(1-2\frac{k}{n}\right)\|T\|_F^2.
+\]
+Equation~\eqref{eq:step-007-ratio} gives
+$1-2k/n\ge1-2(1/8)=3/4$, proving
+\eqref{eq:step-007-residual-floor}, including equality at the boundary.
+
+Proposition~\ref{prop:step-004-sequential-descent} proves that every
+constrained ALS index exists, and
+Proposition~\ref{prop:step-005-well-defined} proves the same for constrained
+GD.  Therefore the defined-index scope of
+Proposition~\ref{prop:step-003-pythagorean-floor} covers every integer
+$t\ge0$.  Combining its exact floor with
+\eqref{eq:step-007-residual-floor} yields
+\[
+ \begin{aligned}
+ F_M(t)
+ &\ge\frac12\|(I-P_{\mathcal H_M})T\|_F^2\\
+ &\ge\frac12\cdot\frac34\|T\|_F^2
+ =\frac38\|T\|_F^2.
+ \end{aligned}
+\]
+The only discarded quantity is the explicit nonnegative in-subspace squared
+residual in the exact Pythagorean identity.
+
+If $T\ne0$, then
+\[
+ \|(I-P_{\mathcal H_M})T\|_F^2
+ \ge\frac34\|T\|_F^2>0,
+\]
+so Lemma~\ref{lem:step-003-fixed-witness} applies and gives
+\[
+ \langle W_M,T-S_t^M\rangle_F
+ =\|(I-P_{\mathcal H_M})T\|_F
+ \quad\text{for every }t\ge0.
+\]
+At $T=0$ the quotient is omitted and the unnormalized identity gives the
+zero floor.
+\end{proof}
+
+\begin{proposition}[Passage to both objective limits]\label{prop:step-007-limit-passage}
+Under Proposition~\ref{prop:step-007-joint-floor},
+Lemma~\ref{lem:step-004-scalar-limit}, and
+Proposition~\ref{prop:step-005-scalar-limit}, the finite limits
+\[
+ \ell_{\mathrm{cALS}}=\lim_{t\to\infty}F_{\mathrm{cALS}}(t),
+ \qquad
+ \ell_{\mathrm{cGD}}=\lim_{t\to\infty}F_{\mathrm{cGD}}(t)
+\]
+exist, and on $\mathcal E$ satisfy simultaneously
+\[
+ \ell_M\ge\frac38\|T\|_F^2,
+ \qquad M\in\{\mathrm{cALS},\mathrm{cGD}\}.
+ \tag{A.18}\label{eq:step-007-limit-floor}
+\]
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:step-004-scalar-limit} gives existence and finiteness of the
+constrained ALS limit, and
+Proposition~\ref{prop:step-005-scalar-limit} gives the constrained GD limit.
+On $\mathcal E$, Proposition~\ref{prop:step-007-joint-floor} gives
+\[
+ F_M(t)\ge c_T:=\frac38\|T\|_F^2
+ \quad\text{for every }t\ge0.
+\]
+If $\ell_M<c_T$, choose
+$\varepsilon=(c_T-\ell_M)/2>0$.  Convergence would give an $N$ such that
+\[
+ F_M(t)<\ell_M+\varepsilon
+ =\frac{\ell_M+c_T}{2}<c_T
+ \quad\text{for every }t\ge N,
+\]
+contradicting the all-time floor.  Thus
+\eqref{eq:step-007-limit-floor} holds for each method.  No limit is
+interchanged with expectation, probability, or optimization.
+\end{proof}
+
+\begin{proposition}[Quantitative specialization and constrained positive-limit theorem]\label{prop:step-007-material-partial}
+Fix $q>0$ and set
+\[
+ \alpha=\frac14,
+ \qquad
+ L(r)=r^{1+\alpha}=r^{5/4},
+ \qquad
+ r_0=1.
+\]
+Under Assumptions~\ref{assump:dimension}--\ref{assump:joint_initialization},
+for every integer $r\ge r_0$, every integer $n\ge8L(r)$, every integer
+$r<k\le L(r)$, and every unrestricted deterministic
+$\bar A,\bar B,\bar C\in\mathbb R^{n\times r}$, draw
+\[
+ a_j=\bar a_j+\xi_j^a,
+ \qquad b_j=\bar b_j+\xi_j^b,
+ \qquad c_j=\bar c_j+\xi_j^c,
+\]
+where all perturbations are independent and
+\[
+ \xi_j^a,\xi_j^b,\xi_j^c
+ \sim\mathcal N\!\left(0,\frac{r^{-2q}}{n}I_n\right),
+\]
+and set $T=\sum_{j=1}^r a_j\otimes b_j\otimes c_j$.  Independently draw
+the two complete Gaussian initialization triples as in
+Assumption~\ref{assump:joint_initialization}, use the same $T$ for both
+methods, and run exactly the constrained procedures in the theoretical setup.
+Then
+\[
+ \mathbb P\!\left[
+ \bigcap_{M\in\{\mathrm{cALS},\mathrm{cGD}\}}
+ \left\{
+ \lim_{t\to\infty}F_M(t)\text{ exists as a finite real number and }
+ \lim_{t\to\infty}F_M(t)\ge\frac38\|T\|_F^2
+ \right\}
+ \right]\ge\frac14.
+ \tag{A.19}\label{eq:step-007-final-event}
+\]
+On the underlying probability-$1/4$ event, the residual-energy and all-time
+objective bounds \eqref{eq:step-007-residual-floor}--
+\eqref{eq:step-007-objective-floor} also hold for both methods.  The constants
+hide no dependence on $r,n,k,q,\rho,T$, the deterministic bases, either
+initialization, the method, the iteration, factor norms, design conditioning,
+or line-search history.  The conclusion is pointwise uniform over each fixed
+deterministic base triple and concerns only the displayed constrained
+procedures; it makes no assertion for ordinary unconstrained ALS or
+full-variable gradient descent.
+\end{proposition}
+
+\begin{proof}
+Fix admissible $q,r,n,k$ and a deterministic base triple, and fix an arbitrary
+possible tensor value $T_0$.  Proposition~\ref{prop:step-002-joint-event}
+gives under the regular conditional initialization law
+\[
+ \mathbb P(\mathcal E\mid T=T_0)\ge\frac14.
+ \tag{A.20}\label{eq:step-007-conditional-event}
+\]
+The probability-one Gaussian full-rank domain can be intersected with
+$\mathcal E$ without changing this bound.  The constrained ALS and GD
+existence results are pathwise and introduce no further random event.
+
+On $\mathcal E$, Proposition~\ref{prop:step-007-limit-passage} gives both
+limit conclusions in \eqref{eq:step-007-final-event}.  Therefore, for every
+$T_0$,
+\[
+ \begin{aligned}
+ &\mathbb P\!\left[
+ \bigcap_{M\in\{\mathrm{cALS},\mathrm{cGD}\}}
+ \left\{
+ \lim_{t\to\infty}F_M(t)\text{ exists and }
+ \lim_{t\to\infty}F_M(t)\ge\frac38\|T\|_F^2
+ \right\}
+ \middle|T=T_0\right]\\
+ &\qquad\ge\mathbb P(\mathcal E\mid T=T_0)\ge\frac14.
+ \end{aligned}
+ \tag{A.21}\label{eq:step-007-conditional-success}
+\]
+This is pointwise in $T_0$ and does not use a favorable smoothing event or
+independence of the complete trajectories.
+
+Averaging \eqref{eq:step-007-conditional-success} over the smoothing law and
+using the tower property gives
+\[
+ \begin{aligned}
+ &\mathbb P\!\left[
+ \bigcap_{M\in\{\mathrm{cALS},\mathrm{cGD}\}}
+ \left\{
+ \lim_{t\to\infty}F_M(t)\text{ exists and }
+ \lim_{t\to\infty}F_M(t)\ge\frac38\|T\|_F^2
+ \right\}\right]\\
+ &\quad=\mathbb E_T\!\left[
+ \mathbb P\!\left(
+ \bigcap_M\left\{
+ \lim_{t\to\infty}F_M(t)\text{ exists and }
+ \lim_{t\to\infty}F_M(t)\ge\frac38\|T\|_F^2
+ \right\}\middle|T\right)\right]\\
+ &\quad\ge\mathbb E_T\!\left[\frac14\right]=\frac14.
+ \end{aligned}
+\]
+Because the conditional argument holds for every $T_0$, no property of the
+deterministic bases and no smoothing concentration, conditioning, or
+incoherence event is used.  The same numerical constants apply after fixing
+each deterministic base triple; no simultaneous event over all triples is
+claimed.
+
+The complete quantitative specialization is explicit:
+\[
+ k\le L(r)=r^{5/4},
+ \qquad n\ge8L(r),
+ \qquad \frac{k}{n}\le\frac18,
+\]
+and therefore
+\[
+ 1-2\frac{k}{n}\ge\frac34,
+ \qquad
+ \frac12\left(1-2\frac{k}{n}\right)\ge\frac38.
+\]
+The two conditional method probabilities satisfy
+$\frac12\cdot\frac12=\frac14$, and the tower conversion preserves this
+constant.  No term is hidden or absorbed.  The arithmetic is valid for every
+positive integer $r$, so $r_0=1$ is admissible; if the rank window is empty
+for a small $r$, the universal assertion over admissible $k$ is vacuous.
+The identity $L(r)=r^{1+\alpha}$ gives $\alpha=1/4$.
+
+At $T=0$, both projection events are sure, both scalar limits exist, and the
+required lower bound is exactly zero; no normalized witness is needed.  For
+nonzero $T$ on $\mathcal E$, both witness denominators are positive.  At
+$k/n=1/8$, the constants are exactly $3/4$ and $3/8$.  Zero block drops,
+singular constrained ALS designs, and zero constrained GD gradients are
+already included in the scalar-limit results.  The shared target prevents an
+unconditional independence assertion, but conditional independence and the
+tower property suffice.
+
+Finally, Proposition~\ref{prop:step-006-nontransfer} shows that ordinary
+unconstrained updates introduce the generated complement component
+$\Lambda_t$ and do not inherit the fixed-witness interface.  Thus the theorem
+neither states nor implies an unconstrained positive-limit result.
+\end{proof}
+
+\subsection{Proof of the Main Theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Proposition~\ref{prop:step-007-material-partial} verifies the choices
+$r_0=1$, $\alpha=1/4$, and $L(r)=r^{5/4}$; all dimension and rank
+conditions; the exact $3/4$ residual-energy and $3/8$ objective constants;
+the conditional product probability and tower conversion giving confidence
+$1/4$; the existence of both finite scalar limits; and pointwise uniformity
+over unrestricted deterministic bases.  Its event also contains the all-time
+floors from Proposition~\ref{prop:step-007-joint-floor}.  These conclusions
+are precisely those asserted in Theorem~\ref{thm:main}.  The constrained-only
+scope follows from Proposition~\ref{prop:step-006-nontransfer}, which exposes
+the uncontrolled outside-span term for ordinary unconstrained updates without
+making an asymptotic claim about those dynamics.
+\end{proof}

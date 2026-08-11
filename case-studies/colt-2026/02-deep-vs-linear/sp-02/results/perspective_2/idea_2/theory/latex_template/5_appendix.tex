@@ -1,0 +1,1374 @@
+\appendix
+
+\section{Proof Details}
+
+\subsection{Complete Responses and Pre-Instance Coordinates}
+\label{app:step-001}
+
+\begin{lemma}[Complete public response rules and the zero-query convention]
+\label{lem:step-001-complete-rules}
+Under Assumptions~\ref{assump:parameter-regime} and
+\ref{assump:adaptive-sq-interface}, let \(\mathscr Q_A\) be the set of all
+public query-bearing histories
+\[
+\eta_t=(q_1,v_1,\ldots,q_{t-1},v_{t-1},q_t),
+\qquad 1\le t\le m,
+\]
+admitted by the fixed learner for some seed and some preceding public reply
+sequence in \(I_\tau\), including histories not reached for a particular seed
+or reply sequence.  Then
+\[
+\mathfrak R_A^{\mathrm{all}}=I_\tau^{\mathscr Q_A}
+=\{R:\mathscr Q_A\to I_\tau\}
+\]
+is exactly the family of deterministic complete public-transcript response
+rules and is nonempty.  Every \(R\in\mathfrak R_A^{\mathrm{all}}\) and
+\(u\in\Omega_A\) determine a terminal predictor
+\(g_{u,R}:\mathcal X\to\{-1,+1\}\).  If \(m=0\), then
+\(\mathscr Q_A=\varnothing\) and
+\(\mathfrak R_A^{\mathrm{all}}=\{R_\varnothing\}\), where
+\(R_\varnothing\) is the unique empty response rule.
+\end{lemma}
+
+\begin{proof}
+The set \(\mathscr Q_A\) is determined solely by the fixed public interaction
+interface: its elements contain public queries and replies but no hidden-seed
+coordinate.  A total function on \(\mathscr Q_A\) therefore observes the seed
+only through information already present in the public transcript.  Because
+its domain contains every admitted query-bearing history, including those not
+reached on one seed path, such a function is complete.  Conversely, every
+deterministic complete response rule assigns one value in \(I_\tau\) to every
+element of \(\mathscr Q_A\), proving the equality of the two families.
+
+Assumption~\ref{assump:parameter-regime} gives \(\tau>0\), and hence
+\[
+0\in[-1-\tau,1+\tau]=I_\tau.
+\]
+Thus the assignment \(R^{\mathrm{zero}}(\eta)=0\) for all
+\(\eta\in\mathscr Q_A\) proves nonemptiness.  This rule need not be valid for
+a later learning instance; it is only an all-rule witness.
+
+For fixed \(u\) and \(R\), the learner selects its next action from \(u\) and
+the preceding public transcript.  Whenever it issues a query, totality of
+\(R\) supplies the next reply.  Assumption~\ref{assump:adaptive-sq-interface}
+makes this recursion well defined and forces stopping after at most \(m\)
+queries with a binary predictor \(g_{u,R}\).
+
+If \(m=0\), there is no index \(t\) with \(1\le t\le m\), so
+\(\mathscr Q_A=\varnothing\).  There is exactly one function from the empty
+set to \(I_\tau\), namely \(R_\varnothing\).  The learner makes no query, but
+its seed-dependent terminal output remains well defined.
+\end{proof}
+
+\begin{proposition}[Finite seed-averaged response space and its exact scope]
+\label{prop:step-001-mean-response-space}
+Under Assumptions~\ref{assump:parameter-regime},
+\ref{assump:adaptive-sq-interface}, and
+\ref{assump:mean-response-rank}, and Lemma~\ref{lem:step-001-complete-rules},
+define
+\[
+F_R(x):=\int_{\Omega_A}g_{u,R}(x)\,\mu_A(du),
+\quad
+V_A:=\operatorname{span}_{\mathbb R}
+\{F_R:R\in\mathfrak R_A^{\mathrm{all}}\},
+\quad
+r_A:=\dim V_A.
+\]
+Then every \(F_R\) is a well-defined member of
+\([-1,1]^{\mathcal X}\), and
+\[
+r_A\le B\bigl(1+m/\tau^2\bigr)^k<\infty.
+\]
+This average-before-span construction gives no bound by \(r_A\) on the span
+of the seed-specific functions \(g_{u,R}\).  If
+\(\mathcal X=\varnothing\), then \(V_A=\{0\}\) and \(r_A=0\).  If
+\(m=0\), then
+\[
+V_A=\operatorname{span}_{\mathbb R}\{F_{R_\varnothing}\},
+\qquad r_A\in\{0,1\},
+\qquad r_A\le B.
+\]
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:step-001-complete-rules} supplies a terminal binary function
+\(g_{u,R}\) for every seed and complete rule.  The measurability clause of
+Assumption~\ref{assump:adaptive-sq-interface} makes the displayed seed
+integral well defined.  Since \(-1\le g_{u,R}(x)\le1\), monotonicity of
+integration against the probability law \(\mu_A\) gives
+\[
+-1\le\int_{\Omega_A}g_{u,R}(x)\,\mu_A(du)\le1.
+\]
+Thus \(F_R:\mathcal X\to[-1,1]\), and finite real linear combinations of
+these functions form \(V_A\subseteq\mathbb R^{\mathcal X}\).
+
+Assumption~\ref{assump:mean-response-rank} applies to exactly this space:
+\[
+r_A=\dim\operatorname{span}_{\mathbb R}
+\left\{x\mapsto\int_{\Omega_A}g_{u,R}(x)\,\mu_A(du):
+R\in\mathfrak R_A^{\mathrm{all}}\right\}
+\le B\bigl(1+m/\tau^2\bigr)^k.
+\]
+The right-hand side is finite because \(B,k\) are finite,
+\(m\in\mathbb N_0\), and \(\tau>0\).  Hence \(r_A\in\mathbb N_0\).
+
+To make the scope of this certificate explicit, define
+\[
+W_A^{\mathrm{seed}}
+:=\operatorname{span}_{\mathbb R}
+\{g_{u,R}:u\in\Omega_A,\ R\in\mathfrak R_A^{\mathrm{all}}\}.
+\]
+The two operations are genuinely different:
+\[
+V_A=\operatorname{span}_{R}
+\left\{\int g_{u,R}\,d\mu_A(u)\right\},
+\qquad
+W_A^{\mathrm{seed}}=\operatorname{span}_{u,R}\{g_{u,R}\}.
+\]
+No individual \(g_{u,R}\) is claimed to lie in \(V_A\), and no finiteness
+or cardinality assertion about \(W_A^{\mathrm{seed}}\) is used below.
+
+The distinction can be arbitrarily large even under all four assumptions.
+Fix \(N\ge5\), take \(\mathcal X_N=\{1,\ldots,N\}\), \(m=0\),
+\(B=k=1\), arbitrary \(\tau>0\), and \(\varepsilon=1/N<1/4\).  Let
+\(\mathcal H=\{h_+\}\), where \(h_+(i)=+1\), let \(U\) be uniform on
+\(\{1,\ldots,N\}\), and let the zero-query learner with seed \(j\) return
+\[
+g_{j,R_\varnothing}(i)=
+\begin{cases}
+-1,&i=j,\\
++1,&i\ne j.
+\end{cases}
+\]
+The unique mean response is the nonzero constant
+\[
+F_{R_\varnothing}(i)=\frac{N-1}{N}-\frac1N=1-\frac2N,
+\]
+so \(r_A=1\) and the mean-response-rank certificate holds with equality.
+The \(N\) terminal predictors are nevertheless linearly independent.  If
+\(\sum_{j=1}^N c_jg_{j,R_\varnothing}=0\) and
+\(S_c=\sum_{j=1}^Nc_j\), evaluation at \(i\) gives
+\(S_c-2c_i=0\) for every \(i\).  Hence \(c_i=S_c/2\) and
+\(S_c=NS_c/2\).  Since \(N\ne2\), this forces \(S_c=0\) and all
+\(c_i=0\).  Thus \(\dim W_A^{\mathrm{seed}}=N\) while \(r_A=1\).
+
+This example also satisfies Assumption~\ref{assump:universal-adversarial-guarantee}.
+For every probability law \(\mathcal D\) on \(\mathcal X_N\), the only
+response rule is \(R_\varnothing\), and
+\[
+\mathbb E_U\mathcal L_{\mathcal D,h_+}(g_{U,R_\varnothing})
+=\frac1N\sum_{j=1}^N\mathcal D(\{j\})
+=\frac1N=\varepsilon.
+\]
+Thus the gap between the two spans is compatible with the complete theorem
+contract.
+
+If \(\mathcal X=\varnothing\), there is only one real-valued function on
+\(\mathcal X\), namely the zero vector of \(\mathbb R^{\mathcal X}\).
+Every \(g_{u,R}\) and \(F_R\) is this function, so \(V_A=\{0\}\) and
+\(r_A=0\).  If \(m=0\), Lemma~\ref{lem:step-001-complete-rules} gives the
+single rule \(R_\varnothing\), so \(V_A\) has one generator and dimension
+zero or one.  The primitive bound specializes exactly to
+\[
+r_A\le B\bigl(1+0/\tau^2\bigr)^k=B.
+\]
+\end{proof}
+
+\begin{proposition}[One pre-instance basis and exact coordinate map]
+\label{prop:step-001-fixed-coordinates}
+Under Assumptions~\ref{assump:parameter-regime},
+\ref{assump:adaptive-sq-interface}, and
+\ref{assump:mean-response-rank}, and
+Proposition~\ref{prop:step-001-mean-response-space}, there is a basis
+\(\psi_1,\ldots,\psi_{r_A}\) of \(V_A\), with the empty basis when
+\(r_A=0\), such that
+\[
+\varphi_A(x):=(\psi_1(x),\ldots,\psi_{r_A}(x))
+\]
+is fixed before every distribution, target, selected complete or valid
+response rule, and realized seed.  Every \(f\in V_A\) has a unique coordinate
+vector \(a(f)\in\mathbb R^{r_A}\) satisfying
+\[
+f(x)=\langle a(f),\varphi_A(x)\rangle
+\qquad\text{for every }x\in\mathcal X.
+\]
+The statement includes \(r_A=0\), empty \(\mathcal X\) or \(\mathcal H\),
+and \(m=0\).
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:step-001-mean-response-space} makes \(V_A\)
+finite-dimensional with dimension \(r_A\).  Fix a linearly independent
+spanning list \(\psi_1,\ldots,\psi_{r_A}\); if \(r_A=0\), the list is empty
+and \(V_A=\{0\}\).
+
+For \(r_A>0\), spanning gives coefficients
+\(a(f)_1,\ldots,a(f)_{r_A}\) with
+\[
+f=\sum_{j=1}^{r_A}a(f)_j\psi_j.
+\]
+Linear independence makes the coefficients unique.  Evaluation at
+\(x\in\mathcal X\) gives the zero-residual identity
+\[
+f(x)=\sum_{j=1}^{r_A}a(f)_j\psi_j(x)
+=\left\langle a(f),(\psi_1(x),\ldots,\psi_{r_A}(x))\right\rangle
+=\langle a(f),\varphi_A(x)\rangle.
+\]
+
+The dependence order is
+\[
+\begin{aligned}
+&(\mathcal X,A,\Omega_A,\mu_A,m,\tau,
+  \text{complete public interface})\\
+&\qquad\longmapsto\mathscr Q_A
+\longmapsto\mathfrak R_A^{\mathrm{all}}
+\longmapsto\{F_R\}
+\longmapsto V_A,r_A\\
+&\qquad\longmapsto(\psi_1,\ldots,\psi_{r_A}),\varphi_A.
+\end{aligned}
+\]
+No \(\mathcal D\), target, validity constraint, selected rule, or realized
+seed enters this chain.  The seed law, rather than a realized seed, enters
+each \(F_R\).  Every later valid-rule family is a subset of the already fixed
+all-rule family.
+
+If \(r_A=0\), then \(f=0\), \(a(f)\), and \(\varphi_A(x)\) are the empty
+vectors in \(\mathbb R^0\), and their inner product is \(0=f(x)\).  Empty
+\(\mathcal X\) forces this branch and has no pointwise condition.  Empty
+\(\mathcal H\) leaves the construction unchanged and makes its later
+target-indexed use vacuous.  At \(m=0\), the same basis is built from
+\(\operatorname{span}\{F_{R_\varnothing}\}\), with no query-round argument
+and with \(r_A\le B\).
+
+Together with Lemma~\ref{lem:step-001-complete-rules} and
+Proposition~\ref{prop:step-001-mean-response-space}, this constructs the
+complete all-rule family, the exact average-before-span response space and
+rank, and one common coordinate map before every learning instance.
+\end{proof}
+
+\subsection{Compactness in One Fixed Function Space}
+\label{app:step-002}
+
+\begin{lemma}[Evaluation coordinates determine the fixed topology]
+\label{lem:step-002-evaluation-coordinates}
+Under Assumptions~\ref{assump:adaptive-sq-interface} and
+\ref{assump:mean-response-rank}, and the conclusions of
+Propositions~\ref{prop:step-001-mean-response-space} and
+\ref{prop:step-001-fixed-coordinates}, suppose \(r_A>0\).  Then
+\[
+\operatorname{span}_{\mathbb R}\{\delta_x:x\in\mathcal X\}=V_A^*,
+\qquad \delta_x(f):=f(x).
+\]
+Consequently, there are points \(z_1,\ldots,z_{r_A}\in\mathcal X\) such that
+\(\delta_{z_1},\ldots,\delta_{z_{r_A}}\) form a basis of \(V_A^*\).  The map
+\[
+E_Z:V_A\to\mathbb R^{r_A},
+\qquad E_Z(f):=(f(z_1),\ldots,f(z_{r_A}))
+\]
+is a linear isomorphism, and
+\(\|f\|_Z:=\|E_Z(f)\|_\infty\) is a norm inducing exactly the
+finite-dimensional topology in which \(K_A\) was defined.
+\end{lemma}
+
+\begin{proof}
+Every \(\delta_x\) is an algebraic linear functional on \(V_A\).  Put
+\[
+W:=\operatorname{span}_{\mathbb R}\{\delta_x:x\in\mathcal X\}
+\subseteq V_A^*.
+\]
+The basis \(\psi_1,\ldots,\psi_{r_A}\) from
+Proposition~\ref{prop:step-001-fixed-coordinates} shows directly that
+\(\dim V_A^*=r_A\): the functionals returning the coefficients in
+\(f=\sum_ja(f)_j\psi_j\) form a basis of the dual.
+
+Suppose that \(W\ne V_A^*\), and write \(s=\dim W<r_A\).  Choose a basis
+\(\lambda_1,\ldots,\lambda_s\) of \(W\).  In the fixed basis of \(V_A\),
+the equations
+\[
+\lambda_i\!\left(\sum_{j=1}^{r_A}c_j\psi_j\right)=0,
+\qquad 1\le i\le s,
+\]
+form an \(s\)-by-\(r_A\) homogeneous real linear system.  Row reduction has
+at most \(s<r_A\) pivots, so the nullspace contains a nonzero vector \(c\).
+Thus
+\[
+f:=\sum_{j=1}^{r_A}c_j\psi_j\ne0,
+\qquad \lambda_i(f)=0\quad(1\le i\le s).
+\]
+Every \(\delta_x\) is a linear combination of the \(\lambda_i\), so
+\(f(x)=\delta_x(f)=0\) for every \(x\in\mathcal X\).  Equality in
+\(\mathbb R^{\mathcal X}\) is pointwise, so this makes \(f=0\), a
+contradiction.  Hence \(W=V_A^*\).
+
+Starting with the empty list, whenever selected evaluations do not yet span
+\(V_A^*\), choose another evaluation outside their span.  Each addition
+raises the dimension by one, so after exactly \(r_A\) additions the selected
+evaluations form a basis.  Denote their points by
+\(z_1,\ldots,z_{r_A}\).  In particular, \(r_A>0\) forces
+\(\mathcal X\ne\varnothing\).
+
+The map \(E_Z\) is linear.  If \(E_Z(f)=0\), every basis functional
+\(\delta_{z_i}\) vanishes on \(f\).  Every \(\delta_x\) is their linear
+combination, so \(f(x)=0\) for all \(x\), hence \(f=0\).  Thus \(E_Z\) is
+injective.  Its domain and codomain both have dimension \(r_A\), so it is
+surjective as well.
+
+It follows that \(\|f\|_Z=\|E_Zf\|_\infty\) is a norm.  To identify its
+topology with the fixed topology, let \(a(f)\) be the coordinate vector in
+the basis \((\psi_j)\), and set
+\[
+M_{ij}:=\psi_j(z_i),\qquad 1\le i,j\le r_A.
+\]
+Then \(E_Z(f)=Ma(f)\), and bijectivity of \(E_Z\) makes \(M\) invertible.
+Finite matrix multiplication gives
+\[
+\|E_Z(f)\|_\infty
+\le
+\left(\max_{1\le i\le r_A}\sum_{j=1}^{r_A}|M_{ij}|\right)
+\|a(f)\|_\infty
+\]
+and
+\[
+\|a(f)\|_\infty
+\le
+\left(\max_{1\le i\le r_A}\sum_{j=1}^{r_A}|(M^{-1})_{ij}|\right)
+\|E_Z(f)\|_\infty.
+\]
+Both multipliers are finite sums of fixed real entries.  Hence the evaluation
+norm and the fixed-basis coordinate norm have the same open and closed sets.
+The latter is the finite-dimensional topology specified in the setup, so
+\(\|\cdot\|_Z\) induces that same topology.  These inequalities establish
+topological equivalence only; they assume no bound on the coefficients of
+\(F_R\) or of convex combinations.
+\end{proof}
+
+\begin{lemma}[Heine--Borel in evaluation coordinates]
+\label{lem:step-002-heine-borel}
+Under Assumptions~\ref{assump:adaptive-sq-interface} and
+\ref{assump:mean-response-rank}, the conclusions of
+Propositions~\ref{prop:step-001-mean-response-space} and
+\ref{prop:step-001-fixed-coordinates}, and
+Lemma~\ref{lem:step-002-evaluation-coordinates}, suppose \(r_A>0\).  If
+\(C\subseteq V_A\) is closed in the fixed finite-dimensional topology and
+bounded in \(\|\cdot\|_Z\), then \(C\) is compact in that topology.
+\end{lemma}
+
+\begin{proof}
+Lemma~\ref{lem:step-002-evaluation-coordinates} makes \(E_Z\) an isometric
+linear homeomorphism from \((V_A,\|\cdot\|_Z)\) onto
+\((\mathbb R^{r_A},\|\cdot\|_\infty)\).  Hence \(D:=E_Z(C)\) is closed and
+bounded in \(\mathbb R^{r_A}\).  We prove compactness directly.
+
+Every sequence in \(D\) has a convergent subsequence with limit in \(D\).
+Boundedness places every coordinate sequence in an interval \([-Q,Q]\).  A
+bounded real sequence has a convergent subsequence by bisection: bisect the
+interval, retain a closed half containing infinitely many terms, and iterate,
+choosing successively increasing indices from the retained halves.  The
+nested intervals have lengths tending to zero, so completeness of
+\(\mathbb R\) gives their unique common limit and convergence of the chosen
+subsequence.  Apply this argument successively to coordinates
+\(1,\ldots,r_A\), each time taking a subsequence of the preceding one.  The
+final subsequence converges in every coordinate and therefore in
+\(\|\cdot\|_\infty\).  Closedness of \(D\) keeps the limit in \(D\).
+
+This subsequence property first implies total boundedness.  Otherwise, for
+some \(\eta>0\), one could recursively choose points whose pairwise distances
+are at least \(\eta\); that sequence has no convergent subsequence.  Now let
+\(\mathcal U\) be an open cover of \(D\).  If no \(\delta>0\) had the
+property that each relative ball \(B_D(y,\delta)\) lies in some member of
+\(\mathcal U\), one could choose \(y_n\in D\) such that
+\(B_D(y_n,1/n)\) lies in no cover member.  A convergent subsequence
+\(y_{n_j}\to y\), together with one cover member containing \(y\),
+contradicts this choice for all sufficiently large \(j\).  Such a
+\(\delta\) therefore exists.  A finite \(\delta/2\)-net gives finitely many
+\(\delta\)-balls, each contained in a member of the cover, and hence a finite
+subcover.  Thus \(D\) is compact.
+
+The continuous inverse \(E_Z^{-1}\) maps \(D\) onto \(C\), proving that
+\(C\) is compact in the fixed topology of \(V_A\).
+\end{proof}
+
+\begin{proposition}[The fixed response body is compact and convex]
+\label{prop:step-002-compact-body}
+Under Assumptions~\ref{assump:adaptive-sq-interface} and
+\ref{assump:mean-response-rank}, the conclusions of
+Lemma~\ref{lem:step-001-complete-rules} and
+Proposition~\ref{prop:step-001-mean-response-space}, and
+Lemmas~\ref{lem:step-002-evaluation-coordinates} and
+\ref{lem:step-002-heine-borel}, suppose \(r_A>0\).  Then
+\[
+K_A=\overline{\operatorname{conv}}
+\{F_R:R\in\mathfrak R_A^{\mathrm{all}}\}
+\]
+is a nonempty compact convex subset of \(V_A\) in the one fixed topology, and
+\[
+K_A\subseteq\{f\in V_A:\|f\|_Z\le1\}.
+\]
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:step-001-complete-rules} makes the generating family nonempty.
+For every complete rule \(R\) and every selected point \(z_i\),
+Proposition~\ref{prop:step-001-mean-response-space} gives
+\(|F_R(z_i)|\le1\).  Hence
+\[
+\|F_R\|_Z=\max_{1\le i\le r_A}|F_R(z_i)|\le1.
+\]
+If \(f=\sum_{j=1}^N\alpha_jF_{R_j}\) is a finite convex combination, then
+for every \(i\),
+\[
+|f(z_i)|
+\le\sum_{j=1}^N\alpha_j|F_{R_j}(z_i)|
+\le\sum_{j=1}^N\alpha_j=1.
+\]
+Thus the convex hull lies in the evaluation-norm unit ball.  The reverse
+triangle inequality
+\[
+|\|f\|_Z-\|g\|_Z|\le\|f-g\|_Z
+\]
+makes this ball closed.  Since
+Lemma~\ref{lem:step-002-evaluation-coordinates} identifies its topology with
+the topology in the defining closure, \(K_A\) remains in that unit ball.
+
+By definition, \(K_A\) is closed, and it is nonempty because it contains the
+nonempty convex hull.  To verify convexity of the closure, let
+\(f,g\in K_A\), \(\theta\in[0,1]\), and \(\eta>0\).  Choose convex-hull
+elements \(f_0,g_0\) satisfying
+\(\|f-f_0\|_Z<\eta\) and \(\|g-g_0\|_Z<\eta\).  Then
+\[
+\|\theta f+(1-\theta)g-[\theta f_0+(1-\theta)g_0]\|_Z
+\le\theta\|f-f_0\|_Z+(1-\theta)\|g-g_0\|_Z
+<\eta.
+\]
+Since \(\theta f_0+(1-\theta)g_0\) belongs to the convex hull and
+\(\eta\) is arbitrary, \(\theta f+(1-\theta)g\in K_A\).  Finally,
+Lemma~\ref{lem:step-002-heine-borel} turns the established closedness and
+boundedness into compactness in the same topology.
+\end{proof}
+
+\begin{lemma}[Every point evaluation is continuous with exact reconstruction]
+\label{lem:step-002-continuous-evaluations}
+Under Assumptions~\ref{assump:adaptive-sq-interface} and
+\ref{assump:mean-response-rank}, the conclusions of
+Propositions~\ref{prop:step-001-mean-response-space} and
+\ref{prop:step-001-fixed-coordinates}, and
+Lemma~\ref{lem:step-002-evaluation-coordinates}, suppose \(r_A>0\).  For
+every \(x\in\mathcal X\), point evaluation \(\delta_x(f)=f(x)\) is
+continuous in the fixed topology.  If \(e_1,\ldots,e_{r_A}\) are the
+standard coordinate vectors and
+\[
+b_i(x):=(E_Z^{-1}e_i)(x),
+\]
+then every \(f\in V_A\) satisfies
+\[
+f(x)=\sum_{i=1}^{r_A}b_i(x)f(z_i),
+\qquad
+|f(x)|\le\left(\sum_{i=1}^{r_A}|b_i(x)|\right)\|f\|_Z,
+\]
+and
+\[
+\delta_x(f)-(\delta_x\circ E_Z^{-1})(E_Zf)=0.
+\]
+\end{lemma}
+
+\begin{proof}
+Fix \(x\).  The composition \(\ell_x:=\delta_x\circ E_Z^{-1}\) is linear
+on \(\mathbb R^{r_A}\).  For
+\(y=\sum_{i=1}^{r_A}y_ie_i\), linearity gives
+\[
+\ell_x(y)=\sum_{i=1}^{r_A}y_i\ell_x(e_i)
+=\sum_{i=1}^{r_A}y_i b_i(x).
+\]
+Therefore
+\[
+|\ell_x(y)|
+\le\sum_{i=1}^{r_A}|b_i(x)|\,|y_i|
+\le\left(\sum_{i=1}^{r_A}|b_i(x)|\right)\|y\|_\infty.
+\]
+The coefficient sum is finite for each fixed \(x\), proving continuity.
+Substituting \(y=E_Zf\) and using \(E_Z^{-1}E_Zf=f\) yields both the
+reconstruction formula and the zero-residual factorization.  No bound uniform
+in \(x\) is asserted or needed.
+\end{proof}
+
+\begin{proposition}[The zero-dimensional and empty-domain branch]
+\label{prop:step-002-zero-dimensional}
+Under Assumptions~\ref{assump:adaptive-sq-interface} and
+\ref{assump:mean-response-rank}, and the conclusions of
+Lemma~\ref{lem:step-001-complete-rules} and
+Proposition~\ref{prop:step-001-mean-response-space}, suppose \(r_A=0\).
+Then
+\[
+V_A=K_A=\{0\}.
+\]
+The empty evaluation map \(E_\varnothing:V_A\to\mathbb R^0\) is a linear
+isomorphism and induces the unique zero-dimensional topology.  The body
+\(K_A\) is nonempty, compact, and convex, and every point evaluation is the
+zero continuous functional.  These conclusions include
+\(\mathcal X=\varnothing\) and the zero-rank branch at \(m=0\).
+\end{proposition}
+
+\begin{proof}
+A vector space of dimension zero contains only its zero vector, so
+\(V_A=\{0\}\).  Lemma~\ref{lem:step-001-complete-rules} makes the generator
+family nonempty, and every generator lies in \(V_A\); hence every generator
+is zero.  Its convex hull and its closure are both \(\{0\}\), proving
+\(K_A=\{0\}\).
+
+Both \(V_A\) and \(\mathbb R^0\) are singleton vector spaces, so the empty
+evaluation map is directly linear, injective, and surjective.  The singleton
+\(\{0\}\) is convex and compact by the open-cover definition.  Every point
+evaluation has domain \(\{0\}\) and value zero, so it is continuous.  If
+\(\mathcal X=\varnothing\), there is no point evaluation to check.  If
+\(m=0\), the unique empty response rule supplies the generator without any
+query or reply.
+\end{proof}
+
+\begin{proof}[Consequences for the fixed response body]
+If \(r_A>0\), Lemma~\ref{lem:step-002-evaluation-coordinates} supplies actual
+domain evaluations and identifies their norm with the fixed topology;
+Proposition~\ref{prop:step-002-compact-body} gives a nonempty compact convex
+\(K_A\); and Lemma~\ref{lem:step-002-continuous-evaluations} makes every
+point evaluation continuous with exact reconstruction.  If \(r_A=0\),
+Proposition~\ref{prop:step-002-zero-dimensional} proves all the same body and
+continuity conclusions directly.  Thus the later minimax and intersection
+arguments always take place in one fixed compact body, including for empty
+\(\mathcal X\) and \(m=0\).
+\end{proof}
+
+\subsection{Exact-Center Correlation and Nondegeneracy}
+\label{app:step-003}
+
+\begin{lemma}[Exact-center legality]
+\label{lem:step-003-exact-center-legality}
+Under Assumptions~\ref{assump:parameter-regime} and
+\ref{assump:adaptive-sq-interface}, and
+Lemma~\ref{lem:step-001-complete-rules}, for every
+\(\mathcal D\in\mathcal P(\mathcal X)\) and \(h\in\mathcal H\), define on
+every admitted public query-bearing history
+\[
+R^0_{\mathcal D,h}(q_1,v_1,\ldots,q_t)
+:=\mathbb E_{x\sim\mathcal D}q_t(x,h(x)).
+\]
+Then \(R^0_{\mathcal D,h}\) is a deterministic complete public-transcript
+rule in \(\mathfrak R_A^{\mathrm{all}}\) and belongs to
+\(\mathfrak R_{A,\tau}(\mathcal D,h)\).  Its validity deviation is zero at
+every round reached by every seed.  For \(m=0\), it is the unique empty rule
+and validity is vacuous.
+\end{lemma}
+
+\begin{proof}
+Fix \(\mathcal D\) and \(h\).  At any admitted public query-bearing history,
+the current query is measurable, bounded, and \([-1,1]\)-valued.  Therefore
+its population expectation is well defined and obeys
+\[
+-1\le\mathbb E_{x\sim\mathcal D}q_t(x,h(x))\le1.
+\]
+Since \(\tau>0\), \([-1,1]\subseteq I_\tau\), so the displayed formula
+assigns an admissible reply to every admitted history, including histories
+not reached by one seed or preceding reply path.
+
+For fixed \((\mathcal D,h)\), the formula is deterministic and takes as its
+runtime input only the public transcript, in particular the public query
+\(q_t\); it has no hidden-seed input.  Lemma~\ref{lem:step-001-complete-rules}
+therefore identifies it as a complete rule in
+\(\mathfrak R_A^{\mathrm{all}}\).
+
+On every reached seed path and at every reached round, its reply is the
+population center itself, so
+\[
+\left|R^0_{\mathcal D,h}(q_1,v_1,\ldots,q_t)
+-\mathbb E_{x\sim\mathcal D}q_t(x,h(x))\right|=0\le\tau.
+\]
+This proves validity separately on every reached path.  There is no
+accumulated tolerance error over the at most \(m\) rounds.  For \(m=0\),
+there is no query-bearing history, and
+Lemma~\ref{lem:step-001-complete-rules} gives the unique empty rule.
+\end{proof}
+
+\begin{proposition}[Exact seed-averaged correlation]
+\label{prop:step-003-exact-correlation}
+Under Assumptions~\ref{assump:parameter-regime},
+\ref{assump:adaptive-sq-interface}, and
+\ref{assump:universal-adversarial-guarantee}, and the conclusions of
+Proposition~\ref{prop:step-001-mean-response-space} and
+Lemma~\ref{lem:step-003-exact-center-legality}, for every
+\(\mathcal D\in\mathcal P(\mathcal X)\) and \(h\in\mathcal H\),
+\[
+F_{R^0_{\mathcal D,h}}
+\in\{F_R:R\in\mathfrak R_A^{\mathrm{all}}\}
+\subseteq K_A\subseteq V_A
+\]
+and
+\[
+\begin{aligned}
+\mathbb E_{x\sim\mathcal D}[h(x)F_{R^0_{\mathcal D,h}}(x)]
+&=1-2\,\mathbb E_{U\sim\mu_A}
+\mathcal L_{\mathcal D,h}(g_{U,R^0_{\mathcal D,h}})\\
+&\ge1-2\varepsilon=\rho>\frac12.
+\end{aligned}
+\]
+The accuracy expectation is solely over the learner seed; no distribution
+over response policies and no favorable seed is introduced.
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:step-003-exact-center-legality} gives
+\(R^0_{\mathcal D,h}\in\mathfrak R_A^{\mathrm{all}}\).  Hence
+Proposition~\ref{prop:step-001-mean-response-space} defines its mean response
+and places it in the raw generating family.  Every raw generator belongs to
+its convex hull and therefore to \(K_A\subseteq V_A\); compactness is not
+needed for this inclusion.
+
+The bounded Fubini theorem \citep{folland1999real} applies with probability
+laws \(\mu_A\) and \(\mathcal D\), and with
+\[
+a(u,x):=h(x)g_{u,R^0_{\mathcal D,h}}(x).
+\]
+Assumption~\ref{assump:adaptive-sq-interface} and the setup supply the needed
+measurability, while \(|a(u,x)|=1\) gives integrability.  Thus
+\[
+\begin{aligned}
+\mathbb E_{x\sim\mathcal D}[h(x)F_{R^0_{\mathcal D,h}}(x)]
+&=\int_{\mathcal X}h(x)
+\left(\int_{\Omega_A}g_{u,R^0_{\mathcal D,h}}(x)\,\mu_A(du)\right)
+\mathcal D(dx)\\
+&=\int_{\Omega_A}\left(\int_{\mathcal X}
+h(x)g_{u,R^0_{\mathcal D,h}}(x)\,\mathcal D(dx)\right)\mu_A(du).
+\end{aligned}
+\]
+For every \((u,x)\), both binary labels lie in \(\{-1,+1\}\), and the two
+possible cases give the pointwise identity
+\[
+h(x)g_{u,R^0_{\mathcal D,h}}(x)
+=1-2\mathbf 1\{g_{u,R^0_{\mathcal D,h}}(x)\ne h(x)\}.
+\]
+Integration over \(x\) gives
+\[
+\int_{\mathcal X}h(x)g_{u,R^0_{\mathcal D,h}}(x)\,\mathcal D(dx)
+=1-2\mathcal L_{\mathcal D,h}(g_{u,R^0_{\mathcal D,h}}),
+\]
+and integration over the seed yields the exact identity in the statement.
+
+Lemma~\ref{lem:step-003-exact-center-legality} proves that this particular
+deterministic complete rule is valid.  The universal quantifier in
+Assumption~\ref{assump:universal-adversarial-guarantee} therefore applies to
+it and gives
+\[
+\mathbb E_{U\sim\mu_A}
+\mathcal L_{\mathcal D,h}(g_{U,R^0_{\mathcal D,h}})\le\varepsilon.
+\]
+Substitution, with no discarded term, gives
+\[
+1-2\mathbb E_U\mathcal L_{\mathcal D,h}(g_{U,R^0})
+\ge1-2\varepsilon=\rho>\frac12.
+\]
+The exact-center rule is only one rule already covered by the every-valid-rule
+premise; it does not replace the adversarial oracle model.  Tolerance creates
+zero residual.  At \(m=0\), the same calculation uses the empty rule and no
+query-round step.  At \(\varepsilon=0\), nonnegativity of loss forces its seed
+expectation to be zero, so the correlation is exactly \(1\).
+\end{proof}
+
+\begin{proposition}[Point-mass exclusion of zero rank]
+\label{prop:step-003-nonzero-rank}
+Under Assumptions~\ref{assump:parameter-regime},
+\ref{assump:adaptive-sq-interface}, and
+\ref{assump:universal-adversarial-guarantee}, and the conclusions of
+Propositions~\ref{prop:step-001-mean-response-space} and
+\ref{prop:step-003-exact-correlation}, if
+\(\mathcal X\ne\varnothing\) and \(\mathcal H\ne\varnothing\), then for
+every \(x_0\in\mathcal X\) and \(h\in\mathcal H\),
+\[
+h(x_0)F_{R^0_{\delta_{x_0},h}}(x_0)\ge\rho>0.
+\]
+Consequently \(V_A\ne\{0\}\) and \(r_A\ge1\).
+\end{proposition}
+
+\begin{proof}
+For nonempty \(\mathcal X\), the point mass \(\delta_{x_0}\) belongs to
+\(\mathcal P(\mathcal X)\).  Proposition~\ref{prop:step-003-exact-correlation}
+with \(\mathcal D=\delta_{x_0}\) gives
+\[
+\begin{aligned}
+h(x_0)F_{R^0_{\delta_{x_0},h}}(x_0)
+&=\mathbb E_{x\sim\delta_{x_0}}
+[h(x)F_{R^0_{\delta_{x_0},h}}(x)]\\
+&\ge\rho>\frac12>0.
+\end{aligned}
+\]
+Thus this raw response is a nonzero function in \(V_A\), and
+\(r_A=\dim V_A\ge1\).  When \(m=0\), all these exact-center rules are the
+unique empty rule, but the point-mass conclusion is unchanged.  If
+\(\mathcal X\) or \(\mathcal H\) is empty, no nonexistent point or target is
+selected, and the later sign condition is vacuous.
+
+Together with Lemma~\ref{lem:step-003-exact-center-legality} and
+Proposition~\ref{prop:step-003-exact-correlation}, this proves that every
+distribution-target pair has an exact \(\rho\)-correlated member of the one
+fixed response body and that the zero-rank branch is impossible precisely in
+the nonempty-domain, nonempty-class regime.
+\end{proof}
+
+\subsection{Finite Simultaneous Margin by Minimax}
+\label{app:step-004}
+
+\begin{lemma}[Finite-simplex minima occur at vertices]
+\label{lem:step-004-simplex-vertex}
+Let \(S\subseteq\mathcal X\) be nonempty and finite.  For every real family
+\((a_x)_{x\in S}\),
+\[
+\min_{p\in\Delta(S)}\sum_{x\in S}p(x)a_x
+=\min_{x\in S}a_x,
+\]
+where
+\[
+\Delta(S):=\left\{p\in\mathbb R^S:p(x)\ge0\ \text{for all }x\in S,
+\ \sum_{x\in S}p(x)=1\right\}.
+\]
+Both minima are attained at a simplex vertex, including when \(S\) is a
+singleton.
+\end{lemma}
+
+\begin{proof}
+Choose \(x_*\in S\) with \(a_{x_*}=\min_{x\in S}a_x\).  For every
+\(p\in\Delta(S)\),
+\[
+\sum_{x\in S}p(x)a_x
+\ge\sum_{x\in S}p(x)a_{x_*}
+=a_{x_*}.
+\]
+At the vertex \(p^{x_*}\), which assigns mass one to \(x_*\), equality
+holds.  This calculation also covers \(S=\{x_*\}\), for which the simplex
+contains only that vertex.
+\end{proof}
+
+\begin{proposition}[Sion's equality on the fixed response body]
+\label{prop:step-004-sion-fixed-body}
+Under Assumptions~\ref{assump:adaptive-sq-interface} and
+\ref{assump:mean-response-rank}, and the conclusions of
+Propositions~\ref{prop:step-002-compact-body} and
+\ref{prop:step-002-zero-dimensional},
+Lemma~\ref{lem:step-002-continuous-evaluations}, and
+Lemma~\ref{lem:step-004-simplex-vertex}, let \(h\in\mathcal H\) and let
+\(S\subseteq\mathcal X\) be nonempty and finite.  On the fixed product
+\(K_A\times\Delta(S)\), define
+\[
+L_h(f,p):=\sum_{x\in S}p(x)h(x)f(x).
+\]
+Then
+\[
+\max_{f\in K_A}\min_{p\in\Delta(S)}L_h(f,p)
+=\min_{p\in\Delta(S)}\max_{f\in K_A}L_h(f,p),
+\]
+and every displayed maximum and minimum is attained.
+\end{proposition}
+
+\begin{proof}
+We use Sion's Theorem 3.4 \citep[Theorem~3.4]{sion1958minimax} in its
+maximizing/minimizing orientation.  The cited statement says that if \(M\)
+and \(N\) are nonempty convex compact spaces contained in linear topological
+spaces, and \(G:M\times N\to\mathbb R\) is upper semicontinuous and
+quasiconcave in its first, maximizing variable for every fixed second
+variable, and lower semicontinuous and quasiconvex in its second, minimizing
+variable for every fixed first variable, then
+\[
+\sup_{m\in M}\inf_{n\in N}G(m,n)
+=\inf_{n\in N}\sup_{m\in M}G(m,n).
+\tag{A.1}
+\]
+
+Proposition~\ref{prop:step-002-compact-body} gives a nonempty compact convex
+\(K_A\) when \(r_A>0\), and
+Proposition~\ref{prop:step-002-zero-dimensional} gives the same conclusion
+directly when \(r_A=0\).  Thus the maximizing set is always the same fixed
+body; it is not selected after \(h\), \(S\), or \(p\).
+
+Because \(S\) is nonempty and finite, \(\Delta(S)\) contains every vertex,
+is convex, and is closed and bounded in the finite-dimensional linear
+topological space \(\mathbb R^S\).  The direct proof of
+Lemma~\ref{lem:step-002-heine-borel} applies with the exact substitutions
+\(r_A\mapsto |S|\), \(D\mapsto\Delta(S)\), and the selected evaluation
+coordinates replaced by the standard coordinates of \(\mathbb R^S\).
+Coordinatewise bisection gives a convergent subsequence, closedness retains
+its limit, and the same finite-net and open-cover argument yields a finite
+subcover.  Hence \(\Delta(S)\) is compact.  Thus both sets required by the
+cited theorem are nonempty, compact, and convex.
+
+For fixed \(p\in\Delta(S)\),
+\[
+f\longmapsto L_h(f,p)
+=\sum_{x\in S}p(x)h(x)\,\delta_x(f)
+\]
+is a finite linear combination of point evaluations.
+Lemma~\ref{lem:step-002-continuous-evaluations} gives their continuity in the
+positive-rank branch, and
+Proposition~\ref{prop:step-002-zero-dimensional} gives it in the zero-rank
+branch.  Hence this map is continuous affine, therefore upper semicontinuous
+and quasiconcave, on \(K_A\).  For fixed \(f\in K_A\),
+\[
+p\longmapsto L_h(f,p)
+=\sum_{x\in S}p(x)h(x)f(x)
+\]
+is a finite linear function of the Euclidean coordinates of \(p\).  It is
+continuous affine, hence lower semicontinuous and quasiconvex, on
+\(\Delta(S)\).  The payoff is finite and real valued.
+
+The mapping
+\[
+M=K_A,\qquad N=\Delta(S),\qquad G=L_h
+\]
+therefore discharges every hypothesis of Sion's theorem.  Its conclusion,
+without reversing the players or changing signs, is
+\[
+\sup_{f\in K_A}\inf_{p\in\Delta(S)}L_h(f,p)
+=\inf_{p\in\Delta(S)}\sup_{f\in K_A}L_h(f,p).
+\tag{A.2}
+\]
+The cited theorem supplies this order equality only; the fixed body,
+per-distribution correlation, vertex reduction, attainment, and later
+arbitrary-domain closure are established separately in this paper.
+
+We now justify all four attainment assertions.  For fixed \(p\), continuity
+of \(L_h(\cdot,p)\) on compact \(K_A\) gives a maximum.  For fixed \(f\),
+continuity of \(L_h(f,\cdot)\) on compact \(\Delta(S)\) gives a minimum;
+Lemma~\ref{lem:step-004-simplex-vertex} identifies an attaining vertex.
+
+For the outer maximum, that lemma also gives
+\[
+\inf_{p\in\Delta(S)}L_h(f,p)
+=\min_{x\in S}h(x)f(x).
+\]
+This function is continuous in \(f\), because for \(f,g\in K_A\),
+\[
+\left|\min_{x\in S}h(x)f(x)-\min_{x\in S}h(x)g(x)\right|
+\le\max_{x\in S}|f(x)-g(x)|,
+\]
+and the finitely many point evaluations are continuous.  Compactness of
+\(K_A\) therefore makes the left outer supremum in (A.2) an attained maximum.
+
+For the outer minimum, write
+\(v(p):=\max_{f\in K_A}L_h(f,p)\).  Every quantity
+\(\max_{f\in K_A}|f(x)|\) is finite because evaluation is continuous on
+compact \(K_A\).  For \(p,q\in\Delta(S)\),
+\[
+\begin{aligned}
+|v(p)-v(q)|
+&\le\max_{f\in K_A}|L_h(f,p)-L_h(f,q)|\\
+&\le\sum_{x\in S}|p(x)-q(x)|
+\max_{f\in K_A}|f(x)|.
+\end{aligned}
+\]
+Thus \(v\) is continuous on compact \(\Delta(S)\), so the right outer
+infimum in (A.2) is attained.  Replacing all four suprema and infima by the
+attained maxima and minima proves the proposition.
+\end{proof}
+
+\begin{proposition}[Exact-center lower bound for the fixed-body game]
+\label{prop:step-004-exact-center-lower}
+Under Assumptions~\ref{assump:parameter-regime},
+\ref{assump:adaptive-sq-interface},
+\ref{assump:universal-adversarial-guarantee}, and
+\ref{assump:mean-response-rank}, and the conclusions of
+Propositions~\ref{prop:step-003-exact-correlation} and
+\ref{prop:step-004-sion-fixed-body}, let \(h\in\mathcal H\) and let
+\(S\subseteq\mathcal X\) be nonempty and finite.  Then
+\[
+\min_{p\in\Delta(S)}\max_{f\in K_A}L_h(f,p)\ge\rho.
+\]
+For each \(p\), the exact-center rule and its mean response may depend on
+\(p\), but every such response belongs to the one fixed \(K_A\).
+\end{proposition}
+
+\begin{proof}
+Fix \(p\in\Delta(S)\).  It defines the finitely supported law
+\(\mathcal D_p\in\mathcal P(\mathcal X)\) assigning mass \(p(x)\) to
+\(x\in S\) and zero elsewhere.  Proposition~\ref{prop:step-003-exact-correlation}
+with \((\mathcal D_p,h)\) gives
+\(F_{R^0_{\mathcal D_p,h}}\in K_A\) and
+\[
+\begin{aligned}
+L_h(F_{R^0_{\mathcal D_p,h}},p)
+&=\sum_{x\in S}p(x)h(x)F_{R^0_{\mathcal D_p,h}}(x)\\
+&=\mathbb E_{x\sim\mathcal D_p}
+[h(x)F_{R^0_{\mathcal D_p,h}}(x)]\\
+&\ge\rho.
+\end{aligned}
+\]
+Consequently,
+\[
+\max_{f\in K_A}L_h(f,p)
+\ge L_h(F_{R^0_{\mathcal D_p,h}},p)
+\ge\rho.
+\tag{A.3}
+\]
+The quantifiers are
+\[
+\forall p\in\Delta(S)\ \exists F_{R^0_{\mathcal D_p,h}}\in K_A:
+L_h(F_{R^0_{\mathcal D_p,h}},p)\ge\rho.
+\]
+The witness may change with \(p\), but the maximizing set does not: it is
+always the pre-instance body \(K_A\).  Taking the attained minimum of (A.3)
+over \(p\) preserves \(\rho\) and proves the claim.
+\end{proof}
+
+\begin{proposition}[Attained simultaneous margin on every finite restriction]
+\label{prop:step-004-finite-margin}
+Under Assumptions~\ref{assump:parameter-regime}--\ref{assump:mean-response-rank},
+and the conclusions of Lemma~\ref{lem:step-004-simplex-vertex} and
+Propositions~\ref{prop:step-004-sion-fixed-body} and
+\ref{prop:step-004-exact-center-lower}, for every \(h\in\mathcal H\) and
+every nonempty finite \(S\subseteq\mathcal X\),
+\[
+\begin{aligned}
+\max_{f\in K_A}\min_{x\in S}h(x)f(x)
+&=\max_{f\in K_A}\min_{p\in\Delta(S)}L_h(f,p)\\
+&=\min_{p\in\Delta(S)}\max_{f\in K_A}L_h(f,p)\\
+&\ge\rho.
+\end{aligned}
+\]
+There is an attaining \(f_{h,S}\in K_A\) satisfying
+\[
+h(x)f_{h,S}(x)\ge\rho
+\qquad\text{for every }x\in S.
+\]
+\end{proposition}
+
+\begin{proof}
+For fixed \(f\in K_A\), apply
+Lemma~\ref{lem:step-004-simplex-vertex} to
+\(a_x=h(x)f(x)\).  This gives
+\[
+\min_{p\in\Delta(S)}L_h(f,p)
+=\min_{x\in S}h(x)f(x).
+\]
+Taking the attained maximum over the same fixed \(K_A\) proves the first
+equality.  Proposition~\ref{prop:step-004-sion-fixed-body} proves the second
+equality in the displayed orientation, and
+Proposition~\ref{prop:step-004-exact-center-lower} proves the final inequality
+at the unchanged threshold \(\rho\).
+
+The maximum is attained by
+Proposition~\ref{prop:step-004-sion-fixed-body}; call an attaining function
+\(f_{h,S}\).  Then
+\[
+\min_{x\in S}h(x)f_{h,S}(x)\ge\rho,
+\]
+which is equivalent, because \(S\ne\varnothing\), to all the pointwise
+inequalities in the statement.
+
+For \(S=\{x_0\}\), the simplex contains the single point mass and the chain
+reduces to
+\[
+\max_{f\in K_A}h(x_0)f(x_0)
+\ge h(x_0)F_{R^0_{\delta_{x_0},h}}(x_0)
+\ge\rho.
+\]
+The empty set is not passed to Sion's theorem; its constraint is handled as
+the empty intersection in Proposition~\ref{prop:step-005-finite-intersections}
+below.  At \(\varepsilon=0\), all equalities preserve the margin \(1\).
+\end{proof}
+
+\subsection{Arbitrary-Domain Exactification}
+\label{app:step-005}
+
+\begin{lemma}[Closed signed constraints in the fixed body]
+\label{lem:step-005-closed-constraints}
+Under Assumptions~\ref{assump:adaptive-sq-interface} and
+\ref{assump:mean-response-rank}, and the conclusions of
+Lemma~\ref{lem:step-002-continuous-evaluations} and
+Proposition~\ref{prop:step-002-zero-dimensional}, fix \(h\in\mathcal H\) and
+\(x\in\mathcal X\).  Then
+\[
+C_{h,x}:=\{f\in K_A:h(x)f(x)\ge\rho\}
+\]
+is relatively closed in the one fixed body \(K_A\), at the same threshold as
+Proposition~\ref{prop:step-004-finite-margin}, including \(\rho=1\).
+\end{lemma}
+
+\begin{proof}
+Let \(\delta_x(f)=f(x)\).  In the positive-rank branch,
+Lemma~\ref{lem:step-002-continuous-evaluations} makes \(\delta_x\) continuous
+in the fixed topology of \(V_A\).  In the zero-rank branch,
+Proposition~\ref{prop:step-002-zero-dimensional} makes it the zero continuous
+functional.  Thus
+\[
+T_{h,x}:K_A\to\mathbb R,
+\qquad T_{h,x}(f):=h(x)\delta_x(f),
+\]
+is continuous in every rank branch.  The ray \([\rho,\infty)\) is closed in
+\(\mathbb R\), and
+\[
+C_{h,x}=T_{h,x}^{-1}([\rho,\infty)).
+\]
+Therefore \(C_{h,x}\) is closed in the subspace topology of the same
+\(K_A\).  The weak inequality and the numerical threshold are unchanged at
+\(\rho=1\).
+\end{proof}
+
+\begin{proposition}[Finite feasibility in the fixed body]
+\label{prop:step-005-finite-intersections}
+Assume Assumptions~\ref{assump:parameter-regime},
+\ref{assump:adaptive-sq-interface},
+\ref{assump:universal-adversarial-guarantee}, and
+\ref{assump:mean-response-rank}.  Under the nonemptiness conclusions of
+Propositions~\ref{prop:step-002-compact-body} and
+\ref{prop:step-002-zero-dimensional}, together with
+Proposition~\ref{prop:step-004-finite-margin}, fix \(h\in\mathcal H\).  Then
+for every finite \(S\subseteq\mathcal X\), including \(S=\varnothing\),
+\[
+\bigcap_{x\in S}C_{h,x}\ne\varnothing.
+\]
+Thus \((C_{h,x})_{x\in\mathcal X}\) has the finite-intersection property
+inside one fixed \(K_A\).
+\end{proposition}
+
+\begin{proof}
+For \(S=\varnothing\), the intersection over the empty subfamily equals its
+ambient set:
+\[
+\bigcap_{x\in\varnothing}C_{h,x}=K_A.
+\]
+Proposition~\ref{prop:step-002-compact-body} in the positive-rank branch and
+Proposition~\ref{prop:step-002-zero-dimensional} in the zero-rank branch make
+this set nonempty.
+
+Now suppose \(S\ne\varnothing\).  Proposition~\ref{prop:step-004-finite-margin}
+supplies \(f_{h,S}\in K_A\) such that
+\[
+h(x)f_{h,S}(x)\ge\rho
+\qquad\text{for every }x\in S.
+\]
+By definition, \(f_{h,S}\in C_{h,x}\) for every \(x\in S\), and therefore
+\[
+f_{h,S}\in\bigcap_{x\in S}C_{h,x}.
+\]
+These two cases exhaust all finite subfamilies.  The witnesses for different
+finite sets need not agree, be nested, or converge.
+\end{proof}
+
+\begin{lemma}[Compactness closes an arbitrary finite-intersection family]
+\label{lem:step-005-compact-fip}
+Let \(K\) be a nonempty compact topological space, let \(I\) be an arbitrary,
+possibly empty, index set, and let \((D_i)_{i\in I}\) be relatively closed
+subsets of \(K\).  If
+\[
+\bigcap_{i\in J}D_i\ne\varnothing
+\qquad\text{for every finite }J\subseteq I,
+\]
+where the intersection for \(J=\varnothing\) is \(K\), then
+\[
+\bigcap_{i\in I}D_i\ne\varnothing.
+\]
+\end{lemma}
+
+\begin{proof}
+Suppose instead that \(\bigcap_{i\in I}D_i=\varnothing\).  Taking
+complements relative to \(K\) gives
+\[
+K=K\setminus\bigcap_{i\in I}D_i
+=\bigcup_{i\in I}(K\setminus D_i).
+\]
+Each \(K\setminus D_i\) is relatively open, so these complements form an
+open cover of \(K\).  Compactness supplies finitely many indices
+\(i_1,\ldots,i_n\) whose complements already cover \(K\).  Since
+\(K\ne\varnothing\), an empty subcollection cannot cover it, so \(n\ge1\).
+Taking complements again gives
+\[
+\bigcap_{j=1}^nD_{i_j}=\varnothing,
+\]
+contradicting finite-intersection nonemptiness.  Hence the total intersection
+is nonempty.  The argument uses the open-cover definition of compactness and
+does not enumerate \(I\), pass to a sequence, or impose a cardinality
+condition.  If \(I=\varnothing\), the conclusion is simply
+\(K\ne\varnothing\).
+\end{proof}
+
+\begin{proposition}[One exact-margin witness on the arbitrary domain]
+\label{prop:step-005-global-margin}
+Under Assumptions~\ref{assump:parameter-regime}--\ref{assump:mean-response-rank},
+and the conclusions of Propositions~\ref{prop:step-002-compact-body},
+\ref{prop:step-002-zero-dimensional},
+\ref{prop:step-004-finite-margin}, and
+\ref{prop:step-005-finite-intersections}, and
+Lemmas~\ref{lem:step-002-continuous-evaluations},
+\ref{lem:step-005-closed-constraints}, and
+\ref{lem:step-005-compact-fip}, for every \(h\in\mathcal H\) there exists
+\(f_h\in K_A\) such that
+\[
+h(x)f_h(x)\ge\rho
+\qquad\text{for every }x\in\mathcal X.
+\]
+The conclusion holds for an arbitrary, possibly uncountable or empty, domain
+and preserves \(\rho\) exactly, including \(\rho=1\).
+\end{proposition}
+
+\begin{proof}
+Fix \(h\in\mathcal H\).  Proposition~\ref{prop:step-002-compact-body} in the
+positive-rank branch and Proposition~\ref{prop:step-002-zero-dimensional} in
+the zero-rank branch make the same \(K_A\) nonempty and compact.
+Lemma~\ref{lem:step-005-closed-constraints} makes every \(C_{h,x}\) relatively
+closed in that body, and
+Proposition~\ref{prop:step-005-finite-intersections} gives the
+finite-intersection property, including the empty subfamily.  Apply
+Lemma~\ref{lem:step-005-compact-fip} with
+\[
+K=K_A,\qquad I=\mathcal X,\qquad D_x=C_{h,x}.
+\]
+It follows that
+\[
+\bigcap_{x\in\mathcal X}C_{h,x}\ne\varnothing.
+\]
+Choose \(f_h\) in this intersection.  For every \(x\), its membership in
+\(C_{h,x}\) is exactly \(h(x)f_h(x)\ge\rho\).
+
+No relationship among the finite witnesses \(f_{h,S}\) was used.  They may
+vary arbitrarily with \(S\); their only role is to certify finite
+intersections inside the same \(K_A\), while compactness produces \(f_h\).
+
+If \(\mathcal X=\varnothing\), the indexed family is empty and its full
+intersection is \(K_A\); the pointwise condition is vacuous.  If
+\(\mathcal H=\varnothing\), the outer target quantifier is vacuous.  In the
+zero-rank branch, \(K_A=\{0\}\).  Empty \(\mathcal X\) is compatible with
+this branch.  If instead \(\mathcal X\ne\varnothing\) and some
+\(h\in\mathcal H\) exists, Proposition~\ref{prop:step-004-finite-margin}
+applied to \(S=\{x\}\) would require \(h(x)0\ge\rho>1/2\), a contradiction.
+Thus the preceding results themselves exclude zero rank exactly in the
+nonempty target/domain regime; no positive-rank assumption was added.
+
+At \(\rho=1\), every finite witness belongs to the closed sets defined by
+\(h(x)f(x)\ge1\), and the compact intersection uses those identical sets.
+No relaxation, sequential approximation, or smaller positive threshold is
+introduced.  This proves the arbitrary-domain conclusion at zero residual.
+\end{proof}
+
+\subsection{Exact Scores and Polynomial Dimension Closure}
+\label{app:step-006}
+
+\begin{proposition}[Exact score transfer through the pre-instance basis]
+\label{prop:step-006-exact-score-transfer}
+Under Assumptions~\ref{assump:parameter-regime}--\ref{assump:mean-response-rank},
+and the conclusions of Propositions~\ref{prop:step-001-fixed-coordinates} and
+\ref{prop:step-005-global-margin}, the basis
+\(\psi_1,\ldots,\psi_{r_A}\) and map \(\varphi_A\) are fixed before every
+learning instance.  For every \(h\in\mathcal H\) and every \(f_h\in K_A\)
+supplied by Proposition~\ref{prop:step-005-global-margin}, there is a unique
+\(w_h\in\mathbb R^{r_A}\) such that
+\[
+f_h=\sum_{j=1}^{r_A}(w_h)_j\psi_j
+\]
+and, for every \(x\in\mathcal X\),
+\[
+\langle w_h,\varphi_A(x)\rangle=f_h(x),
+\qquad
+h(x)\langle w_h,\varphi_A(x)\rangle
+\ge\rho>\frac12>0.
+\]
+Thus every nonvacuous score is nonzero and has sign \(h(x)\).  Only
+\(f_h\) and \(w_h\) may depend on \(h\).
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:step-001-fixed-coordinates} constructs the basis and
+\(\varphi_A\) from the all-rule mean-response space, before any distribution,
+target, validity restriction, selected rule, or realized seed.  Fixing a
+later target cannot change this basis or map.
+
+Now fix \(h\in\mathcal H\).  Proposition~\ref{prop:step-005-global-margin}
+supplies \(f_h\in K_A\) with
+\[
+h(x)f_h(x)\ge\rho
+\qquad\text{for every }x\in\mathcal X.
+\]
+The closure defining \(K_A\) is taken inside \(V_A\), so \(f_h\in V_A\).
+The basis property gives a unique \(w_h\in\mathbb R^{r_A}\) satisfying
+\[
+f_h=\sum_{j=1}^{r_A}(w_h)_j\psi_j.
+\]
+Evaluating at any \(x\) gives
+\[
+\begin{aligned}
+f_h(x)
+&=\sum_{j=1}^{r_A}(w_h)_j\psi_j(x)\\
+&=\left\langle w_h,
+(\psi_1(x),\ldots,\psi_{r_A}(x))\right\rangle\\
+&=\langle w_h,\varphi_A(x)\rangle.
+\end{aligned}
+\]
+This is an equality, with no limit, norm conversion, approximation, or
+coordinate residual.  Multiplying by \(h(x)\) transfers the global margin:
+\[
+h(x)\langle w_h,\varphi_A(x)\rangle
+=h(x)f_h(x)\ge\rho.
+\]
+Assumption~\ref{assump:parameter-regime} gives \(\rho>1/2>0\).  Hence when
+\(h(x)=+1\) the score is positive, and when \(h(x)=-1\) it is negative.
+
+If \(\mathcal H=\varnothing\), the target statement is vacuous and the map
+remains fixed.  If \(\mathcal X=\varnothing\), all pointwise assertions are
+vacuous; Proposition~\ref{prop:step-001-mean-response-space} gives
+\(V_A=\{0\}\) and \(r_A=0\), so \(f_h=0\), \(w_h\) is the empty vector, and
+the basis expansion is the empty sum.
+\end{proof}
+
+\begin{lemma}[Dimension-complexity admissibility and degenerate branches]
+\label{lem:step-006-dimension-admissibility}
+Assume Assumptions~\ref{assump:parameter-regime},
+\ref{assump:adaptive-sq-interface},
+\ref{assump:universal-adversarial-guarantee}, and
+\ref{assump:mean-response-rank}.  Under the conclusions of
+Proposition~\ref{prop:step-006-exact-score-transfer}
+and Proposition~\ref{prop:step-003-nonzero-rank},
+\[
+\operatorname{dc}(\mathcal H)\le r_A.
+\]
+If \(\mathcal X=\varnothing\) or \(\mathcal H=\varnothing\), then
+\(\operatorname{dc}(\mathcal H)=0\).  If \(r_A=0\), at least one of these
+two sets is empty and
+\(\operatorname{dc}(\mathcal H)=r_A=0\).
+\end{lemma}
+
+\begin{proof}
+Proposition~\ref{prop:step-006-exact-score-transfer} gives one fixed map
+\[
+\varphi_A:\mathcal X\to\mathbb R^{r_A}
+\]
+such that for every \(h\in\mathcal H\), some \(w_h\in\mathbb R^{r_A}\)
+satisfies
+\[
+h(x)\langle w_h,\varphi_A(x)\rangle>0
+\qquad\text{for every }x\in\mathcal X.
+\]
+Thus \(d=r_A\) belongs to the set of admissible dimensions in the definition
+of \(\operatorname{dc}(\mathcal H)\), and taking its infimum gives
+\(\operatorname{dc}(\mathcal H)\le r_A\).  The admissible set is nonempty,
+so its empty-infimum convention is not invoked under these assumptions.
+
+If \(\mathcal H=\varnothing\), dimension zero is admissible: use the unique
+map from \(\mathcal X\) to \(\mathbb R^0\), and the target-indexed
+requirement is vacuous.  Since admissible dimensions lie in \(\mathbb N_0\),
+this gives \(\operatorname{dc}(\mathcal H)=0\).
+
+If \(\mathcal X=\varnothing\), dimension zero is again admissible.  Use the
+unique map \(\varnothing\to\mathbb R^0\); for every target, choose the empty
+weight, and the pointwise condition is vacuous.  Hence
+\(\operatorname{dc}(\mathcal H)=0\).  In this branch,
+Proposition~\ref{prop:step-001-mean-response-space} additionally gives
+\(r_A=0\).
+
+Finally, suppose \(r_A=0\).  If both \(\mathcal X\) and \(\mathcal H\) were
+nonempty, Proposition~\ref{prop:step-003-nonzero-rank} would give
+\(r_A\ge1\), a contradiction.  Therefore \(\mathcal X=\varnothing\) or
+\(\mathcal H=\varnothing\), and the preceding paragraphs give
+\(\operatorname{dc}(\mathcal H)=0=r_A\).  This exhausts the zero-rank
+boundary without asking a zero-dimensional score to realize a nonempty sign
+constraint.
+\end{proof}
+
+\begin{proposition}[Exact conditional polynomial dimension closure]
+\label{prop:step-006-polynomial-closure}
+Under Assumptions~\ref{assump:parameter-regime}--\ref{assump:mean-response-rank},
+and the conclusions of
+Proposition~\ref{prop:step-006-exact-score-transfer} and
+Lemma~\ref{lem:step-006-dimension-admissibility}, the fixed map
+\(\varphi_A:\mathcal X\to\mathbb R^{r_A}\) satisfies, for every
+\(h\in\mathcal H\), the existence of \(w_h\in\mathbb R^{r_A}\) with
+\[
+h(x)\langle w_h,\varphi_A(x)\rangle
+\ge1-2\varepsilon=\rho>\frac12>0
+\qquad\text{for every }x\in\mathcal X,
+\]
+and
+\[
+\operatorname{dc}(\mathcal H)
+\le r_A
+\le B\bigl(1+m/\tau^2\bigr)^k.
+\]
+The conclusion is deterministic and contains no hidden constants.  It remains
+conditional on the primitive mean-response-rank certificate and makes no
+claim about seed-specific terminal rank, a rank-free implication, an
+unconditional theorem, or a universal linear bound.
+\end{proposition}
+
+\begin{proof}
+The pointwise score statement, including pre-instance map independence and
+strict positivity, is Proposition~\ref{prop:step-006-exact-score-transfer}.
+Lemma~\ref{lem:step-006-dimension-admissibility} gives
+\[
+\operatorname{dc}(\mathcal H)\le r_A.
+\]
+Assumption~\ref{assump:mean-response-rank} gives, for the same \(r_A\),
+\[
+r_A\le B\bigl(1+m/\tau^2\bigr)^k.
+\]
+Transitivity proves the displayed chain.  Both inequalities are retained
+verbatim; no term is absorbed, asymptotic notation introduced, or constant
+hidden.
+
+The parameter boundaries follow by direct substitution.  If \(m=0\), then
+\[
+B\bigl(1+m/\tau^2\bigr)^k=B(1+0)^k=B,
+\]
+so \(\operatorname{dc}(\mathcal H)\le r_A\le B\).  The unique empty complete
+response rule from Lemma~\ref{lem:step-001-complete-rules} applies, and no
+query-round argument is used.  If \(\varepsilon=0\), then \(\rho=1\) and
+\[
+h(x)\langle w_h,\varphi_A(x)\rangle\ge1
+\]
+with no margin degradation or probabilistic surrogate.  If \(B=1\), the
+rank bound is
+\[
+r_A\le\bigl(1+m/\tau^2\bigr)^k;
+\]
+if \(k=1\), it is
+\[
+r_A\le B\bigl(1+m/\tau^2\bigr);
+\]
+and if \(B=k=1\), it is exactly
+\[
+r_A\le1+m/\tau^2.
+\]
+These substitutions use only \(m\in\mathbb N_0\), \(\tau>0\), \(B\ge1\),
+and \(k\ge1\), and introduce no upper bound on \(\tau\).
+
+Empty \(\mathcal X\), empty \(\mathcal H\), and \(r_A=0\) are handled by
+Lemma~\ref{lem:step-006-dimension-admissibility}.  The primitive certificate,
+rather than the number of response transcripts, terminal predictors, or
+queries alone, supplies the second dimension inequality.  The probability
+mode is deterministic, the horizon mode is the fixed finite upper horizon
+\(m\), and the metric consists of exact algebraic dimension and the pointwise
+signed score.  Thus every exposed dependence is the one displayed above.
+\end{proof}
+
+\subsection{Proof of the Main Theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Lemma~\ref{lem:step-001-complete-rules} and
+Propositions~\ref{prop:step-001-mean-response-space} and
+\ref{prop:step-001-fixed-coordinates} construct the fixed all-rule
+mean-response space, its finite rank, and one pre-instance coordinate map.
+Propositions~\ref{prop:step-002-compact-body} and
+\ref{prop:step-002-zero-dimensional}, together with
+Lemma~\ref{lem:step-002-continuous-evaluations}, place all subsequent
+arguments in one nonempty compact convex body with continuous point
+evaluations.
+
+Lemma~\ref{lem:step-003-exact-center-legality} and
+Proposition~\ref{prop:step-003-exact-correlation} produce the exact
+distributionwise signed-correlation witness, while
+Proposition~\ref{prop:step-003-nonzero-rank} settles the nonempty zero-rank
+boundary.  Proposition~\ref{prop:step-004-finite-margin} converts those
+witnesses, through the fixed-body minimax equality, into an attained
+simultaneous margin on every nonempty finite restriction.
+Proposition~\ref{prop:step-005-global-margin} then uses the closed constraints
+and compact finite-intersection argument to obtain one \(f_h\) on the entire
+arbitrary domain.
+
+Finally, Proposition~\ref{prop:step-006-exact-score-transfer} converts
+\(f_h\) to exact basis scores with zero residual,
+Lemma~\ref{lem:step-006-dimension-admissibility} proves the dimension and
+degenerate-case conclusions, and
+Proposition~\ref{prop:step-006-polynomial-closure} appends the primitive rank
+certificate and the exact parameter specializations.  These statements are
+precisely all conclusions of Theorem~\ref{thm:main}.
+\end{proof}

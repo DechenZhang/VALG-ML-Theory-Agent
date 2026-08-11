@@ -1,0 +1,855 @@
+\appendix
+\section{Proof Details}
+\label{sec:proof-details}
+
+\subsection{Exact ReLU Antisymmetrization}
+\label{app:relu-antisymmetrization}
+
+\begin{lemma}[Per-iterate ReLU antisymmetrization]
+\label{lem:step-001-per-iterate}
+For the bias-free depth-two architecture of Section~\ref{sec:setup}, every
+$W\in\mathbb R^{m\times n}$, $a\in\mathbb R^m$, and
+$x\in\mathcal X$ satisfy
+\[
+ f_{a,W}(x)-f_{a,W}(-x)=\langle W^\top a,x\rangle.
+\]
+No regularity, boundedness, or nonzero condition on $a$ or $W$ is required.
+\end{lemma}
+
+\begin{proof}
+Let $r_j=(Wx)_j$ for $j=1,\ldots,m$.  Linearity gives
+$W(-x)=-Wx$, and hence
+\[
+\begin{aligned}
+ f_{a,W}(x)-f_{a,W}(-x)
+ &=\sum_{j=1}^m a_j\bigl(\sigma(r_j)-\sigma(-r_j)\bigr).
+\end{aligned}
+\]
+For every real $r$,
+\[
+ \sigma(r)-\sigma(-r)
+ =\max\{0,r\}-\max\{0,-r\}=r.
+\]
+If $r>0$, the two ReLU values are $r$ and $0$; if $r<0$, they are $0$
+and $-r$; and if $r=0$, both are zero.  Therefore
+\[
+\sum_{j=1}^m a_j\bigl(\sigma(r_j)-\sigma(-r_j)\bigr)
+=\sum_{j=1}^m a_jr_j
+=a^\top Wx
+=\langle W^\top a,x\rangle.
+\]
+The calculation remains valid when any $r_j=0$, when $a=0$, or when
+$W=0$; it uses no derivative or subgradient at a ReLU kink.
+\end{proof}
+
+\begin{proposition}[Exact latter-half aggregate linearization]
+\label{prop:step-001-aggregate}
+For the network and aggregate defined in Section~\ref{sec:setup}, every
+realized trajectory $\omega$ and every $x\in\mathcal X$ satisfy
+\[
+ A_\omega(x)=G_\omega(x)-G_\omega(-x)
+ =\left\langle
+ \sum_{t=\lceil T/2\rceil}^{T}(W^{(t)})^\top a^{(t)},x
+ \right\rangle
+ =\langle v_\omega,x\rangle.
+\]
+\end{proposition}
+
+\begin{proof}
+Let
+\[
+ I_T:=\{t\in\mathbb Z:\lceil T/2\rceil\leq t\leq T\}.
+\]
+Because $T\geq1$, this is a finite nonempty integer interval.  Subtracting
+the two aggregate sums term by term gives
+\[
+\begin{aligned}
+ A_\omega(x)
+ &=\sum_{t\in I_T}f_{a^{(t)},W^{(t)}}(x)
+   -\sum_{t\in I_T}f_{a^{(t)},W^{(t)}}(-x)\\
+ &=\sum_{t\in I_T}
+   \bigl(f_{a^{(t)},W^{(t)}}(x)
+       -f_{a^{(t)},W^{(t)}}(-x)\bigr).
+\end{aligned}
+\]
+Applying Lemma~\ref{lem:step-001-per-iterate} separately to every listed
+state and using finite linearity of the inner product yields
+\[
+\begin{aligned}
+ A_\omega(x)
+ &=\sum_{t\in I_T}\langle(W^{(t)})^\top a^{(t)},x\rangle\\
+ &=\left\langle\sum_{t\in I_T}(W^{(t)})^\top a^{(t)},x\right\rangle
+ =\langle v_\omega,x\rangle.
+\end{aligned}
+\]
+Each state is merely an arbitrary finite pair $(a^{(t)},W^{(t)})$, so the
+argument is valid at initialization, after any update, at every kink, and for
+zero parameter states.  It invokes neither the SGD recursion nor its gradient
+convention.  When $T=1$, $I_T=\{1\}$, exactly the single returned
+latter-half iterate is present.  Thus the equality is pathwise and has zero
+residual for every realization.
+\end{proof}
+
+Consequently, for every realized trajectory and every cube point, the
+antisymmetric aggregate is the identity-coordinate score
+$x\mapsto\langle v_\omega,x\rangle$.  This exact equality is the sole score
+interface used in the following error-transfer argument; it remains valid in
+the zero-parameter and exact/noiseless regimes.
+
+\subsection{Tie-Aware Antipodal Error Transfer}
+\label{app:error-transfer}
+
+For a score $F:\mathcal X\to\mathbb R$, define locally
+\[
+ e_{F,h}(z):=\mathbf 1\!\left\{
+ \operatorname{sign}_{s_0}(F(z))h(z)<0\right\}.
+\]
+Since both labels are in $\{-1,+1\}$, this indicator is zero exactly when
+$\operatorname{sign}_{s_0}(F(z))=h(z)$.
+
+\begin{lemma}[Tie-aware antipodal pair-error comparison]
+\label{lem:step-002-pair-error}
+Under Assumption~\ref{assump:antipodal-oddness}, for every
+$h\in\mathcal H$, realized trajectory $\omega$, and $x\in\mathcal X$,
+\[
+ e_{A_\omega,h}(x)
+ \leq e_{G_\omega,h}(x)+e_{G_\omega,h}(-x),
+ \qquad A_\omega(x)=G_\omega(x)-G_\omega(-x).
+\]
+\end{lemma}
+
+\begin{proof}
+Fix the stated objects and abbreviate
+\[
+ y=h(x),\qquad u=G_\omega(x),\qquad q=G_\omega(-x).
+\]
+Assumption~\ref{assump:antipodal-oddness} gives $h(-x)=-y$.  Suppose first
+that both source indicators on the right vanish.  Then $u$ is correctly
+classified with label $y$, and $q$ is correctly classified with label $-y$.
+The four possible pairs $(s_0,y)$ give
+\[
+\begin{array}{c|c|c|c|c}
+s_0&y&\text{condition on }u&\text{condition on }q&
+  \text{consequence for }u-q\\ \hline
++1&+1&u\geq0&q<0&u-q>0\\
++1&-1&u<0&q\geq0&u-q<0\\
+-1&+1&u>0&q\leq0&u-q>0\\
+-1&-1&u\leq0&q>0&u-q<0.
+\end{array}
+\]
+Thus $y(u-q)>0$ in every row.  One correctness condition may be weak
+because its target is the tie label, but the correctness condition for the
+opposite label is strict.  Consequently $A_\omega(x)=u-q$ is nonzero and
+has label $y$, so $e_{A_\omega,h}(x)=0$.
+
+This table also exhausts all source-score ties.  If $u=0$ is correct, then
+$y=s_0$ and correctness of $q$ for $-y$ is strict.  If $q=0$ is correct,
+then $-y=s_0$ and correctness of $u$ for $y=-s_0$ is strict.  A zero at a
+point labeled $-s_0$ is already a source error.  If $u=q=0$, exactly one of
+the opposite labels $y$ and $-y$ equals $s_0$, so exactly one source
+indicator is one.
+
+It remains to check a tie of the antisymmetric score.  If
+$A_\omega(x)=0$ and $y=s_0$, its indicator is zero.  If
+$A_\omega(x)=0$ and $y=-s_0$, its indicator is one, while simultaneous
+source correctness is impossible because the preceding calculation would
+force $yA_\omega(x)>0$.  Hence at least one source indicator is one.  In
+every remaining case where a source indicator is one, the right side is at
+least one and the left side, being an indicator, is at most one.  This proves
+the comparison in every zero and nonzero branch.
+\end{proof}
+
+\begin{proposition}[Exact factor-two risk transfer]
+\label{prop:step-002-risk-transfer}
+Under Assumption~\ref{assump:antipodal-oddness} and
+Lemma~\ref{lem:step-002-pair-error}, every
+$\mathcal D\in\Delta(\mathcal X)$, $h\in\mathcal H$, and realized
+trajectory $\omega$ satisfy
+\[
+ \mathcal L_{\mathcal D,h}(A_\omega)
+ \leq \mathcal L_{\mathcal D,h}(G_\omega)
+      +\mathcal L_{\mathcal D^-,h}(G_\omega)
+ =2\mathcal L_{\mathcal D^{\mathrm{sym}},h}(G_\omega).
+\]
+\end{proposition}
+
+\begin{proof}
+Multiply the pointwise inequality in
+Lemma~\ref{lem:step-002-pair-error} by $\mathcal D(x)$ and sum over the
+finite cube:
+\[
+\begin{aligned}
+\mathcal L_{\mathcal D,h}(A_\omega)
+&=\sum_{x\in\mathcal X}\mathcal D(x)e_{A_\omega,h}(x)\\
+&\leq\sum_{x\in\mathcal X}\mathcal D(x)e_{G_\omega,h}(x)
+ +\sum_{x\in\mathcal X}\mathcal D(x)e_{G_\omega,h}(-x)\\
+&=\mathcal L_{\mathcal D,h}(G_\omega)
+ +\sum_{x\in\mathcal X}\mathcal D(x)e_{G_\omega,h}(-x).
+\end{aligned}
+\]
+The last indicator evaluates both the score and target at $-x$.  Since
+$x\mapsto-x$ is a bijection, the substitution $z=-x$ gives
+\[
+\begin{aligned}
+\sum_{x\in\mathcal X}\mathcal D(x)e_{G_\omega,h}(-x)
+&=\sum_{z\in\mathcal X}\mathcal D(-z)e_{G_\omega,h}(z)\\
+&=\sum_{z\in\mathcal X}\mathcal D^-(z)e_{G_\omega,h}(z)
+ =\mathcal L_{\mathcal D^-,h}(G_\omega).
+\end{aligned}
+\]
+Finally,
+\[
+\begin{aligned}
+2\mathcal L_{\mathcal D^{\mathrm{sym}},h}(G_\omega)
+&=2\sum_{z\in\mathcal X}
+ \frac{\mathcal D(z)+\mathcal D^-(z)}2e_{G_\omega,h}(z)\\
+&=\mathcal L_{\mathcal D,h}(G_\omega)
+ +\mathcal L_{\mathcal D^-,h}(G_\omega).
+\end{aligned}
+\]
+No symmetry of $\mathcal D$ is assumed.  The pointwise zero-score checks in
+Lemma~\ref{lem:step-002-pair-error} remain intact under the finite sum, and
+the numerical factor is exactly $2$.
+\end{proof}
+
+Together, Propositions~\ref{prop:step-001-aggregate}
+and~\ref{prop:step-002-risk-transfer} attach the last risk inequality to the
+exact homogeneous score $x\mapsto\langle v_\omega,x\rangle$, pathwise for
+every realization and with no trajectory condition.
+
+In particular, the pointwise comparison holds for both tie labels, all four
+target/tie combinations, source-score zeros, and $A_\omega(x)=0$.  Summing
+under any original distribution and changing variables by the cube involution
+therefore gives exactly the factor-two symmetrized risk, with no symmetry
+assumption on the original distribution.
+
+\subsection{Distributional Extraction of an Approximate Separator}
+\label{app:expected-extraction}
+
+\begin{lemma}[Legality of antipodal symmetrization]
+\label{lem:step-003-sym-law}
+For every $\mathcal D\in\Delta(\mathcal X)$,
+$\mathcal D^{\mathrm{sym}}=(\mathcal D+\mathcal D^-)/2$ belongs to
+$\Delta(\mathcal X)$.
+\end{lemma}
+
+\begin{proof}
+Every mass in $\mathcal D^{\mathrm{sym}}$ is nonnegative.  The cube
+involution is a bijection, so
+\[
+\sum_{x\in\mathcal X}\mathcal D^-(x)
+=\sum_{x\in\mathcal X}\mathcal D(-x)
+=\sum_{z\in\mathcal X}\mathcal D(z)=1.
+\]
+Consequently,
+\[
+\sum_{x\in\mathcal X}\mathcal D^{\mathrm{sym}}(x)
+=\frac12\left(\sum_x\mathcal D(x)+\sum_x\mathcal D^-(x)\right)=1,
+\]
+which is exactly the probability-distribution condition.
+\end{proof}
+
+\begin{proposition}[Expected factor-two identity-coordinate transfer]
+\label{prop:step-003-expected-transfer}
+Under Assumptions~\ref{assump:antipodal-oddness} and
+\ref{assump:universal-sgd-success}, for every
+$\mathcal D\in\Delta(\mathcal X)$ and $h\in\mathcal H$,
+\[
+\mathbb E_{\omega\sim\mathbb Q_{\mathcal D^{\mathrm{sym}},h}}
+ \left[\mathcal L_{\mathcal D,h}
+ \bigl(x\mapsto\langle v_\omega,x\rangle\bigr)\right]
+\leq2\varepsilon.
+\]
+\end{proposition}
+
+\begin{proof}
+Fix $\mathcal D$ and $h$.  Lemma~\ref{lem:step-003-sym-law} makes
+$\mathcal D^{\mathrm{sym}}$ a legal input distribution.  For every trajectory
+under $\mathbb Q_{\mathcal D^{\mathrm{sym}},h}$,
+Proposition~\ref{prop:step-001-aggregate} gives
+\[
+A_\omega(x)=\langle v_\omega,x\rangle\qquad(x\in\mathcal X),
+\]
+so the corresponding losses under the original evaluation law are equal.
+Applying Proposition~\ref{prop:step-002-risk-transfer} with evaluation law
+$\mathcal D$ and then taking expectation under this same trajectory law gives
+\[
+\begin{aligned}
+\mathbb E_{\mathbb Q_{\mathcal D^{\mathrm{sym}},h}}
+ \mathcal L_{\mathcal D,h}\bigl(x\mapsto\langle v_\omega,x\rangle\bigr)
+&\leq 2\mathbb E_{\mathbb Q_{\mathcal D^{\mathrm{sym}},h}}
+ \mathcal L_{\mathcal D^{\mathrm{sym}},h}(G_\omega)\\
+&\leq2\varepsilon.
+\end{aligned}
+\]
+The second inequality is Assumption~\ref{assump:universal-sgd-success}
+instantiated at $(\mathcal D^{\mathrm{sym}},h)$.  Both losses are bounded in
+$[0,1]$ and the displayed pathwise inequality uses exactly the same law on
+both sides; no expectation or distribution is interchanged.
+\end{proof}
+
+\begin{lemma}[Finite-domain expectation-to-existence]
+\label{lem:step-003-finite-extraction}
+Fix $\mathcal D\in\Delta(\mathcal X)$ and $h\in\mathcal H$.  Let
+$\mathbb Q$ be a probability law for which $v_\omega$ and
+$\mathcal L_{\mathcal D,h}(x\mapsto\langle v_\omega,x\rangle)$ are
+measurable.  If $c\geq0$ and
+\[
+\mathbb E_{\omega\sim\mathbb Q}
+ \left[\mathcal L_{\mathcal D,h}(x\mapsto\langle v_\omega,x\rangle)\right]
+\leq c,
+\]
+then there is a deterministic $v\in\mathbb R^n$ with
+\[
+\mathcal L_{\mathcal D,h}(x\mapsto\langle v,x\rangle)\leq c.
+\]
+\end{lemma}
+
+\begin{proof}
+Define the finite subset-sum set
+\[
+ \mathscr R_{\mathcal D}:=
+ \left\{\sum_{x\in\mathcal X}\mathcal D(x)b_x:
+ (b_x)_{x\in\mathcal X}\in\{0,1\}^{\mathcal X}\right\}.
+\]
+It has at most $2^{|\mathcal X|}$ elements.  The random variable
+\[
+Y(\omega):=\mathcal L_{\mathcal D,h}
+ \bigl(x\mapsto\langle v_\omega,x\rangle\bigr)
+\]
+is measurable by hypothesis and takes values in $\mathscr R_{\mathcal D}$,
+because each finite-domain error indicator is either zero or one, including
+at a score tie.  The events $\{Y=r\}$ partition the trajectory space, so
+\[
+\mathbb E_{\mathbb Q}Y
+=\sum_{r\in\mathscr R_{\mathcal D}}r\,\mathbb Q[Y=r],
+\qquad
+\sum_{r\in\mathscr R_{\mathcal D}}\mathbb Q[Y=r]=1.
+\]
+If no realized trajectory had $Y(\omega)\leq c$, every value with positive
+probability would be strictly larger than $c$.  The finite nonempty set of
+such values would have a minimum $\gamma>c$, forcing
+$\mathbb E_{\mathbb Q}Y\geq\gamma>c$, a contradiction.  Hence some value
+$r\leq c$ has positive probability.  Its event is nonempty; choose a
+trajectory $\omega_0$ in it and set $v=v_{\omega_0}$.
+
+When $c=0$, nonnegativity forces a positive-probability value equal to zero,
+so the selected vector has zero risk.  When $c\geq1$, every risk is already
+at most $1\leq c$.  Thus no atom, margin, or limit argument is needed.
+\end{proof}
+
+\begin{proposition}[Distribution-wise approximate homogeneous separator]
+\label{prop:step-003-approximate-separator}
+Under Assumptions~\ref{assump:antipodal-oddness} and
+\ref{assump:universal-sgd-success}, for every
+$\mathcal D\in\Delta(\mathcal X)$ and $h\in\mathcal H$ there exists a
+deterministic $v=v(\mathcal D,h)\in\mathbb R^n$ such that
+\[
+\mathcal L_{\mathcal D,h}(x\mapsto\langle v,x\rangle)\leq2\varepsilon.
+\]
+\end{proposition}
+
+\begin{proof}
+Apply Proposition~\ref{prop:step-003-expected-transfer} and then
+Lemma~\ref{lem:step-003-finite-extraction} with
+$\mathbb Q=\mathbb Q_{\mathcal D^{\mathrm{sym}},h}$ and $c=2\varepsilon$.
+The resulting vector may depend on the displayed pair $(\mathcal D,h)$, but
+the identity coordinates are fixed and no common trajectory is asserted.
+\end{proof}
+
+Thus the quantifier order is
+$\forall\mathcal D\,\forall h\,\exists v(\mathcal D,h)$, and the learner law
+used for that pair is exactly
+$\mathbb Q_{\mathcal D^{\mathrm{sym}},h}$.  The architecture, stepsize, and
+finite horizon remain fixed.  When $\varepsilon=0$, the extracted vector has
+zero risk; when $\mathcal H=\varnothing$, the target assertion is vacuous.
+
+\subsection{Antipodal Representatives and Strict Feasibility}
+\label{app:strict-interface}
+
+\begin{lemma}[Antipodal representative selection]
+\label{lem:step-004-representatives}
+Under Assumption~\ref{assump:antipodal-oddness}, for every fixed
+$h\in\mathcal H$ the set $Q_h=\{q:h(q)=-s_0\}$ contains exactly one
+member of each pair $\{x,-x\}$, and
+\[
+\mathcal X=\bigsqcup_{q\in Q_h}\{q,-q\}.
+\]
+\end{lemma}
+
+\begin{proof}
+For $n\geq1$, no cube point equals its antipode: $x=-x$ would force every
+coordinate to be zero, contrary to $x_i\in\{-1,+1\}$.  Fix $x$ and write
+$y=h(x)$.  Oddness gives $h(-x)=-y$.  Exactly one of the two opposite labels
+$y$ and $-y$ equals $-s_0$, so exactly one of $x,-x$ lies in $Q_h$.  The
+two-element orbits are disjoint and cover the cube, proving the partition;
+for $n=1$ this is the single orbit $\{(+1),(-1)\}$.
+\end{proof}
+
+\begin{lemma}[Pairwise strict-sign criterion]
+\label{lem:step-004-pairwise-strictness}
+Under Assumption~\ref{assump:antipodal-oddness}, if $q\in Q_h$ and
+$w\in\mathbb R^n$, then
+\[
+\left[
+\operatorname{sign}_{s_0}(\langle w,q\rangle)=h(q)\ \text{and}\ 
+\operatorname{sign}_{s_0}(\langle w,-q\rangle)=h(-q)
+\right]
+\Longleftrightarrow h(q)\langle w,q\rangle>0.
+\]
+\end{lemma}
+
+\begin{proof}
+Set $z=\langle w,q\rangle$.  Homogeneity gives
+$\langle w,-q\rangle=-z$.  Since $q\in Q_h$, $h(q)=-s_0$; oddness gives
+$h(-q)=s_0$.  If $s_0=+1$, then $h(q)=-1$ and
+$\operatorname{sign}_{+1}(z)=h(q)$ iff $z<0$, which is iff
+$h(q)z>0$.  If $s_0=-1$, then $h(q)=+1$ and
+$\operatorname{sign}_{-1}(z)=h(q)$ iff $z>0$, again iff $h(q)z>0$.  Thus
+\[
+\operatorname{sign}_{s_0}(z)=h(q)
+\Longleftrightarrow h(q)z>0.
+\]
+In particular $z=0$ is an error at $q$.  The forward implication follows
+immediately.  Conversely, if $h(q)z>0$, then $z\neq0$ and
+\[
+ h(-q)\langle w,-q\rangle=(-h(q))(-z)=h(q)z>0,
+\]
+so both nonzero scores have their correct labels.  This proves the
+equivalence, including both tie labels and the zero-score boundary.
+\end{proof}
+
+\begin{proposition}[Strict-system representation equivalence]
+\label{prop:step-004-strict-equivalence}
+Under Assumption~\ref{assump:antipodal-oddness}, for every fixed
+$h\in\mathcal H$,
+\[
+\begin{aligned}
+&\exists w\in\mathbb R^n\ \forall x\in\mathcal X,
+\quad\operatorname{sign}_{s_0}(\langle w,x\rangle)=h(x)\\
+&\qquad\Longleftrightarrow
+\exists w\in\mathbb R^n\ \forall q\in Q_h,
+\quad h(q)\langle w,q\rangle>0.
+\end{aligned}
+\]
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{lem:step-004-representatives}, the pairs indexed by $Q_h$
+partition $\mathcal X$.  Exactness on all of $\mathcal X$ implies exactness
+on both members of each pair, and Lemma~\ref{lem:step-004-pairwise-strictness}
+then gives the strict inequality on its representative.  Conversely, the
+strict inequalities give exactness on each pair by the same lemma, and the
+partition extends it to every cube point.
+\end{proof}
+
+\subsection{Finite Convex Obstruction}
+\label{app:convex-obstruction}
+
+Fix $h\in\mathcal H$ and write
+\[
+ Z_h:=\{h(q)q:q\in Q_h\}\subseteq\mathbb R^n.
+\]
+By Lemma~\ref{lem:step-004-representatives}, $Q_h$ is finite and nonempty.
+The strict-system equivalence in Proposition~\ref{prop:step-004-strict-equivalence}
+identifies infeasibility of exact representation with the absence of a vector
+having positive inner product with every member of $Z_h$.
+
+\begin{proposition}[Finite closest-point zero certificate]
+\label{prop:step-005-closest-point}
+Suppose that no $w\in\mathbb R^n$ satisfies
+$\langle w,z\rangle>0$ for every $z\in Z_h$.  Then there are coefficients
+$\lambda_q\geq0$ with $\sum_{q\in Q_h}\lambda_q=1$ and
+\[
+\sum_{q\in Q_h}\lambda_q h(q)q=0.
+\]
+\end{proposition}
+
+\begin{proof}
+Enumerate $Q_h=\{q_1^0,\ldots,q_r^0\}$ and put
+$z_j=h(q_j^0)q_j^0$.  Every $z_j$ is nonzero and has norm $\sqrt n$.  Let
+\[
+ \Delta_r=\{\lambda\in\mathbb R^r:\lambda_j\geq0,
+ \ \sum_{j=1}^r\lambda_j=1\},
+ \qquad
+ C=\left\{\sum_{j=1}^r\lambda_jz_j:\lambda\in\Delta_r\right\}.
+\]
+The simplex is nonempty and compact, and the continuous function
+$\lambda\mapsto\|\sum_j\lambda_jz_j\|_2$ attains a minimum.  Let
+$\lambda^\star$ be a minimizer and
+$p=\sum_j\lambda_j^\star z_j$.
+
+For fixed $j$ and $t\in(0,1]$, the point
+$p_t=(1-t)p+t z_j$ belongs to $C$, since its coefficients are
+$(1-t)\lambda_\ell^\star+t\mathbf 1\{\ell=j\}$.  Minimality of $p$ gives
+\[
+0\leq\|p_t\|_2^2-\|p\|_2^2
+=2t\langle p,z_j-p\rangle+t^2\|z_j-p\|_2^2.
+\]
+After division by $t$ and passage to $t\downarrow0$,
+\[
+\langle p,z_j\rangle\geq\|p\|_2^2
+\qquad(1\leq j\leq r).
+\]
+If $p\neq0$, then $w=p$ has
+$\langle w,z_j\rangle\geq\|p\|_2^2>0$ for every $j$, contradicting the
+local infeasibility hypothesis.  Hence $p=0$, and the minimizing coefficients
+give the asserted nonnegative unit-sum representation.
+\end{proof}
+
+\begin{lemma}[Positive support pruning]
+\label{lem:step-005-support-pruning}
+Suppose $u_1,\ldots,u_R\in\mathbb R^n$ and $\rho_j\geq0$ satisfy
+\[
+\sum_{j=1}^R\rho_j=1,
+\qquad
+\sum_{j=1}^R\rho_j u_j=0.
+\]
+Then there are distinct vectors $\widetilde u_1,\ldots,\widetilde u_k$
+from the original list and coefficients $\alpha_i>0$ such that
+\[
+1\leq k\leq n+1,
+\qquad \sum_{i=1}^k\alpha_i=1,
+\qquad \sum_{i=1}^k\alpha_i\widetilde u_i=0.
+\]
+If $u_j=h(q_j)q_j$ with $q_j\in Q_h$, one may retain one such $q_j$ for
+each distinct $\widetilde u_i$.
+\end{lemma}
+
+\begin{proof}
+Delete all indices with $\rho_j=0$; at least one coefficient remains.
+If vector values are duplicated, group equal copies and replace their
+coefficients by the grouped sums.  The resulting distinct list
+$u_1,\ldots,u_{k_0}$ has coefficients $\beta_i>0$ with
+\[
+\sum_i\beta_i=1,qquad\sum_i\beta_i u_i=0.
+\]
+If $k_0\leq n+1$, this is the desired representation.  Otherwise the
+augmented vectors $(u_i,1)\in\mathbb R^{n+1}$ are linearly dependent, so a
+nonzero $\gamma\in\mathbb R^{k_0}$ satisfies
+\[
+\sum_i\gamma_i u_i=0,qquad\sum_i\gamma_i=0.
+\]
+Because the coordinates of $\gamma$ sum to zero, there are both positive and
+negative coordinates.  Let $I_+=\{i:\gamma_i>0\}$ and define
+\[
+ \tau=\min_{i\in I_+}\frac{\beta_i}{\gamma_i}>0,
+ \qquad
+ \beta_i'=\beta_i-\tau\gamma_i.
+\]
+For $i\in I_+$, $\beta_i'\geq0$ and at least one is zero.  For
+$\gamma_i<0$, $\beta_i'>0$, and for $\gamma_i=0$, $\beta_i'=\beta_i>0$.
+Moreover,
+\[
+\sum_i\beta_i'=1,qquad
+\sum_i\beta_i'u_i=0.
+\]
+Delete the newly zero coefficients and repeat.  Each repetition strictly
+reduces the finite support, so the process terminates with at most $n+1$
+positive coefficients and preserves both displayed identities.  No new vector
+is introduced.  A formal singleton support is allowed by the algebra; in the
+present application it cannot occur because every $h(q)q$ has norm
+$\sqrt n>0$, but the lower-bound argument below remains valid for $k=1$.
+\end{proof}
+
+\begin{lemma}[Signed cancellation]
+\label{lem:step-005-signed-cancellation}
+If $z_1,\ldots,z_k\in\mathbb R^n$ and
+\[
+\alpha_i>0,qquad \sum_{i=1}^k\alpha_i=1,qquad
+\sum_{i=1}^k\alpha_i z_i=0,
+\]
+then for every $w\in\mathbb R^n$ there is an $i$ with
+$\langle w,z_i\rangle\leq0$.
+\end{lemma}
+
+\begin{proof}
+Taking the inner product with $w$ gives
+\[
+0=\left\langle w,\sum_{i=1}^k\alpha_i z_i\right\rangle
+=\sum_{i=1}^k\alpha_i\langle w,z_i\rangle.
+\]
+If every inner product were strictly positive, positivity of every
+$\alpha_i$ would make the finite sum strictly positive, a contradiction.
+Thus one inner product is nonpositive.  This includes $w=0$ and equality
+cases without replacing $\leq0$ by a strict inequality.
+\end{proof}
+
+\begin{proposition}[Uniform tie-aware obstruction]
+\label{prop:step-005-uniform-obstruction}
+Suppose distinct $q_1,\ldots,q_k\in Q_h$ and positive coefficients satisfy
+\[
+1\leq k\leq n+1,qquad \sum_{i=1}^k\alpha_i=1,qquad
+\sum_{i=1}^k\alpha_i h(q_i)q_i=0.
+\]
+Define
+\[
+\mathcal D_h^\star(x)=
+\begin{cases}
+1/k,&x\in\{q_1,\ldots,q_k\},\\
+0,&\text{otherwise}.
+\end{cases}
+\]
+Then $\mathcal D_h^\star\in\Delta(\mathcal X)$ and, for every
+$w\in\mathbb R^n$,
+\[
+\mathcal L_{\mathcal D_h^\star,h}(x\mapsto\langle w,x\rangle)
+\geq\frac1k\geq\frac1{n+1}.
+\]
+\end{proposition}
+
+\begin{proof}
+Distinctness makes the displayed masses nonnegative and summing to one.  Put
+$z_i=h(q_i)q_i$.  Lemma~\ref{lem:step-005-signed-cancellation} gives an
+index with $\langle w,z_i\rangle\leq0$, or equivalently
+\[
+h(q_i)\langle w,q_i\rangle\leq0.
+\]
+If this product is negative, the nonzero score has prediction $-h(q_i)$ and
+is an error.  If it is zero, then $q_i\in Q_h$ gives
+$h(q_i)=-s_0$, while the zero score receives label $s_0=-h(q_i)$, again an
+error.  This explicitly handles both choices of $s_0$.
+Therefore at least one of the $k$ uniform atoms is an error, and
+\[
+\mathcal L_{\mathcal D_h^\star,h}(x\mapsto\langle w,x\rangle)
+=\frac1k\sum_{i=1}^k
+\mathbf 1\!\left\{
+\operatorname{sign}_{s_0}(\langle w,q_i\rangle)h(q_i)<0
+\right\}
+\geq\frac1k.
+\]
+Since $k\leq n+1$, $1/k\geq1/(n+1)$.  For $w=0$ every atom is a tie and
+the actual error is one.  The same calculation covers $k=1$, $k=n+1$, and
+$n=1$.
+\end{proof}
+
+\begin{proposition}[Finite obstruction under strict-system infeasibility]
+\label{prop:step-005-obstruction}
+If the strict system
+\[
+\nexists w\in\mathbb R^n\quad
+\forall q\in Q_h,\qquad h(q)\langle w,q\rangle>0
+\]
+is infeasible, then there are distinct representatives
+$q_1,\ldots,q_k\in Q_h$, positive coefficients with $1\leq k\leq n+1$,
+and a distribution $\mathcal D_h^\star$ such that
+\[
+\sum_{i=1}^k\alpha_i=1,qquad
+\sum_{i=1}^k\alpha_i h(q_i)q_i=0,
+\qquad
+\forall w\in\mathbb R^n,\quad
+\mathcal L_{\mathcal D_h^\star,h}(\langle w,\cdot\rangle)
+\geq\frac1k\geq\frac1{n+1}.
+\]
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:step-005-closest-point} gives a nonnegative unit-sum
+zero representation of the signed vectors $h(q)q$.  Apply
+Lemma~\ref{lem:step-005-support-pruning} to delete zero coefficients,
+duplicates, and then affine dependencies while preserving the vector sum and
+coefficient sum.  The resulting positive support has size at most $n+1$.
+Proposition~\ref{prop:step-005-uniform-obstruction} applied to that support
+gives the displayed uniform distribution and universal lower bound.  The
+infeasibility condition is only the hypothesis of this proposition and is not
+used as a primitive assumption elsewhere.
+\end{proof}
+
+\subsection{Exactification by the Strict Accuracy Gap}
+\label{app:exactification}
+
+\begin{proposition}[High-accuracy strict feasibility]
+\label{prop:step-006-feasibility}
+Under Assumption~\ref{assump:high-accuracy}, for every fixed
+$h\in\mathcal H$ the strict system
+\[
+ h(q)\langle w_h,q\rangle>0\qquad(q\in Q_h)
+\]
+has a solution $w_h\in\mathbb R^n$.
+\end{proposition}
+
+\begin{proof}
+Fix $h$.  Suppose for contradiction that the displayed strict system is
+infeasible.  Proposition~\ref{prop:step-005-obstruction} then supplies a
+distribution $\mathcal D_h^\star\in\Delta(\mathcal X)$ and an integer
+$1\leq k\leq n+1$ such that, for every $w\in\mathbb R^n$,
+\[
+ \mathcal L_{\mathcal D_h^\star,h}(x\mapsto\langle w,x\rangle)
+ \geq\frac1k\geq\frac1{n+1}.
+\]
+Apply Proposition~\ref{prop:step-003-approximate-separator} to this same
+distribution and target.  It yields a deterministic $v\in\mathbb R^n$ with
+\[
+ \mathcal L_{\mathcal D_h^\star,h}(x\mapsto\langle v,x\rangle)
+ \leq2\varepsilon.
+\]
+The lower bound is universal in $w$, so it applies to this same $v$.  The
+identical target, distribution, score class, and tie-resolved loss therefore
+give the strict chain
+\[
+ \mathcal L_{\mathcal D_h^\star,h}(\langle v,\cdot\rangle)
+ \leq2\varepsilon
+ <\frac1{n+1}
+ \leq\frac1k
+ \leq\mathcal L_{\mathcal D_h^\star,h}(\langle v,\cdot\rangle),
+\]
+contradicting Assumption~\ref{assump:high-accuracy}.  No expectation is
+compared to a realized loss here: the deterministic vector was extracted
+before the contradiction.  Thus the infeasibility hypothesis is false and a
+strict separator $w_h$ exists.
+\end{proof}
+
+\begin{proposition}[Exact identity representation for a fixed target]
+\label{prop:step-006-exact-representation}
+Under Assumption~\ref{assump:high-accuracy} and the conclusions of
+Propositions~\ref{prop:step-003-approximate-separator},
+\ref{prop:step-004-strict-equivalence}, and
+\ref{prop:step-005-obstruction}, every fixed $h\in\mathcal H$ has a vector
+$w_h\in\mathbb R^n$ satisfying
+\[
+\forall x\in\mathcal X,qquad
+\operatorname{sign}_{s_0}(\langle w_h,x\rangle)=h(x).
+\]
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:step-006-feasibility} supplies a vector satisfying the
+strict inequalities on $Q_h$.  The reverse implication in
+Proposition~\ref{prop:step-004-strict-equivalence} extends its exact labels
+from each representative to its antipode and hence to all of $\mathcal X$.
+Strictness excludes zero scores on representatives, so the fixed tie rule is
+preserved without any ordinary-sign replacement.
+\end{proof}
+
+\subsection{Common Identity Map and Dimension Bounds}
+\label{app:dimension-closure}
+
+\begin{proposition}[Common identity-map exact representation]
+\label{prop:step-007-common-identity}
+Under Assumptions~\ref{assump:antipodal-oddness},
+\ref{assump:high-accuracy}, and~\ref{assump:universal-sgd-success}, the
+single map $\varphi_{\mathrm{id}}(x)=x$ satisfies
+\[
+\forall h\in\mathcal H\ \exists w_h\in\mathbb R^n\ \forall x\in\mathcal X,
+\qquad
+\operatorname{sign}_{s_0}(\langle w_h,\varphi_{\mathrm{id}}(x)\rangle)=h(x).
+\]
+\end{proposition}
+
+\begin{proof}
+If $\mathcal H=\varnothing$, the target quantifier is vacuous and the map
+remains fixed.  Otherwise fix an arbitrary $h\in\mathcal H$ and apply
+Proposition~\ref{prop:step-006-exact-representation}.  Since
+$\varphi_{\mathrm{id}}(x)=x$,
+\[
+\langle w_h,\varphi_{\mathrm{id}}(x)\rangle=\langle w_h,x\rangle
+\]
+for every $x$, and applying the same tie-resolved sign map gives the desired
+identity.  The map contains no target, distribution, initialization, or
+trajectory-dependent choice; only $w_h$ depends on the fixed target.
+\end{proof}
+
+\begin{proposition}[Probability-one point-mass representation]
+\label{prop:step-007-point-mass}
+Let $\mathcal P_{\mathrm{id}}=\delta_{\varphi_{\mathrm{id}}}$.  Under
+Proposition~\ref{prop:step-007-common-identity}, for every
+$\mathcal D\in\Delta(\mathcal X)$ and $h\in\mathcal H$,
+\[
+\Pr_{\varphi\sim\mathcal P_{\mathrm{id}}}\!\left[
+\inf_{w\in\mathbb R^n}\Pr_{x\sim\mathcal D}\!\left[
+\operatorname{sign}_{s_0}(\langle w,\varphi(x)\rangle)h(x)<0
+\right]=0\right]=1.
+\]
+\end{proposition}
+
+\begin{proof}
+The point mass is fixed solely by the identity map.  For arbitrary
+$(\mathcal D,h)$, Proposition~\ref{prop:step-007-common-identity} supplies
+$w_h$ and hence
+\[
+\operatorname{sign}_{s_0}(\langle w_h,\varphi_{\mathrm{id}}(x)\rangle)h(x)
+=h(x)^2=1
+\qquad(x\in\mathcal X).
+\]
+The strict error event is therefore empty at $w=w_h$, so its probability is
+zero.  Nonnegativity of every risk gives
+\[
+0\leq\inf_w\Pr_{x\sim\mathcal D}
+ [\operatorname{sign}_{s_0}(\langle w,\varphi_{\mathrm{id}}(x)\rangle)h(x)<0]
+\leq0.
+\]
+The infimum is exactly zero, and the sole map in the support of the Dirac law
+belongs to the event with probability one.  If $\mathcal H=\varnothing$,
+the universal target assertion is vacuous.
+\end{proof}
+
+\begin{lemma}[Deterministic representation implies confident representation]
+\label{lem:step-007-deterministic-to-confident}
+For every class $\mathcal H$, every deterministic-admissible feature
+dimension is confident-admissible by taking a point mass on the same map.
+Consequently,
+\[
+\operatorname{dc}^{1/2}(\mathcal H)\leq\operatorname{dc}(\mathcal H).
+\]
+\end{lemma}
+
+\begin{proof}
+Let $d$ be deterministic-admissible, with common map
+$\varphi:\mathcal X\to\mathbb R^d$ and target-specific vectors $u_h$ such
+that
+\[
+\operatorname{sign}_{s_0}(\langle u_h,\varphi(x)\rangle)=h(x)
+\qquad(x\in\mathcal X).
+\]
+Choose $\delta_\varphi$ before $\mathcal D$ and $h$.  For every subsequent
+pair, the inner risk is zero at $w=u_h$, and nonnegativity makes its infimum
+zero; the point mass assigns probability one to that event.  Thus every
+deterministic-admissible dimension is confident-admissible, and taking the
+least dimensions gives the inequality.  The argument is vacuous but valid
+when $\mathcal H=\varnothing$.
+\end{proof}
+
+\begin{proposition}[Exact dimension and parameter-count chain]
+\label{prop:step-007-dimension-chain}
+Under Proposition~\ref{prop:step-007-common-identity},
+Lemma~\ref{lem:step-007-deterministic-to-confident}, and
+$n,m,T\geq1$, $S=m(n+1)$,
+\[
+\operatorname{dc}^{1/2}(\mathcal H)
+\leq\operatorname{dc}(\mathcal H)\leq n\leq S\leq TS.
+\]
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:step-007-deterministic-to-confident} gives the first
+inequality, and Proposition~\ref{prop:step-007-common-identity} makes the
+identity map an admissible deterministic map into $\mathbb R^n$, so
+$\operatorname{dc}(\mathcal H)\leq n$.  Since $m\geq1$,
+\[
+n\leq n+1\leq m(n+1)=S.
+\]
+Since $T\geq1$ and $S>0$,
+\[
+TS-S=(T-1)S\geq0,
+\]
+so $S\leq TS$.  Combining the inequalities proves the chain.  At $m=1$,
+$T=1$, or $n=1$, these are respectively weak equalities or the displayed
+specializations $S=n+1$, $TS=S$, and $S=2m$; no excluded boundary case is
+used.  The empty-class case is covered by vacuity.
+\end{proof}
+
+\subsection{Proof of the Main Theorem}
+\label{app:main-proof}
+
+\begin{proof}
+Under the three assumptions, Proposition~\ref{prop:step-006-exact-representation}
+gives, for every $h\in\mathcal H$, a vector $w_h$ with exact identity-coordinate
+labels.  Proposition~\ref{prop:step-007-common-identity} identifies those
+coordinates with the single map $\varphi_{\mathrm{id}}$.  The point-mass
+conclusion follows from Proposition~\ref{prop:step-007-point-mass}, and the
+complexity and parameter inequalities follow from
+Proposition~\ref{prop:step-007-dimension-chain}.  If $\mathcal H$ is empty,
+all target quantifiers are vacuous and the same dimension candidate and
+arithmetic remain valid.  These are exactly the assertions of
+Theorem~\ref{thm:main}.
+\end{proof}

@@ -1,0 +1,52 @@
+\section{Proof Sketch}
+
+The argument separates a static geometric obstruction from the two
+method-specific convergence arguments.  First, the Gaussian $X$-initialization
+has full column rank almost surely, and its range is a Haar-uniform
+$k$-dimensional subspace independent of the shared target.  The constrained
+ALS formula and the coefficient parameterization of constrained GD then keep
+every represented tensor in the same method-specific tensor subspace; see
+Lemma~\ref{lem:step-001-full-rank},
+Lemma~\ref{lem:step-001-haar-independence}, and
+Proposition~\ref{prop:step-001-fixed-span}.
+
+Conditionally on an arbitrary realized $T$, Haar symmetry yields
+$\mathbb E P_{\mathcal S_M}=(k/n)I_n$.  Hence the expected projected tensor
+energy is $(k/n)\|T\|_F^2$.  Markov's inequality gives a probability-$1/2$
+event for each method, and conditional independence of the two spans gives a
+joint probability of at least $1/4$.  Since $k/n\le1/8$, the joint event forces
+at least $3/4$ of the target energy into each fixed orthogonal complement;
+this is Proposition~\ref{prop:step-002-joint-event}.
+
+Fixed-span membership gives an exact orthogonal decomposition of the actual
+residual.  It follows that every defined objective is at least one half of the
+fixed orthogonal-complement energy, with a time-independent normalized witness
+whenever that energy is nonzero; see
+Proposition~\ref{prop:step-003-pythagorean-floor} and
+Lemma~\ref{lem:step-003-fixed-witness}.
+
+For constrained ALS, compact-SVD least squares proves that all three
+pseudoinverse updates are exact minimum-norm block minimizers even for singular
+designs.  Their sequential inequalities make the nonnegative objective
+monotone, so it has a finite scalar limit.  For constrained GD, the coefficient
+objective is polynomial.  At each finite iterate its Hessian is bounded on the
+current search segment, which guarantees finite dyadic Armijo acceptance and
+monotone objective descent.  Induction gives every finite iterate and again a
+finite scalar limit.  These conclusions are stated in
+Proposition~\ref{prop:step-004-sequential-descent},
+Lemma~\ref{lem:step-004-scalar-limit},
+Proposition~\ref{prop:step-005-well-defined}, and
+Proposition~\ref{prop:step-005-scalar-limit}.
+
+On the joint projection event, the exact residual-energy constant $3/4$ and
+the factor $1/2$ in the objective produce the all-time constant $3/8$.
+Passing to the two already established scalar limits loses nothing, and the
+tower property preserves the conditional probability $1/4$.  The resulting
+quantified statement is Proposition~\ref{prop:step-007-material-partial}.
+
+The fixed-span restriction is essential to this proof.  For an ordinary
+unconstrained first update, an explicit outside-span forcing term appears, and
+the orthogonal residual becomes the difference between the fixed target
+component and a generated tensor component.  Proposition~\ref{prop:step-006-nontransfer}
+records this exact non-transfer calculation without making a success or
+failure claim for unconstrained dynamics.

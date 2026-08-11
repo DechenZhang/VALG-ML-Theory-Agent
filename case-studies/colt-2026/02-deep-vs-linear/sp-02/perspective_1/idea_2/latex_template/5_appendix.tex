@@ -1,0 +1,970 @@
+\appendix
+
+\section{Proof Details}\label{sec:proof-details}
+
+\subsection{Rounded canonical oracle and transcript}\label{app:step-001}
+
+\begin{lemma}[Endpoint-grid rounding bound]\label{lem:step-001-grid-rounding}
+Under Assumption~\ref{assump:sq-parameter-regime}, let
+\[
+K=\lceil 1/\tau\rceil,
+\qquad
+G=\{-1+2j/K:0\le j\le K\},
+\]
+and let \(\rho:[-1,1]\to G\) be the fixed deterministic nearest-grid
+map.  Then, for every \(u\in[-1,1]\),
+\[
+|\rho(u)-u|\le \frac1K\le\tau.
+\]
+Moreover, \(\rho(-1)=-1\), \(\rho(1)=1\), either fixed choice at an
+interval midpoint has error exactly \(1/K\), and the same bound holds when
+\(\tau\ge 1\).
+\end{lemma}
+
+\begin{proof}
+Since \(\tau>0\),
+\[
+K=\lceil 1/\tau\rceil\ge 1,
+\qquad
+K\ge \frac1\tau,
+\qquad
+\frac1K\le\tau.
+\tag{A.1}\label{eq:grid-inversion}
+\]
+For \(0\le j\le K\), put \(\gamma_j=-1+2j/K\).  Then
+\[
+\gamma_0=-1,
+\qquad
+\gamma_K=1,
+\qquad
+\gamma_{j+1}-\gamma_j=\frac2K
+\quad(0\le j<K).
+\tag{A.2}\label{eq:grid-spacing}
+\]
+The intervals \([\gamma_j,\gamma_{j+1}]\) cover \([-1,1]\).  If
+\(u\in[\gamma_j,\gamma_{j+1}]\), then
+\[
+\min\{u-\gamma_j,\gamma_{j+1}-u\}
+\le \frac{\gamma_{j+1}-\gamma_j}{2}
+=\frac1K.
+\tag{A.3}\label{eq:grid-half-spacing}
+\]
+Every other grid point is no closer to \(u\) than one of these adjacent
+endpoints.  The nearest-grid definition and
+\eqref{eq:grid-inversion}--\eqref{eq:grid-half-spacing} therefore give the
+claimed chain.
+
+At either endpoint the nearest-grid error is zero.  At a midpoint both
+adjacent points are at distance \(1/K\), so the fixed tie rule preserves the
+bound and makes \(\rho\) single valued.  If \(\tau\ge1\), then
+\(0<1/\tau\le1\), hence \(K=1\), \(G=\{-1,1\}\), and the covering radius
+is \(1=1/K\le\tau\), including the midpoint \(u=0\).
+\end{proof}
+
+\begin{proposition}[Validity of the canonical oracle]
+\label{prop:step-001-canonical-oracle}
+Under Assumptions~\ref{assump:sq-parameter-regime}
+and~\ref{assump:universal-adversarial-sq} and
+Lemma~\ref{lem:step-001-grid-rounding}, for every distribution
+\(\mathcal D\) on \(\mathcal X\) and every \(h\in\mathcal H\), the rule
+\[
+\mathcal O^\rho_{\mathcal D,h}(q)
+=\rho\!\left(\mathbb E_{x\sim\mathcal D}q(x,h(x))\right)
+\]
+is tolerance-valid for every current unrestricted SQ query, including a
+query chosen adaptively from the preceding transcript.
+\end{proposition}
+
+\begin{proof}
+Fix \((\mathcal D,h)\).  For an unrestricted query
+\(q:\mathcal X\times\{+1,-1\}\to[-1,1]\), pointwise boundedness gives
+\[
+-1\le u_q:=\mathbb E_{x\sim\mathcal D}q(x,h(x))\le1.
+\]
+Consequently, Lemma~\ref{lem:step-001-grid-rounding} gives
+\[
+\left|
+\mathcal O^\rho_{\mathcal D,h}(q)
+-\mathbb E_{x\sim\mathcal D}q(x,h(x))
+\right|
+=|\rho(u_q)-u_q|
+\le\frac1K\le\tau.
+\tag{A.4}\label{eq:querywise-validity}
+\]
+The calculation holds for every bounded query, and hence at every query
+selected from any reached adaptive prefix.  Validity is querywise: the
+discrepancies in \eqref{eq:querywise-validity} are not summed over rounds.
+Endpoint expectations are rounded exactly, and the fixed midpoint rule gives
+a unique reply of error \(1/K\).  This is precisely the required adaptive
+absolute-tolerance condition.
+\end{proof}
+
+\begin{proposition}[Unique canonical padded path]
+\label{prop:step-001-padded-path}
+Under Assumptions~\ref{assump:sq-parameter-regime}
+and~\ref{assump:universal-adversarial-sq} and
+Proposition~\ref{prop:step-001-canonical-oracle}, for every
+\((\mathcal D,h,r)\), the interaction of \(A_r\) with
+\(\mathcal O^\rho_{\mathcal D,h}\) determines a unique actual reply prefix
+of length at most \(m\).  Appending \(-1\in G\) after stopping determines a
+unique \(z^{\mathcal D,h,r}\in G^m\), and the appended entries are not
+oracle replies.  If \(m=0\), this path is the unique empty string.
+\end{proposition}
+
+\begin{proof}
+Fix \((\mathcal D,h,r)\).  The canonical oracle is a deterministic rule
+with values in \(G\).  At the empty prefix, the taped protocol \(A_r\)
+either stops or issues one uniquely determined first query.  Inductively,
+after the actual replies \((z_1,\ldots,z_{t-1})\) have been fixed, taped
+determinism gives one stopping decision or one next query \(q_t\).  In the
+latter case the next reply is uniquely
+\[
+z_t=\rho\!\left(
+\mathbb E_{x\sim\mathcal D}q_t(x,h(x))
+\right)\in G.
+\tag{A.5}\label{eq:canonical-recursion}
+\]
+The query budget makes this recursion terminate with a unique actual prefix
+\((z_1,\ldots,z_s)\), where \(0\le s\le m\).  If \(s<m\), define
+\[
+z_{s+1}=\cdots=z_m=-1.
+\tag{A.6}\label{eq:fixed-padding}
+\]
+Here \(-1=-1+2\cdot0/K\in G\).  Since \eqref{eq:fixed-padding} is appended
+only after stopping, none of these entries is supplied to the oracle or
+requires a tolerance check.  The deterministic recursion, midpoint rule,
+and padding value yield a unique element of \(G^m\).
+
+When \(m=0\), no query is permitted, no reply or padding entry is produced,
+and the zero-fold product is \(G^0=\{\emptyset\}\).  Thus the path is
+\(\emptyset\) and oracle validity along it is vacuous.
+\end{proof}
+
+\begin{proof}[Completion of the oracle and transcript construction]
+Lemma~\ref{lem:step-001-grid-rounding} establishes the rounding inequality
+at endpoints, midpoint ties, and \(\tau\ge1\).  Proposition
+\ref{prop:step-001-canonical-oracle} applies it to every current adaptive
+query, and Proposition~\ref{prop:step-001-padded-path} constructs the unique
+full path, including \(\emptyset\) at \(m=0\).  No \(m/K\) error is
+introduced because only executed replies are checked and the post-stop
+suffix is never executed.
+\end{proof}
+
+\subsection{Finite response-tree map and measurable law}
+\label{app:step-002}
+
+\begin{proposition}[Total padded response tree]
+\label{prop:step-002-total-replay}
+Under Assumptions~\ref{assump:sq-parameter-regime}
+and~\ref{assump:universal-adversarial-sq} and the grid of
+Lemma~\ref{lem:step-001-grid-rounding}, every complete tape \(r\) and every
+\(z=(z_1,\ldots,z_m)\in G^m\) determine by prescribed-reply replay a
+terminal binary predictor
+\[
+g_{r,z}:\mathcal X\to\{+1,-1\}.
+\]
+If replay stops after reading exactly \(s<m\) replies, then every
+\(\widetilde z\in G^m\) satisfying
+\(\widetilde z_t=z_t\) for \(1\le t\le s\) obeys
+\[
+g_{r,\widetilde z}=g_{r,z}
+\quad\text{as functions on }\mathcal X.
+\]
+Thus suffix symbols are unread, the terminal output can be copied to every
+depth-\(m\) descendant, and the fixed all-\(-1\) suffix selects one such
+continuation.  If \(m=0\), \(g_{r,\emptyset}\) is the taped learner's
+no-query terminal predictor.
+\end{proposition}
+
+\begin{proof}
+Fix \(r\) and \(z\in G^m\).  Complete-tape conditioning makes the protocol
+deterministic.  At the empty prefix it either stops or issues a uniquely
+defined first query.  More generally, after the entries
+\((z_1,\ldots,z_{t-1})\) actually supplied, the next query, stopping
+decision, and terminal output are deterministic functions of that prefix.
+If query \(t\) is issued, replay supplies \(z_t\).  Since \(K>0\),
+\[
+-1\le -1+\frac{2j}{K}\le1
+\qquad(0\le j\le K),
+\]
+so all prescribed replies lie in \([-1,1]\).  At most \(m\) queries can be
+executed, after which the protocol returns a binary predictor.  This proves
+existence and totality of every \(g_{r,z}\).  No instance, population
+expectation, or tolerance certificate is needed for this synthetic replay.
+
+Suppose replay on \(z\) stops after \(s<m\) entries and \(\widetilde z\)
+has the same first \(s\) entries.  Inductively for \(t=0,\ldots,s\), the
+two replays have the same state after \(t\) replies: the initial taped state
+is common, and equality of states and of the next prescribed reply gives the
+same deterministic transition.  After \(s\) replies both executions make
+the same stopping decision and return the same predictor.  Neither requests
+entry \(s+1\), so later entries cannot affect the output.  This includes
+root stopping \(s=0\); when \(s=m\), there is no suffix to check.
+
+The padded tree assigns the same output to every continuation of a terminal
+prefix.  The value \(-1\in G\) selects one continuation but is not read.
+When \(m=0\), no response is supplied and the root output is exactly
+\(g_{r,\emptyset}\).
+\end{proof}
+
+\begin{lemma}[Exact response-string count]
+\label{lem:step-002-response-count}
+Under Assumption~\ref{assump:sq-parameter-regime} and
+Lemma~\ref{lem:step-001-grid-rounding}, the grid values are pairwise
+distinct and
+\[
+|G|=K+1,
+\qquad
+|G^m|=(K+1)^m
+=\bigl(\lceil1/\tau\rceil+1\bigr)^m.
+\]
+For \(m=0\), \(G^0=\{\emptyset\}\) and both sides equal one.
+\end{lemma}
+
+\begin{proof}
+The grid lemma gives \(K\ge1\).  If \(0\le j<j'\le K\), then
+\[
+\left(-1+\frac{2j'}K\right)-\left(-1+\frac{2j}K\right)
+=\frac{2(j'-j)}K>0.
+\tag{A.7}\label{eq:grid-distinct}
+\]
+Thus \(|G|=K+1\).  By definition,
+\(|G^0|=1=(K+1)^0\).  If \(|G^t|=(K+1)^t\), unique decomposition into a
+length-\(t\) prefix and a last grid value gives
+\[
+|G^{t+1}|=|G^t|\,|G|=(K+1)^t(K+1)=(K+1)^{t+1}.
+\tag{A.8}\label{eq:product-count-induction}
+\]
+Finite induction and \(K=\lceil1/\tau\rceil\) prove the claim.
+\end{proof}
+
+\begin{proposition}[Finite response-tree feature map]
+\label{prop:step-002-feature-map}
+Under Assumptions~\ref{assump:sq-parameter-regime}
+and~\ref{assump:universal-adversarial-sq},
+Proposition~\ref{prop:step-002-total-replay}, and
+Lemma~\ref{lem:step-002-response-count}, fix the lexicographic order on
+\(G^m\) and put \(N=|G^m|=(K+1)^m\).  Then every complete tape \(r\)
+defines the total map
+\[
+\phi_r(x)=\bigl(g_{r,z}(x)\bigr)_{z\in G^m}:
+\mathcal X\to\{+1,-1\}^{N}\subseteq\mathbb R^N.
+\]
+This construction is valid on arbitrary, including infinite, domains, after
+stopping at any prefix, and when distinct response strings yield identical
+terminal predictors.  It uses only the fixed learner and tape, \(m,\tau\),
+the grid and its order, and the padding convention, so it is independent of
+\((\mathcal D,h)\).  At \(m=0\),
+\(\phi_r(x)=(g_{r,\emptyset}(x))\in\mathbb R\).
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:step-002-total-replay} supplies one binary function
+\(g_{r,z}\) at every element of the common finite index set \(G^m\), and
+Lemma~\ref{lem:step-002-response-count} gives exactly \(N\) indices.  Their
+fixed order forms an \(N\)-tuple, all of whose values at each \(x\) belong
+to \(\{+1,-1\}\).
+
+Every coordinate comes from replay of a fixed taped protocol on a fixed
+numeric string.  Replay never chooses an instance, evaluates a population
+query, or follows a realized canonical path, so \(\phi_r\) is fixed before
+\((\mathcal D,h)\).  The construction evaluates a finite list of total
+functions and uses no cardinality or topological property of \(\mathcal X\).
+Suffix invariance keeps every coordinate defined after early stopping.  If
+\(g_{r,z}=g_{r,z'}\) for \(z\ne z'\), the equal functions simply occupy two
+separately labeled coordinates; the dimension counts response strings, not
+distinct function values.  At \(m=0\), the index set is
+\(\{\emptyset\}\), so the displayed scalar map follows.
+\end{proof}
+
+\begin{proposition}[Pre-instance pushforward feature law]
+\label{prop:step-002-preinstance-law}
+Under Assumptions~\ref{assump:sq-parameter-regime}
+and~\ref{assump:universal-adversarial-sq} and
+Proposition~\ref{prop:step-002-feature-map}, let
+\((\Omega_R,\Sigma_R,\mu)\) be the complete-tape probability space, with
+\(R\) the identity map.  Define
+\[
+\mathfrak F_N=\{\Phi:\mathcal X\to\mathbb R^N\},
+\qquad
+T(r)=\phi_r,
+\]
+and equip \(\mathfrak F_N\) with
+\[
+\mathscr A_T
+=\{B\subseteq\mathfrak F_N:T^{-1}(B)\in\Sigma_R\}.
+\tag{A.9}\label{eq:final-sigma-algebra}
+\]
+Then \(\mathscr A_T\) is a sigma algebra, \(T\) is measurable, and
+\[
+\mathsf P_A=T_{\#}\mu,
+\qquad
+\mathsf P_A(B)=\mu(T^{-1}(B))
+\quad(B\in\mathscr A_T),
+\tag{A.10}\label{eq:pushforward-law}
+\]
+is a probability law on maps into \(\mathbb R^N\), where
+\(N=(\lceil1/\tau\rceil+1)^m\).  The measurable space and law are fixed
+before and shared by every \((\mathcal D,h)\).
+
+For each fixed \((\mathcal D,h)\), coordinate evaluations, the functional
+\[
+F_{\mathcal D,h}(\Phi)
+=\inf_{w\in\mathbb R^N}
+L_{\mathrm{tie}}\bigl(\mathcal D,h,
+x\mapsto\langle w,\Phi(x)\rangle\bigr),
+\tag{A.11}\label{eq:optimal-map-loss}
+\]
+and the tape-selected basis loss are measurable.  Moreover,
+\[
+\begin{aligned}
+\mathbb E_{\Phi\sim\mathsf P_A}F_{\mathcal D,h}(\Phi)
+&=\mathbb E_{R\sim\mu}F_{\mathcal D,h}(\phi_R)\\
+&\le \mathbb E_{R\sim\mu}
+L_{\mathrm{tie}}\!\left(
+\mathcal D,h,
+x\mapsto\left\langle
+e_{z^{\mathcal D,h,R}},\phi_R(x)
+\right\rangle\right).
+\end{aligned}
+\tag{A.12}\label{eq:measurable-candidate-interface}
+\]
+Distinct tapes may induce the same map; no inverse-tape selection is needed.
+\end{proposition}
+
+\begin{proof}
+Let \(\mathscr X\) be the measurable structure on \(\mathcal X\) used by
+the distributions, queries, predictors, and losses.  The notation for a
+randomized learner and its complete tape entails measurable finite
+execution: for every fixed \(z\in G^m\),
+\[
+(r,x)\longmapsto g_{r,z}(x)
+\tag{A.13}\label{eq:joint-replay-measurability}
+\]
+is \((\Sigma_R\otimes\mathscr X)\)-measurable.  This is the measurable
+output typing needed for the setting's displayed tape expectations, not an
+additional statistical premise.  Since \(G^m\) is finite,
+\[
+(r,x)\longmapsto T(r)(x)
+=\bigl(g_{r,z}(x)\bigr)_{z\in G^m}
+\tag{A.14}\label{eq:joint-map-measurability}
+\]
+is jointly measurable into \(\{+1,-1\}^N\).
+
+We first verify the parameter integral used below.  For a
+product-measurable \(Q\subseteq\Omega_R\times\mathcal X\), write
+\(Q_r=\{x:(r,x)\in Q\}\), and define
+\[
+\mathcal L_{\mathcal D}
+=\left\{Q\in\Sigma_R\otimes\mathscr X:
+r\mapsto\mathcal D(Q_r)\text{ is }\Sigma_R\text{-measurable}\right\}.
+\]
+Every section \(Q_r\) is in \(\mathscr X\), because the sets with this
+property form a sigma algebra containing the measurable rectangles.  The
+class \(\mathcal L_{\mathcal D}\) is a Dynkin system: the full-space
+section measure is one; complements replace \(\mathcal D(Q_r)\) by
+\(1-\mathcal D(Q_r)\); and for pairwise disjoint \(Q_j\),
+\[
+\mathcal D\!\left(\left(\bigcup_{j\ge1}Q_j\right)_r\right)
+=\sum_{j\ge1}\mathcal D((Q_j)_r),
+\tag{A.15}\label{eq:section-disjoint-union}
+\]
+the pointwise limit of measurable partial sums.  For a measurable rectangle
+\(E\times C\),
+\[
+\mathcal D((E\times C)_r)=\mathbf 1_E(r)\mathcal D(C),
+\]
+which is measurable.  The measurable rectangles are a pi-system generating
+\(\Sigma_R\otimes\mathscr X\); Dynkin's pi-lambda theorem
+\citep[Section~1]{Kallenberg2021} therefore gives
+\(\Sigma_R\otimes\mathscr X\subseteq\mathcal L_{\mathcal D}\).
+
+If \(a:\Omega_R\times\mathcal X\to[0,1]\) is jointly measurable, choose
+nonnegative product-measurable simple functions \(a_n\uparrow a\).  The set
+calculation above and finite linearity make
+\(r\mapsto\int a_n(r,x)\,d\mathcal D(x)\) measurable, and monotone
+convergence gives
+\[
+\int a_n(r,x)\,d\mathcal D(x)
+\uparrow
+\int a(r,x)\,d\mathcal D(x).
+\tag{A.16}\label{eq:parameter-integral-limit}
+\]
+Thus
+\[
+r\longmapsto\int a(r,x)\,d\mathcal D(x)
+\tag{A.17}\label{eq:parameter-integral}
+\]
+is measurable.
+
+We next establish the feature-map measurable space.  Equation
+\eqref{eq:final-sigma-algebra} contains \(\mathfrak F_N\), is closed under
+complements because
+\[
+T^{-1}(\mathfrak F_N\setminus B)
+=\Omega_R\setminus T^{-1}(B),
+\]
+and is closed under countable unions because
+\[
+T^{-1}\!\left(\bigcup_{j\ge1}B_j\right)
+=\bigcup_{j\ge1}T^{-1}(B_j).
+\]
+It is therefore a sigma algebra, and \(T\) is measurable by definition.
+Equation \eqref{eq:pushforward-law} defines a probability measure: inverse
+images preserve disjoint unions and
+\[
+\mathsf P_A(\mathfrak F_N)
+=\mu(T^{-1}(\mathfrak F_N))=\mu(\Omega_R)=1.
+\]
+For every nonnegative \(\mathscr A_T\)-measurable \(H\), indicators,
+finite linearity, and increasing simple approximation prove
+\[
+\int_{\mathfrak F_N}H(\Phi)\,d\mathsf P_A(\Phi)
+=\int_{\Omega_R}H(T(r))\,d\mu(r).
+\tag{A.18}\label{eq:pushforward-integral}
+\]
+
+The final sigma algebra has the exact factorization property
+\[
+U:\mathfrak F_N\to\mathbb R\text{ is }\mathscr A_T\text{-measurable}
+\quad\Longleftrightarrow\quad
+U\circ T\text{ is }\Sigma_R\text{-measurable}.
+\tag{A.19}\label{eq:factorization-measurability}
+\]
+Indeed, for each Borel \(C\subseteq\mathbb R\),
+\[
+T^{-1}(U^{-1}(C))=(U\circ T)^{-1}(C),
+\]
+and the two directions follow directly from
+\eqref{eq:final-sigma-algebra}.  In particular, a measurable tape statistic
+constant on fibers of \(T\) factors uniquely on \(T(\Omega_R)\) through a
+measurable map statistic.
+
+For \(x\in\mathcal X\) and \(z\in G^m\), let
+\(\operatorname{ev}_{x,z}(\Phi)=\Phi_z(x)\).  Its pullback is
+\(g_{r,z}(x)\), measurable by \eqref{eq:joint-replay-measurability}, so
+\eqref{eq:factorization-measurability} makes every coordinate evaluation
+measurable.  For fixed \(w\in\mathbb R^N\), define
+\[
+\ell_{\mathcal D,h,w}(\Phi)
+=L_{\mathrm{tie}}\bigl(
+\mathcal D,h,x\mapsto\langle w,\Phi(x)\rangle\bigr).
+\tag{A.20}\label{eq:fixed-weight-loss}
+\]
+By \eqref{eq:joint-map-measurability}, the function
+\[
+(r,x)\longmapsto
+\mathbf 1\{\langle w,T(r)(x)\rangle h(x)\le0\}
+\]
+is jointly measurable and bounded.  Equation
+\eqref{eq:parameter-integral} and then
+\eqref{eq:factorization-measurability} show that every fixed-weight loss,
+including each standard-basis loss, is measurable.
+
+An uncountable infimum of measurable functions need not be measurable, so
+we reduce it without changing ties.  Let
+\(\mathcal V_N=\{+1,-1\}^N\).  Declare \(w,w'\in\mathbb R^N\) equivalent
+when
+\[
+\mathbf 1\{\langle w,v\rangle y\le0\}
+=\mathbf 1\{\langle w',v\rangle y\le0\}
+\quad\text{for every }(v,y)\in\mathcal V_N\times\{+1,-1\}.
+\tag{A.21}\label{eq:tie-pattern-equivalence}
+\]
+There are finitely many classes because this is a binary pattern on a finite
+set.  Choose one representative of every nonempty class and adjoin all
+standard basis vectors \(e_z\), obtaining a finite
+\(W_N\subseteq\mathbb R^N\).  Since every map in \(T(\Omega_R)\) is
+binary-valued, equivalent weights have the same tie-error indicator at every
+point, including at zero inner products.  Hence
+\[
+F_{\mathcal D,h}(T(r))
+=\min_{w\in W_N}\ell_{\mathcal D,h,w}(T(r)).
+\tag{A.22}\label{eq:finite-pattern-minimum}
+\]
+This finite minimum is measurable on the tape space, and
+\eqref{eq:factorization-measurability} proves measurability of the exact
+functional in \eqref{eq:optimal-map-loss}.  No topology, separability, or
+finiteness of \(\mathcal X\) is used.
+
+For the selected-basis interface, put
+\(Z_{\mathcal D,h}(r)=z^{\mathcal D,h,r}\in G^m\).  Its measurability
+follows by finite induction through measurable execution: the taped
+next-query and stopping maps are measurable,
+\eqref{eq:parameter-integral} makes each current population query mean
+measurable in \(r\), \(\rho\) is Borel because it is piecewise constant on
+finitely many intervals with fixed midpoint choices, and post-stop padding
+is fixed.  Define
+\[
+C_{\mathcal D,h}(r)
+=\ell_{\mathcal D,h,e_{Z_{\mathcal D,h}(r)}}(T(r)).
+\]
+Since \(G^m\) is finite,
+\[
+C_{\mathcal D,h}(r)
+=\sum_{z\in G^m}
+\mathbf 1\{Z_{\mathcal D,h}(r)=z\}
+\ell_{\mathcal D,h,e_z}(T(r)),
+\tag{A.23}\label{eq:selected-basis-finite-sum}
+\]
+which is measurable.  For every \(r\), the definition of the infimum gives
+\[
+F_{\mathcal D,h}(T(r))\le C_{\mathcal D,h}(r).
+\tag{A.24}\label{eq:tape-infimum-candidate}
+\]
+Apply \eqref{eq:pushforward-integral} to \(F_{\mathcal D,h}\), then
+integrate \eqref{eq:tape-infimum-candidate}, to obtain
+\eqref{eq:measurable-candidate-interface}.
+
+If \(T(r)=T(r')\) but the two canonical indices differ, the same mapwise
+infimum is separately bounded by the two tape-side candidates; no inverse of
+\(T\) or common coordinate on a fiber is used.  All objects in
+\eqref{eq:final-sigma-algebra}--\eqref{eq:pushforward-law} depend only on the
+learner, tape law, finite grid, ordering, and padding.  Verifying the
+functionals after fixing \((\mathcal D,h)\) does not alter the sigma algebra
+or law.  At \(m=0\), \(T(r)\) has one root coordinate,
+\(Z_{\mathcal D,h}\equiv\emptyset\), and all formulas reduce to their
+one-coordinate forms.
+\end{proof}
+
+\begin{proof}[Completion of the response-tree construction]
+Proposition~\ref{prop:step-002-total-replay} constructs every binary replay
+predictor and proves exact suffix invariance.  Lemma
+\ref{lem:step-002-response-count} gives
+\[
+|G^m|=(K+1)^m=(\lceil1/\tau\rceil+1)^m=N.
+\]
+Proposition~\ref{prop:step-002-feature-map} forms the total map on the common
+index set, retaining equal predictors as legal separate coordinates.
+Proposition~\ref{prop:step-002-preinstance-law} then constructs the
+measurable pushforward, the finite tie-pattern reduction, and the tape-side
+candidate comparison.  These conclusions place the maps under one law fixed
+before the instance and cover root and intermediate stopping, duplicate map
+fibers, arbitrary domains, and the empty-product case.
+\end{proof}
+
+\subsection{Exact replay and tie-free coordinate}\label{app:step-003}
+
+\begin{lemma}[Prefix synchronization]
+\label{lem:step-003-prefix-synchronization}
+Under Assumption~\ref{assump:universal-adversarial-sq} and
+Propositions~\ref{prop:step-001-padded-path}
+and~\ref{prop:step-002-total-replay}, fix \((\mathcal D,h,r)\), put
+\(z=z^{\mathcal D,h,r}\), and let
+\(s\in\{0,\ldots,m\}\) be the number of replies read before \(A_r\)
+terminates against \(\mathcal O^\rho_{\mathcal D,h}\).  After every
+\(t\in\{0,\ldots,s\}\) replies, the actual interaction and the replay
+indexed by \(z\) have read the same prefix and occupy the
+same taped configuration.  If \(t<s\), they issue the same next query and
+receive the same next reply; at \(t=s\), their stopping decision and
+terminal binary predictor coincide.  This includes \(s=0\) and \(m=0\).
+\end{lemma}
+
+\begin{proof}
+Induct on \(t\).  At \(t=0\), both executions use the same tape, protocol,
+and empty history, so they have the same initial configuration and first
+action.  If this action is terminal, then \(s=0\) and the outputs coincide.
+
+Suppose \(0\le t<s\) and the configurations and prefixes agree after
+\(t\) replies.  Taped determinism gives the same next query
+\(q_{t+1}\).  The actual reply is
+\[
+\mathcal O^\rho_{\mathcal D,h}(q_{t+1})
+=\rho\!\left(
+\mathbb E_{x\sim\mathcal D}q_{t+1}(x,h(x))
+\right),
+\tag{A.25}\label{eq:synchronized-reply}
+\]
+which, by the canonical-path recursion, equals
+\(z^{\mathcal D,h,r}_{t+1}\).  Prescribed-string replay receives that same
+entry.  The two executions therefore apply the same transition to the same
+state and reply, proving agreement after \(t+1\) replies.
+
+At \(t=s\), equal configurations force the same next action; because the
+actual run stops, replay stops and returns the same predictor.  If \(s=m\),
+the query budget forces termination no later than this state.  If \(m=0\),
+then \(s=0\) and the base case applies.  The induction uses the identical
+canonical reply, rather than two merely tolerance-valid replies, so midpoint
+choices, \(\tau\ge1\), and arbitrary adaptive dependence create no defect.
+\end{proof}
+
+\begin{proposition}[Canonical terminal replay]
+\label{prop:step-003-terminal-replay}
+Under Assumption~\ref{assump:universal-adversarial-sq},
+Lemma~\ref{lem:step-003-prefix-synchronization}, and
+Proposition~\ref{prop:step-002-total-replay}, for every
+\((\mathcal D,h,r)\),
+\[
+g_{r,z^{\mathcal D,h,r}}
+=A_r^{\mathcal O^\rho_{\mathcal D,h}}(\mathcal D,h)
+\tag{A.26}\label{eq:terminal-replay-identity}
+\]
+Both sides are functions from \(\mathcal X\) to \(\{+1,-1\}\).
+If stopping occurs after \(s<m\) queries, the padded suffix is unread and
+every full continuation of the same terminal prefix gives the same output.
+At \(m=0\), this is equality of the no-query root predictors.
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:step-003-prefix-synchronization} puts both executions in the
+same terminal configuration after the same \(s\) replies, so their terminal
+predictor objects agree and hence agree at every \(x\).  When \(s<m\), the
+canonical suffix is appended only after actual stopping; synchronized replay
+also stops at that prefix and requests none of those entries.  Proposition
+\ref{prop:step-002-total-replay} shows that all other continuations have the
+same output.  This includes root stopping.  For \(m=0\), the sole response
+index is \(\emptyset\) and the synchronization base case gives the root
+identity.
+\end{proof}
+
+\begin{proposition}[One-hot selection of the actual binary output]
+\label{prop:step-003-one-hot-score}
+Under Assumption~\ref{assump:universal-adversarial-sq} and
+Propositions~\ref{prop:step-002-feature-map}
+and~\ref{prop:step-003-terminal-replay}, for every
+\((\mathcal D,h,r,x)\),
+\[
+\begin{aligned}
+\left\langle e_{z^{\mathcal D,h,r}},\phi_r(x)\right\rangle
+&=g_{r,z^{\mathcal D,h,r}}(x)\\
+&=A_r^{\mathcal O^\rho_{\mathcal D,h}}(\mathcal D,h)(x)
+\in\{+1,-1\}.
+\end{aligned}
+\tag{A.27}\label{eq:one-hot-output}
+\]
+The identity requires neither distinct coordinate functions nor an injective
+tape-to-map construction.  For \(m=0\), it uses
+\(e_{\emptyset}=(1)\in\mathbb R\).
+\end{proposition}
+
+\begin{proof}
+The feature map has coordinates
+\(\phi_r(x)=(g_{r,z'}(x))_{z'\in G^m}\).  The standard basis vector at
+\(z^{\mathcal D,h,r}\) therefore gives by direct multiplication
+\[
+\left\langle e_{z^{\mathcal D,h,r}},\phi_r(x)\right\rangle
+=g_{r,z^{\mathcal D,h,r}}(x).
+\tag{A.28}\label{eq:coordinate-selection}
+\]
+Proposition~\ref{prop:step-003-terminal-replay} supplies equality with the
+actual output, and both terminal predictors are binary.  Repeated functions
+remain separately indexed, and equal maps from different tapes satisfy
+\eqref{eq:coordinate-selection} separately on each tape.  At \(m=0\), the
+one-coordinate formula is multiplication by \((1)\).  The basis vector is
+chosen after fixing \((\mathcal D,h,r)\), and does not alter the previously
+constructed map or law.
+\end{proof}
+
+\begin{proposition}[Exact tie-free loss transfer]
+\label{prop:step-003-tie-free-transfer}
+Under Assumption~\ref{assump:universal-adversarial-sq} and
+Propositions~\ref{prop:step-002-preinstance-law}
+and~\ref{prop:step-003-one-hot-score}, for every fixed
+\((\mathcal D,h)\), tape \(r\), and point \(x\),
+\[
+\begin{aligned}
+\mathbf 1\!\left\{
+\left\langle e_{z^{\mathcal D,h,r}},\phi_r(x)\right\rangle h(x)\le0
+\right\}
+&=\mathbf 1\{g_{r,z^{\mathcal D,h,r}}(x)h(x)<0\}\\
+&=\mathbf 1\!\left\{
+A_r^{\mathcal O^\rho_{\mathcal D,h}}(\mathcal D,h)(x)h(x)<0
+\right\}.
+\end{aligned}
+\tag{A.29}\label{eq:tie-event-identity}
+\]
+Consequently,
+\[
+\begin{aligned}
+&L_{\mathrm{tie}}\!\left(
+\mathcal D,h,
+x\mapsto\left\langle e_{z^{\mathcal D,h,r}},\phi_r(x)\right\rangle
+\right)\\
+&\quad=L_{\mathrm{tie}}(\mathcal D,h,g_{r,z^{\mathcal D,h,r}})
+=L_{\mathrm{bin}}(\mathcal D,h,g_{r,z^{\mathcal D,h,r}})\\
+&\quad=L_{\mathrm{bin}}\!\left(
+\mathcal D,h,A_r^{\mathcal O^\rho_{\mathcal D,h}}(\mathcal D,h)
+\right).
+\end{aligned}
+\tag{A.30}\label{eq:tie-loss-identity}
+\]
+The left side is a measurable tape function.  No selector from a feature-map
+fiber to a tape or basis vector is required.
+\end{proposition}
+
+\begin{proof}
+By Proposition~\ref{prop:step-003-one-hot-score}, the selected score, replay
+output, and actual output are the same sign.  Since \(h(x)\) is also a sign,
+their product belongs to \(\{+1,-1\}\), so zero is impossible and
+\[
+\{\langle e_{z^{\mathcal D,h,r}},\phi_r(x)\rangle h(x)\le0\}
+=\{\langle e_{z^{\mathcal D,h,r}},\phi_r(x)\rangle h(x)=-1\}
+=\{\langle e_{z^{\mathcal D,h,r}},\phi_r(x)\rangle h(x)<0\}.
+\tag{A.31}\label{eq:no-tie-event}
+\]
+Substitute the pointwise output identities to obtain
+\eqref{eq:tie-event-identity}; taking \(\mathcal D\)-probabilities gives
+\eqref{eq:tie-loss-identity}.  The nonzero score is a consequence of binary
+coordinate selection, not a margin assumption.
+
+Proposition~\ref{prop:step-002-preinstance-law} proves measurability of the
+finite-valued path \(Z_{\mathcal D,h}(r)=z^{\mathcal D,h,r}\) and of
+\[
+r\longmapsto L_{\mathrm{tie}}\!\left(
+\mathcal D,h,
+x\mapsto\left\langle e_{Z_{\mathcal D,h}(r)},T(r)(x)\right\rangle
+\right).
+\tag{A.32}\label{eq:measurable-selected-loss}
+\]
+Since \(T(r)=\phi_r\), equation \eqref{eq:tie-loss-identity} identifies
+\eqref{eq:measurable-selected-loss} with the actual binary loss, which is
+therefore measurable.  If equal feature maps arise from tapes with different
+canonical indices, the comparison remains tape-wise; no common basis vector
+or inverse of \(T\) is asserted.  Repeated coordinates and \(m=0\) are
+covered by the same binary identity.
+\end{proof}
+
+\begin{proof}[Completion of the replay and loss transfer]
+Lemma~\ref{lem:step-003-prefix-synchronization} proves that adaptive replay
+has zero prefix defect.  Proposition~\ref{prop:step-003-terminal-replay}
+makes the padded suffix unread and identifies the two terminal predictors.
+Proposition~\ref{prop:step-003-one-hot-score} then identifies one
+standard-basis coordinate with the actual learner output, and Proposition
+\ref{prop:step-003-tie-free-transfer} converts the pointwise binary identity
+into exact tie- and binary-loss equality.  These conclusions remain
+tape-side on duplicate map fibers and reduce to the root coordinate when
+\(m=0\).
+\end{proof}
+
+\subsection{Expected-risk and dimension certificate}\label{app:step-004}
+
+\begin{proposition}[Tape-wise infimum comparison]
+\label{prop:step-004-infimum-pushforward}
+Under Assumptions~\ref{assump:sq-parameter-regime}
+and~\ref{assump:universal-adversarial-sq} and
+Propositions~\ref{prop:step-001-padded-path},
+\ref{prop:step-002-feature-map}, and
+\ref{prop:step-002-preinstance-law}, fix \((\mathcal D,h)\) and let
+\(F_{\mathcal D,h}\) be defined by
+\eqref{eq:optimal-map-loss}.  Then
+\[
+\begin{aligned}
+\mathbb E_{\Phi\sim\mathsf P_A}F_{\mathcal D,h}(\Phi)
+&=\mathbb E_{R\sim\mu}F_{\mathcal D,h}(\phi_R)\\
+&\le\mathbb E_{R\sim\mu}
+L_{\mathrm{tie}}\!\left(
+\mathcal D,h,
+x\mapsto\left\langle
+e_{z^{\mathcal D,h,R}},\phi_R(x)
+\right\rangle\right).
+\end{aligned}
+\tag{A.33}\label{eq:infimum-pushforward}
+\]
+The comparison is tape-wise and remains valid on noninjective fibers of
+\(r\mapsto\phi_r\).
+\end{proposition}
+
+\begin{proof}
+For fixed \(r\), the canonical path gives
+\(z^{\mathcal D,h,r}\in G^m\), so the feature-map coordinate construction
+makes \(e_{z^{\mathcal D,h,r}}\in\mathbb R^N\) an admissible weight.
+Therefore
+\[
+F_{\mathcal D,h}(\phi_r)
+\le L_{\mathrm{tie}}\!\left(
+\mathcal D,h,
+x\mapsto\left\langle e_{z^{\mathcal D,h,r}},\phi_r(x)\right\rangle
+\right).
+\tag{A.34}\label{eq:pointwise-infimum-bound}
+\]
+No minimizer is claimed.  Proposition~\ref{prop:step-002-preinstance-law}
+gives measurability, boundedness in \([0,1]\), and the pushforward identity.
+Integrating \eqref{eq:pointwise-infimum-bound} and using monotonicity yields
+\eqref{eq:infimum-pushforward}.
+
+If \(T(r)=T(r')\) but the canonical indices differ, the common left side of
+\eqref{eq:pointwise-infimum-bound} is separately bounded by each legal
+tape-side candidate.  The expectation retains those candidates on their
+original tapes, so no common fiberwise weight, inverse map, or measurable
+selection is used.
+\end{proof}
+
+\begin{proposition}[Risk closure at the canonical oracle]
+\label{prop:step-004-canonical-risk}
+Under Assumptions~\ref{assump:sq-parameter-regime}
+and~\ref{assump:universal-adversarial-sq} and
+Propositions~\ref{prop:step-001-canonical-oracle}
+and~\ref{prop:step-003-tie-free-transfer}, for every
+\((\mathcal D,h)\),
+\[
+\begin{aligned}
+&\mathbb E_{R\sim\mu}
+L_{\mathrm{tie}}\!\left(
+\mathcal D,h,
+x\mapsto\left\langle e_{z^{\mathcal D,h,R}},\phi_R(x)\right\rangle
+\right)\\
+&\quad=\mathbb E_{R\sim\mu}
+L_{\mathrm{tie}}(\mathcal D,h,g_{R,z^{\mathcal D,h,R}})\\
+&\quad=\mathbb E_{R\sim\mu}
+L_{\mathrm{bin}}\!\left(
+\mathcal D,h,
+A_R^{\mathcal O^\rho_{\mathcal D,h}}(\mathcal D,h)
+\right)
+\le\varepsilon.
+\end{aligned}
+\tag{A.35}\label{eq:canonical-risk-closure}
+\]
+The outer randomness is only the learner tape, and rounding contributes no
+tie-risk remainder.
+\end{proposition}
+
+\begin{proof}
+Fix \((\mathcal D,h)\).  Proposition
+\ref{prop:step-001-canonical-oracle} makes
+\(\mathcal O^\rho_{\mathcal D,h}\) tolerance-valid.  The universal
+adversarial-SQ guarantee applies to this particular valid policy and gives
+\[
+\mathbb E_{R\sim\mu}
+L_{\mathrm{bin}}\!\left(
+\mathcal D,h,
+A_R^{\mathcal O^\rho_{\mathcal D,h}}(\mathcal D,h)
+\right)
+\le\varepsilon.
+\tag{A.36}\label{eq:primitive-canonical-bound}
+\]
+This is an instantiation of an every-valid-policy premise, not a favorable
+oracle assumption.  Proposition~\ref{prop:step-003-tie-free-transfer} gives
+the two preceding equalities in \eqref{eq:canonical-risk-closure} for each
+tape and supplies measurability.  Integrating only over \(R\sim\mu\) and
+using \eqref{eq:primitive-canonical-bound} proves the result.  The population
+loss retains its defining integration over \(x\sim\mathcal D\); no instance,
+oracle, or additional random variable is averaged externally.
+\end{proof}
+
+\begin{proposition}[Simultaneous tie-risk and dimension certificate]
+\label{prop:step-004-dimension-certificate}
+Under Assumptions~\ref{assump:sq-parameter-regime}
+and~\ref{assump:universal-adversarial-sq},
+Lemma~\ref{lem:step-002-response-count}, and
+Propositions~\ref{prop:step-002-preinstance-law},
+\ref{prop:step-004-infimum-pushforward}, and
+\ref{prop:step-004-canonical-risk}, the single pre-instance law
+\(\mathsf P_A\) satisfies
+\[
+\sup_{\mathcal D}\sup_{h\in\mathcal H}
+\mathbb E_{\Phi\sim\mathsf P_A}
+\left[
+\inf_{w\in\mathbb R^N}
+L_{\mathrm{tie}}\bigl(
+\mathcal D,h,x\mapsto\langle w,\Phi(x)\rangle
+\bigr)
+\right]
+\le\varepsilon.
+\tag{A.37}\label{eq:uniform-risk-certificate}
+\]
+Consequently,
+\[
+\operatorname{dc}^{\mathrm{tie}}_\varepsilon(\mathcal H)
+\le N=\bigl(\lceil1/\tau\rceil+1\bigr)^m.
+\tag{A.38}\label{eq:dimension-certificate}
+\]
+At \(m=0\), \(N=1\); at \(\varepsilon=0\), the expected tie risk is
+zero; and at \(\tau\ge1\), \(N=2^m\).
+\end{proposition}
+
+\begin{proof}
+Fix arbitrary \((\mathcal D,h)\).  Propositions
+\ref{prop:step-004-infimum-pushforward}
+and~\ref{prop:step-004-canonical-risk} give
+\[
+\begin{aligned}
+&\mathbb E_{\Phi\sim\mathsf P_A}
+\left[
+\inf_{w\in\mathbb R^N}
+L_{\mathrm{tie}}\bigl(
+\mathcal D,h,x\mapsto\langle w,\Phi(x)\rangle
+\bigr)
+\right]\\
+&\quad\le\mathbb E_{R\sim\mu}
+L_{\mathrm{tie}}\!\left(
+\mathcal D,h,
+x\mapsto\left\langle e_{z^{\mathcal D,h,R}},\phi_R(x)\right\rangle
+\right)\\
+&\quad=\mathbb E_{R\sim\mu}
+L_{\mathrm{tie}}(\mathcal D,h,g_{R,z^{\mathcal D,h,R}})\\
+&\quad=\mathbb E_{R\sim\mu}
+L_{\mathrm{bin}}\!\left(
+\mathcal D,h,
+A_R^{\mathcal O^\rho_{\mathcal D,h}}(\mathcal D,h)
+\right)
+\le\varepsilon.
+\end{aligned}
+\tag{A.39}\label{eq:complete-risk-chain}
+\]
+The first relation evaluates the mapwise infimum; the middle relations are
+exact loss identities; and the last inequality is the primitive guarantee
+at a valid oracle.  There is no additive term.
+
+Proposition~\ref{prop:step-002-preinstance-law} constructs the same
+\(\mathsf P_A\), measurable map space, and ambient dimension before the
+arbitrary pair is chosen.  Taking the two suprema in
+\eqref{eq:complete-risk-chain} therefore gives
+\eqref{eq:uniform-risk-certificate}, with no union bound or probability-mode
+change.  Lemma~\ref{lem:step-002-response-count} gives exactly
+\[
+N=|G^m|=(K+1)^m
+=\bigl(\lceil1/\tau\rceil+1\bigr)^m.
+\tag{A.40}\label{eq:complete-dimension-count}
+\]
+The definition of \(\operatorname{dc}^{\mathrm{tie}}_\varepsilon\) asks
+for one pre-instance law with this uniform expected mapwise loss property;
+\eqref{eq:uniform-risk-certificate} and
+\eqref{eq:complete-dimension-count} exhibit it.
+
+When \(m=0\), \(G^0=\{\emptyset\}\), \(N=1\), and the same chain uses the
+no-query root predictor.  When \(\varepsilon=0\), nonnegativity and
+\eqref{eq:uniform-risk-certificate} make the expected tie loss exactly zero,
+with no rounding remainder.  If \(\tau\ge1\), then \(K=1\), so the exact
+count is \(2^m\).  The total-map and pushforward results already cover
+arbitrary domains and noninjective tape-to-map fibers.
+\end{proof}
+
+\begin{proof}[Completion of the expected-risk and dimension argument]
+For an arbitrary \((\mathcal D,h)\), Proposition
+\ref{prop:step-004-infimum-pushforward} first transfers the mapwise
+optimal-loss functional through the pre-instance pushforward and evaluates
+the infimum at the tape-specific canonical basis vector.  Proposition
+\ref{prop:step-004-canonical-risk} then uses the exact tie-free identity and
+the every-valid-oracle premise to bound this candidate loss by
+\(\varepsilon\), with expectation only over the tape.  Proposition
+\ref{prop:step-004-dimension-certificate} observes that the same law was
+fixed before the arbitrary instance, takes the two suprema, and applies the
+definition with the exact count
+\(N=(\lceil1/\tau\rceil+1)^m\).  No term is absorbed, and the
+\(m=0\), \(\varepsilon=0\), and \(\tau\ge1\) reductions are exact.
+\end{proof}
+
+\subsection{Proof of the Main Theorem}\label{app:main-proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Lemma~\ref{lem:step-001-grid-rounding} and
+Propositions~\ref{prop:step-001-canonical-oracle}
+and~\ref{prop:step-001-padded-path} produce a legal canonical policy and its
+path.  Proposition~\ref{prop:step-002-total-replay},
+Lemma~\ref{lem:step-002-response-count}, and
+Propositions~\ref{prop:step-002-feature-map}
+and~\ref{prop:step-002-preinstance-law} construct the finite response-tree
+maps and their one pre-instance law.  Lemma
+\ref{lem:step-003-prefix-synchronization} and
+Propositions~\ref{prop:step-003-terminal-replay},
+\ref{prop:step-003-one-hot-score}, and
+\ref{prop:step-003-tie-free-transfer} identify a canonical binary coordinate
+with the actual learner output and preserve the tie/binary baseline exactly.
+Finally, Propositions~\ref{prop:step-004-infimum-pushforward}
+and~\ref{prop:step-004-canonical-risk} give the exact comparison chain in
+Theorem~\ref{thm:main}, while
+Proposition~\ref{prop:step-004-dimension-certificate} takes the universal
+instance suprema and applies the dimension definition.  These conclusions
+are precisely its risk and dimension statements, including the
+\(m=0\), \(\varepsilon=0\), and \(\tau\ge1\) boundary cases.
+\end{proof}

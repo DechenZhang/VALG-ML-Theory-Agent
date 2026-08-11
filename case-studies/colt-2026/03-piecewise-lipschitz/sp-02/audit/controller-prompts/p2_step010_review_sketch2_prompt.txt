@@ -1,0 +1,37 @@
+You are the fresh independent step-scoped reviewer for perspective_2/idea_1, step_010, unit attempt 1 under accepted sketch attempt 2, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+Read <CODEX_SKILLS_ROOT>/proof-step-review/SKILL.md completely and every directly required shared contract/template it names. Independently review exactly the current perspective_2/idea_1/proof_steps/step_010/proof.md. Do not trust the producer's COMPLETE status, self-checks, or final report. Write only perspective_2/idea_1/proof_steps/step_010/review.md. Do not modify the proof, idea, setting, sketch, sketch review, dependency artifacts, global diagnostics, tracker, worker log, controller prompts, proof history, downstream steps, final reviews, assembly artifacts, results, another branch, or any other file.
+
+Binding controller inputs:
+
+- setting.md: 6955a2723694ff60af8d5d40329ff0ad056f9b54780ff02744d8985456222b7e
+- accepted proof_sketch.md: 41517943f551814aaf87ff8541d5a81b56123cae7d8533b2bceb302a981bfbc4
+- accepted proof_sketch_review.md: a80e7f4ffb1ad57991675810dbf7064bc7b482b8f34b61f10a171ebfc97b43c9
+- submitted step_010 proof.md: d7b9a1cb7fc05eda80c58e08af140f9f56de0c7b2dfc38cf728efee8339e0823
+- controller-open proof_tracker.md: f346400f2475cc763923c009f5b17ee725144be82b8850b7f437ae0e87edfe8a
+- accepted dependency step_003 proof.md: e49284222ce24bde4b3ae8b5f8d1434622c09bfd3a39eb512641169e55e2d7a0
+- accepted dependency step_003 review.md: 4d6a93d359e6559d49d306809fe8ad925eb03a262c36446591c846632a6e1ff8
+- accepted dependency step_009 proof.md: 8da586dbdd81e96baba3d3767b4982caf24ecbe40c3bb7987ba41a06477208e3
+- accepted dependency step_009 review.md: 7c17949e3a8be360e6439d5e1faa11a08e887cd002cc49b32f8031e3cb0c585a
+
+Fail closed if any binding digest differs. Verify both dependency reviews bind sketch attempt 2, their exact Step IDs and current unit attempts 1 and 2 respectively, the matching dependency proof digests, and ACCEPTED status. Do not read or use global_proof.md, global_proof_review.md, or proof_history. The live review path is a stale sketch-attempt-1 artifact with SHA-256 93724e353a02a14f20dd68edbacece0e244e7dff327d4395f9e9144d69a90255; the controller has already archived that artifact byte-identically. It is not current evidence and must simply be overwritten by this review.
+
+The exact accepted step_010 target is one named complete affine-monic specialization wrapper. Its theorem-style conclusion itself, rather than dependency prose or Target-Step Assembly alone, must export the step_009 augmented tuple (F_0,F_1,...,F_d)=(theta^d,1,theta,...,theta^(d-1)); the original d-dimensional lower-coefficient vector and same-polynomial identity with deterministic leading coefficient one outside the random vector; q=M=m=0, Delta=N=d, and A=(2R)^d kappa; the exact derivative-shift matrix with only B_{0,d}=d and B_{k+1,k}=k for 1<=k<=d-1 nonzero, including d=1; the exact certificate (sum_{k=1}^d k^2)^(1/2); the measurable legal pivot split, exact chart formulas and coefficient insertions, common velocity cap V_d=d+R d(d-1)/2, all boundary conventions, and separate d=1 chart; and the ordinary-probability inequality
+
+Pr[exists theta in J: p_alpha(theta)=0] <= kappa (2R)^(d-1) (d+R d(d-1)/2) |J|
+
+for every arbitrary correlated full-joint lower-coefficient law and every bounded interval J. Dependencies must be exactly step_003 and step_009, and Assumption assump:cube-density-laws in dimension d must be the sole primitive theorem-facing condition. The complete wrapper must be a direct named authority for step_012 and must preserve R1 and R4 without loss.
+
+Audit all four submitted local units, with exactly one Per-Lemma Audit subsection for each of unit_001 through unit_004. Independently verify:
+
+- unit_001 proves the exact nonpivot cube volume, including lambda_0([-R,R]^0)=1=(2R)^0, and the disjoint-cell length ledger without a chart-count factor;
+- unit_002 legally instantiates the exact accepted step_003 indicator-dropped chart inequality on the original d-dimensional coefficient vector, uses the exact step_009 charts with zero residual, applies one full joint-density cap without independence or marginal/conditional density assumptions, and derives the literal positive-length coefficient;
+- unit_003 proves every zero-length case, including singleton intervals, from proper affine-hyperplane nullity under the same full joint density without a separate root theorem;
+- unit_004, Proposition~\ref{prop:step-010-complete-affine-monic-wrapper}, has a self-contained statement basis and statement-level conclusion that really re-exports every deterministic, chart, certificate, boundary, and probability clause required by the target;
+- the exact matrix orientation, coefficient indexing, beta dimension, d=1 and d=2 branches, theta=0 and theta=+/-1 assignment, negative outer theta, empty cells, arbitrary interval location, and deterministic leading coordinate are all correct;
+- the probability mode remains ordinary probability, the law permits arbitrary correlation, the interval quantifier is unchanged, and no confidence conversion, hidden constant, auxiliary tolerance, singular leading-coordinate law, T-dependent certificate, or extra coordinate appears;
+- each dependency and local result is restated in current notation with exact assumptions and discharge, every helper object has correct public-surface and constant provenance, and target-step assembly cites paper-ready named results rather than Step IDs or local-unit IDs as mathematical authority.
+
+Apply target-fidelity, dependency, assumption-provenance, local-unit, citation, notation-surface, explicit-rate, baseline-invariance, hidden-subclaim, boundary-case, adversarial, and target-assembly checks. A local defect under the unchanged accepted row is REVISE_STEP with target /proof-step step_010. A missing or wrong accepted row interface is REVISE_SKETCH with target /proof-sketch. A flaw localized to an accepted dependency is BLOCKED_BY_DEPENDENCY with the exact dependency producer target. ACCEPTED requires the exact complete wrapper to follow with no blocker. Do not repair anything yourself and do not write Retry Mode.
+
+Use the shared proof-step-review template. The review identity must record sketch attempt 2, Step ID step_010, unit attempt 1, and the reviewed proof artifact with exact SHA-256 d7b9a1cb7fc05eda80c58e08af140f9f56de0c7b2dfc38cf728efee8339e0823. Before returning, recheck all protected hashes, controlled fields, required headings, per-unit coverage, ASCII/control bytes, TeX delimiter/brace balance, Markdown table arity ignoring escaped pipes, and single-output-file scope. Report status, smallest retry target, reviewed proof hash, path, and final review SHA-256.

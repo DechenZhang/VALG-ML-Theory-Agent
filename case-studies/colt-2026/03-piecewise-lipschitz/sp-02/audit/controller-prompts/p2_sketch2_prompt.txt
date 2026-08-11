@@ -1,0 +1,25 @@
+You are the distinct perspective-scoped proof-sketch producer for perspective_2/idea_1, sketch attempt 2, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+First read <CODEX_SKILLS_ROOT>/proof-sketch/SKILL.md completely and every directly required shared contract/template it names. Then run /proof-sketch with controller Retry Mode revise_sketch.
+
+Binding current inputs:
+- idea.md: 5209aa21929e84604acb2712d8657460a48463901738fd00ebafaa84d5c43596
+- setting.md: 6955a2723694ff60af8d5d40329ff0ad056f9b54780ff02744d8985456222b7e
+- proof_tracker.md: 4aa2ee468fc9e1ee32fbec49274c5da097773d5f0e2f76bb0df33a530a9a114e
+- triggering step_012 proof.md: a896d3b8e59d6659c473081803d4a07b75988722e13f843907eb229b7f5e15eb
+- triggering step_012 review.md: 6aafb0b6f482dedd365d097bf2aeaaa278e0c6643c6b895c0d8728d71d0dfde3, Step-Review Status REVISE_SKETCH, Smallest Retry Target /proof-sketch
+- previous accepted attempt-1 proof_sketch.md: 8b5b22e5000e1c5641e2b5baf0c4d48244ce3389941b0cc9857b47510bbf6c93
+- previous accepted attempt-1 proof_sketch_review.md: 4288579fa3b8583b31faa2c220f5071879da72f06ac3a1dd3d1889cb1096cb7c
+- precise archive: perspective_2/idea_1/proof_history/sketch_001/proof_sketch/attempt_001/
+
+Preserve the formalized setting, exact full-progress theorem target, all rate objectives, probability modes, arbitrary-correlation scope, deterministic-leading-coefficient monic baseline, Counter-example 1 exact upper and lower scales, and every unaffected valid attempt-1 mechanism/source/interface. This is a target-preserving sketch/interface repair, not an idea change.
+
+Repair the controlling interface defect identified by the fresh step_012 review. In attempt 1, step_009 proves the exact monic presentation, augmented monomial derivative-shift matrix, certificate
+
+q=M=m=0, Delta=N=d, A=(2R)^d kappa, and Lambda_hat=(sum_{k=1}^d k^2)^(1/2),
+
+but the generated-output table sends that package only to step_010, while step_010 exports only the probability inequality to final step_012. The attempt-2 roadmap must expose a legal named producer-consumer path for the entire monic presentation/certificate package consumed by final assembly. Use the smallest exact repair supported by the same setting, such as adding an explicit current-notation wrapper/export to step_010 and its output interface or changing the direct dependency allocation; do not weaken or enlarge the theorem target. Ensure final assembly names every theorem-style producer it consumes, including the zero-certificate and radial-cancellation results, rather than treating bare step IDs as proof authority.
+
+Re-audit every stable step claim, dependency, generated-output flow, exported-interface feasibility row, mechanism witness, exact constant, baseline-invariance obligation, and boundary case. The roadmap may retain the same 12 stable Step IDs when that is the smallest repair, but every step under sketch attempt 2 will require a fresh proof and review. Do not claim attempt-1 step artifacts as accepted evidence under attempt 2. Prior same-step artifacts may be named only as diagnostic repair context when their claim and interfaces remain compatible; never consume proof_history as current evidence.
+
+Write perspective_2/idea_1/proof_sketch.md and update technical_survey.md only if the proof-sketch skill genuinely requires it. Do not edit setting.md, idea.md, proof_tracker.md, triggering review/proof artifacts, worker_log.md, global/step/assembly/final artifacts, or another branch. Before reporting, validate binding hashes, required headings, controlled fields, stable assumption IDs, Gate-related producer-side tables and row arity, ASCII/control bytes, balanced TeX delimiters/braces/environments, exact target preservation, and file scope. Report status, output paths, step count and dependency order, blockers, and final SHA-256 values.

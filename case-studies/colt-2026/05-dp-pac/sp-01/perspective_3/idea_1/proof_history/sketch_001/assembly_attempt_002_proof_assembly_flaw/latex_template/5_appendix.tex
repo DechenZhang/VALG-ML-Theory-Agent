@@ -1,0 +1,4766 @@
+\appendix
+
+\section{Proof Details}\label{sec:proof-details}
+
+\subsection{Exact class parameters}\label{app:step-001}
+We use the following explicit convention. A complete binary instance tree of depth \(D\) over a domain \(\mathcal X\) has an instance \(x_\sigma\in\mathcal X\) at every node \(\sigma\in\{0,1\}^{<D}\). A binary class \(H\subseteq\{0,1\}^{\mathcal X}\) shatters the tree if, for every \(b=(b_1,\ldots,b_D)\in\{0,1\}^D\), there is \(h_b\in H\) such that
+
+\[
+h_b(x_{b_{<r}})=b_r\qquad(1\le r\le D),
+\]
+
+where \(b_{<r}=(b_1,\ldots,b_{r-1})\). The Littlestone dimension is the largest shattered depth. This is the convention used throughout the proof; no tree/mistake equivalence is assumed without proof.
+
+\begin{lemma}[Distinct tagged cuts and exact cardinality]\label{lem:step-001-cardinality}
+Under the primitive tagged-threshold definitions with integers \(k\ge2\) and \(N\ge2\), the functions \(\tau_t\), \(t\in[N+1]\), are pairwise distinct, the parameterization \(\boldsymbol t\mapsto c_{\boldsymbol t}\) is injective, and
+
+\[
+\lvert C_{k,N}\rvert=(N+1)^k.
+\]
+\end{lemma}
+
+\begin{proof}
+If \(t<s\) in \([N+1]\), then \(t\le N\), so \(x=t\) is a valid point of \([N]\). At that point,
+
+\[
+\tau_t(t)=1,\qquad \tau_s(t)=0.
+\]
+
+Thus all \(N+1\) cuts are distinct. This comparison includes the endpoints: \(\tau_1\equiv1\) and \(\tau_{N+1}\equiv0\) on \([N]\), and they disagree at every point.
+
+If \(\boldsymbol t\ne\boldsymbol s\), choose a tag \(i\) for which \(t_i\ne s_i\). The preceding one-tag argument supplies an \(x\in[N]\) with \(\tau_{t_i}(x)\ne\tau_{s_i}(x)\), hence
+
+\[
+c_{\boldsymbol t}(i,x)\ne c_{\boldsymbol s}(i,x).
+\]
+
+The parameter map is therefore injective. It is surjective onto \(C_{k,N}\) by the class definition, and its domain has size \((N+1)^k\), proving the formula. \end{proof}
+
+\begin{lemma}[VC dimension of the tagged threshold product]\label{lem:step-001-vc}
+Under the primitive tagged-threshold definitions with integers \(k\ge2\) and \(N\ge2\),
+
+\[
+\operatorname{VC}(C_{k,N})=k.
+\]
+\end{lemma}
+
+\begin{proof}
+For the lower bound, consider
+
+\[
+S=\{(i,1):i\in[k]\}.
+\]
+
+Given arbitrary desired labels \(b_1,\ldots,b_k\in\{0,1\}\), set
+
+\[
+t_i=\begin{cases}
+1,&b_i=1,\\
+2,&b_i=0.
+\end{cases}
+\]
+
+Both choices lie in \([N+1]\) because \(N\ge2\), and \(\tau_{t_i}(1)=b_i\). Hence \(S\) is shattered and \(\operatorname{VC}(C_{k,N})\ge k\).
+
+For the upper bound, any set of \(k+1\) distinct points of \([k]\times[N]\) contains two points \((i,x)\) and \((i,y)\) on the same tag. Relabel them so that \(x<y\). For every threshold \(t_i\),
+
+\[
+\tau_{t_i}(x)=1\quad\Longrightarrow\quad x\ge t_i
+\quad\Longrightarrow\quad y\ge t_i
+\quad\Longrightarrow\quad \tau_{t_i}(y)=1.
+\]
+
+Thus the labeling \((1,0)\) on these two points cannot be realized by any member of \(C_{k,N}\). No \((k+1)\)-point set is shattered, so \(\operatorname{VC}(C_{k,N})\le k\). \end{proof}
+
+\begin{lemma}[Exact one-tag Littlestone dimension and halving budget]\label{lem:step-001-one-tag-ld}
+Under the primitive one-tag definition
+
+\[
+T_N=\{\tau_t:t\in[N+1]\}\subseteq\{0,1\}^{[N]},
+\]
+
+with \(N\ge2\), and Lemma~\ref{lem:step-001-cardinality}, define
+
+\[
+q=N+1,\qquad d_N=\lfloor\log_2 q\rfloor.
+\]
+
+Then \(T_N\) shatters a complete binary instance tree of depth \(d_N\), shatters no tree of depth greater than \(d_N\), and admits a deterministic online prediction rule that makes at most \(d_N\) mistakes on every finite labeled sequence realizable by \(T_N\). Consequently,
+
+\[
+\operatorname{LD}(T_N)=d_N.
+\]
+\end{lemma}
+
+\begin{proof}
+First, suppose \(T_N\) shatters a tree of depth \(D\). Choose one witnessing concept for each of the \(2^D\) root-to-leaf label sequences. Two different label sequences first diverge at some common node and prescribe opposite labels to the same queried point there. Their witnessing concepts must therefore be different. Lemma~\ref{lem:step-001-cardinality} gives exactly \(q\) distinct one-tag concepts, so
+
+\[
+2^D\le q,
+\]
+
+and hence \(D\le\lfloor\log_2q\rfloor=d_N\).
+
+For the matching lower bound, put \(m=2^{d_N}\), so \(m\le q=N+1\) and \(m-1\le N\). We construct a depth-\(d_N\) tree using only the thresholds \(t\in[m]\). At a node whose surviving threshold set is a consecutive interval
+
+\[
+I=\{a,a+1,\ldots,a+2^s-1\}
+\]
+
+of size \(2^s\), where \(s\ge1\), query
+
+\[
+x_I=a+2^{s-1}-1.
+\]
+
+This is a valid point of \([N]\): throughout the construction \(1\le x_I\le m-1\le N\). On the edge labeled \(1\), retain the lower half \(\{a,\ldots,x_I\}\); on the edge labeled \(0\), retain the upper half \(\{x_I+1,\ldots,a+2^s-1\}\). In the first case every retained threshold obeys \(t\le x_I\) and therefore \(\tau_t(x_I)=1\); in the second case every retained threshold obeys \(t>x_I\) and therefore \(\tau_t(x_I)=0\). Starting from \(I=[m]\), every root-to-leaf path leaves a singleton after exactly \(d_N\) splits, and that singleton threshold realizes every edge label on the path. The constructed tree is therefore shattered.
+
+It remains to record the online interface needed for the product upper bound. Maintain the version space \(V\subseteq T_N\) of concepts consistent with all previously revealed examples, starting from \(V=T_N\). At a query \(x\), predict a label having the larger number of concepts in
+
+\[
+V_y(x)=\{\tau\in V:\tau(x)=y\},\qquad y\in\{0,1\},
+\]
+
+with an arbitrary fixed tie rule. After the true label \(y\) is revealed, replace \(V\) by \(V_y(x)\). On a realizable sequence, the realizing threshold remains in \(V\), so \(V\) never becomes empty. Whenever the prediction is wrong, the surviving side has cardinality at most half the previous cardinality. If \(r\) mistakes occur, then
+
+\[
+1\le \lvert V\rvert\le q\,2^{-r},
+\]
+
+so \(2^r\le q\) and therefore \(r\le d_N\). This also covers the endpoint targets \(t=1\) and \(t=N+1\): each belongs to the initial version space and remains present whenever it is the realizing target. \end{proof}
+
+\begin{lemma}[Concatenated tagged trees give the product lower bound]\label{lem:step-001-product-lower}
+Under the primitive definition of \(C_{k,N}\), with \(k\ge2,N\ge2\), and the depth-\(d_N\) one-tag tree from Lemma~\ref{lem:step-001-one-tag-ld}, the product class shatters a complete tree of depth \(kd_N\). Hence
+
+\[
+\operatorname{LD}(C_{k,N})\ge kd_N.
+\]
+\end{lemma}
+
+\begin{proof}
+Attach a copy of the one-tag tree on tag \(1\) first. Below every leaf attach a copy on tag \(2\), and continue through tag \(k\). Equivalently, split any path label vector \(b\in\{0,1\}^{kd_N}\) into consecutive blocks
+
+\[
+b=(b^{(1)},\ldots,b^{(k)}),\qquad b^{(i)}\in\{0,1\}^{d_N}.
+\]
+
+During block \(i\), if the corresponding one-tag copy queries \(x\in[N]\), the product tree queries \((i,x)\). By Lemma~\ref{lem:step-001-one-tag-ld}, for each block \(b^{(i)}\) there is a threshold \(t_i\in[N+1]\) whose one-tag labels realize that entire block. Because the coordinates \(t_1,\ldots,t_k\) are independent in the defining parameter set \([N+1]^k\), the single product concept \(c_{(t_1,\ldots,t_k)}\) realizes all \(k\) blocks of the chosen path. Every length-\(kd_N\) path is therefore realized, proving the stated lower bound. \end{proof}
+
+\begin{lemma}[Summed per-tag realizable mistake budget]\label{lem:step-001-product-budget}
+Under the primitive definition of \(C_{k,N}\), with \(k\ge2,N\ge2\), and the one-tag online rule of Lemma~\ref{lem:step-001-one-tag-ld}, there is a deterministic online rule that makes at most \(kd_N\) mistakes on every finite sequence realizable by \(C_{k,N}\).
+\end{lemma}
+
+\begin{proof}
+Maintain \(k\) independent one-tag version spaces \(V_1,\ldots,V_k\), each initialized to \(T_N\). When the current instance is \((i,x)\), use the one-tag halving rule based only on \(V_i\), reveal the resulting prediction, and update only \(V_i\) after observing the label.
+
+If the full sequence is realized by \(c_{\boldsymbol t}\), then the subsequence on tag \(i\) is realized by \(\tau_{t_i}\). Lemma~\ref{lem:step-001-one-tag-ld} therefore bounds the number \(M_i\) of mistakes charged to tag \(i\) by \(d_N\). Each global mistake occurs on exactly one tag and is charged exactly once, so
+
+\[
+M_{\mathrm{total}}=\sum_{i=1}^k M_i
+\le\sum_{i=1}^k d_N
+=kd_N.
+\]
+
+There is no cross-tag condition to maintain: observations on tag \(i\) constrain only \(t_i\). The same argument includes \(k=2\) and includes any coordinate whose realizing threshold is either endpoint. \end{proof}
+
+\begin{lemma}[A realizable mistake budget upper-bounds Littlestone dimension]\label{lem:step-001-mistake-to-ld}
+Let \(H\subseteq\{0,1\}^{\mathcal X}\) be any binary class and let \(B\in\mathbb Z_{\ge0}\). If a deterministic online prediction rule makes at most \(B\) mistakes on every finite labeled sequence realizable by \(H\), then
+
+\[
+\operatorname{LD}(H)\le B.
+\]
+\end{lemma}
+
+\begin{proof}
+Suppose instead that \(H\) shatters a complete tree of depth \(B+1\). Starting at its root, present the instance at the current node to the rule. If the rule predicts \(p\in\{0,1\}\), reveal the label \(1-p\) and descend along that edge. Repeat for all \(B+1\) levels. By construction the rule makes a mistake at every level. By shattering, the resulting root-to-leaf labeled sequence is realized by some single member of \(H\). This is a realizable sequence with \(B+1\) mistakes, contradicting the assumed budget. \end{proof}
+
+\begin{proposition}[Exact Littlestone dimension of the tagged product]\label{prop:step-001-product-ld}
+Under the primitive tagged-threshold definitions with integers \(k\ge2,N\ge2\), and Lemmas~\ref{lem:step-001-product-lower}, \ref{lem:step-001-product-budget}, and \ref{lem:step-001-mistake-to-ld},
+
+\[
+\operatorname{LD}(C_{k,N})
+=k\lfloor\log_2(N+1)\rfloor.
+\]
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:step-001-product-lower} gives
+
+\[
+\operatorname{LD}(C_{k,N})\ge kd_N.
+\]
+
+Lemma~\ref{lem:step-001-product-budget} constructs a deterministic rule with realizable mistake budget \(kd_N\). Applying Lemma~\ref{lem:step-001-mistake-to-ld} with \(H=C_{k,N}\) and \(B=kd_N\) gives
+
+\[
+\operatorname{LD}(C_{k,N})\le kd_N.
+\]
+
+The bounds agree, and \(d_N=\lfloor\log_2(N+1)\rfloor\). \end{proof}
+
+Together, Lemmas~\ref{lem:step-001-cardinality} and
+\ref{lem:step-001-vc} and
+Proposition~\ref{prop:step-001-product-ld} establish all three exact
+structural identities used below, including both endpoint cuts.
+
+\subsection{The unrestricted one-block threshold lower bound}\label{app:step-002}
+For a randomized one-block learner
+$B:([N]\times\{0,1\})^M\to\{0,1\}^{[N]}$, write \emph{(W-PAC)} for
+\[
+\Pr_{\substack{S\sim(Q^{\tau_t})^M\\g\sim B(S)}}
+\left\{R_Q(g,\tau_t)\le\frac1{16}\right\}
+\ge\frac{15}{16}
+\quad\text{for every }(t,Q)\in\mathcal I_N,
+\]
+and write \emph{(W-LB)} for $M\ge b_*\log_2^*N$.  The external input is
+the unrestricted improper threshold theorem of
+\citet{AlonLivniMalliarisMoran2019}; all convention and parameter transport
+is proved here.
+\begin{lemma}[Fixed-constant form of the ALMM v3 threshold theorem]\label{lem:step-002-almm-constants}
+The threshold theorem of \citet[Theorem~1]{AlonLivniMalliarisMoran2019},
+together with its PAC and privacy definitions and the fixed constants in its
+proof, implies that there exist universal constants
+
+\[
+b_0>0,\qquad d_0>0,\qquad N_0\in\mathbb Z_{\ge2}
+\]
+
+such that, for every finite ordered real domain \(X\) with \(|X|=N\ge N_0\), every integer \(M\ge8\), and every possibly randomized, possibly improper threshold learner on \(X\) that is \((1/16,1/16)\)-accurate in the source PAC sense and
+
+\[
+\left(0.1,\frac{d_0}{M^2\log M}\right)
+\text{-differentially private},
+\]
+
+one has
+
+\[
+M\ge b_0\log_2^*N.
+\]
+\end{lemma}
+
+\begin{proof}
+The source theorem states
+
+\[
+M=\Omega(\log^*N)
+\quad\text{under}\quad
+\varepsilon=0.1,\qquad
+\delta=O\!\left(\frac1{M^2\log M}\right).
+\tag{S2.1}\label{eq:step-002-1}
+\]
+
+The constants in both asymptotic symbols are absolute: the theorem fixes the accuracy and privacy constants before quantifying over the domain and learner. This is also visible in the active proof. Its private homogeneous-set lemma uses the explicit empirical-size cap
+
+\[
+\delta\le \frac1{10^3m^2\log m},
+\tag{S2.2}\label{eq:step-002-2}
+\]
+
+and the source's constant-factor empirical reduction increases the original
+PAC sample size by at most the absolute factor nine while preserving accuracy
+and privacy.
+
+For completeness, the factor-nine change does not leave an unverified denominator. The function
+
+\[
+x\longmapsto \frac{\log x}{\log(9x)}
+\]
+
+is increasing for \(x>1\), because its derivative is
+
+\[
+\frac{\log 9}{x(\log(9x))^2}>0.
+\]
+
+Hence, for every \(M\ge8\),
+
+\[
+\frac{\log M}{\log(9M)}
+\ge \frac{\log8}{\log72}.
+\tag{S2.3}\label{eq:step-002-3}
+\]
+
+Choose \(d_0\) no larger than the fixed privacy constant represented by the
+\(O(\cdot)\) in \eqref{eq:step-002-1}, and shrink it further, if needed, so that
+
+\[
+0<d_0\le \frac{\log8}{81000\log72}\,.
+\tag{S2.4}\label{eq:step-002-4}
+\]
+
+Then it obeys
+
+\[
+\frac{d_0}{M^2\log M}
+\le
+\frac1{10^3(9M)^2\log(9M)}.
+\tag{S2.5}\label{eq:step-002-5}
+\]
+
+If the empirical reduction uses a size \(m\le9M\), then
+\(m^2\log m\le(9M)^2\log(9M)\), so \eqref{eq:step-002-5} also implies \eqref{eq:step-002-2} at that actual
+size. Thus the source proof exhibits a strictly positive universal privacy
+constant after its own constant-factor reduction; \eqref{eq:step-002-4} is only a conservative
+witness and is not claimed as a numerical constant printed in the theorem
+statement.
+
+Unpacking the \(\Omega\)-conclusion in \eqref{eq:step-002-1} gives an absolute lower-bound constant and a finite domain threshold. The source's unadorned iterated-log convention and the branch's base-two convention differ by at most an absolute additive number of iterations: for some universal \(K_{\rm base}\),
+
+\[
+\log^*_{\rm source}N
+\ge \log_2^*N-K_{\rm base}.
+\tag{S2.6}\label{eq:step-002-6}
+\]
+
+This is the standard fixed-base comparison: multiplying a logarithm by the fixed base-change constant can require only a fixed number of additional iterates before entering \((0,1]\). Increase the finite domain threshold so that
+
+\[
+\log_2^*N\ge2K_{\rm base}
+\]
+
+throughout the retained regime. Then \eqref{eq:step-002-6} is at least \(\frac12\log_2^*N\), and halving the source lower-bound constant gives a universal \(b_0>0\). Absorb every finite exceptional domain and every fixed source convention into one integer \(N_0\ge2\). This proves the displayed fixed-constant form for all \(M\ge8\). No value of \(b_0\) or \(N_0\) beyond existence is asserted. \end{proof}
+
+\begin{lemma}[Exact order, label, PAC, output, and adjacency transport]\label{lem:step-002-transport}
+Under the primitive one-block definitions with \(N\ge2\), and consistently with the endpoint/distinctness certificate in Lemma~\ref{lem:step-001-cardinality}, let
+
+\[
+B:([N]\times\{0,1\})^M\longrightarrow\{0,1\}^{[N]}
+\]
+
+be any randomized map. There is a rowwise bijective transport to a possibly randomized, unrestricted ALMM learner
+
+\[
+\widetilde B:(X\times\{-1,+1\})^M
+\longrightarrow\{-1,+1\}^{X}
+\]
+
+on an \(N\)-point ordered real set \(X\) such that:
+
+\begin{enumerate}
+\item All increasing thresholds, including the all-positive and all-negative
+endpoint restrictions, correspond to \(\{\tau_t:t\in[N+1]\}\).
+\item Every arbitrary output of \(B\) corresponds bijectively to an
+arbitrary output of \(\widetilde B\), with no properness or monotonicity.
+\item For every \(t,Q\), the labeled sample laws are exact i.i.d. products
+of the same fixed size \(M\), and population risks agree pointwise.
+\item Two input datasets differ in one labeled row by replacement before
+transport if and only if their images do so after transport.
+\item \emph{(W-PAC)} for every \(t,Q\) is exactly the source realizable-PAC
+premise for \(\widetilde B\).
+\end{enumerate}
+
+The same conclusions hold if a presentation of the source reverses the threshold orientation, after reversing the order or complementing all labels.
+\end{lemma}
+
+\begin{proof}
+Choose any increasing real sequence
+
+\[
+x_1<x_2<\cdots<x_N
+\]
+
+and put \(X=\{x_1,\ldots,x_N\}\). Let \(\phi:[N]\to X\) be the order bijection \(\phi(j)=x_j\), and let
+
+\[
+\lambda(-1)=0,\qquad \lambda(+1)=1.
+\]
+
+For the increasing source threshold with cut index \(t\), write
+
+\[
+s_t(x_j)=
+\begin{cases}
+-1,&j<t,\\
++1,&j\ge t.
+\end{cases}
+\]
+
+Then, for every \(j\in[N]\) and \(t\in[N+1]\),
+
+\[
+\lambda(s_t(\phi(j)))=\mathbf1\{j\ge t\}=\tau_t(j).
+\tag{S2.7}\label{eq:step-002-7}
+\]
+
+The endpoint \(t=1\) is all positive/all one, and \(t=N+1\) is all negative/all zero. They are restrictions of real half-line thresholds with the cut at or below \(x_1\), respectively above \(x_N\). Lemma~\ref{lem:step-001-cardinality} independently certifies that these are legal, distinct branch members. Even under a convention that lists only interior cut representatives, that source family is a subclass of the branch family, so a learner satisfying (W-PAC) still meets every source target requirement.
+
+Transport a source labeled row by
+
+\[
+(x_j,y)\longmapsto(j,\lambda(y)).
+\tag{S2.8}\label{eq:step-002-8}
+\]
+
+For a source sample \(S\), apply \eqref{eq:step-002-8} row by row to obtain \(S^{\flat}\), run \(B(S^{\flat})\), and define
+
+\[
+\widetilde B(S)(x_j)
+=\lambda^{-1}\!\left(B(S^{\flat})(j)\right).
+\tag{S2.9}\label{eq:step-002-9}
+\]
+
+Equation \eqref{eq:step-002-9} is defined for every branch output, including constant, oscillating, and nonmonotone functions. It transports the internal randomness unchanged and uses no projection onto the target class.
+
+Let \(Q\) be a probability law on \([N]\), and let \(\widetilde Q=\phi_{\#}Q\) be its pushforward to \(X\). For every deterministic branch output \(g\), with transported source output \(\widetilde g(x_j)=\lambda^{-1}(g(j))\), \eqref{eq:step-002-7} gives
+
+\[
+\begin{aligned}
+L_{\widetilde Q^{s_t}}(\widetilde g)
+&=\Pr_{J\sim Q}
+   [\widetilde g(x_J)\ne s_t(x_J)]\\
+&=\Pr_{J\sim Q}[g(J)\ne\tau_t(J)]\\
+&=R_Q(g,\tau_t).
+\end{aligned}
+\tag{S2.10}\label{eq:step-002-10}
+\]
+
+The row transport is deterministic and coordinatewise, so
+
+\[
+S\sim(\widetilde Q^{s_t})^M
+\quad\Longleftrightarrow\quad
+S^{\flat}\sim(Q^{\tau_t})^M.
+\tag{S2.11}\label{eq:step-002-11}
+\]
+
+There is no random or expected sample-size substitution. Every distribution on labeled source examples realizable by a threshold equals \(\widetilde Q^{s_t}\) for its feature marginal \(\widetilde Q\) and its realizing cut (up to changes on zero-mass points). Thus \eqref{eq:step-002-10}--\eqref{eq:step-002-11}, including the learner's unchanged randomness, identify (W-PAC) with the source PAC premise for every realizable threshold distribution.
+
+Finally, \eqref{eq:step-002-8} is a bijection on individual labeled rows and is applied without mixing row indices. Consequently two length-\(M\) samples are equal or differ at exactly one row before transport exactly when the corresponding samples are equal or differ at that same row afterward. Output relabeling in \eqref{eq:step-002-9} is bijective postprocessing. Hence the replacement-DP event inequalities are identical under the event bijection. The source's two-sided indistinguishability is equivalent to the branch's one-sided display quantified over all ordered adjacent pairs, because adjacency is symmetric.
+
+If a threshold convention uses positive labels below the cut, either replace \(\lambda\) by the complemented label bijection or replace \(\phi(j)\) by the order-reversing bijection \(x_{N+1-j}\). These are still rowwise bijections, so \eqref{eq:step-002-10}--\eqref{eq:step-002-11} and adjacency preservation remain exact. \end{proof}
+
+\begin{lemma}[Privacy monotonicity at the source cap]\label{lem:step-002-privacy-monotonicity}
+Under the fixed-size replacement convention, let \(M\ge8\), \(d_0>0\),
+\(0\le\varepsilon\le0.1\), and
+
+\[
+0\le\delta\le\frac{d_0}{M^2\log M}.
+\]
+
+If a randomized kernel is \((\varepsilon,\delta)\)-differentially private, then it is also
+
+\[
+\left(0.1,\frac{d_0}{M^2\log M}\right)
+\text{-differentially private}.
+\]
+
+This conclusion includes \(M=8\), \(\varepsilon<0.1\), \(\delta\) strictly below the cap, and \(\delta=0\).
+\end{lemma}
+
+\begin{proof}
+For adjacent datasets \(S,S'\) and every output event \(E\), privacy gives
+
+\[
+\Pr[B(S)\in E]
+\le e^{\varepsilon}\Pr[B(S')\in E]+\delta.
+\]
+
+Since the event probability is nonnegative, \(e^{\varepsilon}\le e^{0.1}\), and
+\(\delta\le d_0/(M^2\log M)\),
+
+\[
+\Pr[B(S)\in E]
+\le e^{0.1}\Pr[B(S')\in E]
+   +\frac{d_0}{M^2\log M}.
+\tag{S2.12}\label{eq:step-002-12}
+\]
+
+Swapping \(S,S'\) gives the reverse source inequality. There is one application of privacy at the same sample size; no group privacy, composition, subsampling, or adjacency conversion occurs. At \(M=8\), \(M^2\log M=64\log8>0\), so the cap in \eqref{eq:step-002-12} is finite and positive. Decreasing either privacy parameter only strengthens \eqref{eq:step-002-12}. \end{proof}
+
+\begin{proposition}[Current-notation unrestricted ALMM threshold wrapper]\label{prop:step-002-wrapper}
+Under Lemmas~\ref{lem:step-002-almm-constants},
+\ref{lem:step-002-transport}, and
+\ref{lem:step-002-privacy-monotonicity}, there are universal
+\(b_*,d_*>0\) and \(N_*\ge2\) such that, for every \(N\ge N_*\), integer \(M\ge8\),
+\(0\le\varepsilon\le0.1\), and
+\(0\le\delta\le d_*/(M^2\log M)\), every randomized unrestricted map
+
+\[
+B:([N]\times\{0,1\})^M\to\{0,1\}^{[N]}
+\]
+
+that is \((\varepsilon,\delta)\)-DP under one-row replacement and satisfies (W-PAC) for every \(t\in[N+1]\) and every law \(Q\) on \([N]\) must satisfy (W-LB):
+
+\[
+M\ge b_*\log_2^*N.
+\]
+\end{proposition}
+
+\begin{proof}
+Take
+
+\[
+b_*=b_0,\qquad d_*=d_0,\qquad N_*=N_0
+\]
+
+from Lemma~\ref{lem:step-002-almm-constants}. Lemma~\ref{lem:step-002-privacy-monotonicity} promotes the stated privacy guarantee to
+
+\[
+\left(0.1,\frac{d_0}{M^2\log M}\right)\text{-DP}.
+\]
+
+Apply the exact row/order/label transport of Lemma~\ref{lem:step-002-transport}. It produces a possibly randomized source learner whose output ranges over all \(\{\pm1\}\)-valued functions, whose input consists of exactly \(M\) iid labeled examples, whose loss is the identical population 0-1 risk, and whose adjacency/privacy guarantee is the identical one-entry replacement guarantee. By (W-PAC) and \eqref{eq:step-002-10}--\eqref{eq:step-002-11}, this transported learner is \((1/16,1/16)\)-accurate for every source threshold-realizable distribution. All hypotheses of Lemma~\ref{lem:step-002-almm-constants} are therefore discharged, so
+
+\[
+M\ge b_0\log_2^*N=b_*\log_2^*N.
+\]
+
+The proof does not select a hard instance and does not assert expected-risk hardness. Those are conclusions of later contrapositive and minimax steps, not outputs of this proposition. \end{proof}
+Lemmas~\ref{lem:step-002-almm-constants}--
+\ref{lem:step-002-privacy-monotonicity} yield
+Proposition~\ref{prop:step-002-wrapper}, the precise one-block implication
+used in the remainder of the proof.
+
+\subsection{A strict expected-loss hard instance}\label{app:step-003}
+\begin{lemma}[Expectation-to-PAC conversion at the ALMM constants]\label{lem:step-003-markov-bridge}
+Under the primitive one-block definitions, fix integers \(N\ge2\) and
+\(M\ge1\), and let
+
+\[
+B:([N]\times\{0,1\})^M\to\{0,1\}^{[N]}
+\]
+
+be any randomized unrestricted map. If, for every \(t\in[N+1]\) and every
+probability law \(Q\) on \([N]\),
+
+\[
+\mathbb E_{\substack{S\sim(Q^{\tau_t})^M\\g\sim B(S)}}
+  R_Q(g,\tau_t)
+\le 2^{-8},
+\tag{S3.1}\label{eq:step-003-1}
+\]
+
+then, for every such \(t,Q\),
+
+\[
+\Pr_{\substack{S\sim(Q^{\tau_t})^M\\g\sim B(S)}}
+  \left[R_Q(g,\tau_t)>\frac1{16}\right]
+\le\frac1{16}.
+\tag{S3.2}\label{eq:step-003-2}
+\]
+
+Thus \(B\) satisfies (W-PAC).
+\end{lemma}
+
+\begin{proof}
+Fix an arbitrary \(t\in[N+1]\) and arbitrary law \(Q\) on \([N]\), while
+keeping the same fixed sample size \(M\). Under the joint randomness of
+\(S\sim(Q^{\tau_t})^M\) and \(g\sim B(S)\), define the proof-local random
+variable
+
+\[
+Z_{t,Q}:=R_Q(g,\tau_t).
+\]
+
+For every realized output \(g\), population 0-1 risk is a probability, so
+
+\[
+0\le Z_{t,Q}\le1.
+\tag{S3.3}\label{eq:step-003-3}
+\]
+
+Apply Markov's inequality at the positive threshold \(1/16\). The strict
+failure event in (W-PAC) is contained in the weak-threshold event, hence
+
+\[
+\begin{aligned}
+\Pr\!\left(Z_{t,Q}>\frac1{16}\right)
+&\le \Pr\!\left(Z_{t,Q}\ge\frac1{16}\right)\\
+&\le 16\,\mathbb E Z_{t,Q}\\
+&\le 16\cdot2^{-8}\\
+&=2^{-4}
+=\frac1{16}.
+\end{aligned}
+\tag{S3.4}\label{eq:step-003-4}
+\]
+
+The final inequality remains valid when the expectation in \eqref{eq:step-003-1} equals
+\(2^{-8}\); no strict inequality has been inserted. Since \((t,Q)\) was
+arbitrary, \eqref{eq:step-003-4} holds simultaneously as a universally quantified statement
+for every fixed \((t,Q)\), which is exactly (W-PAC). Randomization and
+improperness of \(g\) do not affect \eqref{eq:step-003-3}. \end{proof}
+
+\begin{proposition}[Expected-loss hardness below the one-block threshold bound]\label{prop:step-003-expected-hardness}
+Let \(b_*,d_*>0\) and \(N_*\ge2\) be the constants supplied by
+Proposition~\ref{prop:step-002-wrapper}. Under that proposition and
+Lemma~\ref{lem:step-003-markov-bridge}, for every pair of integers
+\(N\ge N_*\), \(M\ge8\) satisfying
+
+\[
+M<b_*\log_2^*N,
+\]
+
+every randomized unrestricted map
+
+\[
+B:([N]\times\{0,1\})^M\to\{0,1\}^{[N]}
+\]
+
+that is
+\(\left(0.1,d_*/(M^2\log M)\right)\)-DP under one-row replacement admits
+some \(t\in[N+1]\) and some probability law \(Q\) on \([N]\) for which
+
+\[
+\mathbb E_{\substack{S\sim(Q^{\tau_t})^M\\g\sim B(S)}}
+  R_Q(g,\tau_t)
+>2^{-8}.
+\tag{S3.5}\label{eq:step-003-5}
+\]
+\end{proposition}
+
+\begin{proof}
+Fix \(N,M\) and an arbitrary randomized unrestricted \(B\) satisfying all
+the displayed hypotheses. Suppose \eqref{eq:step-003-5} were false. The exact logical
+negation of the existential strict inequality is
+
+\[
+\text{for every }t\in[N+1]\text{ and every law }Q\text{ on }[N],
+\qquad
+\mathbb E_{\substack{S\sim(Q^{\tau_t})^M\\g\sim B(S)}}
+  R_Q(g,\tau_t)
+\le2^{-8}.
+\tag{S3.6}\label{eq:step-003-6}
+\]
+
+Lemma~\ref{lem:step-003-markov-bridge} applies to the same map \(B\), the
+same exact sample size \(M\), and every fixed \((t,Q)\). It converts \eqref{eq:step-003-6} into
+(W-PAC), including the allowed equality
+\(\Pr(R_Q(g,\tau_t)>1/16)=1/16\).
+
+All remaining hypotheses of Proposition~\ref{prop:step-002-wrapper} now hold:
+\(N\ge N_*\), integer \(M\ge8\), the map is arbitrary and improper, and its
+privacy parameters equal the permitted endpoints
+
+\[
+\varepsilon=0.1,
+\qquad
+\delta=\frac{d_*}{M^2\log M}.
+\]
+
+The denominator is positive even at \(M=8\), since \(\log8>0\). The wrapper therefore yields
+
+\[
+M\ge b_*\log_2^*N,
+\]
+
+contradicting the strict hypothesis \(M<b_*\log_2^*N\). Hence \eqref{eq:step-003-6} is false,
+so a fixed pair \((t,Q)\) satisfying \eqref{eq:step-003-5} exists. The pair may depend on the
+fixed learner \(B\), because only worst-instance hardness is asserted here; no
+learner-independent prior or minimax conclusion is asserted. \end{proof}
+The Markov conversion in Lemma~\ref{lem:step-003-markov-bridge} and the
+contrapositive of Proposition~\ref{prop:step-002-wrapper} give
+Proposition~\ref{prop:step-003-expected-hardness} with strict gap
+$\eta=2^{-8}$.
+
+\subsection{A finite public minimax prior}\label{app:step-004}
+Let $b_*,d_*>0$ and $N_*\ge2$ be the constants from
+Proposition~\ref{prop:step-003-expected-hardness}, and set
+$\eta=2^{-8}$.  Throughout this subsection the scalar hard regime is
+explicitly
+\begin{equation}
+N\ge N_*,\qquad M\in\mathbb Z_{\ge8},\qquad
+M<b_*\log_2^*N.
+\tag{S4.H}\label{eq:step-004-hard-regime}
+\end{equation}
+For these fixed $N,M$, the interface to be constructed is one finite law
+$\mu_{N,M}$, selected before the learner, such that every randomized
+unrestricted one-block map
+$B:([N]\times\{0,1\})^M\to\{0,1\}^{[N]}$ satisfying the source privacy cap
+obeys the implication
+\begin{equation}
+\left[
+B\text{ is }\left(0.1,\frac{d_*}{M^2\log M}\right)\text{-DP}
+\right]
+\quad\Longrightarrow\quad
+\mathbb E_{(t,Q)\sim\mu_{N,M}}
+\mathbb E_{\substack{S\sim(Q^{\tau_t})^M\\g\sim B(S)}}
+R_Q(g,\tau_t)>\eta.
+\tag{S4.HP}\label{eq:step-004-hard-prior-interface}
+\end{equation}
+The quantifier order in \eqref{eq:step-004-hard-prior-interface} is
+$\exists\mu_{N,M}\ \forall B$.  The objects
+$\mathcal K_{N,M}$, $\mathcal I_N$, and their payoff are all finite
+dimensional, although $\mathcal I_N$ itself contains a continuum of
+distributions.
+\begin{lemma}[Exact compact polytope of source-private kernels]\label{lem:step-004-kernel-polytope}
+Under the primitive finite one-block definitions, let \(d_*>0\), fix
+integers \(N\ge2\), \(M\ge8\), and put
+\(\bar\delta_M=d_*/(M^2\log M)\). Define
+
+\[
+\mathcal S_{N,M}:=([N]\times\{0,1\})^M,
+\qquad
+\mathcal G_N:=\{0,1\}^{[N]},
+\qquad
+D:=|\mathcal S_{N,M}|\,|\mathcal G_N|=(2N)^M2^N.
+\]
+
+Let \(\mathcal K_{N,M}\subset\mathbb R^D\) consist of the arrays
+\(K=(K_{s,g})_{s\in\mathcal S_{N,M},g\in\mathcal G_N}\) satisfying
+
+\[
+K_{s,g}\ge0,
+\qquad
+\sum_{g\in\mathcal G_N}K_{s,g}=1
+\quad(s\in\mathcal S_{N,M}),
+\tag{S4.6}\label{eq:step-004-6}
+\]
+
+and, for every \emph{ordered} adjacent pair \(s\simeq s'\) and every event
+\(E\subseteq\mathcal G_N\),
+
+\[
+\sum_{g\in E}K_{s,g}
+\le
+e^{0.1}\sum_{g\in E}K_{s',g}+\bar\delta_M.
+\tag{S4.7}\label{eq:step-004-7}
+\]
+
+Then \(\mathcal K_{N,M}\) is a nonempty compact convex polytope, and its
+points are in exact bijection with the output kernels of randomized
+unrestricted \((0.1,\bar\delta_M)\)-DP maps
+\(B:\mathcal S_{N,M}\to\mathcal G_N\).
+\end{lemma}
+
+\begin{proof}
+Both \(\mathcal S_{N,M}\) and \(\mathcal G_N\) are finite. Consequently,
+\eqref{eq:step-004-6} is a finite family of linear equalities and inequalities. Although the
+all-event privacy family is large, it is also finite: there are finitely many
+ordered adjacent pairs and exactly \(2^{|\mathcal G_N|}\) subsets of the
+finite output space. Thus \eqref{eq:step-004-7} is the \emph{exact} all-event approximate-DP
+definition expressed as finitely many closed affine halfspaces. In
+particular, no invalid replacement of all-event privacy by singleton-only
+constraints is made.
+
+The product of row simplexes defined by \eqref{eq:step-004-6} is closed and bounded in
+\(\mathbb R^D\), hence compact. Intersecting it with the finitely many closed
+halfspaces \eqref{eq:step-004-7} leaves a compact set. All constraints are affine, so the
+intersection is convex and is a polytope.
+
+For nonemptiness, fix any \(g_0\in\mathcal G_N\) and set
+
+\[
+K^0_{s,g}:=\mathbf 1\{g=g_0\}
+\quad\text{for every }s,g.
+\]
+
+The output distribution is identical for \(s\) and \(s'\). Hence it is
+\((0,0)\)-DP and satisfies \eqref{eq:step-004-7}, including the events containing \(g_0\) and
+those not containing it. Thus \(K^0\in\mathcal K_{N,M}\).
+
+If \(B\) is any randomized map, define
+\(K_{s,g}=\Pr[B(s)=g]\). Row-stochasticity is \eqref{eq:step-004-6}, and its all-event DP
+inequality is exactly \eqref{eq:step-004-7}, so a source-private \(B\) gives a point of
+\(\mathcal K_{N,M}\). Conversely, given \(K\in\mathcal K_{N,M}\), on input
+\(s\) draw \(g\) from the finite row distribution \((K_{s,g})_g\). This
+defines a randomized unrestricted map \(B_K\), and \eqref{eq:step-004-7} proves its exact
+source-cap privacy for every event. The full set \(\mathcal G_N\) includes
+every improper, nonmonotone hypothesis.
+
+Only the output law on each input matters to both privacy and the one-call
+expected loss. Therefore arbitrary internal randomization is encoded without
+loss. Also, if a public object is hardwired into a learner's code, the
+resulting map still has one such finite kernel and belongs to
+\(\mathcal K_{N,M}\) whenever it satisfies source privacy. If a map is
+\((\varepsilon,\delta)\)-DP with
+\(0\le\varepsilon\le0.1\) and \(0\le\delta\le\bar\delta_M\), its event
+inequality is at most the right side of \eqref{eq:step-004-7}, so its kernel also belongs to
+\(\mathcal K_{N,M}\). Thus the polytope includes the exact cap and every
+stronger privacy pair below it. \end{proof}
+
+\begin{lemma}[Continuous payoff geometry and uniform strict game value]\label{lem:step-004-payoff-value}
+Under Lemma~\ref{lem:step-004-kernel-polytope} and Proposition~\ref{prop:step-003-expected-hardness}, fix integers
+\(N,M\) satisfying \eqref{eq:step-004-hard-regime}. Give \([N+1]\) the discrete
+topology and \(\Delta([N])\) its Euclidean simplex topology, and set
+\(\mathcal I_N=[N+1]\times\Delta([N])\). Then:
+
+\begin{enumerate}
+\item \(\mathcal I_N\) is compact.
+\item The expected one-block loss \(\ell_{N,M}(K;t,Q)\) admits the finite
+   coefficient representation
+   \[
+   \ell_{N,M}(K;t,Q)=\langle K,a_{N,M}(t,Q)\rangle.
+   \]
+   It is affine and
+   continuous in \(K\), and jointly continuous in \((K,t,Q)\). For fixed
+   \(K,t\), its dependence on \(Q\) is generally polynomial of degree at
+   most \(M+1\), so only continuity, not affinity in \((t,Q)\), is claimed.
+\item The function
+   \[
+   f_{N,M}(K):=\max_{(t,Q)\in\mathcal I_N}
+      \ell_{N,M}(K;t,Q)
+   \]
+   is continuous on \(\mathcal K_{N,M}\), and the attained value
+   \[
+   v_{N,M}:=\min_{K\in\mathcal K_{N,M}}f_{N,M}(K)
+   \tag{S4.8}\label{eq:step-004-8}
+   \]
+   satisfies \(v_{N,M}>\eta\).
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+The simplex \(\Delta([N])\) is closed and bounded in \(\mathbb R^N\), and
+\([N+1]\) is finite. Their product \(\mathcal I_N\) is compact. This includes
+every boundary face and every point mass of the simplex.
+
+Write an arbitrary labeled dataset as
+
+\[
+s=((x_1,y_1),\ldots,(x_M,y_M))\in\mathcal S_{N,M}.
+\]
+
+For \((t,Q)\in\mathcal I_N\) and \(g\in\mathcal G_N\), define
+
+\[
+p_{t,Q}(s)
+:=\left(\prod_{j=1}^M Q(x_j)\right)
+  \mathbf 1\{y_j=\tau_t(x_j)\text{ for every }j\},
+\tag{S4.9}\label{eq:step-004-9}
+\]
+
+and
+
+\[
+r_{t,Q}(g)
+:=R_Q(g,\tau_t)
+=\sum_{x=1}^N Q(x)\mathbf 1\{g(x)\ne\tau_t(x)\}.
+\tag{S4.10}\label{eq:step-004-10}
+\]
+
+Thus \(p_{t,Q}\) is exactly the mass function of
+\((Q^{\tau_t})^M\), including zero mass on every label-inconsistent
+dataset. Define the coefficient vector \(a_{N,M}(t,Q)\in\mathbb R^D\) by
+
+\[
+a_{N,M}(t,Q)_{s,g}:=p_{t,Q}(s)r_{t,Q}(g).
+\tag{S4.11}\label{eq:step-004-11}
+\]
+
+For the learner represented by \(K\), direct expansion of the sample and
+output expectations gives
+
+\[
+\begin{aligned}
+\ell_{N,M}(K;t,Q)
+&:=\mathbb E_{\substack{S\sim(Q^{\tau_t})^M\\g\sim B_K(S)}}
+       R_Q(g,\tau_t)\\
+&=\sum_{s\in\mathcal S_{N,M}}p_{t,Q}(s)
+  \sum_{g\in\mathcal G_N}K_{s,g}r_{t,Q}(g)\\
+&=\sum_{s,g}K_{s,g}a_{N,M}(t,Q)_{s,g}
+=\langle K,a_{N,M}(t,Q)\rangle.
+\end{aligned}
+\tag{S4.12}\label{eq:step-004-12}
+\]
+
+For fixed \(t\), every coordinate in \eqref{eq:step-004-11} is a polynomial in the coordinates
+of \(Q\): \eqref{eq:step-004-9} has degree \(M\) and \eqref{eq:step-004-10} has degree one. Hence
+\(a_{N,M}\) is continuous on each simplex copy and therefore on the finite
+disjoint union \(\mathcal I_N\). Equation \eqref{eq:step-004-12} is linear, hence affine and
+continuous, in \(K\), and is jointly continuous in \((K,t,Q)\). The product
+structure in \eqref{eq:step-004-9} is precisely why no affine dependence on raw \(Q\) is
+asserted or needed.
+
+The compact coefficient image
+\(a_{N,M}(\mathcal I_N)\) is bounded. Therefore, for any
+\(K,K'\in\mathcal K_{N,M}\),
+
+\[
+\begin{aligned}
+|f_{N,M}(K)-f_{N,M}(K')|
+&\le
+\max_{(t,Q)\in\mathcal I_N}
+  |\langle K-K',a_{N,M}(t,Q)\rangle|\\
+&\le \|K-K'\|_2
+\max_{(t,Q)\in\mathcal I_N}\|a_{N,M}(t,Q)\|_2.
+\end{aligned}
+\tag{S4.13}\label{eq:step-004-13}
+\]
+
+Thus \(f_{N,M}\) is continuous. Its inner maximum is attained because
+\(\mathcal I_N\) is compact, and its minimum in \eqref{eq:step-004-8} is attained because
+\(\mathcal K_{N,M}\) is compact.
+
+Now fix any \(K\in\mathcal K_{N,M}\). By
+Lemma~\ref{lem:step-004-kernel-polytope}, \(K\) defines an arbitrary
+randomized unrestricted source-private map \(B_K\).  Proposition
+\ref{prop:step-003-expected-hardness} therefore supplies some
+\((t,Q)\in\mathcal I_N\) such that
+\[
+\ell_{N,M}(K;t,Q)>\eta.
+\]
+Hence
+
+\[
+f_{N,M}(K)>\eta
+\quad\text{for every }K\in\mathcal K_{N,M}.
+\tag{S4.14}\label{eq:step-004-14}
+\]
+
+Let \(K_*\) attain the minimum in \eqref{eq:step-004-8}. Applying \eqref{eq:step-004-14} to this actual
+minimizer, rather than taking an unattained infimum, yields
+
+\[
+v_{N,M}=f_{N,M}(K_*)>\eta.
+\tag{S4.15}\label{eq:step-004-15}
+\]
+
+This is the required compactness upgrade from learner-by-learner strict
+hardness to one uniform strict game value. \end{proof}
+
+\begin{lemma}[Finite-dimensional strong separation]\label{lem:step-004-strong-separation}
+Let $A\subset\mathbb R^m$ be nonempty, compact, and convex, and let
+$D\subset\mathbb R^m$ be nonempty, closed, and convex.  If
+$A\cap D=\varnothing$, then there are a nonzero
+$\lambda\in\mathbb R^m$ and $c\in\mathbb R$ such that, after orienting
+$\lambda$ toward $A$,
+\[
+\sup_{z\in D}\langle\lambda,z\rangle
+<c<
+\inf_{u\in A}\langle\lambda,u\rangle.
+\]
+\end{lemma}
+
+\begin{proof}
+The Euclidean distance between $A$ and $D$ is positive.  Indeed, otherwise
+there would be $a_j\in A$ and $z_j\in D$ with
+$\lVert a_j-z_j\rVert_2\to0$; compactness gives a subsequence
+$a_j\to a_0\in A$, hence $z_j\to a_0$, and closedness would put
+$a_0\in D$.  The distance is attained at some
+$(a_0,z_0)\in A\times D$: a minimizing sequence in $A$ has a convergent
+subsequence, and the corresponding points of $D$ are bounded and therefore
+have a convergent subsequence whose limit lies in $D$.
+
+Put $\lambda=a_0-z_0\ne0$.  For every $a\in A$, convexity permits the
+segment $a_0+t(a-a_0)$, and minimality at $t=0$ gives
+\[
+\langle\lambda,a-a_0\rangle\ge0.
+\]
+Likewise, for every $z\in D$, the segment $z_0+t(z-z_0)$ and minimality
+give
+\[
+\langle\lambda,z-z_0\rangle\le0.
+\]
+Consequently
+\[
+\sup_{z\in D}\langle\lambda,z\rangle
+\le\langle\lambda,z_0\rangle
+<\langle\lambda,a_0\rangle
+\le\inf_{a\in A}\langle\lambda,a\rangle,
+\]
+where the strict gap is
+$\langle\lambda,a_0-z_0\rangle=\lVert\lambda\rVert_2^2>0$.
+Any scalar strictly between the middle two quantities is a valid $c$.
+\end{proof}
+
+\begin{lemma}[Compact bilinear minimax via finite-dimensional separation]\label{lem:step-004-compact-minimax}
+Let \(X\) and \(Y\) be nonempty compact convex subsets of finite-dimensional
+real vector spaces, and let \(p:X\times Y\to\mathbb R\) be continuous and
+affine in each argument (in particular, a restricted bilinear pairing).
+Then both outer extrema below are attained and
+
+\[
+\min_{x\in X}\max_{y\in Y}p(x,y)
+=
+\max_{y\in Y}\min_{x\in X}p(x,y).
+\tag{S4.16}\label{eq:step-004-16}
+\]
+\end{lemma}
+
+\begin{proof}
+Continuity on the compact product implies that
+\(x\mapsto\max_{y\in Y}p(x,y)\) is continuous; for example, uniform
+continuity of \(p\) bounds the change of the maximum by the same uniform
+modulus. Hence
+
+\[
+\alpha:=\min_{x\in X}\max_{y\in Y}p(x,y)
+\]
+
+is attained. The elementary weak minimax inequality gives
+
+\[
+\max_{y\in Y}\min_{x\in X}p(x,y)\le\alpha.
+\tag{S4.17}\label{eq:step-004-17}
+\]
+
+We prove the reverse inequality by separation. Fix any real \(r<\alpha\).
+For each \(x\in X\), compactness of \(Y\) supplies some \(y_x\in Y\) with
+\(p(x,y_x)>r\). Continuity in \(x\) gives a neighborhood on which this same
+strict inequality holds. Compactness of \(X\) yields a finite subcover, so
+there are \(y_1,\ldots,y_m\in Y\) such that
+
+\[
+\max_{1\le j\le m}p(x,y_j)>r
+\quad\text{for every }x\in X.
+\tag{S4.18}\label{eq:step-004-18}
+\]
+
+Define the affine continuous map
+
+\[
+F:X\to\mathbb R^m,
+\qquad
+F(x)=(p(x,y_1),\ldots,p(x,y_m)),
+\]
+
+and the closed convex lower orthant
+
+\[
+\mathcal D_r:=(-\infty,r]^m.
+\]
+
+The image \(F(X)\) is compact and convex.  Equation
+\eqref{eq:step-004-18} says that
+\[
+F(X)\cap\mathcal D_r=\varnothing.
+\]
+Applying
+Lemma~\ref{lem:step-004-strong-separation} provides a nonzero
+\(\lambda\in\mathbb R^m\) oriented so that
+
+\[
+\sup_{z\in\mathcal D_r}\langle\lambda,z\rangle
+<
+\inf_{x\in X}\langle\lambda,F(x)\rangle.
+\tag{S4.19}\label{eq:step-004-19}
+\]
+
+Every coordinate of \(\lambda\) must be nonnegative: if
+\(\lambda_j<0\), sending the \(j\)-th coordinate of \(z\in\mathcal D_r\)
+to \(-\infty\) makes the left side of \eqref{eq:step-004-19} infinite. Normalize the nonzero
+nonnegative vector so that \(\sum_j\lambda_j=1\). Then the left side of
+\eqref{eq:step-004-19} is exactly \(r\), attained at \((r,\ldots,r)\), and hence
+
+\[
+\inf_{x\in X}\sum_{j=1}^m\lambda_jp(x,y_j)>r.
+\tag{S4.20}\label{eq:step-004-20}
+\]
+
+Convexity of \(Y\) puts \(y_r:=\sum_j\lambda_jy_j\) in \(Y\), while
+affinity in the second argument turns \eqref{eq:step-004-20} into
+
+\[
+\min_{x\in X}p(x,y_r)>r.
+\tag{S4.21}\label{eq:step-004-21}
+\]
+
+Choose \(r_q\uparrow\alpha\). Compactness of \(Y\) gives a convergent
+subsequence \(y_{r_q}\to y_*\in Y\). For every fixed \(x\in X\), \eqref{eq:step-004-21} and
+continuity give
+
+\[
+p(x,y_*)=\lim_q p(x,y_{r_q})\ge\lim_q r_q=\alpha.
+\]
+
+Thus \(\min_xp(x,y_*)\ge\alpha\). Together with \eqref{eq:step-004-17}, this proves \eqref{eq:step-004-16} and
+shows that the right-hand maximum is attained at \(y_*\). \end{proof}
+
+\begin{lemma}[Compact coefficient hull and exact finite barycenters]\label{lem:step-004-finite-barycenter}
+Let \(I\) be a nonempty compact space and let \(a:I\to\mathbb R^D\) be
+continuous. Then
+
+\[
+\mathcal C:=\operatorname{conv}(a(I))
+\]
+
+is compact and convex. Moreover, every \(c\in\mathcal C\) has an exact
+representation
+
+\[
+c=\sum_{j=1}^r\lambda_j a(i_j),
+\qquad
+1\le r\le D+1,
+\quad
+\lambda_j\ge0,
+\quad
+\sum_{j=1}^r\lambda_j=1,
+\tag{S4.22}\label{eq:step-004-22}
+\]
+
+with \(i_j\in I\). Consequently, for every \(K\in\mathbb R^D\),
+
+\[
+\langle K,c\rangle
+=\sum_{j=1}^r\lambda_j\langle K,a(i_j)\rangle
+\tag{S4.23}\label{eq:step-004-23}
+\]
+
+exactly.
+\end{lemma}
+
+\begin{proof}
+Convexity is immediate from the definition. For the support bound, start
+from any finite convex representation
+\(c=\sum_{j=1}^q\lambda_ja(i_j)\), which exists by the definition of convex
+hull, and first remove every zero-weight term. Thus all remaining
+\(\lambda_j>0\). If \(q>D+1\), the points
+\(a(i_1),\ldots,a(i_q)\) are affinely dependent. Hence there are scalars
+\(\theta_j\), not all zero, such that
+
+\[
+\sum_{j=1}^q\theta_j=0,
+\qquad
+\sum_{j=1}^q\theta_ja(i_j)=0.
+\tag{S4.24}\label{eq:step-004-24}
+\]
+
+After changing all signs if needed, at least one \(\theta_j>0\). Put
+
+\[
+\rho:=\min_{j:\theta_j>0}\frac{\lambda_j}{\theta_j}.
+\]
+
+Then \(\lambda'_j=\lambda_j-\rho\theta_j\) are nonnegative, sum to one,
+represent the same \(c\) by \eqref{eq:step-004-24}, and at least one formerly positive
+coefficient becomes zero. Removing zero coefficients and iterating gives
+\eqref{eq:step-004-22}. This is the affine-dependence proof of Caratheodory's theorem.
+
+The representation bound also proves compactness. Pad every representation
+to exactly \(D+1\) terms using zero weights. Then \(\mathcal C\) is the
+image of the compact set
+
+\[
+\Delta([D+1])\times I^{D+1}
+\]
+
+under the continuous map
+\((\lambda,i_1,\ldots,i_{D+1})\mapsto
+\sum_j\lambda_ja(i_j)\). Thus \(\mathcal C\) is compact. Equation \eqref{eq:step-004-23}
+follows from bilinearity of the Euclidean pairing and introduces no
+approximation. \end{proof}
+
+\begin{proposition}[Finite public hard prior for source-private one-block kernels]\label{prop:step-004-finite-hard-prior}
+Let \(b_*,d_*>0\) and \(N_*\ge2\) be the constants supplied by Proposition~\ref{prop:step-003-expected-hardness}. Under that proposition and
+Lemmas~\ref{lem:step-004-kernel-polytope}--\ref{lem:step-004-finite-barycenter},
+for every pair of integers \(N,M\) satisfying
+\eqref{eq:step-004-hard-regime}, there
+is a probability law \(\mu_{N,M}\) supported on at most
+
+\[
+D+1=(2N)^M2^N+1
+\tag{S4.25}\label{eq:step-004-25}
+\]
+
+pairs in \([N+1]\times\Delta([N])\) such that every randomized unrestricted
+\((0.1,d_*/(M^2\log M))\)-DP one-block learner
+$B:([N]\times\{0,1\})^M\to\{0,1\}^{[N]}$ satisfies
+\[
+\mathbb E_{(t,Q)\sim\mu_{N,M}}
+\mathbb E_{\substack{S\sim(Q^{\tau_t})^M\\g\sim B(S)}}
+R_Q(g,\tau_t)>\eta=2^{-8}.
+\]
+The prior is selected independently of the learner and may be revealed to it.
+\end{proposition}
+
+\begin{proof}
+Use the coefficient map in \eqref{eq:step-004-11} and define
+
+\[
+\mathcal A_{N,M}:=a_{N,M}(\mathcal I_N),
+\qquad
+\mathcal C_{N,M}:=\operatorname{conv}(\mathcal A_{N,M}).
+\]
+
+Lemma~\ref{lem:step-004-finite-barycenter} makes
+\(\mathcal C_{N,M}\) a nonempty compact convex subset of \(\mathbb R^D\).
+For every fixed \(K\), linearity of the pairing gives
+
+\[
+\max_{c\in\mathcal C_{N,M}}\langle K,c\rangle
+=
+\max_{a\in\mathcal A_{N,M}}\langle K,a\rangle
+=f_{N,M}(K).
+\tag{S4.26}\label{eq:step-004-26}
+\]
+
+Indeed, a convex combination cannot exceed the largest paired coefficient,
+and \(\mathcal A_{N,M}\subseteq\mathcal C_{N,M}\) gives the reverse
+inequality.
+
+Apply Lemma~\ref{lem:step-004-compact-minimax} with
+
+\[
+X=\mathcal K_{N,M},
+\qquad
+Y=\mathcal C_{N,M},
+\qquad
+p(K,c)=\langle K,c\rangle.
+\]
+
+The first set is nonempty compact convex by
+Lemma~\ref{lem:step-004-kernel-polytope}; the second is nonempty compact
+convex by Lemma~\ref{lem:step-004-finite-barycenter}; and the payoff is
+continuous bilinear. Thus all hypotheses of the separation-based minimax
+theorem are discharged. Equations \eqref{eq:step-004-8}, \eqref{eq:step-004-15}, and \eqref{eq:step-004-26} yield the exact
+quantifier swap
+
+\[
+\begin{aligned}
+v_{N,M}
+&=\min_{K\in\mathcal K_{N,M}}
+  \max_{c\in\mathcal C_{N,M}}\langle K,c\rangle\\
+&=\max_{c\in\mathcal C_{N,M}}
+  \min_{K\in\mathcal K_{N,M}}\langle K,c\rangle
+>\eta.
+\end{aligned}
+\tag{S4.27}\label{eq:step-004-27}
+\]
+
+Let \(c_*\in\mathcal C_{N,M}\) attain the maximum in \eqref{eq:step-004-27}. By
+Lemma~\ref{lem:step-004-finite-barycenter}, there are
+\(r\le D+1\), pairs \((t_j,Q_j)\in\mathcal I_N\), and nonnegative weights
+\(\lambda_j\) summing to one such that
+
+\[
+c_*=\sum_{j=1}^r\lambda_j a_{N,M}(t_j,Q_j).
+\tag{S4.28}\label{eq:step-004-28}
+\]
+
+Remove zero weights and merge repeated pairs, and define the finite law
+
+\[
+\mu_{N,M}:=\sum_{j=1}^r\lambda_j\,\delta_{(t_j,Q_j)}.
+\tag{S4.29}\label{eq:step-004-29}
+\]
+
+For every \(K\in\mathcal K_{N,M}\), equations \eqref{eq:step-004-12}, \eqref{eq:step-004-27}, and \eqref{eq:step-004-28} give
+
+\[
+\begin{aligned}
+\mathbb E_{(t,Q)\sim\mu_{N,M}}\ell_{N,M}(K;t,Q)
+&=\sum_{j=1}^r\lambda_j
+  \langle K,a_{N,M}(t_j,Q_j)\rangle\\
+&=\langle K,c_*\rangle\\
+&\ge\min_{K'\in\mathcal K_{N,M}}\langle K',c_*\rangle\\
+&=v_{N,M}>\eta.
+\end{aligned}
+\tag{S4.30}\label{eq:step-004-30}
+\]
+
+The first equality is the exact finite-prior expectation, not an
+approximation to a continuum. Lemma~\ref{lem:step-004-kernel-polytope}
+identifies every source-private randomized unrestricted \(B\) with one such
+\(K\), so \eqref{eq:step-004-30} is precisely the hard-prior inequality in
+the proposition and in \eqref{eq:step-004-hard-prior-interface}.
+
+The construction of \(\mu_{N,M}\) uses the whole fixed strategy set
+\(\mathcal K_{N,M}\), not any selected learner. Once \eqref{eq:step-004-29} is fixed and made
+public, a learner whose program refers to \eqref{eq:step-004-29} still induces some kernel
+\(K\in\mathcal K_{N,M}\) if it is source-private; \eqref{eq:step-004-30} was proved for every
+such kernel after the prior was fixed. Hence prior awareness does not change
+the quantifier order.
+
+Finally, no interiority was used. The compact instance space contains
+\(t=1,N+1\), every boundary distribution, and every point-mass \(Q\).
+Equations \eqref{eq:step-004-9}--\eqref{eq:step-004-12} remain polynomial and exact when some \(Q(x)=0\).
+Different thresholds that agree on the support of a point mass may give
+duplicate coefficient vectors, but duplicates neither invalidate the convex
+hull nor change \eqref{eq:step-004-30}. \end{proof}
+The compact-kernel and separation arguments culminate in
+Proposition~\ref{prop:step-004-finite-hard-prior}: one finite law is chosen
+before the universal private-kernel quantifier, and it gives a strict
+prior-averaged loss gap for every such kernel.
+
+\subsection{Candidate and simulator calibration}\label{app:step-005}
+Fix the constants from Proposition~\ref{prop:step-002-wrapper} and set
+\begin{equation}
+a=\frac{b_*}{16},
+\qquad c_\delta=d_*,
+\qquad \varepsilon_0=0.1,
+\qquad \alpha_0=\beta_0=2^{-13}.
+\tag{S5.C1}\label{eq:calibration}
+\end{equation}
+For local formulas write $L_N=\log_2^*N$ and $M=m_{n,k}$.
+\begin{lemma}[Universal calibration and fixed log-star threshold]\label{lem:step-005-calibration}
+Under the universal constants \(b_*,d_*>0\) and
+\(N_*\in\mathbb Z_{\ge2}\) supplied by Proposition~\ref{prop:step-002-wrapper}, define
+
+\[
+q_*:=\left\lceil\frac{16}{b_*}\right\rceil,
+\qquad
+N_0:=\max\left\{N_*,\operatorname{Tow}_2(q_*)\right\},
+\tag{S5.1}\label{eq:step-005-1}
+\]
+
+and choose the constants in \eqref{eq:calibration}. Then
+
+\[
+a,c_\delta,\varepsilon_0>0,\qquad
+\alpha_0,\beta_0\in(0,1/2),qquad
+N_0\in\mathbb Z_{\ge2},
+\]
+
+all choices are universal and independent of \(k,N,n,\varepsilon,\delta\),
+and every \(N\ge N_0\) satisfies
+
+\[
+N\ge N_*,
+\qquad
+b_*\log_2^*N\ge16.
+\tag{S5.2}\label{eq:step-005-2}
+\]
+
+In particular, \eqref{eq:step-005-2} holds at the boundary \(N=N_0\).
+\end{lemma}
+
+\begin{proof}
+Because \(b_*>0\), \(q_*\) is an integer at least one and
+
+\[
+q_*\ge\frac{16}{b_*}.
+\tag{S5.3}\label{eq:step-005-3}
+\]
+
+The tower convention gives
+
+\[
+\log_2^*\operatorname{Tow}_2(q)=q
+\qquad(q\in\mathbb Z_{\ge1}).
+\tag{S5.4}\label{eq:step-005-4}
+\]
+
+Indeed, the claim is immediate for \(q=1\), since
+\(\operatorname{Tow}_2(1)=2\). If it holds at \(q\), then the first
+base-two logarithm of
+\(\operatorname{Tow}_2(q+1)=2^{\operatorname{Tow}_2(q)}\) is
+\(\operatorname{Tow}_2(q)\), so exactly one further iteration is needed.
+
+More directly for the comparison needed here, if
+\(N\ge\operatorname{Tow}_2(q_*)\), then for every
+\(0\le j<q_*\), monotonicity of the iterated base-two logarithm on the
+positive range traversed here gives
+
+\[
+\log_2^{(j)}N
+\ge
+\log_2^{(j)}\operatorname{Tow}_2(q_*)
+>1.
+\]
+
+Hence \(L_N=\log_2^*N\ge q_*\). Combining this with \eqref{eq:step-005-3} yields
+
+\[
+b_*L_N\ge b_*q_*\ge16.
+\tag{S5.5}\label{eq:step-005-5}
+\]
+
+Definition \eqref{eq:step-005-1} also gives \(N\ge N_*\), including when \(N=N_0\).
+The remaining assertions follow from the positivity of
+\(b_*,d_*\), the exact choices
+\(a=b_*/16\), \(c_\delta=d_*\), \(\varepsilon_0=0.1\), and
+\(2^{-13}\in(0,1/2)\). Since \(b_*,d_*,N_*\) are universal by
+Proposition~\ref{prop:step-002-wrapper},
+so are \(q_*\), \(N_0\), and every constant in
+\eqref{eq:calibration}. \end{proof}
+
+\begin{lemma}[Strict domination of the exact simulated budget]\label{lem:step-005-budget}
+Under Assumption~\ref{assump:candidate-regime} and
+Lemma~\ref{lem:step-005-calibration}, if
+
+\[
+n<akL_N
+\qquad\text{with}\qquad a=\frac{b_*}{16},
+\]
+
+then the exact setting-defined budget
+
+\[
+M=\max\left\{8,\left\lceil\frac{4n}{k}\right\rceil\right\}
+\]
+
+is an integer satisfying
+
+\[
+8\le M<b_*L_N.
+\tag{S5.6}\label{eq:step-005-6}
+\]
+
+This remains strict when the maximum is attained by the floor-eight
+branch, when \(4n/k\) is an integer, and at \(N=N_0\).
+\end{lemma}
+
+\begin{proof}
+The contradiction hypothesis and \(k>0\) give the strict inequality
+
+\[
+\frac{4n}{k}
+<4aL_N
+=\frac14 b_*L_N.
+\tag{S5.7}\label{eq:step-005-7}
+\]
+
+For every real \(x\), including integral \(x\),
+\(\lceil x\rceil<x+1\). By \eqref{eq:step-005-5}, \(1\le b_*L_N/16\). Therefore
+
+\[
+\begin{aligned}
+\left\lceil\frac{4n}{k}\right\rceil
+&<\frac{4n}{k}+1\\
+&<\frac14b_*L_N+1\\
+&\le\frac{5}{16}b_*L_N\\
+&<b_*L_N.
+\end{aligned}
+\tag{S5.8}\label{eq:step-005-8}
+\]
+
+The fixed lower branch is also strictly below the source threshold:
+
+\[
+8<16\le b_*L_N.
+\tag{S5.9}\label{eq:step-005-9}
+\]
+
+Both entries of the maximum are strictly below \(b_*L_N\), so their
+maximum is strictly below it. Since both entries are integers and the first
+is 8, \(M\in\mathbb Z_{\ge8}\), proving \eqref{eq:step-005-6}.
+
+At the requested smallest tuple \((n,k)=(1,2)\),
+
+\[
+\left\lceil\frac{4n}{k}\right\rceil=\lceil2\rceil=2,
+\qquad M=8.
+\]
+
+Whenever the local contradiction hypothesis holds, \eqref{eq:step-005-9} proves the strict
+hard-regime inequality for this tuple as well. At \(N=N_0\), \eqref{eq:step-005-5} still
+holds, so no asymptotic or strictly-larger-domain exception is being used.
+\end{proof}
+
+\begin{lemma}[Candidate-conjunction preservation and strict source privacy cap]\label{lem:step-005-privacy-cap}
+Under Assumption~\ref{assump:candidate-regime}, with
+\(\varepsilon_0=0.1\), \(0<c_\delta\le d_*\), and the exact
+\(M=m_{n,k}\ge8\), one has simultaneously
+
+\[
+0<\varepsilon\le0.1,
+\tag{S5.10}\label{eq:step-005-10}
+\]
+
+\[
+0<\delta\le\frac{1}{n\log(n+1)},
+\tag{S5.11}\label{eq:step-005-11}
+\]
+
+\[
+0<\delta\le\frac{c_\delta}{M^2\log(M+1)}
+<\frac{d_*}{M^2\log M}.
+\tag{S5.12}\label{eq:step-005-12}
+\]
+
+Thus both original \(\delta\)-conjuncts are retained, while the second
+strictly implies the source cap.
+\end{lemma}
+
+\begin{proof}
+Equation \eqref{eq:step-005-10} is the candidate \(\varepsilon\)-condition with the fixed
+choice \(\varepsilon_0=0.1\). Since an upper bound by a minimum is an upper
+bound by each entry, the candidate \(\delta\)-condition gives \eqref{eq:step-005-11} and the
+first inequality in \eqref{eq:step-005-12} separately. Their denominators are well-defined
+and positive: \(n\ge1\) gives \(\log(n+1)\ge\log2>0\), while \(M\ge8\)
+gives
+
+\[
+\log(M+1)>\log M\ge\log8>0.
+\tag{S5.13}\label{eq:step-005-13}
+\]
+
+The first inequality in \eqref{eq:step-005-13} is strict because the natural logarithm is
+strictly increasing and \(M+1>M\). Taking positive reciprocals reverses
+that strict comparison. Using \(0<c_\delta\le d_*\),
+
+\[
+\frac{c_\delta}{M^2\log(M+1)}
+<\frac{c_\delta}{M^2\log M}
+\le\frac{d_*}{M^2\log M},
+\tag{S5.14}\label{eq:step-005-14}
+\]
+
+which proves the strict part of \eqref{eq:step-005-12}. Notice that \eqref{eq:step-005-11} was not used to
+derive \eqref{eq:step-005-14} and has not been replaced by it.
+
+At the exact floor boundary \(M=8\), \eqref{eq:step-005-12} reads
+
+\[
+0<\delta\le\frac{c_\delta}{64\log9}
+<\frac{d_*}{64\log8}.
+\tag{S5.15}\label{eq:step-005-15}
+\]
+
+At \((n,k)=(1,2)\), where Lemma~\ref{lem:step-005-budget} computes
+\(M=8\), the full primitive conjunction is explicitly
+
+\[
+0<\delta\le\frac1{\log2}
+\quad\text{and}\quad
+0<\delta\le\frac{c_\delta}{64\log9},
+\]
+
+and \eqref{eq:step-005-15} supplies the source cap. \end{proof}
+
+\begin{proposition}[Hard-regime and candidate-parameter certificate]\label{prop:step-005-certificate}
+Under Assumption~\ref{assump:candidate-regime}, Proposition~\ref{prop:step-002-wrapper}, and the local contradiction
+hypothesis \(n<ak\log_2^*N\), the universal choices in
+\eqref{eq:calibration} and \eqref{eq:step-005-1} imply
+the following complete certificate.  The exact \(M=m_{n,k}\) satisfies
+
+\[
+N\ge N_*,
+\qquad 8\le M<b_*\log_2^*N,
+\qquad 0<\varepsilon\le0.1,
+\]
+
+\[
+0<\delta\le\frac1{n\log(n+1)},
+\qquad
+0<\delta\le\frac{c_\delta}{M^2\log(M+1)}
+<\frac{d_*}{M^2\log M}.
+\]
+
+The conclusion includes \(N=N_0\), \(M=8\), and, when the contradiction
+hypothesis is active, \((n,k)=(1,2)\).
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:step-005-calibration} fixes the universal theorem constants
+once and for all and gives \(N\ge N_*\) and \(b_*L_N\ge16\), including at
+\(N=N_0\). Lemma~\ref{lem:step-005-budget} applies the local contradiction
+hypothesis to the exact ceiling-and-maximum definition of \(M\), proving
+\(M\in\mathbb Z_{\ge8}\) and the strict inequality \(M<b_*L_N\).
+Lemma~\ref{lem:step-005-privacy-cap} gives \(0<\varepsilon\le0.1\), keeps
+both candidate-$\delta$ inequalities, and proves the stronger strict
+source-cap membership \(0<\delta<d_*/(M^2\log M)\).
+The explicit boundary computations \eqref{eq:step-005-9} and \eqref{eq:step-005-15}, together with the
+\((n,k)=(1,2)\) calculation after \eqref{eq:step-005-9}, prove the stated boundary clauses.
+\end{proof}
+Proposition~\ref{prop:step-005-certificate} therefore retains both
+candidate-$\delta$ conditions while placing the same exact integer $M$ in
+the strict one-block hard regime under the negated target bound.
+
+\subsection{Pointwise PAC expectation control}\label{app:step-006}
+\begin{lemma}[Every fixed product vector is a realizable instance]\label{lem:step-006-fixed-product-realizable}
+Under the basic setting definitions, fix integers \(k\ge2\), \(N\ge2\)
+and a deterministic vector
+
+\[
+\bigl((t_i,Q_i)\bigr)_{i=1}^k
+\in\bigl([N+1]\times\Delta([N])\bigr)^k.
+\]
+
+Then
+
+\[
+P_{\boldsymbol Q}(i,x):=\frac1kQ_i(x)
+\qquad((i,x)\in X_{k,N})
+\]
+
+is a probability distribution on \(X_{k,N}\),
+\(\boldsymbol t=(t_1,\ldots,t_k)\in[N+1]^k\) defines
+\(c_{\boldsymbol t}\in C_{k,N}\), and
+\(P_{\boldsymbol Q}^{c_{\boldsymbol t}}\) is the fixed realizable
+labeled law generated by \(P_{\boldsymbol Q}\) and that concept. These
+conclusions also hold when any \(t_i\in\{1,N+1\}\), when any \(Q_i\) is
+a point mass, or, more generally, when any \(Q_i\) lies on a boundary face
+of \(\Delta([N])\).
+\end{lemma}
+
+\begin{proof}
+For every \((i,x)\), nonnegativity of \(Q_i(x)\) gives
+\(P_{\boldsymbol Q}(i,x)\ge0\). Since each \(Q_i\) is a probability
+distribution on \([N]\),
+
+\[
+\sum_{(i,x)\in X_{k,N}}P_{\boldsymbol Q}(i,x)
+=\frac1k\sum_{i=1}^k\sum_{x=1}^NQ_i(x)
+=\frac1k\sum_{i=1}^k1
+=1.
+\tag{S6.1}\label{eq:step-006-1}
+\]
+
+Thus \(P_{\boldsymbol Q}\) is a fixed probability distribution on the
+exact domain \(X_{k,N}\). Each fixed \(t_i\) belongs to \([N+1]\), so
+the displayed class definition gives
+
+\[
+c_{\boldsymbol t}(i,x)=\tau_{t_i}(x)
+=\mathbf 1\{x\ge t_i\}.
+\tag{S6.2}\label{eq:step-006-2}
+\]
+
+Thus the function \(c_{\boldsymbol t}\), rather than its scalar value in
+\eqref{eq:step-006-2}, belongs to \(C_{k,N}\).
+
+Drawing \(Z\sim P_{\boldsymbol Q}\) and assigning the deterministic label
+\(c_{\boldsymbol t}(Z)\) is, by definition, the labeled law
+\(P_{\boldsymbol Q}^{c_{\boldsymbol t}}\). Hence it is realizable by a
+member of \(C_{k,N}\).
+
+No interior-support property was used in \eqref{eq:step-006-1} or \eqref{eq:step-006-2}. If \(Q_i\) is a point
+mass or has zero coordinates, its coordinates remain nonnegative and sum to
+one. If \(t_i=1\), then \(\tau_{t_i}\equiv1\) on \([N]\); if
+\(t_i=N+1\), then \(\tau_{t_i}\equiv0\). Both endpoint concepts belong
+to the displayed class. Nonuniqueness of two thresholds on the support of a
+degenerate \(Q_i\) is irrelevant: the fixed parameter
+\(\boldsymbol t\) still specifies one legal concept and therefore one
+fixed realizable labeled law. \end{proof}
+
+\begin{proposition}[Pointwise PAC-to-expectation conversion]\label{prop:step-006-pointwise-pac-expectation}
+Under Assumption~\ref{assump:distribution-free-realizable-pac}, Lemma~\ref{lem:step-005-calibration}, and
+Lemma~\ref{lem:step-006-fixed-product-realizable}, let
+\(((t_i,Q_i))_{i=1}^k\in\mathcal I_N^k\) be any fixed deterministic
+vector. For the exact fixed instance
+\((P_{\boldsymbol Q},c_{\boldsymbol t})\), exact iid sample size \(n\),
+and arbitrary randomized output \(A(S)\in\mathcal H_{k,N}\),
+
+\[
+\begin{aligned}
+&\mathbb E_{\substack{S\sim
+  (P_{\boldsymbol Q}^{c_{\boldsymbol t}})^n\\ A}}
+  R_{P_{\boldsymbol Q}}\bigl(A(S),c_{\boldsymbol t}\bigr)\\
+&\qquad\le
+  \alpha_0(1-\beta_0)+\beta_0
+  \le\alpha_0+\beta_0
+  =2^{-12}.
+\end{aligned}
+\tag{S6.3}\label{eq:step-006-3}
+\]
+
+The quantifier over the fixed vector precedes both the sample/learner
+expectation in \eqref{eq:step-006-3} and any later analysis-side prior average.
+\end{proposition}
+
+\begin{proof}
+Fix the vector. By
+Lemma~\ref{lem:step-006-fixed-product-realizable},
+\(P_{\boldsymbol Q}\) is a fixed distribution and
+\(c_{\boldsymbol t}\in C_{k,N}\) realizes its labels. Therefore the
+universal distribution-free PAC premise applies directly to this same
+fixed pair. Define the proof-local random variable
+
+\[
+\mathcal R
+:=R_{P_{\boldsymbol Q}}\bigl(A(S),c_{\boldsymbol t}\bigr),
+\]
+
+where the only randomness is
+\(S\sim(P_{\boldsymbol Q}^{c_{\boldsymbol t}})^n\) and the internal
+randomness of \(A\). Population 0-1 risk is a probability of disagreement,
+so for every possible sample and every possible output hypothesis,
+
+\[
+0\le\mathcal R\le1.
+\tag{S6.4}\label{eq:step-006-4}
+\]
+
+This bound uses no properness or monotonicity: it holds for every
+\(A(S)\in\{0,1\}^{X_{k,N}}\).
+
+Let
+
+\[
+G:=\{\mathcal R\le\alpha_0\},
+\qquad p:=\Pr(G^{\mathsf c}).
+\]
+
+Assumption~\ref{assump:distribution-free-realizable-pac} gives
+\(p\le\beta_0\), and \(1-\alpha_0>0\) because
+\(\alpha_0\in(0,1/2)\). Splitting the expectation over the success and
+failure events and using \eqref{eq:step-006-4},
+
+\[
+\begin{aligned}
+\mathbb E\mathcal R
+&=\mathbb E[\mathcal R\mathbf 1_G]
+  +\mathbb E[\mathcal R\mathbf 1_{G^{\mathsf c}}]\\
+&\le \alpha_0\Pr(G)+\Pr(G^{\mathsf c})\\
+&=\alpha_0(1-p)+p\\
+&=\alpha_0+(1-\alpha_0)p\\
+&\le\alpha_0+(1-\alpha_0)\beta_0\\
+&=\alpha_0(1-\beta_0)+\beta_0\\
+&\le\alpha_0+\beta_0.
+\end{aligned}
+\tag{S6.5}\label{eq:step-006-5}
+\]
+
+Lemma~\ref{lem:step-005-calibration} fixes
+\(\alpha_0=\beta_0=2^{-13}\), so
+
+\[
+\alpha_0+\beta_0=2^{-13}+2^{-13}=2^{-12}.
+\tag{S6.6}\label{eq:step-006-6}
+\]
+
+Equations \eqref{eq:step-006-5}--\eqref{eq:step-006-6} prove \eqref{eq:step-006-3}. Because the vector was fixed before invoking
+the PAC premise, the proof remains valid for every deterministic vector,
+including all endpoint-threshold and degenerate-distribution cases covered
+by Lemma~\ref{lem:step-006-fixed-product-realizable}. \end{proof}
+Lemma~\ref{lem:step-006-fixed-product-realizable} applies at every fixed
+product vector, including endpoints and degenerate block laws.  The
+success/failure split in
+Proposition~\ref{prop:step-006-pointwise-pac-expectation} then gives the
+pointwise expectation ceiling $2^{-12}$ before any prior averaging.
+
+\begin{proof}[Assembly of the pointwise and finite-prior consequences]
+For every deterministic vector
+\[
+((t_i,Q_i))_{i=1}^k\in\mathcal I_N^k,
+\]
+first fix that vector and hence
+fix $P_{\boldsymbol Q}$ and $c_{\boldsymbol t}$.  Lemma~\ref{lem:step-006-fixed-product-realizable}
+discharges realizability, and
+Proposition~\ref{prop:step-006-pointwise-pac-expectation} then gives
+\begin{equation}
+\mathbb E_{\substack{S\sim
+(P_{\boldsymbol Q}^{c_{\boldsymbol t}})^n\\A}}
+R_{P_{\boldsymbol Q}}(A(S),c_{\boldsymbol t})\le2^{-12}.
+\tag{S6.7}\label{eq:step-006-7}
+\end{equation}
+The universal quantifier over the deterministic vector precedes the sample
+and learner expectation in \eqref{eq:step-006-7}.
+
+Only after this pointwise statement is established do we use the finite law
+from Proposition~\ref{prop:step-004-finite-hard-prior}.  Finite averaging
+of \eqref{eq:step-006-7} under
+$\mu_{N,M}^{\otimes k}$ gives
+\begin{equation}
+\mathbb E_{((t_i,Q_i))_{i=1}^k\sim\mu_{N,M}^{\otimes k}}
+\left[
+\mathbb E_{\substack{S\sim
+(P_{\boldsymbol Q}^{c_{\boldsymbol t}})^n\\A}}
+R_{P_{\boldsymbol Q}}(A(S),c_{\boldsymbol t})
+\right]
+\le2^{-12}.
+\tag{S6.8}\label{eq:step-006-8}
+\end{equation}
+Thus \eqref{eq:step-006-8} is a consequence of the fixed-vector PAC
+argument, not an application of the PAC premise to a prior mixture.
+\end{proof}
+
+\subsection{Block restriction and exact risk}\label{app:step-007}
+\begin{lemma}[Legality of arbitrary block restriction]\label{lem:step-007-restriction-legality}
+Under the tagged-domain and output-space definitions in
+Sections~\ref{sec:setup}--\ref{sec:preliminaries}, if
+\(h\in\mathcal H_{k,N}\) and \(j\in[k]\), then the map
+\(D_jh:[N]\to\{0,1\}\) defined by \((D_jh)(x)=h(j,x)\) belongs to the full
+one-block improper output space \(\{0,1\}^{[N]}\). No monotonicity or
+threshold-representation condition on \(h\) or \(D_jh\) is required.
+\end{lemma}
+
+\begin{proof}
+Fix arbitrary \(h\in\mathcal H_{k,N}\), \(j\in[k]\), and \(x\in[N]\).
+Then \((j,x)\in X_{k,N}\). Because
+\(h\in\{0,1\}^{X_{k,N}}\), its value \(h(j,x)\) lies in \(\{0,1\}\).
+Consequently \(x\mapsto h(j,x)\) is a binary-valued function on all of
+\([N]\), hence an element of \(\{0,1\}^{[N]}\).
+
+An improper learner of the threshold targets \(\{\tau_t:t\in[N+1]\}\)
+may output any element of this full binary-function space. Thus legality
+does not require \(D_jh\) to equal any threshold \(\tau_s\), and the argument
+applies unchanged to constant, oscillating, or otherwise nonmonotone \(h\).
+\end{proof}
+
+\begin{proposition}[Exact restriction-risk identity]\label{prop:step-007-risk-identity}
+Under the primitive threshold and population 0-1 risk definitions and
+Lemma~\ref{lem:step-007-restriction-legality}, if
+\(h\in\mathcal H_{k,N}\), \(j\in[k]\), and
+\((\boldsymbol t,\boldsymbol Q)=((t_i,Q_i))_{i=1}^k\) has
+\(t_i\in[N+1]\) and each \(Q_i\) a probability distribution on \([N]\),
+then
+
+\[
+  \Pr_{Y\sim Q_j}\!\left[(D_jh)(Y)\ne\tau_{t_j}(Y)\right]
+  =e_j(h;\boldsymbol t,\boldsymbol Q).
+\]
+
+This equality remains valid for \(t_j=1\), for \(t_j=N+1\), and for every
+degenerate or non-full-support \(Q_j\).
+\end{proposition}
+
+\begin{proof}
+For every \(x\in[N]\), the restriction definition and the target definition
+give the pointwise identity
+
+\[
+  \mathbf1\!\left\{(D_jh)(x)\ne\tau_{t_j}(x)\right\}
+  =\mathbf1\!\left\{h(j,x)\ne\tau_{t_j}(x)\right\}
+  =\mathbf1\!\left\{h(j,x)\ne c_{\boldsymbol t}(j,x)\right\}.
+\]
+
+Taking the finite \(Q_j\)-weighted sum of this pointwise equality yields
+
+\[
+\begin{aligned}
+  \Pr_{Y\sim Q_j}\!\left[(D_jh)(Y)\ne\tau_{t_j}(Y)\right]
+  &=\sum_{x\in[N]}Q_j(x)
+       \mathbf1\!\left\{(D_jh)(x)\ne\tau_{t_j}(x)\right\}\\
+  &=\sum_{x\in[N]}Q_j(x)
+       \mathbf1\!\left\{h(j,x)\ne c_{\boldsymbol t}(j,x)\right\}\\
+  &=e_j(h;\boldsymbol t,\boldsymbol Q).
+\end{aligned}
+\]
+
+There is no inequality or approximation in this calculation. When
+\(t_j=1\), the target is the all-one function; when \(t_j=N+1\), it is the
+all-zero function. The same pointwise equality still holds. If \(Q_j\) is a
+point mass, or has zero mass on part of \([N]\), the finite weighted sum
+simply discards the zero-mass coordinates and remains exact.
+
+Finally, let \(J\) be any \([k]\)-valued random variable and let \(H\) be any
+random element of \(\mathcal H_{k,N}\), with arbitrary dependence between
+them. Lemma~\ref{lem:step-007-restriction-legality} and the displayed risk
+identity apply separately to every realization \((J,H)=(j,h)\). Therefore
+\(D_JH\) is almost surely a legal improper one-block output and
+
+\[
+  \sum_{x\in[N]}Q_J(x)
+    \mathbf1\!\left\{(D_JH)(x)\ne\tau_{t_J}(x)\right\}
+  =e_J(H;\boldsymbol t,\boldsymbol Q)
+\]
+
+holds pathwise. No independence, learner symmetry, or monotonicity premise
+is used. \end{proof}
+The restriction is legal for every improper output, and
+Proposition~\ref{prop:step-007-risk-identity} identifies its one-block risk
+exactly, with no projection or residual.
+
+\subsection{The ideal hidden-coordinate experiment}\label{app:step-008}
+Fix a finite public law $\mu_{N,M}$ and an arbitrary randomized learner
+$A$.  Draw $J\sim\operatorname{Unif}[k]$.  Conditional on every $J=j$,
+draw $\Xi_i=(T_i,Q_i)$ independently from $\mu_{N,M}$ for all $i\in[k]$;
+then draw independent uniform tags $I_1,\ldots,I_n$, features
+$X_\ell\sim Q_{I_\ell}$ conditionally independently, labels
+$Y_\ell=\tau_{T_{I_\ell}}(X_\ell)$, and finally
+$H=A(S^{\mathrm{id}})$ for
+$S^{\mathrm{id}}=(((I_\ell,X_\ell),Y_\ell))_{\ell=1}^n$.
+The conclusions to be proved are
+\begin{align}
+\boldsymbol\Xi&\sim\mu_{N,M}^{\otimes k},
+&J&\perp\!\!\!\perp\boldsymbol\Xi,
+\tag{S8.2}\label{eq:ideal-instance-law}\\
+\mathcal L(S^{\mathrm{id}}\mid\boldsymbol\Xi)
+&=(P_{\boldsymbol Q}^{c_{\boldsymbol T}})^n,
+\tag{S8.3}\label{eq:ideal-sample-law}\\
+\mathbb E e_J(H;\boldsymbol T,\boldsymbol Q)
+&=\mathbb E R_{P_{\boldsymbol Q}}(H,c_{\boldsymbol T}).
+\tag{S8.4}\label{eq:ideal-risk-identity}
+\end{align}
+\begin{lemma}[Hidden-coordinate instance factorization]\label{lem:step-008-instance-factorization}
+Under Proposition~\ref{prop:step-004-finite-hard-prior} and the
+ideal experiment above, if \(J\sim\operatorname{Unif}[k]\) and, conditional
+on each \(J=j\), the coordinate instances
+\(\Xi_1,\ldots,\Xi_k\) are mutually independent with their common law
+\(\mu_{N,M}\), then
+
+\[
+\mathcal L(\boldsymbol\Xi\mid J=j)=\mu_{N,M}^{\otimes k}
+\quad\text{for every }j\in[k],
+\tag{S8.5}\label{eq:step-008-5}
+\]
+
+and consequently \eqref{eq:ideal-instance-law} holds. This remains true when \(\mu_{N,M}\) has
+singleton support or repeated coordinate draws occur.
+\end{lemma}
+
+\begin{proof}
+Let \(\mathcal Z=\operatorname{supp}(\mu_{N,M})\), which is a nonempty
+finite set because Proposition~\ref{prop:step-004-finite-hard-prior}
+supplies a finitely supported
+probability law. For every \(j\in[k]\) and
+\(\boldsymbol\xi=(\xi_1,\ldots,\xi_k)\in\mathcal Z^k\), the specified
+conditional independence gives
+
+\[
+\begin{aligned}
+\Pr\{J=j,\boldsymbol\Xi=\boldsymbol\xi\}
+&=\Pr\{J=j\}
+  \Pr\{\boldsymbol\Xi=\boldsymbol\xi\mid J=j\}\\
+&=\frac1k\prod_{i=1}^k\mu_{N,M}(\{\xi_i\}).
+\end{aligned}
+\tag{S8.6}\label{eq:step-008-6}
+\]
+
+The product on the right does not depend on \(j\). Summing \eqref{eq:step-008-6} over
+\(j\) gives
+
+\[
+\Pr\{\boldsymbol\Xi=\boldsymbol\xi\}
+=\prod_{i=1}^k\mu_{N,M}(\{\xi_i\}),
+\]
+
+which is the product law in \eqref{eq:ideal-instance-law}. Equation \eqref{eq:step-008-6} then factors as
+
+\[
+\Pr\{J=j,\boldsymbol\Xi=\boldsymbol\xi\}
+=\Pr\{J=j\}\Pr\{\boldsymbol\Xi=\boldsymbol\xi\},
+\]
+
+proving independence. If the prior has singleton support, all coordinates
+are the same deterministic pair almost surely, but the same factorization
+still proves both the product law and independence from \(J\). Calling one
+coordinate hidden therefore creates no selection bias. \end{proof}
+
+\begin{lemma}[Conditional i.i.d. tagged-product sample law]\label{lem:step-008-ideal-sample-law}
+Under the primitive tagged-product definitions and
+Lemma~\ref{lem:step-008-instance-factorization}, suppose that after
+\((J,\boldsymbol\Xi)\) is generated, the tags
+\(I_1,\ldots,I_n\) are drawn independently from
+\(\operatorname{Unif}[k]\), independently of the preceding variables;
+conditional on \((\boldsymbol\Xi,I_1,\ldots,I_n)\), the features are
+independent with \(X_\ell\sim Q_{I_\ell}\); and
+\(Y_\ell=\tau_{T_{I_\ell}}(X_\ell)\). Then for every realized
+\(\boldsymbol\xi=((t_i,Q_i))_{i=1}^k\in\mathcal Z^k\) and every
+\(j\in[k]\),
+
+\[
+\mathcal L\!\left(S^{\mathrm{id}}\mid
+  \boldsymbol\Xi=\boldsymbol\xi,J=j\right)
+=\left(P_{\boldsymbol Q}^{c_{\boldsymbol t}}\right)^n.
+\tag{S8.7}\label{eq:step-008-7}
+\]
+
+In particular, the conditional row kernel is independent of \(j\), and \eqref{eq:ideal-sample-law}
+holds.
+\end{lemma}
+
+\begin{proof}
+Fix \(\boldsymbol\xi=((t_i,Q_i))_{i=1}^k\) and \(j\). For any row index
+\(\ell\), any \(i\in[k]\), \(x\in[N]\), and \(y\in\{0,1\}\), the tag,
+feature, and deterministic-label rules give
+
+\[
+\begin{aligned}
+&\Pr\left\{((I_\ell,X_\ell),Y_\ell)=((i,x),y)
+  \mid\boldsymbol\Xi=\boldsymbol\xi,J=j\right\}\\
+&\qquad=\frac1k Q_i(x)\,
+  \mathbf1\{y=\tau_{t_i}(x)\}\\
+&\qquad=P_{\boldsymbol Q}(i,x)\,
+  \mathbf1\{y=c_{\boldsymbol t}(i,x)\}\\
+&\qquad=P_{\boldsymbol Q}^{c_{\boldsymbol t}}
+  \bigl(\{((i,x),y)\}\bigr).
+\end{aligned}
+\tag{S8.8}\label{eq:step-008-8}
+\]
+
+The first line on the right uses neither \(j\) nor any property of the
+learner. The pairs \((I_\ell,X_\ell)\) are mutually independent conditional
+on \(\boldsymbol\Xi\): tags are drawn independently, and the conditional
+feature draws use independent randomness across rows. Labels are
+deterministic rowwise functions. Therefore the \(n\) labeled rows are
+conditionally independent and all have the common law in \eqref{eq:step-008-8}, which proves
+\eqref{eq:step-008-7}.
+
+By Lemma~\ref{lem:step-008-instance-factorization}, the conditional law of
+\(\boldsymbol\Xi\) itself is the same for every \(j\). Since \eqref{eq:step-008-7} is also the
+same for every \(j\), summing over \(J\) yields \eqref{eq:ideal-sample-law}. Importantly, \eqref{eq:ideal-sample-law} is a
+conditional i.i.d. statement for each fixed product instance. Unconditionally,
+the rows share the random vector \(\boldsymbol\Xi\), so no stronger
+unconditional i.i.d. assertion is made or needed.
+
+Equation \eqref{eq:step-008-8} remains valid for \(t_i=1\) or \(t_i=N+1\), when the labels in
+that block are constant, and when \(Q_i\) is a point mass or has zeros. No
+division by \(Q_i(x)\) occurs. It also defines an exact size-\(n\) dataset
+when no sampled tag equals the later-designated hidden coordinate \(J\).
+\end{proof}
+
+\begin{lemma}[Persistence of selector independence through an asymmetric
+learner]\label{lem:step-008-selector-independence}
+Under Lemmas~\ref{lem:step-008-instance-factorization} and
+\ref{lem:step-008-ideal-sample-law}, if \(A\) is any randomized map with the
+domain and codomain in Section~\ref{sec:setup} and is run on
+\(S^{\mathrm{id}}\) with fresh internal randomness, then
+
+\[
+J\ \perp\!\!\!\perp\
+(\boldsymbol\Xi,S^{\mathrm{id}},H).
+\tag{S8.9}\label{eq:step-008-9}
+\]
+
+Equivalently, for every \(i\in[k]\),
+
+\[
+\Pr\{J=i\mid\boldsymbol\Xi,S^{\mathrm{id}},H\}=\frac1k
+\quad\text{almost surely}.
+\tag{S8.10}\label{eq:step-008-10}
+\]
+
+No permutation invariance, tag symmetry, properness, or determinism of
+\(A\) is required.
+\end{lemma}
+
+\begin{proof}
+Because all involved spaces are finite, represent the randomized learner by
+its stochastic kernel
+
+\[
+K_A(h\mid s):=\Pr\{A(s)=h\},
+\qquad h\in\mathcal H_{k,N}.
+\]
+
+For a fixed instance vector \(\boldsymbol\xi\), let
+\(p_{\boldsymbol\xi}(s)\) denote its product-sample mass.  This is the
+mass furnished by Lemma~\ref{lem:step-008-ideal-sample-law}. Equations
+\eqref{eq:step-008-6}--\eqref{eq:step-008-8}, followed by the independent
+learner call, give for every atom with
+\(\boldsymbol\xi\in\mathcal Z^k\),
+
+\[
+\begin{aligned}
+&\Pr\{J=j,\boldsymbol\Xi=\boldsymbol\xi,
+       S^{\mathrm{id}}=s,H=h\}\\
+&\qquad=\frac1k
+  \left(\prod_{i=1}^k\mu_{N,M}(\{\xi_i\})\right)
+  p_{\boldsymbol\xi}(s)K_A(h\mid s).
+\end{aligned}
+\tag{S8.11}\label{eq:step-008-11}
+\]
+
+Every factor after \(1/k\) is independent of \(j\). Summing \eqref{eq:step-008-11} over
+\(j\) shows that it equals
+
+\[
+\Pr\{J=j\}\Pr\{\boldsymbol\Xi=\boldsymbol\xi,
+S^{\mathrm{id}}=s,H=h\},
+\]
+
+which proves \eqref{eq:step-008-9}, including zero-mass atoms by omission. The finite
+conditional-probability formula gives \eqref{eq:step-008-10} on every positive-mass atom.
+
+The kernel \(K_A(h\mid s)\) may depend arbitrarily on every tag and every
+row of \(s\). Thus \eqref{eq:step-008-11} does not assert that the law of \(H\) is invariant
+under permutations of tags. It uses only that \(J\) is an analysis-side
+variable not supplied as an argument to \(A\), and that the sample kernel
+in \eqref{eq:step-008-7} does not depend on \(J\). The learner may also have the public prior
+hardwired into its code; this changes \(K_A\) but introduces no \(j\)-factor.
+\end{proof}
+
+\begin{proposition}[Deterministic tagged-product risk decomposition]\label{prop:step-008-risk-decomposition}
+Under the primitive product-distribution definition and Proposition~\ref{prop:step-007-risk-identity}, for every fixed
+\(\boldsymbol t\in[N+1]^k\), every vector of probability distributions
+\(\boldsymbol Q=(Q_1,\ldots,Q_k)\) on \([N]\), and every arbitrary
+\(h\in\mathcal H_{k,N}\),
+
+\[
+\begin{aligned}
+R_{P_{\boldsymbol Q}}(h,c_{\boldsymbol t})
+&=\frac1k\sum_{i=1}^k e_i(h;\boldsymbol t,\boldsymbol Q)\\
+&=\frac1k\sum_{i=1}^k
+  R_{Q_i}(D_i h,\tau_{t_i}).
+\end{aligned}
+\tag{S8.12}\label{eq:step-008-12}
+\]
+
+The equality is deterministic and does not require any distributional
+symmetry of \(\boldsymbol Q\) or any structural property of \(h\).
+\end{proposition}
+
+\begin{proof}
+Expanding the population risk on the finite tagged domain and using
+\[
+P_{\boldsymbol Q}(i,x)=k^{-1}Q_i(x)
+\]
+gives
+
+\[
+\begin{aligned}
+R_{P_{\boldsymbol Q}}(h,c_{\boldsymbol t})
+&=\sum_{i=1}^k\sum_{x\in[N]}
+  \frac1k Q_i(x)
+  \mathbf1\{h(i,x)\ne c_{\boldsymbol t}(i,x)\}\\
+&=\frac1k\sum_{i=1}^k\sum_{x\in[N]}Q_i(x)
+  \mathbf1\{h(i,x)\ne\tau_{t_i}(x)\}\\
+&=\frac1k\sum_{i=1}^k e_i(h;\boldsymbol t,\boldsymbol Q).
+\end{aligned}
+\tag{S8.13}\label{eq:step-008-13}
+\]
+
+Proposition~\ref{prop:step-007-risk-identity} identifies the
+\(i\)-th inner sum with
+\(R_{Q_i}(D_i h,\tau_{t_i})\), proving the second equality in \eqref{eq:step-008-12}. The
+calculation remains exact for unequal block distributions, endpoint
+thresholds, point masses, and arbitrary nonmonotone or tag-asymmetric
+hypotheses. \end{proof}
+
+\begin{lemma}[Finite conditional averaging]\label{lem:step-008-finite-conditional-average}
+Let $\mathcal G$ be a sigma-field, let $J$ take values in $[k]$, and suppose
+$\Pr(J=i\mid\mathcal G)=1/k$ almost surely for every $i\in[k]$.  If
+$a_1,\ldots,a_k$ are integrable $\mathcal G$-measurable random variables,
+then
+\[
+\mathbb E[a_J\mid\mathcal G]=\frac1k\sum_{i=1}^k a_i
+\quad\text{almost surely},
+\]
+and consequently
+\[
+\mathbb E a_J=\mathbb E\left[\frac1k\sum_{i=1}^k a_i\right].
+\]
+\end{lemma}
+
+\begin{proof}
+The pointwise finite identity
+$a_J=\sum_{i=1}^k a_i\mathbf1\{J=i\}$ and
+$\mathcal G$-measurability of every $a_i$ give
+\[
+\mathbb E[a_J\mid\mathcal G]
+=\sum_{i=1}^k a_i\mathbb E[\mathbf1\{J=i\}\mid\mathcal G]
+=\sum_{i=1}^k a_i\Pr(J=i\mid\mathcal G)
+=\frac1k\sum_{i=1}^k a_i.
+\]
+Taking expectations proves the second identity.  In the ideal experiment
+all variables to which this lemma is applied lie in $[0,1]$, so
+integrability is automatic.
+\end{proof}
+
+\begin{proposition}[Selected-coordinate averaging for arbitrary randomized
+learners]\label{prop:step-008-selected-risk-identity}
+Under Propositions~\ref{prop:step-007-risk-identity} and
+\ref{prop:step-008-risk-decomposition}, and
+Lemmas~\ref{lem:step-008-selector-independence} and
+\ref{lem:step-008-finite-conditional-average}, for the ideal experiment
+and every randomized map \(A\) specified above,
+
+\[
+\mathbb E\!\left[
+e_J(H;\boldsymbol T,\boldsymbol Q)
+\mid\boldsymbol\Xi,S^{\mathrm{id}},H
+\right]
+=R_{P_{\boldsymbol Q}}(H,c_{\boldsymbol T})
+\quad\text{almost surely}.
+\tag{S8.14}\label{eq:step-008-14}
+\]
+
+Consequently,
+
+\[
+\begin{aligned}
+\mathbb E\,
+R_{Q_J}(D_JH,\tau_{T_J})
+&=\mathbb E\,e_J(H;\boldsymbol T,\boldsymbol Q)\\
+&=\mathbb E\,R_{P_{\boldsymbol Q}}(H,c_{\boldsymbol T}),
+\end{aligned}
+\tag{S8.15}\label{eq:step-008-15}
+\]
+
+where the expectations retain all prior, sample, selector, and learner
+randomness.
+\end{proposition}
+
+\begin{proof}
+Conditional on \((\boldsymbol\Xi,S^{\mathrm{id}},H)\), every quantity
+\(e_i(H;\boldsymbol T,\boldsymbol Q)\) is fixed. By \eqref{eq:step-008-10}, the remaining
+coordinate selector is uniform, so
+Lemma~\ref{lem:step-008-finite-conditional-average} gives
+
+\[
+\begin{aligned}
+\mathbb E\!\left[
+e_J(H;\boldsymbol T,\boldsymbol Q)
+\mid\boldsymbol\Xi,S^{\mathrm{id}},H
+\right]
+&=\sum_{i=1}^k\frac1k
+  e_i(H;\boldsymbol T,\boldsymbol Q)\\
+&=R_{P_{\boldsymbol Q}}(H,c_{\boldsymbol T}),
+\end{aligned}
+\]
+
+where the last equality is the pathwise application of
+Proposition~\ref{prop:step-008-risk-decomposition}. Taking expectations and
+using the second conclusion of
+Lemma~\ref{lem:step-008-finite-conditional-average} proves
+the second equality in \eqref{eq:step-008-15}, which is \eqref{eq:ideal-risk-identity}. The first equality in \eqref{eq:step-008-15} is the
+pathwise Proposition~\ref{prop:step-007-risk-identity} at the realized
+\((J,H,T_J,Q_J)\).
+
+The proof averages over an independent uniform \(J\) after conditioning on
+the complete realized vector, sample, and output. It never replaces
+\(e_J\) by \(e_1\), never permutes \(A\), and never assumes the errors
+\(e_1,\ldots,e_k\) have the same distribution. Thus deliberate tag
+asymmetry of \(A\) is fully covered. For \(k=2\) and \(k=3\), the
+conditional sums are exactly \((e_1+e_2)/2\) and
+\((e_1+e_2+e_3)/3\), respectively. Samples in which the selected tag does
+not occur require no special conditioning and remain part of the same
+unconditioned identity. \end{proof}
+Lemmas~\ref{lem:step-008-instance-factorization}--
+\ref{lem:step-008-selector-independence} establish the exact stochastic
+factorization, and
+Proposition~\ref{prop:step-008-selected-risk-identity} proves
+\eqref{eq:ideal-risk-identity} for arbitrary tag-asymmetric learners.
+
+\subsection{Usage and overflow}\label{app:step-009}
+Use
+\begin{equation}
+M=\max\left\{8,\left\lceil\frac{4n}{k}\right\rceil\right\},
+\tag{S9.1}\label{eq:overflow-budget}
+\end{equation}
+and, for the selector and tags above, set
+\begin{equation}
+U=\sum_{\ell=1}^n\mathbf 1\{I_\ell=J\}.
+\tag{S9.2}\label{eq:usage-count}
+\end{equation}
+The desired certificate is
+\begin{equation}
+U\sim\operatorname{Bin}(n,1/k),
+\qquad \Pr\{U>M\}<2^{-9}.
+\tag{S9.3}\label{eq:overflow-certificate}
+\end{equation}
+\begin{lemma}[Exact hidden-tag usage law]\label{lem:step-009-usage-law}
+Under the ideal hidden-coordinate tag interface, for every pair of
+integers \(k\ge2,n\ge1\), the count \(U\) in \eqref{eq:usage-count} satisfies, for each
+\(j\in[k]\) and each \(u\in\{0,\ldots,n\}\),
+
+\[
+\Pr\{U=u\mid J=j\}
+=\binom nu\left(\frac1k\right)^u
+ \left(1-\frac1k\right)^{n-u}.
+\tag{S9.4}\label{eq:step-009-4}
+\]
+
+Consequently \(U\sim\operatorname{Bin}(n,1/k)\) unconditionally. The law
+includes \(U=0\), and its trial count is exactly \(n\).
+\end{lemma}
+
+\begin{proof}
+Fix \(j\in[k]\). By the tag interface, conditional on \(J=j\),
+the variables
+
+\[
+B_\ell:=\mathbf1\{I_\ell=j\},\qquad \ell\in[n],
+\]
+
+are mutually independent, and
+
+\[
+\Pr\{B_\ell=1\mid J=j\}=\Pr\{I_\ell=j\mid J=j\}=\frac1k.
+\]
+
+Thus \(U=\sum_{\ell=1}^nB_\ell\). For any fixed set of exactly \(u\)
+indices, the probability that precisely those indicators equal one is
+\(k^{-u}(1-1/k)^{n-u}\). The \(\binom nu\) choices are disjoint, proving
+\eqref{eq:step-009-4}. The right-hand side does not depend on \(j\). Since
+\(\Pr(J=j)=1/k\),
+
+\[
+\begin{aligned}
+\Pr\{U=u\}
+&=\sum_{j=1}^k\Pr\{J=j\}\Pr\{U=u\mid J=j\}\\
+&=\binom nu\left(\frac1k\right)^u
+ \left(1-\frac1k\right)^{n-u}.
+\end{aligned}
+\]
+
+This is the asserted binomial mass function. In particular, no random block
+instance, feature, label, learner output, or stopping rule changes the law.
+\end{proof}
+
+\begin{lemma}[Falling-factorial binomial tail bound]\label{lem:step-009-factorial-tail}
+Let \(V\sim\operatorname{Bin}(n,p)\), where \(n\ge1\) and
+\(p\in[0,1]\). For every integer \(v\ge0\), set \((v)_0:=1\); for every
+integer \(r\ge1\), write
+
+\[
+(v)_r:=v(v-1)\cdots(v-r+1),
+\]
+
+with \((v)_r=0\) when \(r>v\). Then, for every integer \(r\ge1\),
+
+\[
+\mathbb E(V)_r=(n)_r p^r
+\tag{S9.5}\label{eq:step-009-5}
+\]
+
+and
+
+\[
+\Pr\{V\ge r\}
+\le \frac{(n)_r p^r}{r!}
+\le \frac{(np)^r}{r!}.
+\tag{S9.6}\label{eq:step-009-6}
+\]
+
+Equations \eqref{eq:step-009-5}--\eqref{eq:step-009-6} remain valid when \(r>n\), in which case both the event
+and \((n)_r\) vanish.
+\end{lemma}
+
+\begin{proof}
+Represent \(V=\sum_{\ell=1}^n Z_\ell\) for independent
+Bernoulli\((p)\) variables. For every outcome with \(V=v\), the number of
+ordered \(r\)-tuples of pairwise distinct successful trial indices is
+exactly \((v)_r\). Hence the pointwise identity
+
+\[
+(V)_r
+=\sum_{\substack{(\ell_1,\ldots,\ell_r)\in[n]^r\\
+                    \ell_1,\ldots,\ell_r\ \mathrm{pairwise\ distinct}}}
+  \prod_{s=1}^r Z_{\ell_s}
+\tag{S9.7}\label{eq:step-009-7}
+\]
+
+holds, with an empty sum if \(r>n\). There are \((n)_r\) ordered tuples,
+and independence gives expectation \(p^r\) for every product in \eqref{eq:step-009-7},
+proving \eqref{eq:step-009-5}.
+
+If \(V\ge r\), then
+
+\[
+(V)_r=r!\binom Vr\ge r!,
+\]
+
+whereas if \(V<r\), both \(\mathbf1\{V\ge r\}\) and \((V)_r\) are zero.
+Therefore
+
+\[
+\mathbf1\{V\ge r\}\le\frac{(V)_r}{r!}
+\]
+
+pointwise. Taking expectations and using \eqref{eq:step-009-5} gives the first inequality in
+\eqref{eq:step-009-6}. Finally, each of the \(r\) nonnegative factors of \((n)_r\) is at
+most \(n\) when \(r\le n\), so \((n)_r\le n^r\). When \(r>n\), the
+left side is zero. This proves the second inequality in every case.
+\end{proof}
+
+\begin{lemma}[Floor-eight small-mean bound]\label{lem:step-009-small-mean}
+Under Lemmas~\ref{lem:step-009-usage-law} and
+\ref{lem:step-009-factorial-tail}, define
+
+\[
+\lambda:=\frac nk.
+\tag{S9.8}\label{eq:step-009-8}
+\]
+
+If \(\lambda\le2\), then the exact budget \eqref{eq:overflow-budget} satisfies \(M=8\) and
+
+\[
+\Pr\{U>M\}
+\le\frac{\lambda^9}{9!}
+\le\frac{2^9}{9!}
+<2^{-9}.
+\tag{S9.9}\label{eq:step-009-9}
+\]
+
+If, more specifically, \(n<k\), then \(M=8\) and
+
+\[
+\Pr\{U>M\}<\frac1{9!}<2^{-9}.
+\tag{S9.10}\label{eq:step-009-10}
+\]
+
+Thus the statement includes the exact boundary \(\lambda=2\), every
+occurrence of \(M=8\), and the case \(n<k\).
+\end{lemma}
+
+\begin{proof}
+If \(\lambda\le2\), then \(4\lambda\le8\), so
+
+\[
+\lceil4n/k\rceil=\lceil4\lambda\rceil\le8.
+\]
+
+Equation \eqref{eq:overflow-budget} therefore gives \(M=8\) exactly. Since \(U\) is integer,
+
+\[
+\{U>M\}=\{U>8\}=\{U\ge9\}.
+\tag{S9.11}\label{eq:step-009-11}
+\]
+
+Apply Lemma~\ref{lem:step-009-factorial-tail} to the exact law in
+Lemma~\ref{lem:step-009-usage-law} with \(p=1/k\) and \(r=9\). Because
+\(np=n/k=\lambda\),
+
+\[
+\Pr\{U>M\}\le\frac{\lambda^9}{9!}
+\le\frac{2^9}{9!}.
+\tag{S9.12}\label{eq:step-009-12}
+\]
+
+The final comparison in \eqref{eq:step-009-9} is strict and completely numerical:
+
+\[
+9!=362880>262144=2^{18}.
+\tag{S9.13}\label{eq:step-009-13}
+\]
+
+Dividing \eqref{eq:step-009-13} by the positive number \(2^9 9!\) gives
+\(2^9/9!<2^{-9}\), completing \eqref{eq:step-009-9}. If \(n<9\), the event in \eqref{eq:step-009-11} is
+actually empty because \(U\le n\), and the convention in
+Lemma~\ref{lem:step-009-factorial-tail} records this as \((n)_9=0\).
+
+If \(n<k\), then \(0<\lambda<1\) and
+\(0<4\lambda<4\), whence \(\lceil4\lambda\rceil\le4\) and \(M=8\).
+The first inequality of \eqref{eq:step-009-9} is then strict:
+
+\[
+\Pr\{U>M\}\le\frac{\lambda^9}{9!}<\frac1{9!}.
+\]
+
+Since \(9!=362880>512=2^9\), one has \(1/9!<2^{-9}\), proving \eqref{eq:step-009-10}.
+Conversely, if \(M=8\), then \eqref{eq:overflow-budget} implies
+\(\lceil4\lambda\rceil\le8\), hence \(4\lambda\le8\) and
+\(\lambda\le2\); thus every possible \(M=8\) case is indeed contained
+in this lemma. \end{proof}
+
+\begin{lemma}[Monotone factorial envelope]\label{lem:step-009-envelope}
+For every integer \(j\ge9\), define
+
+\[
+a_j:=\frac{(j/4)^{j+1}}{(j+1)!}.
+\tag{S9.14}\label{eq:step-009-14}
+\]
+
+Then \((a_j)_{j\ge9}\) is strictly decreasing and
+
+\[
+a_j\le a_9
+=\frac{(9/4)^{10}}{10!}
+<2^{-10}.
+\tag{S9.15}\label{eq:step-009-15}
+\]
+\end{lemma}
+
+\begin{proof}
+Direct cancellation gives, for every integer \(j\ge9\),
+
+\[
+\frac{a_{j+1}}{a_j}
+=\frac{j+1}{4(j+2)}
+ \left(1+\frac1j\right)^{j+1}.
+\tag{S9.16}\label{eq:step-009-16}
+\]
+
+We bound the power in \eqref{eq:step-009-16} without importing an asymptotic exponential
+estimate. The binomial theorem gives
+
+\[
+\left(1+\frac1j\right)^j
+=\sum_{r=0}^j \binom jr j^{-r}
+=\sum_{r=0}^j \frac{(j)_r}{r!\,j^r}
+\le\sum_{r=0}^j\frac1{r!}
+<3.
+\tag{S9.17}\label{eq:step-009-17}
+\]
+
+For the strict last inequality, \(r!\ge2^{r-1}\) for every \(r\ge2\),
+with strict inequality for every \(r\ge3\), so
+
+\[
+\sum_{r=2}^{\infty}\frac1{r!}
+<\sum_{r=2}^{\infty}\frac1{2^{r-1}}=1.
+\]
+
+Adding the \(r=0,1\) terms proves \eqref{eq:step-009-17}. Since \(j\ge9\),
+
+\[
+\left(1+\frac1j\right)^{j+1}
+<3\left(1+\frac19\right)
+=\frac{10}{3}<4.
+\tag{S9.18}\label{eq:step-009-18}
+\]
+
+Substituting \eqref{eq:step-009-18} into \eqref{eq:step-009-16} yields the strict ratio bound
+
+\[
+\frac{a_{j+1}}{a_j}
+<\frac{j+1}{j+2}<1.
+\tag{S9.19}\label{eq:step-009-19}
+\]
+
+Thus the sequence is strictly decreasing and \(a_j\le a_9\). It remains
+to verify the endpoint constant. Since \(4^{10}=2^{20}\), the inequality
+\(a_9<2^{-10}\) is equivalent to
+
+\[
+9^{10}<2^{10}\,10!.
+\]
+
+Both integers are explicit:
+
+\[
+9^{10}=3486784401
+<3715891200=2^{10}\,10!.
+\tag{S9.20}\label{eq:step-009-20}
+\]
+
+Equations \eqref{eq:step-009-19}--\eqref{eq:step-009-20} prove \eqref{eq:step-009-15}. \end{proof}
+
+\begin{lemma}[Ceiling-controlled large-mean bound]\label{lem:step-009-large-mean}
+Under Lemmas~\ref{lem:step-009-usage-law},
+\ref{lem:step-009-factorial-tail}, and
+\ref{lem:step-009-envelope}, if \(\lambda=n/k>2\) and
+
+\[
+j:=\lceil4\lambda\rceil,
+\tag{S9.21}\label{eq:step-009-21}
+\]
+
+then \(j\) is an integer satisfying \(j\ge9\), the exact budget is
+\(M=j\), and
+
+\[
+\Pr\{U>M\}
+\le\frac{\lambda^{j+1}}{(j+1)!}
+\le\frac{(j/4)^{j+1}}{(j+1)!}
+\le\frac{(9/4)^{10}}{10!}
+<2^{-10}<2^{-9}.
+\tag{S9.22}\label{eq:step-009-22}
+\]
+
+The conclusion remains valid when \(j+1>n\), when the overflow event is
+empty.
+\end{lemma}
+
+\begin{proof}
+The strict inequality \(\lambda>2\) gives \(4\lambda>8\). Therefore its
+integer ceiling obeys
+
+\[
+j=\lceil4\lambda\rceil\ge9,
+\tag{S9.23}\label{eq:step-009-23}
+\]
+
+so \eqref{eq:overflow-budget} gives \(M=\max\{8,j\}=j\). Because \(U\) is integer,
+
+\[
+\{U>M\}=\{U\ge j+1\}.
+\tag{S9.24}\label{eq:step-009-24}
+\]
+
+Apply Lemma~\ref{lem:step-009-factorial-tail} with
+\(p=1/k\) and the integer order \(r=j+1\). Together with
+Lemma~\ref{lem:step-009-usage-law}, this gives
+
+\[
+\Pr\{U>M\}
+\le\frac{(n/k)^{j+1}}{(j+1)!}
+=\frac{\lambda^{j+1}}{(j+1)!}.
+\tag{S9.25}\label{eq:step-009-25}
+\]
+
+If \(j+1>n\), the sharper first expression in \eqref{eq:step-009-6} has
+\((n)_{j+1}=0\), so \eqref{eq:step-009-24} is empty and \eqref{eq:step-009-25} still holds. No unstated
+assumption \(j+1\le n\) is needed.
+
+The ceiling definition \eqref{eq:step-009-21} also gives \(j\ge4\lambda\), hence
+\(\lambda\le j/4\). Raising nonnegative quantities to the positive integer
+power \(j+1\) and dividing by \((j+1)!>0\) proves the second inequality in
+\eqref{eq:step-009-22}. Lemma~\ref{lem:step-009-envelope} supplies the next two inequalities,
+and \(2^{-10}<2^{-9}\) follows from \(2^{-10}=\tfrac12 2^{-9}\).
+This proves the entire strict chain \eqref{eq:step-009-22}. \end{proof}
+
+\begin{proposition}[Exact finite-budget overflow certificate]\label{prop:step-009-overflow}
+Under the basic-setting ranges \(k\ge2,n\ge1\), the exact budget \eqref{eq:overflow-budget}, and
+the ideal hidden-coordinate tag interface, the usage count \eqref{eq:usage-count}
+satisfies \eqref{eq:overflow-certificate}. More explicitly:
+
+\begin{enumerate}
+\item If \(n/k\le2\), then \(M=8\) and \eqref{eq:step-009-9} gives the strict tail bound.
+\item If \(n/k>2\), then \(M=\lceil4n/k\rceil\ge9\) and \eqref{eq:step-009-22} gives the
+stronger tail bound \(\Pr(U>M)<2^{-10}\).
+\item If \(k=2\) or \(k=3\), then \(M\ge n\) and \(\Pr(U>M)=0\).
+\item If \(n<k\), then \(M=8\) and the strict chain \eqref{eq:step-009-10} holds.
+\item If \(M=8\), necessarily \(n/k\le2\), so the first branch applies.
+\end{enumerate}
+
+No contradiction-regime, hard-prior, privacy, PAC, or learner condition is
+needed for any clause.
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:step-009-usage-law} proves the first assertion in \eqref{eq:overflow-certificate}.
+Exactly one of \(n/k\le2\) and \(n/k>2\) holds. In the first case,
+Lemma~\ref{lem:step-009-small-mean} proves
+\(\Pr(U>M)<2^{-9}\); in the second,
+Lemma~\ref{lem:step-009-large-mean} proves the stronger
+\(\Pr(U>M)<2^{-10}<2^{-9}\). This proves the second assertion in \eqref{eq:overflow-certificate}
+for all \(k,n\).
+
+For the requested small-tag boundaries, if \(k\in\{2,3\}\), then
+\(4/k\ge1\), so
+
+\[
+\left\lceil\frac{4n}{k}\right\rceil\ge n
+\quad\text{and hence}\quad M\ge n.
+\tag{S9.26}\label{eq:step-009-26}
+\]
+
+The count \eqref{eq:usage-count} always obeys \(0\le U\le n\). Thus \(U>M\) is impossible
+and its probability is zero. This direct argument covers every \(n\),
+including values for which \(M=8\) and values for which the ceiling branch
+exceeds eight.
+
+The \(n<k\) and \(M=8\) clauses, including all ceiling inequalities and
+their strict constants, were proved in
+Lemma~\ref{lem:step-009-small-mean}. Finally, \(U=0\) never belongs to the
+overflow event because \(M\ge8\); it remains an ordinary atom of the exact
+binomial law rather than a conditioned-away case. \end{proof}
+The exhaustive small- and large-mean estimates in
+Proposition~\ref{prop:step-009-overflow} prove
+\eqref{eq:overflow-certificate}, including zero overflow for $k=2,3$.
+
+\subsection{The executable one-use simulator}\label{app:step-010}
+Fix a candidate and, locally for contradiction, suppose
+\begin{equation}
+n<ak\log_2^*N.
+\tag{S10.2}\label{eq:local-negation}
+\end{equation}
+With $M=m_{n,k}$, Proposition~\ref{prop:step-004-finite-hard-prior}
+provides the finite public law
+\begin{equation}
+\mu_{N,M}\quad\text{on}\quad\mathcal I_N.
+\tag{S10.3}\label{eq:public-prior}
+\end{equation}
+For an arbitrary $A:\mathsf S_n\to\mathcal H_{k,N}$, the simulator to be
+constructed is
+\begin{equation}
+B_{\mu_{N,M},A}:\mathsf Z_M\longrightarrow\mathsf G_N.
+\tag{S10.5}\label{eq:simulator-type}
+\end{equation}
+\begin{lemma}[Input-independent public preprocessing]\label{lem:step-010-public-preprocessing}
+Under Assumption~\ref{assump:candidate-regime}, the contradiction hypothesis~\eqref{eq:local-negation},
+Propositions~\ref{prop:step-004-finite-hard-prior},
+\ref{prop:step-005-certificate}, and
+\ref{prop:step-009-overflow}, the following ordered procedure defines a
+preprocessing seed \(\Omega_{\mathrm{pre}}\) before any input coordinate is
+evaluated:
+
+\begin{enumerate}
+\item Draw \(J\sim\operatorname{Unif}[k]\).
+\item Draw \(I_1,\ldots,I_n\) independently and uniformly from \([k]\),
+independently of \(J\).
+\item Conditional on \(J\), independently draw
+   \[
+     \Theta_i=(T_i,Q_i)\sim\mu_{N,M},
+     \qquad i\in[k]\setminus\{J\};
+   \]
+\item Conditional on \(J,I_{1:n},(\Theta_i)_{i\ne J}\), independently draw
+   \[
+     X_r^\circ\sim Q_{I_r}
+     \quad\text{for every }r\in[n]\text{ with }I_r\ne J,
+   \]
+   and set
+   \[
+     Y_r^\circ:=\tau_{T_{I_r}}(X_r^\circ).
+   \]
+\end{enumerate}
+
+The seed consists of precisely these realized objects. Its distribution
+depends only on the public tuple
+\((k,N,n,M,\mu_{N,M})\), is independent of every
+\(z\in\mathsf Z_M\), and contains neither a hidden instance
+\((t,Q)\), a block-instance draw \(\Theta_J\), nor a synthetic feature or
+label at a position whose tag equals \(J\). Conditional on the realized
+selector, tags, and nonhidden instances, the nonhidden labeled
+rows
+
+\[
+  \left((I_r,X_r^\circ),Y_r^\circ\right),
+  \qquad r:I_r\ne J,
+\tag{S10.6}\label{eq:step-010-6}
+\]
+
+are mutually independent, and each row with tag \(i\ne J\) has labeled law
+\(Q_i^{\tau_{T_i}}\) after its tag is suppressed.
+\end{lemma}
+
+\begin{proof}
+Proposition~\ref{prop:step-005-certificate} discharges the exact
+\(N,M\) conditions for Proposition~\ref{prop:step-004-finite-hard-prior}, so the finite public law
+\(\mu_{N,M}\) exists before the present simulator is defined. The first two
+draws use the selector/tag product kernel certified by Proposition~\ref{prop:step-009-overflow}. Once \(J=j\) is fixed, the finite
+product law
+
+\[
+  \bigotimes_{i\in[k]\setminus\{j\}}\mu_{N,M}
+\]
+
+defines all nonhidden instances. Each realized \(Q_i\) is a probability
+distribution on the finite set \([N]\), so the further finite conditional
+product
+
+\[
+  \bigotimes_{\substack{r\in[n]\\ I_r\ne J}}Q_{I_r}
+\tag{S10.7}\label{eq:step-010-7}
+\]
+
+defines the nonhidden feature draws. For any fixed values
+\((x_r)_{r:I_r\ne J}\), \eqref{eq:step-010-7} gives the exact conditional mass
+
+\[
+  \prod_{\substack{r\in[n]\\ I_r\ne J}}Q_{I_r}(x_r),
+\tag{S10.8}\label{eq:step-010-8}
+\]
+
+which proves conditional mutual independence and the stated marginal
+kernels. Applying the deterministic threshold label
+\(\tau_{T_{I_r}}\) gives exactly the labeled law in the lemma.
+
+All four randomization stages are completed without referring to an input
+argument. In particular, the sampling code knows the public distribution
+\(\mu_{N,M}\) and its own realized nonhidden pairs
+\((T_i,Q_i)\), but it neither draws nor receives \((T_J,Q_J)\).
+A later hidden pair \((t,Q)\) is therefore not an input to this procedure.
+Endpoint draws \(T_i=1\) and \(T_i=N+1\) are executable: their deterministic
+labels are respectively all one and all zero. Point-mass \(Q_i\)'s are also
+valid factors in \eqref{eq:step-010-7}.
+
+The internal randomness used by \(A\) is intentionally not a component of
+\(\Omega_{\mathrm{pre}}\). It remains the fresh internal randomization of
+the one call to the kernel \(A\), if that call is reached. Thus every
+random choice belonging to preprocessing is fixed before input access,
+without converting randomized \(A\) into a deterministic map.
+\end{proof}
+
+\begin{proposition}[Exact hidden-blind size-\(n\) row construction]\label{prop:step-010-row-construction}
+Under Lemma~\ref{lem:step-010-public-preprocessing}, fix any realization
+\(\omega\) of \(\Omega_{\mathrm{pre}}\) and any arbitrary labeled input
+
+\[
+  z=(z_1,\ldots,z_M)\in\mathsf Z_M,
+  \qquad z_\ell=(x_\ell,y_\ell).
+\tag{S10.9}\label{eq:step-010-9}
+\]
+
+Define, using only the selector and tags in \(\omega\),
+
+\[
+  L_r:=\sum_{s=1}^r\mathbf1\{I_s=J\},
+  \qquad
+  U:=L_n.
+\tag{S10.10}\label{eq:step-010-10}
+\]
+
+The value of \(U\) is computed before any \(z_\ell\) is evaluated. If
+\(U>M\), the row-construction procedure stops immediately and evaluates no
+input coordinate. If \(U\le M\), it defines an ordered size-\(n\) labeled
+product dataset
+
+\[
+  \mathcal P_\omega(z)
+  =(\widetilde z_1,\ldots,\widetilde z_n)\in\mathsf S_n
+\tag{S10.11}\label{eq:step-010-11}
+\]
+
+by the exact rule
+
+\[
+  \widetilde z_r=
+  \begin{cases}
+    ((J,x_{L_r}),y_{L_r}), & I_r=J,\\[2mm]
+    ((I_r,X_r^\circ),Y_r^\circ), & I_r\ne J.
+  \end{cases}
+\tag{S10.12}\label{eq:step-010-12}
+\]
+
+Thus, on nonoverflow, the \(\ell\)-th input row is used exactly at the
+\(\ell\)-th hidden-tag occurrence for every \(\ell\in[U]\), every
+nonhidden row is the pre-drawn row \eqref{eq:step-010-6}, and the rule requires no knowledge
+of a hidden \(t\) or \(Q\). It is valid for every binary label pattern in
+\eqref{eq:step-010-9}, including patterns inconsistent with every threshold.
+\end{proposition}
+
+\begin{proof}
+The seed is drawn before the input is accessed by
+Lemma~\ref{lem:step-010-public-preprocessing}. Both \(L_r\) and \(U\) are
+functions only of the already drawn \(J,I_1,\ldots,I_n\). Consequently the
+comparison \(U>M\) can be resolved before evaluating any coordinate of
+\eqref{eq:step-010-9}. On overflow, the procedure takes no later row-construction action, so
+it never attempts to access a nonexistent \((M+1)\)-st record.
+
+Suppose \(U\le M\). For each position \(r\) with \(I_r=J\), \eqref{eq:step-010-10} gives
+
+\[
+  1\le L_r\le U\le M.
+\tag{S10.13}\label{eq:step-010-13}
+\]
+
+Hence \(z_{L_r}\) is an available input record. Since
+\(x_{L_r}\in[N]\), \(J\in[k]\), and \(y_{L_r}\in\{0,1\}\), the first line
+of \eqref{eq:step-010-12} lies in \(X_{k,N}\times\{0,1\}\), regardless of whether
+\(y_{L_r}=\tau_t(x_{L_r})\) for any \(t\).
+
+For each position with \(I_r\ne J\), the seed already contains
+\(X_r^\circ\in[N]\) and
+\(Y_r^\circ=\tau_{T_{I_r}}(X_r^\circ)\in\{0,1\}\), so the second line of
+\eqref{eq:step-010-12} has the same required type. There is one and only one applicable line
+of \eqref{eq:step-010-12} for every \(r\in[n]\). Thus \eqref{eq:step-010-11} has exactly \(n\) ordered labeled
+rows and belongs to the full domain \(\mathsf S_n\) of \(A\).
+
+If \(r\) is the \(\ell\)-th occurrence of tag \(J\), then by definition
+\(L_r=\ell\), so the first line of \eqref{eq:step-010-12} uses \(z_\ell\), including its raw
+label. This is why no hidden threshold \(t\) is needed. The feature
+distribution \(Q\) of a later hidden input law is likewise unnecessary:
+the procedure takes hidden features directly from the input records.
+Nonhidden features and labels use only the simulator's publicly drawn
+instances, whose exact conditional kernels were proved in
+Lemma~\ref{lem:step-010-public-preprocessing}.
+\end{proof}
+
+\begin{lemma}[Ordered one-use input incidence]\label{lem:step-010-one-use}
+Under Proposition~\ref{prop:step-010-row-construction}, for every fixed
+preprocessing seed \(\omega\) and every arbitrary input
+\(z\in\mathsf Z_M\), the following statements hold pathwise.
+
+\begin{itemize}
+\item If \(U>M\), no coordinate of \(z\) is evaluated.
+\item If \(U\le M\), let
+  \[
+    r_\ell:=\min\left\{r\in[n]:
+      \sum_{s=1}^r\mathbf1\{I_s=J\}=\ell\right\},
+    \qquad \ell=1,\ldots,U.
+  \tag{S10.14}\label{eq:step-010-14}
+  \]
+  Then
+  \[
+    1\le r_1<\cdots<r_U\le n,
+    \qquad
+    \widetilde z_{r_\ell}=((J,x_\ell),y_\ell).
+  \tag{S10.15}\label{eq:step-010-15}
+  \]
+  No row of \(\mathcal P_\omega(z)\) other than row \(r_\ell\) depends on
+  input coordinate \(z_\ell\); coordinates \(z_{U+1},\ldots,z_M\) are not
+  evaluated at all.
+\end{itemize}
+
+In particular, each input record has at most one image row. If \(U=0\), the
+input-access set is empty and all \(n\) rows are nonhidden pre-drawn rows.
+If \(U=M\), every input record has exactly one image row. The statement is
+about row incidence only and makes no differential-privacy claim.
+\end{lemma}
+
+\begin{proof}
+On overflow, the first bullet is part of the control flow proved in
+Proposition~\ref{prop:step-010-row-construction}. Now fix \(U\le M\). The
+running count \(L_r\) in \eqref{eq:step-010-10} starts at zero, is nondecreasing, and
+increases by exactly one precisely at the positions with \(I_r=J\).
+Because its terminal value is \(U\), it hits each integer
+\(\ell=1,\ldots,U\) at a unique first position \(r_\ell\), and those
+positions are strictly increasing. At \(r_\ell\), one has
+\(I_{r_\ell}=J\) and \(L_{r_\ell}=\ell\), so the first line of \eqref{eq:step-010-12} gives
+the identity in \eqref{eq:step-010-15}.
+
+At a hidden position \(r\), the only input coordinate named by \eqref{eq:step-010-12} is
+\(z_{L_r}\). The map from hidden positions to positive running counts is
+the bijection \(r_\ell\mapsto\ell\). At a nonhidden position, the second
+line of \eqref{eq:step-010-12} is already fixed by \(\omega\) and names no input coordinate.
+Therefore \(z_\ell\), for \(\ell\le U\), occurs in exactly row \(r_\ell\),
+and every \(\ell>U\) occurs in no row. This proves the one-use incidence
+claim for arbitrary features and labels, without any realizability premise.
+\end{proof}
+
+\begin{proposition}[Total executable improper one-block simulator]\label{prop:step-010-simulator}
+Under Assumption~\ref{assump:candidate-regime}, the contradiction hypothesis~\eqref{eq:local-negation},
+Propositions~\ref{prop:step-004-finite-hard-prior},
+\ref{prop:step-005-certificate}, and
+\ref{prop:step-009-overflow}, Lemma~\ref{lem:step-007-restriction-legality}, and
+Lemma~\ref{lem:step-010-public-preprocessing},
+Proposition~\ref{prop:step-010-row-construction}, and
+Lemma~\ref{lem:step-010-one-use}, the following algorithm defines a
+total randomized kernel
+\[
+  B_{\mu_{N,M},A}:\mathsf Z_M\longrightarrow\mathsf G_N
+\]
+for every arbitrary randomized map
+\(A:\mathsf S_n\to\mathcal H_{k,N}\).
+
+On input \(z\in\mathsf Z_M\):
+
+\begin{enumerate}
+\item Sample the complete seed \(\Omega_{\mathrm{pre}}\) in the order stated
+by Lemma~\ref{lem:step-010-public-preprocessing}.
+\item Compute \(U\) from \(J,I_1,\ldots,I_n\), without evaluating \(z\).
+\item If \(U>M\), return the fixed hypothesis
+   \[
+     g_0(x):=0\quad(x\in[N])
+   \tag{S10.16}\label{eq:step-010-16}
+   \]
+   immediately, without evaluating any coordinate of \(z\) and without
+   invoking \(A\);
+\item If \(U\le M\), construct the exact
+   \(\mathcal P_{\Omega_{\mathrm{pre}}}(z)\in\mathsf S_n\) from \eqref{eq:step-010-12}, draw
+   \[
+     H\sim A(\mathcal P_{\Omega_{\mathrm{pre}}}(z))
+   \]
+   using \(A\)'s own fresh internal randomness, and return \(D_JH\).
+\end{enumerate}
+
+This simulator has exact input size \(M\), makes at most one call to \(A\)
+and only with exact input size \(n\), uses each input row at most once, and
+is defined on every arbitrary size-\(M\) labeled input. It does not know a
+hidden \(t,Q\), does not require \(A\) to be proper or tag-symmetric, and
+does not infer privacy or an ideal-law coupling.
+\end{proposition}
+
+\begin{proof}
+The seed law is a valid input-independent probability kernel by
+Lemma~\ref{lem:step-010-public-preprocessing}. On the overflow branch,
+\(g_0\) is a fixed member of \(\mathsf G_N\); the control flow reaches \eqref{eq:step-010-16}
+before any input dereference or call to \(A\). Thus this branch is total and
+input-independent even when the supplied input has arbitrary corrupt
+labels.
+
+On the nonoverflow branch,
+Proposition~\ref{prop:step-010-row-construction} proves that the argument of
+\(A\) is a valid member of its complete domain \(\mathsf S_n\) and has
+exactly \(n\) rows. Therefore the randomized map \(A\) returns some
+\(H\in\mathcal H_{k,N}\). Since \(J\in[k]\), Lemma~\ref{lem:step-007-restriction-legality} gives
+\(D_JH\in\mathsf G_N\), regardless of whether \(H\) is a threshold,
+monotone, proper, symmetric, deterministic, or tag-asymmetric.
+
+Equivalently, if \(E\subseteq\mathsf G_N\) and
+\(A(s,h)\) denotes the output probability assigned by \(A\) to
+\(h\in\mathcal H_{k,N}\) on \(s\in\mathsf S_n\), then the simulator kernel
+is the well-defined finite expectation
+
+\[
+B_{\mu_{N,M},A}(z,E)
+=
+\mathbb E_{\Omega_{\mathrm{pre}}}
+\left[
+\begin{cases}
+  \mathbf1\{g_0\in E\}, & U>M,\\[1mm]
+  \displaystyle
+  \sum_{h\in\mathcal H_{k,N}}
+    A(\mathcal P_{\Omega_{\mathrm{pre}}}(z),h)
+    \mathbf1\{D_Jh\in E\}, & U\le M.
+\end{cases}
+\right].
+\tag{S10.17}\label{eq:step-010-17}
+\]
+
+Every term is nonnegative, the expression equals one when
+\(E=\mathsf G_N\), and it is additive over disjoint events. Because all
+input and output spaces are finite, \eqref{eq:step-010-17} is a total randomized kernel on
+every \(z\in\mathsf Z_M\). Formula \eqref{eq:step-010-17} is a mathematical description of
+the procedural branches; on \(U>M\) it contains no evaluation of
+\(\mathcal P_\omega(z)\) and no \(A\)-term.
+
+Lemma~\ref{lem:step-010-one-use} proves the exact access pattern. In
+particular:
+
+\begin{itemize}
+\item At \(U=0\), no input row is read, all \(n\) rows come from the realized
+  nonhidden instances, and \(A\) is called once on that size-\(n\) dataset;
+\item At \(1\le U\le M\), precisely the first \(U\) input rows are read once
+  each, in their original order, and all trailing rows are ignored;
+\item At \(U=M\), all \(M\) rows are used once if that event is possible.
+\item At \(U>M\), no row is read and \(A\) is not called.
+\end{itemize}
+
+The same clauses apply to endpoint labels, point-mass nonhidden
+distributions, and arbitrary nonrealizable input labels. For \(k=2,3\),
+Proposition~\ref{prop:step-009-overflow} says the overflow branch
+has probability zero, but the branch remains defined. No step of this proof
+uses Assumption~\ref{assump:central-dp}, compares two input datasets,
+identifies an ideal sample law, or evaluates population risk. Those are
+separate downstream obligations.
+\end{proof}
+The ordered construction is total on arbitrary labels.  In particular,
+Lemma~\ref{lem:step-010-one-use} proves the pathwise incidence property,
+and Proposition~\ref{prop:step-010-simulator} packages the construction as
+the kernel in \eqref{eq:simulator-type}.
+
+\subsection{Actual-to-ideal coupling}\label{app:step-011}
+Fix $(t,Q)\in\mathcal I_N$ and let
+\begin{equation}
+Z^{\mathrm{in}}\sim(Q^{\tau_t})^M.
+\tag{S11.3}\label{eq:coupling-input-law}
+\end{equation}
+The fixed-hidden and prior-averaged targets are, respectively,
+\begin{align}
+\mathbb E_{\mathrm{id},(t,Q)}R_Q(G^{\mathrm{id}},\tau_t)
+&\ge
+\mathbb E R_Q(B_{\mu_{N,M},A}(Z^{\mathrm{in}}),\tau_t)
+-\Pr\{U>M\},
+\tag{S11.4a}\label{eq:fixed-hidden-transfer}\\
+\mathbb E_{\mathrm{ideal}}R_{Q_J}(D_JH^{\mathrm{id}},\tau_{T_J})
+&\ge
+\mathbb E_{\substack{(T,Q)\sim\mu_{N,M}\\
+Z^{\mathrm{in}}\sim(Q^{\tau_T})^M}}
+R_Q(B_{\mu_{N,M},A}(Z^{\mathrm{in}}),\tau_T)
+-\Pr\{U>M\}.
+\tag{S11.4b}\label{eq:prior-transfer}
+\end{align}
+\begin{lemma}[Shared realization of a finite randomized learner]\label{lem:step-011-shared-randomization}
+For every randomized map
+\(A:(X_{k,N}\times\{0,1\})^n\to\mathcal H_{k,N}\), there is a
+deterministic function
+
+\[
+  \Phi_A:(X_{k,N}\times\{0,1\})^n\times(0,1)
+  \longrightarrow\mathcal H_{k,N}
+\]
+
+such that, for \(V\sim\operatorname{Unif}(0,1)\),
+\(\Phi_A(s,V)\) has exactly the law \(A(s)\) for every
+\(s\in(X_{k,N}\times\{0,1\})^n\). For the same \(V\), equal input datasets give equal
+outputs pathwise. No properness, determinism, or tag symmetry of \(A\) is
+required.
+\end{lemma}
+
+\begin{proof}
+Enumerate the finite set
+\(\mathcal H_{k,N}=\{h_1,\ldots,h_q\}\). For each dataset \(s\), put
+
+\[
+  c_m(s):=\sum_{a=1}^m\Pr\{A(s)=h_a\},\qquad c_0(s):=0,
+\]
+
+and let \(\Phi_A(s,v)=h_m\) at the first index satisfying
+\(c_m(s)\ge v\). Since \(c_q(s)=1\), this is total, and
+
+\[
+  \Pr\{\Phi_A(s,V)=h_m\}=c_m(s)-c_{m-1}(s)
+  =\Pr\{A(s)=h_m\}.
+\]
+
+This proves the exact learner marginal. Equal datasets and the same \(V\)
+give the same two arguments to the same deterministic function, proving
+the pathwise synchronization statement. \end{proof}
+
+\begin{lemma}[Fixed-hidden common-randomness coupling]\label{lem:step-011-coupling-kernel}
+Under Propositions~\ref{prop:step-009-overflow} and
+\ref{prop:step-010-simulator} and
+Lemma~\ref{lem:step-011-shared-randomization}, fix any
+\((t,Q)\in\mathcal I_N\)
+and any arbitrary randomized \(A\). There exists a joint probability
+kernel carrying
+
+\begin{enumerate}
+\item An infinite sequence
+   \[
+     W_\ell=(X_\ell^\star,Y_\ell^\star),\qquad \ell\ge1,
+   \tag{S11.7}\label{eq:step-011-7}
+   \]
+   of mutually independent draws from \(Q^{\tau_t}\), so
+   \(X_\ell^\star\sim Q\) and
+   \(Y_\ell^\star=\tau_t(X_\ell^\star)\);
+\item Independently of \eqref{eq:step-011-7}, the complete input-independent preprocessing seed
+   of Lemma~\ref{lem:step-010-public-preprocessing}; and
+\item Independently of both, one \(V\sim\operatorname{Unif}(0,1)\).
+\end{enumerate}
+
+such that the following statements hold.
+
+\begin{itemize}
+\item The actual input is
+  \[
+    Z^{\mathrm{in}}_\ell=W_\ell,\qquad \ell=1,\ldots,M,
+  \tag{S11.8}\label{eq:step-011-8}
+  \]
+  and hence has exactly the law \eqref{eq:coupling-input-law}, independently of simulator
+  preprocessing.
+\item Put \(\Theta_J=(T_J,Q_J):=(t,Q)\), retain the seed's
+  \(\Theta_i=(T_i,Q_i)\) for \(i\ne J\), write
+  \(\boldsymbol\Xi=(\Theta_1,\ldots,\Theta_k)\), and define the always-present
+  ideal ordered dataset
+  \[
+    S^{\mathrm{id}}=(\widehat z_1,\ldots,\widehat z_n)
+  \tag{S11.9}\label{eq:step-011-9}
+  \]
+  by
+  \[
+    \widehat z_r=
+    \begin{cases}
+      ((J,X_{L_r}^\star),Y_{L_r}^\star),&I_r=J,\\[1mm]
+      ((I_r,X_r^\circ),Y_r^\circ),&I_r\ne J,
+    \end{cases}
+    \qquad r\in[n].
+  \tag{S11.10}\label{eq:step-011-10}
+  \]
+  The infinite sequence makes \eqref{eq:step-011-10} well defined even when \(U>M\).
+\item There is a deterministic realization \(\Phi_A\) of the learner kernel
+  for which
+  \[
+    H^{\mathrm{id}}:=\Phi_A(S^{\mathrm{id}},V),
+    \qquad
+    G^{\mathrm{id}}:=D_JH^{\mathrm{id}}
+  \tag{S11.11}\label{eq:step-011-11}
+  \]
+  has the exact ideal call-and-restrict marginal.
+\item Define the actual output by the simulator control flow:
+  \[
+    G^{\mathrm{act}}:=
+    \begin{cases}
+      g_0,&U>M,\\
+      D_J\Phi_A(\mathcal P_{\Omega_{\mathrm{pre}}}
+                    (Z^{\mathrm{in}}),V),&U\le M.
+    \end{cases}
+  \tag{S11.12}\label{eq:step-011-12}
+  \]
+  Its marginal is exactly
+  \(B_{\mu_{N,M},A}(Z^{\mathrm{in}})\) with input law \eqref{eq:coupling-input-law}.
+  In the first line of \eqref{eq:step-011-12}, \(V\), \eqref{eq:step-011-7}, and every other coupling-only
+  variable are ignored: operationally the actual simulator still reads no
+  input and makes no call to \(A\).
+\end{itemize}
+
+Thus \eqref{eq:step-011-7}--\eqref{eq:step-011-12} give a coupling of the exact actual and ideal experiments,
+with every expectation and source of randomness specified.
+\end{lemma}
+
+\begin{proof}
+The finite law \(Q^{\tau_t}\) defines the product sequence \eqref{eq:step-011-7}. Only its
+first \(M\) coordinates are exposed as the actual input, so \eqref{eq:step-011-8} is exactly
+an iid size-\(M\) input rather than a stopped or conditioned sample. By
+construction this sequence is independent of the preprocessing seed, as
+required by Lemma~\ref{lem:step-010-public-preprocessing}.
+
+The running indices satisfy \(1\le L_r\le U\le n\) at every hidden
+position. Hence the infinite sequence gives every hidden row in \eqref{eq:step-011-10},
+including on overflow. Nonhidden rows in \eqref{eq:step-011-10} are the identical realized
+rows already present in the preprocessing seed. Therefore \eqref{eq:step-011-9} is
+always an ordered member of the full size-\(n\) learner domain.
+
+Lemma~\ref{lem:step-011-shared-randomization} makes \eqref{eq:step-011-11} an exact call to
+the randomized kernel \(A\), followed by
+the same restriction used by the simulator. In \eqref{eq:step-011-12}, the
+nonoverflow branch applies the same realization to the exact row
+map, while the overflow branch is the exact fixed output from Proposition~\ref{prop:step-010-simulator}. Sampling an unused coupling
+variable does not create an operational learner call. Equations \eqref{eq:step-011-8} and
+\eqref{eq:step-011-12}, together with the input-independent seed law and that lemma, prove the
+actual marginal claim. Equations \eqref{eq:step-011-9}--\eqref{eq:step-011-11} define the ideal marginal.
+\end{proof}
+
+\begin{lemma}[Identification with the ideal experiment]\label{lem:step-011-ideal-marginal}
+Under Lemmas~\ref{lem:step-008-instance-factorization},
+\ref{lem:step-008-ideal-sample-law}, and
+\ref{lem:step-008-selector-independence}, and under
+Lemma~\ref{lem:step-011-coupling-kernel}, fix \(j\in[k]\) and a complete
+vector
+
+\[
+  \boldsymbol\theta=((t_1,Q_1),\ldots,(t_k,Q_k))
+\tag{S11.14}\label{eq:step-011-14}
+\]
+
+with \((t_j,Q_j)=(t,Q)\). Conditional on \(J=j\) and on the nonhidden
+seed instances taking the values in \eqref{eq:step-011-14}, but without conditioning on
+\(U\), \(U\le M\), or any tag-count event, the ideal dataset \eqref{eq:step-011-9} satisfies
+
+\[
+  S^{\mathrm{id}}\sim
+  \left(P_{\boldsymbol Q}^{c_{\boldsymbol t}}\right)^n.
+\tag{S11.15}\label{eq:step-011-15}
+\]
+
+Equivalently, the \(n\) coupled ideal global labeled rows are mutually independent,
+and each has the fixed realizable law that first selects a tag uniformly
+and then draws its feature from that tag's fixed \(Q_i\). If the nonhidden
+instances are not fixed, their marginal is only the corresponding mixture
+of the product laws in \eqref{eq:step-011-15}; this lemma does not call that mixture iid from
+one deterministic product instance. Moreover, if the hidden pair
+\((t,Q)\) is first drawn from \(\mu_{N,M}\), the complete joint marginal
+\((J,\boldsymbol\Xi,S^{\mathrm{id}},H^{\mathrm{id}})\) is exactly the
+joint law characterized by Lemmas~\ref{lem:step-008-instance-factorization}--
+\ref{lem:step-008-selector-independence}, and
+
+\[
+  \mathbb E_{(t,Q)\sim\mu_{N,M}}
+    \mathbb E_{\mathrm{id},(t,Q)}R_Q(G^{\mathrm{id}},\tau_t)
+  =\mathbb E_{\mathrm{ideal}}
+    R_{Q_J}(D_JH^{\mathrm{id}},\tau_{T_J}).
+\tag{S11.15a}\label{eq:step-011-15a}
+\]
+\end{lemma}
+
+\begin{proof}
+Fix ordered tags \(i_1,\ldots,i_n\in[k]\) and features
+\(x_1,\ldots,x_n\in[N]\). The tag kernel gives
+
+\[
+  \Pr\{I_1=i_1,\ldots,I_n=i_n\mid J=j\}=k^{-n}.
+\tag{S11.16}\label{eq:step-011-16}
+\]
+
+Conditional on this tag vector and \eqref{eq:step-011-14}, enumerate the positions with
+tag \(j\) in increasing order. Formula \eqref{eq:step-011-10} assigns them the distinct
+sequence variables \(X_1^\star,\ldots,X_u^\star\), where \(u\) is the
+number of such positions. Their joint mass is the product of the
+corresponding \(Q_j\) factors. At every position with tag \(i_r\ne j\),
+Lemma~\ref{lem:step-010-public-preprocessing} supplies an
+independent feature with law \(Q_{i_r}\). Those nonhidden features are
+conditionally mutually independent and are independent of the separately
+drawn hidden sequence \eqref{eq:step-011-7}. Therefore
+
+\[
+  \Pr\{\text{the ideal feature at row }r\text{ is }x_r
+        \text{ for all }r
+       \mid J=j,\boldsymbol\theta,I_{1:n}=i_{1:n}\}
+  =\prod_{r=1}^n Q_{i_r}(x_r).
+\tag{S11.17}\label{eq:step-011-17}
+\]
+
+All labels in \eqref{eq:step-011-10} are deterministic and equal
+\(\tau_{t_{i_r}}(x_r)\). Multiplying \eqref{eq:step-011-16} and \eqref{eq:step-011-17} gives
+
+\[
+  \prod_{r=1}^n\left[
+    \frac1k Q_{i_r}(x_r)
+    \mathbf1\{y_r=\tau_{t_{i_r}}(x_r)\}
+  \right]
+\tag{S11.18}\label{eq:step-011-18}
+\]
+
+for every ordered labeled row vector. Expression \eqref{eq:step-011-18} is exactly the
+product mass function in \eqref{eq:step-011-15}. This calculation sums over all tag vectors,
+including those with \(U>M\); no overflow conditioning appears.
+
+Now draw the hidden pair \((t,Q)\sim\mu_{N,M}\) independently of the
+selector before applying the fixed-hidden kernel. Conditional on \(J=j\),
+this pair occupies coordinate \(j\), while
+Lemma~\ref{lem:step-010-public-preprocessing} draws every coordinate
+\(i\ne j\) independently from the
+same \(\mu_{N,M}\). These are precisely the hypotheses of Lemma~\ref{lem:step-008-instance-factorization}; hence the full vector has
+law \(\mu_{N,M}^{\otimes k}\) and is independent of \(J\). The row kernel
+verified in \eqref{eq:step-011-16}--\eqref{eq:step-011-18} is precisely the kernel in Lemma~\ref{lem:step-008-ideal-sample-law}. Finally,
+Lemma~\ref{lem:step-011-shared-randomization} gives the exact same learner
+kernel \(A\). Thus the complete coupled ideal marginal equals the ideal experiment, and its selected restriction is \(D_JH^{\mathrm{id}}\),
+which proves \eqref{eq:step-011-15a}. Lemma~\ref{lem:step-008-selector-independence} and
+Proposition~\ref{prop:step-008-selected-risk-identity} therefore remain
+valid for this marginal; their exchangeability and product-risk
+conclusions are consumed as facts and are not rederived here.
+
+Conditioning \eqref{eq:step-011-15} further on \(U\le M\) would restrict the tag vectors in
+\eqref{eq:step-011-16} and generally destroy the iid tag law. The proof never makes that
+conditional-iid assertion: later equality on \(U\le M\) is pathwise under
+the coupling, while \eqref{eq:step-011-15} is the unconditioned ideal sample law for the fixed
+block vector. \end{proof}
+
+\begin{proposition}[Exact row and restricted-output identity off overflow]\label{prop:step-011-no-overflow-identity}
+Under Lemma~\ref{lem:step-011-coupling-kernel}, Proposition~\ref{prop:step-010-row-construction}, and Lemma~\ref{lem:step-010-one-use}, on the event
+
+\[
+  E:=\{U\le M\},
+\tag{S11.19}\label{eq:step-011-19}
+\]
+
+the actual ordered dataset and ideal ordered dataset satisfy, row by row,
+
+\[
+  \mathcal P_{\Omega_{\mathrm{pre}}}(Z^{\mathrm{in}})_r
+  =\widehat z_r,
+  \qquad r=1,\ldots,n.
+\tag{S11.20}\label{eq:step-011-20}
+\]
+
+Consequently the shared randomized learner outputs and restrictions in
+\eqref{eq:step-011-11}--\eqref{eq:step-011-12} agree pathwise on \(E\), and
+
+\[
+  R_Q(G^{\mathrm{id}},\tau_t)
+  =R_Q(G^{\mathrm{act}},\tau_t)
+  \qquad\text{on }E.
+\tag{S11.21}\label{eq:step-011-21}
+\]
+
+This includes \(U=0\) and \(U=M\). No dataset, output, or risk equality is
+claimed on \(E^c=\{U>M\}\).
+\end{proposition}
+
+\begin{proof}
+Fix an outcome in \(E\) and a row \(r\in[n]\). If \(I_r=J\), then
+
+\[
+  1\le L_r\le U\le M.
+\tag{S11.22}\label{eq:step-011-22}
+\]
+
+The exact occurrence map in
+Proposition~\ref{prop:step-010-row-construction} uses actual input row
+\(L_r\).
+By \eqref{eq:step-011-8}, this row is
+
+\[
+  Z^{\mathrm{in}}_{L_r}
+  =(X_{L_r}^\star,Y_{L_r}^\star).
+\]
+
+The hidden-row line of the row rule in
+Proposition~\ref{prop:step-010-row-construction} is therefore
+
+\[
+  ((J,X_{L_r}^\star),Y_{L_r}^\star),
+\]
+
+which is exactly the first line of the ideal rule \eqref{eq:step-011-10}. If \(I_r\ne J\),
+the nonhidden-row line of
+Proposition~\ref{prop:step-010-row-construction} and the nonhidden-row line
+of \eqref{eq:step-011-10} are literally the same realized
+nonhidden row \(((I_r,X_r^\circ),Y_r^\circ)\). This exhaustive row split
+proves \eqref{eq:step-011-20}, with ordering preserved.
+
+At \(U=0\), there is no hidden row and the second-line identity applies at
+all \(n\) positions; both experiments call \(A\) on the identical all-
+nonhidden dataset. At \(U=M\), \eqref{eq:step-011-22} still holds, and the exact occurrence
+map may use all and only the first \(M\) sequence records. Thus neither
+endpoint requires a separate conditioning argument or an extra record.
+
+Because \eqref{eq:step-011-20} gives equal datasets and both calls use the same \(V\),
+Lemma~\ref{lem:step-011-shared-randomization} gives equal hypotheses even when
+\(A\) is randomized, improper, nonmonotone, or tag-asymmetric. Both sides
+then apply the same restriction \(D_J\), so the one-block outputs are
+equal. Evaluating the identical functions against the same fixed
+\((Q,\tau_t)\) proves \eqref{eq:step-011-21}.
+
+On \(E^c\), Proposition~\ref{prop:step-010-simulator} makes the
+actual side return \(g_0\) before reading the input or calling \(A\),
+whereas the ideal side still uses \eqref{eq:step-011-9}--\eqref{eq:step-011-11}. The proof makes no comparison
+between those datasets or outputs there. \end{proof}
+
+\begin{proposition}[Bounded selected-risk transfer]\label{prop:step-011-risk-transfer}
+Under Lemma~\ref{lem:step-011-ideal-marginal},
+Proposition~\ref{prop:step-011-no-overflow-identity}, and Proposition~\ref{prop:step-009-overflow}, for every fixed hidden pair
+\((t,Q)\) and arbitrary randomized \(A\), define
+
+\[
+  L_{\mathrm{id}}:=R_Q(G^{\mathrm{id}},\tau_t),
+  \qquad
+  L_{\mathrm{act}}:=R_Q(G^{\mathrm{act}},\tau_t).
+\tag{S11.23}\label{eq:step-011-23}
+\]
+
+Then, on the full coupling space,
+
+\[
+  L_{\mathrm{id}}
+  \ge L_{\mathrm{act}}-\mathbf1\{U>M\}.
+\tag{S11.24}\label{eq:step-011-24}
+\]
+
+Taking the exact marginals from
+Lemma~\ref{lem:step-011-coupling-kernel} proves \eqref{eq:fixed-hidden-transfer}. Averaging the hidden
+pair under \(\mu_{N,M}\) and applying
+Lemma~\ref{lem:step-011-ideal-marginal} proves the exact ideal
+interface \eqref{eq:prior-transfer}. Proposition~\ref{prop:step-009-overflow}
+supplies the strict residual in \eqref{eq:overflow-certificate}.
+If \(k=2\) or \(k=3\), then \(U\le M\) pathwise and the same result has
+zero residual.
+\end{proposition}
+
+\begin{proof}
+Population 0-1 risk is a probability, so for every output function,
+
+\[
+  0\le L_{\mathrm{id}}\le1,
+  \qquad
+  0\le L_{\mathrm{act}}\le1.
+\tag{S11.25}\label{eq:step-011-25}
+\]
+
+On \(E\), Proposition~\ref{prop:step-011-no-overflow-identity} gives
+\(L_{\mathrm{id}}=L_{\mathrm{act}}\), so \eqref{eq:step-011-24} holds with a zero
+indicator. On \(E^c\), \eqref{eq:step-011-25} gives
+
+\[
+  L_{\mathrm{act}}-1\le0\le L_{\mathrm{id}},
+\]
+
+which is exactly \eqref{eq:step-011-24} with indicator one. This overflow argument uses only
+boundedness. In particular, the actual early-abort output is \(g_0\), but
+its risk may be any value in \([0,1]\): it is zero for the all-zero target,
+one for the all-one target under any \(Q\), and can take an intermediate
+value for other thresholds. No equality or favorable abort-risk property
+is assumed.
+
+Taking expectation of \eqref{eq:step-011-24} over the joint variables in
+Lemma~\ref{lem:step-011-coupling-kernel} gives
+
+\[
+  \mathbb E_{\mathrm{id},\theta}L_{\mathrm{id}}
+  \ge
+  \mathbb E_{\mathrm{act},\theta}L_{\mathrm{act}}
+  -\mathbb E\mathbf1\{U>M\}.
+\tag{S11.26}\label{eq:step-011-26}
+\]
+
+The actual marginal identity in that lemma identifies the middle term with
+the simulator expectation displayed in \eqref{eq:fixed-hidden-transfer}, including all of its
+preprocessing and learner randomness. The ideal marginal identifies the
+first term with the ideal selected-risk expectation. Finally,
+
+\[
+  \mathbb E\mathbf1\{U>M\}=\Pr\{U>M\}<2^{-9}
+\tag{S11.27}\label{eq:step-011-27}
+\]
+
+by Proposition~\ref{prop:step-009-overflow}. There is no conditioning-to-expectation
+conversion and no interchange of a limit, supremum, or integral: the
+ideal dataset uses only finitely many coordinates of \eqref{eq:step-011-7}, and all other
+spaces are finite.
+
+Because \eqref{eq:step-011-26} holds for every fixed \((t,Q)\), average it over
+\((t,Q)\sim\mu_{N,M}\). The overflow term is unchanged because its law
+depends only on \(J,I_{1:n}\). Lemma~\ref{lem:step-011-ideal-marginal},
+specifically \eqref{eq:step-011-15a}, identifies the averaged ideal term
+with the selected-risk quantity in
+Proposition~\ref{prop:step-008-selected-risk-identity}. The averaged
+actual term is
+the right-hand simulator expectation in \eqref{eq:prior-transfer}. This proves \eqref{eq:prior-transfer} without
+rederiving or using the equality between ideal selected risk and
+product population risk.
+
+For \(k=2,3\), Proposition~\ref{prop:step-009-overflow} gives
+\(M\ge n\ge U\), so \eqref{eq:step-011-21} holds everywhere and the final term in \eqref{eq:step-011-26} is
+exactly zero. For \(n<k\) or \(M=8\), the coupling and pointwise inequality
+are unchanged, while the floor-eight estimate supplies the stated
+strict residual. \end{proof}
+The shared realization of $A$ synchronizes outputs whenever the ordered
+datasets agree.  Proposition~\ref{prop:step-011-risk-transfer} proves
+\eqref{eq:fixed-hidden-transfer}--\eqref{eq:prior-transfer} with one and
+only one overflow charge.
+
+\subsection{One-charge privacy of the simulator}\label{app:step-012}
+Continue under \eqref{eq:local-negation}.  For every
+$z\simeq z'$ in $\mathsf Z_M$ and every $E\subseteq\mathsf G_N$, the
+target simulator inequalities are
+\begin{align}
+B_{\mu_{N,M},A}(z,E)
+&\le e^\varepsilon B_{\mu_{N,M},A}(z',E)+\delta,
+\tag{S12.4}\label{eq:simulator-dp}\\
+B_{\mu_{N,M},A}(z,E)
+&\le e^{0.1}B_{\mu_{N,M},A}(z',E)+\Delta_M,
+\qquad
+\Delta_M=\frac{d_*}{M^2\log M}.
+\tag{S12.6}\label{eq:simulator-source-cap}
+\end{align}
+\begin{lemma}[Deterministic one-row preprocessing map]\label{lem:step-012-one-row-map}
+Under Assumption~\ref{assump:candidate-regime}, the contradiction hypothesis~\eqref{eq:local-negation},
+and Proposition~\ref{prop:step-010-row-construction} and
+Lemma~\ref{lem:step-010-one-use}, fix any realization \(\omega\) of
+the input-independent preprocessing seed and any arbitrary
+\(z,z'\in\mathsf Z_M\) with \(z\simeq z'\).  Then exactly one of the
+following holds.
+
+\begin{enumerate}
+\item If \(U(\omega)>M\), the preprocessing control flow evaluates no
+   coordinate of either input, so its output branch is identical on
+   \(z,z'\).
+\item If \(U(\omega)\le M\), the two exact size-\(n\) datasets
+   \(\mathcal P_\omega(z)\) and \(\mathcal P_\omega(z')\) are equal or
+   replacement-adjacent.  More precisely, if the inputs differ only at
+   row \(q\), then they are equal when \(q>U\), while for \(q\le U\)
+   they can differ only at the single global row \(r_q\), the \(q\)-th
+   hidden-tag occurrence.
+\end{enumerate}
+
+This assertion includes \(U=0\), a changed unused record, a changed used
+record, simultaneous replacement of the record's feature and label, and
+arbitrary possibly nonrealizable label patterns.  All nonhidden global
+rows and all hidden rows other than \(r_q\) coincide.  In particular, the
+map never produces group-adjacent datasets.
+\end{lemma}
+
+\begin{proof}
+Proposition~\ref{prop:step-010-row-construction} gives
+
+\[
+  U=\sum_{r=1}^n\mathbf1\{I_r=J\},
+\tag{S12.10}\label{eq:step-012-10}
+\]
+
+as a function only of \(J,I_{1:n}\), all of which belong to \(\omega\).
+Hence the same value of \(U\), and therefore the same overflow branch, is
+used on \(z\) and \(z'\).  When \(U>M\), Proposition~\ref{prop:step-010-row-construction} stops before either input
+is read.  This proves the first branch pathwise, not only in distribution.
+
+Suppose \(U\le M\).  Lemma~\ref{lem:step-010-one-use} gives distinct
+hidden positions
+
+\[
+  1\le r_1<\cdots<r_U\le n
+\tag{S12.11}\label{eq:step-012-11}
+\]
+
+depending only on \(\omega\), and its exact row rule gives, for
+\(z_\ell=(x_\ell,y_\ell)\),
+
+\[
+  \bigl(\mathcal P_\omega(z)\bigr)_{r_\ell}
+  =((J,x_\ell),y_\ell),
+  \qquad \ell=1,\ldots,U.
+\tag{S12.12}\label{eq:step-012-12}
+\]
+
+Every other position is a nonhidden row already fixed by \(\omega\).
+The same formulas, with primes, hold for \(z'\), with exactly the same
+positions \(r_\ell\) and exactly the same nonhidden rows.
+
+If \(z=z'\), the synthesized datasets are equal.  Otherwise adjacency in
+\(\mathsf Z_M\) supplies one index \(q\in[M]\) such that
+\(z_\ell=z'_\ell\) for every \(\ell\ne q\).  If \(q>U\), Lemma~\ref{lem:step-010-one-use} says row \(q\) is unused, and \eqref{eq:step-012-12}
+shows equality of every used hidden row; all nonhidden rows also coincide.
+Thus
+
+\[
+  \mathcal P_\omega(z)=\mathcal P_\omega(z').
+\tag{S12.13}\label{eq:step-012-13}
+\]
+
+If \(q\le U\), then for every hidden row \(r_\ell\) with \(\ell\ne q\),
+the equality \(z_\ell=z'_\ell\) and \eqref{eq:step-012-12} give equal rows.  At the sole
+remaining hidden position,
+
+\[
+  \bigl(\mathcal P_\omega(z)\bigr)_{r_q}=((J,x_q),y_q),
+  \qquad
+  \bigl(\mathcal P_\omega(z')\bigr)_{r_q}=((J,x'_q),y'_q).
+\tag{S12.14}\label{eq:step-012-14}
+\]
+
+Equation \eqref{eq:step-012-14} is one replacement even if both \(x_q\ne x'_q\) and
+\(y_q\ne y'_q\).  It is still a legal replacement when either raw label
+is inconsistent with every threshold because both labels remain elements
+of \(\{0,1\}\), and Assumption~\ref{assump:central-dp} is stated on all
+labeled datasets.  Every nonhidden row is a component of the fixed seed,
+so no nonhidden row changes.  Thus the synthesized datasets differ in at
+most the one row \(r_q\), proving replacement adjacency and excluding any
+group-adjacency charge.
+
+Finally, if \(U=0\), there are no positions in \eqref{eq:step-012-11}, every synthesized
+row is nonhidden and seed-fixed, and \eqref{eq:step-012-13} holds for every pair of inputs.
+This also proves the requested null case. \end{proof}
+
+\begin{proposition}[Fixed-seed privacy kernel with learner coins retained]\label{prop:step-012-fixed-seed-kernel}
+Under Assumptions~\ref{assump:candidate-regime} and
+\ref{assump:central-dp}, the contradiction hypothesis~\eqref{eq:local-negation}, Proposition~\ref{prop:step-010-simulator}, and
+Lemma~\ref{lem:step-012-one-row-map}, fix a preprocessing seed \(\omega\)
+but do not fix the internal coins of \(A\).  Define the all-zero global
+hypothesis
+
+\[
+  h_0(i,x):=0
+  \qquad ((i,x)\in X_{k,N}),
+\tag{S12.15}\label{eq:step-012-15}
+\]
+
+and the global-output kernel \(K_\omega:\mathsf Z_M\to\mathcal H_{k,N}\)
+by
+
+\[
+  K_\omega(z,F)=
+  \begin{cases}
+    \mathbf1\{h_0\in F\}, & U(\omega)>M,\\[1mm]
+    \Pr_A\!\left[A(\mathcal P_\omega(z))\in F\right],
+      & U(\omega)\le M,
+  \end{cases}
+\tag{S12.16}\label{eq:step-012-16}
+\]
+
+for every \(F\subseteq\mathcal H_{k,N}\).  Then, for all arbitrary
+\(z\simeq z'\) in \(\mathsf Z_M\),
+
+\[
+  K_\omega(z,F)
+  \le e^\varepsilon K_\omega(z',F)+\delta
+  \qquad(F\subseteq\mathcal H_{k,N}).
+\tag{S12.17}\label{eq:step-012-17}
+\]
+
+On overflow the two output laws coincide exactly.  On nonoverflow, \eqref{eq:step-012-17}
+uses Assumption~\ref{assump:central-dp} at most once.  The statement holds
+for arbitrary randomized \(A\); its internal coins are precisely the
+randomness under \(\Pr_A\) in \eqref{eq:step-012-16}, not part of the fixed seed.
+\end{proposition}
+
+\begin{proof}
+The function \(h_0\) belongs to the full output space
+\(\mathcal H_{k,N}\), and \(D_Jh_0=g_0\) for every \(J\).  Thus the first
+line of \eqref{eq:step-012-16} is an analytical global-output lift of the simulator's actual
+fixed overflow output; it does not call \(A\).
+
+If \(U(\omega)>M\), the seed fixes the same branch for both inputs, and
+
+\[
+  K_\omega(z,F)=\mathbf1\{h_0\in F\}=K_\omega(z',F).
+\tag{S12.18}\label{eq:step-012-18}
+\]
+
+Since \(e^\varepsilon\ge1\) and \(\delta\ge0\), \eqref{eq:step-012-18} implies \eqref{eq:step-012-17}.  This
+also shows directly that overflow contributes no privacy residual.
+
+Suppose \(U(\omega)\le M\).  By
+Lemma~\ref{lem:step-012-one-row-map},
+\(\mathcal P_\omega(z)=\mathcal P_\omega(z')\) or
+\(\mathcal P_\omega(z)\simeq\mathcal P_\omega(z')\).  In the equality
+case the two laws in \eqref{eq:step-012-16} coincide, including when \(U=0\) or the changed
+input row is unused.  In the adjacent case, Assumption~\ref{assump:central-dp}
+applied once to the exact size-\(n\) pair and the event \(F\) gives
+
+\[
+\begin{aligned}
+  K_\omega(z,F)
+  &=\Pr_A[A(\mathcal P_\omega(z))\in F]\\
+  &\le e^\varepsilon
+    \Pr_A[A(\mathcal P_\omega(z'))\in F]+\delta\\
+  &=e^\varepsilon K_\omega(z',F)+\delta.
+\end{aligned}
+\tag{S12.19}\label{eq:step-012-19}
+\]
+
+No coin of \(A\) was conditioned on or fixed in \eqref{eq:step-012-19}.  Arbitrary feature
+and label replacements are covered because the premise of \eqref{eq:step-012-19} is the
+replacement adjacency proved in Lemma~\ref{lem:step-012-one-row-map}, not
+realizability.  There is one invocation of
+Assumption~\ref{assump:central-dp}, so neither group privacy
+nor sequential composition appears. \end{proof}
+
+\begin{lemma}[Common input-independent mixture and restriction preserve one charge]\label{lem:step-012-postprocess-mixture}
+Under Assumptions~\ref{assump:candidate-regime} and
+\ref{assump:central-dp}, the contradiction hypothesis~\eqref{eq:local-negation}, Lemma~\ref{lem:step-010-public-preprocessing} and
+Proposition~\ref{prop:step-010-simulator}, and
+Proposition~\ref{prop:step-012-fixed-seed-kernel}, let \(\nu\) be the law
+of the input-independent preprocessing seed on its finite seed space
+\(\mathsf\Omega_{\mathrm{pre}}\).  For
+\(G\subseteq\mathsf\Omega_{\mathrm{pre}}\times\mathcal H_{k,N}\), define
+its seed section
+
+\[
+  G_\omega:=\{h\in\mathcal H_{k,N}:(\omega,h)\in G\},
+\tag{S12.20}\label{eq:step-012-20}
+\]
+
+and form the joint seed/global-output kernel
+
+\[
+  \widehat K(z,G)
+  :=\sum_{\omega\in\mathsf\Omega_{\mathrm{pre}}}
+       \nu(\omega)K_\omega(z,G_\omega).
+\tag{S12.21}\label{eq:step-012-21}
+\]
+
+Then \(\widehat K\) is \((\varepsilon,\delta)\)-DP.  Applying only after
+this common mixture the deterministic postprocessing map
+
+\[
+  \Phi(\omega,h):=D_{J(\omega)}h
+\tag{S12.22}\label{eq:step-012-22}
+\]
+
+produces exactly the simulator law.  Consequently \eqref{eq:simulator-dp} holds with
+exactly one additive \(\delta\).
+\end{lemma}
+
+\begin{proof}
+The seed space is finite: Lemma~\ref{lem:step-010-public-preprocessing}
+samples finitely many tags,
+finitely many elements of the finite-support prior, and features from the
+finite domain \([N]\).  For each \(G\), every section \(G_\omega\) in
+\eqref{eq:step-012-20} is therefore a valid event in the global output space.  Equation
+\eqref{eq:step-012-21} is a total kernel: all summands are nonnegative, its value on
+\(\mathsf\Omega_{\mathrm{pre}}\times\mathcal H_{k,N}\) is
+\(\sum_\omega\nu(\omega)K_\omega(z,\mathcal H_{k,N})=1\), and finite
+additivity follows by taking disjoint seed sections and using additivity of
+each \(K_\omega\).  The seedwise inequality \eqref{eq:step-012-17} is uniform in \(\omega\)
+and in the event, so for arbitrary \(z\simeq z'\),
+
+\[
+\begin{aligned}
+  \widehat K(z,G)
+  &=\sum_\omega\nu(\omega)K_\omega(z,G_\omega)\\
+  &\le\sum_\omega\nu(\omega)
+       \bigl(e^\varepsilon K_\omega(z',G_\omega)+\delta\bigr)\\
+  &=e^\varepsilon\sum_\omega\nu(\omega)K_\omega(z',G_\omega)
+    +\delta\sum_\omega\nu(\omega)\\
+  &=e^\varepsilon\widehat K(z',G)+\delta.
+\end{aligned}
+\tag{S12.23}\label{eq:step-012-23}
+\]
+
+Here Lemma~\ref{lem:step-010-public-preprocessing} supplies the
+same input-independent weights \(\nu(\omega)\) for \(z\) and \(z'\).  Also,
+\[
+\sum_\omega\nu(\omega)=1.
+\]
+Thus \eqref{eq:step-012-23} first proves exact DP for the
+common joint mixture.  The overflow subset
+\(\{\omega:U(\omega)>M\}\), the \(U=0\) subset, and every nonoverflow
+subset are determined solely by this common seed.  No input-dependent
+conditioning, normalization, or change of measure occurs.
+
+Now fix \(E\subseteq\mathsf G_N\) and use the one joint-output event
+
+\[
+  G_E:=\Phi^{-1}(E)
+  =\{(\omega,h):D_{J(\omega)}h\in E\}.
+\tag{S12.24}\label{eq:step-012-24}
+\]
+
+On an overflow seed, \eqref{eq:step-012-15} gives \(\Phi(\omega,h_0)=g_0\), so that seed's
+contribution to \(\widehat K(z,G_E)\) is
+\(\nu(\omega)\mathbf1\{g_0\in E\}\), independently of \(z\).  On a
+nonoverflow seed, its contribution is
+
+\[
+  \nu(\omega)\Pr_A\!\left[
+    D_{J(\omega)}A(\mathcal P_\omega(z))\in E
+  \right],
+\tag{S12.25}\label{eq:step-012-25}
+\]
+
+with all internal randomness of \(A\) retained.  Summing these two exact
+branches is precisely Proposition~\ref{prop:step-010-simulator},
+so
+
+\[
+  B_{\mu_{N,M},A}(z,E)=\widehat K(z,G_E).
+\tag{S12.26}\label{eq:step-012-26}
+\]
+
+Finally apply \eqref{eq:step-012-23} to \(G=G_E\) and use \eqref{eq:step-012-26} for both inputs.  This is the
+event-preimage proof of postprocessing after the common mixture and gives
+\eqref{eq:simulator-dp}.  The additive term in \eqref{eq:step-012-23} is \(\delta\), not \(\delta\) times the
+number of seeds, \(n\), \(k\), \(U\), or an overflow factor. \end{proof}
+
+\begin{proposition}[Exact source-cap membership]\label{prop:step-012-source-membership}
+Under Assumptions~\ref{assump:candidate-regime} and
+\ref{assump:central-dp}, the contradiction hypothesis~\eqref{eq:local-negation}, Propositions~\ref{prop:step-005-certificate} and
+\ref{prop:step-010-simulator}, and
+Lemma~\ref{lem:step-012-postprocess-mixture}, define the exact source-cap
+learner set at the present \(N,M\) by
+
+\[
+\begin{aligned}
+  \mathcal K^{\mathrm{src}}_{N,M}:=
+  \bigl\{K:\;&\mathsf Z_M\longrightarrow\mathsf G_N
+      \text{ a total randomized kernel}:\\[-1mm]
+    &K(z,E)\le e^{0.1}K(z',E)+\Delta_M\\[-1mm]
+    &\text{for all }z\simeq z'\text{ in }\mathsf Z_M
+      \text{ and }E\subseteq\mathsf G_N\bigr\}.
+\end{aligned}
+\tag{S12.27}\label{eq:step-012-27}
+\]
+
+Then
+
+\[
+  B_{\mu_{N,M},A}\in\mathcal K^{\mathrm{src}}_{N,M}.
+\tag{S12.28}\label{eq:step-012-28}
+\]
+
+More fully, the same parameters satisfy
+\[
+N\ge N_*,\qquad 8\le M<b_*\log_2^*N,\qquad
+0<\varepsilon\le0.1,\qquad 0<\delta<\Delta_M,
+\]
+the simulator has exact input size \(M\), full arbitrary one-block
+output space \(\mathsf G_N\), and is total on all labeled inputs, and its
+event probabilities satisfy \eqref{eq:simulator-source-cap}.  Thus \eqref{eq:step-012-28} is exact source-interface
+membership, not an inference from the phrase
+"\((\varepsilon,\delta)\)-DP" alone.
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:step-010-simulator} proves that
+\(B_{\mu_{N,M},A}\) is a total randomized kernel with domain exactly
+\(\mathsf Z_M\) and codomain exactly the full improper space
+\(\mathsf G_N\).  Its totality includes overflow, \(U=0\), arbitrary
+corrupt input labels, and unused trailing records.
+
+Proposition~\ref{prop:step-005-certificate}, applied to the same
+\(N,M,\varepsilon,\delta\), gives
+$N\ge N_*$, $8\le M<b_*\log_2^*N$,
+$0<\varepsilon\le0.1$, and $0<\delta<\Delta_M$.  In particular,
+\(M\ge8\) implies \(\log M>0\), so the value
+\(\Delta_M=d_*/(M^2\log M)\) in
+\eqref{eq:simulator-source-cap} is a well-defined positive source cap.
+Lemma~\ref{lem:step-012-postprocess-mixture} gives, for every
+defining pair and event in \eqref{eq:step-012-27},
+
+\[
+  B_{\mu_{N,M},A}(z,E)
+  \le e^\varepsilon B_{\mu_{N,M},A}(z',E)+\delta.
+\tag{S12.29}\label{eq:step-012-29}
+\]
+
+Because probabilities are nonnegative, \(\varepsilon\le0.1\), and
+\(\delta<\Delta_M\),
+
+\[
+\begin{aligned}
+  e^\varepsilon B_{\mu_{N,M},A}(z',E)+\delta
+  &\le e^{0.1}B_{\mu_{N,M},A}(z',E)+\delta\\
+  &< e^{0.1}B_{\mu_{N,M},A}(z',E)+\Delta_M.
+\end{aligned}
+\tag{S12.30}\label{eq:step-012-30}
+\]
+
+The weak inequality required in \eqref{eq:step-012-27} follows.  The scalar
+inequalities from Proposition~\ref{prop:step-005-certificate},
+\eqref{eq:step-012-27}, and
+\eqref{eq:step-012-30}, together with the exact total kernel typing, check every component
+of the source interface separately.  No accuracy, realizability, or
+properness property has been added to that learner set, and no private
+eligibility is inferred without the event-level derivation \eqref{eq:step-012-29}--\eqref{eq:step-012-30}.
+This proves \eqref{eq:step-012-28}. \end{proof}
+The fixed-seed adjacency lemma, the single invocation of
+Assumption~\ref{assump:central-dp}, and the common seed mixture prove
+\eqref{eq:simulator-dp}.  Proposition~\ref{prop:step-012-source-membership}
+then verifies the exact source-cap typing and parameters in
+\eqref{eq:simulator-source-cap}.
+
+\subsection{Prior-averaged product risk}\label{app:step-013}
+Set $\eta=2^{-8}$ and $B=B_{\mu_{N,M},A}$.  In the ideal experiment let
+\begin{equation}
+\boldsymbol\Xi\sim\mu_{N,M}^{\otimes k},
+\qquad
+S^{\mathrm{id}}\mid\boldsymbol\Xi
+\sim(P_{\boldsymbol Q}^{c_{\boldsymbol T}})^n,
+\qquad
+H^{\mathrm{id}}\sim A(S^{\mathrm{id}}).
+\tag{S13.3}\label{eq:product-lower-experiment}
+\end{equation}
+The conclusion sought is
+\begin{equation}
+\mathbb E R_{P_{\boldsymbol Q}}(H^{\mathrm{id}},c_{\boldsymbol T})
+>2^{-9}.
+\tag{S13.4}\label{eq:prior-product-lower}
+\end{equation}
+\begin{proposition}[Hard-prior loss of the certified simulator]\label{prop:step-013-simulator-hardness}
+Under Proposition~\ref{prop:step-004-finite-hard-prior} and
+Proposition~\ref{prop:step-012-source-membership}, if the total
+simulator \(B=B_{\mu_{N,M},A}\) is instantiated at their identical
+admissible \(N,M\) and public prior \(\mu_{N,M}\), then
+
+\[
+\mathbb E_{\substack{(T,Q)\sim\mu_{N,M}\\
+                      Z\sim(Q^{\tau_T})^M\\ B}}
+R_Q(B(Z),\tau_T)>\eta=2^{-8}.
+\tag{S13.9}\label{eq:step-013-9}
+\]
+
+The expectation includes the prior draw, exactly \(M\) i.i.d. realizable
+one-block input rows conditional on that draw, all simulator preprocessing,
+and any internal coins of \(A\) used by the simulator.
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:step-012-source-membership} gives every
+membership clause needed by the universal learner quantifier in Proposition~\ref{prop:step-004-finite-hard-prior}: \(B\) is total on the
+entire arbitrary labeled input space of exact size \(M\), its output is an
+arbitrary member of \(\{0,1\}^{[N]}\), and it satisfies every event-level
+one-row replacement inequality at privacy parameters
+
+\[
+\left(0.1,\frac{d_*}{M^2\log M}\right).
+\tag{S13.10}\label{eq:step-013-10}
+\]
+
+Both propositions use the same finite ordered domain \([N]\),
+thresholds \(\tau_t\), population-risk convention, source constants, and
+integers \(N,M\). Thus no convention, object, sample-size, or privacy bridge
+remains to prove.
+
+The prior in Proposition~\ref{prop:step-004-finite-hard-prior} was selected
+before the universal learner
+quantifier. Although the code of \(B\) uses the public
+\(\mu_{N,M}\), it is therefore one of the prior-aware kernels already
+covered by that quantifier. Substituting this exact \(B\) into
+Proposition~\ref{prop:step-004-finite-hard-prior} yields
+\eqref{eq:step-013-9} directly. The substitution neither conditions on overflow nor changes
+the simulator on any input, so it introduces no residual. \end{proof}
+
+\begin{proposition}[Prior-averaged product-risk transfer]\label{prop:step-013-product-lower-bound}
+Under Propositions~\ref{prop:step-008-selected-risk-identity},
+\ref{prop:step-009-overflow}, \ref{prop:step-011-risk-transfer}, and
+\ref{prop:step-013-simulator-hardness}, the ideal experiment
+\eqref{eq:product-lower-experiment} obeys the exact
+product-risk lower bound \eqref{eq:prior-product-lower}.
+\end{proposition}
+
+\begin{proof}
+Define only for this proof
+
+\[
+\mathcal L_{\mathrm{act}}
+:=
+\mathbb E_{\substack{(T,Q)\sim\mu_{N,M}\\
+                      Z\sim(Q^{\tau_T})^M\\ B}}
+R_Q(B(Z),\tau_T)
+\tag{S13.11}\label{eq:step-013-11}
+\]
+
+and
+
+\[
+\mathcal L_{\mathrm{id}}
+:=
+\mathbb E_{\mathrm{ideal}}
+R_{Q_J}(D_JH^{\mathrm{id}},\tau_{T_J}).
+\tag{S13.12}\label{eq:step-013-12}
+\]
+
+These are proof-local names for the two exact quantities already typed by
+the dependencies. Proposition~\ref{prop:step-013-simulator-hardness}
+gives
+
+\[
+\mathcal L_{\mathrm{act}}>2^{-8}.
+\tag{S13.13}\label{eq:step-013-13}
+\]
+
+Proposition~\ref{prop:step-011-risk-transfer} and the notation
+\(p_{\mathrm{ov}}=\Pr(U>M)\), with its bound supplied by
+Proposition~\ref{prop:step-009-overflow}, give
+
+\[
+\mathcal L_{\mathrm{id}}
+\ge \mathcal L_{\mathrm{act}}-p_{\mathrm{ov}}.
+\tag{S13.14}\label{eq:step-013-14}
+\]
+
+Combining \eqref{eq:step-013-13} with the weak inequality \eqref{eq:step-013-14} preserves strictness:
+
+\[
+\mathcal L_{\mathrm{id}}
+>2^{-8}-p_{\mathrm{ov}}.
+\tag{S13.15}\label{eq:step-013-15}
+\]
+
+Proposition~\ref{prop:step-009-overflow} gives the strict upper
+bound \(p_{\mathrm{ov}}<2^{-9}\). Since subtraction reverses the comparison
+in the subtracted term,
+
+\[
+2^{-8}-p_{\mathrm{ov}}
+>2^{-8}-2^{-9}
+=2\cdot2^{-9}-2^{-9}
+=2^{-9}.
+\tag{S13.16}\label{eq:step-013-16}
+\]
+
+Equations \eqref{eq:step-013-15}--\eqref{eq:step-013-16} therefore yield
+
+\[
+\mathcal L_{\mathrm{id}}>2^{-9}.
+\tag{S13.17}\label{eq:step-013-17}
+\]
+
+The overflow event has been charged exactly once: it occurs only in \eqref{eq:step-013-14},
+and no later equality or bound adds another copy.
+
+Finally, Proposition~\ref{prop:step-008-selected-risk-identity}
+identifies \eqref{eq:step-013-12}, with no residual, as
+
+\[
+\mathcal L_{\mathrm{id}}
+=
+\mathbb E_{\substack{\boldsymbol\Xi\sim\mu_{N,M}^{\otimes k}\\
+                      S^{\mathrm{id}}\sim
+                      (P_{\boldsymbol Q}^{c_{\boldsymbol T}})^n\\
+                      H^{\mathrm{id}}\sim A(S^{\mathrm{id}})}}
+R_{P_{\boldsymbol Q}}(H^{\mathrm{id}},c_{\boldsymbol T}).
+\tag{S13.18}\label{eq:step-013-18}
+\]
+
+Substituting \eqref{eq:step-013-18} into \eqref{eq:step-013-17} proves \eqref{eq:prior-product-lower}. The equality in \eqref{eq:step-013-18} is taken under
+the unconditional ideal experiment; the conditional i.i.d. sample law is
+invoked only after fixing \(\boldsymbol\Xi\), and no conditioning on
+\(U\le M\) appears. \end{proof}
+Proposition~\ref{prop:step-013-simulator-hardness} applies the public prior
+only after source-cap membership is established.  The ledger in
+Proposition~\ref{prop:step-013-product-lower-bound} preserves strictness and
+proves \eqref{eq:prior-product-lower}.
+
+\subsection{A fixed hard product instance}\label{app:step-014}
+For $\boldsymbol z=((t_i,Q_i))_{i=1}^k\in\mathcal I_N^k$, define
+\begin{equation}
+\Phi_A(\boldsymbol z)
+=\mathbb E_{\substack{S\sim(P_{\boldsymbol Q}^{c_{\boldsymbol t}})^n\\
+\rho_A}}
+R_{P_{\boldsymbol Q}}(A_{\rho_A}(S),c_{\boldsymbol t}).
+\tag{S14.3}\label{eq:fixed-instance-functional}
+\end{equation}
+\begin{proposition}[Fixed support point from a strict prior average]\label{prop:step-014-fixed-extraction}
+Under Proposition~\ref{prop:step-013-product-lower-bound}, fix its
+same \(k,N,M,n,A\), finite prior \(\mu_{N,M}\), and ideal experiment. Then
+there exists a deterministic vector
+\[
+\boldsymbol z^*\in\operatorname{supp}(\mu_{N,M}^{\otimes k})
+\subseteq\mathcal I_N^k
+\tag{S14.8}\label{eq:step-014-8}
+\]
+such that
+\[
+\mathbb E_{\substack{S\sim(P_{\boldsymbol Q^*}^{c_{\boldsymbol t^*}})^n\\
+\rho_A}}
+R_{P_{\boldsymbol Q^*}}\bigl(A_{\rho_A}(S),c_{\boldsymbol t^*}\bigr)
+>2^{-9}.
+\tag{S14.9}\label{eq:step-014-9}
+\]
+Once \(\boldsymbol z^*\) is selected, the only randomness in \eqref{eq:step-014-9} is the
+fixed-instance sample and the learner coins.
+\end{proposition}
+
+\begin{proof}
+Let
+\[
+\mathcal S=\operatorname{supp}(\mu_{N,M}^{\otimes k}).
+\tag{S14.10}\label{eq:step-014-10}
+\]
+Proposition~\ref{prop:step-013-product-lower-bound} supplies a finite
+probability law, so
+\(\mathcal S\) is finite. For each \(\boldsymbol z\in\mathcal S\), put
+\[
+w_{\boldsymbol z}=\mu_{N,M}^{\otimes k}(\{\boldsymbol z\}).
+\tag{S14.11}\label{eq:step-014-11}
+\]
+Then \(w_{\boldsymbol z}>0\) and
+\(\sum_{\boldsymbol z\in\mathcal S}w_{\boldsymbol z}=1\).
+
+Conditional on \(\boldsymbol\Xi=\boldsymbol z\), the sample and output
+experiment in Proposition~\ref{prop:step-013-product-lower-bound}
+is exactly the fixed-instance experiment defining \(\Phi_A(\boldsymbol z)\).
+Finite expansion of the outer prior expectation therefore gives
+\[
+\begin{aligned}
+&\mathbb E_{\substack{
+  \boldsymbol\Xi\sim\mu_{N,M}^{\otimes k}\\
+  S^{\mathrm{id}}\sim(P_{\boldsymbol Q}^{c_{\boldsymbol T}})^n\\
+  H^{\mathrm{id}}\sim A(S^{\mathrm{id}})}}
+  R_{P_{\boldsymbol Q}}(H^{\mathrm{id}},c_{\boldsymbol T})\\
+&\qquad=\sum_{\boldsymbol z\in\mathcal S}
+  w_{\boldsymbol z}\Phi_A(\boldsymbol z).
+\end{aligned}
+\tag{S14.12}\label{eq:step-014-12}
+\]
+This is finite conditional expectation. It does not assert that the
+unconditional prior mixture is iid from one deterministic distribution.
+
+The left side of \eqref{eq:step-014-12} is strictly greater than \(2^{-9}\) by Proposition~\ref{prop:step-013-product-lower-bound}; hence
+\[
+\sum_{\boldsymbol z\in\mathcal S}w_{\boldsymbol z}\Phi_A(\boldsymbol z)
+>2^{-9}.
+\tag{S14.13}\label{eq:step-014-13}
+\]
+If every \(\boldsymbol z\in\mathcal S\) had
+\(\Phi_A(\boldsymbol z)\le2^{-9}\), then
+\[
+\sum_{\boldsymbol z\in\mathcal S}w_{\boldsymbol z}\Phi_A(\boldsymbol z)
+\le\sum_{\boldsymbol z\in\mathcal S}w_{\boldsymbol z}2^{-9}
+=2^{-9},
+\tag{S14.14}\label{eq:step-014-14}
+\]
+contradicting \eqref{eq:step-014-13}. Thus some \(\boldsymbol z^*\in\mathcal S\) has
+\(\Phi_A(\boldsymbol z^*)>2^{-9}\), which is \eqref{eq:step-014-9}. \end{proof}
+
+\begin{proposition}[Same-instance PAC contradiction]\label{prop:step-014-fixed-contradiction}
+Under Proposition~\ref{prop:step-014-fixed-extraction} and Proposition~\ref{prop:step-006-pointwise-pac-expectation}, fix the
+deterministic vector \(\boldsymbol z^*\) extracted in \eqref{eq:step-014-8}. Then
+\[
+2^{-9}<\Phi_A(\boldsymbol z^*)\le2^{-12},
+\tag{S14.15}\label{eq:step-014-15}
+\]
+which is impossible.
+\end{proposition}
+
+\begin{proof}
+The extraction proposition gives
+\[
+\Phi_A(\boldsymbol z^*)>2^{-9}.
+\tag{S14.16}\label{eq:step-014-16}
+\]
+This lower bound concerns the fixed \(P_{\boldsymbol Q^*}\), fixed target
+\(c_{\boldsymbol t^*}\), exact sample size \(n\), fixed randomized learner
+\(A\), its internal coin law, and the setting-defined population 0-1 risk.
+No component is changed by selecting \(\boldsymbol z^*\).
+
+Because \(\boldsymbol z^*\in\mathcal I_N^k\), Proposition~\ref{prop:step-006-pointwise-pac-expectation}, which is the
+pointwise consequence of Assumption~\ref{assump:distribution-free-realizable-pac},
+applies to this same vector:
+\[
+\begin{aligned}
+\Phi_A(\boldsymbol z^*)
+&=\mathbb E_{\substack{
+  S\sim(P_{\boldsymbol Q^*}^{c_{\boldsymbol t^*}})^n\\ \rho_A}}
+  R_{P_{\boldsymbol Q^*}}\bigl(A_{\rho_A}(S),c_{\boldsymbol t^*}\bigr)\\
+&\le\alpha_0+\beta_0
+=2^{-13}+2^{-13}=2^{-12}.
+\end{aligned}
+\tag{S14.17}\label{eq:step-014-17}
+\]
+Equations \eqref{eq:step-014-16} and \eqref{eq:step-014-17} concern literally the same deterministic number;
+neither includes a prior average. Finally,
+\[
+2^{-9}=8\cdot2^{-12}>2^{-12},
+\tag{S14.18}\label{eq:step-014-18}
+\]
+so \eqref{eq:step-014-16}--\eqref{eq:step-014-17} contradict one another. \end{proof}
+Finite-support extraction produces one deterministic $\boldsymbol z^*$
+with $\Phi_A(\boldsymbol z^*)>2^{-9}$, while the pointwise PAC result gives
+$\Phi_A(\boldsymbol z^*)\le2^{-12}$.  Proposition~\ref{prop:step-014-fixed-contradiction}
+records this same-instance contradiction.
+
+\subsection{Nonasymptotic closure}\label{app:step-015}
+The constants are those in \eqref{eq:calibration}, fixed before choosing
+\begin{equation}
+k\ge2,
+\qquad N\ge N_0,
+\qquad n\ge1,
+\tag{S15.T2}\label{eq:candidate-order}
+\end{equation}
+the admissible privacy pair, and the arbitrary randomized map
+\begin{equation}
+A:(X_{k,N}\times\{0,1\})^n\longrightarrow\mathcal H_{k,N}.
+\tag{S15.T4}\label{eq:candidate-map}
+\end{equation}
+\begin{lemma}[Impossibility of the negated candidate bound]\label{lem:step-015-negated-target}
+Under Assumptions~\ref{assump:candidate-regime},
+\ref{assump:central-dp}, and
+\ref{assump:distribution-free-realizable-pac},
+Proposition~\ref{prop:step-005-certificate}, and
+Proposition~\ref{prop:step-014-fixed-contradiction}, fix any candidate in
+the order \eqref{eq:candidate-order}--\eqref{eq:candidate-map}, with the
+privacy pair chosen between the integer tuple and the learner. If
+
+\[
+n<ak\log_2^*N,
+\tag{S15.1}\label{eq:step-015-1}
+\]
+
+then the preceding propositions yield a contradiction. Hence no
+such fixed candidate can satisfy \eqref{eq:step-015-1}.
+\end{lemma}
+
+\begin{proof}
+The constants in \eqref{eq:calibration}, including \(a=b_*/16\), and
+\(N_0\) were fixed by
+Proposition~\ref{prop:step-005-certificate} before the present
+candidate was chosen. Apply that proposition to the fixed candidate and the
+strict hypothesis \eqref{eq:step-015-1}. It yields, at the exact integer budget
+
+\[
+M=\max\left\{8,\left\lceil\frac{4n}{k}\right\rceil\right\},
+\]
+
+the strict hard-regime and source-privacy conclusions
+
+\[
+N\ge N_*,\qquad 8\le M<b_*\log_2^*N,
+\qquad 0<\varepsilon\le0.1,
+\qquad 0<\delta<\frac{d_*}{M^2\log M}.
+\tag{S15.2}\label{eq:step-015-2}
+\]
+
+The same proposition retains, rather than replaces, the primitive
+conjunction
+
+\[
+0<\delta\le\frac{1}{n\log(n+1)},
+\qquad
+0<\delta\le\frac{c_\delta}{M^2\log(M+1)}.
+\tag{S15.3}\label{eq:step-015-3}
+\]
+
+The fixed learner still satisfies its exact
+Assumption~\ref{assump:central-dp} and
+Assumption~\ref{assump:distribution-free-realizable-pac} premises; neither
+is altered by the scalar specialization \eqref{eq:step-015-2}. Therefore the complete
+premise package for
+Proposition~\ref{prop:step-014-fixed-contradiction} holds at this identical
+candidate. Applying that proposition, without reopening any of its internal
+dependencies, gives one fixed product instance
+\((P_{\boldsymbol Q^*},c_{\boldsymbol t^*})\) for which
+
+\[
+\mathbb E_{\substack{
+ S\sim(P_{\boldsymbol Q^*}^{c_{\boldsymbol t^*}})^n\\
+ \rho_A}}
+R_{P_{\boldsymbol Q^*}}
+\bigl(A_{\rho_A}(S),c_{\boldsymbol t^*}\bigr)>2^{-9}
+\tag{S15.4}\label{eq:step-015-4}
+\]
+
+and, for literally the same fixed distribution, target, size-\(n\) iid
+sample law, randomized learner, internal-coin law, and population risk,
+
+\[
+\mathbb E_{\substack{
+ S\sim(P_{\boldsymbol Q^*}^{c_{\boldsymbol t^*}})^n\\
+ \rho_A}}
+R_{P_{\boldsymbol Q^*}}
+\bigl(A_{\rho_A}(S),c_{\boldsymbol t^*}\bigr)\le2^{-12}.
+\tag{S15.5}\label{eq:step-015-5}
+\]
+
+But
+
+\[
+2^{-9}=8\cdot2^{-12}>2^{-12},
+\tag{S15.6}\label{eq:step-015-6}
+\]
+
+so no real number can satisfy both \eqref{eq:step-015-4} and \eqref{eq:step-015-5}. This contradicts \eqref{eq:step-015-1}.
+
+There is no exceptional boundary branch. Proposition~\ref{prop:step-005-certificate} derives \eqref{eq:step-015-2}--\eqref{eq:step-015-3} with the same
+strict inequalities when \(N=N_0\), \(M=8\), \(n=1\), \(n<k\), or
+\(k=2\), and Proposition~\ref{prop:step-014-fixed-contradiction} applies to that same
+candidate and exact fixed-instance experiment. No floor, ceiling, endpoint,
+privacy parameter, or sample size is changed in this invocation. \end{proof}
+
+\begin{proposition}[Nonasymptotic candidate closure]\label{prop:step-015-exact-closure}
+Fix the universal constants in \eqref{eq:calibration} and the fixed
+\(N_0\) before
+candidate quantification. Under Assumptions~\ref{assump:candidate-regime},
+\ref{assump:central-dp}, and
+\ref{assump:distribution-free-realizable-pac}, every candidate quantified
+in that same candidate order satisfies
+
+\[
+n\ge a k\log_2^*N.
+\tag{S15.7}\label{eq:step-015-7}
+\]
+
+This is a deterministic pointwise implication for the exact candidate. It
+makes no assertion outside the approved candidate regime.
+\end{proposition}
+
+\begin{proof}
+Fix an arbitrary candidate covered by the proposition. If \eqref{eq:step-015-7} failed, then
+the total order on the real numbers would give its exact strict negation
+
+\[
+n<ak\log_2^*N.
+\tag{S15.8}\label{eq:step-015-8}
+\]
+
+No integer rounding is inserted into this logical negation. But
+Lemma~\ref{lem:step-015-negated-target} proves that \eqref{eq:step-015-8} is impossible for a
+candidate satisfying the three primitive assumptions. Therefore \eqref{eq:step-015-7} holds.
+Because the constants were fixed before the arbitrary candidate and the
+candidate was otherwise arbitrary within that order, the conclusion has the
+quantifier order stated in the formalized goal. \end{proof}
+Lemma~\ref{lem:step-015-negated-target} excludes the exact strict negation
+for every candidate in this order.  Proposition~\ref{prop:step-015-exact-closure}
+therefore yields the weak nonasymptotic lower bound with no rounding or
+scope change.
+
+\subsection{Tower-diagonal specialization}\label{app:step-016}
+For compactness in the following proof, write
+
+\[
+T_s=\operatorname{Tow}_2(s)\qquad(s\ge1)
+\]
+
+\begin{lemma}[Exact tower inversion and floor arithmetic]\label{lem:step-016-tower-arithmetic}
+Under the tower and iterated-logarithm definitions in
+Section~\ref{sec:setup}, the map
+\(s\mapsto T_s\) is strictly increasing and unbounded, with
+\(T_s\ge2^s\) for every integer \(s\ge1\). The function
+\(u\mapsto\log_2^*u\) is nondecreasing on \((0,\infty)\). Moreover, for
+every integer \(r\ge1\),
+
+\[
+\log_2^*T_r=r
+\tag{S16.1}\label{eq:step-016-1}
+\]
+
+and, for every integer \(r\ge2\),
+
+\[
+\left\lfloor\log_2(T_r+1)\right\rfloor=T_{r-1}.
+\tag{S16.2}\label{eq:step-016-2}
+\]
+\end{lemma}
+
+\begin{proof}
+Because \(T_1=2\) and \(T_{s+1}=2^{T_s}\), induction gives
+\(T_s\ge2^s\). Indeed, the claim is true at \(s=1\), and the elementary
+induction \(2^s\ge s+1\) gives
+
+\[
+T_{s+1}=2^{T_s}\ge2^{2^s}\ge2^{s+1}.
+\]
+
+Also \(2^m>m\) for every integer \(m\ge2\), so
+\(T_{s+1}>T_s\). Thus the tower is strictly increasing and, from
+\(T_s\ge2^s\), unbounded.
+
+For monotonicity of log-star, first note that for \(u>1\),
+
+\[
+\log_2^*u=1+\log_2^*(\log_2u).
+\tag{S16.3}\label{eq:step-016-3}
+\]
+
+If \(0<u\le v\), induction on \(\log_2^*v\), using the monotonicity of
+\(\log_2\) and \eqref{eq:step-016-3}, gives \(\log_2^*u\le\log_2^*v\). The base case
+\(\log_2^*v=0\) means \(v\le1\), so also \(u\le1\), and both log-star
+values are zero. In the induction step, \(u\le1\) is immediate; if
+\(u>1\), apply the induction hypothesis to
+\(0<\log_2u\le\log_2v\) in \eqref{eq:step-016-3}.
+
+For \(0\le j\le r-1\), repeated use of the tower recursion yields
+
+\[
+\log_2^{(j)}T_r=T_{r-j}.
+\tag{S16.4}\label{eq:step-016-4}
+\]
+
+In particular, the \((r-1)\)-fold iterate equals \(T_1=2>1\), whereas
+the \(r\)-fold iterate equals \(\log_2 2=1\). By the minimum in the
+definition of log-star, \eqref{eq:step-016-1} follows exactly.
+
+Finally, put \(q=T_{r-1}\). Then \(T_r=2^q>1\), and hence
+
+\[
+2^q<T_r+1<2T_r=2^{q+1}.
+\]
+
+Taking base-two logarithms gives
+
+\[
+q<\log_2(T_r+1)<q+1.
+\]
+
+Since \(q\) is an integer, its floor is exactly \(q=T_{r-1}\), proving
+\eqref{eq:step-016-2}. \end{proof}
+
+\begin{proposition}[Exact diagonal structural identities]\label{prop:step-016-structural-diagonal}
+Under the primitive diagonal specialization \(r\in\mathbb Z_{\ge2}\),
+\(k=r\), \(N=T_r\), Lemma~\ref{lem:step-001-cardinality}, Lemma~\ref{lem:step-001-vc}, Proposition~\ref{prop:step-001-product-ld}, and
+Lemma~\ref{lem:step-016-tower-arithmetic},
+
+\[
+\operatorname{VC}(C_{r,T_r})=r,
+\qquad
+\operatorname{LD}(C_{r,T_r})=rT_{r-1},
+\qquad
+|C_{r,T_r}|=(T_r+1)^r.
+\tag{S16.5}\label{eq:step-016-5}
+\]
+
+With the setting convention that unadorned \(\log\) is natural,
+
+\[
+rT_{r-1}\log2
+  <\log|C_{r,T_r}|
+  <\frac32rT_{r-1}\log2.
+\tag{S16.6}\label{eq:step-016-6}
+\]
+
+In particular,
+\(\log|C_{r,T_r}|=\Theta(rT_{r-1})\) with universal hidden constants.
+\end{proposition}
+
+\begin{proof}
+The structural identities give, after the exact substitution
+\(k=r,N=T_r\),
+
+\[
+\operatorname{VC}(C_{r,T_r})=r,
+\]
+
+\[
+\operatorname{LD}(C_{r,T_r})
+=r\left\lfloor\log_2(T_r+1)\right\rfloor,
+\]
+
+and \(|C_{r,T_r}|=(T_r+1)^r\). Equation \eqref{eq:step-016-2} in
+Lemma~\ref{lem:step-016-tower-arithmetic} turns the middle display into
+\(rT_{r-1}\), proving every exact identity in \eqref{eq:step-016-5}.
+
+For \eqref{eq:step-016-6}, write \(T_r=2^{T_{r-1}}\). The same strict comparison used for
+the floor gives
+
+\[
+T_{r-1}\log2
+  <\log(T_r+1)
+  <(T_{r-1}+1)\log2.
+\]
+
+Since \(r\ge2\) implies \(T_{r-1}\ge T_1=2\),
+\(T_{r-1}+1\le(3/2)T_{r-1}\). Multiplication by \(r\) and the exact
+identity \(\log|C_{r,T_r}|=r\log(T_r+1)\) prove \eqref{eq:step-016-6}. The constants
+\(\log2\) and \((3/2)\log2\) are absolute and independent of \(r\).
+\end{proof}
+
+\begin{lemma}[Iterated logarithm of the diagonal Littlestone dimension]\label{lem:step-016-ld-logstar}
+Under Lemma~\ref{lem:step-016-tower-arithmetic} and
+Proposition~\ref{prop:step-016-structural-diagonal}, for every integer
+\(r\ge2\),
+
+\[
+r-1
+\le
+\log_2^*\operatorname{LD}(C_{r,T_r})
+\le r.
+\tag{S16.7}\label{eq:step-016-7}
+\]
+
+Consequently,
+
+\[
+\frac r2
+\le
+\log_2^*\operatorname{LD}(C_{r,T_r})
+\le r,
+\tag{S16.8}\label{eq:step-016-8}
+\]
+
+so \(\log_2^*\operatorname{LD}(C_{r,T_r})=\Theta(r)\) with constants
+\(1/2\) and \(1\), independent of \(r\).
+\end{lemma}
+
+\begin{proof}
+Let \(q=T_{r-1}\). Proposition~\ref{prop:step-016-structural-diagonal}
+gives
+
+\[
+\operatorname{LD}(C_{r,T_r})=rq\ge q=T_{r-1}.
+\tag{S16.9}\label{eq:step-016-9}
+\]
+
+We next prove the upper comparison \(rq\le T_r=2^q\). At \(r=2\),
+\(q=T_1=2\) and both sides equal \(4\). For \(r\ge3\), induction gives
+\(T_{r-1}\ge r\): the base is \(T_2=4\ge3\), and
+\(T_s\ge s+1\) implies \(T_{s+1}=2^{T_s}\ge2^{s+1}\ge s+2\).
+Also, \(2^x\ge x^2\) for every integer \(x\ge4\); this follows by
+induction from equality at \(x=4\) and
+\(2x^2\ge(x+1)^2\) for \(x\ge3\). Therefore, for \(r\ge3\),
+
+\[
+T_r=2^q\ge q^2\ge rq.
+\tag{S16.10}\label{eq:step-016-10}
+\]
+
+Combining \eqref{eq:step-016-9}--\eqref{eq:step-016-10}, monotonicity of log-star from
+Lemma~\ref{lem:step-016-tower-arithmetic}, and its exact tower inversion
+gives
+
+\[
+\log_2^*T_{r-1}=r-1
+\le\log_2^*(rq)
+\le\log_2^*T_r=r,
+\]
+
+which is \eqref{eq:step-016-7}. Finally, \(r-1\ge r/2\) for every \(r\ge2\), yielding
+\eqref{eq:step-016-8} and the stated uniform \(\Theta\)-constants. \end{proof}
+
+\begin{proposition}[Tower-diagonal Rate Specialization Bridge]\label{prop:step-016-rate-bridge}
+Fix the universal constants
+\[
+a,c_\delta,\varepsilon_0,\alpha_0,\beta_0,N_0
+\]
+from Proposition~\ref{prop:step-015-exact-closure}, before any candidate is
+chosen. Thus \(a=b_*/16\), \(c_\delta=d_*\), \(\varepsilon_0=0.1\), and
+\(\alpha_0=\beta_0=2^{-13}\). Define
+the finite deterministic index
+
+\[
+r_0=\min\{s\in\mathbb Z_{\ge2}:T_s\ge N_0\}.
+\tag{S16.11}\label{eq:step-016-11}
+\]
+
+Under Assumptions~\ref{assump:candidate-regime},
+\ref{assump:central-dp}, and
+\ref{assump:distribution-free-realizable-pac}, every diagonal candidate
+with integer \(r\ge r_0\), \(k=r\), and \(N=T_r\) satisfies
+
+\[
+n\ge ar^2
+\tag{S16.12}\label{eq:step-016-12}
+\]
+
+and
+
+\[
+n\ge
+a\,\operatorname{VC}(C_{r,T_r})
+   \log_2^*\operatorname{LD}(C_{r,T_r}).
+\tag{S16.13}\label{eq:step-016-13}
+\]
+
+Moreover,
+
+\[
+\frac12r^2
+\le
+\operatorname{VC}(C_{r,T_r})
+\log_2^*\operatorname{LD}(C_{r,T_r})
+\le r^2.
+\tag{S16.14}\label{eq:step-016-14}
+\]
+
+Thus \eqref{eq:step-016-12}--\eqref{eq:step-016-13} are exactly
+\(n=\Omega(r^2)=\Omega(\operatorname{VC}\log_2^*\operatorname{LD})\),
+with constants independent of \(r\), and only within the approved
+candidate/privacy/PAC regime.
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:step-016-tower-arithmetic} proves that \(T_s\) is
+increasing and unbounded, so the set in \eqref{eq:step-016-11} is nonempty and \(r_0\) is a
+finite integer depending only on the already-fixed \(N_0\). For every
+\(r\ge r_0\), one has \(r\ge2\) and \(T_r\ge T_{r_0}\ge N_0\).
+Therefore \(k=r,N=T_r\) meet the structural range of Proposition~\ref{prop:step-015-exact-closure}.
+
+No privacy condition is absorbed in this substitution. The candidate has
+the exact budget
+
+\[
+m_{n,r}=\max\left\{8,\left\lceil\frac{4n}{r}\right\rceil\right\},
+\]
+
+and Assumption~\ref{assump:candidate-regime} remains exactly
+
+\[
+n\in\mathbb Z_{\ge1},
+\quad 0<\varepsilon\le\varepsilon_0,
+\quad
+0<\delta\le
+\min\left\{
+\frac1{n\log(n+1)},
+\frac{c_\delta}{m_{n,r}^2\log(m_{n,r}+1)}
+\right\}.
+\tag{S16.15}\label{eq:step-016-15}
+\]
+
+The learner remains an arbitrary randomized map
+
+\[
+A:(X_{r,T_r}\times\{0,1\})^n
+  \longrightarrow\{0,1\}^{X_{r,T_r}}
+\]
+
+satisfying the exact central replacement-DP and distribution-free
+realizable-PAC assumptions at this same candidate. Proposition~\ref{prop:step-015-exact-closure} therefore applies without a
+mode or scope conversion and gives
+
+\[
+n\ge ar\log_2^*T_r.
+\]
+
+Equation \eqref{eq:step-016-1} in Lemma~\ref{lem:step-016-tower-arithmetic} makes the
+right-hand side exactly \(ar^2\), proving \eqref{eq:step-016-12}. No asymptotic term is
+dropped in this equality.
+
+By Proposition~\ref{prop:step-016-structural-diagonal} and
+Lemma~\ref{lem:step-016-ld-logstar},
+
+\[
+\operatorname{VC}(C_{r,T_r})=r,
+\qquad
+\frac r2
+\le\log_2^*\operatorname{LD}(C_{r,T_r})\le r.
+\]
+
+Multiplication proves \eqref{eq:step-016-14}. In particular, the upper half of \eqref{eq:step-016-14} and
+\eqref{eq:step-016-12} give
+
+\[
+n\ge ar^2
+\ge
+a\,\operatorname{VC}(C_{r,T_r})
+   \log_2^*\operatorname{LD}(C_{r,T_r}),
+\]
+
+which is \eqref{eq:step-016-13} with the same inherited constant \(a\).
+
+The finite initial indices are not hidden inside an \(r\)-dependent
+constant. At \(r=2\), the arithmetic itself is exact:
+
+\[
+T_1=2,\qquad T_2=4,\qquad \log_2^*T_2=2,\qquad
+\lfloor\log_2(5)\rfloor=2,
+\]
+
+and hence \(\operatorname{VC}=2\), \(\operatorname{LD}=4\),
+\(|C|=25\), and \(\log_2^*\operatorname{LD}=2\). The same structural
+identities hold for every \(2\le r<r_0\). By the minimality of \(r_0\)
+and monotonicity of the tower, every such index has \(T_r<N_0\). Therefore
+Proposition~\ref{prop:step-015-exact-closure} is inapplicable, so no learning
+lower-bound conclusion is asserted for those indices. The asymptotic statements begin
+at the single fixed index \(r_0\). \end{proof}
+
+\begin{proposition}[Diagonal separation and unresolved scales]\label{prop:step-016-scale-comparison}
+Under Proposition~\ref{prop:step-016-structural-diagonal} and
+Lemma~\ref{lem:step-016-ld-logstar}, for every integer \(r\ge2\),
+
+\[
+2r-1
+\le
+\operatorname{VC}(C_{r,T_r})
++\log_2^*\operatorname{LD}(C_{r,T_r})
+\le2r,
+\tag{S16.16}\label{eq:step-016-16}
+\]
+
+and
+
+\[
+r2^{r-1}
+\le
+\operatorname{VC}(C_{r,T_r})
+2^{\log_2^*\operatorname{LD}(C_{r,T_r})}
+\le r2^r.
+\tag{S16.17}\label{eq:step-016-17}
+\]
+
+Consequently, the established lower-bound scale \(r^2\) exceeds the
+additive expression by an unbounded factor, but
+
+\[
+r^2
+=o\!\left(
+\operatorname{VC}(C_{r,T_r})
+2^{\log_2^*\operatorname{LD}(C_{r,T_r})}
+\right)
+\tag{S16.18}\label{eq:step-016-18}
+\]
+
+and
+
+\[
+r^2=o(\log|C_{r,T_r}|).
+\tag{S16.19}\label{eq:step-016-19}
+\]
+
+These comparisons concern the size of the proved lower-bound expression;
+they are not upper bounds on the true sample complexity.
+\end{proposition}
+
+\begin{proof}
+Substitute \(\operatorname{VC}=r\) and the two bounds in \eqref{eq:step-016-7}. Addition
+gives \eqref{eq:step-016-16}, and exponentiation followed by multiplication by \(r\) gives
+\eqref{eq:step-016-17}. In particular,
+
+\[
+\frac{r^2}{
+ \operatorname{VC}(C_{r,T_r})
+ +\log_2^*\operatorname{LD}(C_{r,T_r})}
+\ge\frac r2\longrightarrow\infty,
+\]
+
+which proves the unbounded-factor comparison with the additive scale.
+
+For the first remaining scale, the lower half of \eqref{eq:step-016-17} gives
+
+\[
+0\le
+\frac{r^2}{
+ \operatorname{VC}(C_{r,T_r})
+ 2^{\log_2^*\operatorname{LD}(C_{r,T_r})}}
+\le\frac r{2^{r-1}}.
+\tag{S16.20}\label{eq:step-016-20}
+\]
+
+The right-hand side tends to zero: its ratio at consecutive indices is
+\((r+1)/(2r)\le3/4\) for \(r\ge2\). This proves \eqref{eq:step-016-18}.
+
+For cardinality, \eqref{eq:step-016-6} and \(T_{r-1}\ge2^{r-1}\) from
+Lemma~\ref{lem:step-016-tower-arithmetic} yield
+
+\[
+0\le\frac{r^2}{\log|C_{r,T_r}|}
+<\frac{r}{T_{r-1}\log2}
+\le\frac{r}{2^{r-1}\log2}\longrightarrow0,
+\]
+
+which proves \eqref{eq:step-016-19}. \end{proof}
+
+\begin{proof}[Assembly of the tower-diagonal specialization]
+Lemma~\ref{lem:step-016-tower-arithmetic} uses the exact convention
+\[
+T_1=2,qquad T_{s+1}=2^{T_s},
+\]
+and the minimum-based definition of log-star to
+prove
+\[
+\log_2^*T_r=r,
+\qquad
+\left\lfloor\log_2(T_r+1)\right\rfloor=T_{r-1}.
+\]
+Combining the floor identity with Lemmas~\ref{lem:step-001-cardinality} and
+\ref{lem:step-001-vc} and
+Proposition~\ref{prop:step-001-product-ld},
+Proposition~\ref{prop:step-016-structural-diagonal} gives the exact formulas
+\[
+\operatorname{VC}(C_{r,T_r})=r,
+\qquad
+\operatorname{LD}(C_{r,T_r})=rT_{r-1},
+\qquad
+|C_{r,T_r}|=(T_r+1)^r.
+\]
+Lemma~\ref{lem:step-016-ld-logstar} sharpens the asymptotic notation to the
+two-sided finite-index inequality
+\[
+r-1\le
+\log_2^*\operatorname{LD}(C_{r,T_r})
+\le r,
+\]
+and hence to
+\[
+\frac12r^2\le
+\operatorname{VC}(C_{r,T_r})
+\log_2^*\operatorname{LD}(C_{r,T_r})
+\le r^2.
+\]
+
+Let $r_0$ be the fixed index in
+Proposition~\ref{prop:step-016-rate-bridge}.  For every $r\ge r_0$, that
+proposition verifies the unchanged candidate, privacy, and PAC conditions
+before applying Proposition~\ref{prop:step-015-exact-closure}; it therefore
+gives, with the same universal $a$,
+\[
+n\ge ar^2
+\ge a\,\operatorname{VC}(C_{r,T_r})
+       \log_2^*\operatorname{LD}(C_{r,T_r}).
+\]
+All structural identities remain valid for the finite indices
+$2\le r<r_0$, while no learning conclusion is asserted there because
+$T_r<N_0$.
+
+Finally, Proposition~\ref{prop:step-016-scale-comparison} proves
+\[
+2r-1\le
+\operatorname{VC}(C_{r,T_r})+
+\log_2^*\operatorname{LD}(C_{r,T_r})
+\le2r,
+\]
+so the quadratic lower bound exceeds the additive expression by an
+unbounded factor.  The same proposition proves
+\[
+r^2=o\!\left(
+\operatorname{VC}(C_{r,T_r})
+2^{\log_2^*\operatorname{LD}(C_{r,T_r})}
+\right),
+\qquad
+r^2=o(\log|C_{r,T_r}|).
+\]
+Thus the result remains a partial resolution: it proves neither the
+stronger exponential milestone nor the $\Omega(\log|C|)$ lower bound,
+and it supplies neither a universal upper bound nor a matching
+combinatorial characterization for all finite-Littlestone classes.
+\end{proof}
+
+\subsection{Proof of the Main Theorem}\label{app:main-proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Choose $b_*,d_*,N_*$ from
+Proposition~\ref{prop:step-002-wrapper}, and then choose
+$a,c_\delta,\varepsilon_0,\alpha_0,\beta_0,N_0$ as in
+Lemma~\ref{lem:step-005-calibration} and \eqref{eq:calibration}.  These
+constants are universal and precede every candidate quantifier.
+
+Fix an arbitrary candidate satisfying
+Assumptions~\ref{assump:candidate-regime},
+\ref{assump:central-dp}, and
+\ref{assump:distribution-free-realizable-pac}.  Proposition~\ref{prop:step-015-exact-closure}
+gives
+\[
+n\ge ak\log_2^*N,
+\]
+which proves \eqref{eq:main-nonasymptotic} with the exact fixed-size,
+replacement-private, population-risk, and unrestricted-improper scope.
+
+For $T_s=\operatorname{Tow}_2(s)$, Lemma~\ref{lem:step-016-tower-arithmetic}
+proves $\log_2^*T_r=r$ and the exact floor identity.
+Proposition~\ref{prop:step-016-structural-diagonal} and
+Lemma~\ref{lem:step-016-ld-logstar} then give
+\eqref{eq:main-structure}--\eqref{eq:main-product-scale}.  The tower is
+increasing and unbounded, so the displayed $r_0$ is finite.  For every
+$r\ge r_0$, Proposition~\ref{prop:step-016-rate-bridge} applies the
+nonasymptotic bound to the same admissible diagonal candidate and proves
+\eqref{eq:main-diagonal}.  Finally,
+Proposition~\ref{prop:step-016-scale-comparison} gives
+\eqref{eq:main-additive}--\eqref{eq:main-remaining-scales}.  This proves all
+parts of the theorem.
+\end{proof}

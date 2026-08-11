@@ -1,0 +1,146 @@
+\section{Theoretical Setup}
+\label{sec:setup}
+
+Fix integers $n,m,T\geq 1$, a stepsize $\eta>0$, and an accuracy
+parameter $\varepsilon\geq 0$.  Let
+$\mathcal X=\{-1,+1\}^{n}$ and let
+$\mathcal H\subseteq\{-1,+1\}^{\mathcal X}$.  Write
+$\Delta(\mathcal X)$ for the probability distributions on the finite set
+$\mathcal X$, and fix a tie label $s_0\in\{-1,+1\}$.  Throughout, scores are
+converted to labels by
+\[
+\operatorname{sign}_{s_0}(z)=
+\begin{cases}
+ +1,&z>0,\\
+ -1,&z<0,\\
+ s_0,&z=0.
+\end{cases}
+\]
+For a score $g:\mathcal X\to\mathbb R$, distribution $\mathcal D$, and
+target $h\in\mathcal H$, define the strict source error
+\[
+\mathcal L_{\mathcal D,h}(g)
+ :=\Pr_{x\sim\mathcal D}\left[
+ \operatorname{sign}_{s_0}(g(x))h(x)<0\right].
+\]
+Thus a zero score is an error precisely at points whose target label is
+$-s_0$.
+
+The learner is the bias-free depth-two fully connected ReLU network
+\[
+ f_{a,W}(x)=a^\top\sigma(Wx),\qquad
+ W\in\mathbb R^{m\times n},\quad a\in\mathbb R^m,
+ \qquad \sigma(r)=\max\{0,r\}
+\]
+with coordinatewise ReLU.  Both layers are trainable and the parameter count
+is
+\[
+ S=mn+m=m(n+1).
+\]
+At initialization the entries are independent with
+\[
+ W^{(0)}_{ji}\sim\mathcal N(0,1/n),\qquad
+ a^{(0)}_j\sim\mathcal N(0,1/m).
+\]
+For a fixed pair $(\mathcal D,h)$, fresh samples
+$x^{(t)}\sim\mathcal D$ are drawn for $t=0,\ldots,T-1$ and the all-layer
+one-sample SGD recursion is
+\[
+ (a^{(t+1)},W^{(t+1)})=(a^{(t)},W^{(t)})
+ -\eta\nabla_{(a,W)}
+ \ell\!\left(h(x^{(t)})f_{a^{(t)},W^{(t)}}(x^{(t)})\right),
+ \qquad \ell(z)=\log(1+e^{-z}),
+\]
+using the source gradient convention at ReLU kinks.  For a realized
+initialization and sample path $\omega$, define
+\[
+ G_\omega(x)=\sum_{t=\lceil T/2\rceil}^{T}
+ f_{a^{(t)},W^{(t)}}(x),
+ \qquad
+ \widehat h_\omega(x)=\operatorname{sign}_{s_0}(G_\omega(x)).
+\]
+Let $\mathbb Q_{\mathcal D,h}$ denote the joint law of the Gaussian
+initialization and the fresh SGD samples.  Also set
+\[
+ \mathcal D^-(x)=\mathcal D(-x),\qquad
+ \mathcal D^{\mathrm{sym}}=\tfrac12(\mathcal D+\mathcal D^-),
+\]
+and, for each realized trajectory,
+\[
+ A_\omega(x)=G_\omega(x)-G_\omega(-x),\qquad
+ v_\omega=\sum_{t=\lceil T/2\rceil}^{T}(W^{(t)})^\top a^{(t)}.
+\]
+
+For a feature map $\varphi:\mathcal X\to\mathbb R^d$, use the same
+tie-resolved homogeneous classifier
+$x\mapsto\operatorname{sign}_{s_0}(\langle w,\varphi(x)\rangle)$.  The
+deterministic dimension complexity is the least $d$ for which one map
+$\varphi$ satisfies
+\[
+\forall h\in\mathcal H\ \exists w_h\in\mathbb R^d\ \forall x\in\mathcal X,
+\qquad
+\operatorname{sign}_{s_0}(\langle w_h,\varphi(x)\rangle)=h(x).
+\]
+The confident dimension $\operatorname{dc}^{1/2}(\mathcal H)$ is the least
+$d$ for which a law $\mathcal P$ over such maps, chosen before the later
+choices of $\mathcal D$ and $h$, satisfies
+\[
+\forall\mathcal D\in\Delta(\mathcal X)\ \forall h\in\mathcal H,
+\quad
+\Pr_{\varphi\sim\mathcal P}\!\left[
+\inf_{w\in\mathbb R^d}
+\Pr_{x\sim\mathcal D}\!\left[
+\operatorname{sign}_{s_0}(\langle w,\varphi(x)\rangle)h(x)<0
+\right]=0\right]\geq\frac12.
+\]
+Finally, let $\varphi_{\mathrm{id}}:\mathcal X\to\mathbb R^n$ be the
+identity map $\varphi_{\mathrm{id}}(x)=x$.
+
+\begin{assumption}[Antipodally odd target class]
+\label{assump:antipodal-oddness}
+For every $h\in\mathcal H$ and every $x\in\mathcal X$,
+\[
+h(-x)=-h(x).
+\]
+\end{assumption}
+
+\begin{assumption}[Strict high-accuracy regime]
+\label{assump:high-accuracy}
+The primitive accuracy condition
+\[
+2\varepsilon<\frac{1}{n+1}
+\]
+holds.
+\end{assumption}
+
+\begin{assumption}[Universal source success]
+\label{assump:universal-sgd-success}
+The architecture, width, stepsize, and horizon above are fixed before the
+later choices of distribution and target, and
+\[
+\forall\mathcal D\in\Delta(\mathcal X)\ \forall h\in\mathcal H,
+\qquad
+\mathbb E_{\omega\sim\mathbb Q_{\mathcal D,h}}
+ \left[\mathcal L_{\mathcal D,h}(G_\omega)\right]\leq\varepsilon.
+\]
+The expectation is jointly over the independent Gaussian initialization and
+all fresh one-sample SGD draws; no learner parameter may depend on the later
+choice of $\mathcal D$ or $h$.
+\end{assumption}
+
+\subsection{Formalized Goal}
+
+Under Assumptions~\ref{assump:antipodal-oddness},
+\ref{assump:high-accuracy}, and~\ref{assump:universal-sgd-success}, prove
+\[
+\forall h\in\mathcal H\ \exists w_h\in\mathbb R^n\ \forall x\in\mathcal X,
+\qquad
+\operatorname{sign}_{s_0}(\langle w_h,x\rangle)=h(x).
+\]
+The consequences are the point-mass feature law
+$\delta_{\varphi_{\mathrm{id}}}$ with exact-representation probability one
+and the dimension chain
+\[
+\operatorname{dc}^{1/2}(\mathcal H)
+\leq\operatorname{dc}(\mathcal H)\leq n\leq S\leq TS.
+\]

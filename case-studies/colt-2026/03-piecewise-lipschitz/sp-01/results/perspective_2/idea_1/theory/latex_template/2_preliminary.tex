@@ -1,0 +1,40 @@
+\section{Preliminaries}
+\label{sec:preliminaries}
+
+For $I\in\mathcal I(\Theta)$, introduce the three setting-derived chart
+pieces
+\[
+I_0:=I\cap[-1,1],\qquad
+I_+:=I\cap(1,\infty),\qquad
+I_-:=I\cap(-\infty,-1).
+\]
+They record the exact interval lengths that appear in the main theorem.  The
+corresponding coefficient sweeps are
+\[
+\begin{aligned}
+s_0(\theta;\alpha_{1:d-1})
+&:=-\theta^d-\sum_{j=1}^{d-1}\alpha_j\theta^j,
+&& |\theta|\leq1,\\
+s_\infty(\theta;\alpha_{0:d-2})
+&:=-\theta-\sum_{j=0}^{d-2}\alpha_j\theta^{j-d+1},
+&& |\theta|\geq1.
+\end{aligned}
+\]
+All empty sums are zero.  These maps express the root equation using
+$\alpha_0$ on the inner chart and $\alpha_{d-1}$ on the two outer charts.
+
+The exact chart coefficients and their fixed-$\eta$ envelope are
+\[
+\begin{aligned}
+B_0(d,R)&:=d+\frac{Rd(d-1)}2,\\
+B_\infty(d,R)&:=1+\frac{Rd(d-1)}2,\\
+M_\eta(d,R)&:=\max\{\bar\kappa_0B_0(d,R),
+                         \bar\kappa_\infty B_\infty(d,R)\},\\
+\bar\kappa_*&:=\max\{\bar\kappa_0,\bar\kappa_\infty\},\\
+P_\eta(d,R)&:=\bar\kappa_*d+\frac{\bar\kappa_*}{2}Rd^2.
+\end{aligned}
+\]
+The main theorem uses $B_0$ and $B_\infty$ for its sharp weighted estimate,
+$M_\eta$ for the exact two-chart maximum, and $P_\eta$ for the public
+polynomial specialization.  For a scalar map $s$ and a set $J$, the notation
+$s(J):=\{s(\theta):\theta\in J\}$ denotes its direct image.

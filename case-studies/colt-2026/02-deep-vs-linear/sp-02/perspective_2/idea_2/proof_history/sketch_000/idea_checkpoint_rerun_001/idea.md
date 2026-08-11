@@ -1,0 +1,37 @@
+# Idea
+
+## Perspective Anchor
+
+- Tuple: (analysis_target=other_deterministic_exact_embedding_derandomization, model_class=binary_hypothesis_class, data_assumption=universal_distribution_target_pair, regime=arbitrary_domain, algorithm=randomized_sq_transcript_feature_construction)
+- Fixed source anchor: Perspective 2, Gap 2, exactification of randomized adaptive SQ transcripts into one deterministic exact feature map.
+
+## Added Dimensions
+
+- Target-changing obstruction interface: Replace the failed unconditional exactification goal by a formal test of one necessary intermediate claim: whether uniformly bounded finite-restriction dimension alone can yield one real global map. The response-complete operator, point-mass payoff, and finite Gordan separator from `perspective_2/idea_1` remain failure context only; they are not reused as this theorem's mechanism because they supply neither common rank nor exact separator descent.
+- Arbitrary-cardinality threshold family: Let \(\mathfrak c=|\mathbb R|\), choose the initial ordinal \(\kappa=\mathfrak c^+\), put \(\mathcal X=\kappa\) with its well-order, and define \(h_\alpha(x)=+1\) exactly when \(x<\alpha\), for \(\alpha<\kappa\). The class \(\mathcal H_\kappa=\{h_\alpha:\alpha<\kappa\}\) has \(\kappa\) distinct threshold cuts.
+- Exact finite/global mismatch: For every finite \(S=\{x_1<\cdots<x_n\}\), the shared map \(\varphi_S(x_i)=(1,i)\in\mathbb R^2\) strictly represents every restricted cut: if the first \(k\) points are positive, \(w_k=(k+1/2,-1)\) has the required signs. In contrast, any fixed \(\varphi:\mathcal X\to\mathbb R^d\) with finite \(d\) induces at most \(|\mathbb R^d|\le\mathfrak c\) sign functions as its weight varies and therefore cannot represent all \(\kappa>\mathfrak c\) cuts.
+- Repair boundary: The obstruction targets only generic finite-restriction compactness. It does not rename the missing pathwise-energy or common-kernel claims and does not assert that \(\mathcal H_\kappa\) has the SQ learner from the source premise. A future full proof must instead produce one global finite-rank quotient directly, or a restriction-compatible real family with an independent coherence and strict-sign-preservation source.
+
+## Setting
+
+- Context: Work with binary classes over arbitrary domains and exact deterministic dimension complexity. The branch isolates the local-to-global implication that the failed randomized SQ transcript route would have needed after any finite-dimensional finite-restriction output; it does not rerun or rely on that route's transcript prefix.
+- Model: A finite-restriction certificate for \((\mathcal X,\mathcal H)\) consists, for each finite \(S\subseteq\mathcal X\), of one map \(\varphi_S:S\to\mathbb R^2\) shared by all \(h|_S\), with target-dependent weights giving strict signs. A global certificate is one finite-dimensional real map \(\varphi:\mathcal X\to\mathbb R^d\) shared by all of \(\mathcal H\). No compatibility, margin, compactness, or cardinality premise is inserted between these two notions.
+- Data: The obstruction itself is representation-theoretic and uses the threshold-cut class \(\mathcal H_\kappa\); it does not claim that this class satisfies the universal adversarial-tolerance SQ premise. This is deliberate because the source permits a rigorous counterexample to a necessary intermediate claim as formal obstruction progress.
+- Algorithm: Keep the parent randomized-SQ transcript-feature construction as the route under audit, but replace its failed exactification stage by an independent counterexample to the local-to-global inference. No response-tree prefix, branch-uniform energy, common annihilating kernel, projective quotient, or global map is assumed or deferred to a later proof step.
+- Regime: The domain is the well-order \(\kappa=\mathfrak c^+\), so the stress test lies inside the source's arbitrary-domain scope. All finite restrictions are handled with exact strict signs and dimension two, while the global target ranges over every finite real dimension. There is no finite encoding, approximate sign, probabilistic map, favorable oracle, or uniform-margin substitution.
+
+## Goal
+
+- Theorem type: unconditional arbitrary-domain finite-restriction exactification obstruction.
+- Informal statement: Prove that \(\sup_{S\subseteq\mathcal X,\,|S|<\infty}\operatorname{dc}(\mathcal H_\kappa|_S)\le2\) but \(\operatorname{dc}(\mathcal H_\kappa)=\infty\); consequently, uniformly bounded finite exact maps and strict finite separators cannot by themselves close the arbitrary-domain transcript exactification step.
+
+## Notes
+
+- Parent foundation papers: Invited Open Problem: Is the Power of Deep Learning over Linear Models Inherently Distribution Dependent? (COLT 2026); Limitations of Learning via Embeddings in Euclidean Half Spaces (JMLR 2002)
+- Transfer map: preserves the source's arbitrary-domain exact-sign interface; drops the response-complete/point-mass/finite-Gordan prefix as a proof route; changes the theorem goal to a counterexample to generic finite-restriction compactness; reuses affine threshold representations and the cardinality bound on sign functions generated by a fixed real feature map.
+- Source alignment: The branch preserves arbitrary domains, real deterministic exact signs, and the requirement that one global map represent every target. It explicitly changes the success criterion from the full SQ-to-dimension implication to a formal obstruction and makes no SQ-learnability claim for the witness class. Thus it does not relax the oracle silently or present a finite-domain, probabilistic, approximate, or domain-dependent upper bound as full progress.
+- Progress type: obstruction
+- Materiality: The theorem converts the exact globalization defect from `idea_1` into a standalone counterexample to the necessary intermediate inference "uniformly bounded finite-restriction dimension implies finite global real dimension." It proves that any full Perspective 2 route must obtain global coherence from the SQ premise itself; local Gordan separators, strictness, and even a uniform local rank bound cannot supply that coherence.
+- Significance: The result rules out a concrete exactification strategy at the full arbitrary-domain boundary and isolates the missing mechanism without repeating the unsupported pathwise-energy or common-kernel claims. It is non-duplicate of `perspective_1/idea_2`, which proves an exponential tie-penalized probabilistic response-grid bound rather than an exact deterministic local-to-global obstruction.
+- Feasibility: The proof uses standard/literature-derived dimension-complexity and cardinality facts, with no novel theorem-facing assumption or protocol. The local formula can be checked directly at \(n=1,2,3\) and then for every finite \(n\): half-integer offsets avoid all ties, including the all-negative and all-positive cuts. Globally, \(\kappa=\mathfrak c^+\) supplies \(\kappa\) distinct targets, whereas finite-dimensional real weights supply only \(\mathfrak c\) candidate sign functions.
+- Consistency: The witness has exactly the claimed local and global behavior and does not smuggle a generated coherence condition into the premises. The target change is explicit, the full \(C m/\tau^2\) implication remains open, and `idea_1` is used only as failure evidence. Common rank, separator preservation, and arbitrary-domain coherence remain named as missing rather than relabeled.

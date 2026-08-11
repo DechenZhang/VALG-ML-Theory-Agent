@@ -1,0 +1,222 @@
+\section{Main Theorem}
+
+\begin{theorem}[Anchored coefficient-normalized Pfaffian sweep]
+\label{thm:main}
+Under Assumptions~\ref{assump:parameter-regime},
+\ref{assump:balcan-common-chain}, and
+\ref{assump:anchored-unit-range}, the following conclusions hold.  The
+probabilistic conclusions additionally use
+Assumption~\ref{assump:cube-density-laws}, and the general affine conclusion
+also uses Assumption~\ref{assump:affine-chart-data}.
+
+\emph{Primitive presentation and projective speed.}
+Define
+\[
+D_*:=\Delta B_Q(1+qB_P).
+\]
+For every $x\in[-1,1]$ and $1\leq i\leq N$,
+\[
+|G_i'(x)|\leq D_*,
+\qquad
+\|G'(x)\|_2\leq\sqrt N\,D_*.
+\]
+Moreover $G_1=F_1=1$, so $\|G(x)\|_2,\|F(\theta)\|_2\geq1$.  With
+$\gamma_G=G/\|G\|_2$,
+\[
+\gamma_G'(x)
+=\frac{(I_N-\gamma_G(x)\gamma_G(x)^{\mathsf T})G'(x)}{\|G(x)\|_2},
+\]
+\[
+\gamma_F(\theta)=\gamma_G\!\left(\frac{\theta-c}{h}\right),
+\qquad
+\gamma_F'(\theta)=\frac1h\gamma_G'\!\left(\frac{\theta-c}{h}\right),
+\]
+and hence
+\[
+\Gamma_{\mathrm{proj}}(F)
+\leq\frac{\sqrt N\,\Delta B_Q(1+qB_P)}{h}.
+\tag{R1}
+\]
+These pointwise statements include one-sided endpoint derivatives.  When
+$q=0$, $M=B_P=0$ and $D_*=\Delta B_Q$; dependence on $M$ is degree zero
+when $B_P$ is fixed.  When $N=1$, or when the Euclidean projector annihilates
+$G'$, the normalized curve is stationary and its speed is zero.  The case
+$\Delta=0$ likewise gives the identity $0\leq0$.
+
+\emph{Central swept-hyperplane bound.}
+Fix the deterministic presentation before selecting a law or interval.  For
+every, possibly correlated, $\mu\in\mathcal D_{N,R,\kappa}$ and then every
+positive-length interval $I\subseteq\Theta$,
+\[
+\Pr_{\alpha\sim\mu}
+ [\exists\theta\in I:\langle\alpha,F(\theta)\rangle=0]
+\leq A\sqrt{\frac N2}\,\Gamma_{\mathrm{proj}}(F)|I|
+\leq\frac{AN\Delta B_Q(1+qB_P)}{\sqrt2\,h}|I|,
+\tag{R2a}
+\]
+and, with the interval supremum inside the law supremum,
+\[
+C^{\mathrm{Pf}}_{\mathcal D}(F;\Theta)
+\leq A\sqrt{\frac N2}\,\Gamma_{\mathrm{proj}}(F)
+\leq\frac{AN\Delta B_Q(1+qB_P)}{\sqrt2\,h}.
+\tag{R2b}
+\]
+Before division by $|I|$, the same chain holds for empty and singleton
+intervals with zero right side and for every endpoint convention.  Tangent
+and multiple roots, stationary normalized pieces, and coefficients for which
+the combination vanishes identically are included; no simple-root or finite-
+fiber condition is imposed.
+
+\emph{General affine chart bound.}
+For every interval $I\subseteq\Theta$, every measurable pivot partition in
+Assumption~\ref{assump:affine-chart-data}, and every, possibly correlated,
+$\mu\in\mathcal D_{N,R,\kappa}$,
+\[
+\begin{aligned}
+&\Pr_{\alpha\sim\mu}
+ [\exists\theta\in I:F_0(\theta)+\langle\alpha,F(\theta)\rangle=0]\\
+&\quad\leq
+\kappa\sum_{j=1}^N\int_{E_j}\int_{[-R,R]^{N-1}}
+ |\partial_\theta T_j(\theta,\beta)|\,d\beta\,d\theta.
+\end{aligned}
+\tag{R3}
+\]
+This is an inequality in $[0,+\infty]$.  It permits a divergent chart
+integral, arbitrarily small nonzero pivots, cube faces, empty or singleton
+intervals, included endpoints, tangent and multiple roots, infinite fibers,
+$N=1$, and affine combinations that vanish identically.  It assumes neither
+transversality, a uniform pivot margin, a conditional density, nor coordinate
+independence.
+
+\emph{Exact affine-monic recovery.}
+For every integer $d\geq1$ and bounded interval $J\subset\mathbb R$, choose a
+nondegenerate $\Theta=[c-h,c+h]\supseteq J$ and set
+\[
+F_0(\theta)=\theta^d,
+\qquad
+F_{k+1}(\theta)=\theta^k\quad(0\leq k\leq d-1),
+\]
+\[
+Q_0(x)=(c+hx)^d,
+\qquad
+Q_{k+1}(x)=(c+hx)^k\quad(0\leq k\leq d-1).
+\]
+Then
+\[
+p_\alpha(\theta)
+:=F_0(\theta)+\langle\alpha,F(\theta)\rangle
+=\theta^d+\sum_{k=0}^{d-1}\alpha_k\theta^k,
+\]
+with the exact data
+\[
+q=0,
+\quad M=0,
+\quad B_P=0,
+\quad N=d,
+\quad A=(2R)^d\kappa,
+\quad \Delta_{\mathrm{aug}}=d.
+\]
+The monic coefficient $1$ is deterministic and remains outside the random
+lower-coefficient vector $\alpha=(\alpha_0,\ldots,\alpha_{d-1})$.
+
+For $d\geq2$, use
+\[
+E_1=J\cap\{|\theta|\leq1\},
+\qquad
+E_d=J\cap\{|\theta|>1\},
+\qquad
+E_j=\varnothing\quad(j\notin\{1,d\}).
+\]
+The transition points $0,1,-1$ belong to the constant-pivot cell.  The two
+charts and their literal velocities are
+\[
+T_1(\theta,\beta)
+=-\theta^d-\sum_{k=1}^{d-1}\beta_k\theta^k,
+\qquad
+|\partial_\theta T_1|
+\leq d+R\sum_{k=1}^{d-1}k
+=d+\frac{Rd(d-1)}2
+\quad(|\theta|\leq1),
+\]
+\[
+T_d(\theta,\beta)
+=-\theta-\sum_{k=0}^{d-2}\beta_k\theta^{k-d+1},
+\]
+\[
+|\partial_\theta T_d|
+\leq1+R\sum_{k=0}^{d-2}(d-1-k)
+=1+\frac{Rd(d-1)}2
+\leq d+\frac{Rd(d-1)}2
+\quad(|\theta|>1).
+\]
+For $d=1$, use $E_1=J$, the zero-dimensional beta cube,
+$T_1(\theta)=-\theta$, and $|T_1'(\theta)|=1$.  Consequently, for every
+possibly correlated $\mu\in\mathcal D_{d,R,\kappa}$ and then every bounded
+$J$,
+\[
+\Pr_{\alpha\sim\mu}[\exists\theta\in J:p_\alpha(\theta)=0]
+\leq\kappa(2R)^{d-1}
+ \left(d+\frac{Rd(d-1)}2\right)|J|.
+\tag{R4}
+\]
+At $d=1$ this is exactly $\kappa|J|$.  There is no chart-count factor,
+interval enlargement, law augmentation, conservative remainder, or singular
+leading coordinate.
+
+\emph{Counter-example 1 scale.}
+Let $0<\delta\leq1$, $\Theta=[-1,1]$, $c=0$, $h=1$, and
+\[
+G(x)=\left(1,\frac{x}{\delta}\right),
+\qquad
+F(\theta)=\left(1,\frac{\theta}{\delta}\right).
+\]
+For the uniform law on $[-1,1]^2$,
+\[
+(h,q,M,\Delta,N,R,\kappa,A,B_P,B_Q)
+=\left(1,0,0,1,2,1,\frac14,1,0,\frac1\delta\right),
+\]
+\[
+\gamma_F(\theta)
+=\frac{(\delta,\theta)}{\sqrt{\delta^2+\theta^2}},
+\qquad
+\|\gamma_F'(\theta)\|_2
+=\frac{\delta}{\delta^2+\theta^2},
+\qquad
+\Gamma_{\mathrm{proj}}(F)=\frac1\delta.
+\]
+For every $0<\epsilon\leq\delta$,
+\[
+\Pr[\exists\theta\in[0,\epsilon]:
+ \alpha_1+\alpha_2\theta/\delta=0]
+=\frac{\epsilon}{4\delta}.
+\]
+Therefore, for $\mathcal D=\mathcal D_{2,1,1/4}$,
+\[
+\frac1{4\delta}
+\leq C^{\mathrm{Pf}}_{\mathcal D}(F;[-1,1])
+\leq\underbrace{A\sqrt{\frac N2}\,\Gamma_{\mathrm{proj}}(F)}_{1/\delta}
+\leq\underbrace{\frac{AN\Delta B_Q(1+qB_P)}{\sqrt2\,h}}_{\sqrt2/\delta}.
+\tag{R5}
+\]
+This is a lower and upper scale certificate, not an equality or optimality
+claim for the capacity.  It includes $\delta=1$ and $\epsilon=\delta$
+without a limiting argument.
+
+\emph{Rate contract.}
+The exposed central variables are
+$(q,M,\Delta,N,R,\kappa,A,B_P,B_Q,h^{-1})$; the monic variables are
+$(d,R,\kappa,|J|)$; and the scale-audit variables are $(\delta,\epsilon)$.
+There are no hidden constants or allowed hidden parameter dependencies.  The
+deterministic presentation is fixed before the law and interval ranges.  The
+probability mode is ordinary probability under each fixed full joint law; the
+horizon mode is the stated per-interval assertion followed, only in
+\emph{(R2b)}, by the interval supremum and then the law supremum.  Central
+norms and operator norms are Euclidean, affine velocities are scalar, and all
+coefficient and interval measures use the conventions in
+Section~\ref{sec:prelim}.  The
+admissibility conditions are exactly the numbered assumptions and the local
+restrictions $d\geq1$, bounded $J$, and
+$0<\epsilon\leq\delta\leq1$.  No confidence parameter, asymptotic horizon,
+independence premise, or further normalization claim is present, and every
+displayed algebraic bridge and numerical factor is literal.
+\end{theorem}

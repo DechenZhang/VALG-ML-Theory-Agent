@@ -1,0 +1,35 @@
+You are the step-scoped proof producer for perspective_3/idea_1, step_001, unit attempt 1 under sketch attempt 2, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+First read <CODEX_SKILLS_ROOT>/proof-step/SKILL.md completely and every directly required shared contract/template it names. Then prove exactly the accepted attempt-2 step_001 row.
+
+Binding artifacts and hashes:
+- idea.md: 5743443042dfc9c20be52d5e563ebc263b0a4a3454c7eb30034c2b811123e836
+- setting.md: 91119d2600ee2f787eb873796569ab53e35201e499bf81658d8a0bc1a8e7c79e
+- proof_sketch.md: aabcf6f6302d5cfab51cc1495d683cfa353390df7bf0fa81c3beecfcb076d108
+- proof_sketch_review.md: 56d6b16524f0935fbfeee3802f4f6fe748cf0eebfdcfcdf1a66ddce763ebc88c, status ACCEPTED
+- optional global_proof.md planning context: fcb7dc635362de5be5c61bbaf858c09ed9795863e8cdd5598247666d45b178b0
+- paired global_proof_review.md: 51006b10c890f501de7e1f6dd672a2ce07502b82251fcd58bbeef81ea006805b, status ACCEPTED
+- dependencies: None
+
+Exact target: prove every supported root lies in the compact root-feasible set K_R; if K_R is empty, prove the supported root event is empty and Gamma_piv=0; otherwise prove
+
+rho := min_{theta in K_R} max_{1<=j<=N} |F_j(theta)| > 0,
+
+define the proof-local finite extrema
+
+B_0 := max_{theta in Theta} max{|b(theta)|,|F_1(theta)|,...,|F_N(theta)|},
+B_1 := max_{theta in Theta} max{|b'(theta)|,|F_1'(theta)|,...,|F_N'(theta)|},
+
+derive for every theta in K_R the explicit crude bound
+
+min_j V_j(theta) <= 2 B_0 B_1 rho^(-2) (1 + R(N-1)),
+
+and conclude Gamma_piv(b,F;R)<infinity for this fixed family.
+
+Use exactly primitive assump:shared-pfaffian-chain and assump:no-forced-root. The full-joint-density assumption is not needed for this deterministic step. Prove root feasibility from |b|=|<alpha,F>|<=R||F||_1. Prove K_R is closed in compact Theta. On nonempty K_R, show that F(theta)=0 would force b(theta)=0 and violate assump:no-forced-root; then use continuity and compactness to obtain rho>0. For a largest-magnitude coordinate j, apply the quotient rule separately to b/F_j and every F_i/F_j, bound each numerator by 2 B_0 B_1 and each denominator by rho^2, and sum the exact 1+R(N-1) weights. Handle B_0=0 or B_1=0 without dividing by them. Audit N=1, coordinate zeros, ties, endpoints, K_R empty, and a hypothetical forced root.
+
+The binding progress type is material_partial and the theorem boundary is strict. B_0, B_1, and rho are proof-local witnesses of fixed-family finiteness only. Do not claim or imply polynomial general-instance control of Gamma_piv from q, M, Delta_rnd, Delta_aff, N, R, A, or other Pfaffian-format descriptors. Do not import a globally prescribed pivot, a theorem-facing norm margin, a density assumption, a probability conclusion, or a cited theorem as a substitute for the direct compactness/quotient derivation. Export only root feasibility, pivot availability, and fixed-family finiteness for steps 002--006.
+
+The accepted global proof may supply planning ideas only and is never proof evidence, a citation, or an assumption source. The pre-existing live step_001 proof and review are stale sketch-attempt-1 artifacts and are byte-identical to the precise archive at proof_history/sketch_001/proof_steps/step_001/attempt_001/. You may inspect those two exact same-step files before overwriting only as diagnostic context if useful; they establish no attempt-2 claim and must not be cited as evidence. Do not scan any other proof_history content.
+
+Write only perspective_3/idea_1/proof_steps/step_001/proof.md. Do not edit trackers, worker_log.md, dependency artifacts, reviews, final artifacts, or another branch. Use all required proof-step sections, exact assumption provenance, a complete local lemma map, cited-result applications, detailed derivations, target-step assembly, explicit-rate audit, blockers, and notation/public-surface classifications. Set Step Proof Status to COMPLETE only if the exact claim is fully proved. Before reporting, validate binding hashes, ASCII/control bytes, structurally balanced TeX delimiters and braces, Markdown table arity while ignoring escaped pipes, local-unit correspondence, required headings, and file scope. Report status, path, local-unit count, and final SHA-256.

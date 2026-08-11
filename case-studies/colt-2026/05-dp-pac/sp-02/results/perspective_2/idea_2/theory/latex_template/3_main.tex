@@ -1,0 +1,34 @@
+\section{Main Theorem}
+\label{sec:main-theorem}
+
+\begin{theorem}[Private direct-sum threshold-minor lower bound]
+\label{thm:main}
+There exist universal constants $c,c_\delta>0$ and an integer $N_0\geq2$
+such that the following holds.  For every $k\geq1$, every $N\geq N_0$,
+every domain $X$, every finite $C\subseteq\{0,1\}^X$, and every fixed-sample
+learner $A$ satisfying Assumptions~\ref{assump:minor-table}--
+\ref{assump:unrestricted-private-pac} and
+Assumption~\ref{assump:fixed-parameter-scale} instantiated with the same
+$c_\delta$ quantified in this theorem,
+\[
+m\geq c\,k\log^*N.
+\]
+The conclusion is deterministic; the antecedent is high-probability,
+distribution-free realizable PAC in zero-one risk at the fixed sample size
+$m$.  All displayed constants are independent of $C,X,k,N,m$, of
+$\varepsilon_0,\delta_m$, and of the learner and minor table.
+\end{theorem}
+
+\begin{corollary}[Exact one-chain specialization]
+\label{cor:one-chain}
+Under the assumptions of Theorem~\ref{thm:main}, if $k=1$, then
+$m\geq c\log^*N$.  In the reduction proving this statement the auxiliary
+sample size, sole-arm occupancy, and overflow event are defined by
+\[
+n:=2m+12,\qquad R:=m,\qquad \mathsf O:=\{R>n\}.
+\]
+Consequently $R=m<n$ and $\mathsf O$ is empty, there are no nonhidden-arm
+simulations, and the
+restricted threshold kernel inherits exactly
+$(\varepsilon_0,\delta_m)$-privacy and the one-chain risk interface.
+\end{corollary}

@@ -1,0 +1,28 @@
+You are the distinct step-scoped proof producer for perspective_1/idea_1, step_009, unit attempt 1, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+First read <CODEX_SKILLS_ROOT>/proof-step/SKILL.md completely and every directly required shared contract/template it names. Then prove exactly the accepted step_009 row.
+
+Binding artifacts and hashes:
+- setting.md: f77d11e1a559e22a96b14de1936d50c691c79d5a4a15e5806ddf4e6d119ada83
+- proof_sketch.md: e7035d01ff910e55426d09e1add806b49103404582df2cf3e998000a8eebe898
+- proof_sketch_review.md: ccc24fd25cd6ac468831c0cd84f8aea642d7584e7cd402686da3bb6f82a86561, status ACCEPTED
+- global_proof.md: ab5340e84579424a3359d13063e91ed62e3db868b3b126c0bf10e5073f98153f
+- global_proof_review.md: bc4164bc1cad6e4856ee1268a586fbd17d5f8aa319f69716ea73b3da580f28c2, status ACCEPTED
+- dependency step_005 proof.md: 8af0c8f33a8e26e96adcc9808aadcd77e6464d930d6acdbcf0e7f255934cc68d
+- dependency step_005 review.md: 97aad3d3cc66eea47cf89b8896cc4482387b35decf484914e092b901e58c8712, status ACCEPTED
+
+For Counter-example 1, prove the full accepted row: with Theta=[-1,1], G(x)=(1,x/delta), and 0<delta<=1, record exactly h=1, q=0, M=0, Delta=1, N=2, R=1, kappa=1/4, A=1, B_P=0, and B_Q=1/delta in the setting's monomial-coefficient l1 convention. Explicitly verify B_Q=max{1,1/delta}=1/delta rather than importing it. Preserve the normalized coordinate x=theta, the anchor G_1=1, and the exact Euclidean projective presentation.
+
+For every 0<epsilon<=delta, identify the original closed coefficient event
+
+{alpha in [-1,1]^2 : exists theta in [0,epsilon], alpha_1+alpha_2 theta/delta=0}
+
+exactly, including both sign branches and all coefficient-axis and endpoint cases. With t=epsilon/delta in (0,1], show that the two closed triangular wedges have total Lebesgue area t by explicit slicing/integration, that overlap and boundary contributions have planar measure zero, and hence that the uniform density 1/4 gives exactly epsilon/(4 delta). Do not state only an almost-everywhere event identity when an exact closed-set identity is available.
+
+Divide only by the positive interval length epsilon and use the setting definition of C^Pf_D to conclude C^Pf_D(G;[-1,1]) >= 1/(4 delta). Then consume accepted step_005 only for the upper-scale comparison: its exact central theorem coefficient at this tuple is sqrt(2)/delta (and its projective-speed form has the same 1/delta scale). Make clear that the lower calculation is independent of the upper theorem, that the presentation exposes rather than hides the metric scale, and that no claim of constant-factor equality beyond the displayed lower and upper certificates is made.
+
+Handle epsilon=delta, delta=1, epsilon down to arbitrarily small positive values, alpha_1=0, alpha_2=0, the origin, wedge edges, and theta=0 and theta=epsilon. Preserve ordinary probability, the fixed uniform law, literal constants, and the exact R5 horizon and norm modes. Do not introduce independence beyond the explicitly fixed uniform-square law, a union bound, conditioning, an asymptotic limit in place of positive epsilon, a hidden constant, an auxiliary tolerance, or an alternate Pfaffian convention.
+
+Use exactly the primitive specialized setting assumptions and accepted step_005 comparison interface allocated by the sketch. This is the complete R5 scale audit and progress type remains full.
+
+Write only perspective_1/idea_1/proof_steps/step_009/proof.md. Do not edit trackers, worker_log, dependencies, or another branch. Use all required proof-step sections, exact assumption provenance, a complete local lemma map, dependency/cited-result applications, detailed derivations, target-step assembly, explicit-rate and baseline-reduction audit, blockers, and notation/public-surface classifications. Validate binding hashes, ASCII/control bytes, structurally balanced TeX delimiters and braces, Markdown table arity while ignoring escaped pipes, local-unit correspondence, required headings, and file scope before reporting status, path, local-unit count, and final SHA-256.

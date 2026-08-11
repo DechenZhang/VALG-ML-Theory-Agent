@@ -1,0 +1,56 @@
+You are the fresh distinct step-scoped producer handoff for perspective_2/idea_1, step_009, unit attempt 1, sketch attempt 2, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+Read <CODEX_SKILLS_ROOT>/proof-step/SKILL.md completely and every directly required shared contract/template it names. Prove exactly the accepted sketch-attempt-2 step_009 row and overwrite only perspective_2/idea_1/proof_steps/step_009/proof.md. Do not modify the sketch, review, tracker, worker log, dependency artifacts, proof history, prompts, assembly, final-review artifacts, results, or any other file.
+
+Binding SHA-256 values: idea 5209aa21929e84604acb2712d8657460a48463901738fd00ebafaa84d5c43596; setting 6955a2723694ff60af8d5d40329ff0ad056f9b54780ff02744d8985456222b7e; accepted sketch 41517943f551814aaf87ff8541d5a81b56123cae7d8533b2bceb302a981bfbc4; accepted sketch review a80e7f4ffb1ad57991675810dbf7064bc7b482b8f34b61f10a171ebfc97b43c9; controller-open tracker b0d2751d6237dd2f5461fc0e5edaa18144df068ebfc4fcfd157bbfd75f8d5c9e. The target has no dependency proof/review artifacts. Omit global_proof.md and global_proof_review.md because this is a direct primitive specialization and they are unnecessary diagnostic context.
+
+Prove the exact monic specialization for every integer d>=1 and every bounded interval J. Use the actual augmented tuple
+
+  F_0(theta)=theta^d,  F_{k+1}(theta)=theta^k for 0<=k<=d-1,
+
+so F_0+<alpha,F>=p_alpha(theta)=theta^d+sum_{k=0}^{d-1}alpha_k theta^k pointwise, with deterministic leading coefficient outside the d-dimensional random vector alpha=(alpha_0,...,alpha_{d-1}). Verify exactly
+
+  q=0, M=0, Delta=d, N=d, m=0, A=(2R)^d kappa,
+
+and the literal anchor F_1=1. Do not import an independent polynomial-root theorem or any probability conclusion.
+
+Construct and verify the constant derivative-shift matrix B for the ordered augmented tuple (F_0,F_1,...,F_d)=(theta^d,1,theta,...,theta^(d-1)). Its only nonzero entries must be
+
+  B_{0,d}=d,  B_{k+1,k}=k for 1<=k<=d-1.
+
+Prove coefficient by coefficient that tilde F'=B tilde F, that the polynomial matrix degree is m=0, and that the setting-defined coefficient-height certificate is exactly
+
+  widehat Lambda_{B,T}=(sum_{k=1}^d k^2)^(1/2).
+
+Do not merely state that this is the usual shift matrix; display the row actions, index map, and Frobenius/coefficient-height algebra. Handle d=1, when B is the 2-by-2 matrix with only B_{0,1}=1.
+
+For d>=2, prove that the measurable disjoint partition
+
+  E_1=J intersect {|theta|<=1},  E_d=J intersect {|theta|>1}
+
+uses the legal pivots alpha_0 and alpha_{d-1}, respectively, with |theta|=1 assigned to E_1. Derive the actual coefficient-coordinate chart maps
+
+  T_1(theta,beta)=-theta^d-sum_{k=1}^{d-1} beta_k theta^k,
+  T_d(theta,beta)=-theta-sum_{k=0}^{d-2} beta_k theta^(k-d+1).
+
+Differentiate them directly and display every finite-sum calculation needed to prove
+
+  |partial_theta T_1| <= d + R sum_{k=1}^{d-1} k = d + R d(d-1)/2
+
+on E_1, and
+
+  |partial_theta T_d| <= 1 + R sum_{m=1}^{d-1} m/|theta|^(m+1)
+                       <= 1 + R d(d-1)/2
+                       <= d + R d(d-1)/2
+
+on E_d. Control negative powers only from |theta|>1 and show the exact reindexing. For d=1, use the sole constant pivot alpha_0 on all J, derive T_1(theta)=-theta, and prove |partial_theta T_1|=1 with the zero-dimensional beta convention.
+
+Audit theta=0, both theta=1 and theta=-1, negative outer theta, empty partition pieces, d=1, d=2, an arbitrarily located bounded J, every coefficient index and dimension, exact pointwise equality to p_alpha, the actual lower-coefficient cube, and the absence of a singular or randomized leading coordinate. The interval location may be unbounded across problem instances; no bound may depend on sup |J| because the outer chart uses negative powers. Preserve the exact Euclidean/Frobenius certificate convention.
+
+The step exports only the exact monic object, Balcan descriptor tuple, constant derivative-shift certificate, legal pivot partition, chart formulas, and velocity caps needed by step_010. It does not prove the downstream probability bound, integrate beta volume, use a density, invoke step_003, or assemble the final theorem. Preserve R1/R4, the exact baseline path, and progress_type=full without claiming a result outside this local specialization.
+
+Use every required proof-step template section. Give every independent nontrivial calculation a stable local unit, paper-ready theorem-style title and label, self-contained statement with explicit assumption basis/local conditions/conclusion, and a matching derivation subsection. Restate direct standard facts and local results before use, show assumption and constant provenance, classify every helper as public-facing, appendix-local, or proof-local, include a complete target-step assembly, explicit-rate/baseline audit, boundary audit, and honest blockers. Mathematical prose must cite named theorem-style results, not step IDs, subsection titles, or unit IDs as proof authority.
+
+The pre-overwrite live step_009 proof and review are consumed sketch-attempt-1 artifacts with SHA-256 values 241aff9f7902ac53f4bbfbaa561c92d077f6827911a597eb6087aca664e00e7c and d0c991fb67d7b8f34d718ed897982178dc4f9d1fc8596efda3482e678a6a6abc. Before dispatch, the controller copied them byte-identically to perspective_2/idea_1/proof_history/sketch_001/proof_steps/step_009/attempt_001/. They may be consulted only as the latest same-step diagnostic material if needed and never as current evidence. Do not read proof_history. Regenerate the current identity, local units, labels, direct derivations, and target assembly for sketch attempt 2.
+
+Set Step Proof Status=COMPLETE only if the exact target is proved without a dependency or hidden probability theorem. Before returning, validate all binding and archived-live hashes, sketch/step/unit identity, required headings, table arity ignoring escaped pipes, assumption IDs, local-unit correspondence, labels/references, ASCII/control bytes, TeX delimiter and brace balance, and single-file output scope. Report status, local-unit count, blockers, and final SHA-256.

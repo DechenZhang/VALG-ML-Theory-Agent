@@ -1,0 +1,46 @@
+\section{Main Theorem}
+
+\begin{theorem}[Fixed-span positive limiting objective]\label{thm:main}
+Under Assumptions~\ref{assump:dimension}--\ref{assump:joint_initialization},
+set
+\[
+ r_0=1,
+ \qquad
+ \alpha=\frac14,
+ \qquad
+ L(r)=r^{1+\alpha}=r^{5/4}.
+\]
+For every integer $r\ge r_0$, every integer $n\ge8L(r)$, every integer
+$k$ with $r<k\le L(r)$, and every deterministic base triple allowed by
+Assumption~\ref{assump:arbitrary_base}, run the two constrained methods above
+with their independent Gaussian starts and their shared smoothed tensor $T$.
+Then, with probability at least $1/4$ over the smoothing variables and both
+complete initialization triples, simultaneously for
+$M\in\{\mathrm{cALS},\mathrm{cGD}\}$,
+\[
+ \|(I-P_{\mathcal H_M})T\|_F^2\ge\frac34\|T\|_F^2,
+ \qquad
+ F_M(t)\ge\frac38\|T\|_F^2\quad\text{for every }t\ge0,
+\]
+and the finite scalar limit satisfies
+\[
+ \lim_{t\to\infty}F_M(t)\ge\frac38\|T\|_F^2.
+\]
+Equivalently,
+\[
+ \mathbb P\!\left[
+ \bigcap_{M\in\{\mathrm{cALS},\mathrm{cGD}\}}
+ \left\{
+ \lim_{t\to\infty}F_M(t)\text{ exists as a finite real number and }
+ \lim_{t\to\infty}F_M(t)\ge\frac38\|T\|_F^2
+ \right\}
+ \right]\ge\frac14.
+\]
+All displayed constants are exact and hide no dependence on
+$r,n,k,q,\rho,T$, the deterministic bases, either initialization, the method,
+or the iteration index.  The probability statement is pointwise uniform over
+the deterministic base triple, not a simultaneous event over all triples.
+The conclusion is only for the two displayed fixed-one-mode constrained
+procedures and does not extend to ordinary unconstrained ALS or full-variable
+gradient descent.
+\end{theorem}

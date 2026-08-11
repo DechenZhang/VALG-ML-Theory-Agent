@@ -1,0 +1,15 @@
+Perform the fresh independent /proof-review-structural stage for perspective_2/idea_1, accepted sketch attempt 2, assembly attempt 4.
+
+Read <CODEX_SKILLS_ROOT>/proof-review-structural/SKILL.md completely, <CODEX_SKILLS_ROOT>/_shared/checklists/artifact-contracts.md completely, and <CODEX_SKILLS_ROOT>/_shared/templates/proof-review-structural.md completely. Then read .controller_tmp/p2_final_review_common_manifest_assembly4.txt completely and verify SHA-256 8c5c7c9eaf826d6f7cec4cdac4fff70e014bd2d862856b5f969514cc92726c74.
+
+Write only perspective_2/idea_1/proof_review_structural.md, replacing the stale assembly-attempt-3 live file without reading it. Do not read proof_review.md, sibling specialized reviews, proof_history, or archived final reviews. Do not modify any other file.
+
+Independently audit exact-goal alignment, all 12 accepted producer interfaces, dependency closure, theorem-block mapping, all five inseparable theorem clauses, assembly discipline, main-theorem standalone readability, assumption provenance, notation surface, theorem-style statement shape, public references, and exact nine-file self-containment. Verify the final wrapper uses only accepted conclusions and direct composition.
+
+Perform exhaustive source-to-appendix comparison for all 49 accepted local units, every used cited-result application, and all 12 Target-Step Assembly sections. Do not PASS from counts, labels, compilation, assembly_report.md, or accepted-review tokens. Recheck the Federer area-formula integration and the entire fixed-section, homogeneous, monic, and Counter-example chains.
+
+Audit the attempt-4 delta directly. Verify all theorem-facing Counter-example sqrt(2)/delta additions are absent from 1_intro.tex, 3_main.tex, and 5_appendix.tex; selected-law probability epsilon/(4 delta) and lower ratio 1/(4 delta) remain; and the separate all-law coefficient, raw certificate, and homogeneous projective-speed 1/delta conclusions remain synchronized. Confirm the repair introduced no statement, label, reference, layout, scope, or source-interface drift and no malformed public-TeX fragment.
+
+Use exactly the shared template and heading order. Controlled field bodies must be raw tokens. PASS requires Blocking Issues=None, Suggested Repair Depth=None, and Smallest Candidate Repair Target=None. BLOCKING requires numbered blockers and aligned depth/target. Emit no score, aggregate Failure Type, Retry Mode, or controller route.
+
+Before returning, reverify all protected inputs, complete the 12-step comparison, output SHA-256, ASCII/control-byte cleanliness, final LF, and single-output-file scope. Report verdict, blockers/concerns, depth/target, comparison completion, output hash, and protected-input verification.

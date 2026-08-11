@@ -1,0 +1,181 @@
+\section{Theoretical Setup}\label{sec:theoretical-setup}
+
+\subsection{Problem setting}
+
+Let \(\mathcal X\) be an arbitrary, possibly infinite, domain and let
+\(\mathcal H\subseteq\{+1,-1\}^{\mathcal X}\).  All distributions,
+queries, predictors, and expectations below are understood on their
+underlying measurable structures.  For a distribution \(\mathcal D\) on
+\(\mathcal X\), a target \(h\in\mathcal H\), and a binary predictor
+\(g:\mathcal X\to\{+1,-1\}\), define
+\[
+L_{\mathrm{bin}}(\mathcal D,h,g)
+:=\Pr_{x\sim\mathcal D}[g(x)h(x)<0].
+\]
+For a real score \(s:\mathcal X\to\mathbb R\), define the tie-penalized
+loss
+\[
+L_{\mathrm{tie}}(\mathcal D,h,s)
+:=\Pr_{x\sim\mathcal D}[s(x)h(x)\le0].
+\]
+Thus \(L_{\mathrm{tie}}(\mathcal D,h,g)
+=L_{\mathrm{bin}}(\mathcal D,h,g)\) for a binary \(g\), whereas the
+identically zero score has tie loss one.
+
+For \(\alpha\in[0,1]\), define
+\(\operatorname{dc}^{\mathrm{tie}}_\alpha(\mathcal H)\) as the least
+\(d\) for which there is a probability law \(\mathsf P\) on feature maps
+\(\Phi:\mathcal X\to\mathbb R^d\), fixed before and shared by every
+\((\mathcal D,h)\), such that
+\[
+\sup_{\mathcal D}\sup_{h\in\mathcal H}
+\mathbb E_{\Phi\sim\mathsf P}
+\left[
+\inf_{w\in\mathbb R^d}
+L_{\mathrm{tie}}\bigl(
+\mathcal D,h,x\mapsto\langle w,\Phi(x)\rangle
+\bigr)
+\right]
+\le\alpha.
+\tag{1}\label{eq:tie-dimension-definition}
+\]
+
+An unrestricted statistical-query (SQ) query is a function
+\(q:\mathcal X\times\{+1,-1\}\to[-1,1]\).  For fixed
+\((\mathcal D,h)\), a tolerance-\(\tau\) adaptive oracle policy may use
+the observed transcript, but each reply \(a\) to a current query \(q\)
+must satisfy
+\[
+\left|a-\mathbb E_{x\sim\mathcal D}q(x,h(x))\right|\le\tau.
+\tag{2}\label{eq:sq-tolerance}
+\]
+For a randomized learner \(A\), let \(R\sim\mu\) denote its complete
+random tape.  Conditioning on \(R=r\) makes all queries, stopping decisions,
+and the terminal binary predictor deterministic.  We write
+\(A_r^{\mathcal O}(\mathcal D,h)\) for that terminal predictor when the
+taped protocol interacts with \(\mathcal O\) on the labeled distribution
+induced by \((\mathcal D,h)\).
+
+\subsection{Assumptions}
+
+\begin{assumption}[SQ parameter regime]
+\label{assump:sq-parameter-regime}
+The parameters satisfy
+\[
+m\in\mathbb N_0,
+\qquad
+\tau>0,
+\qquad
+\varepsilon\in[0,1/4).
+\]
+\end{assumption}
+
+\begin{assumption}[Universal adversarial-SQ learner]
+\label{assump:universal-adversarial-sq}
+One randomized adaptive algorithm \(A\), fixed independently of
+\((\mathcal D,h)\), makes at most \(m\) unrestricted SQ queries of
+tolerance \(\tau\), returns a binary predictor, and, for every distribution
+\(\mathcal D\) on \(\mathcal X\), every \(h\in\mathcal H\), and every
+adaptive tolerance-valid oracle policy \(\mathcal O\), satisfies
+\[
+\mathbb E_{R\sim\mu}
+L_{\mathrm{bin}}\bigl(
+\mathcal D,h,A_R^{\mathcal O}(\mathcal D,h)
+\bigr)
+\le\varepsilon.
+\tag{3}\label{eq:universal-sq-guarantee}
+\]
+The expectation is only over the learner tape, and the oracle guarantee is
+pointwise for every valid policy.
+\end{assumption}
+
+\subsection{Canonical response-tree construction}
+
+Under Assumption~\ref{assump:sq-parameter-regime}, put
+\[
+K:=\lceil1/\tau\rceil,
+\qquad
+G:=\{-1+2j/K:0\le j\le K\},
+\qquad
+N:=|G|^m=(\lceil1/\tau\rceil+1)^m.
+\tag{4}\label{eq:grid-and-dimension}
+\]
+Fix a deterministic nearest-grid map \(\rho:[-1,1]\to G\), with any fixed
+rule at midpoint ties.  Adjacent grid points are separated by \(2/K\), and
+the exact covering bound
+\[
+|\rho(u)-u|\le 1/K\le\tau
+\qquad(u\in[-1,1])
+\tag{5}\label{eq:setup-rounding-bound}
+\]
+will be proved in Lemma~\ref{lem:step-001-grid-rounding}.
+
+For a tape \(r\) and full response string
+\(z=(z_1,\ldots,z_m)\in G^m\), replay the deterministic protocol \(A_r\),
+supplying \(z_t\) at its \(t\)-th query, and denote the terminal predictor
+by \(g_{r,z}:\mathcal X\to\{+1,-1\}\).  If the protocol stops after a
+prefix, all suffixes receive the same terminal predictor; equivalently, the
+tree is padded to depth \(m\).  Ordering \(G^m\) lexicographically, define
+\[
+\phi_r(x):=(g_{r,z}(x))_{z\in G^m}\in\{+1,-1\}^N,
+\qquad
+\mathsf P_A:=\operatorname{Law}(\phi_R),\quad R\sim\mu.
+\tag{6}\label{eq:response-tree-map-law}
+\]
+The law uses only the fixed learner, its tape law, and \((m,\tau)\), and is
+therefore chosen before \((\mathcal D,h)\).
+
+For an instance \((\mathcal D,h)\), define the deterministic canonical
+oracle
+\[
+\mathcal O^\rho_{\mathcal D,h}(q)
+:=\rho\!\left(
+\mathbb E_{x\sim\mathcal D}q(x,h(x))
+\right).
+\tag{7}\label{eq:canonical-oracle}
+\]
+For tape \(r\), let \(z^{\mathcal D,h,r}\in G^m\) be the replies generated
+recursively along this run, padded after early stopping by \(-1\).  If
+\(e_z\in\mathbb R^N\) is the standard basis vector at coordinate \(z\),
+then by construction
+\[
+\left\langle e_{z^{\mathcal D,h,r}},\phi_r(x)\right\rangle
+=g_{r,z^{\mathcal D,h,r}}(x).
+\tag{8}\label{eq:setup-coordinate-identity}
+\]
+
+\subsection{Formalized goal}
+
+The objective is to prove, under exactly
+Assumptions~\ref{assump:sq-parameter-regime}
+and~\ref{assump:universal-adversarial-sq}, that the one pre-instance law
+\(\mathsf P_A\) satisfies simultaneously for every \((\mathcal D,h)\)
+the exact chain
+\[
+\begin{aligned}
+&\mathbb E_{\Phi\sim\mathsf P_A}
+\left[
+\inf_{w\in\mathbb R^N}
+L_{\mathrm{tie}}\bigl(
+\mathcal D,h,x\mapsto\langle w,\Phi(x)\rangle
+\bigr)
+\right]\\
+&\quad\le
+\mathbb E_{R\sim\mu}
+L_{\mathrm{tie}}(\mathcal D,h,g_{R,z^{\mathcal D,h,R}})\\
+&\quad=
+\mathbb E_{R\sim\mu}
+L_{\mathrm{bin}}\bigl(
+\mathcal D,h,
+A_R^{\mathcal O^\rho_{\mathcal D,h}}(\mathcal D,h)
+\bigr)
+\le\varepsilon,
+\end{aligned}
+\tag{9}\label{eq:formalized-goal-chain}
+\]
+and consequently
+\[
+\operatorname{dc}^{\mathrm{tie}}_\varepsilon(\mathcal H)
+\le N=(\lceil1/\tau\rceil+1)^m.
+\tag{10}\label{eq:formalized-goal-dimension}
+\]

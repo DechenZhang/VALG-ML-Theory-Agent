@@ -1,0 +1,18 @@
+You are the distinct step-scoped proof producer for perspective_1/idea_1, step_006, unit attempt 1, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+First read <CODEX_SKILLS_ROOT>/proof-step/SKILL.md completely and every directly required shared contract/template it names. Then prove exactly the accepted step_006 row.
+
+Binding artifacts and hashes:
+- setting.md: f77d11e1a559e22a96b14de1936d50c691c79d5a4a15e5806ddf4e6d119ada83
+- proof_sketch.md: e7035d01ff910e55426d09e1add806b49103404582df2cf3e998000a8eebe898
+- proof_sketch_review.md: ccc24fd25cd6ac468831c0cd84f8aea642d7584e7cd402686da3bb6f82a86561, status ACCEPTED
+- dependency step_001 proof.md: b846300f0428d90bf5fd1d418223567a34baf7d1c39d6ef5d5e62dab911cc46f
+- dependency step_001 review.md: cbffa6c670710873223b51cafa6a8eded4d3bb4a4ae45517dd2c30f9f1fafb97, status ACCEPTED
+
+Exact target: prove the accepted general affine chart inequality by applying the Euclidean area formula to each D_{j,m} and Psi_j, summing charts, and taking m to infinity. The result must cover the full affine root event with no uniform pivot margin, retain the coefficient-cube indicator and the exact chart Jacobian/integral, and handle extended-real integrals, tangent and multiple roots, interval endpoints, affine-identically-zero combinations, and arbitrary correlation through the full joint density cap.
+
+Use exactly the primitive assumptions assump:parameter-regime, assump:balcan-common-chain, assump:anchored-unit-range, assump:cube-density-laws, and assump:affine-chart-data, plus only the accepted step_001 regularity interface. Prove finite-level Lipschitz legality from the 1/m pivot lower bound, exact coefficient-object mapping and cube membership, exact determinant/Jacobian, event/image coverage with measurable exhaustion, multiplicity-safe projection control, null handling of affine-identically-zero combinations as allocated by the accepted sketch, density domination without independence, and monotone convergence in [0,+infinity]. Balcan--Dick--Pegden Theorem 18 (arXiv:1904.09014) is affine lineage only, not a black-box replacement for the required current-notation derivation.
+
+Preserve the exact R3 chart integrals, probability and interval modes, all exposed N,R,kappa and feature/chart dependence, and zero hidden constant. Progress type is full. Export only the general affine theorem clause needed by step_008 and step_010. Do not use global_proof.md as proof evidence and do not change the accepted sketch interface.
+
+Write only perspective_1/idea_1/proof_steps/step_006/proof.md. Do not edit trackers, worker log, dependencies, or another branch. Use all required proof-step sections, exact assumption/dependency provenance, complete local lemma map, cited-result applications, detailed derivations, target-step assembly, explicit-rate audit, blockers, and notation/public-surface classifications. Validate binding hashes, ASCII/control bytes, structurally balanced TeX delimiters and braces, Markdown table arity while ignoring escaped pipes, local-unit correspondence, required headings, and file scope before reporting status, path, local-unit count, and final SHA-256.

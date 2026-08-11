@@ -1,0 +1,63 @@
+\section{Preliminaries}
+\label{sec:prelim}
+
+Write $F=(F_1,\ldots,F_N)$ and let $I_N$ be the $N\times N$ identity
+matrix.  Under Assumption~\ref{assump:anchored-unit-range}, define
+\[
+\gamma_F(\theta):=\frac{F(\theta)}{\|F(\theta)\|_2},
+\qquad
+\Gamma_{\mathrm{proj}}(F)
+:=\operatorname*{ess\,sup}_{\theta\in\Theta}
+  \|\gamma_F'(\theta)\|_2.
+\]
+The appendix derives both the legality and finiteness of these quantities; no
+such conclusion is folded into the assumptions.
+
+Set
+\[
+A:=(2R)^N\kappa,
+\qquad
+\mathcal D:=\mathcal D_{N,R,\kappa},
+\]
+and define the ordered all-law, all-interval coefficient
+\[
+C^{\mathrm{Pf}}_{\mathcal D}(F;\Theta)
+:=\sup_{\mu\in\mathcal D_{N,R,\kappa}}
+  \sup_{\substack{I\subseteq\Theta\ \mathrm{interval}\\|I|>0}}
+  \frac{\Pr_{\alpha\sim\mu}
+  [\exists\theta\in I:\langle\alpha,F(\theta)\rangle=0]}{|I|}.
+\]
+Thus the interval supremum is taken for a fixed law before the law supremum.
+
+For the affine interface, put
+\[
+\phi^{\mathrm{aff}}_\alpha(\theta)
+:=F_0(\theta)+\langle\alpha,F(\theta)\rangle.
+\]
+Given the partition in Assumption~\ref{assump:affine-chart-data}, index
+$\beta\in[-R,R]^{N-1}$ by coordinates $i\neq j$ and define
+\[
+T_j(\theta,\beta)
+:=-\frac{F_0(\theta)}{F_j(\theta)}
+  -\sum_{i\neq j}\beta_i\frac{F_i(\theta)}{F_j(\theta)},
+\]
+\[
+\partial_\theta T_j(\theta,\beta)
+=-\frac{
+\left(F_0'(\theta)+\sum_{i\neq j}\beta_iF_i'(\theta)\right)F_j(\theta)
+-\left(F_0(\theta)+\sum_{i\neq j}\beta_iF_i(\theta)\right)F_j'(\theta)
+}{F_j(\theta)^2}.
+\]
+The associated exhaustion sets are
+\[
+E_{j,m}:=\{\theta\in E_j:|F_j(\theta)|\geq1/m\},
+\qquad m\geq1.
+\]
+
+All vector and matrix norms below are Euclidean and induced Euclidean norms,
+respectively; chart velocities use scalar absolute value.  We write
+$\operatorname{Leb}^m$ for $m$-dimensional Lebesgue measure and
+$\mathcal H^m$ for Euclidean Hausdorff measure.  The zero-dimensional
+conventions are $[-R,R]^0=\{()\}$ and
+$\operatorname{Leb}^0(\{()\})=1$.  For an interval $I$, $|I|$ denotes its
+Lebesgue length, independently of endpoint convention.

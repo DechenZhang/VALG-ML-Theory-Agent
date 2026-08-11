@@ -1,0 +1,1021 @@
+\appendix
+
+\section{Proof Details}
+\label{sec:proof-details}
+
+\subsection{Finite gradient control on the static ball}
+\label{app:step001-gradient}
+
+\begin{lemma}[Finite-ball forward envelope]
+\label{lem:p1-i3-step001-forward}
+Under Assumptions~\ref{assump:fixed-source-witnesses} and
+\ref{assump:robust-tube}, fix a deterministic
+$\theta^{(0)}\in\mathbb R^S$ and the finite radius $r>0$.  Define
+\[
+B:=\max\{1,\|\theta^{(0)}\|_\infty+r\},
+\qquad a_0:=1,
+\qquad a_\ell:=n_{\ell-1}B a_{\ell-1}
+\quad(1\leq\ell<L).
+\tag{21}
+\]
+Then $B,a_0,\ldots,a_{L-1}$ are finite and, for every
+$\theta\in B_\infty(\theta^{(0)},r)$, $x\in\mathcal X$, hidden layer
+$1\leq\ell<L$, and $j\in[n_\ell]$,
+\[
+|u_{\ell,j}(\theta,x)|\leq a_\ell,
+\qquad
+|z_{\ell,j}(\theta,x)|\leq a_\ell.
+\tag{22}
+\]
+For $L=1$ the hidden-layer assertion is empty and $a_0=1$.
+\end{lemma}
+
+\begin{proof}
+All coordinates of the deterministic vector $\theta^{(0)}$ are finite and
+the radius is finite, hence $B<\infty$.  If $\theta$ lies in the closed ball,
+then every weight coordinate satisfies
+\[
+|\theta_{\ell,jk}|
+\leq |(\theta^{(0)}_\ell)_{jk}|
+      +|\theta_{\ell,jk}-(\theta^{(0)}_\ell)_{jk}|
+\leq \|\theta^{(0)}\|_\infty+r\leq B.
+\tag{23}
+\]
+The weak inequalities include the boundary $\|\theta-\theta^{(0)}\|_\infty=r$.
+At the input, $z_0(\theta,x)=x$ and every coordinate has magnitude
+$1=a_0$.  If all coordinates of $z_{\ell-1}$ have magnitude at most
+$a_{\ell-1}$, then
+\[
+\begin{aligned}
+|u_{\ell,j}(\theta,x)|
+&=\left|\sum_{k=1}^{n_{\ell-1}}
+       \theta_{\ell,jk}z_{\ell-1,k}(\theta,x)\right|\\
+&\leq\sum_{k=1}^{n_{\ell-1}}
+       |\theta_{\ell,jk}|\,|z_{\ell-1,k}(\theta,x)|\\
+&\leq n_{\ell-1}B a_{\ell-1}=a_\ell.
+\end{aligned}
+\tag{24}
+\]
+Since $0\leq\sigma(v)\leq|v|$ for every real $v$, the same bound holds
+for $z_{\ell,j}$.  Finite induction proves (22), and the recurrence also
+gives
+\[
+a_\ell=B^\ell\prod_{q=0}^{\ell-1}n_q,
+\tag{25}
+\]
+with the empty product equal to one.  Thus all envelopes are finite.
+\end{proof}
+
+\begin{proposition}[Exact fixed-selector gradient envelope]
+\label{prop:p1-i3-step001-gradient}
+Under Assumptions~\ref{assump:fixed-source-witnesses} and
+\ref{assump:robust-tube}, and Lemma~\ref{lem:p1-i3-step001-forward}, define
+\[
+b_L:=1,
+\qquad b_\ell:=n_{\ell+1}B b_{\ell+1}\quad(1\leq\ell<L),
+\qquad
+C_r(\theta^{(0)}):=\max_{1\leq\ell\leq L}b_\ell a_{\ell-1}.
+\tag{26}
+\]
+Then on the full domain defining $G_r(\theta^{(0)})$,
+\[
+\left|
+[\nabla_\theta^{(\kappa)}\ell(yf_\theta(x))]_{\ell,jk}
+\right|
+\leq b_\ell a_{\ell-1}\leq C_r(\theta^{(0)}),
+\tag{27}
+\]
+for every layer and coordinate.  Consequently
+\[
+G_r(\theta^{(0)})\leq C_r(\theta^{(0)})<\infty.
+\tag{28}
+\]
+When $L=1$, $C_r(\theta^{(0)})=1$ and $G_r(\theta^{(0)})\leq1$.
+\end{proposition}
+
+\begin{proof}
+Fix $\theta,x,y$ in the domains of (27).  The forward equations are finite
+sums and products, so $f_\theta(x)$ is finite.  Direct differentiation of
+$\ell(a)=\log(1+e^{-a})$ gives
+\[
+\ell'(a)=-\frac1{1+e^a},
+\qquad
+\left|\frac{\partial}{\partial f}\ell(yf)\right|
+=\frac1{1+e^{yf}}\leq1.
+\tag{29}
+\]
+Because $n_L=1$, define the selected output adjoint
+\[
+\delta_{L,1}:=\frac{\partial}{\partial f}\ell(yf)\bigg|_{f=f_\theta(x)}
+=-\frac{y}{1+e^{yf_\theta(x)}}.
+\tag{30}
+\]
+Thus $|\delta_{L,1}|\leq1=b_L$.  The exact protocol-selected recurrence at
+the hidden layers is
+\[
+\delta_{\ell,j}:=\rho_\kappa(u_{\ell,j}(\theta,x))
+\sum_{q=1}^{n_{\ell+1}}
+\theta_{\ell+1,qj}\delta_{\ell+1,q},
+\qquad \ell=L-1,\ldots,1.
+\tag{31}
+\]
+It is valid as the definition of the selected back-propagation value even at
+a kink.  Since $0\leq\rho_\kappa(v)\leq1$ for every $v$, including
+$\rho_\kappa(0)=\kappa$, the induction hypothesis and (23) give
+\[
+|\delta_{\ell,j}|
+\leq\sum_{q=1}^{n_{\ell+1}}
+|\theta_{\ell+1,qj}|\,|\delta_{\ell+1,q}|
+\leq n_{\ell+1}B b_{\ell+1}=b_\ell.
+\tag{32}
+\]
+Backward induction yields
+\[
+b_\ell=B^{L-\ell}\prod_{q=\ell+1}^{L}n_q,
+\tag{33}
+\]
+where $n_L=1$.  The layerwise selected-gradient formula is
+\[
+[\nabla_\theta^{(\kappa)}\ell(yf_\theta(x))]_{\ell,jk}
+=\delta_{\ell,j}z_{\ell-1,k}(\theta,x).
+\tag{34}
+\]
+Combining (32), (34), and Lemma~\ref{lem:p1-i3-step001-forward} proves
+(27), and taking the supremum over the domain in (9) proves (28).  The
+finiteness of (25), (33), and the finite layer maximum in (26) gives
+$C_r<\infty$.  The estimate includes hidden preactivation zeros for every
+$\kappa\in[0,1]$ and does not use continuity or attainment of the selected
+gradient supremum.
+
+If $L=1$, there are no hidden adjoints and (34) reduces to
+\[
+\left|[\nabla_\theta^{(\kappa)}\ell(yf_\theta(x))]_{1,1k}\right|
+=\frac{|x_k|}{1+e^{yf_\theta(x)}}\leq1,
+\tag{35}
+\]
+so $a_0=b_1=C_r=1$, including zero weights and closed-ball boundary points.
+\end{proof}
+
+The two results prove the finite static envelope before any trajectory
+membership or gate statement is invoked.  The bound is deterministic for each
+initialization and uniform in inputs and labels.
+
+\subsection{All-history containment in the closed tube}
+\label{app:step002-containment}
+
+Fix $\theta^{(0)}\in E_r$ and an arbitrary deterministic labeled history
+\[
+\omega=((x^{(0)},y^{(0)}),\ldots,(x^{(T-1)},y^{(T-1)}))
+\in(\mathcal X\times\{-1,+1\})^T.
+\]
+Let the exact history-driven states satisfy
+\[
+\theta^{(t+1)}=\theta^{(t)}-\eta g_t,
+\qquad
+g_t:=\nabla_\theta^{(\kappa)}
+\ell(y^{(t)}f_{\theta^{(t)}}(x^{(t)})),
+\qquad0\leq t<T,
+\tag{36}
+\]
+and put
+\[
+D_t:=\|\theta^{(t)}-\theta^{(0)}\|_\infty,
+\qquad G:=G_r(\theta^{(0)}).
+\tag{37}
+\]
+
+\begin{lemma}[One-step closed-ball recurrence]
+\label{lem:p1-i3-step002-one-step}
+Under Assumptions~\ref{assump:fixed-source-witnesses} and
+\ref{assump:robust-tube}, Proposition~\ref{prop:p1-i3-step001-gradient},
+and the definitions (36)--(37), if $0\leq t<T$ and $D_t\leq r$, then
+\[
+\|g_t\|_\infty\leq G,
+\qquad D_{t+1}\leq D_t+\eta G.
+\tag{38}
+\]
+The conclusion includes the case $D_t=r$.
+\end{lemma}
+
+\begin{proof}
+The condition $D_t\leq r$ is exactly
+$\theta^{(t)}\in B_\infty(\theta^{(0)},r)$.  Since the history is arbitrary,
+$x^{(t)}\in\mathcal X$ and $y^{(t)}\in\{-1,+1\}$.  Therefore the triple
+$(\theta^{(t)},x^{(t)},y^{(t)})$ lies in the defining domain of $G_r$, and
+\[
+\|g_t\|_\infty
+=\left\|\nabla_\theta^{(\kappa)}
+\ell(y^{(t)}f_{\theta^{(t)}}(x^{(t)}))\right\|_\infty\leq G.
+\tag{39}
+\]
+Using (36), the triangle inequality, $\eta>0$, and (39),
+\[
+\begin{aligned}
+D_{t+1}
+&=\|\theta^{(t)}-\theta^{(0)}-\eta g_t\|_\infty\\
+&\leq\|\theta^{(t)}-\theta^{(0)}\|_\infty+\eta\|g_t\|_\infty\\
+&\leq D_t+\eta G.
+\end{aligned}
+\tag{40}
+\]
+No sign, descent, or cancellation property is used.
+\end{proof}
+
+\begin{proposition}[All-history closed-tube containment]
+\label{prop:p1-i3-step002-closed-tube}
+Under Assumptions~\ref{assump:fixed-source-witnesses} and
+\ref{assump:robust-tube}, Proposition~\ref{prop:p1-i3-step001-gradient},
+and Lemma~\ref{lem:p1-i3-step002-one-step}, fix any initialization
+$\theta^{(0)}\in E_r$ and any deterministic labeled history
+\[
+\omega=((x^{(0)},y^{(0)}),\ldots,(x^{(T-1)},y^{(T-1)}))
+\in(\mathcal X\times\{-1,+1\})^T.
+\]
+Let $\theta^{(t)}$ be generated from $\theta^{(0)}$ by the exact recursion
+\[
+\theta^{(t+1)}=\theta^{(t)}-\eta\nabla_\theta^{(\kappa)}
+\ell\!\left(y^{(t)}f_{\theta^{(t)}}(x^{(t)})\right),
+\qquad 0\leq t<T.
+\]
+Then, for every integer $0\leq t\leq T$,
+\[
+\|\theta^{(t)}-\theta^{(0)}\|_\infty
+\leq t\eta G_r(\theta^{(0)})\leq r.
+\tag{41}
+\]
+\end{proposition}
+
+\begin{proof}
+The accepted static envelope gives $0\leq G<\infty$.  Membership in $E_r$
+gives only the scalar budget
+\[
+\eta T G\leq r.
+\tag{42}
+\]
+At the entry state,
+\[
+D_0=\|\theta^{(0)}-\theta^{(0)}\|_\infty=0=0\cdot\eta G\leq r.
+\tag{43}
+\]
+Suppose $0\leq t<T$ and $D_t\leq t\eta G$.  Since $t\leq T$, (42) gives
+\[
+D_t\leq t\eta G\leq T\eta G\leq r,
+\tag{44}
+\]
+so the one-step lemma may be applied only after current membership has been
+established.  It yields
+\[
+D_{t+1}\leq D_t+\eta G\leq(t+1)\eta G,
+\tag{45}
+\]
+and $t+1\leq T$ gives
+\[
+(t+1)\eta G\leq T\eta G\leq r.
+\tag{46}
+\]
+Finite induction proves (41).  The first transition is
+$D_1\leq\eta G\leq r$ because $T\geq1$; if $T=1$, (43) and this bound
+complete the argument.  If $G=0$, every inequality forces $D_t=0$.  Equality
+at the terminal radius is allowed because the ball is closed, and arbitrary
+outward increments are already charged by the full sum $t\eta G$.
+\end{proof}
+
+Thus the static event supplies no trajectory containment statement by itself:
+(41) is the derived all-history containment result that will be used below.  It applies in
+particular to source-consistent histories with $y^{(t)}=h(x^{(t)})$.
+
+\subsection{Gate constancy from the positive margin}
+\label{app:step003-gates}
+
+\begin{lemma}[Continuous exact preactivation paths]
+\label{lem:p1-i3-step003-continuous-preactivation}
+Under Assumptions~\ref{assump:fixed-source-witnesses} and
+\ref{assump:robust-tube}, fix $\theta^{(0)}$, $r>0$,
+$\theta\in B_\infty(\theta^{(0)},r)$, and $x\in\mathcal X$.  For $L\geq2$
+define
+\[
+\gamma(s):=\theta^{(0)}+s(\theta-\theta^{(0)}),
+\qquad0\leq s\leq1.
+\tag{47}
+\]
+Then $\gamma(s)$ remains in the closed ball and each exact scalar path
+$q_{\ell,j}(s):=u_{\ell,j}(\gamma(s),x)$, $1\leq\ell<L$, is continuous.
+More explicitly,
+\[
+q_{1,j}(s)=\sum_{k=1}^{n_0}\gamma_{1,jk}(s)x_k,
+\tag{48}
+\]
+and, for $2\leq\ell<L$,
+\[
+q_{\ell,j}(s)=\sum_{k=1}^{n_{\ell-1}}
+\gamma_{\ell,jk}(s)\sigma(q_{\ell-1,k}(s)).
+\tag{49}
+\]
+For $L=1$ there are no such paths.
+\end{lemma}
+
+\begin{proof}
+For every vectorized coordinate,
+\[
+|\gamma_a(s)-\theta^{(0)}_a|
+=s|\theta_a-\theta^{(0)}_a|\leq sr\leq r,
+\tag{50}
+\]
+so the segment, including its endpoints and boundary points, lies in the
+closed ball.  Its coordinates are affine and hence continuous.  Formula
+(48) is a finite sum of continuous functions.  If all paths at layer
+$\ell-1$ are continuous, then coordinatewise ReLU is continuous, and (49) is
+a finite sum of products of continuous functions.  Induction over the finite
+hidden layers proves continuity.  These are the exact forward equations
+evaluated on $\gamma(s)$, not a linearization, and no derivative convention is
+used.
+\end{proof}
+
+\begin{proposition}[Strict gate constancy on the positive-margin ball]
+\label{prop:p1-i3-step003-ball-gates}
+Under Assumptions~\ref{assump:fixed-source-witnesses} and
+\ref{assump:robust-tube}, Lemma~\ref{lem:p1-i3-step003-continuous-preactivation},
+and the local condition $\theta^{(0)}\in E_r$, let
+$m=M_r(\theta^{(0)})$.  If $L\geq2$, then $m>0$ and, for every point in the
+closed ball, input, hidden layer, and coordinate,
+\[
+|u_{\ell,j}(\theta,x)|\geq m,
+\qquad
+\operatorname{sgn}(u_{\ell,j}(\theta,x))
+=\operatorname{sgn}(u_{\ell,j}(\theta^{(0)},x)),
+\tag{51}
+\]
+where ordinary $\operatorname{sgn}$ is used only on nonzero reals.  Hence
+\[
+\mathbf1\{u_{\ell,j}(\theta,x)>0\}
+=\mathbf1\{u_{\ell,j}(\theta^{(0)},x)>0\}.
+\tag{52}
+\]
+For $L=1$ the assertion is empty and $M_r=+\infty$ by definition.
+\end{proposition}
+
+\begin{proof}
+When $L\geq2$, event membership gives $m>0$.  By the infimum definition of
+$M_r$, every point $\vartheta$ in the ball satisfies
+\[
+|u_{\ell,j}(\vartheta,x)|\geq m
+\tag{53}
+\]
+for every hidden coordinate and input.  Along the segment (47), (53) gives
+$|q_{\ell,j}(s)|\geq m>0$.  If the endpoint signs differed, continuity from
+Lemma~\ref{lem:p1-i3-step003-continuous-preactivation} and the intermediate
+value theorem would give an $s_\star\in(0,1)$ with
+$q_{\ell,j}(s_\star)=0$, contradicting (53).  Thus the endpoint signs agree;
+since both are nonzero, (52) follows.
+
+The argument includes $\theta=\theta^{(0)}$, all ball-boundary points, and
+zero parameter coordinates.  A zero preactivation anywhere in the ball would
+make $M_r=0$ and hence place the initialization outside $E_r$; that case is
+not silently excluded from the later unconditional law.  The proof never
+evaluates $\rho_\kappa(0)$ and is independent of $\kappa$.
+\end{proof}
+
+\begin{proposition}[All-history initialization gate signature]
+\label{prop:p1-i3-step003-history-gates}
+Under Assumptions~\ref{assump:fixed-source-witnesses} and
+\ref{assump:robust-tube}, Proposition~\ref{prop:p1-i3-step002-closed-tube},
+and Proposition~\ref{prop:p1-i3-step003-ball-gates}, fix any initialization
+$\theta^{(0)}\in E_r$ and any deterministic labeled history
+\[
+\omega=((x^{(0)},y^{(0)}),\ldots,(x^{(T-1)},y^{(T-1)}))
+\in(\mathcal X\times\{-1,+1\})^T.
+\]
+Let $\theta^{(t)}$ be generated from $\theta^{(0)}$ by
+\[
+\theta^{(t+1)}=\theta^{(t)}-\eta\nabla_\theta^{(\kappa)}
+\ell\!\left(y^{(t)}f_{\theta^{(t)}}(x^{(t)})\right),
+\qquad 0\leq t<T.
+\]
+If $L\geq2$, then
+\[
+|u_{\ell,j}(\theta^{(t)},x)|
+\geq M_r(\theta^{(0)})>0,
+\qquad
+\mathbf1\{u_{\ell,j}(\theta^{(t)},x)>0\}
+=\mathbf1\{u_{\ell,j}(\theta^{(0)},x)>0\}
+\tag{54}
+\]
+for all $x$, hidden $(\ell,j)$, and $0\leq t\leq T$.  For $L=1$ the
+universal statement is empty.
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:p1-i3-step002-closed-tube} gives
+\[
+\|\theta^{(t)}-\theta^{(0)}\|_\infty
+\leq t\eta G_r(\theta^{(0)})\leq r
+\tag{55}
+\]
+for every state, including the first and terminal states and equality at the
+boundary.  Proposition~\ref{prop:p1-i3-step003-ball-gates} therefore applies
+to each $\theta^{(t)}$, every input, and every hidden coordinate, proving
+(54).  The history was arbitrary, so the conclusion is all-history rather
+than almost-sure.  No gate stability was assumed before (55) was established.
+\end{proof}
+\subsection{Exact path expansion and aggregate coefficients}
+\label{app:step004-paths}
+
+\begin{lemma}[Exact path expansion under the initialization gate signature]
+\label{lem:p1-i3-step004-path-expansion}
+Under Assumptions~\ref{assump:fixed-source-witnesses} and
+\ref{assump:robust-tube}, Proposition~\ref{prop:p1-i3-step003-ball-gates},
+and $\theta^{(0)}\in E_r$, fix
+$\theta\in B_\infty(\theta^{(0)},r)$ and $x\in\mathcal X$.  For
+$p=(i_0,\ldots,i_{L-1})\in\mathcal I_{\rm path}$ define
+\[
+c_p(\theta):=(\theta_L)_{1,i_{L-1}}
+\prod_{\ell=1}^{L-1}(\theta_\ell)_{i_\ell,i_{\ell-1}},
+\qquad
+\varphi_{\theta^{(0)},p}(x):=x_{i_0}
+\prod_{\ell=1}^{L-1}
+\mathbf1\{u_{\ell,i_\ell}(\theta^{(0)},x)>0\},
+\tag{56}
+\]
+and let $c(\theta)=(c_p(\theta))_{p\in\mathcal I_{\rm path}}$.  Then
+\[
+f_\theta(x)=\sum_{p\in\mathcal I_{\rm path}}c_p(\theta)
+\varphi_{\theta^{(0)},p}(x)
+=\langle c(\theta),\varphi_{\theta^{(0)}}(x)\rangle.
+\tag{57}
+\]
+Empty products are one, so this includes $L=1$.
+\end{lemma}
+
+\begin{proof}
+Assume first $L\geq2$ and abbreviate
+\[
+g_{\ell,j}^{(0)}(x):=\mathbf1\{u_{\ell,j}(\theta^{(0)},x)>0\}.
+\tag{58}
+\]
+The ball gate proposition gives
+\[
+\mathbf1\{u_{\ell,j}(\theta,x)>0\}=g_{\ell,j}^{(0)}(x),
+\qquad |u_{\ell,j}(\theta,x)|>0.
+\tag{59}
+\]
+Therefore the exact ReLU equation is
+\[
+z_{\ell,j}(\theta,x)=g_{\ell,j}^{(0)}(x)
+\sum_{k=1}^{n_{\ell-1}}(\theta_\ell)_{j,k}
+z_{\ell-1,k}(\theta,x).
+\tag{60}
+\]
+Define finite partial path sums by
+\[
+P_{0,i_0}(\theta,x):=x_{i_0},
+\tag{61}
+\]
+and, for $1\leq\ell<L$,
+\[
+P_{\ell,i_\ell}(\theta,x):=g_{\ell,i_\ell}^{(0)}(x)
+\sum_{i_{\ell-1}=1}^{n_{\ell-1}}
+(\theta_\ell)_{i_\ell,i_{\ell-1}}
+P_{\ell-1,i_{\ell-1}}(\theta,x).
+\tag{62}
+\]
+We prove simultaneously $z_{\ell,j}=P_{\ell,j}$ and, for every hidden
+layer, the explicit expansion
+\[
+P_{\ell,i_\ell}(\theta,x)=
+\sum_{i_0=1}^{n_0}\cdots\sum_{i_{\ell-1}=1}^{n_{\ell-1}}
+x_{i_0}
+\left(\prod_{q=1}^{\ell}g_{q,i_q}^{(0)}(x)\right)
+\left(\prod_{q=1}^{\ell}(\theta_q)_{i_q,i_{q-1}}\right).
+\tag{63}
+\]
+At layer zero, $z_{0,i_0}=x_{i_0}=P_{0,i_0}$.  If the assertion holds at
+layer $\ell-1$, substituting it into (60) gives (62), and distributing the
+finite sum appends exactly the new factor
+$g_{\ell,i_\ell}^{(0)}(x)(\theta_\ell)_{i_\ell,i_{\ell-1}}$, proving (63).
+No division or nonzero weight condition is used.
+
+At the scalar output, $n_L=1$ and
+\[
+\begin{aligned}
+f_\theta(x)
+&=\sum_{i_0=1}^{n_0}\cdots\sum_{i_{L-1}=1}^{n_{L-1}}
+x_{i_0}\left(\prod_{q=1}^{L-1}g_{q,i_q}^{(0)}(x)\right)
+\left[(\theta_L)_{1,i_{L-1}}
+\prod_{q=1}^{L-1}(\theta_q)_{i_q,i_{q-1}}\right]\\
+&=\sum_{p\in\mathcal I_{\rm path}}c_p(\theta)
+\varphi_{\theta^{(0)},p}(x).
+\end{aligned}
+\tag{64}
+\]
+If $L=1$, then $\mathcal I_{\rm path}=[n_0]$ and the original output equation
+is already
+\[
+f_\theta(x)=\sum_{i_0=1}^{n_0}(\theta_1)_{1,i_0}x_{i_0}
+=\sum_{i_0\in[n_0]}c_{i_0}(\theta)
+\varphi_{\theta^{(0)},i_0}(x).
+\tag{65}
+\]
+Zero or canceling products simply give zero summands or exact cancellation;
+the finite equality remains valid.
+\end{proof}
+
+\begin{proposition}[Exact latter-half aggregate coefficient and tie identity]
+\label{prop:p1-i3-step004-aggregate}
+Under Assumptions~\ref{assump:fixed-source-witnesses} and
+\ref{assump:robust-tube}, Propositions~\ref{prop:p1-i3-step002-closed-tube}
+and~\ref{prop:p1-i3-step003-history-gates}, and
+Lemma~\ref{lem:p1-i3-step004-path-expansion}, fix an initialization in $E_r$
+and a deterministic labeled history with its exact states.  Set
+\[
+J_T:=\{\lceil T/2\rceil,\ldots,T\},
+\qquad
+w_\omega:=\sum_{t\in J_T}c(\theta^{(t)}(\omega)).
+\tag{66}
+\]
+Then, for every $x\in\mathcal X$,
+\[
+A_\omega(x):=\sum_{t\in J_T}f_{\theta^{(t)}(\omega)}(x)
+=\langle w_\omega,\varphi_{\theta^{(0)}}(x)\rangle.
+\tag{67}
+\]
+For a source-consistent history this is the setting score, and applying
+$\operatorname{sign}_{s_0}$ gives the same prediction, including at a zero
+score.
+\end{proposition}
+
+\begin{proof}
+Proposition~\ref{prop:p1-i3-step002-closed-tube} places each state in the
+closed ball, and Proposition~\ref{prop:p1-i3-step003-history-gates} supplies
+the initialization gate signature at every state.  Lemma
+\ref{lem:p1-i3-step004-path-expansion} therefore gives, for each $t\in J_T$,
+\[
+f_{\theta^{(t)}(\omega)}(x)
+=\left\langle c(\theta^{(t)}(\omega)),
+\varphi_{\theta^{(0)}}(x)\right\rangle.
+\tag{68}
+\]
+The set $J_T$ is finite and nonempty because $T\geq1$.  Summing (68) and
+using bilinearity proves (67).  On a source-consistent history the left side
+is exactly (5), so equal real scores have equal
+$\operatorname{sign}_{s_0}$ values and identical strict-error indicators.
+When $T=1$, $J_T=\{1\}$.  Zero coefficients, cancellations, and a common score
+of zero do not change the equality; at zero both predictors use $s_0$.
+\end{proof}
+
+\subsection{The conditional infimum comparison}
+\label{app:step005-risk}
+
+Fix $\mathcal D\in\Delta(\mathcal X)$, $h\in\mathcal H$, and a stable
+initialization $\theta^{(0)}\in E_r$.  For a training tuple
+$\mathbf x=(x^{(0)},\ldots,x^{(T-1)})\in\mathcal X^T$, use the source-consistent
+history
+\[
+\omega_h(\mathbf x):=((x^{(0)},h(x^{(0)})),\ldots,
+(x^{(T-1)},h(x^{(T-1)}))).
+\tag{69}
+\]
+Let $w_{\mathbf x}$ be the coefficient in Proposition
+\ref{prop:p1-i3-step004-aggregate}, and abbreviate the corresponding score and
+predictor by
+\[
+A_{\theta^{(0)},\mathbf x}(x):=
+\sum_{t=\lceil T/2\rceil}^{T}
+f_{\theta^{(t)}(\theta^{(0)},\omega_h(\mathbf x))}(x),
+\qquad
+\widehat h_{\theta^{(0)},\mathbf x}(x):=
+\operatorname{sign}_{s_0}(A_{\theta^{(0)},\mathbf x}(x)).
+\tag{70}
+\]
+
+\begin{lemma}[Pathwise exact risk identity]
+\label{lem:p1-i3-step005-pathwise-risk}
+Under Assumptions~\ref{assump:fixed-source-witnesses} and
+\ref{assump:robust-tube}, Proposition~\ref{prop:p1-i3-step004-aggregate},
+and fixed $\mathcal D,h,\theta^{(0)}\in E_r$, every
+$\mathbf x\in\mathcal X^T$ has a vector $w_{\mathbf x}\in\mathbb R^{d_{\rm path}}$
+such that
+\[
+\operatorname{sign}_{s_0}(A_{\theta^{(0)},\mathbf x}(x))
+=\operatorname{sign}_{s_0}
+\left(\langle w_{\mathbf x},\varphi_{\theta^{(0)}}(x)\rangle\right)
+\tag{71}
+\]
+for every $x$, and
+\[
+R_{\mathcal D,h}(w_{\mathbf x},\varphi_{\theta^{(0)}})
+=\mathcal L_{\mathcal D,h}(\widehat h_{\theta^{(0)},\mathbf x}).
+\tag{72}
+\]
+\end{lemma}
+
+\begin{proof}
+The history (69) is deterministic and source-consistent.  Proposition
+\ref{prop:p1-i3-step004-aggregate} gives the real-score equality
+\[
+A_{\theta^{(0)},\mathbf x}(x)
+=\langle w_{\mathbf x},\varphi_{\theta^{(0)}}(x)\rangle
+\tag{73}
+\]
+for every evaluation input.  Applying the same tie-resolved sign, multiplying
+by the same $h(x)$, and testing the same strict inequality gives pointwise
+equality of the error indicators, hence (72).  The conclusion remains exact
+when the common score is zero, and no coefficient nonzero or margin condition
+is needed.  For $T=1$, the index set contains the single terminal state.
+\end{proof}
+
+\begin{proposition}[Conditional infimum-before-expectation comparison]
+\label{prop:p1-i3-step005-conditional-comparison}
+Under Assumptions~\ref{assump:fixed-source-witnesses} and
+\ref{assump:robust-tube}, Proposition~\ref{prop:p1-i3-step004-aggregate},
+and Lemma~\ref{lem:p1-i3-step005-pathwise-risk}, fix
+$\mathcal D\in\Delta(\mathcal X)$, $h\in\mathcal H$, and
+$\theta^{(0)}\in E_r$ before drawing $\mathbf X\sim\mathcal D^T$.  Define
+\[
+F_{\mathcal D,h}(\theta^{(0)}):=
+\inf_{w\in\mathbb R^{d_{\rm path}}}
+R_{\mathcal D,h}(w,\varphi_{\theta^{(0)}}).
+\tag{74}
+\]
+Then
+\[
+0\leq F_{\mathcal D,h}(\theta^{(0)})\leq1,
+\qquad
+F_{\mathcal D,h}(\theta^{(0)})
+\leq\mathbb E_{\mathbf X\sim\mathcal D^T}
+\left[\mathcal L_{\mathcal D,h}
+(\widehat h_{\theta^{(0)},\mathbf X})\right].
+\tag{75}
+\]
+The infimum need not be attained.
+\end{proposition}
+
+\begin{proof}
+Every risk in (74) is a probability in $[0,1]$, and the coefficient space is
+nonempty, so its infimum is a finite value in $[0,1]$.  For every fixed
+$\mathbf x$, the pathwise lemma supplies the feasible vector $w_{\mathbf x}$;
+the defining lower-bound property of an infimum gives
+\[
+F_{\mathcal D,h}(\theta^{(0)})
+\leq R_{\mathcal D,h}(w_{\mathbf x},\varphi_{\theta^{(0)}})
+=\mathcal L_{\mathcal D,h}
+(\widehat h_{\theta^{(0)},\mathbf x}).
+\tag{76}
+\]
+The left side is fixed before the tuple is drawn.  Multiplying (76) by the
+nonnegative mass $\mathcal D^T(\mathbf x)$ and summing over the finite set
+$\mathcal X^T$ gives
+\[
+\begin{aligned}
+\mathbb E_{\mathbf X\sim\mathcal D^T}
+\left[\mathcal L_{\mathcal D,h}
+(\widehat h_{\theta^{(0)},\mathbf X})\right]
+&=\sum_{\mathbf x\in\mathcal X^T}\mathcal D^T(\mathbf x)
+\mathcal L_{\mathcal D,h}(\widehat h_{\theta^{(0)},\mathbf x})\\
+&\geq\sum_{\mathbf x\in\mathcal X^T}\mathcal D^T(\mathbf x)
+F_{\mathcal D,h}(\theta^{(0)})\\
+&=F_{\mathcal D,h}(\theta^{(0)}).
+\end{aligned}
+\tag{77}
+\]
+This is pointwise feasible-candidate comparison followed by averaging, not an
+interchange of an infimum with an expectation, and it does not require a
+measurable minimizing coefficient.
+\end{proof}
+
+
+\subsection{Unconditional gate-law witness}
+\label{app:step006-witness}
+
+Let $\Theta=\mathbb R^S$ and let $\gamma$ be the product Gaussian
+initialization law in (3).  Define
+\[
+\Phi:\Theta\longrightarrow\{\text{maps }\mathcal X\to\mathbb R^{d_{\rm path}}\},
+\qquad \Phi(\vartheta):=\varphi_\vartheta,
+\tag{78}
+\]
+and, for fixed $\mathcal D,h$,
+\[
+F_{\mathcal D,h}(\vartheta):=
+\inf_{w\in\mathbb R^{d_{\rm path}}}
+R_{\mathcal D,h}(w,\Phi(\vartheta)).
+\tag{79}
+\]
+This definition applies on both the stable event and its complement.
+
+\begin{lemma}[Finite gate law and pushforward identity]
+\label{lem:p1-i3-step006-gate-pushforward}
+Under Assumption~\ref{assump:fixed-source-witnesses}, the map $\Phi$ is Borel
+measurable and has finite range $\Gamma=\Phi(\Theta)$, with
+\[
+|\Gamma|\leq3^{d_{\rm path}|\mathcal X|}.
+\tag{80}
+\]
+For every fixed $\mathcal D\in\Delta(\mathcal X)$ and $h\in\mathcal H$,
+$F_{\mathcal D,h}$ is Borel, takes values in $[0,1]$, and
+\[
+\mathbb E_{\varphi\sim\mathcal P_{\rm gate}}
+\left[\inf_{w\in\mathbb R^{d_{\rm path}}}
+R_{\mathcal D,h}(w,\varphi)\right]
+=\mathbb E_{\theta^{(0)}\sim\gamma}
+[F_{\mathcal D,h}(\theta^{(0)})].
+\tag{81}
+\]
+No optimizing coefficient is selected measurably.
+\end{lemma}
+
+\begin{proof}
+For fixed $x$, every initialization preactivation is continuous in
+$\vartheta$ by finite matrix multiplication and continuous coordinatewise
+ReLU.  Hence each strict indicator
+$\mathbf1\{u_{\ell,j}(\vartheta,x)>0\}$ is Borel.  Each coordinate of $\Phi$
+is a finite product of such indicators and one input coordinate, and therefore
+belongs to $\{-1,0,+1\}$.  There are only
+$d_{\rm path}|\mathcal X|$ coordinates, proving measurability and (80).
+For $L=1$, the empty product gives $\Phi(\vartheta)(x)=x$ and the range is a
+singleton.
+
+For $\psi\in\Gamma$, define the finite-table function
+\[
+\Psi_{\mathcal D,h}(\psi):=
+\inf_{w\in\mathbb R^{d_{\rm path}}}R_{\mathcal D,h}(w,\psi).
+\tag{82}
+\]
+Every risk is in $[0,1]$ and the coefficient space is nonempty, so the table
+is finite-valued even if its infimum is not attained.  Equation (79) is
+$F_{\mathcal D,h}=\Psi_{\mathcal D,h}\circ\Phi$, hence $F$ is Borel.  Since
+$\mathcal P_{\rm gate}=\Phi_\#\gamma$, summing over the finite range gives
+\[
+\begin{aligned}
+\mathbb E_{\varphi\sim\mathcal P_{\rm gate}}
+\left[\inf_wR_{\mathcal D,h}(w,\varphi)\right]
+&=\sum_{\psi\in\Gamma}\Psi_{\mathcal D,h}(\psi)
+\gamma(\Phi^{-1}(\{\psi\}))\\
+&=\int_\Theta\Psi_{\mathcal D,h}(\Phi(\vartheta))\,d\gamma(\vartheta)\\
+&=\mathbb E_{\theta^{(0)}\sim\gamma}[F_{\mathcal D,h}(\theta^{(0)})].
+\end{aligned}
+\tag{83}
+\]
+Initializations inducing the same map are combined by the pushforward mass;
+no coefficient selector appears.
+\end{proof}
+
+\begin{proposition}[Unconditional event-split risk bound]
+\label{prop:p1-i3-step006-event-split}
+Under Assumptions~\ref{assump:fixed-source-witnesses},
+\ref{assump:universal-expected-success}, and~\ref{assump:robust-tube}, and
+Proposition~\ref{prop:p1-i3-step005-conditional-comparison}, for every fixed
+$\mathcal D\in\Delta(\mathcal X)$ and $h\in\mathcal H$,
+\[
+\mathbb E_{\theta^{(0)}\sim\gamma}
+[F_{\mathcal D,h}(\theta^{(0)})]\leq\varepsilon+\delta_0.
+\tag{84}
+\]
+The expectation is under the unconditional Gaussian law.
+\end{proposition}
+
+\begin{proof}
+For a fixed pair $(x,y)\in\mathcal X\times\{-1,+1\}$, define the full
+one-step update map
+\[
+\mathsf T_{x,y}(\theta)
+:=\theta-\eta\nabla_\theta^{(\kappa)}
+\ell\!\left(yf_\theta(x)\right),
+\qquad \theta\in\Theta.
+\]
+This map is Borel.  Indeed, every forward preactivation and activation is
+continuous in $\theta$.  The selected gate factor
+$\rho_\kappa(u_{\ell,j}(\theta,x))$ is Borel, including at zero; the output
+adjoint $-y/(1+e^{yf_\theta(x)})$ is continuous; and the finite backward
+recursion and the coordinate formula
+$[\nabla_\theta^{(\kappa)}\ell(yf_\theta(x))]_{\ell,jk}
+=\delta_{\ell,j}z_{\ell-1,k}(\theta,x)$ use only finite sums and products.
+Thus the selected gradient is a Borel map from $\Theta$ to $\Theta$, and
+subtracting it from the identity proves the claim for $\mathsf T_{x,y}$.
+
+Fix a tuple
+$\mathbf x=(x^{(0)},\ldots,x^{(T-1)})\in\mathcal X^T$ and define the
+generated-state maps recursively by
+\[
+\mathsf U_{\mathbf x,0}(\vartheta):=\vartheta,
+\qquad
+\mathsf U_{\mathbf x,t+1}(\vartheta)
+:=\mathsf T_{x^{(t)},h(x^{(t)})}
+   (\mathsf U_{\mathbf x,t}(\vartheta)),
+\qquad 0\leq t<T.
+\]
+The base map is the identity.  If $\mathsf U_{\mathbf x,t}$ is Borel, then
+the displayed composition with the Borel map
+$\mathsf T_{x^{(t)},h(x^{(t)})}$ is Borel.  Finite induction therefore proves
+that every generated state map $\mathsf U_{\mathbf x,t}:\Theta\to\Theta$ is
+Borel for $0\leq t\leq T$.
+
+For each evaluation input $v\in\mathcal X$, the finite-horizon score and
+predictor are consequently the Borel compositions
+\[
+A_{\vartheta,\mathbf x}(v)
+:=\sum_{t=\lceil T/2\rceil}^{T}
+f_{\mathsf U_{\mathbf x,t}(\vartheta)}(v),
+\qquad
+\widehat h_{\vartheta,\mathbf x}(v)
+:=\operatorname{sign}_{s_0}(A_{\vartheta,\mathbf x}(v)).
+\]
+The tie map is Borel.  Hence, for an initialization $\vartheta$ and the fixed
+tuple $\mathbf x$, the prescribed learner loss is the finite sum
+\[
+Z_{\mathcal D,h}(\vartheta,\mathbf x):=
+\mathcal L_{\mathcal D,h}(\widehat h_{\vartheta,\mathbf x})
+=\sum_{v\in\mathcal X}\mathcal D(v)
+\mathbf1\!\left\{
+\operatorname{sign}_{s_0}(A_{\vartheta,\mathbf x}(v))h(v)<0
+\right\}\in[0,1]
+\tag{85}
+\]
+on the source-consistent labeled tuple
+$((x^{(t)},h(x^{(t)})))_{t=0}^{T-1}$.  It is Borel in $\vartheta$ for each
+fixed tuple.  Since $\mathcal X^T$ is finite with its discrete sigma-algebra,
+$Z_{\mathcal D,h}$ is jointly measurable on $\Theta\times\mathcal X^T$.
+Define the conditional sample average
+\[
+g_{\mathcal D,h}(\vartheta):=
+\mathbb E_{\mathbf X\sim\mathcal D^T}
+[Z_{\mathcal D,h}(\vartheta,\mathbf X)]
+=\sum_{\mathbf x\in\mathcal X^T}\mathcal D^T(\mathbf x)
+Z_{\mathcal D,h}(\vartheta,\mathbf x),
+\tag{86}
+\]
+which is measurable and lies in $[0,1]$.
+
+For every $\vartheta\in E_r$, the conditional comparison gives
+\[
+F_{\mathcal D,h}(\vartheta)\leq g_{\mathcal D,h}(\vartheta).
+\tag{87}
+\]
+For every $\vartheta\in E_r^c$, the probability definition gives
+\[
+0\leq F_{\mathcal D,h}(\vartheta)\leq1.
+\tag{88}
+\]
+Splitting the same unconditional expectation therefore yields
+\[
+\begin{aligned}
+\mathbb E_{\theta^{(0)}}F_{\mathcal D,h}(\theta^{(0)})
+&=\mathbb E[\mathbf1_{E_r}F_{\mathcal D,h}]
+ +\mathbb E[\mathbf1_{E_r^c}F_{\mathcal D,h}]\\
+&\leq\mathbb E[\mathbf1_{E_r}g_{\mathcal D,h}]
+ +\Pr(E_r^c).
+\end{aligned}
+\tag{89}
+\]
+By independence and the finite sum (86), bounded tower averaging gives
+\[
+\begin{aligned}
+\mathbb E[\mathbf1_{E_r}g_{\mathcal D,h}]
+&=\mathbb E_{\theta^{(0)},\mathbf X}
+[\mathbf1_{E_r}Z_{\mathcal D,h}(\theta^{(0)},\mathbf X)]\\
+&\leq\mathbb E_{\theta^{(0)},\mathbf X}
+[Z_{\mathcal D,h}(\theta^{(0)},\mathbf X)]\\
+&\leq\varepsilon,
+\end{aligned}
+\tag{90}
+\]
+where the last inequality is Assumption~\ref{assump:universal-expected-success}.
+Assumption~\ref{assump:robust-tube} gives
+\[
+\Pr(E_r^c)\leq\delta_0.
+\tag{91}
+\]
+Substitution in (89) proves (84).  The complement is charged once by its
+unit risk bound; it is neither discarded nor used to condition the feature
+law.
+\end{proof}
+
+\begin{proposition}[Universal probabilistic-dimension witness]
+\label{prop:p1-i3-step006-dc-witness}
+Under Assumptions~\ref{assump:fixed-source-witnesses},
+\ref{assump:universal-expected-success}, and~\ref{assump:robust-tube},
+together with Lemma~\ref{lem:p1-i3-step006-gate-pushforward} and
+Proposition~\ref{prop:p1-i3-step006-event-split}, the one law
+$\mathcal P_{\rm gate}$ satisfies, for every
+$\mathcal D\in\Delta(\mathcal X)$ and $h\in\mathcal H$,
+\[
+\mathbb E_{\varphi\sim\mathcal P_{\rm gate}}
+\left[\inf_{w\in\mathbb R^{d_{\rm path}}}
+R_{\mathcal D,h}(w,\varphi)\right]\leq\varepsilon+\delta_0,
+\tag{92}
+\]
+and hence
+\[
+\operatorname{dc}_{\varepsilon+\delta_0}(\mathcal H)
+\leq d_{\rm path}.
+\tag{93}
+\]
+\end{proposition}
+
+\begin{proof}
+The architecture, Gaussian law, and rule $\Phi(\vartheta)=\varphi_\vartheta$
+are fixed by Assumption~\ref{assump:fixed-source-witnesses} before any
+distribution or target.  Thus their pushforward $\mathcal P_{\rm gate}$ is
+one law independent of later choices.  For arbitrary $\mathcal D,h$, (81)
+and (84) give (92).  Since the law was fixed before this arbitrary choice, the
+quantifier order is $\exists\mathcal P_{\rm gate}\,\forall\mathcal D\,\forall h$.
+The definition (1) then gives (93).
+\end{proof}
+
+\subsection{Polynomial dimension and the two-epsilon specialization}
+\label{app:step007-specialization}
+
+\begin{lemma}[Polynomial path-count bound]
+\label{lem:p1-i3-step007-path-count}
+Under Assumption~\ref{assump:constant-depth}, positive integer widths
+$n_0,\ldots,n_L$ with $n_L=1$, and the setting definitions
+$S=\sum_{j=1}^{L}n_jn_{j-1}$ and
+$d_{\rm path}=\prod_{j=0}^{L-1}n_j$,
+\[
+d_{\rm path}\leq S^L\leq S^{L_0}.
+\tag{94}
+\]
+\end{lemma}
+
+\begin{proof}
+For each $j\in\{0,\ldots,L-1\}$, positivity of $n_{j+1}$ gives
+\[
+n_j\leq n_{j+1}n_j\leq\sum_{k=1}^{L}n_kn_{k-1}=S.
+\tag{95}
+\]
+Multiplying the $L$ inequalities yields
+\[
+d_{\rm path}=\prod_{j=0}^{L-1}n_j\leq S^L.
+\tag{96}
+\]
+Every summand in $S$ is a positive integer, so $S\geq1$.  Since
+$L\leq L_0$,
+\[
+S^{L_0}=S^LS^{L_0-L}\geq S^L.
+\tag{97}
+\]
+If $L=1$, then $n_1=1$ and $S=n_0=d_{\rm path}=S^L$.  If $S=1$, positivity
+forces $L=1$ and all three quantities in (94) equal one.
+\end{proof}
+
+\begin{proposition}[Public error-threshold specialization]
+\label{prop:p1-i3-step007-public-specialization}
+Under Assumptions~\ref{assump:fixed-source-witnesses},
+\ref{assump:universal-expected-success}, and~\ref{assump:robust-tube}, and
+Proposition~\ref{prop:p1-i3-step006-dc-witness}, the same unconditional law
+$\mathcal P_{\rm gate}$ satisfies
+\[
+\forall\mathcal D\in\Delta(\mathcal X)\quad
+\forall h\in\mathcal H,
+\qquad
+\mathbb E_{\varphi\sim\mathcal P_{\rm gate}}
+\left[\inf_{w\in\mathbb R^{d_{\rm path}}}
+R_{\mathcal D,h}(w,\varphi)\right]\leq2\varepsilon
+\tag{98}
+\]
+and consequently
+\[
+\operatorname{dc}_{2\varepsilon}(\mathcal H)
+\leq\operatorname{dc}_{\varepsilon+\delta_0}(\mathcal H)
+\leq d_{\rm path}.
+\tag{99}
+\]
+\end{proposition}
+
+\begin{proof}
+The robust-tube range gives $0\leq\delta_0\leq\varepsilon$, hence
+\[
+\varepsilon+\delta_0\leq2\varepsilon.
+\tag{100}
+\]
+The witness bound (92) therefore proves (98) under the unchanged law and
+dimension.  If $0\leq a\leq b$, every law admissible at level $a$ is
+admissible at level $b$, so
+\[
+\operatorname{dc}_b(\mathcal H)\leq\operatorname{dc}_a(\mathcal H).
+\tag{101}
+\]
+Apply this with $a=\varepsilon+\delta_0$ and $b=2\varepsilon$; nonemptiness
+of the stricter admissible set is supplied by Proposition
+\ref{prop:p1-i3-step006-dc-witness}.  If $\varepsilon=0$, then $\delta_0=0$
+and both thresholds are zero; if $\delta_0=\varepsilon$, they coincide.
+\end{proof}
+
+\subsection{Proof of the Main Theorem}
+\label{app:main-proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Proposition~\ref{prop:p1-i3-step006-dc-witness} proves (18) with one
+unconditional law and gives
+\[
+\operatorname{dc}_{\varepsilon+\delta_0}(\mathcal H)
+\leq d_{\rm path}.
+\tag{102}
+\]
+Lemma~\ref{lem:p1-i3-step007-path-count} gives
+$d_{\rm path}\leq S^L\leq S^{L_0}$, proving (19).  Finally,
+Proposition~\ref{prop:p1-i3-step007-public-specialization} reuses that same
+law and gives the first inequality in (20); combining it with (102) and the
+path-count bound gives the stated $S^{L_0}$ corollary.  All steps preserve the
+fixed tie rule, finite-horizon expectation mode, and initialization-first
+quantifier order.
+\end{proof}

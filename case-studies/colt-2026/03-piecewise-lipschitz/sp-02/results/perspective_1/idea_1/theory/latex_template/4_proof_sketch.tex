@@ -1,0 +1,53 @@
+\section{Proof Sketch}
+
+The argument begins with a coefficient-envelope calculation on the actual
+unit box.  Lemma~\ref{lem:unit-box-envelope} bounds polynomial values and
+partials by their monomial coefficient $\ell_1$ budgets, and
+Proposition~\ref{prop:coordinate-envelope} applies the common-chain rule to
+obtain $D_*=\Delta B_Q(1+qB_P)$.  The literal anchor then supplies a global
+denominator.  Lemma~\ref{lem:normalized-curve} computes the Euclidean
+projector derivative, and Proposition~\ref{prop:projective-speed} transfers it
+through $x=(\theta-c)/h$ with the exact factor $h^{-1}$.
+
+For the central event, Lemma~\ref{lem:incidence-jacobians} computes the two
+tangential Jacobians of the incidence hypersurface.  The area and coarea
+formulas \citep{federer1969gmt} turn projection multiplicity into the
+coefficient-volume inequality in Proposition~\ref{prop:central-volume}; the
+null classes and boundary regimes are handled in
+Lemma~\ref{lem:central-null-classes}.  Ball's sharp central cube-section
+theorem \citep{ball1986cube} is scaled exactly in
+Lemma~\ref{lem:scaled-cube-section}.  Proposition~\ref{prop:central-sweep}
+then uses the single full joint-density cap, and
+Proposition~\ref{prop:central-rate} performs the visible speed substitution
+and the interval-then-law supremum closure.
+
+The affine argument solves the root equation in a selected nonzero
+coefficient coordinate.  Lemmas~\ref{lem:finite-chart-legality} and
+\ref{lem:affine-chart-jacobian} establish finite-level Lipschitz legality and
+the exact determinant $|\partial_\theta T_j|$.
+Proposition~\ref{prop:finite-chart-area} applies the equal-dimensional area
+formula, while Lemma~\ref{lem:affine-exhaustion} proves that every root enters
+a least finite pivot level.  Monotone convergence yields the extended-real
+bound in Proposition~\ref{prop:affine-bound}, without transversality or a
+uniform pivot margin.
+
+For monic polynomials, Proposition~\ref{prop:monic-presentation} constructs
+the exact normalized presentation while keeping the leading coefficient in
+the deterministic offset.  Lemma~\ref{lem:monic-pivot-partition} supplies the
+prescribed two cells, and Lemmas~\ref{lem:monic-low-chart} and
+\ref{lem:monic-high-chart} compute their velocities.  The general affine
+theorem is transferred without loss in
+Proposition~\ref{prop:monic-affine-transfer};
+Lemma~\ref{lem:monic-two-cell-ledger} keeps the sharper high-chart constant
+until the final coefficient-one comparison, while
+Proposition~\ref{prop:monic-linear-branch} handles the zero-dimensional
+$d=1$ case.
+
+Finally, Proposition~\ref{prop:counter-presentation} computes the exact
+projective speed of the two-feature example,
+Lemma~\ref{lem:counter-wedges} identifies both closed coefficient wedges and
+their area, and Proposition~\ref{prop:counter-scale} compares the resulting
+$1/(4\delta)$ certificate with the distinct projective and raw-presentation
+upper scales.  Proposition~\ref{prop:full-conjunction} places these exact
+interfaces under their respective numbered assumptions, after which the main
+theorem is their direct conjunction.

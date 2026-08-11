@@ -1,0 +1,35 @@
+\section{Proof Sketch}
+
+First form the seed-averaged terminal responses over all complete public
+response rules, and choose a basis of their finite-dimensional span before
+selecting any learning instance.  Lemma~\ref{lem:step-001-complete-rules} and
+Propositions~\ref{prop:step-001-mean-response-space} and
+\ref{prop:step-001-fixed-coordinates} make this construction precise and
+separate mean-response rank from the generally much larger span of individual
+seed-specific predictors.
+
+Next choose finitely many point evaluations that coordinatize \(V_A\).  They
+put every raw mean response in a common bounded set, so the closed convex body
+\(K_A\) is compact in one fixed topology and every point evaluation is
+continuous.  For each distribution-target pair, the exact-center complete
+rule is tolerance-valid on every reached seed path.  The universal guarantee
+and the binary loss identity then produce a member of \(K_A\) with signed
+correlation at least \(\rho\).
+
+For a nonempty finite set \(S\), play the bilinear payoff
+\(L_h(f,p)=\sum_{x\in S}p(x)h(x)f(x)\) on the fixed body \(K_A\) and the
+simplex \(\Delta(S)\).  Sion's theorem
+\citep[Theorem~3.4]{sion1958minimax} changes the order of optimization, while
+the exact-center witness may vary with \(p\) inside the same fixed body.
+This yields one \(f_{h,S}\) with margin at least \(\rho\) at every point of
+\(S\).  The resulting pointwise constraint sets are closed subsets of the
+same compact \(K_A\) and have the finite-intersection property, including the
+empty subfamily.  Compactness therefore gives a single \(f_h\) satisfying all
+points of an arbitrary domain.
+
+Finally, exact basis coordinates turn \(f_h\) into \(w_h\) with zero score
+residual.  Strict positivity makes \(r_A\) admissible in the definition of
+dimension complexity, and the primitive rank certificate gives the displayed
+polynomial upper bound.  The appendix proves each of these statements in full,
+including the empty, zero-rank, zero-query, noiseless, and parameter-boundary
+cases.

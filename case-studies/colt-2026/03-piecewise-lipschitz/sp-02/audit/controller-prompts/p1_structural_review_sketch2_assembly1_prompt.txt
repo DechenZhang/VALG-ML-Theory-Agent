@@ -1,0 +1,50 @@
+You are the distinct perspective-scoped structural final reviewer for perspective_1/idea_1 after assembly attempt 1 under accepted sketch attempt 2, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
+
+Read <CODEX_SKILLS_ROOT>/proof-review-structural/SKILL.md completely and every directly required shared contract and template it names. Perform an independent diagnostic structural review. Write only perspective_1/idea_1/proof_review_structural.md. Do not modify the LaTeX bundle, assembly report, setting, sketch, sketch review, global diagnostics, step proofs/reviews, trackers, worker log, controller prompts, proof_review.md, results, history, or any other file.
+
+Binding controller inputs:
+
+- setting.md: f77d11e1a559e22a96b14de1936d50c691c79d5a4a15e5806ddf4e6d119ada83
+- accepted proof_sketch.md: 2fa48ee16cca9a8d0379071f448d1e72ce98ae46d624482d772e74b97649c74a
+- accepted proof_sketch_review.md: 40b66331aa50a66607d068e266c545a865044bd175a56d81f012542e6d17d6f8
+- valid diagnostic global_proof.md: 45e93d102aa948c0d80886e5f21cf3bdaa412dfaa25611684eb363d48fa1f5b9
+- accepted global_proof_review.md: cd86cc68e3982c55aeb16fcafbda0759bb71464aee405c4a158bd41a308463db
+- controller-open proof_tracker.md: e155cbdfbc916a7c5ffc52921058578b61aedb76fce2aeae792571a18e107e86
+- assembly_report.md: b41aac17a913b261c6460d0ed34e842ff015a9718cac5b10554514b4ba7a2b35
+
+Canonical LaTeX bundle hashes:
+
+- main.tex: f2e56c66a7768c711386d814a73190f48b59387480c94e6770e8307ca9a8fc83
+- arxiv.sty: 91d740114defc597b45964526f666a910bff242724f88de360a2de1bd4703c2a
+- ims.bst: c1f6e420970d0c72b3c0d184a14c4223fe8c373055eb4c43692a72b660a9ca5f
+- reference.bib: a89938be2d6eeec1a46d2f3cf295f907dcb0a064f69c61f7a318e7343489a658
+- 1_intro.tex: ddcd17824dc334941e28bc7c58bb40330a9bcbb794ed60feee2247916a909f0e
+- 2_preliminary.tex: 8c4cb6298f8195440e79dc1664a3433e94b47769fb48d34707607034d889ed75
+- 3_main.tex: 0d2b87084df713fb9f74e263e0050f6f7e6e527c9af7d0b95b005fe68b820f7b
+- 4_proof_sketch.tex: e2af5d952c6302ac2cbd068bf3719dd514d363c7106dc85646981f4e3747e061
+- 5_appendix.tex: 57d4788e7af33f73ca774581078a8361f2dd79e5898ca6edd750dd0ad29e4626
+
+The ten required accepted proof/review pairs are:
+
+- step_001: proof 6c4e3048df8a590bd8c24f6f6b1d6be157c7fe8895af38bd8736ea1c419ac939; review cd4bc2cee3dabe3638d749cf6996ab6a3bcf6d2a69743bfafcf78b44ad88c3a7
+- step_002: proof b59794f374d66ec07e21b8662c438251ef1d9ba42c8a4db03894d62c8560e69c; review 71bec34a7f197cb6480973516a1a47c5a30c196eb5144676c7fa5d5be8563a37
+- step_003: proof 648841deed8e205ff9dcbf7b74267a77bdbb7d519a7ce1f9833de0d88f503cf5; review 456aa120c700edc7e711f09f283845c3e7eeee8036951fafdd1212e5682b2ec0
+- step_004: proof 58339caff7775e6a63fc73b4d0a9293c6b42b9faa2f3ed519b8d2ad58d2af8a2; review 990ae2d8977f3d8c1b6083b25549246d5e7b6843642b61c4b555bbbf2ad797e6
+- step_005: proof e3dbe02dd8b6b20828d0e2ff563c95e91d9000865c4d8002db18f746f65d2737; review d8d4ddf8f57ba935f27eac6437e0ee3921b1323b6b9f1cd6cd8550e58c930135
+- step_006: proof 4ec1534fcbcb44eb50e275a2526c60831fc7dd92b59a1d9db3cf90c68320f068; review e775661c8345636704e59b07f3a2f972a4b6f5f1a465eb3a5e8b05a1f3d956fa
+- step_007: proof b769b0f15124e73117ec9860f08d5cdd0eb78100daf134d6a69d1891a7dc4c6d; review 3f54140026d5c207c333ea9c53ea443357ad708b16353695ea875fd46dbc7b34
+- step_008: proof 796a93f69656d53ab9dddddec9866994d6d0a3c6494003eeca984ae42f858e2b; review 1bc23f593d16c262e76775c16b5820312570f482b37264c3d92e860109230fa0
+- step_009: proof 9758e4e566fddb8008a675e2274c89c41acabd3a856713f65c89841e4e795c81; review 188e5d507b8c294a79cdacb58e1765ef337927acfcc681488c031759e698532e
+- step_010: proof 3615d3e1cf61367c9deee03358c82aea0c887c1aeb2b0596c55e743700757235; review 067f639b5c03c8ddfa00e368b3996c899fb36503fb1254fa7e2187967f142b28
+
+Verify every review identity and ACCEPTED status before consuming its proof. The accepted sketch has exactly step_001 through step_010. Treat global_proof.md, global_proof_review.md, and assembly_report.md as diagnostic context only, never as proof authority. Do not use proof_history or stale artifacts.
+
+The formalized target is the exact full declared anchored, unit-range, coefficient-controlled normalization with progress_type=full. Audit exact R1--R5 alignment, five stable primitive assumptions, quantifier order, arbitrary correlated full-joint laws, ordinary probability, Euclidean/projective/operator/scalar norm conventions, interval and endpoint modes, exact affine-monic recovery with deterministic leading coefficient outside the random vector, and the distinct 1/(4 delta), 1/delta, sqrt(2)/delta scale chain. The bundle must keep explicit that it does not normalize every raw Pfaffian presentation with polynomial budgets.
+
+The appendix has ten mathematical subsections followed by Proof of the Main Theorem and 29 public theorem-style blocks. These counts are only diagnostics, not acceptance evidence. Read every accepted proof's Local Derivation, every cited-result application invoked there, and Target-Step Assembly, then compare the actual substantive content against the corresponding appendix subsection. Confirm definitions, displayed calculations, inequalities, measure/compactness/continuity arguments, cases, boundary regimes, constants, object maps, source assumption checks, and target assembly. In particular, directly audit the long central-incidence/coarea block (step_003), the finite-chart/measurable-exhaustion block (step_006), exact monic chart and probability blocks (steps 007--008), the closed-wedge scale block (step_009), and the exact conjunction map (step_010). Do not PASS from labels or unit counts alone.
+
+Check main-theorem self-containedness and readability, appendix theorem-statement assumption bases, dependency closure, source-to-public traceability, no unreviewed assembly lemmas, public-surface discipline, assumption provenance, exact rate bridges, baseline preservation, unique labels/references, support-file completeness, and forbidden workflow/placeholder hygiene. Compilation through Tectonic succeeds with resolved references and citations. However, an independent controller compile emitted one overfull-hbox warning of 7.52167pt, reported at main.tex:21 for a paragraph spanning input lines 46--21, while the assembly report says no warnings. Inspect the source/PDF-relevant cause and classify it honestly as either an acceptance-blocking paper-readiness defect or a concrete nonblocking concern; do not edit it.
+
+Write proof_review_structural.md from the shared template. Emit the required raw controlled fields Reviewer Verdict, Blocking Issues, Nonblocking Concerns, Suggested Repair Depth, and Smallest Candidate Repair Target. PASS requires Blocking Issues=None, Suggested Repair Depth=None, and Smallest Candidate Repair Target=None. BLOCKING requires numbered blockers and an aligned smallest target: assembly -> /proof-assembly, step -> /proof-step <Step ID>, sketch -> /proof-sketch, or idea -> /subagent-idea-generator. Do not assign a score, aggregate failure type, retry mode, or controller route.
+
+Before returning, reverify every protected input and output hash, exact required headings and raw tokens, ASCII/control bytes, and single-output-scope discipline. Concurrent changes in perspective_2 or perspective_3 are outside your branch-local scope and are not worker violations. Report verdict, blockers, nonblocking concerns, repair depth/target, final review SHA-256, all-ten-step source comparison completion, compile-warning classification, and protected-input verification.

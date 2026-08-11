@@ -1,0 +1,4843 @@
+\appendix
+
+\section{Proof Details}\label{sec:proof-details}
+
+\subsection{Static smoothed geometry}\label{app:step-001}
+
+No external paper result is used in this step. The standard tools named in the
+sketch are instantiated as follows and are proved in the local units rather
+than imported as unchecked citations.
+
+1. Scalar Gaussian Chernoff bound. If $Z\sim {\cal N}(0,\sigma^2)$,
+   then
+   $\Pr\{|Z|>\sigma\sqrt{2t}\}\le2e^{-t}$.
+   In Lemma~\ref{lem:step-001-raw-smoothing},
+   $Z=\langle \bar m_{M,i},e_{M,j}\rangle$,
+   $\sigma^2\le(\kappa _0\rho)^2/n$, and $t=2L_{\rm sm}$.
+   The covariance bound comes from Assumption~\ref{assump:base-scale} and
+   Assumption~\ref{assump:gaussian-smoothing}.
+2. Chi-square upper tail. For $z\sim {\cal N}(0,I_n)$,
+   \[
+   \Pr\{\|z\|_2^2>n+2\sqrt{nt}+2t\}\le e^{-t}.
+   \]
+   It is derived from the exact chi-square moment generating function in
+   Lemma~\ref{lem:step-001-raw-smoothing} and applied with
+   $t=2L_{\rm sm}$ to every relative perturbation.
+3. Independent Gaussian bilinear tail. For independent
+   $z,z'\sim {\cal N}(0,I_n)$,
+   \[
+   \Pr\{|z^\top z'|>\sqrt{2nt}+t\}\le2e^{-t}.
+   \]
+   It is also derived from its exact moment generating function in
+   Lemma~\ref{lem:step-001-raw-smoothing} and applied only to distinct
+   columns, whose independence is supplied by
+   Assumption~\ref{assump:gaussian-smoothing}.
+4. Khatri--Rao Gram identity and spectral comparison. For unit-column
+   matrices $A,B$,
+   $(B\odot A)^\top(B\odot A)=(A^\top A)\circ(B^\top B)$.
+   Proposition~\ref{prop:step-001-khatri-rao} proves this identity
+   entrywise and proves the needed spectral floor directly by a quadratic-form
+   estimate, so no unverified Schur-product or Gershgorin theorem is consumed.
+
+For compactness, index the three modes by $M\in\{U,V,W\}$. Let
+$\bar x_{U,j}=\bar a_j$, $\bar x_{V,j}=\bar b_j$, and
+$\bar x_{W,j}=\bar c_j$, with perturbations $g_{M,j}$ and base unit
+directions $\bar m_{U,j}=\bar u_j$,
+$\bar m_{V,j}=\bar v_j$, and
+$\bar m_{W,j}=\bar w_j$. Put
+\[
+\beta_{M,j}:=\|\bar x_{M,j}\|_2,\qquad
+e_{M,j}:={g_{M,j}\over\beta_{M,j}},\qquad
+\nu_{M,j}:=\|\bar m_{M,j}+e_{M,j}\|_2.
+\]
+Thus the realized column norm is $\beta_{M,j}\nu_{M,j}$, and its
+realized unit direction is
+$m_{M,j}=(\bar m_{M,j}+e_{M,j})/\nu_{M,j}$.
+For every well-formed value of the confidence parameter, write
+\[
+L_{\rm sm}:=\log {9r^2\over\delta_{\rm sm}},\qquad
+\chi_{\rm sm}:=\sqrt{L_{\rm sm}/n},\qquad
+\alpha_{\rm sm}:=\kappa _0\rho,\qquad
+\upsilon_{\rm sm}:=\alpha_{\rm sm}\chi_{\rm sm}.
+\]
+The two scalar smoothing margins imply
+\[
+\alpha_{\rm sm}\le {q_*\over128},\qquad
+r\upsilon_{\rm sm}(1+\alpha_{\rm sm})\le {q_*\over32}.
+\tag{1}
+\]
+In particular,
+\[
+r\upsilon_{\rm sm}\le {q_*\over32},\qquad
+r\alpha_{\rm sm}\upsilon_{\rm sm}\le {q_*\over32},\qquad
+\upsilon_{\rm sm}\le {q_*\over96},
+\tag{2}
+\]
+where the last inequality uses $r\ge3$.
+
+
+\begin{lemma}[Simultaneous raw Gaussian smoothing controls]\label{lem:step-001-raw-smoothing}
+Under Assumptions~\ref{assump:base-scale},
+\ref{assump:gaussian-smoothing}, and
+\ref{assump:smoothing-margin}, there is an event
+$E_{\rm raw}$, measurable with respect to the once-drawn $3r$
+smoothing perturbations, such that
+$\Pr(E_{\rm raw})\ge1-\delta_{\rm sm}$. In the nonvacuous confidence
+case $0<\delta_{\rm sm}<1$, the event simultaneously satisfies, for all
+modes $M$, all $i,j\in[r]$, and all distinct $i,j$, respectively,
+\[
+|\langle\bar m_{M,i},e_{M,j}\rangle|
+\le2\upsilon_{\rm sm},
+\tag{3}
+\]
+\[
+\|e_{M,j}\|_2^2\le
+\alpha_{\rm sm}^2
+\bigl(1+2\sqrt2\,\chi_{\rm sm}+4\chi_{\rm sm}^2\bigr),
+\tag{4}
+\]
+\[
+|\langle e_{M,i},e_{M,j}\rangle|
+\le\alpha_{\rm sm}^2
+\bigl(2\chi_{\rm sm}+2\chi_{\rm sm}^2\bigr).
+\tag{5}
+\]
+If $\delta_{\rm sm}\ge1$, one may take $E_{\rm raw}=\varnothing$,
+for which the probability and conditional conclusions remain valid.
+
+\begin{proof}
+We prove the three tail statements from exact moment generating functions.
+For $Z\sim {\cal N}(0,\sigma^2)$, Chernoff's inequality applied to
+$\mathbb E e^{\lambda Z}=e^{\lambda^2\sigma^2/2}$, and then to
+$-Z$, gives
+\[
+\Pr\{|Z|>\sigma\sqrt{2t}\}\le2e^{-t}.
+\tag{6}
+\]
+For $z\sim {\cal N}(0,I_n)$ and $0\le\lambda<1/2$,
+\[
+\log\mathbb E e^{\lambda(\|z\|_2^2-n)}
+=-n\lambda-{n\over2}\log(1-2\lambda)
+\le {n\lambda^2\over1-2\lambda}.
+\tag{7}
+\]
+The inequality follows by expanding the nonnegative power series of
+$-\log(1-2\lambda)-2\lambda$. For $a=\sqrt{t/n}$, substitution of
+$\lambda=a/(1+2a)$ in the Chernoff bound gives
+\[
+\Pr\{\|z\|_2^2-n>2\sqrt{nt}+2t\}\le e^{-t}.
+\tag{8}
+\]
+Indeed, the exponent at this value of $\lambda$ is exactly at most
+$-t$.
+
+For independent $z,z'\sim{\cal N}(0,I_n)$, direct conditioning on either
+vector gives, for $|\lambda|<1$,
+\[
+\mathbb E e^{\lambda z^\top z'}=(1-\lambda^2)^{-n/2},
+\qquad
+\log\mathbb E e^{\lambda z^\top z'}
+\le {n\lambda^2\over2(1-\lambda)}
+\quad(0\le\lambda<1).
+\tag{9}
+\]
+For $a=\sqrt{2t/n}$, substitution of
+$\lambda=a/(1+a)$ gives
+\[
+\Pr\{z^\top z'>\sqrt{2nt}+t\}\le e^{-t}.
+\]
+The law is symmetric, hence
+\[
+\Pr\{|z^\top z'|>\sqrt{2nt}+t\}\le2e^{-t}.
+\tag{10}
+\]
+
+Now take $t=2L_{\rm sm}$. Since
+$\beta_{M,j}^{-1}\le\kappa _0$, the variance in (3) is at most
+$\alpha_{\rm sm}^2/n$, and (6) gives (3) with failure probability at
+most $2e^{-2L_{\rm sm}}$ for each ordered triple $(M,i,j)$.
+Equation (8), after multiplying by
+$\rho^2/(n\beta_{M,j}^2)\le\alpha_{\rm sm}^2/n$, gives (4) with failure
+at most $e^{-2L_{\rm sm}}$ per $(M,j)$. For distinct columns,
+independence in Assumption~\ref{assump:gaussian-smoothing} and (10)
+give (5) with failure at most $2e^{-2L_{\rm sm}}$ per unordered pair and
+mode.
+
+There are $3r^2$ directional quantities, $3r$ norm quantities, and
+$3\binom r2$ unordered bilinear quantities. Therefore the one finite
+union has failure probability at most
+\[
+6r^2e^{-2L_{\rm sm}}+3re^{-2L_{\rm sm}}
++6{r\choose2}e^{-2L_{\rm sm}}
+=9r^2e^{-2L_{\rm sm}}
+={\delta_{\rm sm}^2\over9r^2}
+\le\delta_{\rm sm}.
+\tag{11}
+\]
+This proves the nonvacuous case. If $\delta_{\rm sm}\ge1$, then
+$\Pr(\varnothing)=0\ge1-\delta_{\rm sm}$, proving the stated boundary
+case without importing another assumption. 
+
+
+\end{proof}
+\end{lemma}
+\begin{lemma}[Normalization reserve and column-norm retention]\label{lem:step-001-normalization}
+Under Assumptions~\ref{assump:base-scale} and
+\ref{assump:smoothing-margin}, on the event in
+Lemma~\ref{lem:step-001-raw-smoothing}, define
+\[
+h_{\rm sm}:=4\upsilon_{\rm sm}+\alpha_{\rm sm}^2
++2\sqrt2\,\alpha_{\rm sm}\upsilon_{\rm sm}
++4\upsilon_{\rm sm}^2.
+\tag{12}
+\]
+Then, simultaneously for all modes and columns,
+\[
+|\nu_{M,j}^2-1|\le h_{\rm sm}\le {q_*\over20},
+\tag{13}
+\]
+and
+\[
+\|\bar x_{M,j}+g_{M,j}\|_2
+=\beta_{M,j}\nu_{M,j}\ge {1\over2\kappa _0}.
+\tag{14}
+\]
+
+\begin{proof}
+The exact normalization expansion is
+\[
+\nu_{M,j}^2-1
+=2\langle\bar m_{M,j},e_{M,j}\rangle+\|e_{M,j}\|_2^2.
+\tag{15}
+\]
+Equations (3)--(4) bound its absolute value by (12): the first term is the
+own-direction linear contribution $4\upsilon_{\rm sm}$; the norm energy
+contributes the deterministic normalization scale
+$\alpha_{\rm sm}^2$, the quadratic fluctuation
+$2\sqrt2\,\alpha_{\rm sm}\upsilon_{\rm sm}$, and the confidence
+correction $4\upsilon_{\rm sm}^2$.
+
+Using (1)--(2), $q_*=1/4096\le1$, and $2\sqrt2<3$,
+\[
+\begin{aligned}
+h_{\rm sm}
+&\le {q_*\over24}+{q_*\over16384}
+  +{q_*\over4096}+{q_*\over2304}\\
+&<{q_*\over20}.
+\end{aligned}
+\tag{16}
+\]
+Here the four bounds use, in order,
+$\upsilon_{\rm sm}\le q_*/96$,
+$\alpha_{\rm sm}\le q_*/128$, and the product of those two bounds;
+the last three occurrences of $q_*^2$ were conservatively replaced by
+$q_*$. Thus
+$\nu_{M,j}\ge\sqrt{1-h_{\rm sm}}>1/2$. Since
+$\beta_{M,j}\ge\kappa _0^{-1}$, (14) follows. In particular,
+nonvanishing is a conclusion on this event rather than an admissibility
+condition. 
+
+
+\end{proof}
+\end{lemma}
+\begin{proposition}[Cumulative Gram control after normalization]\label{prop:step-001-realized-gram}
+Under Assumptions~\ref{assump:cumulative-gram} and
+\ref{assump:smoothing-margin}, and on the event of
+Lemma~\ref{lem:step-001-raw-smoothing} with the normalization reserve
+of Lemma~\ref{lem:step-001-normalization}, each realized normalized
+mode $G\in\{U,V,W\}$ satisfies
+\[
+\|G^\top G-I\|_{\rm row,1}
+=\|G^\top G-I\|_{\rm col,1}
+=q(G)\le q_*.
+\tag{17}
+\]
+Consequently $q_{\rm real}\le q_*$.
+
+\begin{proof}
+Fix a mode and a row $j$. Before normalization, expansion of every
+off-diagonal numerator gives
+\[
+\begin{aligned}
+&\sum_{\ell\ne j}
+|\langle\bar m_j+e_j,\bar m_\ell+e_\ell\rangle|\\
+&\quad\le q(\bar M)+4(r-1)\upsilon_{\rm sm}
+ +(r-1)\alpha_{\rm sm}^2
+ (2\chi_{\rm sm}+2\chi_{\rm sm}^2).
+\end{aligned}
+\tag{18}
+\]
+The first term is the base row mass. The second is exactly the sum of the
+two directional linear terms in (3). The third is the independent quadratic
+term (5). By (2),
+\[
+4(r-1)\upsilon_{\rm sm}\le {q_*\over8},
+\tag{19}
+\]
+while
+\[
+\begin{aligned}
+r\alpha_{\rm sm}^2
+(2\chi_{\rm sm}+2\chi_{\rm sm}^2)
+&=2r\alpha_{\rm sm}\upsilon_{\rm sm}
+  +2r\upsilon_{\rm sm}^2\\
+&\le {q_*\over16}+{q_*^2\over1536}
+<{q_*\over8}.
+\end{aligned}
+\tag{20}
+\]
+Together with $q(\bar M)\le q_*/4$, equations (18)--(20) bound the
+unnormalized off-diagonal row mass by $q_*/2$.
+
+Lemma~\ref{lem:step-001-normalization} gives
+$\nu_j\nu_\ell\ge1-h_{\rm sm}$. Therefore
+\[
+\sum_{\ell\ne j}|\langle m_j,m_\ell\rangle|
+\le {q_*/2\over1-h_{\rm sm}}
+\le {q_*/2\over1-q_*/20}<q_*.
+\tag{21}
+\]
+The realized Gram matrix is symmetric, so its induced row and column
+off-diagonal $\ell_1$ masses agree. Maximizing over rows and then over the
+three modes proves (17) and $q_{\rm real}\le q_*$. 
+
+
+\end{proof}
+\end{proposition}
+\begin{lemma}[Realized product-weight balance]\label{lem:step-001-weight}
+Under Assumption~\ref{assump:base-weight-balance}, on the event where
+Lemma~\ref{lem:step-001-normalization} holds, the realized weights obey
+\[
+\Gamma={\max_j\lambda_j\over\min_j\lambda_j}\le1.01.
+\tag{22}
+\]
+
+\begin{proof}
+The exact scale relation is
+\[
+\lambda_j=\bar\lambda_j
+\nu_{U,j}\nu_{V,j}\nu_{W,j}.
+\tag{23}
+\]
+By (13), every squared multiplier is in
+$[1-h_{\rm sm},1+h_{\rm sm}]$. Hence
+\[
+\Gamma\le {801\over800}
+\left({1+h_{\rm sm}\over1-h_{\rm sm}}\right)^{3/2}.
+\tag{24}
+\]
+This numerical reserve is much smaller than the required slack. Indeed,
+since $h_{\rm sm}\le q_*/20=1/81920$,
+\[
+\begin{aligned}
+\log\Gamma
+&\le {1\over800}+{3h_{\rm sm}\over1-h_{\rm sm}}\\
+&\le {1\over800}+{3\over81919}
+<{1\over500}<{1\over101}
+\le\log {101\over100}.
+\end{aligned}
+\tag{25}
+\]
+We used $\log(1+x)\le x$,
+$\log((1+h)/(1-h))\le2h/(1-h)$, and
+$\log(1+x)\ge x/(1+x)$. Exponentiating (25) proves (22). 
+
+
+\end{proof}
+\end{lemma}
+\begin{proposition}[Target Khatri--Rao spectral floors]\label{prop:step-001-khatri-rao}
+Under Proposition~\ref{prop:step-001-realized-gram}, all three target
+Khatri--Rao Grams satisfy
+\[
+\lambda_{\min}\bigl((W\odot V)^\top(W\odot V)\bigr),\quad
+\lambda_{\min}\bigl((W\odot U)^\top(W\odot U)\bigr),\quad
+\lambda_{\min}\bigl((V\odot U)^\top(V\odot U)\bigr)
+\ge1-q_*^2.
+\tag{26}
+\]
+
+\begin{proof}
+For example, entrywise tensor inner products give the exact identity
+\[
+K_U:=(W\odot V)^\top(W\odot V)
+=(V^\top V)\circ(W^\top W).
+\tag{27}
+\]
+Its diagonal is one. For every row $j$,
+Proposition~\ref{prop:step-001-realized-gram} implies
+\[
+\begin{aligned}
+\sum_{\ell\ne j}|(K_U)_{j\ell}|
+&=\sum_{\ell\ne j}
+ |\langle v_j,v_\ell\rangle|
+ |\langle w_j,w_\ell\rangle|\\
+&\le
+\left(\sum_{\ell\ne j}|\langle v_j,v_\ell\rangle|\right)
+\left(\sum_{\ell\ne j}|\langle w_j,w_\ell\rangle|\right)
+\le q_*^2.
+\end{aligned}
+\tag{28}
+\]
+For any $z\in\mathbb R^r$, using
+$2|z_jz_\ell|\le z_j^2+z_\ell^2$,
+\[
+\begin{aligned}
+z^\top K_Uz
+&\ge\sum_jz_j^2
+-\sum_{j<\ell}|(K_U)_{j\ell}|(z_j^2+z_\ell^2)\\
+&=\sum_j\left(1-\sum_{\ell\ne j}|(K_U)_{j\ell}|\right)z_j^2
+\ge(1-q_*^2)\|z\|_2^2.
+\end{aligned}
+\tag{29}
+\]
+This proves the first floor. Permuting the three modes proves the other two.
+The argument is the exact same-object Khatri--Rao Gram comparison; no
+surrogate or weighted Gram is substituted. 
+
+\end{proof}
+\end{proposition}
+\begin{proof}[Step composition]
+For $0<\delta_{\rm sm}<1$, define the public generated event
+$E_{\rm sm}:=E_{\rm raw}$ from
+Lemma~\ref{lem:step-001-raw-smoothing}. Equation (11) gives
+$\Pr(E_{\rm sm})\ge1-\delta_{\rm sm}$ over the once-drawn smoothing
+perturbations, before proposal randomness. On this same event:
+
+- Lemma~\ref{lem:step-001-normalization} proves every realized column
+  has norm at least $(2\kappa _0)^{-1}$.
+- Proposition~\ref{prop:step-001-realized-gram} proves
+  $q_{\rm real}\le q_*$, in both induced Gram orientations.
+- Lemma~\ref{lem:step-001-weight} proves $\Gamma\le1.01$.
+- Proposition~\ref{prop:step-001-khatri-rao} proves the
+  $1-q_*^2$ floor for every target Khatri--Rao Gram.
+
+If $\delta_{\rm sm}\ge1$, set $E_{\rm sm}=\varnothing$; the exact
+probability statement and all implications on the event are then valid
+vacuously. Thus the exact displayed claim is proved using only its five
+listed primitive assumptions and no additional assumption. diagnostic is not used in this assembly.
+\end{proof}
+
+\begin{proposition}[Static smoothed geometry event]\label{prop:step-001-geometry}
+Under Assumptions~\ref{assump:base-scale},
+\ref{assump:cumulative-gram}, \ref{assump:base-weight-balance},
+\ref{assump:gaussian-smoothing}, and
+\ref{assump:smoothing-margin}, let $E_{\rm sm}$ be the event supplied by
+Lemma~\ref{lem:step-001-raw-smoothing}.  Then
+$\Pr(E_{\rm sm})\ge1-\delta_{\rm sm}$, and on this event Lemma~
+\ref{lem:step-001-normalization}, Proposition~\ref{prop:step-001-realized-gram},
+Lemma~\ref{lem:step-001-weight}, and Proposition~
+\ref{prop:step-001-khatri-rao} give the realized norm floor,
+$q_{\rm real}\le q_*$, $\Gamma\le1.01$, and all three
+$1-q_*^2$ Khatri--Rao spectral floors.
+\begin{proof}
+The probability is the conclusion of Lemma~\ref{lem:step-001-raw-smoothing};
+ the four deterministic interfaces are exactly the conclusions of
+ Lemma~\ref{lem:step-001-normalization}, Proposition~\ref{prop:step-001-realized-gram},
+ Lemma~\ref{lem:step-001-weight}, and Proposition~\ref{prop:step-001-khatri-rao};
+ their conjunction therefore holds on the same event.
+\end{proof}
+\end{proposition}
+
+
+\subsection{Observable Gaussian windows}\label{app:step-002}
+
+No external paper result is used.
+
+The static event and realized factors are supplied by
+Proposition~\ref{prop:step-001-geometry}; on $E_{\rm sm}$ every realized
+factor column is well defined and (1) holds simultaneously in all three
+modes. The proposal analysis below uses only this exported interface.
+2. Gaussian regression. If $(X,Y)$ is centered jointly Gaussian with
+   $\operatorname{Var}(X)=\operatorname{Var}(Y)=1$ and
+   $\operatorname{Cov}(X,Y)=c$, then
+   $Y=cX+\sqrt{1-c^2}\,G$, where $G\sim N(0,1)$ is independent of $X$.
+   Lemma~\ref{lem:step-002-regression} proves this by checking that
+   $Y-cX$ is jointly Gaussian and uncorrelated with $X$, and instantiates it
+   in the exact raw-coordinate convention.
+3. Centered Gaussian product tail. For independent $G_1,G_2\sim N(0,1)$
+   and $s>0$,
+
+   \[
+   \Pr\{|G_1G_2|>s\}
+   \le \sqrt{2\over\pi s}\,e^{-s}.
+   \tag{2}
+   \]
+
+   Lemma~\ref{lem:step-002-product-reserve} derives (2) directly in polar
+   coordinates and combines it with an exact three-variable order-statistic
+   integral. No unverified product-tail citation is consumed.
+4. Scalar Gaussian Chernoff bound. For $G\sim N(0,1)$ and $x>0$,
+   $\Pr\{|G|>x\}\le2e^{-x^2/2}$.
+   Proposition~\ref{prop:step-002-conditional-competitors} derives it from
+   $\mathbb E e^{tG}=e^{t^2/2}$ and applies it only to the proof-local
+   residual cap. The exact $\chi^2_2$ tail used in the polar derivation is
+   likewise obtained by integrating the two-dimensional standard-Gaussian
+   radial density $re^{-r^2/2}$.
+
+Let $\mathcal F_{\rm sm}$ be the sigma-field generated by all once-drawn
+smoothing perturbations. Fix throughout one realization in $E_{\rm sm}$, a
+slot $i$, and a target $j$. For $M\in\{U,V,W\}$ abbreviate
+
+\[
+Z_{\ell}^{(M)}:=Z_{i\ell}^{(M)},\qquad
+X_M:=Z_j^{(M)},\qquad
+c_{M\ell}:=\langle m_{M,j},m_{M,\ell}\rangle .
+\tag{3}
+\]
+
+All probabilities below are conditional on this fixed realization of
+$\mathcal F_{\rm sm}$ unless the conditioning is displayed more finely.
+
+
+\begin{lemma}[Exact regression in the realized proposal coordinates]\label{lem:step-002-regression}
+Under Assumption~\ref{assump:random-initialization} and conditional on the
+event $E_{\rm sm}$ supplied by Proposition~\ref{prop:step-001-geometry},
+for every mode $M$ and every $\ell\ne j$,
+
+\[
+Z_{\ell}^{(M)}\mid\{X_M=x_M\}
+=c_{M\ell}x_M+\sqrt{1-c_{M\ell}^2}\,G_{M\ell},
+\tag{4}
+\]
+
+where, for each fixed $\ell$, the three variables
+$G_{U\ell},G_{V\ell},G_{W\ell}$ are independent standard Gaussians. No
+independence is asserted among $G_{M\ell}$ as $\ell$ varies within one mode.
+Moreover,
+
+\[
+\sum_{\ell\ne j}|c_{M\ell}|\le q_*,
+\qquad |c_{M\ell}|\le q_*.
+\tag{5}
+\]
+
+\begin{proof}
+The vector $(Z_1^{(M)},\ldots,Z_r^{(M)})$ is a centered Gaussian vector,
+because it consists of linear functionals of the raw
+$\xi_i^{(M)}\sim N(0,I_n)$. Its covariance is exactly the realized Gram:
+
+\[
+\operatorname{Cov}(Z_a^{(M)},Z_b^{(M)})
+=\langle m_{M,a},m_{M,b}\rangle .
+\tag{6}
+\]
+
+In particular, the diagonal variances are one. Put
+$Y_{M\ell}=Z_{\ell}^{(M)}-c_{M\ell}X_M$. Then
+
+\[
+\operatorname{Cov}(Y_{M\ell},X_M)=0,\qquad
+\operatorname{Var}(Y_{M\ell})=1-c_{M\ell}^2.
+\tag{7}
+\]
+
+The pair $(Y_{M\ell},X_M)$ is jointly Gaussian, so zero covariance gives
+independence and hence (4). Equation (1) gives (5). Finally, the three raw
+mode vectors are independent under
+Assumption~\ref{assump:random-initialization}; conditioning separately on
+$X_U,X_V,X_W$ therefore preserves independence of the three mode residuals
+for each fixed $\ell$. This proves exactly the independence stated, and no
+more. 
+
+
+\end{proof}
+\end{lemma}
+\begin{lemma}[Explicit three-Gaussian product reserve]\label{lem:step-002-product-reserve}
+Let $G_1,G_2,G_3$ be independent $N(0,1)$ variables. For every integer
+$r\ge3$, set
+
+\[
+\beta:={21\over20},\qquad
+\mathfrak q_r:=\Pr\left\{
+\max_{1\le a<b\le3}|G_aG_b|>\beta\log r\right\}.
+\tag{8}
+\]
+
+Then the following completely numerical bound holds:
+
+\[
+(r-1)\{\mathfrak q_r+6r^{-9/2}\}\le {9\over10}.
+\tag{9}
+\]
+
+\begin{proof}
+We first record the exact one-dimensional calculation used for the finite
+range. Let
+
+\[
+F(x):=\Pr\{|G_1|\le x\}
+=\sqrt{2\over\pi}\int_0^x e^{-u^2/2}\,du,
+\qquad f(x):=F'(x).
+\tag{10}
+\]
+
+For $s>0$, a unique largest absolute coordinate exists almost surely.
+Conditioning on its value gives the exact identity
+
+\[
+\begin{aligned}
+\Pr\left\{\max_{a<b}|G_aG_b|\le s\right\}
+&=3\int_0^\infty f(x)
+ F\bigl(\min\{x,s/x\}\bigr)^2\,dx\\
+&=F(\sqrt s)^3
++3\int_{\sqrt s}^\infty f(x)F(s/x)^2\,dx.
+\end{aligned}
+\tag{11}
+\]
+
+Here the first term is exactly
+$3\int_0^{\sqrt s}f(x)F(x)^2dx=F(\sqrt s)^3$.
+
+For completeness, (11) has the following finite outward-rounded arithmetic
+certificate in the only range where the coarser analytic bound below is not
+already sufficient. Put $\eta=51/50$, $z_r=\sqrt{\beta\log r}$, and
+
+\[
+L_r:=F(z_r)^3+3\sum_{m=0}^{125}
+ \{F(\eta^{m+1}z_r)-F(\eta^m z_r)\}
+ F(z_r/\eta^{m+1})^2.
+\tag{12}
+\]
+
+On $[\eta^mz_r,\eta^{m+1}z_r]$, the factor
+$F(\beta\log r/x)^2$ is at least
+$F(z_r/\eta^{m+1})^2$, so (11) gives
+$1-\mathfrak q_r\ge L_r$. Direct interval evaluation of the positive
+integral in (10), with every endpoint rounded against the desired
+inequality, gives the following rational upper endpoints:
+
+
+This is a finite integral certificate, not a simulation: each entry follows
+by replacing the integrand in (10) on the explicit multiplicative mesh by
+interval upper or lower endpoints and summing; the unretained positive tail after
+$\eta^{126}z_r>12z_r$ is omitted only from the lower bound $L_r$.
+Thus (9) holds for $3\le r\le99$.
+
+For $r\ge100$, no finite check is needed. If $G_1,G_2$ are independent
+standard Gaussians, polar coordinates give
+
+\[
+\Pr\{|G_1G_2|>s\}
+={2\over\pi}\int_0^{\pi/2}
+ \exp\left(-{s\over\cos u}\right)du.
+\tag{13}
+\]
+
+Indeed, conditional on the polar angle, the required squared radius is
+$2s/|\sin(2\theta)|$, and a $\chi^2_2$ tail at $y$ is $e^{-y/2}$.
+For $0\le u<\pi/2$, $\sec u\ge1+u^2/2$: its derivative dominates $u$
+because $\sec u\tan u\ge\tan u\ge u$. Therefore
+
+\[
+\Pr\{|G_1G_2|>s\}
+\le {2e^{-s}\over\pi}\int_0^\infty e^{-su^2/2}du
+=\sqrt{2\over\pi s}\,e^{-s},
+\tag{14}
+\]
+
+which is (2). A union over the three pairs and $s=\beta\log r$ yields
+
+\[
+(r-1)\{\mathfrak q_r+6r^{-9/2}\}
+\le(r-1)\left{
+3\sqrt{2\over\pi\beta\log r}\,r^{-\beta}
++6r^{-9/2}\right}.
+\tag{15}
+\]
+
+The right-hand side decreases for $r\ge100$. For its first term, the
+logarithmic derivative has the sign of
+
+\[
+{r\over r-1}-\beta-{1\over2\log r}
+\le {100\over99}-{21\over20}<0,
+\tag{16}
+\]
+
+and the second term also decreases. At $r=100$, (15) is less than
+$857/1000<9/10$. This proves (9) for every $r\ge3$. 
+
+
+\end{proof}
+\end{lemma}
+\begin{lemma}[Exact target-window mass]\label{lem:step-002-target-mass}
+Let $G\sim N(0,1)$, $a_*=10/9$, and
+$t_r=\sqrt{a_*\log r}$ for $r\ge3$. Define
+
+\[
+c_{\rm tar}:=\sqrt{2\over\pi a_*}
+ \exp\left(-1-{1\over2a_*\log3}\right),
+\qquad
+C_{\rm tar}:=\sqrt{2\over\pi a_*}.
+\tag{17}
+\]
+
+Then
+
+\[
+c_{\rm tar}\,r^{-5/9}(\log r)^{-1/2}
+\le
+\Pr\{t_r\le|G|\le t_r+t_r^{-1}\}
+\le
+C_{\rm tar}\,r^{-5/9}(\log r)^{-1/2}.
+\tag{18}
+\]
+
+\begin{proof}
+The standard Gaussian density $\phi$ decreases on $[0,\infty)$. Hence
+
+\[
+{2\over t_r}\phi(t_r+t_r^{-1})
+\le2\int_{t_r}^{t_r+t_r^{-1}}\phi(x)dx
+\le {2\over t_r}\phi(t_r).
+\tag{19}
+\]
+
+Now $t_r^2/2=(5/9)\log r$ and
+
+\[
+{(t_r+t_r^{-1})^2\over2}
+={t_r^2\over2}+1+{1\over2t_r^2}
+\le {5\over9}\log r+1+{1\over2a_*\log3}.
+\tag{20}
+\]
+
+Substitution in (19) gives precisely (18). 
+
+
+For the fixed target and slot, define the signed target-window event
+
+\[
+W_{ij}:=\bigcap_{M\in\{U,V,W\}}
+\{t_r\le|X_M|\le t_r+t_r^{-1}\},
+\tag{21}
+\]
+
+and the event, expressed only in the original raw coordinates,
+
+\[
+C_{ij}:=\bigcap_{\ell\ne j}
+\bigcap_{\{M,N\}\in\binom{\{U,V,W\}}2}
+\{|Z_{\ell}^{(M)}Z_{\ell}^{(N)}|\le b_*\log r\}.
+\tag{22}
+\]
+
+\end{proof}
+\end{lemma}
+\begin{proposition}[Competitor reserve conditional on the target window]\label{prop:step-002-conditional-competitors}
+Under Assumption~\ref{assump:random-initialization}, conditional on the
+event $E_{\rm sm}$ supplied by Proposition~\ref{prop:step-001-geometry},
+and under Lemmas~\ref{lem:step-002-regression} and
+\ref{lem:step-002-product-reserve}, for every signed
+$x=(x_U,x_V,x_W)$ satisfying the three inequalities in $W_{ij}$,
+
+\[
+\Pr\{C_{ij}\mid X_U=x_U,X_V=x_V,X_W=x_W\}\ge {1\over10}.
+\tag{23}
+\]
+
+No independence between $C_{ij}$ and $W_{ij}$, and no independence across
+different targets, is assumed.
+
+\begin{proof}
+Put $a=a_*=10/9$, $b=b_*=19/18$, $q=q_*=1/4096$, and
+
+\[
+d_r:=q(t_r+t_r^{-1}),\qquad
+L_r^{\rm cap}:=3\sqrt{\log r},\qquad
+s_r:=b\log r-2d_rL_r^{\rm cap}-d_r^2.
+\tag{24}
+\]
+
+For $\ell\ne j$, the regression representation (4) and the target-window
+bound imply
+
+\[
+|c_{M\ell}x_M|\le d_r,\qquad
+|Z_{\ell}^{(M)}|\le |G_{M\ell}|+d_r.
+\tag{25}
+\]
+
+The numerical slack in $a,b,q$ leaves a product exponent strictly above one.
+Writing $h=\log r\ge\log3>1$, direct expansion gives
+
+\[
+{b h-s_r\over h}
+=6q\sqrt a+{6q\over\sqrt a\,h}
++q^2a+{2q^2\over h}+{q^2\over a h^2}
+\le {37\over3}q+5q^2<{1\over180}.
+\tag{26}
+\]
+
+Here $\sqrt{10/9}<19/18$, $1/\sqrt a<1$, $a<2$, and $h>1$ were
+used. Since
+
+\[
+b-{21\over20}={1\over180},
+\tag{27}
+\]
+
+equations (26)--(27) prove
+
+\[
+s_r\ge {21\over20}\log r.
+\tag{28}
+\]
+
+For a fixed competitor $\ell$, suppose first that
+$\max_M|G_{M\ell}|\le L_r^{\rm cap}$ and every standard-Gaussian pair
+product is at most $s_r$. Then, for every mode pair,
+
+\[
+|Z_{\ell}^{(M)}Z_{\ell}^{(N)}|
+\le |G_{M\ell}G_{N\ell}|
++d_r(|G_{M\ell}|+|G_{N\ell}|)+d_r^2
+\le b\log r.
+\tag{29}
+\]
+
+For a standard Gaussian, the Chernoff bound
+$\Pr\{|G|>x\}\le2e^{-x^2/2}$ follows directly from
+$\mathbb Ee^{tG}=e^{t^2/2}$. Therefore the cap failure for the three
+modes is at most
+
+\[
+6e^{-(L_r^{\rm cap})^2/2}=6r^{-9/2}.
+\tag{30}
+\]
+
+By (28), the remaining product failure is at most $\mathfrak q_r$ from
+Lemma~\ref{lem:step-002-product-reserve}. A union bound over the $r-1$
+competitors, which requires no independence among their within-mode
+residuals, now gives
+
+\[
+\Pr\{C_{ij}^c\mid X=x\}
+\le(r-1)(\mathfrak q_r+6r^{-9/2})
+\le {9\over10}.
+\tag{31}
+\]
+
+Taking complements proves (23). 
+
+
+\end{proof}
+\end{proposition}
+\begin{proposition}[Joint one-slot extreme window]\label{prop:step-002-joint-window}
+Under Assumption~\ref{assump:random-initialization}, conditional on the
+event $E_{\rm sm}$ supplied by Proposition~\ref{prop:step-001-geometry},
+and under Lemma~\ref{lem:step-002-target-mass} and
+Proposition~\ref{prop:step-002-conditional-competitors}, define the actual
+one-slot, target-$j$ event
+
+\[
+E_{{\rm win},ij}:=W_{ij}\cap C_{ij}.
+\tag{32}
+\]
+
+Let
+
+\[
+c_{\rm win}:={c_{\rm tar}^3\over10},
+\qquad C_{\rm win}:=C_{\rm tar}^3.
+\tag{33}
+\]
+
+Then, for every $i\in[k]$ and $j\in[r]$,
+
+\[
+c_{\rm win}r^{-5/3}(\log r)^{-3/2}
+\le p_{{\rm win},j}
+:=\Pr(E_{{\rm win},ij}\mid\mathcal F_{\rm sm})
+\le C_{\rm win}r^{-5/3}(\log r)^{-3/2}.
+\tag{34}
+\]
+
+The conditional probability is independent of the slot index $i$. Thus
+$p_{\rm win}:=\min_{j\in[r]}p_{{\rm win},j}$ obeys the same two-sided
+bound. Moreover, at the normalized initial state $h_i^0$,
+
+\[
+R_j(h_i^0)\le {b_*\over a_*}={19\over20},
+\qquad S_j(h_i^0)\le(r-1)R_j(h_i^0)\le rR_j(h_i^0).
+\tag{35}
+\]
+
+\begin{proof}
+The three target coordinates $X_U,X_V,X_W$ are independent standard
+Gaussians because the three raw mode vectors are independent and every
+realized target column is unit. Lemma~\ref{lem:step-002-target-mass}
+therefore gives
+
+\[
+c_{\rm tar}^3r^{-5/3}(\log r)^{-3/2}
+\le\Pr(W_{ij}\mid\mathcal F_{\rm sm})
+\le C_{\rm tar}^3r^{-5/3}(\log r)^{-3/2}.
+\tag{36}
+\]
+
+For the lower bound, do not factor $W_{ij}$ and $C_{ij}$. Instead,
+Proposition~\ref{prop:step-002-conditional-competitors} applies uniformly
+at every signed point $x$ in the target window, so disintegration gives
+
+\[
+\begin{aligned}
+\Pr(E_{{\rm win},ij}\mid\mathcal F_{\rm sm})
+&=\int_{x\in W_{ij}}
+ \Pr(C_{ij}\mid X=x,\mathcal F_{\rm sm})\,
+ d\Pr_X(x\mid\mathcal F_{\rm sm})\\
+&\ge {1\over10}\Pr(W_{ij}\mid\mathcal F_{\rm sm}).
+\end{aligned}
+\tag{37}
+\]
+
+The upper bound follows from $E_{{\rm win},ij}\subseteq W_{ij}$. Equations
+(33), (36), and (37) prove (34). Assumption~\ref{assump:random-initialization}
+makes the conditional law identical across slots, proving the slot claim.
+The minimum over finitely many targets preserves both uniform bounds; no
+claim of independence among the target events is made.
+
+Finally, normalization of $\xi_i^{(M)}$ cancels in every same-mode ratio.
+On $E_{{\rm win},ij}$, each target denominator has squared product at least
+$t_r^2=a_*\log r$, while (22) bounds every corresponding competitor
+numerator product by $b_*\log r$. Thus each of the three pair ratios is at
+most $b_*/a_*=19/20$, proving the first part of (35). Every sum defining
+$S_j$ has at most $r-1$ terms, each at most $R_j$, proving the second part.
+
+
+\end{proof}
+\end{proposition}
+\begin{proof}[Step composition]
+Fix any realized tensor in the event $E_{\rm sm}$ from Proposition~\ref{prop:step-001-geometry}.
+For every target $j$ and slot $i$, define $E_{{\rm win},ij}$ by (21),
+(22), and (32), using only the original raw proposal coordinates. The
+regression variables in Lemma~\ref{lem:step-002-regression} are proof-local
+and do not alter this event.
+
+Lemma~\ref{lem:step-002-target-mass} supplies the exact three-mode target
+mass. Lemma~\ref{lem:step-002-product-reserve} and
+Proposition~\ref{prop:step-002-conditional-competitors} show, with displayed
+constants, that imposing every competitor pair constraint retains at least a
+$1/10$ fraction after conditioning on any point of the target window.
+Proposition~\ref{prop:step-002-joint-window} therefore proves
+
+\[
+{1\over10}\left[\sqrt{2\over\pi a_*}
+e^{-1-1/(2a_*\log3)}\right]^3
+r^{-5/3}(\log r)^{-3/2}
+\le p_{\rm win}
+\le
+\left({2\over\pi a_*}\right)^{3/2}
+r^{-5/3}(\log r)^{-3/2}.
+\tag{38}
+\]
+
+This is the displayed probability claim. It is a one-slot probability
+conditional on the fixed good instance, contains no confidence parameter or
+rank choice, and uses neither target/competitor independence nor independence
+among events for different targets. Equation (35) records the same-event
+ratio interface needed after the downstream coverage step.
+\end{proof}
+
+\subsection{All-target coverage}\label{app:step-003}
+
+Proposition~\ref{prop:step-002-joint-window}
+   proves (1), uniformly in slot \(i\) and
+   target \(j\), conditional on the fixed smoothed instance. It also proves
+   the ratio initialization on each \(E_{{\rm win},ij}\). The present step
+   uses exactly this public interface and does not reuse the dependency's
+   internal Gaussian regression or product-tail arguments.
+2. Elementary exponential inequality. For \(x\in[0,1]\),
+   \(1-x\le e^{-x}\). Applying it to \(x=p_{{\rm win},j}\) is valid because
+   \(p_{{\rm win},j}\) is a probability. The inequality is the only
+   simplification of the binomial miss term.
+3. Finite union bound. For arbitrary events \(A_1,\ldots,A_r\),
+   \(\Pr(\bigcup_jA_j)\le\sum_j\Pr(A_j)\). This result requires no
+   independence and is used precisely for the target-indexed miss events.
+
+Fix throughout an arbitrary realized smoothed instance in the domain on
+which the Proposition~\ref{prop:step-002-joint-window} interface holds, and condition on its
+\(\sigma\)-field \(\mathcal F_{\rm sm}\). Write
+
+\[
+\mathscr E_{ij}:=E_{{\rm win},ij},\qquad
+p_j:=p_{{\rm win},j}=\Pr(\mathscr E_{ij}\mid\mathcal F_{\rm sm}).
+\tag{2}
+\]
+
+The event \(\mathscr E_{ij}\) is evaluated from the raw Gaussian tape in slot
+\(i\), with the target index used only to state the analysis event. By the
+Proposition~\ref{prop:step-002-joint-window} gives
+\(p_j\ge c_{\rm win}r^{-5/3}(\log r)^{-3/2}\) in (1).
+
+
+\begin{lemma}[Fixed-target slot-miss bound]\label{lem:step-003-slot-miss}
+Under Assumption~\ref{assump:random-initialization} and the Proposition~\ref{prop:step-002-joint-window}, fix \(j\in[r]\) and define
+
+\[
+B_j:=\bigcap_{i=1}^k\mathscr E_{ij}^{\,c}.
+\tag{3}
+\]
+
+Then, conditional on \(\mathcal F_{\rm sm}\),
+
+\[
+\Pr(B_j\mid\mathcal F_{\rm sm})=(1-p_j)^k
+\le e^{-kp_j}
+\le r^{-C_{\rm rank}c_{\rm win}}.
+\tag{4}
+\]
+
+No relation among \(\mathscr E_{1j},\ldots,\mathscr E_{rj}\) for a common
+slot is required.
+
+\begin{proof}
+For fixed \(j\), each \(\mathscr E_{ij}\) is a measurable function of the
+raw triple \(\Xi_i\) and the fixed realized tensor. The primitive
+initialization assumption makes the \(\Xi_i\)'s independent over \(i\), so
+the indicators \(1_{\mathscr E_{ij}}\) are independent and have the common
+conditional success probability \(p_j\). Therefore the first equality in
+(4) holds. The elementary inequality in the displayed auxiliary fact gives the first
+inequality. From (1) and the rank formula,
+
+\[
+kp_j\ \ge\ \left(C_{\rm rank}r^{5/3}(\log r)^{5/2}\right)
+   \left(c_{\rm win}r^{-5/3}(\log r)^{-3/2}\right)
+ =C_{\rm rank}c_{\rm win}\log r,
+\tag{5}
+\]
+
+where the ceiling in \(k\) only increases the left side. Exponentiating
+(5) proves the final inequality in (4). The proof has used independence
+only in the slot index \(i\), and nowhere factors events with different
+target labels. 
+
+
+\end{proof}
+\end{lemma}
+\begin{proposition}[All-target coupon coverage]\label{prop:step-003-coupon}
+Under Assumption~\ref{assump:subquadratic-rank}, Assumption~\ref{assump:random-initialization},
+and the Proposition~\ref{prop:step-002-joint-window}, define
+
+\[
+E_{\rm cov}:=\bigcap_{j=1}^r\bigcup_{i=1}^k\mathscr E_{ij}
+   =\bigcap_{j=1}^r B_j^{\,c}.
+\tag{6}
+\]
+
+Then, for every fixed smoothed instance in the event
+$E_{\rm sm}$ supplied by Proposition~\ref{prop:step-001-geometry},
+
+\[
+\Pr(E_{\rm cov}\mid\mathcal F_{\rm sm})
+\ge 1-r^{\,1-C_{\rm rank}c_{\rm win}}.
+\tag{7}
+\]
+
+Choose the universal rank constant once and for all so that
+
+\[
+C_{\rm rank}c_{\rm win}\ge4.
+\tag{8}
+\]
+
+Then, for all \(r\ge3\),
+
+\[
+\Pr(E_{\rm cov}\mid\mathcal F_{\rm sm})\ge1-r^{-3}\ge
+p_0,\qquad p_0:=1-3^{-3}={26\over27}>0.
+\tag{9}
+\]
+
+No independence across the \(r\) target-indexed events is asserted or used.
+
+\begin{proof}
+The complement of (6) is \(\bigcup_{j=1}^rB_j\). Applying the finite
+union bound and Lemma~\ref{lem:step-003-slot-miss} gives
+
+\[
+\Pr(E_{\rm cov}^{\,c}\mid\mathcal F_{\rm sm})
+\le\sum_{j=1}^r\Pr(B_j\mid\mathcal F_{\rm sm})
+\le r\,r^{-C_{\rm rank}c_{\rm win}}
+=r^{\,1-C_{\rm rank}c_{\rm win}},
+\tag{10}
+\]
+
+which proves (7). Under (8), the exponent is at most \(-3\), and
+\(r^{-3}\le3^{-3}\) for \(r\ge3\), proving (9). The events \(B_j\) may be
+maximally correlated for different \(j\); (10) remains valid because it is a
+union bound rather than a product calculation. 
+
+
+\end{proof}
+\end{proposition}
+\begin{proposition}[Proof-only witnesses and label-free procedure interface]\label{prop:step-003-witness-interface}
+Under the hypotheses of Proposition~\ref{prop:step-003-coupon}, on the
+event \(E_{\rm cov}\), for every \(j\in[r]\) the finite nonempty set
+
+\[
+\mathcal I_j:=\{i\in[k]:\mathscr E_{ij}\text{ occurs}\}
+\tag{11}
+\]
+
+has a proof-only canonical witness \(i(j):=\min\mathcal I_j\). The
+conclusion of Proposition~\ref{prop:step-002-joint-window} then gives
+
+\[
+R_j(h_{i(j)}^0)\le{19\over20},\qquad
+S_j(h_{i(j)}^0)\le rR_j(h_{i(j)}^0).
+\tag{12}
+\]
+
+The construction of \(E_{\rm cov}\), \(\mathcal I_j\), and \(i(j)\) is an
+analysis definition only: the SL-SC-JEP-ALS procedure does not read any
+target index \(j\), any \(u_j,v_j,w_j\), any raw-coordinate window event, or
+the proof-only witness. It executes the same slotwise Jacobi, score, and
+clustering rules for every tape. Thus (6) is a generated probabilistic
+interface and not a label-dependent acceptance test.
+
+\begin{proof}
+By (6), each union over \(i\) is nonempty on \(E_{\rm cov}\); finiteness of
+\([k]\) makes the minimum in (11) well-defined. Equation (12) is exactly
+the ratio conclusion of Proposition~\ref{prop:step-002-joint-window} applied
+to the witness event \(\mathscr E_{i(j)j}\). The final statement follows by
+inspection of the setting's procedure: target labels occur only in the
+proof definitions of \(A_{\ell\mid j},B_{\ell\mid j},C_{\ell\mid j}\) and
+\(E_{{\rm win},ij}\); no such quantities are computed by the algorithm. A
+proof may use \(i(j)\) to organize the subsequent targetwise induction,
+while the actual state evolution remains the unlabeled stored-state
+trajectory. 
+
+\end{proof}
+\end{proposition}
+\begin{proof}[Step composition]
+Fix a realized smoothed instance for which
+Proposition~\ref{prop:step-002-joint-window} holds. It supplies a uniform
+per-target lower probability \(p_j\ge c_{\rm win}r^{-5/3}(\log r)^{-3/2}\).
+Lemma~\ref{lem:step-003-slot-miss} uses the \(k\) independent raw slots to
+make each target miss probability at most \(r^{-C_{\rm rank}c_{\rm win}}\).
+Proposition~\ref{prop:step-003-coupon} takes a union over targets and, after
+the single universal choice (8), produces
+
+\[
+E_{\rm cov}=\{\text{every target has at least one jointly observable
+window slot}\},\qquad
+\Pr(E_{\rm cov}\mid\mathcal F_{\rm sm})\ge p_0={26\over27}.
+\tag{13}
+\]
+
+Proposition~\ref{prop:step-003-witness-interface} records the targetwise initial
+ratio interface for any proof-only witness and explicitly separates it from
+the label-free procedure. The proof never assumes independence among the
+events for different targets in a slot or across the target index; only the
+primitive slot independence is used. Therefore (13) is exactly the
+displayed coverage output \(E_{\rm cov},p_0\), ready for the trajectory
+induction and the restart conclusion of Proposition~\ref{prop:step-012-restart}.
+
+For completeness, the rank scaling has no hidden confidence factor. With
+\(C_{\rm rank}\) fixed universally and \(r\ge3\),
+
+\[
+C_{\rm rank}r^{5/3}(\log r)^{5/2}\le k
+\le\left(C_{\rm rank}+{1\over3^{5/3}(\log3)^{5/2}}\right)
+ r^{5/3}(\log r)^{5/2},
+\tag{14}
+\]
+
+so \(k=\Theta(r^{5/3}(\log r)^{5/2})\). The upper feasibility and
+subquadratic statement are already part of Assumption~\ref{assump:subquadratic-rank};
+indeed \(k/r^2=O((\log r)^{5/2}/r^{1/3})=o(1)\) for fixed
+\(C_{\rm rank}\). If an unconditional nested probability is desired, the
+tower property and the instance bound give
+
+\[
+\Pr(E_{\rm sm}\cap E_{\rm cov})\ge
+\Pr(E_{\rm sm})\,p_0\ge(1-\delta_{\rm sm})p_0,
+\tag{15}
+\]
+
+but the theorem-facing one-run initialization guarantee remains the
+conditional bound (13), with \(\delta_{\rm init}\) reserved for independent
+restarts.
+\end{proof}
+
+\subsection{Jacobi chart recurrence}\label{app:step-004}
+
+Proposition~\ref{prop:step-003-witness-interface} supplies, on
+\(E_{\rm cov}\), a witness for every target with \(R_0\le19/20\) and
+\(S_0\le rR_0\). Proposition~\ref{prop:step-001-realized-gram} supplies, on
+\(E_{\rm sm}\), unit diagonal Gram matrices
+\(\mathsf K_M=G_M^\top G_M\) with absolute row and column off-diagonal mass at
+most \(q_{\rm real}\).
+3. For a Gram matrix with unit diagonal and off-diagonal row/column mass
+   \(q\), the off-target block has induced column/row mass at most \(1+q\),
+   while the target row/column has mass at most \(q\). We use the elementary
+   induced-\(\ell_1\) inequalities in current notation.
+4. If an induced norm satisfies \(\|K-I\|\le q<1\), the Neumann series gives
+   \(\|K^{-1}\|\le(1-q)^{-1}\). This is used only for the exact target-span
+   chart.
+5. For nonzero vectors \(a,b\),
+   \(\|a/\|a\|-b/\|b\|\|_2\le
+   2\|a-b\|_2/\min(\|a\|_2,\|b\|_2)\). The chart Gram floor supplies the
+   positive norm lower bound.
+
+Fix \(E_{\rm sm}\), \(E_{\rm cov}\), a target \(j\), and one proof-only witness
+slot \(i(j)\). Suppress the slot index. Put
+
+\[
+q:=q_{\rm real}\le q_*={1\over4096},\qquad
+\gamma:=\Gamma\le {101\over100}.
+\]
+
+For \(M\in\{U,V,W\}\), write \(g_{M,\ell}\) for the realized target column
+(\(u_\ell,v_\ell,w_\ell\), respectively), and \(h_M^t\) for the mode-\(M\)
+state after \(t\) simultaneous commits. At every time at which the target
+correlation is nonzero, use a proof-only sign so that
+
+\[
+a_{M,j}^t:=\langle g_{M,j},h_M^t\rangle>0,\qquad
+x_{M,\ell}^t:={\langle g_{M,\ell},h_M^t\rangle\over a_{M,j}^t}
+\quad(\ell\ne j).
+\tag{1}
+\]
+
+The absolute values of (1) are the setting's \(A_\ell,B_\ell,C_\ell\).
+Sign choices do not alter \(R,S\) or \(\zeta\), because \(\zeta\) minimizes
+over a modewise sign.
+
+
+\begin{lemma}[Simultaneous coefficient and pair-mass recurrence]\label{lem:step-004-recurrence}
+Under the realized Gram conclusion of Proposition~\ref{prop:step-001-geometry}
+and the covered-slot initial interface of Proposition~\ref{prop:step-003-witness-interface},
+suppose at
+time \(t\) all target correlations in (1) are nonzero and
+\(\gamma R_t<1\). For mode \(M\), with held modes \(M',M''\), define
+
+\[
+\beta_{M,j}^t:=1,\qquad
+\beta_{M,\ell}^t:={\lambda_\ell\over\lambda_j}
+x_{M',\ell}^t x_{M'',\ell}^t\quad(\ell\ne j).
+\tag{2}
+\]
+
+Then the target coefficient of the unnormalized \(M\)-contraction is nonzero,
+and, with \(D_t:=1-\gamma qR_t\),
+
+\[
+|x_{M,\ell}^{t+1}|\le {\gamma R_t+q\over D_t}\quad(\ell\ne j),
+\tag{3}
+\]
+
+\[
+R_{t+1}\le\left({\gamma R_t+q\over1-\gamma qR_t}\right)^2,\qquad
+S_{t+1}\le
+{(\gamma R_t+q)\{\gamma(1+q)S_t+q\}\over(1-\gamma qR_t)^2}.
+\tag{4}
+\]
+
+The conclusion holds for the first update even when \(h^0\) has a component
+orthogonal to a target span.
+
+\begin{proof}
+Divide the \(M\)-contraction by its target
+coefficient \(\lambda_j a_{M',j}^ta_{M'',j}^t\). Its coefficient vector in
+the \(g_{M,\ell}\) basis is \(e_j+\beta_M^t\). Since
+\(|\beta_{M,\ell}^t|\le\gamma B_\ell^tC_\ell^t\le\gamma R_t<1\), the target
+coordinate of the contraction obeys
+
+\[
+\begin{aligned}
+\left|\left\langle g_{M,j},e_j+
+\sum_{\ell\ne j}\beta_{M,\ell}^tg_{M,\ell}\right\rangle\right|
+&\ge1-\sum_{\ell\ne j}|\beta_{M,\ell}^t|
+|\langle g_{M,j},g_{M,\ell}\rangle|\\
+&\ge1-\gamma R_tq=D_t>0.
+\end{aligned}
+\tag{5}
+\]
+
+Thus the contraction norm is positive and its normalized output is defined.
+For an off-target index \(\ell\), the diagonal term contributes
+\(|\beta_{M,\ell}^t|\), and all remaining terms are bounded by the Gram row
+mass \(q\), because every \(|\beta_{M,m}^t|\le1\). Therefore
+
+\[
+|\langle g_{M,\ell},e_j+\sum_m\beta_{M,m}^tg_{M,m}\rangle|
+\le\gamma R_t+q.
+\tag{6}
+\]
+
+Dividing (6) by (5) proves (3), and taking products proves the first part of
+(4). For the \(S\) bound, let \(n_{M,\ell}\) denote the absolute numerator
+in (6). Using the target column mass \(q\), then swapping the remaining finite
+sums and using the Gram column mass \(q\),
+
+\[
+\begin{aligned}
+\sum_{\ell\ne j}n_{M,\ell}
+&\le \sum_{\ell\ne j}|\beta_{M,\ell}^t|
+ +q+q\sum_{\ell\ne j}|\beta_{M,\ell}^t|\\
+&\le\gamma(1+q)\sum_{\ell\ne j}
+|x_{M',\ell}^tx_{M'',\ell}^t|+q\\
+&\le\gamma(1+q)S_t+q.
+\end{aligned}
+\tag{7}
+\]
+
+For example, for the \(U,V\) pair, the \(U\)-numerator is at most
+\(\gamma R_t+q\) termwise, while the \(\ell_1\) sum of the \(V\)-numerator
+is bounded by (7). Division by the two target denominators gives the first
+pair sum in \(S_{t+1}\); cyclic permutation gives the other pair sums. At
+\(t=0\), the window event supplies nonzero target correlations and (5)
+proves the first update before any span assertion. After that update every
+mode lies in its exact target span because the tensor contraction is a linear
+combination of the \(g_{M,\ell}\). 
+
+
+\end{proof}
+\end{lemma}
+\begin{proposition}[Noncircular scalar envelope and finite chart entry]\label{prop:step-004-envelope}
+Under Assumption~\ref{assump:subquadratic-rank}, on the coverage interface
+of Proposition~\ref{prop:step-003-witness-interface}, and under
+Lemma~\ref{lem:step-004-recurrence}, put
+
+\[
+\bar R:={19\over20},\quad d_*:={999\over1000},\quad
+\rho_R=\rho_S:={49\over50}.
+\tag{8}
+\]
+
+Then every finite trajectory iterate satisfies
+
+\[
+R_t\le\bar R,\qquad 1-\gamma qR_t\ge d_*>0,\qquad \gamma R_t<1.
+\tag{9}
+\]
+
+Moreover, if \(\Lambda_t:=\max_M\sum_{\ell\ne j}|x_{M,\ell}^t|\), then
+
+\[
+\Lambda_{t+1}\le {\gamma(1+q)S_t+q\over1-\gamma qR_t},\qquad
+S_{t+1}\le\rho_S S_t+q.
+\tag{10}
+\]
+
+There is a universal choice \(C_{\rm burn}=2048\) such that, with
+\(L_{\rm burn}=\lceil C_{\rm burn}\log r\rceil\), every covered witness
+trajectory has
+
+\[
+R_{L_{\rm burn}-1}\le {1\over128},\quad
+S_{L_{\rm burn}-1}\le {1\over7200},\quad
+\Lambda_{L_{\rm burn}}\le {1\over256},\quad
+\max_{M,\ell}|x_{M,\ell}^{L_{\rm burn}}|\le {1\over100}.
+\tag{11}
+\]
+
+\begin{proof}
+Let
+\(f(x)=((\gamma x+q)/(1-\gamma qx))^2\). On
+\([0,\bar R]\), \(f\) is increasing. The numerical bounds
+
+\[
+\gamma\bar R+q < {24\over25},\qquad
+1-\gamma q\bar R>{999\over1000}
+\tag{12}
+\]
+
+give \(f(\bar R)/\bar R<49/50\). For \(x\ge q/\gamma\), direct
+differentiation shows \(f(x)/x\) is increasing, since
+
+\[
+{d\over dx}\log{f(x)\over x}
+={2\gamma\over\gamma x+q}-{1\over x}
+ +{2\gamma q\over1-\gamma qx}>0.
+\tag{13}
+\]
+
+The covered initial state satisfies \(\gamma R_0\le(101/100)(19/20)<1\),
+so Lemma~\ref{lem:step-004-recurrence} is applicable at \(t=0\).
+Thus \(f(x)\le(49/50)x\) whenever \(q/\gamma\le x\le\bar R\); if
+\(x<q/\gamma\), then \(x<1/128\) and monotonicity gives
+\(f(x)\le f(q/\gamma)<f(\bar R)<\bar R\). Since \(R_0\le\bar R\),
+induction using
+(4) proves (9), and the first phase reaches \(R_t\le1/128\) in at most
+
+\[
+N_R:=\left\lceil{\log(128\bar R)\over\log(50/49)}\right\rceil
+\tag{14}
+\]
+
+steps. The coefficient multiplying \(S_t\) in (4) is bounded by
+
+\[
+{(24/25)(101/100)(1001/1000)\over(999/1000)^2}
+< {49\over50},
+\tag{15}
+\]
+
+and the additive term is less than \(q\). Hence
+
+\[
+S_t\le(49/50)^t(19r/20)+50q.
+\tag{16}
+\]
+
+Set
+
+\[
+N_S(r):=\left\lceil
+{\log\{(19r/20)/(1/64-50q_*)\}\over\log(50/49)}
+\right\rceil.
+\tag{17}
+\]
+
+The denominator is positive because \(50q_*=50/4096<1/64\). After
+\(N_S(r)\) steps, (16) gives \(S_t\le1/64\). At any time with
+\(R_t\le1/128\), (4) and the same numerical constants give
+
+\[
+R_{t+1}\le10^{-4},\qquad S_{t+1}\le {1\over7200},\qquad
+\Lambda_{t+1}< {1\over60}.
+\tag{18}
+\]
+
+Applying (10) once more from the \(S\)-bound \(1/7200\) gives
+\(\Lambda_{t+2}\le1/256\), while (3) gives the \(1/100\) coordinate bound.
+Once \(R\le1/128\) and \(S\le1/7200\), the right side of the \(S\)
+recurrence is again below \(1/7200\), so this smaller bound persists.
+Consequently (11) holds once
+\(L_{\rm burn}\ge\max\{N_R,N_S(r)\}+2\). A direct numerical comparison at
+\(r=3\), and the linear \(\log r\) term in (17), gives
+
+\[
+\max\{N_R,N_S(r)\}+2\le2048\log r\qquad(r\ge3).
+\tag{19}
+\]
+
+Thus the prescribed universal \(C_{\rm burn}=2048\) suffices. All bounds are
+finite-horizon consequences of (4); no chart or denominator condition was
+assumed in obtaining them. 
+
+
+\end{proof}
+\end{proposition}
+\begin{lemma}[Target-chart self-map and contraction]\label{lem:step-004-chart}
+Under \(E_{\rm sm}\), let
+\(\mathsf K_M:=G_M^\top G_M\) denote the step-local Gram (distinct from the
+setting-defined same-state coefficient matrix \(K_M\)).
+For a target \(j\), write a signed off-target ratio vector
+\(x_M\in\mathbb R^{r-1}\), with \(e_j+x_M\) denoting the \(r\)-vector obtained by inserting a
+1 in coordinate \(j\). On the chart
+
+\[
+\mathcal C_j:=\left\{(x_U,x_V,x_W):
+\max_M\|x_M\|_\infty\le {1\over100},\
+\max_M\|x_M\|_1\le {1\over256},\
+S_j\le {1\over512}\right\},
+\tag{20}
+\]
+
+the exact signed ratio map is
+
+\[
+\Phi_M(x_{M'},x_{M''})_\ell
+={\left[\mathsf K_M(e_j+\beta_M)\right]_\ell\over
+\left[\mathsf K_M(e_j+\beta_M)\right]_j},\qquad
+\beta_{M,j}=1,\quad
+\beta_{M,\ell}={\lambda_\ell\over\lambda_j}
+x_{M',\ell}x_{M'',\ell},
+\tag{21}
+\]
+
+and is a self-map of \(\mathcal C_j\). In the metric
+
+\[
+d_{\rm ch}(x,\widetilde x):=\max_M\|x_M-\widetilde x_M\|_1,
+\tag{22}
+\]
+
+it satisfies
+
+\[
+d_{\rm ch}(\Phi(x),\Phi(\widetilde x))\le {1\over4}
+d_{\rm ch}(x,\widetilde x).
+\tag{23}
+\]
+
+If \(p_M(x)\) is the unit vector in \({\rm span}(G_M)\) with correlation
+ratios \(x_M\) and positive target correlation, then
+
+\[
+\|p_M(x)-p_M(\widetilde x)\|_2\le4\|x_M-\widetilde x_M\|_1.
+\tag{24}
+\]
+
+\begin{proof}
+Let \(v=e_j+x\), and define
+
+\[
+p_M(x):={G_M\mathsf K_M^{-1}v\over
+\|G_M\mathsf K_M^{-1}v\|_2}.
+\tag{25}
+\]
+
+The Neumann bound applies because \(q<1\), and substitution gives
+\(G_M^\top p_M(x)\) proportional to \(v\); hence (25) is the unique oriented
+span direction with the stated ratios. The Gram eigenvalues lie in
+\([1-q,1+q]\). Consequently
+\[
+\|G_M\mathsf K_M^{-1}(x-\widetilde x)\|_2
+\le(1-q)^{-1/2}\|x-\widetilde x\|_2,
+\quad
+\|G_M\mathsf K_M^{-1}v\|_2\ge(1+q)^{-1/2}\|v\|_2.
+\]
+Since \(\|e_j+x\|_2\ge1\) on the chart, the normalization inequality gives
+(24) with the conservative factor \(4\).
+
+For (21), divide the held-mode target coefficients exactly as in (2); the
+common target scale cancels. On (20),
+\(\|\beta_{M,-j}\|_\infty\le\gamma/10^4\), and the target denominator in
+(21) is at least \(999/1000\). The off-target numerator has coordinatewise
+bound \(\gamma/10^4+q<1/100\). Its \(\ell_1\) bound is
+\(\gamma(1+q)S_j+q<1/256\), by the row/column summation used in (7).
+For every output pair, the product mass is at most
+\((1/100)(1/256)<1/512\). Thus \(\Phi\) is a self-map.
+
+For two chart points, with \(d=d_{\rm ch}(x,\widetilde x)\), the product rule
+gives
+
+\[
+\|\beta_M-\widetilde\beta_M\|_1
+\le2\gamma(1/100)d.
+\tag{26}
+\]
+
+The off-target block of \(\mathsf K_M\) has induced column mass at most \(1+q\), the
+target row has mass at most \(q\), and both quotient denominators are at least
+\(999/1000\). Using the self-map \(\ell_1\) bound in the denominator variation
+term yields
+
+\[
+\|\Phi_M(x)-\Phi_M(\widetilde x)\|_1
+\le\left({1+q\over999/1000}+
+{q\over(999/1000)^2\,256}\right)
+\|\beta_M-\widetilde\beta_M\|_1
+< {1\over4}d.
+\tag{27}
+\]
+
+Taking the maximum over modes proves (23). 
+
+
+\end{proof}
+\end{lemma}
+\begin{proposition}[Finite projective certificate and stored-state interface]\label{prop:step-004-certificate}
+Under Assumption~\ref{assump:subquadratic-rank}, on the coverage interface
+of Proposition~\ref{prop:step-003-witness-interface}, and under
+Proposition~\ref{prop:step-004-envelope} and
+Lemma~\ref{lem:step-004-chart},
+on every covered witness trajectory the chart \(\mathcal C_j\) is entered no
+later than \(L_{\rm burn}\), remains invariant, and for every
+\(t\ge L_{\rm burn}\),
+
+\[
+\zeta(h^t)\le {1\over32}\,4^{-(t-L_{\rm burn})}.
+\tag{28}
+\]
+
+With the universal choice \(C_{\rm cert}=64\) and
+\(L_{\rm cert}=\lceil C_{\rm cert}\log r\rceil\),
+\(\zeta(h^{L_{\rm burn}+L_{\rm cert}})\le\tau_r=q_*^2/(10^4r)\). Thus the
+algorithm stores a state at or before \(L_{\rm prop}=L_{\rm burn}+L_{\rm cert}\);
+the stored state is \(h^t\), not its look-ahead image. If the procedure stores
+an earlier state because its observable \(\zeta\) is already below the
+threshold, the continuation used in this proof is only a proof device and
+the earlier stored state already satisfies the exported certificate.
+
+\begin{proof}
+By (11), its \(1/100\) and \(1/256\) bounds imply
+that the state at \(L_{\rm burn}\) has
+\(S_j\le(1/100)(1/256)<1/512\), so it is in \(\mathcal C_j\); the self-map
+keeps all subsequent states there. Let
+\(\Delta_t=d_{\rm ch}(x^t,x^{t-1})\). The first in-chart displacement is at
+most \(2/256=1/128\). For \(t\ge L_{\rm burn}+1\), (23) gives the recursive
+inequality below; the displayed closed form also holds at
+\(t=L_{\rm burn}\) by the diameter bound:
+
+\[
+\Delta_{t+1}\le {1\over4}\Delta_t,\qquad
+\Delta_{t+1}\le {1\over128}\,4^{-(t-L_{\rm burn})}.
+\tag{29}
+\]
+
+For each mode, the oriented state at time \(t\) is \(p_M(x_M^t)\), while the
+oriented look-ahead Jacobi state is \(p_M(x_M^{t+1})\). Equation (24) and the
+sign-minimum in \(\zeta_M\) give
+
+\[
+\zeta_M(h^t)\le4\|x_M^t-x_M^{t+1}\|_1,
+\]
+
+which with (29) proves (28). Finally,
+\(4^{-L_{\rm cert}}/32\le\tau_r\) holds for all \(r\ge3\) under \(C_{\rm cert}=64\):
+after substituting \(\tau_r=q_*^2/(10^4r)\), the required logarithm is
+\(\log(32\cdot10^4r/q_*^2)/\log4\), and \(64\log r\) dominates it at \(r=3\)
+and hence for all larger \(r\). If the bound first holds at \(t=L_{\rm prop}\),
+the algorithm still evaluates \(\zeta(h^t)\) and stores that old state; no
+look-ahead state is exported. 
+
+\end{proof}
+\end{proposition}
+\begin{proof}[Step composition]
+On \(E_{\rm sm}\cap E_{\rm cov}\), choose the witness from Proposition~\ref{prop:step-003-witness-interface} \(i(j)\) for
+each target \(j\). The argument in fact applies to every pair \((i,j)\) for
+which the window event occurs; \(E_{\rm cov}\) is used only to
+ensure that at least one such pair exists for every target. The initial interface gives nonzero target
+coordinates and \(R_0\le19/20\), \(S_0\le rR_0\). Lemma~\ref{lem:step-004-recurrence}
+proves the exact displayed \(R,S\) recurrences, including the first
+simultaneous update, and proves every target denominator before division.
+Proposition~\ref{prop:step-004-envelope} gives the noncircular invariant,
+finite burn entry, and modewise \(\ell_1\) chart bounds. The chart lemma
+supplies an independent contraction mechanism for the same old-state map;
+Proposition~\ref{prop:step-004-certificate} converts successive displacement
+to the exact algorithmic Euclidean \(\zeta\) and guarantees a stored
+certificate within the prescribed finite horizon. These conclusions define
+\(E_{\rm RS},E_{\rm chart},E_{\rm chart\_l1},E_{\rm cert}\) as generated
+outputs. No target label, comparator, future ALS output, or landing output is
+used by the procedure. A zero target denominator or contraction on an
+uncovered tape remains an observable unsuccessful branch; on the covered
+branch, (5) rules it out before the first commit.
+
+Concretely, \(E_{\rm RS}\) is the finite intersection, over all the window pairs and all \(t\le L_{\rm prop}\), of (3)--(4) and (9);
+\(E_{\rm chart}\) and \(E_{\rm chart\_l1}\) are the corresponding post-burn
+bounds (20), and \(E_{\rm cert}\) records that each such slot stores its
+first old state with \(\zeta\le\tau_r\). These are proof events, not extra
+algorithmic tests.
+\end{proof}
+
+\subsection{Signed certificate equation}\label{app:step-005}
+
+1. Realized Gram interface. In current notation,
+   Proposition~\ref{prop:step-001-realized-gram} says that on the event $E_{\rm sm}$ from Proposition~\ref{prop:step-001-geometry} each
+   $H_M=G_M^\top G_M$ has unit diagonal and induced off-diagonal row and
+   column masses at most $q_{\rm real}\le q_*$. Symmetry gives the same
+   spectral bounds by the elementary Rayleigh estimate
+   $1-q\le\lambda(H_M)\le1+q$. This is used only for the current realized
+   factors.
+2. Stored-state interface.
+   Proposition~\ref{prop:step-004-certificate} says that a covered slot stores
+   the old state $h^t$, not its look-ahead image, with
+   $\zeta_M(h^t)\le\tau_r$, and that the first update has already placed all
+   modes in the corresponding realized target span.  Its chart bounds are
+   used only for the coverage-witness score floor in unit 003.
+3. Elementary induced-norm and Cauchy--Schwarz facts.  If a matrix has
+   off-diagonal column mass at most $q$, then
+   $\|(H-I)v\|_1\le q\|v\|_1$. Also
+   $\|x\circ y\|_1\le\|x\|_2\|y\|_2$, and
+   $\|G_M^\top z\|_2\le\sqrt{1+q}\|z\|_2$. These inequalities are
+   proved or instantiated directly below, so no external theorem is needed.
+
+Throughout, let $m_c:=|\mathcal I_{\rm cert}|$, index certified slots by
+$a\in\mathcal I_{\rm cert}$, and put
+$g_{U,j}=u_j,\ g_{V,j}=v_j,\ g_{W,j}=w_j$.  For a slot $a$, write
+$p_{M,a}$ for its three unit vectors and define the raw correlation vector
+
+\[
+c_{M,a}:=G_M^\top p_{M,a},\qquad
+k_{M,a}:=D_\lambda\bigl(c_{M',a}\circ c_{M'',a}\bigr),
+\tag{1}
+\]
+
+where $M',M''$ are the two held modes.  The symbols in (1) are slot-local;
+the setting's $K_M,D_M$ for selected representatives are recovered by
+restricting the slot index set to the selected $r$ columns.
+
+
+\begin{lemma}[Signed certificate equation and score-preserving orientation]\label{lem:step-005-signed-equation}
+Under the certified-state conclusion of Proposition~\ref{prop:step-004-certificate}
+and the static event of Proposition~\ref{prop:step-001-geometry}, for every
+certified slot (a) and mode (M), let
+
+\[
+d_{M,a}:=\|G_Mk_{M,a}\|_2>0,
+\]
+
+and choose $\varepsilon_{M,a}\in\{\pm1\}$ attaining the certified
+projective residual.  Then, with
+
+\[
+r_{M,a}:=d_{M,a}p_{M,a}-\varepsilon_{M,a}G_Mk_{M,a},
+\]
+
+\[
+\|r_{M,a}\|_2\le d_{M,a}\tau_r,
+\qquad
+d_{M,a}p_{M,a}=\varepsilon_{M,a}G_Mk_{M,a}+r_{M,a}.
+\tag{2}
+\]
+
+Writing $\theta_a:=\langle T,p_{U,a}\otimes p_{V,a}\otimes p_{W,a}\rangle$,
+all three signs satisfy
+\[
+\varepsilon_{U,a}=\varepsilon_{V,a}=\varepsilon_{W,a}
+=\operatorname{sgn}(\theta_a),
+\qquad \theta_a\ne0,
+\tag{3}
+\]
+
+and, with $s_a:=\operatorname{sgn}(\theta_a)$, the proof-only orientation
+
+\[
+\bar p_{U,a}:=s_ap_{U,a},\qquad
+\bar p_{V,a}:=p_{V,a},\qquad
+\bar p_{W,a}:=p_{W,a}
+\tag{4}
+\]
+
+has
+\[
+|\theta_a|\bar p_{U,a}\otimes\bar p_{V,a}\otimes\bar p_{W,a}
+=\theta_a p_{U,a}\otimes p_{V,a}\otimes p_{W,a}.
+\]
+Defining
+
+\[
+\bar c_{M,a}:=G_M^\top\bar p_{M,a},\quad
+\bar k_{M,a}:=D_\lambda(\bar c_{M',a}\circ\bar c_{M'',a}),\quad
+\bar r_{M,a}:=\eta_{M,a}r_{M,a},
+\]
+
+where $(\eta_{U,a},\eta_{V,a},\eta_{W,a})=(s_a,1,1)$, gives the
+right-sided barred equation
+\[
+d_{M,a}\bar p_{M,a}=G_M\bar k_{M,a}+\bar r_{M,a},
+\qquad \|\bar r_{M,a}\|_2\le d_{M,a}\tau_r.
+\tag{5}
+\]
+
+Equivalently, if \(P_M^{\rm raw}\), \(K_M^{\rm raw}\), and \(R_M^{\rm raw}\)
+stack the columns \(p_{M,a}\), \(k_{M,a}\), and \(r_{M,a}\), and if
+\(D_M^{\rm cert}:=\operatorname{diag}(d_{M,a})\) and
+\(\Sigma_M:=\operatorname{diag}(\varepsilon_{M,a})\), then
+\[
+P_M^{\rm raw}D_M^{\rm cert}
+=G_MK_M^{\rm raw}\Sigma_M+R_M^{\rm raw},\qquad
+\|R_M^{\rm raw}(:,a)\|_2\le d_{M,a}\tau_r.
+\tag{5a}
+\]
+The barred stacks satisfy
+\[
+\bar P_MD_M^{\rm cert}=G_M\bar K_M+\bar R_M,\qquad
+\|\bar R_M(:,a)\|_2\le d_{M,a}\tau_r.
+\tag{5b}
+\]
+
+In particular, writing $\sigma_a:=|\theta_a|$,
+\[
+|d_{M,a}-\sigma_a|\le d_{M,a}\tau_r,
+\qquad
+\frac{\sigma_a}{d_{M,a}}\in[1-\tau_r,1+\tau_r].
+\tag{6}
+\]
+
+\begin{proof}
+The stored-state interface gives a nonzero
+contraction and
+\[
+\left\|p_{M,a}-\varepsilon_{M,a}
+\frac{G_Mk_{M,a}}{d_{M,a}}\right\|_2\le\tau_r.
+\]
+Multiplying by $d_{M,a}$ proves (2).  By multilinearity,
+
+\[
+p_{M,a}^{\top}G_Mk_{M,a}
+=\sum_{j=1}^r\lambda_j
+\langle g_{U,j},p_{U,a}\rangle
+\langle g_{V,j},p_{V,a}\rangle
+\langle g_{W,j},p_{W,a}\rangle
+=\theta_a.
+\]
+
+Taking the inner product of (2) with $p_{M,a}$ therefore gives
+
+\[
+d_{M,a}-\varepsilon_{M,a}\theta_a
+=p_{M,a}^{\top}r_{M,a},
+\qquad
+|d_{M,a}-\varepsilon_{M,a}\theta_a|\le d_{M,a}\tau_r.
+\tag{7}
+\]
+
+Because $\tau_r=q_*^2/(10^4r)<1$, (7) implies
+$\varepsilon_{M,a}\theta_a>0$, proving (3) simultaneously for all modes.
+For the orientation (4), the held-mode sign products are
+
+\[
+\bar k_{U,a}=k_{U,a},\qquad
+\bar k_{V,a}=s_ak_{V,a},\qquad
+\bar k_{W,a}=s_ak_{W,a}.
+\]
+
+Multiplying the $U$ equation in (2) by $s_a$, and leaving the other two
+equations unchanged, gives (5); the rank-one identity follows because the
+product of the three orientation signs is $s_a$.  Finally,
+\[
+\bar p_{M,a}^{\top}\bar r_{M,a}
+=d_{M,a}-\bar p_{M,a}^{\top}G_M\bar k_{M,a}
+=d_{M,a}-\sigma_a,
+\]
+so (6) follows from the residual bound.  This common scalar identity is the
+normalization cancellation: the three modes share one $\sigma_a$, and no
+independent first-order scalar error is charged in (5).  
+
+
+\end{proof}
+\end{lemma}
+\begin{proposition}[Projected Gram-leak and finite residual ledger]\label{prop:step-005-projected-ledger}
+Under the hypotheses of
+Lemma~\ref{lem:step-005-signed-equation}, fix a barred certified slot $a$.
+Put $H_M:=G_M^\top G_M$, $\bar c_M:=\bar c_{M,a}$,
+$\bar k_M:=\bar k_{M,a}$, $d_M:=d_{M,a}$, and
+$\bar r_M:=\bar r_{M,a}$.  For every selector
+$w=(w_1,\ldots,w_r)\in[0,1]^r$,
+\[
+\sum_{j=1}^r w_j
+\left|d_M\bar c_{M,j}-\bar k_{M,j}\right|
+\le q\|\bar k_M\|_1+\sqrt{r(1+q)}\,d_M\tau_r,
+\tag{8}
+\]
+
+and, in particular,
+\[
+\left|d_M\bar c_{M,j}-\lambda_j\bar c_{M',j}\bar c_{M'',j}\right|
+\le q\lambda_{\max}+d_M\tau_r.
+\tag{9}
+\]
+
+Every stored state is in $\operatorname{range}(G_M)$, so if
+$\bar p_{M,a}=G_M\alpha_{M,a}$, then with
+$\Delta_{M,a}:=(H_M-I)\alpha_{M,a}$ there is an exact decomposition
+\[
+d_M\alpha_{M,a}
+=B_{M,a}+L_{M,a}+X_{M,a}+\varrho_{M,a},
+\tag{10}
+\]
+where
+\[
+\begin{aligned}
+B_{M,a}&:=D_\lambda(\alpha_{M',a}\circ\alpha_{M'',a}),\\
+L_{M,a}&:=D_\lambda(\alpha_{M',a}\circ\Delta_{M'',a}
+ +\Delta_{M',a}\circ\alpha_{M'',a}),\\
+X_{M,a}&:=D_\lambda(\Delta_{M',a}\circ\Delta_{M'',a}),
+\end{aligned}
+\]
+
+and
+\[
+\|L_{M,a}\|_1\le\frac{2\lambda_{\max}q}{1-q},\qquad
+\|X_{M,a}\|_1\le\frac{\lambda_{\max}q^2}{1-q},\qquad
+\|\varrho_{M,a}\|_1
+\le\frac{\sqrt r\,d_{M,a}\tau_r}{\sqrt{1-q}}.
+\tag{11}
+\]
+
+The first normalized identity is
+\[
+\alpha_{M,a}-\frac{B_{M,a}}{d_{M,a}}
+=\frac{L_{M,a}+X_{M,a}+\varrho_{M,a}}{d_{M,a}},
+\tag{12}
+\]
+so the scalar normalization term is not double-counted.  If $d_{M,a}$ is
+replaced by $\sigma_a$, the exact identity is
+\[
+\alpha_{M,a}-\frac{B_{M,a}}{\sigma_a}
+ =\frac{L_{M,a}+X_{M,a}+\varrho_{M,a}}{d_{M,a}}
+  +\left(\frac1{d_{M,a}}-\frac1{\sigma_a}\right)B_{M,a}.
+\tag{12a}
+\]
+The additional term therefore has $\ell_1$ norm at most
+$\tau_r(1-\tau_r)^{-1}\|B_{M,a}\|_1/d_{M,a}$.
+
+\begin{proof}
+Projecting (5) by $G_M^\top$ gives the exact
+coordinate identity
+\[
+d_M\bar c_M=H_M\bar k_M+G_M^\top\bar r_M,
+\qquad
+d_M\bar c_M-\bar k_M=(H_M-I)\bar k_M+G_M^\top\bar r_M.
+\tag{13}
+\]
+The row and column bounds from Proposition~\ref{prop:step-001-geometry} imply
+$\|(H_M-I)\bar k_M\|_1\le q\|\bar k_M\|_1$.  Also
+$\|G_M^\top\bar r_M\|_1\le\sqrt r\|G_M^\top\bar r_M\|_2
+\le\sqrt{r(1+q)}\,d_M\tau_r$, proving (8).  Since all correlations are inner
+products of unit vectors, $|\bar c_{M,j}|\le1$, which proves (9).
+
+For the coefficient form, write $\bar p_M=G_M\alpha_M$.  The Gram
+eigenvalue bounds and $\bar p_M^\top\bar p_M=1$ give
+\[
+\|\alpha_M\|_2\le(1-q)^{-1/2},\qquad
+\|\Delta_M\|_2\le q(1-q)^{-1/2},\qquad
+\bar c_M=\alpha_M+\Delta_M.
+\tag{14}
+\]
+Substitution of (14) into
+$\bar k_M=D_\lambda(\bar c_{M'}\circ\bar c_{M''})$ gives $B+L+X$.
+Because both sides of (5) are in $\operatorname{range}(G_M)$, the residual
+is in that range and $\varrho_M:=G_M^\dagger\bar r_M$ satisfies
+$\|\varrho_M\|_2\le d_M\tau_r/\sqrt{1-q}$.  The Cauchy--Schwarz
+product inequality yields (11), and applying (G\_M^\dagger) to (5) gives
+(10)--(12).  The final scalar conversion follows from (6). 
+
+
+\end{proof}
+\end{proposition}
+\begin{proposition}[Observable score floor and threshold/tail ledger]\label{prop:step-005-threshold-ledger}
+Under the certified-state conclusion of Proposition~\ref{prop:step-004-certificate}
+and its coverage-witness interface, define
+\[
+a_{\rm win}:=\sqrt{\frac{1-q_*}{1+1/65536}},\qquad
+u_{\rm win}:=\frac1{100\,256^2},\qquad
+s_{\rm win}:=a_{\rm win}^3(1-1.01u_{\rm win}).
+\tag{15}
+\]
+Then $a_{\rm win}>99/100$ and $s_{\rm win}>9/10$.  For every coverage
+witness for target $j$, $\sigma_a\ge s_{\rm win}\lambda_j$, hence
+\[
+\sigma_{\max}\ge s_{\rm win}\lambda_{\min}>\frac9{10}\lambda_{\min}.
+\tag{16}
+\]
+Let
+\[
+\mathcal H:=\{a\in\mathcal I_{\rm cert}:\sigma_a\ge0.85\sigma_{\max}\}
+\tag{17}
+\]
+be the observable retained pool.  For each $a\in\mathcal H$,
+\[
+\sigma_a>\frac34\lambda_{\min},\qquad
+d_{M,a}>\frac34\lambda_{\min},\qquad
+\frac{\lambda_{\max}}{d_{M,a}}<\frac75,\qquad
+\max_j|\bar c_{M,a,j}|>\frac34
+\tag{18}
+\]
+for every mode $M$.  Put
+\[
+\eta_{\rm raw}(r):=\frac75(1+q_*)q_*+
+\sqrt{r(1+q_*)}\,\tau_r,
+\]
+\[
+\eta_{\rm score}(r):=\eta_{\rm raw}(r)+
+\frac{\frac75(1+q_*)\tau_r}{1-\tau_r}.
+\tag{19}
+\]
+Then $\eta_{\rm score}(r)<1/2000$ for every $r\ge3$.  For every
+$a\in\mathcal H$, every mode $M$, and every selector $I\subseteq[r]$,
+\[
+\sum_{j\in I}\left|
+\bar c_{M,a,j}-\frac{\lambda_j}{\sigma_a}
+\bar c_{M',a,j}\bar c_{M'',a,j}
+\right|\le\eta_{\rm score}(r).
+\tag{20}
+\]
+Consequently, with the proof-only latent-coordinate $1/8$-threshold sets
+\[
+T_{M,a}:=\{j:|\bar c_{M,a,j}|\ge1/8\},
+\tag{21}
+\]
+each $T_{M,a}$ is nonempty, and if $j_M$ maximizes
+$|\bar c_{M,a,j}|$ in mode $M$, then
+\[
+\frac{\lambda_{j_M}}{\sigma_a}
+|\bar c_{M',a,j_M}\bar c_{M'',a,j_M}|
+>\frac34-\eta_{\rm score}(r),
+\tag{22}
+\]
+and $j_M\in T_{M',a}\cap T_{M'',a}$.  Finally, for any mode $M$, any
+$t\in[0,1]$, and $I_{M,a}(t):=\{j:|\bar c_{M,a,j}|<t\}$,
+\[
+\sum_{j\in I_{M,a}(t)}\lambda_j
+|\bar c_{U,a,j}\bar c_{V,a,j}\bar c_{W,a,j}|
+\le\lambda_{\max}(1+q_*)t.
+\tag{23}
+\]
+In particular, the $1/8$ tail is at most
+$\lambda_{\max}(1+q_*)/8$.  For a coverage witness $j$, the sharper
+all-certified tail is
+\[
+\sum_{\ell\ne j}\lambda_\ell
+|\bar c_{U,a,\ell}\bar c_{V,a,\ell}\bar c_{W,a,\ell}|
+\le\lambda_{\max}|\bar c_{U,a,j}\bar c_{V,a,j}\bar c_{W,a,j}|u_{\rm win}.
+\tag{24}
+\]
+Equations (8), (20), (21), (23), and (24), taken for every certified slot
+and mode, define the finite event the tail conclusion of Proposition~\ref{prop:step-005-threshold-ledger}; it is formed before any
+target label, representative ordering, or clustering operation.
+
+\begin{proof}
+On a coverage witness, let
+$\rho_{M,\ell}:=|\bar c_{M,a,\ell}/\bar c_{M,a,j}|$.
+Proposition~\ref{prop:step-004-certificate} gives
+$\sum_{\ell\ne j}\rho_{M,\ell}\le1/256$ and
+$\max_\ell\rho_{M,\ell}\le1/100$.  Since the stored state is in the
+target span, (14) and the Gram floor give
+$\|\bar c_M\|_2^2\ge1-q_*$.  Therefore
+\[
+|\bar c_{M,a,j}|
+\ge\frac{\sqrt{1-q_*}}
+{\sqrt{1+\sum_{\ell\ne j}\rho_{M,\ell}^2}}
+\ge a_{\rm win}.
+\tag{25}
+\]
+The off-target score sum is bounded by
+\[
+\sum_{\ell\ne j}\lambda_\ell
+|\bar c_{U,a,\ell}\bar c_{V,a,\ell}\bar c_{W,a,\ell}|
+\le\lambda_{\max}|\bar c_{U,a,j}\bar c_{V,a,j}\bar c_{W,a,j}|
+\sum_{\ell\ne j}\rho_{U,\ell}\rho_{V,\ell}\rho_{W,\ell}
+\le\lambda_{\max}|\bar c_{U,a,j}\bar c_{V,a,j}\bar c_{W,a,j}|u_{\rm win}.
+\tag{26}
+\]
+The reverse triangle inequality applied to the target summand and the
+off-target sum in (26) gives
+$\sigma_a\ge |\bar c_{U,a,j}\bar c_{V,a,j}\bar c_{W,a,j}|
+(\lambda_j-\lambda_{\max}u_{\rm win})
+\ge a_{\rm win}^3\lambda_j(1-1.01u_{\rm win})$,
+which is (16). The displayed numerical bounds on $a_{\rm win},s_{\rm win}$
+follow by substituting $q_*=1/4096$.
+
+For an arbitrary stored state, $\|\bar c_M\|_2\le\sqrt{1+q_*}$, and hence
+\[
+\sigma_a\le\lambda_{\max}(1+q_*)^{3/2},\qquad
+\sigma_a\le\lambda_{\max}(1+q_*)\max_j|\bar c_{M,a,j}|.
+\tag{27}
+\]
+The first inequality, (16), and the score filter give the first two bounds in
+(18).  The second inequality in (27), the same filter, and
+the weight ratio $\lambda_{\max}/\lambda_{\min}\le1.01$ give
+$\max_j|\bar c_{M,a,j}|>3/4$ for every mode. The $d$-bound and
+$\lambda_{\max}/d<7/5$ follow from (6) and the numerical slack
+$\tau_r<10^{-6}$.
+
+Apply (8) with a selector and divide by $d_{M,a}$. The bound
+$\|\bar k_M\|_1\le\lambda_{\max}(1+q_*)$ and (18) give
+$\eta_{\rm raw}$. By (6),
+$|1-d_{M,a}/\sigma_a|\le\tau_r/(1-\tau_r)$; the additional conversion
+from $d^{-1}$ to $\sigma^{-1}$ is therefore at most the last term in (19),
+proving (20). Taking a singleton selector gives (22). Since
+$\lambda_j/\sigma_a\le\lambda_{\max}/\sigma_a<7/5$ on the retained pool,
+(22) gives
+$|\bar c_{M',a,j_M}\bar c_{M'',a,j_M}|>(3/4-1/2000)/(7/5)>1/3$.
+Each held correlation is therefore larger than $1/3>1/8$, proving the
+threshold intersection claim and nonemptiness.
+
+For (23), on $I_{M,a}(t)$ use $|\bar c_{M,a,j}|<t$ and Cauchy--Schwarz:
+\[
+\sum_{j\in I_{M,a}(t)}\lambda_j|\bar c_{U,j}\bar c_{V,j}\bar c_{W,j}|
+\le\lambda_{\max}t\|\bar c_{M'}\|_2\|\bar c_{M''}\|_2
+\le\lambda_{\max}(1+q_*)t.
+\]
+Equation (24) is the same calculation with the witness ratios and
+$\sum\rho_U\rho_V\rho_W\le u_{\rm win}$. All these inequalities are
+slotwise finite deterministic statements on the certified-state conclusion of Proposition~\ref{prop:step-004-certificate} and the event from Proposition~\ref{prop:step-001-geometry}; no label is
+read by the procedure. 
+
+\end{proof}
+\end{proposition}
+\begin{proof}[Step composition]
+Fix the event from Proposition~\ref{prop:step-001-geometry} and the certified-state conclusion of Proposition~\ref{prop:step-004-certificate}.  For each certified slot,
+Lemma~\ref{lem:step-005-signed-equation} starts from the exact old-state
+Jacobi contraction and multiplies the observable projective residual by the
+same contraction norm.  It proves the raw right-sided equation, shows that
+the three certificate signs are one common score sign, and applies a
+score-preserving proof-only orientation to obtain the barred equation.  The
+orientation preserves the represented rank-one term, so the consumed target is
+still the realized (G\_U,G\_V,G\_W,D\_\lambda) tensor.
+
+Proposition~\ref{prop:step-005-projected-ledger} then projects that same
+equation with the realized target Gram.  Its selector inequality separates
+the Gram leakage, the two first-order coordinate leaks, their quadratic cross
+term, and the certificate residual.  The residual is charged once as
+(\sqrt{r(1+q)}\tau\_r), rather than being silently multiplied by a future
+selection or ALS horizon.  The exact (d)-normalized identity records the
+scalar cancellation; conversion to the score (sigma\_a) adds only the
+explicit one-time term in (19).
+
+Finally, Proposition~\ref{prop:step-005-threshold-ledger} uses only the
+already generated coverage witnesses to lower-bound (sigma\_{\max}).  It
+then instantiates the selector inequality for every observable high-score
+slot and every proof-only (1/8)-threshold/tail set, while retaining the unnormalized
+ledger for low-score slots.  The resulting finite conjunction is precisely
+the score-equation conclusion of Proposition~\ref{prop:step-005-threshold-ledger} and the tail conclusion of Proposition~\ref{prop:step-005-threshold-ledger}.  It is produced before the score-filter output
+is used to form clusters, and all target indices in the witness argument are
+proof-only choices rather than algorithmic inputs.  Thus the exact displayed
+claim is proved with no landing, selected representative, or cyclic
+condition.
+\end{proof}
+
+\subsection{Observable selection and gauge}\label{app:step-006}
+
+1. Realized Gram interface. In current notation,
+   Proposition~\ref{prop:step-001-realized-gram} is the \(H_M\) row/column
+   bound and spectral consequence recorded above. It is applied only to the
+   realized columns consumed by the score and graph rules.
+2. Certificate equation and weighted ledger.
+   Lemma~\ref{lem:step-005-signed-equation} and
+   Proposition~\ref{prop:step-005-threshold-ledger} give (A), the retained
+   score floor, the dominant-coordinate \(3/4\) bound, and the coverage
+   witness score bounds. Their assumptions are exactly the conclusions of Propositions~\ref{prop:step-004-certificate} and \ref{prop:step-001-geometry}; no
+   clustering or landing conclusion is imported.
+3. Elementary norm facts. For nonnegative vectors \(x,y\),
+   \(\sum_i x_i y_i\le\|x\|_2\|y\|_2\); for unit vectors \(v,v'\),
+   \(\langle v,v'\rangle=1-\|v-v'\|_2^2/2\). These are applied in current
+   notation and introduce no source-dependent constant.
+
+Fix the event from Proposition~\ref{prop:step-001-geometry} and the finite certified pool. For a barred slot
+\(a\), write \(c_M=c_{M,a}\), \(\sigma=\sigma_a\), and set
+\[
+ \eta:=\eta_{\rm score}(r)<{1\over2000},\qquad
+ \rho_a:={\lambda_{\max}\over\sigma_a}<{7\over5}. \tag{1}
+\]
+All indices introduced in this derivation are latent proof indices.
+
+
+\begin{proposition}[Common dominant support and small-root tail]\label{prop:step-006-support}
+Under the static event of Proposition~\ref{prop:step-001-geometry} and the
+score/threshold conclusions of Proposition~\ref{prop:step-005-threshold-ledger}, for
+every \(a\in\mathcal H\) there is a unique index \(\pi(a)\) such that
+\[
+ |c_{U,a,\pi(a)}|,\ |c_{V,a,\pi(a)}|,\ |c_{W,a,\pi(a)}|>{3\over4}. \tag{2}
+\]
+Moreover, with
+\[
+ x_a:=\max_{M\in\{U,V,W\},\,\ell\ne\pi(a)}|c_{M,a,\ell}|,\qquad
+ L_{M,a}:=\sum_{\ell\ne\pi(a)}|c_{M,a,\ell}|, \tag{3}
+\]
+one has
+\[
+ x_a<2\eta,\qquad
+ L_{M,a}\le {\eta\over1-(14/5)\eta},\qquad
+ \sum_{\ell\ne\pi(a)}c_{M,a,\ell}^2
+ \le \chi:= {2\eta^2\over1-(14/5)\eta}. \tag{4}
+\]
+
+\begin{proof}
+Proposition~\ref{prop:step-005-threshold-ledger} gives, for each mode, a
+coordinate of magnitude \(>3/4\). There cannot be two such coordinates,
+because \(\|c_M\|_2^2\le1+q_*<18/16\). Denote the unique indices by
+\(j_U,j_V,j_W\).
+
+We first rule out \(j_U\ne j_V\). Put \(S:=1+q_*\) and \(A:=9/16\),
+\(u_i:=|c_{U,i}|^2\), \(v_i:=|c_{V,i}|^2\). If \(a=j_U\) and
+\(b=j_V\ne a\), then \(u_a>A\), \(v_b>A\), and
+\(\sum_i u_i,\sum_i v_i\le S\). With \(t=u_a\) and \(z=v_a\),
+\[
+\begin{aligned}
+ \sum_i u_i v_i
+ &\le tz+(S-t)\max_{i\ne a}v_i\\
+ &\le tz+(S-t)(S-z).
+\end{aligned} \tag{5}
+\]
+Here \(t\in[A,S]\) and \(z\in[0,S-A]\), since \(v_b>A\). The last
+expression is bilinear in \(t,z\); checking its four rectangle corners gives
+\[
+ \sum_i u_i v_i\le2A(S-A)
+ ={9\over8}\left({7\over16}+q_*\right)<{1\over2}. \tag{6}
+\]
+Consequently, by the weighted triangle inequality and Cauchy--Schwarz,
+\[
+ \sigma
+ \le\lambda_{\max}\sum_i|c_{U,i}c_{V,i}c_{W,i}|
+ \le\lambda_{\max}\|c_U\circ c_V\|_2\|c_W\|_2
+ <{71\over100}\lambda_{\max}. \tag{7}
+\]
+On the other hand, the coverage score floor and the observable filter imply
+for every retained slot
+\[
+ \sigma\ge0.85\sigma_{\max}>0.765\lambda_{\min}
+ \ge {0.765\over1.01}\lambda_{\max}>{3\over4}\lambda_{\max}, \tag{8}
+\]
+contradicting (7). The same argument for the pairs \(U,W\) and \(V,W\)
+proves \(j_U=j_V=j_W=:\pi(a)\). This is the promised
+singleton-versus-multi-support separation: a mismatched multi-support
+pattern has score \(<0.71\lambda_{\max}\), whereas the retained singleton
+floor is \(>0.75\lambda_{\max}\).
+
+For \(\ell\ne\pi(a)\), taking \(I=\{\ell\}\) in (A) gives
+\[
+ |c_{M,\ell}|\le {\lambda_\ell\over\sigma}
+ |c_{M',\ell}c_{M'',\ell}|+\eta
+ \le {7\over5}x_a^2+\eta. \tag{9}
+\]
+The dominant coordinate and norm upper bound also give
+\[
+ x_a^2\le S-{9\over16}<\left({2\over3}\right)^2. \tag{10}
+\]
+If \(\eta=0\), (9) immediately gives \(x_a=0\). Otherwise, on
+\([2\eta,2/3]\) the concave function \(f(x)=x-(7/5)x^2\) is bounded below
+by its endpoint values:
+\[
+ f(2\eta)>\eta,\qquad f(2/3)={2\over45}>\eta.
+\]
+Thus (9)--(10) force \(x_a<2\eta\). Summing (A) over
+\(I=[r]\setminus\{\pi(a)\}\), and using one factor bounded by \(x_a\), gives
+\[
+ L_{M,a}\le {7\over5}x_a L_{M'',a}+\eta. \tag{11}
+\]
+Taking the maximum over modes and using \(x_a<2\eta\) proves the second
+bound in (4). Finally,
+\(\sum_{\ell\ne\pi(a)}c_{M,a,\ell}^2\le x_aL_{M,a}\) gives the last
+bound. 
+
+
+\end{proof}
+\end{proposition}
+\begin{proposition}[Observable graph components]\label{prop:step-006-graph}
+Under the hypotheses and conclusion of
+Proposition~\ref{prop:step-006-support}, every target \(j\) has at least one
+retained slot, and the graph in setting.md has exactly the \(r\) nonempty
+components
+\[
+ \mathcal H_j:=\{a\in\mathcal H:\pi(a)=j\},\qquad j\in[r]. \tag{12}
+\]
+
+\begin{proof}
+Let \(a(j)\) be the coverage witness supplied by the tail conclusion of Proposition~\ref{prop:step-005-threshold-ledger} for
+target \(j\). Its score obeys
+\(\sigma_{a(j)}\ge s_{\rm win}\lambda_j>(9/10)\lambda_{\min}\).
+For every certified slot, including the maximizer,
+\(\sigma_i\le\lambda_{\max}(1+q_*)^{3/2}\). Hence
+\[
+ {\sigma_{a(j)}\over\sigma_{\max}}
+ \ge {s_{\rm win}\lambda_{\min}\over
+ \lambda_{\max}(1+q_*)^{3/2}}
+ >{0.9\over1.01(1+1/4096)^{3/2}}>0.85, \tag{13}
+\]
+so \(a(j)\in\mathcal H\) and \(\mathcal H_j\ne\varnothing\).
+
+Set
+\[
+ \chi_*:={2\eta_{\rm score}(r)^2\over
+ 1-(14/5)\eta_{\rm score}(r)},\qquad
+ d_*:=\sqrt{2(q+\chi_*)}. \tag{14}
+\]
+For \(a\in\mathcal H_j\), Proposition~\ref{prop:step-006-support} and
+the lower norm bound in the tail conclusion of Proposition~\ref{prop:step-005-threshold-ledger} imply
+\[
+ |c_{M,a,j}|^2\ge1-q-\chi_*,\qquad
+ \|\widehat p_{M,a}-g_{M,j}\|_2^2
+ =2(1-|c_{M,a,j}|)\le2(q+\chi_*)=d_*^2, \tag{15}
+\]
+where \(\widehat p_{M,a}:=\operatorname{sgn}(c_{M,a,j})\bar p_{M,a}\) and
+\(g_{U,j}=u_j,g_{V,j}=v_j,g_{W,j}=w_j\). The sign is well-defined by
+(15).
+
+Since \(\eta<1/2000\), direct substitution gives
+\[
+ q+\chi_*<{1\over4000},\qquad d_*^2<{1\over2000},\qquad d_*<{1\over40}. \tag{16}
+\]
+If \(a,b\in\mathcal H_j\), then in every mode
+\[
+ \begin{aligned}
+ |\langle p_{M,a},p_{M,b}\rangle|
+ &=|\langle\widehat p_{M,a},\widehat p_{M,b}\rangle|\\
+ &\ge1-\tfrac12(\|\widehat p_{M,a}-g_{M,j}\|_2
+             +\|\widehat p_{M,b}-g_{M,j}\|_2)^2\\
+ &\ge1-2d_*^2>1-{1\over1000}>1-64q_*.
+ \end{aligned} \tag{17}
+\]
+Thus all vertices in \(\mathcal H_j\) are joined. If \(a\in\mathcal H_j\),
+\(b\in\mathcal H_\ell\), and \(j\ne\ell\), then
+\(|\langle g_{M,j},g_{M,\ell}\rangle|\le q\) and (15)--(16) give
+\[
+ |\langle p_{M,a},p_{M,b}\rangle|
+ \le q+2d_*+d_*^2<{1\over8}<1-64q_*.
+ \tag{18}
+\]
+Therefore no cross-target edge exists. The graph is the disjoint union of
+the \(r\) nonempty cliques in (12), so its connected components are exactly
+those cliques. 
+
+
+\end{proof}
+\end{proposition}
+\begin{lemma}[Product-preserving target permutation and sign gauge]\label{lem:step-006-gauge}
+Under Proposition~\ref{prop:step-006-graph},
+the observable representative rule yields a bijection between the \(r\)
+representatives and the realized target columns. There is a proof-only
+permutation and a sign gauge that preserves every represented rank-one term.
+
+\begin{proof}
+The graph components are the nonempty sets \(\mathcal H_j\). The
+minimum-\(\zeta\) (then score) rule selects one member \(a(j)\) from each,
+and the arbitrary algorithmic ordering induces a bijection
+\(\pi:[r]\to[r]\) with representative \(a\) assigned to target
+\(\pi(a)\). This is a proof-only permutation; the algorithm never reads
+\(\pi\).
+
+For a representative \(a\), use the score-preserving barred orientation from
+Proposition~\ref{prop:step-005-threshold-ledger}, so that
+\[
+ \sigma_a\,\bar p_{U,a}\otimes\bar p_{V,a}\otimes\bar p_{W,a}
+ =\theta_a\,p_{U,a}\otimes p_{V,a}\otimes p_{W,a}. \tag{19}
+\]
+Let \(\xi_{M,a}=\operatorname{sgn}\langle g_{M,\pi(a)},\bar p_{M,a}\rangle\),
+which is defined by (15), and let \(\chi_a=\xi_{U,a}\xi_{V,a}\xi_{W,a}\).
+The target-aligned directions and signed scalar
+\[
+ \widetilde p_{M,a}=\xi_{M,a}\bar p_{M,a},\qquad
+ \widetilde\theta_a=\chi_a\sigma_a \tag{20}
+\]
+satisfy
+\[
+ \widetilde\theta_a\bigotimes_M\widetilde p_{M,a}
+ =\sigma_a\bigotimes_M\bar p_{M,a}, \tag{21}
+\]
+because \(\chi_a^2=1\). Thus (20) is a proof-only sign chart that aligns
+all target coordinates and preserves the represented tensor. For the literal
+product-one sign convention used by the quotient chart, set
+\[
+ (\varepsilon_{U,a},\varepsilon_{V,a},\varepsilon_{W,a})
+ :=(\xi_{U,a},\xi_{V,a},\chi_a\xi_{W,a}).
+\]
+Then \(\varepsilon_{U,a}\varepsilon_{V,a}\varepsilon_{W,a}=1\), so
+\(\bigotimes_M\varepsilon_{M,a}\bar p_{M,a}
+=\bigotimes_M\bar p_{M,a}\); the coefficient \(\sigma_a\) is unchanged.
+The all-positive chart (20) and this product-one chart differ only by
+placing the sign \(\chi_a\) in the W scalar, exactly as in the observable
+seed definition. Positive componentwise rescalings with product one are
+unchanged by this sign bookkeeping. Hence the resulting permutation/gauge is
+exactly the interface exported as the gauge conclusion of Lemma~\ref{lem:step-006-gauge}. 
+
+\end{proof}
+\end{lemma}
+\begin{proof}[Step composition]
+Fix the event from Proposition~\ref{prop:step-001-geometry} and the
+interfaces supplied by the preceding propositions. The weighted ledger
+supplies the retained score floor, the \(3/4\) dominant coordinate in each
+mode, and (A). Proposition~\ref{prop:step-006-support} first compares two
+different dominant indices through (5)--(8), proving that every retained
+slot has one common target support. The same proposition then applies the
+small-root branch of (A), giving a dimension-free off-target \(\ell_1\) tail
+and direction error.
+
+Coverage witnesses are retained by (13). Proposition~\ref{prop:step-006-graph}
+uses the direction error and the realized Gram off-diagonal bound to prove
+within-target edges and cross-target nonedges at the exact observable
+threshold \(1-64q_*\). It follows that the algorithm's graph has exactly
+\(r\) components and that the selected representative in each component is
+associated with a distinct realized target. Finally,
+Lemma~\ref{lem:step-006-gauge} supplies the proof-only permutation and
+product-preserving sign chart. These three named results jointly produce
+\[
+ E_{\rm support},\qquad E_{\rm cluster},\qquad E_{\rm gauge},
+\]
+before any selected-state coefficient, landing output, or cyclic invariant is
+used. The construction is label-free at the procedure level and preserves
+the represented rank-one terms exactly.
+\end{proof}
+
+\subsection{Two-orientation coefficient closure}\label{app:step-007}
+
+The geometry bounds used below are supplied by
+Proposition~\ref{prop:step-001-geometry}. The signed equation and the support,
+graph, and gauge conclusions are supplied by
+Lemma~\ref{lem:step-005-signed-equation}, Proposition~\ref{prop:step-006-graph},
+and Lemma~\ref{lem:step-006-gauge}; the latter contributes only the
+proof-only permutation and term-preserving product-one option. No landing
+state or later ALS invariant is imported. The remaining tools are
+Cauchy--Schwarz, the Hadamard-product norm inequality, and induced row/column
+$\ell_1$ estimates, all derived below.
+
+Reindex by the proof-only target permutation and put
+\[
+q:=q_{\rm real},\qquad t:=r\tau_r,\qquad
+\omega:=q_*^2+t,\qquad \eta:=\eta_{\rm score}(r).
+\]
+The definitions of $\eta_{\rm score}$ and
+$\tau_r=q_*^2/(10000r)$, together with $q\le q_*$, imply
+\[
+\eta\le\frac32q_*,\qquad \ell_*\le\frac{31}{20}q_*,\qquad
+x_*:=2\eta\le3q_*,\qquad x_*\ell_*\le\frac{93}{20}q_*^2.
+\tag{A}
+\]
+Indeed,
+\[
+\sqrt{r(1+q_*)}\,\tau_r\le\frac{q_*}{10^6},\qquad
+\frac{1.4(1+q_*)\tau_r}{1-\tau_r}\le\frac{q_*}{10^6},
+\]
+and hence
+$\eta\le1.4(1+q_*)q_*+2q_*/10^6<3q_*/2$. Since
+$\eta<1/2000$, division by $1-(14/5)\eta$ gives the stated $\ell_*$ bound.
+All constants in (A) are universal and remain valid when $q_{\rm real}=0$.
+
+
+\begin{lemma}[sign-covariant dual equation, positive diagonal, and projected residual]\label{lem:step-007-dual-equation}
+
+Under the static event of Proposition~\ref{prop:step-001-geometry}, the
+certificate/score ledger of Proposition~\ref{prop:step-005-threshold-ledger},
+and the support and graph conclusions of Propositions~\ref{prop:step-006-support}
+and \ref{prop:step-006-graph}, first keep the score-oriented objects barred.
+After the proof-only target permutation, write
+\[
+\bar c_{M,ja}=(G_M^\top\bar P_M)(j,a),\qquad
+\bar\sigma_a=|\theta_a|
+ =\sum_j\lambda_j\bar c_{U,ja}\bar c_{V,ja}\bar c_{W,ja}
+ >\frac34\lambda_{\max}.
+\tag{A.1}
+\]
+For each $a$ let $\xi_{M,a}=\operatorname{sign}(\bar c_{M,aa})$; then
+$\xi_{U,a}\xi_{V,a}\xi_{W,a}=1$.  Define
+\[
+ p_{M,a}=\xi_{M,a}\bar p_{M,a},\quad
+ c_{M,ja}=\xi_{M,a}\bar c_{M,ja},\quad
+ k_{M,a}=\xi_{M',a}\xi_{M'',a}\bar k_{M,a}=\xi_{M,a}\bar k_{M,a},\quad
+ r_{M,a}=\xi_{M,a}\bar r_{M,a}.
+\tag{A.2}
+\]
+Stacking these columns gives $P_M,K_M,R_M$ and the exact identities
+\[
+ P_MD_M=G_MK_M+R_M,\qquad c_M=G_M^\top P_M,\qquad
+ A_M=G_M^\dagger P_M=H_M^{-1}G_M^\top P_M,\qquad c_M=H_MA_M.
+\tag{B0}
+\]
+Set $\sigma_a=\bar\sigma_a$ and relabel without bars.  With
+$a_{M,a}=A_M(a,a)$,
+\[
+ 0.74<a_{M,a}<1.001,\qquad
+ \Delta_M=\operatorname{diag}(a_{M,a}),\qquad
+ Z_M=A_M\Delta_M^{-1},\qquad
+ h_{M,ja}=(H_MZ_M)(j,a)=\frac{c_{M,ja}}{a_{M,a}}.
+\tag{A.3}
+\]
+Then $h_{M,aa}>2/3$.  If
+\[
+ \varepsilon_{M,ja}:=\frac{(G_M^\dagger R_M)(j,a)}{d_{M,a}},
+\]
+then $|\varepsilon_{M,ja}|\le2\tau_r$, and for $j\ne a$,
+\[
+ |Z_M(j,a)|\le4|h_{M',ja}h_{M'',ja}|+3\tau_r.
+\tag{B}
+\]
+
+\begin{proof}
+
+The barred score identity and retained-pool bounds are the pre-gauge facts.
+If $\xi_{U,a}\xi_{V,a}\xi_{W,a}<0$, the dominant term would be negative and
+the off-target bounds would give
+\[
+\bar\sigma_a\le\lambda_{\max}x_*
+ \|\bar c_{M',-a}\|_2\|\bar c_{M'',-a}\|_2
+ \le\lambda_{\max}x_*(1+q_*)<\frac34\lambda_{\max}.
+\tag{A.4}
+\]
+This contradicts the retained score floor, so the signs have product one.
+Multiplying the barred same-state equation in mode $M$ by $\xi_{M,a}$ gives
+(B0), because $\xi_{M',a}\xi_{M'',a}=\xi_{M,a}$. The residual column obeys
+\[
+\|R_M(:,a)\|_2\le d_{M,a}\tau_r.
+\tag{A.5}
+\]
+The product of the transformed correlations equals the barred product, so the
+score identity and every absolute tail in (A) are unchanged. This is a
+product-one sign gauge; by construction $c_{M,aa}=|\bar c_{M,aa}|>3/4$.
+
+Since $P_M\in{\rm range}(G_M)$, write $P_M=G_MA_M$. The unit-column norm
+and eigenvalue floor give $\|A_M(:,a)\|_2\le(1-q)^{-1/2}$, and hence
+\[
+ |c_{M,aa}-A_M(a,a)|
+ \le\|H_M(a,-a)\|_2\|A_M(-a,a)\|_2
+ \le {q\over\sqrt{1-q}}.
+\tag{C}
+\]
+Thus $0.74<a_{M,a}<1.001$ and $h_{M,aa}>2/3$. Applying $G_M^\dagger$ to
+(B0) gives
+\[
+d_{M,a}A_M(:,a)=K_M(:,a)+(G_M^\dagger R_M)(:,a).
+\tag{D}
+\]
+The pseudoinverse bound gives
+\[
+\|\varepsilon_{M,:,a}\|_2\le{\tau_r\over\sqrt{1-q}}<2\tau_r,
+\tag{E}
+\]
+and the directly projected residual separately satisfies
+\[
+{ |(G_M^\top R_M)(j,a)|\over d_{M,a}}
+ \le\sqrt{1+q}\,\tau_r<2\tau_r.
+\tag{E'}
+\]
+Also
+\[
+d_{M,a}\le\|G_M\|_2\|K_M(:,a)\|_2
+\le\lambda_{\max}(1+q).
+\tag{A.6}
+\]
+For $j\ne a$, division of the $j$-coordinate of (D) by the $a$-coordinate
+has denominator at least
+\[
+{9\over16}-{1.02\tau_r\over\sqrt{1-q}}>0.56.
+\tag{F}
+\]
+The product part of the numerator divided by $\lambda_a$ is at most
+$1.02|h_{M',ja}h_{M'',ja}|$, and the residual part is at most
+$1.02\tau_r$. Division by (F) gives (B), with the residual bounded entrywise
+before any sum. QED.
+
+
+
+\end{proof}
+\end{lemma}
+\begin{proposition}[normalized dual-coordinate column bootstrap]\label{prop:step-007-column}
+
+Under Lemma~\ref{lem:step-007-dual-equation},
+
+\[
+\max_M\|Z_M-I\|_{\rm col,1}\le42\omega.
+\tag{G}
+\]
+
+\begin{proof}
+
+For each selected column $a$, (A), (C), and $a_{M,a}>0.74$ give
+\[
+\|h_{M,-a}\|_2\le{\|c_{M,-a}\|_2\over a_{M,a}}
+\le{3\over2}\sqrt{x_*\ell_*}.
+\tag{H}
+\]
+
+Summing (B) over $j\ne a$ and using Cauchy--Schwarz gives
+\[
+\sum_{j\ne a}|Z_M(j,a)|
+\le4\|h_{M',-a}\|_2\|h_{M'',-a}\|_2+3(r-1)\tau_r
+\le9x_*\ell_*+3t\le42(q_*^2+t)=42\omega.
+\tag{I}
+\]
+
+Taking the maximum over M and a proves (G).  This is a genuine column
+bootstrap: no row mass, landing output, or cyclic condition occurs.
+\end{proof}
+
+
+\end{proposition}
+\begin{proposition}[two-orientation coefficient closure]\label{prop:step-007-row}
+
+Under Lemma~\ref{lem:step-007-dual-equation} and Proposition
+\ref{prop:step-007-column}, let
+
+\[
+R:=\max_M\|Z_M-I\|_{\rm row,1},\qquad
+C:=\max_M\|Z_M-I\|_{\rm col,1}.
+\]
+
+Then
+
+\[
+R\le5\omega,\qquad
+\max_M\|A_M-I\|_{\rm row,1}\le7\omega,\qquad
+\max_M\|A_M-I\|_{\rm col,1}\le44\omega.
+\tag{J}
+\]
+
+The normalized residual entries still obey |eps\_M,ja| <= 2 tau\_r, and
+$their row or column sums are charged once as 2 r tau_r.$
+
+\begin{proof}
+
+Fix M and row j.  For a != j, set v\_M,ja = (H\_M Z\_M)(j,a).  From (G),
+
+\[
+\max_{a\ne j}|v_{M,ja}|\le q+(1+q)C=:u.
+\tag{K}
+\]
+
+Here the direct $H_M(j,a)$ term has row mass $q$, the off-diagonal $Z_M$
+entry is at most $C$, and the remaining Gram row contributes at most $qC$.
+
+\[
+\sum_{a\ne j}|v_{M,ja}|
+\le q+(1+q)\|Z_M-I\|_{\rm row,1}.
+\tag{L}
+\]
+
+To verify (L), the $l=j$ term in $H_MZ_M$ contributes the row error. Each
+$l\ne j$ term contributes its off-diagonal row mass and its diagonal entry
+$Z_M(l,l)=1$, weighted by the $H_M$ row mass $q$.
+
+Summing (B) over $a\ne j$, using (K) for one factor and (L) for the other,
+and taking the maximum over modes gives
+
+\[
+R\le4u\{q+(1+q)R\}+3t.
+\tag{M}
+\]
+
+By (G), t = q\_*^2/10000, and q <= q\_*,
+
+\[
+u\le q+42(1+q_*)(1+10^{-4})q_*^2<{51\over50}q_*,\qquad
+4u(1+q)<{1\over1000}.
+\tag{N}
+\]
+
+Thus (M) has a positive denominator and
+
+\[
+R\le{4uq+3t\over1-4u(1+q)}<5\omega.
+\tag{O}
+\]
+
+This is the small-root selection.  Before inserting (G), (M) is the usual
+quadratic/small-gain envelope; (G) puts the solution in the small branch,
+and (N) excludes the large branch without assuming a row tube.
+
+It remains to transfer from normalized columns to $A_M$. Let $z$ be a column
+of $Z_M$, with $z_a=1$ and $\|z-e_a\|_1\le C$, and write $a_0=a_{M,a}$.
+The unit-norm identity gives
+\[
+|z^\top H_Mz-1|\le2qC+(1+q)C^2=:\delta_a.
+\tag{P}
+\]
+
+At $q\le q_*$ and $C\le42\omega$, $\delta_a<1/100$ and
+$|a_0-1|\le2\delta_a\le\omega$; the last inequality follows directly from
+$\omega=(1+10^{-4})q_*^2$ and $q_*=1/4096$.
+Since a0 < 1.001, (G), (O), and this diagonal bound imply
+
+\[
+\|A_M-I\|_{\rm col,1}\le1.001C+\omega<44\omega,\qquad
+\|A_M-I\|_{\rm row,1}\le1.001R+\omega<7\omega.
+\]
+
+This proves (J). Equation (E) gives the entrywise $2\tau_r$ residual, and
+summing over at most $r$ entries gives $2r\tau_r$ in either orientation,
+never $r^2\tau_r$.\quad\Box
+
+\end{proof}
+\end{proposition}
+\begin{proof}[Step composition]
+The support and gauge interfaces first provide one selected
+stored state per target, a proof-only permutation, and a term-preserving
+product-one sign option.  Lemma~\ref{lem:step-007-dual-equation} starts from the
+barred score identity, proves the dominant sign product, explicitly
+transforms the equation and residual, and only then applies the true-factor
+dual.  It proves the positive diagonal and bounds every projected residual
+entry before summation.  Proposition~\ref{prop:step-007-column} uses
+only the per-column correlation tails to produce the 42 omega
+column interface.  Proposition~\ref{prop:step-007-row} then uses that interface
+to bound held correlation rows, solve the positive-denominator small-gain
+inequality, and transfer from normalized dual columns to $A_M-I$. Therefore
+the column-closure conclusion of Proposition~\ref{prop:step-007-column}, the projected-residual conclusion of Proposition~\ref{prop:step-007-row}, and the row-closure conclusion of Proposition~\ref{prop:step-007-row} hold with both induced orientations at
+$O(\omega)$, with one residual charge $r\tau_r$. All objects are from the
+selected stored state; no landing or cyclic object is consumed.
+Because the stored-state interface places every selected column in
+$\operatorname{range}(G_M)$, the orthogonal complement field is exactly zero
+at this stage and therefore satisfies the later budget $\tau_r$.
+\end{proof}
+
+\subsection{Balanced observable seed}\label{app:step-008}
+
+The observable support and gauge results imply, in current notation,
+   one representative is selected per realized target, a proof-only
+   permutation and a product-one sign gauge preserve each represented
+   rank-one term, and the retained-pool tail bounds are exactly (A). The
+   score-preserving orientation gives (B). The graph remains label-free.
+The two-orientation coefficient result gives (C), the exact target-span identity
+   $P_M=G_MA_M$, and unit columns. No landing, basin, or cyclic conclusion is
+   imported.
+3. Elementary current-notation tools: orthogonal projection for a
+   full-column-rank $G_M$, induced row/column $\ell_1$ inequalities,
+   Cauchy--Schwarz, and
+   $|\log(1+u)|\le |u|/(1-|u|)$ for $|u|<1$. Each use is instantiated below.
+
+Put
+\[
+ q:=q_{\rm real},\qquad t:=r\tau_r,\qquad
+ \omega:=q_*^2+t,\qquad \beta:=44\omega. \tag{1}
+\]
+The setting gives $t=q_*^2/10^4$, hence
+$\omega=(1+10^{-4})q_*^2<10^{-6}$ and $\beta<10^{-4}$. All numerical
+inequalities below are uniform in $r,n,\kappa_0,\rho$ and the confidence
+parameters.
+
+
+\begin{lemma}[observable seed decomposition]\label{lem:step-008-seed-decomp}
+Under the static event of Proposition~\ref{prop:step-001-geometry}, the
+permutation/gauge conclusion of Lemma~\ref{lem:step-006-gauge}, and the
+two-orientation closure of Proposition~\ref{prop:step-007-row}, after the
+proof-only permutation and product-one sign chart, let $P_M^0$ be the
+normalized active seed factors. Then, for every mode $M$,
+\[
+ P_M^0=G_M(I+C_M^0)+N_M^0,\qquad G_M^\top N_M^0=0, \tag{2}
+\]
+with
+\[
+ N_M^0=0,\qquad
+ \|C_M^0\|_{\rm row,1}\vee\|C_M^0\|_{\rm col,1}\le48\omega. \tag{3}
+\]
+
+\begin{proof}
+
+For selected representative $j$, the setting forms
+\[
+ x_j^0=|\theta_j|^{1/3}p_{U,j},\quad
+ y_j^0=|\theta_j|^{1/3}p_{V,j},\quad
+ z_j^0=\operatorname{sgn}(\theta_j)|\theta_j|^{1/3}p_{W,j}. \tag{4}
+\]
+The score-preserving orientation from the gauge conclusion of Lemma~\ref{lem:step-006-gauge} has the same rank-one product
+as (4) with scalar $\sigma_j=|\theta_j|$. Hence the two triples of unit
+directions differ only by a product-one sign gauge. Applying that proof-only
+gauge and the target permutation gives
+\[
+ P_M^0=P_M, \tag{5}
+\]
+where $P_M$ is the oriented selected matrix in the named result
+interface. This is an identity of the actual observable seed, not a new
+algorithmic state; represented rank-one terms are unchanged.
+
+By Proposition~\ref{prop:step-001-geometry}, $\lambda_{\min}(H_M)\ge1-q>0$, so $G_M$ has full column rank. The
+the row-closure conclusion of Proposition~\ref{prop:step-007-row} conclusion gives $P_M=G_MA_M$ with (C). The orthogonal
+decomposition relative to the exact target span is unique:
+\[
+ A_M:=G_M^\dagger P_M,\qquad
+ N_M^0:=(I-G_MG_M^\dagger)P_M. \tag{6}
+\]
+Because $P_M\in{\rm range}(G_M)$, (6) gives $N_M^0=0$ and
+$P_M^0=G_M(I+C_M^0)$ with $C_M^0=A_M-I$. Thus (C) implies
+\[
+ \|C_M^0\|_{\rm row,1}\le7\omega\le48\omega,\qquad
+ \|C_M^0\|_{\rm col,1}\le44\omega\le48\omega.
+\]
+The requested perpendicular-column bound follows from the stronger identity
+$\max_j\|N_M^0(:,j)\|_2=0\le\tau_r$. QED.
+
+
+\end{proof}
+\end{lemma}
+\begin{lemma}[best-scalar transfer]\label{lem:step-008-best-scalar}
+Under the static event of Proposition~\ref{prop:step-001-geometry}, the
+support conclusion of Proposition~\ref{prop:step-006-support}, and the
+closure conclusion of Proposition~\ref{prop:step-007-row}, with the oriented matrices in
+Lemma~\ref{lem:step-008-seed-decomp}, for every target column $j$,
+\[
+ |c_{M,jj}-1|\le2\omega\quad(M\in\{U,V,W\}),\qquad
+ \left|\frac{\sigma_j}{\lambda_j}-1\right|\le9\omega. \tag{7}
+\]
+Here $c_M=G_M^\top P_M^0$ and $\sigma_j=|\theta_j|>0$ is the observable
+best-scalar in (B).
+
+\begin{proof}
+
+Fix $M,j$, write $H=H_M=I+E$, $A=A_M$, and let
+\[
+ a:=A_{jj},\qquad \alpha:=A(:,j)-e_j.
+\]
+From (C), $\|\alpha\|_1\le\beta$, so $a>0$ and
+$|a-1|\le\beta<1/100$. Put $z:=A(:,j)/a=e_j+u$. Then $u_j=0$ and
+\[
+ B:=\|u\|_1\le\frac{\beta}{1-\beta}\le45\omega. \tag{8}
+\]
+The column $P_M^0(:,j)=G_M(az)$ has norm one. Since the diagonal of $H$
+is one and the diagonal of $E$ is zero,
+\[
+ 1=a^2 z^\top H z,\qquad
+ |z^\top H z-1|\le2qB+(1+q)B^2=:d. \tag{9}
+\]
+Indeed, $\|u\|_2^2\le B^2$, $|e_j^\top Eu|\le q\|u\|_\infty\le qB$,
+and $|u^\top Eu|\le q\|u\|_1\|u\|_\infty\le qB^2$. Substituting
+$B\le45\omega$, $q\le q_*$, and $\omega<10^{-6}$ gives
+\[
+ d\le90q_*\omega+(1+q_*)2025\omega^2<\frac{\omega}{20}<\frac1{20}. \tag{10}
+\]
+The elementary inverse-square-root bound
+$|(1+v)^{-1/2}-1|\le2|v|$ for $|v|\le1/2$, applied to (9), yields
+$|a-1|\le2d<\omega/10$, and in particular $|a-1|\le\omega$. Now
+$c_M=HA$ and $E_{jj}=0$, so
+\[
+ c_{M,jj}-1=(a-1)+e_j^\top E\alpha.
+\]
+Consequently, using $\|\alpha\|_\infty\le\beta$,
+\[
+ |c_{M,jj}-1|\le\omega+q\beta
+ \le(1+44q_*)\omega<2\omega. \tag{11}
+\]
+
+It remains to transfer this diagonal control to the scalar. By the support ledger (A), every off-target column satisfies the same $x_*,\ell_*$
+bounds after the sign gauge. Write $c_{M,jj}=1+\delta_M$, so
+$|\delta_M|\le2\omega$. Then
+\[
+ \left|\prod_M c_{M,jj}-1\right|
+ \le3(2\omega)+3(2\omega)^2+(2\omega)^3
+ <7\omega. \tag{12}
+\]
+Using (B), $\lambda_\ell/\lambda_j\le\Gamma$, and two off-target maxima
+together with one off-target $\ell_1$ sum, we obtain
+\[
+\begin{aligned}
+ \left|\frac{\sigma_j}{\lambda_j}-1\right|
+ &\le 7\omega+
+ \Gamma\sum_{\ell\ne j}
+ |c_{U,\ell j}c_{V,\ell j}c_{W,\ell j}|\\
+ &\le 7\omega+\Gamma x_*^2\ell_*.
+\end{aligned} \tag{13}
+\]
+The endpoint bounds $x_*\le3q_*$, $\ell_*\le(31/20)q_*$,
+$\Gamma\le1.01$, and $\omega\ge q_*^2$ give
+\[
+ \Gamma x_*^2\ell_*
+ \le1.01\cdot9\cdot\frac{31}{20}q_*^3
+ <\omega, \tag{14}
+\]
+so the scalar bound in (7) follows. In particular
+$\sigma_j/\lambda_j>0$, consistently with the observable nonzero-score
+branch. QED.
+
+
+\end{proof}
+\end{lemma}
+\begin{proposition}[balanced scale and quotient entry]\label{prop:step-008-seed-interface}
+Under the conclusions of Lemma~\ref{lem:step-008-seed-decomp} and
+Lemma~\ref{lem:step-008-best-scalar}, the
+setting's equal-norm seed satisfies
+\[
+ \gamma_j^0:=d_{U,j}^0d_{V,j}^0d_{W,j}^0=\sigma_j,\qquad
+ s_j^0:=\log(\gamma_j^0/\lambda_j),\qquad
+ \|s^0\|_\infty\le128\omega, \tag{15}
+\]
+and, with $E^0={\rm diag}(e^{s_j^0/3})$,
+\[
+ D_U^0=D_V^0=D_W^0=D_\lambda^{1/3}E^0,\qquad
+ e^{-128\omega/3}\le\frac{d_{M,j}^0}{\lambda_j^{1/3}}
+ \le e^{128\omega/3}. \tag{16}
+\]
+
+\begin{proof}
+
+The three factors in (4) all have norm $\sigma_j^{1/3}$; the sign in the
+third factor does not change its norm. Therefore their product of norms is
+exactly $\gamma_j^0=\sigma_j$. By Lemma~\ref{lem:step-008-best-scalar}, write
+$\sigma_j/\lambda_j=1+u_j$ with $|u_j|\le9\omega<1/2$. Then
+\[
+ |s_j^0|=|\log(1+u_j)|
+ \le\frac{|u_j|}{1-|u_j|}
+ \le18\omega<128\omega. \tag{17}
+\]
+The definition of equal-norm balancing now gives
+\[
+ d_{M,j}^0=(\sigma_j)^{1/3}
+ =\lambda_j^{1/3}e^{s_j^0/3},
+\]
+which is (16) and the displayed diagonal identity. QED.
+
+\end{proof}
+\end{proposition}
+\begin{proof}[Step composition]
+The named result graph/gauge result first identifies, purely for proof,
+one selected representative per realized target and a product-preserving
+orientation. Lemma~\ref{lem:step-008-seed-decomp} checks that the normalized
+observable best-scalar seed is exactly this oriented selected state. Because
+the selected state is already in the exact realized target span, its
+orthogonal complement is identically zero; the row/column closure
+then gives the public $48\omega$ directional interface in both induced
+orientations and the stronger $N^0=0\le\tau_r$ bound.
+
+Lemma~\ref{lem:step-008-best-scalar} uses only the same selected-state correlations,
+the target Gram margin, and the off-target ledger. It first derives
+the diagonal correlation error, then bounds the weighted off-target score
+contribution before taking a logarithm. This proves the observable ratio
+estimate without a latent scale or any post-landing object. Proposition
+prop:step-008-seed-interface converts the ratio to the exact relative
+product-log coordinate and records the positive scale congruence. Together
+these named results produce
+\[
+ E_{\rm seed}:\quad
+ P_M^0=G_M(I+C_M^0)+N_M^0,\quad G_M^\top N_M^0=0,\quad
+ \|C_M^0\|_{\rm row,1}\vee\|C_M^0\|_{\rm col,1}\le48\omega,\quad
+ \max_j\|N_M^0(:,j)\|_2\le\tau_r,\quad
+ \|s^0\|_\infty\le128\omega.
+\]
+This event holds before any frozen design or landing solve and supplies the
+input to the synchronized landing argument and the separate exact-baseline
+specialization; no chronological predecessor, post-solve normalizer, or
+cyclic invariant enters the proof.
+\end{proof}
+
+\subsection{Frozen landing reserves}\label{app:step-009}
+
+The static geometry interface is Proposition~\ref{prop:step-001-geometry}; it
+gives \(q\le q_*\), \(\Gamma\le1.01\), and the displayed induced row/column
+Gram bounds for every realized \(G_M\). The balanced seed interface is
+Proposition~\ref{prop:step-008-seed-interface}; it gives the decomposition,
+orthogonality, \(48\omega\) row/column fields, the \(\tau_r\)
+perpendicular-column bound, unit normalized columns, and
+\(D_M^0=D_\lambda^{1/3}E^0\). No landing object is imported.
+
+3. Elementary current-notation tools. For induced \(\nu\)-norms with
+   \(\nu\in\{{\rm row},{\rm col}\}\),
+   \(\|AB\|_\nu\le\|A\|_\nu\|B\|_\nu\) and
+   \(\|A\circ B\|_\nu\le\|A\|_\nu\|B\|_{\max}\). If
+   \(\|E\|_\nu<1\), the Neumann identity
+   \((I+E)^{-1}=\sum_{m\ge0}(-E)^m\) holds in that induced norm. These
+   finite-dimensional inequalities are stated in current notation and their
+   hypotheses are checked below.
+
+No paper theorem or generated reserve is cited as evidence for this step.
+
+For each \(M\in\{U,V,W\}\), let \(M',M''\) denote the other two modes in
+the order used by the setting's frozen Khatri--Rao design, and define
+\[
+ H_M:=G_M^\top G_M,\qquad
+ L_M:=G_M^\top P_M^0,\qquad
+ F_M:=(P_M^0)^\top P_M^0.
+\]
+The setting-derived budgets are
+\[
+\delta_L=(1+q_*)c_0,\qquad
+\delta_F=2(1+q_*)c_0+(1+q_*)c_0^2+r\tau_r^2,
+\]
+\[
+\delta_{FL}=(1+q_*)c_0+(1+q_*)c_0^2+r\tau_r^2,\qquad
+\alpha_0=q_*+\delta_F,
+\]
+\[
+\eta_J=\alpha_0^2,\qquad
+\eta_{QJ}=2\delta_{FL}+\delta_L^2+\delta_F^2,\qquad
+\eta_A=\frac{\eta_{QJ}}{1-\eta_J}.
+\]
+
+
+\begin{proposition}[fixed numerical slack]\label{prop:step-009-numerical-slack}
+Under Assumption~\ref{assump:subquadratic-rank} and the geometry conclusion
+of Proposition~\ref{prop:step-001-geometry}, in particular
+\(\Gamma\le1.01\), with \(q_*=1/4096\) and
+\(\tau_r=q_*^2/(10^4r)\), the setting-defined budgets satisfy
+\[
+c_0<49q_*^2,\quad \delta_L<50q_*^2,\quad
+\delta_F<101q_*^2,\quad \delta_{FL}<51q_*^2, \tag{N1}
+\]
+\[
+\eta_J<1.051q_*^2<10^{-6},\qquad
+\eta_{QJ}<103q_*^2,\qquad
+\eta_A<104q_*^2, \tag{N2}
+\]
+and, using the \(\Gamma\le1.01\),
+\[
+\eta_J\le\frac1{64},\qquad
+\Gamma\eta_A\le128\omega<\frac1{64}. \tag{N3}
+\]
+
+\begin{proof}
+Since
+\(\omega=(1+10^{-4})q_*^2\),
+\[
+c_0=48(1+10^{-4})q_*^2<49q_*^2.
+\]
+Also \(r\tau_r^2=q_*^4/(10^8r)\le q_*^4\) because \(r\ge3\). Therefore
+\[
+\delta_L<50q_*^2,\qquad
+\delta_F<100q_*^2+4803q_*^4<101q_*^2,
+\]
+\[
+\delta_{FL}<50q_*^2+4803q_*^4<51q_*^2,
+\]
+where \(4803q_*^2<1\). Consequently
+\(\alpha_0<q_*(1+101/4096)<1.025q_*\), so
+\(\eta_J<1.051q_*^2<10^{-6}\). Further,
+\[
+\eta_{QJ}<2(51q_*^2)+50^2q_*^4+101^2q_*^4
+<103q_*^2.
+\]
+Thus \(1/(1-\eta_J)<1.000002\), giving
+\(\eta_A<104q_*^2\). Finally,
+\[
+\Gamma\eta_A<1.01\cdot104q_*^2
+<128(1+10^{-4})q_*^2=128\omega<1/64.
+\]
+This proves (N1)--(N3). 
+
+
+\end{proof}
+\end{proposition}
+\begin{lemma}[two-orientation frozen Gram expansion]\label{lem:step-009-raw-expansion}
+Under the geometry conclusion of Proposition~\ref{prop:step-001-geometry}
+and the balanced-seed conclusion of Proposition~\ref{prop:step-008-seed-interface},
+for every mode \(M\),
+\[
+\|L_M-H_M\|_{\rm row,1}\vee\|L_M-H_M\|_{\rm col,1}\le\delta_L, \tag{1}
+\]
+\[
+\|F_M-H_M\|_{\rm row,1}\vee\|F_M-H_M\|_{\rm col,1}\le\delta_F, \tag{2}
+\]
+\[
+\|F_M-L_M\|_{\rm row,1}\vee\|F_M-L_M\|_{\rm col,1}\le\delta_{FL}. \tag{3}
+\]
+
+\begin{proof}
+
+The geometry event gives
+\(\|H_M\|_{\rm row,1}\vee\|H_M\|_{\rm col,1}\le1+q_*\). From the seed
+decomposition and \(G_M^\top N_M^0=0\),
+\[
+L_M=H_M(I+C_M^0),
+\]
+so \(L_M-H_M=H_MC_M^0\). Submultiplicativity in each orientation gives
+(1).
+
+Expanding the full seed Gram, with the two cross terms involving \(N_M^0\)
+vanishing by \(G_M^\top N_M^0=0\), gives
+\[
+F_M-H_M=(C_M^0)^\top H_M+H_MC_M^0
+ +(C_M^0)^\top H_MC_M^0+(N_M^0)^\top N_M^0. \tag{4}
+\]
+For every pair \(i,j\),
+\(\left|((N_M^0)^\top N_M^0)_{ij}\right|\le\tau_r^2\), hence each induced row and
+column sum is at most \(r\tau_r^2\). Applying the induced-norm product
+inequality to (4), and using that transpose exchanges row and column norms,
+proves (2).
+
+Subtracting \(L_M=H_M(I+C_M^0)\) from \(F_M\) instead yields
+\[
+F_M-L_M=(C_M^0)^\top H_M(I+C_M^0)+(N_M^0)^\top N_M^0. \tag{5}
+\]
+The same two-orientation calculation proves (3). All bounds use the fixed
+upper value \(q_*\), so the result is simultaneous over \(M=U,V,W\).
+
+
+
+\end{proof}
+\end{lemma}
+\begin{proposition}[normalized pair-Gram and direct Q-J reserves]\label{prop:step-009-pair-reserves}
+Under Proposition~\ref{prop:step-009-numerical-slack}
+and the conclusion of Lemma~\ref{lem:step-009-raw-expansion}, define
+\[
+J_M^0:=F_{M'}\circ F_{M''},\qquad
+Q_M^0:=L_{M'}\circ L_{M''}.
+\]
+Then, in both induced orientations,
+\[
+\|F_M-I\|_{\rm row,1}\vee\|F_M-I\|_{\rm col,1}\le\alpha_0, \tag{6}
+\]
+\[
+\|J_M^0-I\|_{\rm row,1}\vee\|J_M^0-I\|_{\rm col,1}\le\eta_J, \tag{7}
+\]
+\[
+\|Q_M^0-J_M^0\|_{\rm row,1}\vee\|Q_M^0-J_M^0\|_{\rm col,1}
+\le\eta_{QJ}. \tag{8}
+\]
+Moreover, \(\eta_J\le1/64\) and
+\[
+\lambda_{\min}(J_M^0)\ge1-\eta_J,\qquad
+\|(J_M^0)^{-1}\|_{\rm row,1}\vee\|(J_M^0)^{-1}\|_{\rm col,1}
+\le\frac1{1-\eta_J}, \tag{9}
+\]
+\[
+\|(J_M^0)^{-1}-I\|_{\rm row,1}\vee\|(J_M^0)^{-1}-I\|_{\rm col,1}
+\le\frac{\eta_J}{1-\eta_J}. \tag{10}
+\]
+
+\begin{proof}
+
+Because \(P_M^0\) and \(G_M\) have unit columns, every entry of \(F_M\),
+\(L_M\), and \(H_M\) has absolute value at most one. In particular the
+diagonal of \(F_M\) is one. Set \(E_M:=F_M-I\). Equation (2) and
+\(\|H_M-I\|_\nu\le q_*\) give (6), and \(E_M\) has zero diagonal. Therefore
+\[
+J_M^0=(I+E_{M'})\circ(I+E_{M''})
+  =I+E_{M'}\circ E_{M''}. \tag{11}
+\]
+For either \(\nu={\rm row}\) or \(\nu={\rm col}\),
+\[
+\|E_{M'}\circ E_{M''}\|_\nu
+\le\|E_{M'}\|_\nu\|E_{M''}\|_\nu
+\le\alpha_0^2,
+\]
+which proves (7).
+
+For the direct paired cancellation, use the exact identity
+\[
+Q_M^0-J_M^0
+ =(L_{M'}-F_{M'})\circ L_{M''}
+  +F_{M'}\circ(L_{M''}-F_{M''}). \tag{12}
+\]
+The unit-column observation gives
+\(\|L_{M''}\|_{\max}\vee\|F_{M'}\|_{\max}\le1\). Thus (3) and the
+Hadamard bound yield the stronger estimate
+\[
+\|Q_M^0-J_M^0\|_\nu\le2\delta_{FL}
+\le2\delta_{FL}+\delta_L^2+\delta_F^2=\eta_{QJ},
+\]
+proving (8) without inverting either pair. The two nonnegative square terms
+are retained because they are part of the binding reserve definition.
+
+Proposition~\ref{prop:step-009-numerical-slack} gives \(\eta_J<1\), so the
+Neumann series for \(J_M^0=I+(J_M^0-I)\) converges in each induced norm and
+gives (9)--(10).
+The Schur-product/Khatri--Rao identity says that \(J_M^0\) is the Gram
+matrix of the columnwise Kronecker products
+\(P_{M'}^0\odot P_{M''}^0\), so it is symmetric positive semidefinite.
+Together with the row bound in (7) (or
+\(\|J_M^0-I\|_2\le\eta_J\)), Gershgorin gives
+\(\lambda_{\min}(J_M^0)\ge1-\eta_J\). 
+
+
+\end{proof}
+\end{proposition}
+\begin{lemma}[positive diagonal congruence and ordinary frozen solve]\label{lem:step-009-congruence}
+Under Proposition~\ref{prop:step-009-pair-reserves} and the scale identity
+in Proposition~\ref{prop:step-008-seed-interface}, let
+\[
+P_{-M}^0:=P_{M'}^0\odot P_{M''}^0,\qquad
+K_{-M}:=G_{M'}\odot G_{M''},\qquad
+D_{-M}^0:=D_{M'}^0D_{M''}^0.
+\]
+Then \(D_{-M}^0=D_\lambda^{2/3}(E^0)^2\succ0\) and
+\[
+(H_M^0)^\top H_M^0=D_{-M}^0J_M^0D_{-M}^0. \tag{13}
+\]
+Consequently the Moore--Penrose frozen-input update is ordinary on this
+event and, for every mode,
+\[
+\widetilde X_M=G_M\widetilde B_M,\qquad
+\widetilde B_M=D_\lambda Q_M^0(J_M^0)^{-1}(D_{-M}^0)^{-1}. \tag{14}
+\]
+
+\begin{proof}
+
+The scale identity from the balanced-seed conclusion of Proposition~\ref{prop:step-008-seed-interface} gives
+\[
+D_{-M}^0=(D_\lambda^{1/3}E^0)^2
+=D_\lambda^{2/3}(E^0)^2,
+\]
+which is positive diagonal. Since
+\(X_{M'}^0=P_{M'}^0D_{M'}^0\) and
+\(X_{M''}^0=P_{M''}^0D_{M''}^0\), the frozen Khatri--Rao design in the
+setting is
+\[
+H_M^0=P_{-M}^0D_{-M}^0.
+\]
+The Khatri--Rao Gram identity gives
+\[
+(P_{-M}^0)^\top P_{-M}^0
+=F_{M'}\circ F_{M''}=J_M^0,
+\]
+proving (13). Proposition~\ref{prop:step-009-pair-reserves} makes both
+factors on the right invertible, so the Moore--Penrose inverse equals the
+ordinary inverse.
+
+For completeness, the current unfolding identity is
+\[
+T_{(M)}=G_MD_\lambda K_{-M}^\top,\qquad
+K_{-M}^\top P_{-M}^0=L_{M'}\circ L_{M''}=Q_M^0. \tag{15}
+\]
+Using (13) and the diagonal inverse gives
+\[
+\begin{aligned}
+T_{(M)}H_M^0((H_M^0)^\top H_M^0)^{-1}
+ &=G_MD_\lambda Q_M^0D_{-M}^0
+   (D_{-M}^0)^{-1}(J_M^0)^{-1}(D_{-M}^0)^{-1}\\
+ &=G_MD_\lambda Q_M^0(J_M^0)^{-1}(D_{-M}^0)^{-1},
+\end{aligned}
+\]
+which is (14). This calculation is done for all three frozen inputs before
+any output is committed. On a singular or otherwise off-event tape the
+setting's Moore--Penrose rule remains the observable fallback; the ordinary
+formula and quantitative reserves are asserted only on this generated
+pre-solve event. 
+
+
+\end{proof}
+\end{lemma}
+\begin{proposition}[scale-conjugated coefficient and normalizer reserve]\label{prop:step-009-normalizer}
+Under Proposition~\ref{prop:step-009-numerical-slack}
+and Lemma~\ref{lem:step-009-congruence}, for
+every mode define
+\[
+L_M^0:=D_\lambda(D_{-M}^0)^{-1}
+   =D_\lambda^{1/3}(E^0)^{-2},\qquad
+\ell_{M,j}^0:=(L_M^0)_{jj}
+   =\lambda_j^{1/3}e^{-2s_j^0/3}>0,
+\]
+and
+\[
+\Xi_M:=D_\lambda Q_M^0(J_M^0)^{-1}D_\lambda^{-1}.
+\]
+Then, in both induced orientations,
+\[
+\|\Xi_M-I\|_{\rm row,1}\vee\|\Xi_M-I\|_{\rm col,1}
+\le\Gamma\eta_A\le128\omega<\frac1{64}. \tag{16}
+\]
+If \(\widetilde d_{M,j}:=\|G_M\widetilde B_M(:,j)\|_2\), then
+\[
+(1-\Gamma\eta_A)\ell_{M,j}^0
+\le\widetilde d_{M,j}
+\le(1+\Gamma\eta_A)\ell_{M,j}^0, \tag{17}
+\]
+so every output normalizer is strictly positive before the joint commit.
+
+\begin{proof}
+
+By Proposition~\ref{prop:step-009-numerical-slack}, \(\eta_J\le1/64\) and
+\(\Gamma\eta_A\le128\omega<1/64\); the explicit arithmetic is (N1)--(N3).
+
+By (14), \(\widetilde B_M=\Xi_M L_M^0\). From (8)--(10),
+\[
+Q_M^0(J_M^0)^{-1}-I
+=(Q_M^0-J_M^0)(J_M^0)^{-1},
+\]
+whose row and column norms are at most \(\eta_A\). Diagonal similarity
+multiplies either induced norm by at most
+\(\max_i\lambda_i/\min_i\lambda_i=\Gamma\), proving the first inequality
+in (16).
+
+For a fixed column \(j\), write \(\Xi_M(:,j)=e_j+v_j\). The column part of
+(16) gives \(\|v_j\|_1\le\Gamma\eta_A\). Since every column of \(G_M\) has
+norm one,
+\[
+\|G_M\Xi_M(:,j)-G_M(:,j)\|_2
+\le\|v_j\|_1\le\Gamma\eta_A.
+\]
+The reverse and forward triangle inequalities give
+\(1-\Gamma\eta_A\le\|G_M\Xi_M(:,j)\|_2
+\le1+\Gamma\eta_A\). Multiplication by the positive
+\(\ell_{M,j}^0\) proves (17). All three modes satisfy the same bounds in a
+single pre-solve pass. 
+
+\end{proof}
+\end{proposition}
+\begin{proof}[Step composition]
+Lemma~\ref{lem:step-009-raw-expansion} expands the exact frozen seed in the
+target Gram/cross-Gram convention and supplies \(\delta_L,\delta_F,\delta_{FL}\)
+in both orientations, including the shared perpendicular charge
+\(r\tau_r^2\). Proposition~\ref{prop:step-009-pair-reserves} uses the zero
+diagonal of \(F_M-I\) for the Hadamard cancellation in \(J_M^0\), and uses
+the direct \(Q_M^0-J_M^0\) identity before either pair is inverted. Its
+Neumann bounds and the numerical check establish the normalized pair floor
+and both inverse reserves simultaneously for \(M=U,V,W\).
+
+Lemma~\ref{lem:step-009-congruence} transfers those normalized reserves to the
+actual frozen designs through the exact positive diagonal congruence
+\((H_M^0)^\top H_M^0=D_{-M}^0J_M^0D_{-M}^0\), and supplies the
+ordinary-inverse coefficient formula for all three independent Moore--Penrose
+calls. Finally, Proposition~\ref{prop:step-009-normalizer} controls the only
+scale similarity by the generated \(\Gamma\le1.01\), proves
+\(\Gamma\eta_A\le128\omega<1/64\), and gives strictly positive output
+normalizers before any solve is committed. These four results give the
+pre-solve reserve conclusion of Proposition~\ref{prop:step-009-normalizer},
+with no post-solve or predecessor input.
+\end{proof}
+
+\subsection{Synchronized frozen landing}\label{app:step-010}
+
+The pre-solve reserve from Lemma~\ref{lem:step-009-congruence} and
+Proposition~\ref{prop:step-009-normalizer} supplies, in current notation,
+   \[
+   \widetilde X_M
+   =G_MD_\lambda Q_M^0(J_M^0)^{-1}(D_{-M}^0)^{-1}
+   =G_M\Xi_ML_M^0, \tag{C1}
+   \]
+   before any landing commit. Its static and seed inputs are not landing outputs.
+Current-setting linear algebra: right multiplication cannot enlarge a
+   left column range; positive diagonal congruences are invertible; and
+   \(\|G_Mv\|_2\le\|v\|_1\) for unit-column \(G_M\).
+3. For \(0<\beta<1\) and \(a\in[1-\beta,1+\beta]\),
+   \[
+   |\log a|\le-\log(1-\beta)\le\frac{\beta}{1-\beta}. \tag{C2}
+   \]
+   The interval for \(a\) is proved below.
+
+For \(M\in\{U,V,W\}\), let \(M',M''\) be the other modes and put
+\[
+K_{-M}:=G_{M'}\odot G_{M''},\qquad
+P_{-M}^0:=P_{M'}^0\odot P_{M''}^0.
+\]
+These are proof-local translations of the frozen Khatri--Rao factors.
+
+
+\begin{lemma}[unconditional unfolding-range inclusion]\label{lem:step-010-range}
+Under the exact tensor decomposition, for every frozen
+design, including a singular one,
+\[
+\widetilde X_M:=T_{(M)}H_M^0\big((H_M^0)^\top H_M^0\big)^\dagger
+\]
+has every column in \({\rm range}(G_M)\).
+
+\begin{proof}
+The exact unfolding identity is
+\[
+T_{(M)}=G_MD_\lambda K_{-M}^{\top}. \tag{1}
+\]
+Hence \({\rm range}(T_{(M)})\subseteq{\rm range}(G_M)\), and right
+multiplication by \(H_M^0((H_M^0)^\top H_M^0)^\dagger\) preserves that
+left column range.  This uses no inverse or good event and applies
+independently to all three modes.
+
+
+\end{proof}
+\end{lemma}
+\begin{proposition}[three independent frozen solves and positive normalizers]\label{prop:step-010-frozen-solves}
+Under the pre-solve reserve supplied by Proposition~\ref{prop:step-009-normalizer}
+and Lemma~\ref{lem:step-009-congruence}, for each mode
+\[
+\widetilde X_M=G_M\widetilde B_M,\qquad
+\widetilde B_M=D_\lambda Q_M^0(J_M^0)^{-1}(D_{-M}^0)^{-1}
+=\Xi_ML_M^0. \tag{2}
+\]
+Writing \(\xi_{M,j}:=\Xi_M(:,j)\),
+\[
+\widetilde x_{M,j}=\ell_j^0G_M\xi_{M,j},\quad
+\widetilde d_{M,j}:=\|\widetilde x_{M,j}\|_2
+=\ell_j^0a_{M,j},\quad a_{M,j}:=\|G_M\xi_{M,j}\|_2, \tag{3}
+\]
+and \(1-\beta\le a_{M,j}\le1+\beta\), so
+\(\widetilde d_{M,j}>0\).  All three formulas are evaluated from the one
+frozen seed before any mode is committed.
+
+\begin{proof}
+The frozen scaling and the congruence give
+\[
+H_M^0=P_{-M}^0D_{-M}^0,\qquad
+(H_M^0)^\top H_M^0=D_{-M}^0J_M^0D_{-M}^0. \tag{4}
+\]
+By (the landing conclusion of Proposition~\ref{prop:step-010-quotient-entry}), \(H_M^0\) has full column rank, so its Moore--Penrose inverse is
+the ordinary inverse.  Since
+\[
+K_{-M}^{\top}P_{-M}^0
+=(G_{M'}^\top P_{M'}^0)\circ(G_{M''}^\top P_{M''}^0)
+=Q_M^0,
+\]
+the unfolding identity yields
+\[
+\begin{aligned}
+T_{(M)}H_M^0\big((H_M^0)^\top H_M^0\big)^{-1}
+&=G_MD_\lambda Q_M^0D_{-M}^0
+ (D_{-M}^0)^{-1}(J_M^0)^{-1}(D_{-M}^0)^{-1}\\
+&=G_MD_\lambda Q_M^0(J_M^0)^{-1}(D_{-M}^0)^{-1},
+\end{aligned}
+\]
+which is (2).  Factoring \(L_M^0\) gives (3).  For
+\(v_{M,j}:=\xi_{M,j}-e_j\), (the static geometry conclusion of Proposition~\ref{prop:step-001-geometry}) and unit columns of \(G_M\) imply
+\[
+|a_{M,j}-1|\le\|G_Mv_{M,j}\|_2\le\|v_{M,j}\|_1\le\beta. \tag{5}
+\]
+Thus the interval and positive normalizer follow.  The singular
+Moore--Penrose branch was not altered; the ordinary formula is used only
+after (the landing conclusion of Proposition~\ref{prop:step-010-quotient-entry}).
+
+
+\end{proof}
+\end{proposition}
+\begin{proposition}[normalized direction fields]\label{prop:step-010-directions}
+On the pre-solve reserve event supplied by Proposition~\ref{prop:step-009-normalizer},
+assume the conclusions of Lemma~\ref{lem:step-009-congruence} and
+Proposition~\ref{prop:step-009-normalizer}; in particular, for every
+\(M\in\{U,V,W\}\),
+\[
+\beta:=\Gamma\eta_A\le128\omega<1/64<1,\qquad
+\|\Xi_M-I\|_{\rm row,1}\vee\|\Xi_M-I\|_{\rm col,1}\le\beta,
+\]
+where \(\Xi_M:=D_\lambda Q_M^0(J_M^0)^{-1}D_\lambda^{-1}\), and the positive
+diagonal congruence and ordinary frozen-solve identity hold.
+Let the three outputs and their positive normalizers be those supplied by
+Proposition~\ref{prop:step-010-frozen-solves}, so that
+\[
+\widetilde d_{M,j}>0,\qquad
+a_{M,j}:=\|G_M\Xi_M(:,j)\|_2\in[1-\beta,1+\beta].
+\]
+Define \(D_{a,M}:={\rm diag}(a_{M,1},\ldots,a_{M,r})\) and
+\[
+P_M^{\rm land}:=\big[\widetilde x_{M,j}/\widetilde d_{M,j}\big]_{j=1}^r,
+\qquad C_M^{\rm land}:=\Xi_MD_{a,M}^{-1}-I. \tag{6}
+\]
+Then \(P_M^{\rm land}=G_M(I+C_M^{\rm land})\), its perpendicular field is
+zero, and, for \(\nu\in\{{\rm row},{\rm col}\}\),
+\[
+\|C_M^{\rm land}\|_\nu\le\frac{2\beta}{1-\beta}<3\beta,\qquad
+\max_j\|G_MC_M^{\rm land}(:,j)\|_2
+\le\frac{2\beta}{1-\beta}<3\beta. \tag{7}
+\]
+Every output direction has positive inner product with its corresponding
+target column \(G_M(:,j)\).
+
+\begin{proof}
+From (5), \(D_{a,M}\) is positive and
+\(\|D_{a,M}^{-1}\|_\nu\le(1-\beta)^{-1}\).  The identity
+\[
+\Xi_MD_{a,M}^{-1}-I
+=(\Xi_M-I)D_{a,M}^{-1}+(D_{a,M}^{-1}-I) \tag{8}
+\]
+and (the static geometry conclusion of Proposition~\ref{prop:step-001-geometry}) give two terms each at most \(\beta/(1-\beta)\) in either
+orientation, proving the first bound in (7).  Since
+\(2/(1-\beta)=128/63<3\), the displayed strict bound follows.
+For a column,
+\[
+\left\|\frac{G_M\xi_{M,j}}{a_{M,j}}-G_M(:,j)\right\|_2
+\le\frac{\|G_Mv_{M,j}\|_2+|a_{M,j}-1|}{a_{M,j}}
+\le\frac{2\beta}{1-\beta}.
+\]
+The range lemma gives zero perpendicular field.  Also
+\(\langle G_M(:,j),G_M\xi_{M,j}\rangle\ge1-\beta>0\), so the proof-only
+target sign chart is unchanged.
+
+
+\end{proof}
+\end{proposition}
+\begin{proposition}[joint commit and product-preserving rebalance]\label{prop:step-010-rebalance}
+On the pre-solve reserve event supplied by Proposition~\ref{prop:step-009-normalizer}, under
+the setting's rule that all three frozen-input designs are formed before any
+commit and their outputs are committed together, let
+\[
+(\widetilde X_U,\widetilde X_V,\widetilde X_W)
+\]
+be the three outputs from the common frozen seed
+\((X^0,Y^0,Z^0)\) supplied by
+Proposition~\ref{prop:step-010-frozen-solves}.  Assume, as that proposition
+concludes, that every active normalizer satisfies
+\(\widetilde d_{M,j}>0\) before commitment.  With
+\[
+\widetilde\gamma_j:=\prod_{M\in\{U,V,W\}}\widetilde d_{M,j}>0,
+\]
+set
+\[
+X_M^{\rm land}(:,j):=\widetilde\gamma_j^{1/3}
+\frac{\widetilde X_M(:,j)}{\widetilde d_{M,j}}. \tag{9}
+\]
+This preserves each active rank-one product exactly and leaves normalized
+directions unchanged.
+
+\begin{proof}
+Proposition~\ref{prop:step-010-frozen-solves}
+states that every mode formula uses only the same frozen
+\((X^0,Y^0,Z^0)\), so the three outputs are computed and then committed as
+one transaction.  Its positive-normalizer conclusion gives
+\(\widetilde\gamma_j>0\), and
+\[
+X_U^{\rm land}(:,j)\otimes X_V^{\rm land}(:,j)\otimes X_W^{\rm land}(:,j)
+=\frac{\widetilde\gamma_j}
+{\widetilde d_{U,j}\widetilde d_{V,j}\widetilde d_{W,j}}
+\widetilde x_j\otimes\widetilde y_j\otimes\widetilde z_j
+=\widetilde x_j\otimes\widetilde y_j\otimes\widetilde z_j. \tag{10}
+\]
+Only positive scales change, so \(P_M^{\rm land}\) and \(C_M^{\rm land}\)
+are unchanged; inactive columns remain zero.
+
+
+\end{proof}
+\end{proposition}
+\begin{proposition}[quotient entry after one rebalance]\label{prop:step-010-quotient-entry}
+On the conjunction of the pre-solve reserve from Proposition~\ref{prop:step-009-normalizer}
+and the seed conclusion of Proposition~\ref{prop:step-008-seed-interface}, assume
+the seed-scale conclusion \(\|s^0\|_\infty\le128\omega\), and the reserve
+\(\beta=\Gamma\eta_A\le128\omega<1/64\), and the following named
+conclusions: Lemma~\ref{lem:step-010-range} gives exact target-span
+membership for the Moore--Penrose outputs; Proposition~\ref{prop:step-010-frozen-solves}
+gives \(\widetilde d_{M,j}=\ell_j^0a_{M,j}\) with
+\(a_{M,j}\in[1-\beta,1+\beta]\); Proposition~\ref{prop:step-010-directions}
+gives \(P_M^{\rm land}=G_M(I+C_M^{\rm land})\), zero perpendicular field, and
+positive target orientation; and Proposition~\ref{prop:step-010-rebalance} gives the common
+frozen-input joint commit and product-preserving rebalance.  Then
+\[
+\|s^{\rm land}\|_\infty\le1024\omega,\qquad
+d_Q(e^{\rm land},0)\le1024\omega.
+\tag{11}
+\]
+Consequently \(d_Q(e^{\rm land},0)\le4096\omega<\rho_{\rm ALS}/3\).
+
+\begin{proof}
+Since
+\(\ell_j^0=\lambda_j^{1/3}e^{-2s_j^0/3}\), (3) gives
+\[
+\frac{\widetilde\gamma_j}{\lambda_j}
+=e^{-2s_j^0}\prod_{M\in\{U,V,W\}}a_{M,j}.
+\tag{12}
+\]
+The quotient log is therefore
+\[
+s_j^{\rm land}=-2s_j^0+\sum_{M\in\{U,V,W\}}\log a_{M,j}. \tag{13}
+\]
+By (C2) and (5), \(|\log a_{M,j}|\le\beta/(1-\beta)<2\beta\le256\omega\).
+Thus
+\[
+|s_j^{\rm land}|\le2(128\omega)+3(256\omega)=1024\omega. \tag{14}
+\]
+The definition of \(d_Q\) takes the maximum of the three direction
+quantities and the scale log.  Proposition~\ref{prop:step-010-directions}
+bounds every direction quantity by \(3\beta\le384\omega\), so (11) follows.
+Finally,
+\[
+\omega=q_*^2+r\tau_r=q_*^2(1+10^{-4}),\quad
+q_*={1\over4096},\quad \rho_{\rm ALS}={1\over1024},
+\]
+and hence
+\[
+4096\omega={1+10^{-4}\over4096}
+<{1\over3072}={\rho_{\rm ALS}\over3},
+\tag{15}
+\]
+because \(1+10^{-4}<4/3\).
+
+\end{proof}
+\end{proposition}
+\begin{proof}[Step composition]
+Lemma~\ref{lem:step-010-range} gives exact target-span membership for each
+Moore--Penrose output without assuming a nonsingular design.  On the derived
+event \(E_{\rm land\_pre}\), Proposition~\ref{prop:step-010-frozen-solves}
+invokes the positive diagonal congruence and pair-Gram floor supplied by
+Lemma~\ref{lem:step-009-congruence} and
+Proposition~\ref{prop:step-009-normalizer} to replace each pseudoinverse by
+its own ordinary inverse, derives the exact coefficient identity, and proves
+all active normalizers positive from the explicit \(\beta<1\) reserve.  Its
+statement also records that all three outputs use the one frozen seed.
+
+Under the same event, Proposition~\ref{prop:step-010-directions} applies the
+normalizers to obtain the target-chart coefficient fields, both induced
+direction bounds, zero perpendicular fields, and the fixed target
+orientation.  The setting's synchronized joint-commit rule together with the
+positive normalizers is discharged by
+Proposition~\ref{prop:step-010-rebalance}, which proves exact preservation of
+every represented term.  Finally, under the \(E_{\rm seed}\) scale
+bound, Proposition~\ref{prop:step-010-quotient-entry} gives
+\(d_Q(e^{\rm land},0)\le1024\omega\le4096\omega\) and the
+\(\rho_{\rm ALS}/3\) entry.  No landing output is used as an input to another
+landing solve; singular/off-event tapes retain the observable
+Moore--Penrose fallback without an unsupported basin claim.
+\end{proof}
+
+\subsection{Cyclic target-span contraction}\label{app:step-011}
+
+The landing and static-geometry inputs for this section are the conclusions of
+Propositions~\ref{prop:step-010-quotient-entry} and
+\ref{prop:step-001-geometry}.  We use the quotient interpretation in
+Uschmajew~\cite{Uschmajew2012} only at the scope of Assumption~1, Lemma~3.2,
+and Theorems~3.3 and~3.5 of that paper: the active factors are nonzero, the
+block normal equations are nonsingular, and cyclic ALS is read modulo the
+componentwise product-one scaling kernel with block-Gauss--Seidel chronology.
+Here the object map is $G_M\in\{U,V,W\}$, the held Khatri--Rao design is
+$H_M=X_{M'}\odot X_{M''}$, and the quotient representative is
+$(C_U,C_V,C_W,s)$ with the setting's $\operatorname{Refresh}_s$ operation.
+The target-span inclusion, the radius $\rho_{\rm ALS}$, every inverse and
+contraction constant, and the refresh identity are proved in the current
+notation below; none is imported from the cited source.
+
+For induced row/column $\ell_1$ norms, submultiplicativity, the Neumann inverse bound, and the Khatri--Rao Gram identity are used after their hypotheses are displayed.
+
+For matrices with unit diagonal, the following direct inequality will be
+   used repeatedly:
+   \[
+   \|A\circ B\|_\nu
+   \le \|A-\operatorname{diag}(A)\|_\nu
+      \max_{i\ne j}|B_{ij}|
+   +\max_i|A_{ii}B_{ii}|,
+   \qquad \nu\in\{{\rm row},{\rm col}\}.
+   \tag{C1}
+   \]
+   It follows by separating the diagonal term in each row or column sum.
+
+Throughout this derivation, \(M'\) and \(M''\) denote the two modes other
+than \(M\). The proof-local alias
+\[
+\varrho:=\rho_{\rm ALS}=1/1024
+\]
+is used to avoid confusing the chart radius with the smoothing scale
+\(\rho\) in setting.md.
+
+
+\begin{lemma}[target-span quotient representation and balanced scales]\label{lem:step-011-quotient-chart}
+Under the static event of Proposition~\ref{prop:step-001-geometry}, the
+landing conclusion of Proposition~\ref{prop:step-010-quotient-entry}, and
+Assumption~\ref{assump:base-scale}, let an active state have nonzero columns in the exact
+target spans, and orient its columns by the landing permutation/sign chart.
+If its represented component products are positive, then there are unique
+matrices \(C_M\) and a unique vector \(s\) such that
+\[
+ P_M=G_M(I+C_M),\qquad
+ s_j=\log(\gamma_j/\lambda_j),
+ \qquad \gamma_j=\prod_M\|X_M(:,j)\|_2.
+ \tag{1}
+\]
+After the product-preserving equal-norm representative is chosen,
+\[
+ D_M=\operatorname{diag}(\|X_M(:,j)\|_2)
+  =D_\lambda^{1/3}E,
+ \qquad E:=\operatorname{diag}(e^{s_j/3}),
+ \tag{2}
+\]
+for all three modes. The exact target state is \(0=(0,0,0,0)\).
+
+\begin{proof}
+From (the static geometry conclusion of Proposition~\ref{prop:step-001-geometry}), every \(G_M^\top G_M\) is positive
+definite by Gershgorin, so the coefficient matrix in
+\(P_M=G_MB_M\) is unique. Set \(C_M=B_M-I\). The landing signs and
+permutation fix the column chart; later positive normalizations preserve it
+when the coefficient error is below one. The positive product definition
+gives the unique logarithm \(s\). Equal-norm balancing replaces the three
+norms by \(\gamma_j^{1/3}\), which is positive and preserves each rank-one
+product, yielding (2). No factor outside the target span is introduced by
+this scaling.
+
+
+\end{proof}
+\end{lemma}
+\begin{proposition}[scale equivariance and literal refresh identity]\label{prop:step-011-refresh-equivariance}
+Under the hypotheses of
+Lemma~\ref{lem:step-011-quotient-chart}, suppose the held design for a mode
+\(M\) has full column rank and the solved active output satisfies
+\(\min_j\|\widetilde X_M(:,j)\|_2>0\). Let positive diagonal matrices
+\(R_U,R_V,R_W\) satisfy \(R_UR_VR_W=I\). Rescaling a literal state by
+\(X_M\mapsto X_MR_M\) changes the mode-\(M\) ALS output to
+\(\widetilde X_M\mapsto\widetilde X_MR_M\), and hence leaves its quotient
+coordinates unchanged. Consequently, if \(e^t\) is the balanced quotient
+representative of a literal state, then the three records
+\[
+ e\longmapsto e_U\longmapsto e_V\longmapsto e_W
+ \tag{3}
+\]
+defined by the setting's Refresh\_s operation are quotient-equivalent to
+the literal U/V/W post-block states, in that chronological order.
+
+\begin{proof}
+Write the literal mode design as
+\(H_M=X_{M'}\odot X_{M''}\). Under the product-one rescaling,
+\(H_M\mapsto H_MR_{M'}R_{M''}=H_MR_M^{-1}\). Full column rank lets the
+Moore--Penrose solve be written as the ordinary normal-equation solve, so
+\[
+\begin{aligned}
+T_{(M)}H_MR_M^{-1}
+ \big((R_M^{-1})H_M^\top H_MR_M^{-1}\big)^{-1}
+ &=T_{(M)}H_M(H_M^\top H_M)^{-1}R_M\\
+ &=\widetilde X_MR_M.
+\end{aligned}
+\tag{4}
+\]
+Thus positive product-one scaling is a gauge symmetry of the literal update.
+The displayed positive-output condition makes the canonical equal-norm map
+well-defined; it changes only positive scales and preserves every rank-one
+product, so it produces the same quotient point. The U record uses
+the old V,W and writes the new U product log globally; the V record then uses
+that new U and old W, and the W record uses the two current fields. Applying
+(4) successively proves that (3) is exactly the quotient image of the
+literal chronological orbit. This is the block-Gauss--Seidel chronology
+described qualitatively by the cited quotient interpretation, but the identity is
+the displayed current-notation calculation.
+
+
+\end{proof}
+\end{proposition}
+\begin{lemma}[two-orientation dynamic Gram reserve]\label{lem:step-011-gram-reserve}
+Under the static geometry conclusion of Proposition~\ref{prop:step-001-geometry}, let
+\(e=(C_U,C_V,C_W,s)\) be an exact target-span balanced state with
+\(x:=d_Q(e,0)\le\varrho\). For each mode set
+\[
+ A_M:=I+C_M,\quad P_M:=G_MA_M,\quad
+ L_M:=G_M^\top P_M=H_MA_M,\quad
+ F_M:=P_M^\top P_M=A_M^\top H_MA_M.
+\tag{5}
+\]
+Then, for \(\nu\in\{{\rm row},{\rm col}\}\), simultaneously for all
+three modes,
+\[
+\begin{aligned}
+ \|F_M-H_M\|_\nu&\le2.01x,\\
+ \|(L_M-F_M)-\operatorname{diag}(L_M-F_M)\|_\nu&\le1.01x,\\
+ \max_j|L_{M,jj}-F_{M,jj}|&\le x^2/2,\\
+ \max_{i\ne j}|(L_M)_{ij}|&\le q+1.01x,\\
+ \max_{i\ne j}|(F_M)_{ij}|&\le q+2.01x.
+\end{aligned}
+\tag{6}
+\]
+For a block M define
+\[
+ Q_M:=L_{M'}\circ L_{M''},\quad
+ J_M:=F_{M'}\circ F_{M''},\quad
+ K_M:=H_{M'}\circ H_{M''}.
+\tag{7}
+\]
+Then
+\[
+ \|Q_M-J_M\|_\nu\le2.1qx+4.1x^2,
+ \qquad
+ \|J_M-I\|_\nu\le q^2+4.1qx+4.1x^2<1/64,
+\tag{8}
+\]
+and therefore \(J_M\) is positive definite and
+\[
+ \|J_M^{-1}\|_{\rm row,1}\vee\|J_M^{-1}\|_{\rm col,1}\le64/63.
+\tag{9}
+\]
+
+\begin{proof}
+Write \(H=H_M\), \(A=I+C\), and note from
+the definition of \(d_Q\) that both induced norms of C and every
+\(\|GC(:,j)\|_2\) are at most x. Since \(\|H-I\|_\nu\le q\),
+\(\|H\|_\nu\le1+q\), and \(x\le1/1024\),
+\[
+ \|F-H\|_\nu
+ \le (1+q)x+(1+q)x+(1+q)x^2\le2.01x.
+\tag{10}
+\]
+Here we used \(F-H=HC+C^\top H+C^\top HC\). Also
+\[
+ L-F=HA-A^\top HA=-C^\top HA,
+\tag{11}
+\]
+so its induced norm is at most \((1+q)(1+x)x\le1.01x\).
+Unit columns of P give the exact diagonal identity
+\[
+ L_{jj}-F_{jj}=L_{jj}-1=-\tfrac12\|GC(:,j)\|_2^2,
+\tag{12}
+\]
+which proves the second and third lines of (6). The expansion
+\(L-H=HC\) gives the fourth line of (6); the expansion in (10) gives the
+fifth line.
+
+For (8), apply the direct diagonal/off-diagonal inequality (C1) to
+\[
+ Q-J=(L_{M'}-F_{M'})\circ L_{M''}
+   +F_{M'}\circ(L_{M''}-F_{M''}).
+\tag{13}
+\]
+The first term is at most
+\(1.01x(q+1.01x)+x^2/2\), and the second is at most
+\((q+2.01x)(1.01x)+x^2/2\). Their sum is at most
+\(2.02qx+4.051x^2\), hence the first bound in (8). Similarly, with
+\(R_M=F_M-H_M\), whose diagonal is zero,
+\[
+ J-K=R_{M'}\circ F_{M''}+H_{M'}\circ R_{M''}
+\tag{14}
+\]
+has norm at most \(4.1qx+4.1x^2\). The target Gram satisfies
+\(\|K-I\|_\nu\le q^2\), because its off-diagonal entries are products of
+the two target off-diagonal entries. This proves the second inequality in
+(8). Finally \(q\le q_*\le\varrho/4\) and \(x\le\varrho\), so
+\[
+q^2+4.1qx+4.1x^2
+\le(1/16+4.1/4+4.1)\varrho^2<1/64.
+\tag{15}
+\]
+The Neumann series in either induced norm gives (9); because J is the Gram
+of \(P_{M'}\odot P_{M''}\), it is symmetric positive semidefinite, and
+the same bound gives its positive spectral floor. Thus the Moore--Penrose
+update is the ordinary update throughout the chart.
+
+
+\end{proof}
+\end{lemma}
+\begin{proposition}[one chronological block contraction]\label{prop:step-011-block-contraction}
+Under the static geometry conclusion of Proposition~\ref{prop:step-001-geometry},
+and under the hypotheses and conclusions of
+Lemmas~\ref{lem:step-011-quotient-chart} and
+\ref{lem:step-011-gram-reserve}, fix a mode M and let
+\(x=d_Q(e,0)\le\varrho\) for an exact-span balanced positive-product state.
+Form the literal exact ALS update from the two held modes. The full-rank
+reserve below first proves positive solved columns; only then apply the
+product-preserving equal-norm representative. The landing conclusion of
+Proposition~\ref{prop:step-010-quotient-entry}
+supplies one such in-chart input, but the estimate below is uniform over
+the entire displayed chart.
+The new mode direction and its refreshed product log satisfy, in both
+induced orientations and in the Euclidean column part of \(d_Q\),
+\[
+ \|C_M^+\|_{\rm row,1}\vee\|C_M^+\|_{\rm col,1}
+ \vee\max_j\|G_MC_M^+(:,j)\|_2
+ \vee\|s_M^+\|_\infty
+ \le \ell x,
+ \qquad \ell:=8q_*+32\varrho.
+\tag{16}
+\]
+The ordinary full-rank output is in \({\rm range}(G_M)\), has positive
+target orientation, and has positive active norm, so the canonical
+representative is defined.
+
+\begin{proof}
+In the balanced representative, write
+\(D_M=D_\lambda^{1/3}E\) as in (2) and
+\(D_{-M}=D_{M'}D_{M''}=D_\lambda^{2/3}E^2\). The unfolding identity and
+the full-rank conclusion of Lemma~\ref{lem:step-011-gram-reserve} give the
+current normal-equation formula
+\[
+ \widetilde X_M
+ =G_MD_\lambda Q_MJ_M^{-1}D_{-M}^{-1}
+ =G_M\Xi_M D_\lambda^{1/3}E^{-2},
+ \qquad
+ \Xi_M:=D_\lambda Q_MJ_M^{-1}D_\lambda^{-1}.
+\tag{17}
+\]
+Indeed, \(T_{(M)}=G_MD_\lambda(G_{M'}\odot G_{M''})^\top\) and
+\((G_{M'}\odot G_{M''})^\top(P_{M'}\odot P_{M''})=Q_M\).
+Using \(Q_MJ_M^{-1}-I=(Q_M-J_M)J_M^{-1}\), (8)--(9), and
+\(\Gamma\le1.01\), diagonal similarity gives, for either \(\nu\),
+\[
+ \|\Xi_M-I\|_\nu
+ \le1.01\frac{64}{63}(2.1qx+4.1x^2)
+ \le2.2qx+4.3x^2.
+\tag{18}
+\]
+Set \(\beta:=2.2qx+4.3x^2\). Since
+\(2.2q_*+4.3\varrho<1/128\), we have \(\beta<1/128\). For each column
+\(\xi_j=\Xi_M(:,j)\), let \(a_j=\|G_M\xi_j\|_2\). The column bound in
+(18) gives \(|a_j-1|\le\beta\), hence \(a_j>0\). Moreover
+\(\langle G_M(:,j),G_M\xi_j\rangle\ge1-\beta>0\), so the target
+orientation is preserved. Put
+\[
+ b_{M,j}:=\lambda_j^{1/3}e^{-2s_j/3}>0,
+ \qquad \widetilde x_{M,j}=b_{M,j}G_M\xi_j,
+ \qquad \|\widetilde x_{M,j}\|_2=b_{M,j}a_j>0.
+\tag{19a}
+\]
+Thus the positive solved-column condition in
+Proposition~\ref{prop:step-011-refresh-equivariance} is discharged before
+canonical normalization. The normalized coefficient field is
+\[
+ C_M^+=\Xi_M\operatorname{diag}(a_j^{-1})-I.
+\tag{19}
+\]
+Consequently, in either induced orientation,
+\[
+ \|C_M^+\|_\nu
+ \le {2\beta\over1-\beta}
+ \le4.5qx+8.8x^2,
+\tag{20}
+\]
+and the same bound holds for each Euclidean column error after applying
+G\_M. To identify the refreshed product log, the two held balanced norms are
+\(\lambda_j^{1/3}e^{s_j/3}\) each. Therefore, before the canonical rebalance,
+\[
+ \gamma_j^+
+ = (b_{M,j}a_j)
+   (\lambda_j^{1/3}e^{s_j/3})^2
+ = \lambda_j a_j.
+\tag{20a}
+\]
+The rebalance preserves this rank-one product, so its global product register
+satisfies the exact gauge cancellation
+\[
+ s_{M,j}^+
+ =\log\!\left({\gamma_j^+\over\lambda_j}\right)=\log a_j.
+\tag{20b}
+\]
+The elementary logarithm bound on \([1-\beta,1+\beta]\) now gives
+\[
+ |s_{M,j}^+|=|\log a_j|
+ \le {\beta\over1-\beta}
+ \le2.3qx+4.4x^2.
+\tag{21}
+\]
+Since \(q\le q_*\) and \(x\le\varrho\), each right side in (20)--(21)
+is at most
+\[
+ (8q_*+32\varrho)x=\ell x.
+\tag{22}
+\]
+On the maintained chart, Lemma~\ref{lem:step-011-gram-reserve} makes the
+current design Gram invertible, so the displayed ordinary formula (17) has a
+left factor \(G_M\) and proves the output is in \({\rm range}(G_M)\). No
+singular/off-chart range assertion is used in this cyclic step. The positive
+normalizer just proved makes the normalized direction and canonical rebalance
+well-defined. This proves (16).
+
+
+\end{proof}
+\end{proposition}
+\begin{proposition}[chronological contraction and target-span invariant]\label{prop:step-011-chronological-contraction}
+Under the static geometry conclusion of Proposition~\ref{prop:step-001-geometry},
+let the landing conclusion of Proposition~\ref{prop:step-010-quotient-entry}
+supply the entry state \(e^{\rm land}\). Using
+Proposition~\ref{prop:step-011-block-contraction} and then
+Proposition~\ref{prop:step-011-refresh-equivariance} (the latter only after
+the former has supplied positive solved columns), take any exact-span
+balanced positive-product state \(e^0=e\) in the fixed orientation chart
+with \(x:=d_Q(e,0)\le\varrho\), and define the setting's chronological states
+\[
+ e_U=(C_U^+,C_V^0,C_W^0,s_U^+),\quad
+ e_V=(C_U^+,C_V^+,C_W^0,s_V^+),\quad
+ e_W=(C_U^+,C_V^+,C_W^+,s_W^+),
+ \qquad \Psi^q(e):=e_W.
+\tag{23}
+\]
+Then all three blocks are defined, their outputs remain in the exact
+target-span chart with positive active products, and their refreshed records
+are quotient-equivalent to the literal ALS post-block states. Uniformly for
+every such in-chart input,
+\[
+ d_Q(\Psi^q(e),0)\le\ell d_Q(e,0),
+ \qquad \ell=8q_*+32\rho_{\rm ALS}=17/512<1/16.
+\tag{24}
+\]
+In particular, starting from the landing conclusion of Proposition~\ref{prop:step-010-quotient-entry} state, the generated
+chronological orbit remains in the chart and defines the generated basin event; writing
+\(e^{t+1}:=\Psi^q(e^t)\) and \(e^0=e^{\rm land}\), it has no additive forcing:
+\[
+ d_Q(e^t,0)\le\ell^t d_Q(e^{\rm land},0),
+ \quad
+ d_Q(e^t,0)-d_Q(e^{t+1},0)\ge(1-\ell)d_Q(e^t,0),
+ \quad
+ \sum_{t\ge0}d_Q(e^t,0)\le{d_Q(e^{\rm land},0)\over1-\ell}.
+\tag{25}
+\]
+
+\begin{proof}
+Fix an arbitrary input state in the domain of the
+proposition and write \(x=d_Q(e,0)\le\varrho\). Lemma~\ref{lem:step-011-gram-reserve}
+gives the full-rank held-design reserve for the U block. Proposition~\ref{prop:step-011-block-contraction}
+therefore gives
+\[
+  \|C_U^+\|_{\rm row,1}\vee\|C_U^+\|_{\rm col,1}
+  \vee\max_j\|G_UC_U^+(:,j)\|_2\vee\|s_U^+\|_\infty
+  \le\ell x,
+\tag{26}
+\]
+The positivity and target-span conclusions in the same proposition discharge
+the local condition of Proposition~\ref{prop:step-011-refresh-equivariance};
+the full-rank reserve and equation (4) then identify the U record with the
+literal U post-block state. The unchanged V,W fields and their scale register
+are still bounded by x, while the newly written U fields/register are bounded
+by \(\ell x\), so \(d_Q(e_U,0)\le x\). Apply
+the same two propositions to V with the new U field and old W field. Its input
+is still in the chart, so the new V fields and \(s_V^+\) are at most
+\(\ell x\), and \(d_Q(e_V,0)\le x\); the V record is again the literal
+post-block state. Applying them to W gives the same bound for the new W
+fields and \(s_W^+\). At the end of the sweep, U,V,W and the common product
+register are all at most \(\ell x\), proving the uniform map inequality
+(24), while equation (17) proves exact target-span membership before every
+subsequent block update.
+
+For the landing state, Proposition~\ref{prop:step-010-quotient-entry} gives
+\(d_Q(e^{\rm land},0)<\varrho/3\). Since \(\ell<1\), the uniform map
+inequality keeps every \(e^t\) in the chart and gives the first inequality
+in (25) by induction. Subtracting successive nonnegative terms and summing
+the geometric series gives the potential drop and finite budget in (25).
+
+Finally,
+\[
+ 8q_*+32\rho_{\rm ALS}
+ ={8\over4096}+{32\over1024}
+ ={17\over512}< {1\over16},
+\tag{27}
+\]
+so the contraction is strict with the fixed sketch constant. A singular or
+zero-normalizer tape outside the maintained chart receives no quantitative
+conclusion and follows the setting's observable unsuccessful/cap branch.
+
+\end{proof}
+\end{proposition}
+\begin{proof}[Step composition]
+The landing conclusion of Proposition~\ref{prop:step-010-quotient-entry},
+together with the event from Proposition~\ref{prop:step-001-geometry},
+supplies the legal positive exact-span entry.
+Lemma~\ref{lem:step-011-quotient-chart} supplies the unique exact-span
+quotient coordinates and the balanced scale convention consumed by every
+block. Proposition~\ref{prop:step-011-block-contraction} first proves
+positive solved columns, target-span output, and the one-block bound on every
+in-chart input; only after that discharge does
+Proposition~\ref{prop:step-011-refresh-equivariance} prove that
+positive product-one scaling is a genuine gauge symmetry of each full-rank
+literal normal-equation solve and that the setting's chronological
+Refresh\_s records are the quotient representatives of the literal U/V/W
+orbit. Lemma~\ref{lem:step-011-gram-reserve} derives, rather than assumes,
+the dynamic pair-Gram reserve from the realized interference bound
+and the current radius; it also proves that every design used on the good
+trajectory is full rank. Proposition~\ref{prop:step-011-block-contraction}
+then retains the exact coefficient identity, displays the product/gauge
+scale cancellation
+\(s_M^+=\log a_j\), positive normalizers, target orientation, and all three
+parts of the one-block \(d_Q\) bound. Finally,
+Proposition~\ref{prop:step-011-chronological-contraction} composes the held
+input bounds in the actual U/V/W order for every exact-span positive-product
+input with \(d_Q\le\rho_{\rm ALS}\), proves target-span invariance before
+each block update, and exports the uniform map estimate (24) and the
+no-forcing recurrence (25). Therefore the generated basin event and
+\(\Psi^q\) satisfy the exact displayed claim, with no predecessor
+comparator, post-solve landing input, or hidden basin assumption.
+
+At the exact orthogonal equal-weight certified state,
+\(H_M=I\), \(C_M=0\), and \(s=0\). Hence \(Q_M=J_M=I\),
+\(\Xi_M=I\), \(a_j=1\), every Refresh\_s register remains zero, and all
+three cyclic updates are stationary. The quotient error and the represented
+tensor residual are exactly zero, preserving the required baseline rather
+than replacing it by the finite-radius bound.
+\end{proof}
+
+\subsection{Stopping, runtime, and restarts}\label{app:step-012}
+
+1. the coupon dependency.  The preceding
+   Proposition~\ref{prop:step-003-coupon}, under
+   Assumptions~\ref{assump:subquadratic-rank} and
+   \ref{assump:random-initialization}, together with
+   Proposition~\ref{prop:step-002-joint-window}, proves its coverage conclusion
+   conditional on the fixed smoothed tensor, without targetwise
+   independence.  Proposition~\ref{prop:step-003-witness-interface} makes its
+   witnesses proof-only.  This step uses only the probability and label-free
+   conclusions.
+2. the cyclic dependency.  The preceding
+   Lemma~\ref{lem:step-011-quotient-chart} translates positive exact-span
+   factors into the current balanced quotient coordinates.
+   Proposition~\ref{prop:step-011-chronological-contraction}, under the
+   \(E_{\rm sm}\) and \(E_{\rm land}\) interfaces, proves the landing-state
+   contraction,
+   exact-span/positive-product invariance, and literal chronological
+   equivalence.  Its recurrence is used only on its generated basin.
+3. Khatri--Rao Gram identity and Schur order.  If matrices have matched
+   columns, then
+   \((A\odot B)^\top(A\odot B)=(A^\top A)\circ(B^\top B)\); the analogous
+   three-mode identity follows by iteration.  If \(H\succeq0\) has unit
+   diagonal and \(aI\preceq K\preceq bI\), the Schur product theorem applied
+   to \(H\circ(K-aI)\) and \(H\circ(bI-K)\) gives
+   \(aI\preceq H\circ K\preceq bI\), because \(H\circ I=I\).  Below,
+   \(H=U^\top U\) is positive semidefinite with unit diagonal, while the
+   bounds on \(K=(V^\top V)\circ(W^\top W)\) are discharged directly from
+   \(q_{\rm real}\le q_*\).
+4. Kronecker and induced-norm facts.  For finite matrices \(A,B\),
+   \(\|A\otimes B\|_2=\|A\|_2\|B\|_2\) and
+   \(\|C\|_2\le\sqrt{\|C\|_{\rm row,1}\|C\|_{\rm col,1}}\).  The
+   diagonal embedding
+   \(\Delta(z)=\sum_jz_je_j\otimes e_j\otimes e_j\) is an isometry from
+   Euclidean coefficient vectors to coefficient tensors.
+5. Moore--Penrose existence and dense linear algebra.  Every finite
+   matrix has a Moore--Penrose pseudoinverse, computable by a dense SVD or
+   rank-revealing factorization in \(O(s^3)\) arithmetic operations for an
+   \(s\)-column normal equation.  This gives existence and cost only, never
+   an inverse reserve on a singular branch.
+6. Conditional restart product.  Conditional on the fixed tensor,
+   Assumption~\ref{assump:random-initialization} makes complete-run tapes
+   independent.  Hence failures of runs whose individual failure
+   probabilities are at most \(1-p\) have joint probability at most
+   \((1-p)^J\).  It is applied only after
+   Proposition~\ref{prop:step-012-finite-tapes} makes every run a completed
+   finite trial.
+
+\begin{lemma}[balanced-chart residual transfer]\label{lem:step-012-residual-transfer}
+Under Assumption~\ref{assump:base-scale}, the static-geometry
+interface recorded in
+Proposition~\ref{prop:step-011-chronological-contraction}, and the coordinate
+conclusion of Lemma~\ref{lem:step-011-quotient-chart}, let
+\(e=(C_U,C_V,C_W,s)\) be a state supplied by Proposition~\ref{prop:step-011-chronological-contraction} represented in
+the exact-span, positively oriented, equal-norm chart, and suppose
+\(x=d_Q(e,0)\le\rho_{\rm ALS}=1/1024\).  If \(\widehat T(e)\) denotes the
+rank-\(r\) tensor represented by its active factors, with the inactive
+\(k-r\) columns zero, then
+\[
+ { \|T-\widehat T(e)\|_F\over\|T\|_F}\le5x\le8\kappa_0^2x.
+\tag{1}
+\]
+
+\begin{proof}
+Write \(G_M=U,V,W\) in the corresponding mode,
+\(A_M=I+C_M\), and \(\lambda=(\lambda_1,\ldots,\lambda_r)^\top\). The fixed orientation chart
+and positive product register give
+\[
+ p_{M,j}=G_MA_Me_j,\qquad
+ \widehat T(e)={\mathscr G}{\cal A}\Delta(\lambda\odot e^s),
+ \qquad T={\mathscr G}\Delta(\lambda),
+\tag{2}
+\]
+where \({\mathscr G}=G_U\otimes G_V\otimes G_W\),
+\({\cal A}=A_U\otimes A_V\otimes A_W\), and \(e^s\) has entries \(e^{s_j}\).
+This is the componentwise identity
+\(\lambda_je^{s_j}p_{U,j}\otimes p_{V,j}\otimes p_{W,j}\), so it does not
+add a factor or change the represented tensor.
+
+By the definition of \(d_Q\), both induced norms of each \(C_M\) are at most
+\(x\), so \(\|C_M\|_2\le x\) and
+\[
+ \|{\cal A}\|_2\le(1+x)^3,\qquad
+ \|{\cal A}-I\|_2\le(1+x)^3-1.
+\tag{3}
+\]
+For \(0\le x<1\), the power-series comparison \(e^x\le1/(1-x)\) gives
+\[
+ \|\lambda\odot e^s-\lambda\|_2
+ \le(e^x-1)\|\lambda\|_2
+ \le {x\over1-x}\|\lambda\|_2.
+\tag{4}
+\]
+At \(x\le1/1024\), \((1+x)^3<1.003\),
+\(x/(1-x)<1.001x\), and \((1+x)^3-1<3.004x\). The isometry of \(\Delta\)
+therefore yields
+\[
+\begin{aligned}
+ \|{\cal A}\Delta(\lambda\odot e^s)-\Delta(\lambda)\|_F
+ &\le\|{\cal A}\|_2\|\Delta(\lambda\odot e^s-\lambda)\|_F
+  +\|{\cal A}-I\|_2\|\Delta(\lambda)\|_F\\
+ &<(1.003)(1.001)x\|\lambda\|_2+3.004x\|\lambda\|_2
+ <4.1x\|\lambda\|_2.
+\end{aligned}
+\tag{5}
+\]
+The static geometry gives
+\(\|G_M\|_2^2=\lambda_{\max}(G_M^\top G_M)\le1+q_*\), and hence
+\[
+ \|{\mathscr G}\|_2\le(1+q_*)^{3/2}.
+\tag{6}
+\]
+It remains to compare the denominator with the same coefficient norm used in
+(5).  Put \(H_U=U^\top U\), \(H_V=V^\top V\), and \(H_W=W^\top W\), and
+define the two-mode and full three-mode Khatri--Rao Grams
+\[
+ K_{VW}:=(W\odot V)^\top(W\odot V)=H_W\circ H_V,
+ \qquad
+ K_{UVW}:=(W\odot V\odot U)^\top(W\odot V\odot U)
+      =H_U\circ H_V\circ H_W,
+\]
+where column \(j\) of \(W\odot V\odot U\) is
+\(w_j\otimes v_j\otimes u_j\).  For each row \(j\),
+\[
+ \sum_{\ell\ne j}|(K_{VW})_{j\ell}|
+ \le \left(\max_{\ell\ne j}|(H_W)_{j\ell}|\right)
+   \sum_{\ell\ne j}|(H_V)_{j\ell}|
+ \le q_*^2.
+\]
+Thus symmetry and Gershgorin give
+\((1-q_*^2)I\preceq K_{VW}\preceq(1+q_*^2)I\).  Since
+\(H_U\succeq0\) and \(\operatorname{diag}(H_U)=I\), the checked Schur-order
+fact in the displayed auxiliary fact gives the full sandwich
+\[
+ (1-q_*^2)\|\lambda\|_2^2
+ \le \lambda^\top K_{UVW}\lambda
+ =\left\|\sum_{j=1}^r\lambda_j
+    u_j\otimes v_j\otimes w_j\right\|_F^2
+ =\|T\|_F^2
+ \le(1+q_*^2)\|\lambda\|_2^2.
+\tag{7}
+\]
+This is the required full three-mode Gram identity; the two-mode Gram is used
+only as the Schur-order input.
+Combining (5)--(7), direct substitution of \(q_*=1/4096\) gives
+\[
+ { \|T-\widehat T(e)\|_F\over\|T\|_F}
+ \le { (1+q_*)^{3/2}\over\sqrt{1-q_*^2}}\,4.1x
+ <5x.
+\tag{8}
+\]
+Finally Assumption~\ref{assump:base-scale} gives \(\kappa_0\ge1\), hence
+\(5x\le8\kappa_0^2x\).  At \(x=0\), (2) is exactly the target tensor and
+the residual is zero.  This is a conditional exact-entry statement; it does
+not assert that the frozen landing produces that entry in the baseline
+specialization.
+
+
+
+\end{proof}
+\end{lemma}
+\begin{proposition}[covered-path stopping before the cap]\label{prop:step-012-stop-cap}
+Under Assumptions~\ref{assump:base-scale} and
+\ref{assump:accuracy-confidence}, the Proposition~\ref{prop:step-011-chronological-contraction}, and
+Lemma~\ref{lem:step-012-residual-transfer}, suppose a covered run has the
+generated \(E_{\rm basin}\) entry
+\(x_0=d_Q(e^{\rm land},0)\le4096\omega<1\), and let \(x_t\) be its quotient
+error after \(t\) completed cyclic sweeps. With \(\ell=17/512\),
+\[
+ { \|T-\widehat T(e^t)\|_F\over\|T\|_F}
+ \le8\kappa_0^2\ell^t.
+\tag{9}
+\]
+Choose any universal \(C_{\rm stop}\) with
+\(C_{\rm stop}\log(512/17)\ge1\) (for example \(C_{\rm stop}=1\)), and set
+\[
+ m_{\rm cap}=\left\lceil C_{\rm stop}\log{8\kappa_0^2\over\epsilon}\right\rceil.
+\tag{10}
+\]
+Then the covered run has an original relative-Frobenius residual test at most
+\(\epsilon\) no later than this counter.
+
+\begin{proof}
+Proposition~\ref{prop:step-011-chronological-contraction} gives
+\(x_t\le\ell^t x_0\). Since \(x_0<1\),
+Lemma~\ref{lem:step-012-residual-transfer} gives (9). Put
+\(A=8\kappa_0^2/\epsilon\). Assumptions~\ref{assump:base-scale} and
+\ref{assump:accuracy-confidence} give \(A>1\). Since \(\ell=17/512\),
+(10) and the displayed choice of \(C_{\rm stop}\) imply
+\[
+ \ell^{m_{\rm cap}}
+ \le\exp\{-C_{\rm stop}\log A\log(512/17)\}\le A^{-1}.
+\tag{11}
+\]
+The residual at the \(m_{\rm cap}\)-th completed sweep is therefore at most
+\(8\kappa_0^2A^{-1}=\epsilon\). The setting tests the original residual after
+each completed sweep, so the first hit is no later than the cap. If an exact
+quotient entry \(x_0=0\) is supplied, the contraction forces
+\(x_t=0\) for every completed sweep, and
+Lemma~\ref{lem:step-012-residual-transfer} makes the first tested residual
+zero. This conditional statement does not prove the baseline landing trace.
+
+
+
+\end{proof}
+\end{proposition}
+\begin{proposition}[observable cap and Moore--Penrose branch separation]\label{prop:step-012-finite-tapes}
+Under Assumption~\ref{assump:accuracy-confidence}, fix a generated
+\(E_{\rm sm}\) instance, for which (7) gives \(\|T\|_F>0\). Define the
+algorithmically admissible raw domain of one complete run and of all \(J\)
+restarts by
+\[
+ \Omega_{\rm raw}^{(1),\circ}:=
+ \left\{(\xi_i^{(M)})_{i\in[k],\,M\in\{U,V,W\}}:
+   \|\xi_i^{(M)}\|_2>0\ \text{for every }i,M\right\},
+ \qquad
+ \Omega_{\rm raw}^{(J),\circ}:=
+   (\Omega_{\rm raw}^{(1),\circ})^J.
+\tag{12}
+\]
+For every tape in \(\Omega_{\rm raw}^{(1),\circ}\), the setting's procedure
+is initialized and has a finite observable outcome. A zero proposal
+contraction, empty certified pool, wrong cluster count, zero \(\theta_a\), or
+zero active norm at the landing commit terminates that run as unsuccessful.
+Otherwise every prescribed Moore--Penrose solve is defined, including for a
+singular design. The cyclic phase executes no more than \(m_{\rm cap}\)
+complete sweeps and returns either the first original-residual hit or an
+unsuccessful timeout. No singular or off-event tape receives the generated
+\(E_{\rm basin}\) recurrence. Under the conditional Gaussian law,
+\(\Pr(\Omega_{\rm raw}^{(J),\circ}\mid{\cal F}_{\rm sm})=1\).
+
+\begin{proof}
+The domain (12) is exactly where every initial normalization
+\({\cal N}(\xi_i^{(M)})\) in the written procedure is defined. A nondegenerate
+Gaussian vector in finite dimension is zero with probability zero; a finite
+union over \(3kJ\) raw vectors proves the final probability-one assertion.
+No statement is made about a raw-zero array outside (12).
+
+There are \(k\) proposal slots and each has at most
+\(L_{\rm prop}+1\) old-state evaluations. A zero contraction is checked before
+normalization, so that gate has a finite failure branch. Certification,
+score filtering, graph construction, and connected components are finite
+operations on the k-slot list. The setting declares the other listed
+failures observable before a cyclic update.
+
+For a surviving landing call, each frozen design is a finite matrix. The
+Moore--Penrose rule returns a matrix even when its Gram is singular; no
+ordinary inverse is silently substituted. The positive-norm landing gate
+either accepts all active columns or marks the run unsuccessful. On an
+the landing, the literal cyclic update also uses a Moore--Penrose
+solution at every mode. A singular cyclic design is thus a legal finite
+algebraic branch, but it is outside the hypotheses of the quotient
+Refresh\_s proof; no d\_Q, target-span, or contraction claim is made there.
+If a proof-only canonical refresh would require division by a zero output
+norm, that refresh is not invoked and the literal tape remains on the
+observable capped branch. The original residual is still evaluable for the
+literal factors because \(\|T\|_F>0\).
+
+The counter is initialized before the first cyclic solve and ranges over the
+finite set \(\{1,\ldots,m_{\rm cap}\}\). After each counted completed sweep,
+the original residual is tested; a hit returns success, and the final nonhit
+returns unsuccessful. Thus any admissible noncovered, singular, off-chart,
+or nonhitting tape cannot cause unbounded work or justify the good-path
+recurrence. This deterministic completion property is the event
+\(E_{\rm run\_cap}\).
+
+
+
+\end{proof}
+\end{proposition}
+\begin{proposition}[dense per-run runtime]\label{prop:step-012-dense-cost}
+For the setting-defined finite dimensions and horizons, under the completion
+conclusion of Proposition~\ref{prop:step-012-finite-tapes}, put in the dense
+exact-arithmetic model
+\[
+ B_s:=n^3s+n^2s^2+s^3,\qquad
+ L:=L_{\rm prop},\qquad m:=m_{\rm cap}.
+\tag{13}
+\]
+There is a universal c\_cost such that one complete run, including all
+unsuccessful branches, costs at most
+\[
+ W_{\rm run}\le c_{\rm cost}\left[
+ n^3+kL(n^3+n)+kn^3+k^2n+(m+1)B_k+kn\right].
+\tag{14}
+\]
+This bound is independent of every generated condition number.
+
+\begin{proof}
+Materializing the three dense unfoldings costs
+O(n^3) once. A contraction of an n by n^2 unfolding with one Khatri--Rao
+vector costs O(n^3); three contractions per Jacobi commit, including
+certification look-ahead, give O(k L n^3). Generating and normalizing raw
+vectors costs O(kn). Scores use at most O(k n^3) dense tensor contractions.
+The three modewise inner products for every retained pair and the connected
+graph cost O(k^2 n), covering filtering, clustering, and tie handling.
+
+The frozen landing pass has three products of an n by n^2 unfolding with an
+n^2 by k design, dense Gram formation, and three k-column Moore--Penrose
+factorizations. Their
+combined cost is O(B\_k); the one rebalance is lower order. A cyclic sweep has
+the same dense upper bound O(B\_k), including construction of the reconstructed
+tensor for the original residual test (O(n^3 k)). Inactive k-r columns may
+be removed for a sharper B\_r bound, but retaining the prescribed zero-padded
+arrays is covered by B\_k. Singular pseudoinverses use the same
+dimension-controlled factorization, so no inverse condition number enters.
+There are at most \(m\) sweeps by
+Proposition~\ref{prop:step-012-finite-tapes}, proving (14).
+
+
+
+\end{proof}
+\end{proposition}
+\begin{proposition}[conditional restart amplification]\label{prop:step-012-restart}
+Under Assumptions~\ref{assump:random-initialization} and
+\ref{assump:accuracy-confidence}, condition on a fixed generated
+\(E_{\rm sm}\) instance. Suppose complete runs use the cap in (10), and
+invoke the Proposition~\ref{prop:step-003-coupon}, the Proposition~\ref{prop:step-011-chronological-contraction}, and the local
+Propositions~\ref{prop:step-012-stop-cap} and
+\ref{prop:step-012-finite-tapes}. Let
+\[
+ J=\max\{1,\lceil C_{\rm rep}\log(1/\delta_{\rm init})\rceil\},
+ \qquad C_{\rm rep}\ge1/\log27.
+\tag{15}
+\]
+Then
+\[
+ \Pr(\text{all \(J\) runs fail}\mid{\cal F}\_{\rm sm})
+ \le(1-p\_0)^J=27^{-J}\le\delta\_{\rm init}.
+\tag{16}
+\]
+On the complementary event, the smallest-residual successful output has at
+most \(k\) nonzero terms and original relative residual at most \(\epsilon\).
+
+\begin{proof}
+Proposition~\ref{prop:step-003-coupon} gives a one-run coverage probability
+at least \(p_0=26/27\). On a fixed \(E_{\rm sm}\) tensor, the deterministic chain through
+Proposition~\ref{prop:step-011-chronological-contraction} supplies the
+generated \(E_{\rm basin}\) on that covered branch, and
+Proposition~\ref{prop:step-012-stop-cap} supplies a residual hit before the
+cap. Proposition~\ref{prop:step-012-finite-tapes} makes every admissible tape
+a completed success/failure trial, and its domain has conditional probability
+one. Fresh complete-run tapes make these outcomes independent conditional on
+\({\cal F}_{\rm sm}\), even though the tensor is reused. Therefore the
+failure product in (16) holds. Since
+\[
+ J\log27\ge C_{\rm rep}\log(1/\delta_{\rm init})\log27
+ \ge\log(1/\delta_{\rm init}),
+\]
+the final inequality in (16) follows. The clamp in (15) remains exact for
+\(\delta_{\rm init}\) near one.
+
+Every successful run passed the original residual test, so minimum-residual
+selection cannot increase its residual. Only the active rank-\(r\) columns
+can be nonzero and \(r\le k\); all inactive columns remain exactly zero.
+
+
+\end{proof}
+\end{proposition}
+\begin{proof}[Step composition]
+Fix a generated \(E_{\rm sm}\) instance.  For completed run
+\(a\in[J]\), let \(E_{\rm cov}^{(a)}\) and \(E_{\rm basin}^{(a)}\) denote
+the generated interfaces on its fresh tape, and define
+\[
+ E_{\rm stop}^{(a)}:=E_{\rm cov}^{(a)}\cap E_{\rm basin}^{(a)}\cap
+ \left\{\exists t\le m_{\rm cap}:
+ {\|T-\widehat T(e^{t,a})\|_F\over\|T\|_F}\le\epsilon\right\},
+ \qquad
+ E_{\rm restart}:=\bigcup_{a=1}^J E_{\rm stop}^{(a)}.
+\tag{17}
+\]
+Let \(E_{\rm run\_cap}\) be the event that every one of the \(J\) runs
+returns either success or an observable gate/timeout failure within its
+declared work.  Proposition~\ref{prop:step-012-finite-tapes} proves this for
+every tape in \(\Omega_{\rm raw}^{(J),\circ}\), a conditional
+probability-one domain.  Its singular and off-event branches are never fed
+into the quotient recurrence.
+
+Proposition~\ref{prop:step-003-coupon} gives
+\(\Pr(E_{\rm cov}^{(a)}\mid{\cal F}_{\rm sm})\ge26/27\).  On each covered
+branch, Proposition~\ref{prop:step-011-chronological-contraction} produces
+the exact-span chronology and (the landing conclusion of Proposition~\ref{prop:step-010-quotient-entry}).  Lemma~\ref{lem:step-012-residual-transfer}
+uses the full three-mode Gram sandwich (7) to transfer that quotient error to
+the original relative Frobenius residual, and
+Proposition~\ref{prop:step-012-stop-cap} proves
+\(E_{\rm cov}^{(a)}\subseteq E_{\rm stop}^{(a)}\).  Therefore
+Proposition~\ref{prop:step-012-restart} gives the nested probabilities
+\[
+ \Pr(E_{\rm restart}\mid{\cal F}_{\rm sm})\ge1-\delta_{\rm init}
+ \quad\text{on }E_{\rm sm},
+ \qquad
+ \Pr(E_{\rm sm}\cap E_{\rm restart})
+ \ge(1-\delta_{\rm sm})(1-\delta_{\rm init}).
+\tag{18}
+\]
+The second inequality is the tower calculation
+\(\mathbb E[1_{E_{\rm sm}}
+\Pr(E_{\rm restart}\mid{\cal F}_{\rm sm})]\); it does not move either
+confidence parameter into \(k\).  Every successful output passed the original
+residual test and has only its \(r\le k\) active columns nonzero.
+
+It remains to charge all restarts rather than only one run.  Define the
+proof-local ceiling bounds
+\[
+ \bar k:=1+C_{\rm rank}r^{5/3}(\log r)^{5/2},\qquad
+ R_\epsilon:=2+C_{\rm stop}
+ \left(\log8+2\log\kappa_0+\log(1/\epsilon)\right).
+\]
+From the setting definitions and \(0<\delta_{\rm init}<1\),
+\[
+ k\le\bar k,\quad
+ L_{\rm prop}\le2+(C_{\rm burn}+C_{\rm cert})\log r,\quad
+ m_{\rm cap}+1\le R_\epsilon,\quad
+ J\le1+C_{\rm rep}\log(1/\delta_{\rm init}).
+\tag{19}
+\]
+Applying Proposition~\ref{prop:step-012-dense-cost} to each completed run
+and summing, including early failed runs, gives the displayed total-work
+bound
+\[
+\begin{aligned}
+ W_{\rm total}\ &\le J W_{\rm run}\\
+ &\le c_{\rm cost}\bigl(1+C_{\rm rep}\log(1/\delta_{\rm init})\bigr)
+ \Big[ n^3
+ +\bar k\{2+(C_{\rm burn}+C_{\rm cert})\log r\}(n^3+n)
+ +\bar k n^3+\bar k^2n\\
+ &\hspace{46mm}
+ +R_\epsilon(n^3\bar k+n^2\bar k^2+\bar k^3)+\bar k n\Big].
+\end{aligned}
+\tag{20}
+\]
+In particular, after exposing the prescribed rank powers, (20) is
+\[
+\begin{aligned}
+ W_{\rm total}=O\!\Big((1+\log(1/\delta_{\rm init}))\big[&n^3
+ +n^3r^{5/3}(\log r)^{7/2}+nr^{10/3}(\log r)^5\\
+ &+(1+\log\kappa_0+\log(1/\epsilon))
+ \{n^3r^{5/3}(\log r)^{5/2}
+ +n^2r^{10/3}(\log r)^5+r^5(\log r)^{15/2}\}\big]\Big).
+\end{aligned}
+\tag{21}
+\]
+The hidden constant in (21) depends only on the fixed universal algorithmic
+constants.  The bound is independent of \(\rho^{-1}\), hence is in
+particular polynomial in the full list of variables allowed by the setting.
+
+For the exact/noiseless baseline, the scope of this step is conditional: if
+the exact quotient entry \(e^0=0\) is supplied,
+Proposition~\ref{prop:step-011-chronological-contraction} keeps every completed
+cyclic state at zero and Lemma~\ref{lem:step-012-residual-transfer} gives an
+exactly zero first tested residual for every \(\epsilon>0\).  Neither the cap
+nor the restart rule weakens that conclusion.  This step does not prove that
+the frozen landing produces \(e^0=0\); the complete landing specialization is
+proved separately in Proposition~\ref{prop:step-013-frozen-landing}.
+\end{proof}
+
+\begin{proposition}[Rate Specialization Bridge]\label{prop:rate-specialization-bridge}
+Under Assumptions~\ref{assump:base-scale},
+\ref{assump:subquadratic-rank}, and
+\ref{assump:accuracy-confidence}, condition on the static event supplied by
+Proposition~\ref{prop:step-001-geometry}.  Choose
+\[
+ k=\left\lceil C_{\rm rank}r^{5/3}(\log r)^{5/2}\right\rceil,
+ \quad m_{\rm cap}=\left\lceil C_{\rm stop}\log\frac{8\kappa _0^2}{\epsilon}\right\rceil,
+ \quad J=\max\left\{1,\left\lceil C_{\rm rep}\log\frac1{\delta_{\rm init}}\right\rceil\right\}.
+\tag{B.1}
+\]
+Let
+\[
+ \bar k:=1+C_{\rm rank}r^{5/3}(\log r)^{5/2},\quad
+ R_\epsilon:=2+C_{\rm stop}\bigl(\log 8+2\log\kappa _0+\log(1/\epsilon)\bigr).
+\tag{B.2}
+\]
+Then
+\[
+ k\le\bar k,\quad
+ L_{\rm prop}\le2+(C_{\rm burn}+C_{\rm cert})\log r,\quad
+ m_{\rm cap}+1\le R_\epsilon,\quad
+ J\le1+C_{\rm rep}\log(1/\delta_{\rm init}).
+\tag{B.3}
+\]
+If $p_0\ge26/27$ is the one-run coverage probability from
+Proposition~\ref{prop:step-003-coupon}, then
+\[
+ (1-p_0)^J\le27^{-J}\le\delta_{\rm init}
+ \quad\text{whenever }C_{\rm rep}\ge1/\log 27.
+\tag{B.4}
+\]
+Moreover, the dense per-run bound of
+Proposition~\ref{prop:step-012-dense-cost} gives
+\[
+\begin{aligned}
+W_{\rm total}
+\le c_{\rm cost}\bigl(1+C_{\rm rep}\log(1/\delta_{\rm init})\bigr)
+\Big[&n^3+\bar k\{2+(C_{\rm burn}+C_{\rm cert})\log r\}(n^3+n)\\
+&+\bar k n^3+\bar k^2n
++R_\epsilon(n^3\bar k+n^2\bar k^2+\bar k^3)+\bar k n\Big].
+\end{aligned}
+\tag{B.5}
+\]
+Consequently,
+\[
+\begin{aligned}
+W_{\rm total}=O\!\Big((1+\log(1/\delta_{\rm init}))\big[&n^3
++n^3r^{5/3}(\log r)^{7/2}+nr^{10/3}(\log r)^5\\
+&+(1+\log\kappa _0+\log(1/\epsilon))
+\{n^3r^{5/3}(\log r)^{5/2}
++n^2r^{10/3}(\log r)^5+r^5(\log r)^{15/2}\}\big]\Big).
+\end{aligned}
+\tag{B.6}
+\]
+The hidden constant depends only on the fixed universal algorithmic constants;
+the declared envelopes for $\kappa _0$ and $\rho^{-1}$ are the only
+structural substitutions.  The probability in (B.4) is conditional on the
+static event, while the first probability remains the separate
+$1-\delta_{\rm sm}$ event probability.
+\end{proposition}
+
+\begin{proof}
+The ceiling in the definition of $k$ gives the first inequality in (B.3).
+The definitions $L_{\rm prop}=L_{\rm burn}+L_{\rm cert}$ and
+$L_{\rm burn},L_{\rm cert}\le1+C\log r$ give the second.  Since
+$0<\epsilon<1$ and $\kappa _0\ge1$,
+\[
+\log\frac{8\kappa _0^2}{\epsilon}
+ =\log 8+2\log\kappa _0+\log(1/\epsilon),
+\]
+which proves the third inequality in (B.3); the last follows from the ceiling
+and $0<\delta_{\rm init}<1$.  The conditional one-run bound is
+Proposition~\ref{prop:step-003-coupon}; independence of complete runs from
+Assumption~\ref{assump:random-initialization} gives the first inequality in
+(B.4), and the choice of $C_{\rm rep}$ gives the second.
+
+Substituting (B.3) into the per-run expression of
+Proposition~\ref{prop:step-012-dense-cost} and multiplying by the bound on
+$J$ gives (B.5).  Expanding
+$\bar k=O(r^{5/3}(\log r)^{5/2})$ yields the three displayed rank powers in
+(B.6); every term is retained, and the only absorbed scalar is
+$R_\epsilon=O(1+\log\kappa _0+\log(1/\epsilon))$.  The finite envelopes
+$\kappa _0\le r^{d_\kappa}$ and $\rho^{-1}\le r^{d_\rho}$ then make the
+hidden dependence polynomial in the stated structural variables.  No
+confidence parameter is absorbed into $k$, and the two probability modes are
+not multiplied until the tower calculation in the main theorem.
+\end{proof}
+
+\subsection{Exact orthogonal baseline}\label{app:step-013}
+
+Assume the deterministic scope condition $\mathsf{ExactCertifiedSeed}$ from
+the preliminaries.  The proof below checks the frozen-input solves, the
+product-preserving rebalance, all chronological mode orderings, and the
+original residual directly.  We use only the elementary identities
+$(A\odot B)^\top(A\odot B)=(A^\top A)\circ(B^\top B)$ and the
+Moore--Penrose formula for a positive scalar multiple of an orthonormal
+matrix; their three mode-wise instances are displayed explicitly.
+
+Set
+\[
+G_U:=U,\quad G_V:=V,\quad G_W:=W,\qquad
+K_U:=W\odot V,\quad K_V:=W\odot U,\quad K_W:=V\odot U.
+\tag{1}
+\]
+The Khatri--Rao column \(K_M(:,j)\) is the tensor product of the two held
+target directions in the order used by the corresponding unfolding. Under
+\(\mathsf{ExactCertifiedSeed}\),
+\[
+K_U^\top K_U=K_V^\top K_V=K_W^\top K_W=I_r,
+\tag{2}
+\]
+because each factor Gram is \(I_r\). The target tensor and its unfoldings are
+\[
+T=\lambda\sum_{j=1}^r u_j\otimes v_j\otimes w_j,\quad
+T_{(1)}=\lambda U K_U^\top,\quad
+T_{(2)}=\lambda V K_V^\top,\quad
+T_{(3)}=\lambda W K_W^\top.
+\tag{3}
+\]
+
+
+\begin{lemma}[exact orthogonal equal-weight seed and frozen Grams]\label{lem:step-013-baseline-geometry}
+Under the local
+specialization \(\mathsf{ExactCertifiedSeed}\) and the seed convention from Proposition~\ref{prop:step-008-seed-interface}, the
+observable scores satisfy \(\theta_j=\lambda\), the balanced frozen seed is
+\[
+X^0=\lambda^{1/3}U,\qquad Y^0=\lambda^{1/3}V,\qquad
+Z^0=\lambda^{1/3}W,
+\tag{4}
+\]
+and, for every \(M\in\{U,V,W\}\),
+\[
+P_M^0=G_M,\quad D_M^0=\lambda^{1/3}I_r,\quad
+C_M^0=0,\quad N_M^0=0,\quad s^0=0,
+\tag{5}
+\]
+\[
+F_M^0=(P_M^0)^\top P_M^0=I_r,\quad
+G_M^\top P_M^0=I_r.
+\tag{6}
+\]
+Consequently, in all three held-mode orderings,
+\[
+\begin{array}{c|c|c}
+M & J_M^0=F_{M'}^0\circ F_{M''}^0 &
+Q_M^0=(G_{M'}^\top P_{M'}^0)\circ(G_{M''}^\top P_{M''}^0)\\ \hline
+U & I\circ I=I & I\circ I=I\\
+V & I\circ I=I & I\circ I=I\\
+W & I\circ I=I & I\circ I=I
+\end{array}
+\tag{7}
+\]
+and every actual frozen pair Gram is \(\lambda^{4/3}I_r\).
+
+\begin{proof}
+For an exact representative,
+\[
+\theta_j=\left\langle
+\lambda\sum_{\ell=1}^r u_\ell\otimes v_\ell\otimes w_\ell,\,
+u_j\otimes v_j\otimes w_j\right\rangle
+=\lambda
+\tag{8}
+\]
+by the orthonormality identities. If a product-one sign chart is used, the three signs multiply to
+one and the same inner product and represented rank-one term result. The
+setting's observable seed therefore gives (4), and normalizing its columns
+gives (5). Equations (6)--(7) follow from the orthonormality identities and the Khatri--Rao identity.
+Finally, for each mode \(M\),
+\[
+H_M^0=(P_{M'}^0D_{M'}^0)\odot(P_{M''}^0D_{M''}^0)
+=\lambda^{2/3}K_M,
+\tag{9}
+\]
+so (2) gives \((H_M^0)^\top H_M^0=\lambda^{4/3}I_r\). This also proves
+that the exact seed has no perpendicular or product-log defect. The line
+\(\lambda^{4/3}I_r\) is valid for each of the U, V, and W orderings in (7).
+Thus the actual left-hand defects in the bridge (the differences bounded by
+\(\delta_L,\delta_F,\delta_{FL}\), and \(Q_M^0-J_M^0\)) are zero, while the
+conservative budget constants \(\eta_J,\eta_{QJ},\eta_A\) may remain positive
+at the main-theorem threshold values. All these bounds are therefore sharp
+upper bounds at the baseline, and the budget constants become zero in the
+optional formal \(q_*,\tau_r\downarrow0\) no-floor limit; no budget is used
+to weaken the equalities above.
+
+
+
+\end{proof}
+\end{lemma}
+\begin{proposition}[three exact frozen landing solves]\label{prop:step-013-frozen-landing}
+Under \(\mathsf{ExactCertifiedSeed}\), with
+the synchronized frozen designs of the setting, the Moore--Penrose outputs
+are well-defined and, mode by mode,
+\[
+\begin{array}{c|c|c|c}
+M & H_M^0 & T_{(M)}H_M^0 &
+T_{(M)}H_M^0((H_M^0)^\top H_M^0)^\dagger\\ \hline
+U & \lambda^{2/3}K_U & \lambda^{5/3}U & \lambda^{1/3}U\\
+V & \lambda^{2/3}K_V & \lambda^{5/3}V & \lambda^{1/3}V\\
+W & \lambda^{2/3}K_W & \lambda^{5/3}W & \lambda^{1/3}W
+\end{array}
+\tag{10}
+\]
+Thus \(\widetilde X_U=\lambda^{1/3}U\),
+\(\widetilde X_V=\lambda^{1/3}V\), and
+\(\widetilde X_W=\lambda^{1/3}W\), with every active output norm equal to
+\(\lambda^{1/3}>0\).
+
+\begin{proof}
+The U row follows from (2)--(3) and (9):
+\[
+T_{(1)}H_U^0
+=\lambda U K_U^\top(\lambda^{2/3}K_U)
+=\lambda^{5/3}U,\qquad
+((H_U^0)^\top H_U^0)^\dagger=\lambda^{-4/3}I_r.
+\tag{11}
+\]
+Their product is \(\lambda^{1/3}U\). Replacing \((U,K_U)\) by
+\((V,K_V)\) and \((W,K_W)\) gives, respectively,
+\[
+T_{(2)}H_V^0=\lambda^{5/3}V,\qquad
+T_{(3)}H_W^0=\lambda^{5/3}W,
+\tag{12}
+\]
+with the same Gram inverse and the same output scale. These are three
+independent evaluations from the one frozen seed; no output in one row is an
+input to another row. Since \(\lambda^{4/3}I_r\) is nonsingular, the
+Moore--Penrose rule agrees with the displayed ordinary inverse, while the
+calculation remains valid at the exact \(\rho_{\rm sm}=0\) specialization.
+
+
+
+\end{proof}
+\end{proposition}
+\begin{proposition}[joint rebalance and product-one gauge]\label{prop:step-013-rebalance-gauge}
+Under \(\mathsf{ExactCertifiedSeed}\) and the
+outputs of Proposition~\ref{prop:step-013-frozen-landing}, the setting's
+single joint rebalance returns
+\[
+X_U^{\rm land}=\lambda^{1/3}U,\qquad
+X_V^{\rm land}=\lambda^{1/3}V,\qquad
+X_W^{\rm land}=\lambda^{1/3}W,
+\tag{13}
+\]
+preserves every represented rank-one product, and has
+\(\gamma_j^{\rm land}=\lambda\) and \(s_j^{\rm land}=0\) for every \(j\).
+The same represented tensor and quotient state result after any positive
+product-one scale gauge or proof-only product-one sign gauge.
+
+\begin{proof}
+Proposition~\ref{prop:step-013-frozen-landing}
+gives \(\|\widetilde x_j\|_2=\|\widetilde y_j\|_2
+=\|\widetilde z_j\|_2=\lambda^{1/3}\). Hence
+\[
+\widetilde\gamma_j
+=\|\widetilde x_j\|_2\|\widetilde y_j\|_2\|\widetilde z_j\|_2
+=\lambda,
+\tag{14}
+\]
+and the rebalance multiplier is \(\widetilde\gamma_j^{1/3}
+=\lambda^{1/3}\). Dividing each output by its norm therefore gives (13).
+More generally, for nonzero factors and positive scalars
+\(R_{U,j},R_{V,j},R_{W,j}\) with
+\(R_{U,j}R_{V,j}R_{W,j}=1\),
+\[
+(R_{U,j}x_j)\otimes(R_{V,j}y_j)\otimes(R_{W,j}z_j)
+=x_j\otimes y_j\otimes z_j.
+\tag{15}
+\]
+The rebalance uses positive norms and is exactly such a product-one
+rescaling. A product-one sign gauge has the same identity with signs in
+place of positive scalars. Thus neither gauge changes the represented term,
+and the common product remains \(\lambda\), giving
+\(s_j=\log(\lambda/\lambda)=0\).
+
+
+
+\end{proof}
+\end{proposition}
+\begin{proposition}[all cyclic normal equations are stationary]\label{prop:step-013-cyclic-fixed}
+Under \(\mathsf{ExactCertifiedSeed}\), start a
+cyclic active ALS sweep from the balanced state (13), with inactive columns
+zero. For each mode \(M\in\{U,V,W\}\), regardless of which mode is first,
+the held design is \(\lambda^{2/3}K_M\), its Gram is
+\(\lambda^{4/3}I_r\), and the exact normal equation returns
+\(\lambda^{1/3}G_M\). After the product-preserving canonical refresh, the
+state is unchanged and the refreshed common-product register is \(s=0\).
+Consequently every chronological Refresh\_s state and every full cyclic
+sweep equal the same exact quotient state; this holds for all six
+permutations of the U/V/W mode order.
+
+\begin{proof}
+For the displayed U/V/W order, the U block uses
+the held factors \(Y=\lambda^{1/3}V\), \(Z=\lambda^{1/3}W\), hence
+\[
+H_U=\lambda^{2/3}K_U,\quad H_U^\top H_U=\lambda^{4/3}I_r,\quad
+T_{(1)}H_U=\lambda^{5/3}U,\quad
+\widetilde X_U=\lambda^{1/3}U.
+\tag{16}
+\]
+Its solved product with the held factors is \(\lambda\) in each component,
+so Refresh\_s writes \(s_U^+=0\) and the canonical representative is again
+the state (13). The V block then has the unchanged held U and W factors and
+similarly obeys
+\[
+H_V=\lambda^{2/3}K_V,\quad
+T_{(2)}H_V=\lambda^{5/3}V,\quad
+\widetilde X_V=\lambda^{1/3}V,\quad s_V^+=0.
+\tag{17}
+\]
+The W block gives
+\[
+H_W=\lambda^{2/3}K_W,\quad
+T_{(3)}H_W=\lambda^{5/3}W,\quad
+\widetilde X_W=\lambda^{1/3}W,\quad s_W^+=0.
+\tag{18}
+\]
+Thus the U/V/W chronological intermediate states are all exactly (13).
+For any other first mode, use the same generic identity
+\[
+T_{(M)}=\lambda G_MK_M^\top,\qquad
+H_M=\lambda^{2/3}K_M,\qquad K_M^\top K_M=I_r,
+\tag{19}
+\]
+and then apply the remaining two identities in their chosen order. This
+proves all six mode permutations, not only the displayed cyclic order.
+
+For completeness, the scale-equivariance interface can be checked
+directly. If a literal state is changed by positive diagonal
+\(R_UR_VR_W=I\), then the mode-M design changes to \(H_MR_M^{-1}\), and
+\[
+T_{(M)}H_MR_M^{-1}
+\big(R_M^{-1}H_M^\top H_MR_M^{-1}\big)^{-1}
+=T_{(M)}H_M(H_M^\top H_M)^{-1}R_M.
+\tag{20}
+\]
+Therefore the solved factors differ only by the same gauge, and the
+canonical Refresh\_s representative is (13). The sign gauge is handled by
+the proof-only orientation and preserves each product by (15). Induction
+over sweeps proves stationarity forever, with no accumulated forcing term.
+
+
+
+\end{proof}
+\end{proposition}
+\begin{proposition}[exact residual and no-floor stopping]\label{prop:step-013-zero-residual}
+Under \(\mathsf{ExactCertifiedSeed}\) and
+Assumption~\ref{assump:accuracy-confidence}, after the joint landing and
+after every cyclic refresh, the active factors represent exactly
+\[
+\widehat T
+=\lambda\sum_{j=1}^r u_j\otimes v_j\otimes w_j=T,
+\tag{21}
+\]
+and the inactive \(k-r\) columns contribute zero. Hence
+\[
+\frac{\|T-\widehat T\|_F}{\|T\|_F}=0\le\epsilon,\qquad
+\|T\|_F=\lambda\sqrt r>0.
+\tag{22}
+\]
+The first original residual test is therefore successful (whether it is
+performed immediately after landing or after the first completed cyclic
+sweep), for every \(\epsilon>0\); no \(\omega\)-, \(\tau_r\)-, or positive-radius
+error floor is present.
+
+\begin{proof}
+Equation (13) gives, componentwise,
+\[
+x_j^{\rm land}\otimes y_j^{\rm land}\otimes z_j^{\rm land}
+=\lambda u_j\otimes v_j\otimes w_j.
+\tag{23}
+\]
+Proposition~\ref{prop:step-013-cyclic-fixed} shows that the same equality is
+preserved by every block and every refresh. The tensors
+\(u_j\otimes v_j\otimes w_j\) are mutually orthonormal in the Frobenius inner
+product under the orthonormality identities, so \(\|T\|_F^2=r\lambda^2\). This proves (21)--(22) and
+the stopping assertion. In the deterministic \(\rho_{\rm sm}=0\) limit
+there is no perturbation term to dominate, and in the optional formal
+no-floor limit \(q_*,\tau_r\downarrow0\) the same exact calculation remains
+valid. The positive \(\rho_{\rm ALS}\) chart radius is only a neighborhood
+for the main theorem; the baseline state is its exact origin, so no radius
+term enters (22).
+
+
+\end{proof}
+\end{proposition}
+\begin{proof}[Step composition]
+Lemma~\ref{lem:step-013-baseline-geometry} derives the exact observable score,
+balanced seed, zero coefficient/perpendicular/product-log fields, and all
+three identity pair/cross Grams. Proposition~\ref{prop:step-013-frozen-landing}
+then evaluates the three synchronized frozen-input pseudoinverse calls from
+that single seed. It explicitly gives the U, V, and W outputs and their
+positive normalizers, so no mode-specific predecessor or post-solve design is
+used. Proposition~\ref{prop:step-013-rebalance-gauge} applies the one joint
+positive rebalance, proves product preservation, and handles both positive
+scale and product-one sign gauges. Proposition~\ref{prop:step-013-cyclic-fixed}
+checks the chronological U/V/W normal equations and their generic permutation,
+and proves that every Refresh\_s register remains zero. Finally,
+Proposition~\ref{prop:step-013-zero-residual} identifies the represented tensor
+with \(T\), computes its strictly positive Frobenius norm, and applies the
+residual-test conclusion of Proposition~\ref{prop:step-012-stop-cap}. Thus all three frozen landing
+outputs, every cyclic refresh, the common product error, and the original
+residual have the exact values required by the theorem. The argument is a
+deterministic specialization and leaves the positive-\(\rho\) main-theorem
+assumptions untouched.
+\end{proof}
+
+\subsection{Proof of the Main Theorem}\label{app:main-proof}
+\begin{proof}[Proof of the main theorem]
+The theorem assumptions provide the primitive conditions used by the
+first step.  Proposition~\ref{prop:step-001-realized-gram} gives the static event
+with probability at least $1-\delta_{\rm sm}$.  Conditional on that event,
+Propositions~\ref{prop:step-002-joint-window} and
+\ref{prop:step-003-coupon} provide the universal covered-run event.  The
+recurrence and certificate conclusions in Proposition~\ref{prop:step-004-certificate}
+and Proposition~\ref{prop:step-005-threshold-ledger} feed the label-free selection
+and gauge results of Proposition~\ref{prop:step-006-graph}; the two
+orientation closure and seed bounds follow from Proposition~\ref{prop:step-007-row}
+and Proposition~\ref{prop:step-008-seed-interface}.  The frozen reserves and
+joint landing are then supplied by Proposition~\ref{prop:step-009-normalizer}
+and Proposition~\ref{prop:step-010-quotient-entry}.  Finally,
+Proposition~\ref{prop:step-011-chronological-contraction} and
+Proposition~\ref{prop:step-012-restart} yield the original Frobenius stopping
+criterion, polynomial runtime, and conditional restart confidence.  These are
+exactly the generated interfaces stated in theorem, and the direct
+composition introduces no additional assumption or rate loss.  In the exact
+orthogonal equal-weight specialization, Proposition~\ref{prop:step-013-zero-residual}
+gives the stated zero-residual fixed point.
+\end{proof}
