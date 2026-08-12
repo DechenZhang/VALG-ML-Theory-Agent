@@ -5,6 +5,16 @@ type: software
 authors:
   - family-names: Zhang
     given-names: Dechen
+  - family-names: Tang
+    given-names: Xuan
+  - family-names: Yin
+    given-names: Xinxiang
+  - family-names: Chen
+    given-names: Xingwu
+  - family-names: Qian
+    given-names: Jian
+  - family-names: Zou
+    given-names: Difan
 repository-code: "https://github.com/DechenZhang/VALG-ML-Theory-Agent"
 url: "https://github.com/DechenZhang/VALG-ML-Theory-Agent"
 version: 0.1.0
