@@ -1,12 +1,12 @@
 cff-version: 1.2.0
 message: "If you use this workflow or its case-study corpus, please cite this repository."
-title: "ML Theory Research Agent"
+title: "VALG-ML-Theory-Agent"
 type: software
 authors:
   - family-names: Zhang
     given-names: Dechen
-repository-code: "https://github.com/DechenZhang/ml-theory-research-agent"
-url: "https://github.com/DechenZhang/ml-theory-research-agent"
+repository-code: "https://github.com/DechenZhang/VALG-ML-Theory-Agent"
+url: "https://github.com/DechenZhang/VALG-ML-Theory-Agent"
 version: 0.1.0
 date-released: 2026-08-12
 license: MIT

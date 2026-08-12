@@ -1,4 +1,4 @@
-# VALG-ML-Theory-Agent
+# VALG: An Agentic System for ML Theory Research
 
 <div align="center">
 

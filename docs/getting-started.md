@@ -21,9 +21,9 @@ Project-local installation makes the exact skill version part of a research
 project's working context. It is the recommended setup for a reproducible run.
 
 ```bash
-git clone https://github.com/DechenZhang/ml-theory-research-agent.git
+git clone https://github.com/DechenZhang/VALG-ML-Theory-Agent.git
 mkdir -p /path/to/research-project/.agents/skills
-cp -R ml-theory-research-agent/skills/. /path/to/research-project/.agents/skills/
+cp -R VALG-ML-Theory-Agent/skills/. /path/to/research-project/.agents/skills/
 ```
 
 Copy the entire contents of `skills/`, including `_shared/`. The controller and
@@ -48,7 +48,7 @@ skill directory instead:
 
 ```bash
 mkdir -p ~/.codex/skills
-cp -R ml-theory-research-agent/skills/. ~/.codex/skills/
+cp -R VALG-ML-Theory-Agent/skills/. ~/.codex/skills/
 ```
 
 Project-local skills are easier to pin and audit. When both locations contain a
