@@ -19,8 +19,8 @@ distinct perspective branches, formalizes viable ideas into fixed settings and
 goals that serve as theorem contracts, develops proofs from global structure to
 local derivations, and routes failures to the smallest stage capable of
 repairing them. When a failure exposes an obstruction in the theorem
-formulation rather than a local derivation or proof structure, it creates an
-explicitly related variant or relaxation, allowing the problem setup to be
+formulation rather than a local derivation or proof structure, it **creates an
+explicitly related variant or relaxation**, allowing the problem setup to be
 revised while preserving its mathematical relationship to the source problem.
 A run may return zero, one, or several workflow-accepted theorem candidates.
 
@@ -289,11 +289,12 @@ The case studies contain full-progress solutions for two subproblems:
 candidates provide restricted-method results, special cases, conditional
 results, or partial progress.
 
-Start with the [case-study index](case-studies/colt-2026/README.md), then inspect
-the common [evaluation rubric](case-studies/colt-2026/evaluation/EVALUATION_RUBRICS.md)
-and [refined ranking and status report](case-studies/colt-2026/evaluation/RESULTS_EVALUATION_REFINED.md).
-Each run includes its source brief, branch traces, accepted bundles, compiled
-candidate papers where available, and links to the independent evaluation.
+Each run in the [case-study index](case-studies/colt-2026/README.md) includes
+its source brief, branch traces, accepted bundles, compiled candidate papers
+where available, and links to the
+[independent evaluation](case-studies/colt-2026/evaluation/RESULTS_EVALUATION_REFINED.md)
+conducted under the shared
+[evaluation rubric](case-studies/colt-2026/evaluation/EVALUATION_RUBRICS.md).
 
 ## Inputs and Controls
 
