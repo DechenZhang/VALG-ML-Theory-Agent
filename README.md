@@ -256,16 +256,14 @@ mean estimation, and differentially private PAC learning.
 | Source open-problem papers | **5** |
 | Source-aligned subproblem runs | **9** |
 | Workflow-accepted candidate bundles | **22** |
-| Bundles labeled `verified_full_solution` by the post-run evaluation | **2** |
+| Subproblems with full-progress solutions | **2** |
 
-Under the included post-run evaluation, the two bundles labeled
-`verified_full_solution` are **Perspective 1 / idea 1** and **Perspective 2 /
-idea 1** for **Online Open Question 2**. The remaining candidates are
-restricted-method results, special cases, conditional results, partial
-progress, dependency-limited results, or results awaiting stronger source and
-proof verification. The 22 bundles are internally workflow-accepted; the
-evaluation labels are a separate assessment and are not proof evidence by
-themselves.
+The case studies contain full-progress solutions for two subproblems:
+**Online Open Question 2**, through **Perspective 1 / idea 1** and
+**Perspective 2 / idea 1**; and **One-bit Open Problem 1**, through
+**Perspective 1 / idea 1** and **Perspective 3 / idea 1**. The remaining
+candidates provide restricted-method results, special cases, conditional
+results, or partial progress.
 
 Start with the [case-study index](case-studies/colt-2026/README.md), then inspect
 the common [evaluation rubric](case-studies/colt-2026/evaluation/EVALUATION_RUBRICS.md)
