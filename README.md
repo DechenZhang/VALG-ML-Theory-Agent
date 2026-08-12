@@ -339,7 +339,7 @@ evidence from prior runs, not runtime dependencies.
 | [Skills](docs/skills.md) | Responsibilities and outputs of all 17 skills |
 | [Run Layout](docs/run-layout.md) | Artifact ownership, lifecycle, history, and accepted copies |
 | [Configuration](docs/configuration.md) | Inputs, modes, attempt budgets, and retry routing |
-| [Reproducibility](docs/reproducibility.md) | Rerun procedure, preserved traces, verification boundaries, and known limits |
+| [Reproducibility](docs/reproducibility.md) | Rerun procedure, preserved traces, archival guidance, and known limits |
 
 ## Research Status
 

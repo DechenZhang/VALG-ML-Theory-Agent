@@ -62,25 +62,6 @@ Worker logs may retain paths and digests for omitted runtime scratch files such
 as `.controller_tmp/`. These entries document historical dispatches, but their
 referenced scratch files are not part of the published corpus.
 
-## Verification Boundaries
-
-A controller-accepted bundle has passed the workflow's internal contracts and
-review ensemble. It has not thereby received peer review. Before citing or
-building on a candidate:
-
-1. check every cited theorem against its primary source;
-2. verify that assumptions and mathematical objects map exactly;
-3. audit theorem-critical derivations and boundary cases independently;
-4. compile the LaTeX bundle from a clean temporary directory;
-5. compare the theorem to the original open-problem scope;
-6. record whether the result is full, restricted, conditional, partial, or
-   unresolved.
-
-The COLT corpus uses this distinction explicitly: it contains 22
-workflow-accepted candidates, but only Online Open Question 2 currently has
-independently evaluated verified full solutions. Other labels remain
-provisional at the strength stated in the case-study index.
-
 ## Citation And Archival Use
 
 Use [`CITATION.cff`](../CITATION.cff) for the repository and cite the relevant
