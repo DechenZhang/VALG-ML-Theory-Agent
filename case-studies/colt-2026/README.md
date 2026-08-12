@@ -2,6 +2,8 @@
 
 This corpus records applications of `ml-theory-research-agent` to **5 COLT 2026 problems**, decomposed into **9 subproblems**, with **22 workflow-accepted candidate bundles**.
 
+**Execution configuration.** All nine preserved case-study runs used `gpt-5.6-sol` with maximum reasoning effort.
+
 Workflow acceptance means that a branch passed the controller's internal artifact and review gates. It does **not** mean that the original open problem was solved. The separate [independent evaluation](evaluation/RESULTS_EVALUATION_REFINED.md) reads the source paper and public proof artifacts under a common [rubric](evaluation/EVALUATION_RUBRICS.md). Only Online Open Question 2 currently has independently evaluated verified full solutions: Perspective 1 / idea 1 and Perspective 2 / idea 1.
 
 ## Corpus index
