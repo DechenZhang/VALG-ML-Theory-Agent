@@ -191,23 +191,32 @@ producer-reviewer separation, or final acceptance gates.
 
 ### Diagnosis and Revision
 
-Every failed review identifies the smallest admissible repair target. The
-controller, not the reviewer, executes the route and charges the corresponding
-producer budget.
+A failed attempt may expose a defect in a local derivation, a dependency
+interface, the proof architecture, the theorem formulation, or the problem
+setup itself. VALG-ML-Theory-Agent uses a hierarchy of revision loops that
+routes each diagnosis to the smallest stage capable of repairing it:
 
-| Diagnosed defect | Normal repair target |
-| --- | --- |
-| Exposition, notation, or accepted-step composition | Proof assembly |
-| Invalid or incomplete local derivation | The affected proof step, followed by a fresh step review |
-| Incomplete theorem-level diagnostic | Global diagnostic under the same accepted sketch |
-| Missing dependency, incompatible interface, or flawed proof architecture | Proof sketch, followed by fresh downstream proof work |
-| Unsupported assumption, changed protocol, weakened target, or other theorem-contract obstruction | A new idea and formal setting |
+```text
+proof assembly -> proof step -> proof sketch -> idea and formal setting
+```
 
-If a local budget is exhausted, routing escalates to a broader upstream repair;
-if no admissible idea remains, only that perspective branch fails. Consumed
-artifacts are archived before replacement, but history is never current proof
-evidence. Any upstream revision makes affected downstream artifacts stale and
-requires fresh production and review.
+The global diagnostic may be revised under the same proof sketch or may expose
+a defect that requires sketch or formulation repair. When the obstruction lies
+in the theorem formulation or initial setup, the workflow creates a
+source-relative variant or relaxation, preserving its mathematical relationship
+to the originating problem.
+
+<p align="center">
+  <a href="assets/revision-loops.png"><img src="assets/revision-loops.png" alt="Controlled VALG revision cycle: a current attempt is independently reviewed, routed by the controller to the smallest repair level, revised by the selected producer, and freshly reviewed before acceptance; blocking reviews return to controller routing" width="100%"></a>
+</p>
+
+The reviewer identifies the smallest mathematical object that must change; the
+controller validates the diagnosis, selects the responsible stage, and charges
+its retry budget. The selected producer changes only the implicated component
+using the accepted upstream context, the failed attempt, and the validated
+diagnosis. Every revision must pass a fresh independent review or human
+checkpoint before downstream use. If a local retry budget is exhausted, the
+controller escalates to the next broader repair level with remaining budget.
 
 ## Auditable Outputs
 
@@ -292,7 +301,7 @@ budgets by themselves. Exact defaults and controlled status values live in
 |-- docs/                           # installation, workflow, controls, run semantics
 |-- examples/minimal/               # reusable research-brief example
 |-- case-studies/colt-2026/         # source papers, run traces, evaluations
-|-- assets/workflow.png
+|-- assets/                         # workflow and revision-loop figures
 |-- scripts/                         # repository validation
 |-- .github/workflows/               # continuous validation
 |-- CITATION.cff
