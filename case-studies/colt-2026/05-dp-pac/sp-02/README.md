@@ -1,6 +1,6 @@
 # Open Question 2: Lower bounds in terms of concept-class cardinality
 
-The accepted candidates are a conditional reduction and a restricted direct-sum lower bound. Both remain partial, provisional, and dependency-limited under the refined evaluation.
+The accepted candidates are a conditional reduction and a restricted direct-sum lower bound. Both provide partial progress under the refined evaluation.
 
 > **Status note:** `workflow_accepted` records the controller's internal gates, not an independent mathematical verdict. `Pk/Il` denotes Perspective `k` / idea `l`. The conclusions and weighted scores below summarize the [refined evaluation](../../evaluation/RESULTS_EVALUATION_REFINED.md).
 
@@ -8,8 +8,8 @@ The accepted candidates are a conditional reduction and a restricted direct-sum 
 
 | Branch | Contribution | Independent conclusion | Weighted score `W` | Paper | Accepted bundle |
 | --- | --- | --- | ---: | --- | --- |
-| `P1/I5` | Conditional global-stability nonexistence route | Conditional reduction; dependency-limited | 4.15 | [PDF](results/perspective_1/idea_5/paper.pdf) | [bundle](results/perspective_1/idea_5/theory/) |
-| `P2/I2` | Disjoint-threshold-minor direct sum | Restricted lower bound; dependency-limited | 5.70 | [PDF](results/perspective_2/idea_2/paper.pdf) | [bundle](results/perspective_2/idea_2/theory/) |
+| `P1/I5` | Conditional global-stability nonexistence route | Conditional reduction | 4.15 | [PDF](results/perspective_1/idea_5/paper.pdf) | [bundle](results/perspective_1/idea_5/theory/) |
+| `P2/I2` | Disjoint-threshold-minor direct sum | Restricted lower bound | 5.70 | [PDF](results/perspective_2/idea_2/paper.pdf) | [bundle](results/perspective_2/idea_2/theory/) |
 
 ## Run record
 

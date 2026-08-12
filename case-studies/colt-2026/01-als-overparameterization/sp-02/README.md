@@ -10,7 +10,7 @@ The three accepted candidates are conditional or protocol-restricted lower-bound
 | --- | --- | --- | ---: | --- | --- |
 | `P1/I2` | Fixed-one-mode constrained ALS and GD | Altered-protocol diagnostic | 4.90 | [PDF](results/perspective_1/idea_2/paper.pdf) | [bundle](results/perspective_1/idea_2/theory/) |
 | `P2/I2` | Adaptive-projector path certificate | Conditional structural progress | 5.45 | [PDF](results/perspective_2/idea_2/paper.pdf) | [bundle](results/perspective_2/idea_2/theory/) |
-| `P3/I3` | Tangent-deficit certificate for balanced GD | Conditional result; primary-source verification pending | 4.65 | [PDF](results/perspective_3/idea_3/paper.pdf) | [bundle](results/perspective_3/idea_3/theory/) |
+| `P3/I3` | Tangent-deficit certificate for balanced GD | Conditional result | 4.65 | [PDF](results/perspective_3/idea_3/paper.pdf) | [bundle](results/perspective_3/idea_3/theory/) |
 
 ## Run record
 
