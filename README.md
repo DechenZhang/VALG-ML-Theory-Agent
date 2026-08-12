@@ -207,7 +207,7 @@ source-relative variant or relaxation, preserving its mathematical relationship
 to the originating problem.
 
 <p align="center">
-  <a href="assets/revision-loops.png"><img src="assets/revision-loops.png" alt="Controlled VALG revision cycle: a current attempt is independently reviewed, routed by the controller to the smallest repair level, revised by the selected producer, and freshly reviewed before acceptance; blocking reviews return to controller routing" width="100%"></a>
+  <a href="assets/revision-loops.png"><img src="assets/revision-loops.png" alt="Controlled VALG revision cycle: a current attempt is independently reviewed, routed by the controller to the smallest repair level, revised by the selected producer, and freshly reviewed before acceptance; blocking reviews return to controller routing" width="520"></a>
 </p>
 
 The reviewer identifies the smallest mathematical object that must change; the
