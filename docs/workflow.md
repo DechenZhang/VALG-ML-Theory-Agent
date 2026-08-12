@@ -77,26 +77,39 @@ retry, justify acceptance, or be copied to results. Important gates include:
 - fresh review of every repaired proof step;
 - self-contained, paper-ready assembly without unreviewed lemmas.
 
-Reviews route failures to the smallest justified producer. The following is a
-simplified repair map; the first four routes preserve the current accepted
-sketch, while deeper obstructions trigger a sketch or idea-level revision:
+When a review or human checkpoint rejects an attempt, it identifies the
+smallest mathematical object that must change. The controller validates that
+diagnosis, selects the responsible producer, and charges the applicable retry
+budget. The selected producer changes only the implicated component using the
+accepted upstream context, the failed attempt, and the validated diagnosis.
+The revised artifact must then pass a fresh independent review or human
+checkpoint before downstream use.
+
+Repair follows a hierarchy from the narrowest proof artifact to the theorem
+contract:
 
 ```text
-review finding
-  |- same-sketch global repair
-  |- dependency-step repair
-  |- local-step repair
-  |- assembly repair
-  `- proof-sketch revision
-       `- idea/formalization revision
-            `- branch failure
+proof assembly -> proof step or dependency -> proof sketch
+                                            -> idea and formal setting
 ```
 
-An `IDEA_FAIL` route is valid only when preserving the current setting and goal
-cannot repair the defect. It must identify the theorem-contract change, such as
-a primitive assumption, algorithm, theorem scope, exposed dependence, success
-criterion, addition of a theorem-facing mechanism source unsupported by the
-current setting, or weakened conclusion.
+The global diagnostic sits alongside this hierarchy: it may be revised under
+the same accepted sketch, or it may expose a defect requiring sketch or
+theorem-contract repair. An `IDEA_FAIL` route is valid only when preserving the
+current setting and goal cannot repair the defect. It must identify the
+required theorem-contract change, such as a primitive assumption, algorithm,
+theorem scope, exposed dependence, success criterion, theorem-facing mechanism
+source unsupported by the current setting, or weakened conclusion.
+
+When the obstruction lies in the theorem formulation or initial problem
+setup, the next idea must be an explicitly related source-relative variant or
+relaxation. It preserves the branch's mathematical relationship to the
+originating question and records the remaining gap rather than silently
+replacing the target. If a local retry budget is exhausted, the controller
+escalates to the next broader repair level with remaining budget. Exhausting
+all idea slots ends only the affected perspective branch. See
+[Configuration](configuration.md) for the exact status-to-route mappings and
+attempt limits.
 
 ## Worker Separation
 
