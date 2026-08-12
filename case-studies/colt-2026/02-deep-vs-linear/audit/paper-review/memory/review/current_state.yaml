@@ -1,7 +1,0 @@
-workflow_mode: full-review-only
-phase: baseline_review
-round: -1
-round_type: standard-full-review
-latest_summary_path: null
-loop_status: in_progress
-next_expected_phase: complete_baseline_review

@@ -22,7 +22,6 @@ jobs:
             --offline
             './README.md'
             './CONTRIBUTING.md'
-            './CHANGELOG.md'
             './THIRD_PARTY_NOTICES.md'
             './docs/**/*.md'
             './examples/**/*.md'

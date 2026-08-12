@@ -61,8 +61,9 @@ without copy verification.
 
 Every `MAX_*` value is the total number of producer attempts, not a retry count.
 Attempt 1 consumes the first slot; attempt `MAX + 1` is invalid. Reviewer and
-diagnostic calls consume no producer budget by themselves. The repair producer
-that a review dispatches consumes the next slot.
+aggregation calls consume no producer budget by themselves. The `global-proof`
+diagnostic is a producer stage and consumes its dedicated attempt budget; any
+producer rerun dispatched by a review consumes the next slot.
 
 These values are hard controller gates in the published workflow. A local fork
 can change the policy deliberately, but a run must not exceed the limits stated
@@ -87,7 +88,7 @@ by the controller version it records.
 | Aggregate review | `ACCEPTED` | Verify gates, copy the accepted bundle, then continue other branches. |
 | Aggregate review | `PROOF_ASSEMBLY_FLAW` | Repair assembly, then rerun all specialized and aggregate reviews. |
 | Aggregate review | `PROOF_STEP_FLAW` | Repair and freshly review the named step, refresh affected downstream work, then reassemble and rereview. |
-| Aggregate review | `PROOF_SKETCH_FLAW` | Start the next sketch attempt and regenerate all binding downstream proof artifacts. |
+| Aggregate review | `PROOF_SKETCH_FLAW` | Start the next sketch attempt; after its acceptance, rerun the global diagnostic and review, then produce fresh step proofs and reviews, assembly, specialized reviews, and aggregate review. |
 | Aggregate review | `IDEA_FAIL` | Create a new idea only with the required theorem-contract rationale. |
 
 When a local unit budget is exhausted, routing escalates to sketch revision.

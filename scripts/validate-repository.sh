@@ -37,6 +37,14 @@ assert_count 5 "$problem_count" "COLT problem directories"
 assert_count 9 "$subproblem_count" "COLT subproblem directories"
 assert_count 22 "$accepted_count" "accepted candidate bundles"
 
+for evaluation_file in \
+  README.md EVALUATION_RUBRICS.md RESULTS_EVALUATION_REFINED.md; do
+  test -f "case-studies/colt-2026/evaluation/$evaluation_file" \
+    || die "missing case-studies/colt-2026/evaluation/$evaluation_file"
+done
+test ! -d case-studies/colt-2026/evaluation/audits \
+  || die "superseded evaluation/audits directory still exists"
+
 while IFS= read -r problem_dir; do
   test -f "$problem_dir/README.md" || die "missing $problem_dir/README.md"
   test -f "$problem_dir/source.pdf" || die "missing $problem_dir/source.pdf"
@@ -44,18 +52,6 @@ done < <(find case-studies/colt-2026 -mindepth 1 -maxdepth 1 -type d -name '0*' 
 
 while IFS= read -r run_root; do
   test -f "$run_root/README.md" || die "missing $run_root/README.md"
-  test -f "$run_root/run-metadata.yaml" || die "missing $run_root/run-metadata.yaml"
-  test -f "$run_root/MANIFEST.sha256" || die "missing $run_root/MANIFEST.sha256"
-
-  expected_inventory=$(
-    cd "$run_root"
-    git ls-files --cached --others --exclude-standard -- . \
-      | grep -Ev '^(MANIFEST\.sha256|\.MANIFEST\.sha256\.tmp)$' \
-      | LC_ALL=C sort | sed 's#^#./#'
-  )
-  recorded_inventory=$(sed -E 's/^[[:xdigit:]]{64}[[:space:]]+//' "$run_root/MANIFEST.sha256" | LC_ALL=C sort)
-  test "$recorded_inventory" = "$expected_inventory" || die "manifest inventory mismatch in $run_root"
-  (cd "$run_root" && shasum -a 256 -c MANIFEST.sha256 >/dev/null) || die "checksum failure in $run_root"
 done < <(find case-studies/colt-2026 -mindepth 2 -maxdepth 2 -type d -name 'sp-*' | sort)
 
 while IFS= read -r theory_dir; do
@@ -99,13 +95,12 @@ max_path_length=$(find . -not -path './.git*' -print | awk '{if (length > max) m
 test "$max_path_length" -le 240 || die "maximum path length is $max_path_length (limit 240)"
 
 if grep -nHE '[[:blank:]]+$' \
-  README.md CONTRIBUTING.md CHANGELOG.md THIRD_PARTY_NOTICES.md \
+  README.md CONTRIBUTING.md THIRD_PARTY_NOTICES.md \
   docs/*.md examples/minimal/*.md \
   case-studies/colt-2026/README.md \
   case-studies/colt-2026/*/README.md \
   case-studies/colt-2026/*/sp-*/README.md \
   case-studies/colt-2026/evaluation/*.md \
-  case-studies/colt-2026/evaluation/audits/*.md \
   scripts/*.sh .github/workflows/*.yml >/dev/null; then
   die "trailing whitespace found in maintained documentation or scripts"
 fi

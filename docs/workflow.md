@@ -49,7 +49,7 @@ non-duplicate branches rather than a history of every failed candidate.
 The proof workflow deliberately separates theorem-level planning, local proof
 production, and final evaluation.
 
-| Phase | Producer and reviewer behavior | Binding output |
+| Phase | Producer and reviewer behavior | Stage output |
 | --- | --- | --- |
 | Proof sketch | Build lemma-sized steps with stable IDs, dependencies, assumptions, tools, exported interfaces, and known blockers; review viability before detailed proof work. | Accepted `proof_sketch.md` plus `proof_sketch_review.md` |
 | Global diagnostic | Draft the whole theorem argument, map sketch blocks, audit assumptions and citations, and expose hard steps; independently review the theorem-level structure. | `global_proof.md` is diagnostic context only and must be paired with an accepted `global_proof_review.md`. |
@@ -77,19 +77,26 @@ retry, justify acceptance, or be copied to results. Important gates include:
 - fresh review of every repaired proof step;
 - self-contained, paper-ready assembly without unreviewed lemmas.
 
-Reviews route failures to the smallest justified producer:
+Reviews route failures to the smallest justified producer. The following is a
+simplified repair map; the first four routes preserve the current accepted
+sketch, while deeper obstructions trigger a sketch or idea-level revision:
 
 ```text
-local proof or assembly repair
-          -> proof-sketch revision
-          -> idea/formalization revision
-          -> branch failure
+review finding
+  |- same-sketch global repair
+  |- dependency-step repair
+  |- local-step repair
+  |- assembly repair
+  `- proof-sketch revision
+       `- idea/formalization revision
+            `- branch failure
 ```
 
 An `IDEA_FAIL` route is valid only when preserving the current setting and goal
 cannot repair the defect. It must identify the theorem-contract change, such as
 a primitive assumption, algorithm, theorem scope, exposed dependence, success
-criterion, missing mechanism source, or weakened conclusion.
+criterion, addition of a theorem-facing mechanism source unsupported by the
+current setting, or weakened conclusion.
 
 ## Worker Separation
 

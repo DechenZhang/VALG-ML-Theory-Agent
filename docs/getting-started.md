@@ -9,10 +9,11 @@ where to inspect the result. The public entry point is always
 - Codex with project or personal skills enabled and support for subagents.
 - Git for cloning the repository.
 - Network access when the literature stages need external sources.
-- A TeX distribution only if you want to compile an assembled proof bundle.
+- A working TeX toolchain for any run intended to reach aggregate acceptance.
 
-The workflow can produce useful diagnostics without TeX, but final assembly
-checks are strongest when the generated LaTeX can be compiled.
+Early research and proof diagnostics can proceed without TeX, but final
+aggregate acceptance requires `latex_template/main.tex` to compile from inside
+the bundle.
 
 ## Project-Local Installation
 

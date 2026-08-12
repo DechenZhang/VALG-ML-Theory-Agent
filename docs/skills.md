@@ -35,7 +35,9 @@ make the stage skills interoperable:
 - `checklists/tracker-lifecycle.md` defines tracker update rules;
 - `checklists/review-outcomes.md` defines controlled reviewer outcomes;
 - `checklists/result-copy.md` defines final accepted-copy verification;
-- `references/directory-conventions.md` defines run and branch paths.
+- `references/directory-conventions.md` defines run and branch paths;
+- `references/terminology.md` defines shared workflow terms and controlled
+  vocabulary.
 
 All `../_shared/...` references are resolved relative to the installed skill
 directory, not relative to the active research run. This is why the entire

@@ -5,7 +5,7 @@ Thumbs.db
 *.swo
 *~
 
-# Controller scratch files. Curated prompt traces belong under audit/.
+# Controller scratch files
 .controller_tmp/
 
 # LaTeX build products. Source, bibliography, style, and final PDFs are kept.

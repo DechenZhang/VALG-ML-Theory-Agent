@@ -1,9 +1,0 @@
-You are the distinct step-scoped reviewer for perspective_1/idea_1, step_002, unit attempt 1, sketch attempt 2, in an interactive ml-theory-research-agent run. Use gpt-5.6-sol at max reasoning. Work only in the current run root.
-
-Read <CODEX_SKILLS_ROOT>/proof-step-review/SKILL.md completely and every directly required shared contract/template it names. Then independently review exactly perspective_1/idea_1/proof_steps/step_002/proof.md. Do not repair it.
-
-Binding SHA-256 values: setting f77d11e1a559e22a96b14de1936d50c691c79d5a4a15e5806ddf4e6d119ada83; accepted sketch 2fa48ee16cca9a8d0379071f448d1e72ce98ae46d624482d772e74b97649c74a; accepted sketch review 40b66331aa50a66607d068e266c545a865044bd175a56d81f012542e6d17d6f8; submitted proof b59794f374d66ec07e21b8662c438251ef1d9ba42c8a4db03894d62c8560e69c; accepted dependency step_001 proof 6c4e3048df8a590bd8c24f6f6b1d6be157c7fe8895af38bd8736ea1c419ac939; accepted dependency review cd4bc2cee3dabe3638d749cf6996ab6a3bcf6d2a69743bfafcf78b44ad88c3a7.
-
-Audit exactly unit_001 and unit_002. Verify the normalized Euclidean derivative/projector lemma, anchor-derived nonvanishing, exact coordinate relation gamma_F(theta)=gamma_G((theta-c)/h), endpoint convention, and literal Gamma_proj(F) <= sqrt(N) Delta B_Q(1+q B_P)/h bound. Check N=1, q=0, stationary and degree-zero cases and Counter-example 1 scale. Reject hidden norm margins, probability assumptions, hidden constants, stale evidence, or dependency drift.
-
-Write only perspective_1/idea_1/proof_steps/step_002/review.md, replacing the stale attempt-1 live review whose consumed copy is archived. Use every required section, exactly two Per-Lemma Audit subsections, and raw controlled fields. Validate hashes, identity, headings, labels, table arity, ASCII/control bytes, TeX balance, and file scope. Report status, target, blockers, and final SHA-256.

@@ -5,7 +5,7 @@
 - Sketch attempt: 2
 - Step ID: `step_009`
 - Unit attempt: 2
-- Reviewed proof artifact: `<WORKSPACE_ROOT>/colt_2026_v336_piecewise_lipschitz_open_problem/colt_2026_v336_002_invited-open-problem-online-optimization-of-piecewise-lipschitz-functi/subproblem_002/perspective_2/idea_1/proof_steps/step_009/proof.md` (SHA-256: `8da586dbdd81e96baba3d3767b4982caf24ecbe40c3bb7987ba41a06477208e3`)
+- Reviewed proof artifact: `proof.md` (SHA-256: `8da586dbdd81e96baba3d3767b4982caf24ecbe40c3bb7987ba41a06477208e3`)
 
 ## Step-Review Status
 

@@ -22,16 +22,16 @@ run-local evidence, and independently evaluated case-study claims.
   solution" for an independent evaluation that checks the original source
   contract and public proof.
 - Remove machine-local paths, credentials, OS metadata, and compiler residue
-  before publishing traces. Record intentional sanitization in
-  `run-metadata.yaml`.
-- Regenerate `MANIFEST.sha256` after changing a published run.
+  before publishing traces. Describe intentional sanitization in the relevant
+  case-study documentation or pull request.
+- Do not add inferred run controls or publication-only checksum manifests to
+  preserved historical run roots.
 
 ## Validation
 
 Run the repository checks before opening a pull request:
 
 ```bash
-bash scripts/generate-manifests.sh
 bash scripts/validate-repository.sh
 ```
 
