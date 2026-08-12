@@ -61,9 +61,9 @@ mkdir -p /path/to/research-project/runs/my-problem
 cd /path/to/research-project/runs/my-problem
 ```
 
-Optionally add a `RESEARCH_BRIEF.md` to preserve the source question, target
-setting, constraints, known obstacles, and criteria for useful progress. Start
-from the [minimal example](examples/minimal/README.md) when useful.
+Add a `RESEARCH_BRIEF.md` when you have a clear or partially clear working
+direction that should remain stable across the run. Start from the reusable
+[minimal brief](examples/minimal/RESEARCH_BRIEF.md).
 
 ### 3. Invoke the controller
 
@@ -72,6 +72,23 @@ Open Codex in the run root and send:
 ```text
 $ml-theory-research-agent "your ML theory research direction"
 ```
+
+> [!TIP]
+> **Make the target explicit.** A prompt-only run is supported: the controller
+> uses the prompt as the effective research direction. When
+> `RESEARCH_BRIEF.md` is present, the controller merges it with the prompt
+> before literature search, with the brief refining or overriding overlapping
+> details. Literature mapping, perspective selection, idea generation, and
+> formalization therefore share one stable, inspectable target.
+
+A useful brief can state the source question; model, data, learner, oracle, or
+algorithmic setting; desired theorem or form of progress; assumptions and
+constraints; known obstacles; excluded shortcuts; and criteria for full,
+partial, conditional, or negative progress. It need not begin with a complete
+formal statement: record the choices that are already clear and identify those
+that remain open to refinement. See the [minimal brief](examples/minimal/RESEARCH_BRIEF.md)
+for a concise template and the [COLT 2026 case studies](case-studies/colt-2026/README.md)
+for detailed, source-grounded examples.
 
 `RUN_MODE=interactive` is the default. To approve research checkpoints by
 default while retaining source-fidelity, artifact, provenance, retry-budget,
