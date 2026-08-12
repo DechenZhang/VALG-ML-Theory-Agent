@@ -131,24 +131,3 @@ results/perspective_M/idea_N/theory/
 That public bundle contains `setting.md`, `proof_review.md`, and
 `latex_template/`. The full branch directory remains the audit trace. See
 [Run Layout](run-layout.md) for binding and archival artifact rules.
-
-## Common Problems
-
-**A stage cannot find `_shared/`.** Reinstall the complete contents of
-`skills/`; copying only the controller directory is insufficient.
-
-**No literature sources can be checked.** Confirm network access. Treat any
-uncorroborated citations as provisional and verify them against primary
-sources before relying on the proof.
-
-**A generated PDF is missing.** The accepted output contract is a LaTeX source
-bundle, not necessarily a compiled PDF. Install TeX and compile `main.tex` in a
-temporary build directory.
-
-**Windows reports a path-length error.** The preserved proof histories include
-relative paths up to 235 characters. Enable Git long-path support and clone the
-repository near the drive root when inspecting the full case-study corpus.
-
-**A run keeps revising one branch.** Read the most recent review and tracker
-row. Attempt limits are total producer attempts, and exhaustion deliberately
-escalates from a local repair to a sketch, idea, or branch failure.
