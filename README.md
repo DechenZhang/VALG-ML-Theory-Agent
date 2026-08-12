@@ -2,9 +2,7 @@
 
 <div align="center">
 
-**Source-relative theorem development for machine-learning theory, from literature gaps to reviewer-separated proof artifacts.**
-
-[![Validate repository](https://github.com/DechenZhang/ml-theory-research-agent/actions/workflows/validate.yml/badge.svg)](https://github.com/DechenZhang/ml-theory-research-agent/actions/workflows/validate.yml) ![Platform: Codex](https://img.shields.io/badge/platform-Codex-111827) ![Skills: 17](https://img.shields.io/badge/skills-17-0f766e) ![Case studies: 22 candidates](https://img.shields.io/badge/case%20studies-22%20candidates-7c3aed) [![License: MIT](https://img.shields.io/badge/license-MIT-4b5563)](LICENSE)
+![Platform: Codex](https://img.shields.io/badge/platform-Codex-111827) ![Skills: 17](https://img.shields.io/badge/skills-17-0f766e) ![Case studies: 22 candidates](https://img.shields.io/badge/case%20studies-22%20candidates-7c3aed) [![License: MIT](https://img.shields.io/badge/license-MIT-4b5563)](LICENSE)
 
 [🚀 Quick Start](#quick-start) | [🔥 Why It Matters](#why-valg-ml-theory-agent) | [⚙️ Workflow](#how-valg-ml-theory-agent-works) | [🧪 Case Studies](#colt-2026-case-studies) | [📚 Documentation](#documentation) | [📝 Citation](#citation)
 
