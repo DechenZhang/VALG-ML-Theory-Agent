@@ -32,9 +32,9 @@ A run may return zero, one, or several workflow-accepted theorem candidates.
 </p>
 
 <p align="center">
-  <a href="assets/workflow.png"><img src="assets/workflow.png" alt="VALG-ML-Theory-Agent workflow from literature survey and perspective branches through proof construction, reviewer-separated reviews, repair routing, and accepted output" width="100%"></a>
+  <a href="assets/workflow.png"><img src="assets/workflow.png" alt="VALG-ML-Theory-Agent workflow: source-relative idea discovery creates theorem contracts, split theory-proof stages alternate producers and independent reviewers, and failure-localized routing repairs the smallest implicated object under controller invariants" width="100%"></a>
 </p>
-<p align="center"><em>Workflow 1 creates source-relative theorem branches. Workflow 2 develops and reviews one fixed branch from proof graph to assembled result.</em></p>
+<p align="center"><em>Workflow 1 creates source-relative theorem branches. Workflow 2 develops and reviews every active branch from proof graph to accepted manuscript, with failure-localized repair routing throughout.</em></p>
 
 ## Quick Start
 
@@ -207,7 +207,7 @@ source-relative variant or relaxation, preserving its mathematical relationship
 to the originating problem.
 
 <p align="center">
-  <a href="assets/revision-loops.png"><img src="assets/revision-loops.png" alt="Controlled VALG revision cycle: a current attempt is independently reviewed, routed by the controller to the smallest repair level, revised by the selected producer, and freshly reviewed before acceptance; blocking reviews return to controller routing" width="520"></a>
+  <a href="assets/revision-loops.png"><img src="assets/revision-loops.png" alt="Controlled VALG revision cycle: an attempt receives independent diagnosis, the controller selects the repair level, the responsible producer revises only the implicated component, and a fresh review either advances the result or returns the branch to controller routing" width="100%"></a>
 </p>
 
 The reviewer identifies the smallest mathematical object that must change; the

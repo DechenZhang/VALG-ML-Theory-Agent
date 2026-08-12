@@ -1,0 +1,103 @@
+\definecolor{rlInk}{HTML}{243746}
+\definecolor{rlNavy}{HTML}{264A67}
+\definecolor{rlBlue}{HTML}{4A78A8}
+\definecolor{rlTeal}{HTML}{3B817B}
+\definecolor{rlAmber}{HTML}{B9782D}
+\definecolor{rlGreen}{HTML}{4B8058}
+\definecolor{rlRust}{HTML}{B85C38}
+\definecolor{rlLine}{HTML}{C8D2DA}
+
+\begin{tikzpicture}[
+  font=\sffamily\footnotesize,
+  text=rlInk,
+  line cap=round,
+  line join=round,
+  stage/.style={
+    draw=rlLine,
+    rounded corners=2pt,
+    line width=0.65pt,
+    fill=white,
+    align=left,
+    text width=3.85cm,
+    minimum height=1.72cm,
+    inner sep=6pt,
+    execute at begin node={\raggedright\hyphenpenalty=10000\exhyphenpenalty=10000}
+  },
+  current/.style={stage,draw=rlBlue!62,fill=rlBlue!3},
+  review/.style={stage,draw=rlAmber!72,fill=rlAmber!4},
+  control/.style={stage,draw=rlNavy!66,fill=rlBlue!3},
+  produce/.style={stage,draw=rlTeal!72,fill=rlTeal!4},
+  terminal/.style={
+    draw=rlGreen!70,
+    rounded corners=2pt,
+    line width=0.65pt,
+    fill=rlGreen!5,
+    align=center,
+    text width=3.15cm,
+    minimum height=1.05cm,
+    inner sep=5pt
+  },
+  flow/.style={
+    -{Latex[length=2mm,width=1.35mm]},
+    draw=rlInk!62,
+    line width=0.72pt
+  },
+  retry/.style={
+    -{Latex[length=2.3mm,width=1.5mm]},
+    draw=rlRust,
+    dashed,
+    line width=0.8pt
+  },
+  edgelabel/.style={
+    fill=white,
+    inner sep=1.5pt,
+    font=\sffamily\footnotesize,
+    text=rlInk!70
+  }
+]
+  \node[current] (attempt) at (2.15,0) {
+    {\scriptsize\bfseries\color{rlBlue}1 \; CURRENT ATTEMPT}\\[2pt]
+    {\bfseries Attempt $a$}\\[1pt]
+    Evaluate one stage result against its stated target and accepted inputs.
+  };
+
+  \node[review] (diagnosis) at (8.25,0) {
+    {\scriptsize\bfseries\color{rlAmber}2 \; INDEPENDENT REVIEW}\\[2pt]
+    {\bfseries Diagnose the failure}\\[1pt]
+    Identify the failure type and the smallest mathematical object that must change.
+  };
+
+  \node[control] (controller) at (14.35,0) {
+    {\scriptsize\bfseries\color{rlNavy}3 \; CONTROLLER ROUTING}\\[2pt]
+    {\bfseries Select the repair level}\\[1pt]
+    Validate the diagnosis and route one scoped retry to the responsible stage.
+  };
+
+  \node[produce] (revision) at (14.35,-2.85) {
+    {\scriptsize\bfseries\color{rlTeal}4 \; SELECTED PRODUCER}\\[2pt]
+    {\bfseries Construct Attempt $a+1$}\\[1pt]
+    Revise only the implicated mathematical component.
+  };
+
+  \node[review] (fresh) at (8.25,-2.85) {
+    {\scriptsize\bfseries\color{rlAmber}5 \; FRESH REVIEW}\\[2pt]
+    {\bfseries Check the revision}\\[1pt]
+    Repeat the required independent review or human checkpoint before downstream use.
+  };
+
+  \node[terminal] (accepted) at (2.15,-2.85) {
+    {\bfseries\color{rlGreen}Accepted}\\[1pt]
+    Advance the revised result downstream
+  };
+
+  \draw[flow] (attempt) -- (diagnosis);
+  \draw[flow] (diagnosis) -- (controller);
+  \draw[flow] (controller) -- (revision);
+  \draw[flow] (revision) -- (fresh);
+  \draw[flow,draw=rlGreen] (fresh) -- (accepted);
+
+  \draw[retry,rounded corners=4pt]
+    (fresh.south) -- ++(0,-0.64)
+    -- node[edgelabel,below,text=rlRust]{blocking: return to Step 3} ++(9.15,0)
+    |- (controller.east);
+\end{tikzpicture}

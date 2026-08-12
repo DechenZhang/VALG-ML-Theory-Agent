@@ -1,0 +1,312 @@
+\definecolor{wfInk}{HTML}{243746}
+\definecolor{wfNavy}{HTML}{264A67}
+\definecolor{wfBlue}{HTML}{4A78A8}
+\definecolor{wfTeal}{HTML}{3B817B}
+\definecolor{wfAmber}{HTML}{B9782D}
+\definecolor{wfGreen}{HTML}{4B8058}
+\definecolor{wfRust}{HTML}{B85C38}
+\definecolor{wfLine}{HTML}{C8D2DA}
+\definecolor{wfPanel}{HTML}{F7F9FB}
+
+\begin{tikzpicture}[
+  font=\sffamily\scriptsize,
+  text=wfInk,
+  line cap=round,
+  line join=round,
+  stage/.style={
+    draw=wfLine,
+    rounded corners=2pt,
+    line width=0.65pt,
+    fill=white,
+    align=center,
+    text width=2.65cm,
+    minimum height=1.58cm,
+    inner sep=5pt,
+    execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}
+  },
+  discovery/.style={stage,draw=wfBlue!75,fill=wfBlue!4},
+  producer/.style={stage,draw=wfTeal!78,fill=wfTeal!4},
+  reviewer/.style={stage,draw=wfAmber!82,fill=wfAmber!5},
+  outcome/.style={stage,draw=wfGreen!82,fill=wfGreen!7},
+  band/.style={
+    draw=wfLine,
+    rounded corners=3pt,
+    line width=0.6pt,
+    fill=wfPanel
+  },
+  flow/.style={
+    -{Latex[length=2.0mm,width=1.35mm]},
+    draw=wfInk!66,
+    line width=0.7pt
+  },
+  retryflow/.style={
+    -{Latex[length=1.9mm,width=1.3mm]},
+    draw=wfRust,
+    dashed,
+    line width=0.7pt
+  },
+  sectiontitle/.style={
+    anchor=center,
+    text=wfNavy,
+    font=\sffamily\bfseries\footnotesize,
+    inner sep=0pt
+  },
+  checkpoint/.style={
+    fill=wfPanel,
+    text=wfBlue,
+    inner sep=1pt,
+    font=\sffamily\bfseries\tiny
+  },
+  retrytag/.style={
+    draw=wfRust!68,
+    fill=wfRust!4,
+    text=wfRust,
+    rounded corners=1pt,
+    line width=0.45pt,
+    inner xsep=4pt,
+    inner ysep=1.7pt,
+    font=\sffamily\bfseries\tiny
+  },
+  repaircard/.style={
+    draw=wfRust!36,
+    fill=white,
+    rounded corners=1.5pt,
+    line width=0.45pt,
+    align=left,
+    text width=2.28cm,
+    minimum height=0.80cm,
+    inner sep=4pt,
+    font=\sffamily\tiny
+  }
+]
+  % Workflow 1: two rows leave a dedicated header lane and long arrow runs.
+  \path[band] (-0.15,0.65) rectangle (18.25,-4.55);
+  \node[sectiontitle] at (9.05,0.28)
+    {WORKFLOW 1 \(\cdot\) IDEA DISCOVERY};
+  \node[checkpoint] at (15.20,0.28) {$\checkmark$};
+  \node[anchor=west,font=\sffamily\tiny,text=wfInk!62] at (15.42,0.28)
+    {interactive checkpoint};
+
+  \node[discovery,text width=3.10cm] (input) at (2.20,-1.20) {
+    {\tiny\bfseries\color{wfBlue}INPUT}\\[1pt]
+    {\bfseries Research direction}\\[-1pt]
+    source question + optional research brief
+  };
+  \node[discovery,text width=3.10cm] (literature) at (8.15,-1.20) {
+    {\tiny\bfseries\color{wfBlue}STAGE 01}\\[1pt]
+    {\bfseries Literature survey}\\[-1pt]
+    constraints, results, gaps
+  };
+  \node[discovery,text width=3.10cm] (perspective) at (14.10,-1.20) {
+    {\tiny\bfseries\color{wfBlue}STAGE 02}\\[1pt]
+    {\bfseries Perspective selection}\\[-1pt]
+    distinct, gap-grounded lenses
+  };
+  \node[
+    circle,
+    draw=wfBlue!78,
+    fill=white,
+    line width=0.65pt,
+    minimum size=0.78cm,
+    inner sep=0pt,
+    font=\sffamily\bfseries\tiny
+  ] (fork) at (17.15,-1.20) {$M\!\leq\!3$};
+  \node[font=\sffamily\tiny,text=wfInk!62,align=center] at (17.72,-2.08)
+    {active\\branches};
+
+  \node[producer,text width=3.10cm] (idea) at (14.10,-3.35) {
+    {\tiny\bfseries\color{wfTeal}STAGE 03}\\[1pt]
+    {\bfseries Idea generation}\\[-1pt]
+    mechanism, support, duplicate gate
+  };
+  \node[producer,text width=3.10cm] (formalize) at (8.15,-3.35) {
+    {\tiny\bfseries\color{wfTeal}STAGE 04}\\[1pt]
+    {\bfseries Formalization}\\[-1pt]
+    objects, assumptions, exactly one goal
+  };
+  \node[
+    draw=wfNavy!68,
+    dashed,
+    rounded corners=2pt,
+    line width=0.65pt,
+    fill=white,
+    align=center,
+    text width=2.40cm,
+    minimum height=1.02cm,
+    inner sep=4pt,
+    font=\sffamily\bfseries\tiny,
+    text=wfNavy
+  ] (contract) at (2.20,-3.35) {theorem contract\\for branch $m$};
+
+  \draw[flow] (input) -- (literature);
+  \draw[flow] (literature) -- node[checkpoint] {$\checkmark$} (perspective);
+  \draw[flow] (perspective) -- node[checkpoint] {$\checkmark$} (fork);
+  \draw[flow] (fork.south) |- (idea.east);
+  \draw[flow] (idea) -- node[checkpoint] {$\checkmark$} (formalize);
+  \draw[flow] (formalize) -- node[checkpoint] {$\checkmark$} (contract);
+
+  % Workflow 2: three rows keep every producer/reviewer pair well separated.
+  \path[band] (-0.15,-4.95) rectangle (18.25,-13.00);
+  \node[sectiontitle] at (9.05,-5.28)
+    {WORKFLOW 2 \(\cdot\) SPLIT THEORY PROOF
+    \textnormal{\(\cdot\) repeated for every active branch}};
+
+  \node[producer] (sketch) at (2.20,-6.62) {
+    {\tiny\bfseries\color{wfTeal}PRODUCE \(\cdot\) STAGE 01}\\[1pt]
+    {\bfseries Proof sketch}\\[-1pt]
+    typed dependency DAG
+  };
+  \node[reviewer] (sketchreview) at (6.75,-6.62) {
+    {\tiny\bfseries\color{wfAmber}REVIEW \(\cdot\) STAGE 02}\\[1pt]
+    {\bfseries Sketch review}\\[-1pt]
+    early viability gate
+  };
+  \node[producer] (globalproof) at (11.30,-6.62) {
+    {\tiny\bfseries\color{wfTeal}PRODUCE \(\cdot\) STAGE 03}\\[1pt]
+    {\bfseries Global proof}\\[-1pt]
+    whole-theorem diagnostic
+  };
+  \node[reviewer] (globalreview) at (15.85,-6.62) {
+    {\tiny\bfseries\color{wfAmber}REVIEW \(\cdot\) STAGE 04}\\[1pt]
+    {\bfseries Global review}\\[-1pt]
+    viability + obstruction localization
+  };
+
+  \node[retrytag,anchor=north] (sketchretry) at ($(sketchreview.south)+(0,-0.18)$)
+    {retry: sketch / idea};
+  \node[retrytag,anchor=north] (globalretry) at ($(globalreview.south)+(0,-0.18)$)
+    {retry: global / sketch / idea};
+
+  \draw[flow] (contract.south) -- (sketch.north);
+  \draw[flow] (sketch) -- (sketchreview);
+  \draw[flow] (sketchreview) -- (globalproof);
+  \draw[flow] (globalproof) -- (globalreview);
+
+  \node[producer,text width=3.15cm] (stepproof) at (15.85,-9.10) {
+    {\tiny\bfseries\color{wfTeal}PRODUCE \(\cdot\) STAGE 05}\\[1pt]
+    {\bfseries Step proofs}\\[-1pt]
+    $S_1,\ldots,S_k$ in dependency order
+  };
+  \node[reviewer,text width=3.15cm] (stepreview) at (9.00,-9.10) {
+    {\tiny\bfseries\color{wfAmber}REVIEW \(\cdot\) STAGE 06}\\[1pt]
+    {\bfseries Step reviews}\\[-1pt]
+    fresh independent review for every $S_i$
+  };
+  \node[producer,text width=3.15cm] (assembly) at (2.20,-9.10) {
+    {\tiny\bfseries\color{wfTeal}PRODUCE \(\cdot\) STAGE 07}\\[1pt]
+    {\bfseries Proof assembly}\\[-1pt]
+    accepted steps $\rightarrow$ self-contained manuscript
+  };
+
+  \node[retrytag,anchor=north] (stepretry) at ($(stepreview.south)+(0,-0.18)$)
+    {retry: step / dependency / sketch};
+
+  \draw[flow] (globalreview.east) -- ++(0.62,0) |- (stepproof.east);
+  \draw[flow] (stepproof) -- (stepreview);
+  \draw[flow] (stepreview) -- (assembly);
+
+  \node[reviewer,text width=3.55cm] (specialists) at (2.20,-11.55) {
+    {\tiny\bfseries\color{wfAmber}REVIEW \(\cdot\) STAGE 08}\\[1pt]
+    {\bfseries Specialized final reviews}\\[-1pt]
+    structural $\mid$ rigor $\mid$ citation $\mid$ adversarial
+  };
+  \node[reviewer,text width=3.25cm] (aggregate) at (9.00,-11.55) {
+    {\tiny\bfseries\color{wfAmber}REVIEW \(\cdot\) STAGE 09}\\[1pt]
+    {\bfseries Aggregate final review}\\[-1pt]
+    sole controller-facing verdict
+  };
+  \node[outcome,text width=3.55cm] (accepted) at (15.40,-11.55) {
+    {\tiny\bfseries\color{wfGreen}ACCEPT \(\cdot\) STAGE 10}\\[1pt]
+    {\bfseries Finalize accepted branch}\\[-1pt]
+    verify gates; copy setting, manuscript, and final review
+  };
+
+  \node[retrytag,anchor=north] (aggregateretry) at ($(aggregate.south)+(0,-0.18)$)
+    {retry: assembly / step / sketch / idea};
+
+  \draw[flow] (assembly.south) -- (specialists.north);
+  \draw[flow] (specialists) -- (aggregate);
+  \draw[flow] (aggregate) --
+    node[above,font=\sffamily\tiny\bfseries,text=wfGreen]
+    {score $\geq 7$, no blockers}
+    (accepted);
+
+  % Controller-owned repair routing and lifecycle invariants.
+  \begin{scope}[yshift=-4.68cm]
+    \path[
+      draw=wfRust!68,
+      rounded corners=3pt,
+      line width=0.65pt,
+      fill=wfRust!4
+    ] (-0.15,-8.72) rectangle (11.75,-11.48);
+    \node[
+      anchor=west,
+      font=\sffamily\bfseries\footnotesize,
+      text=wfRust
+    ] at (0.15,-8.99) {FAILURE-LOCALIZED ROUTING};
+    \node[anchor=west,font=\sffamily\tiny,text=wfInk!72] at (0.15,-9.28)
+      {Reviewers diagnose; the controller selects the smallest valid producer retry.};
+
+    \node[repaircard] at (1.35,-10.03) {
+      {\bfseries\color{wfRust} ASSEMBLY}\\[-1pt]
+      flaw $\rightarrow$ 07
+    };
+    \node[repaircard] at (4.12,-10.03) {
+      {\bfseries\color{wfRust} LOCAL STEP}\\[-1pt]
+      step/dependency $\rightarrow$ 05
+    };
+    \node[repaircard] at (6.89,-10.03) {
+      {\bfseries\color{wfRust} PROOF STRUCTURE}\\[-1pt]
+      diagnostic $\rightarrow$ 03\\graph/interface $\rightarrow$ 01
+    };
+    \node[repaircard,text width=2.45cm] at (9.66,-10.03) {
+      {\bfseries\color{wfRust}\mbox{THEOREM CONTRACT}}\\[-1pt]
+      failure $\rightarrow$ new idea
+    };
+    \node[
+      anchor=west,
+      font=\sffamily\tiny,
+      text=wfInk!78
+    ] at (0.15,-10.94) {
+      {\bfseries Budget escalation:}\quad
+      local unit $\rightarrow$ sketch $\rightarrow$ new idea $\rightarrow$ branch failure
+    };
+
+    \path[
+      draw=wfNavy!58,
+      rounded corners=3pt,
+      line width=0.65pt,
+      fill=wfBlue!3
+    ] (12.05,-8.72) rectangle (18.25,-11.48);
+    \node[
+      anchor=west,
+      font=\sffamily\bfseries\scriptsize,
+      text=wfNavy
+    ] at (12.35,-9.00) {CONTROLLER INVARIANTS};
+
+    \node[anchor=west,inner sep=0pt,font=\sffamily\bfseries\tiny,text=wfNavy]
+      at (12.35,-9.52) {GATES};
+    \node[anchor=west,inner sep=0pt,font=\sffamily\tiny,text=wfInk!78]
+      at (13.80,-9.52) {validate artifacts before use};
+    \node[anchor=west,inner sep=0pt,font=\sffamily\bfseries\tiny,text=wfNavy]
+      at (12.35,-10.08) {WORKERS};
+    \node[anchor=west,inner sep=0pt,font=\sffamily\tiny,text=wfInk!78]
+      at (13.80,-10.08) {$2$ run-scoped; $12+2k$ per branch};
+    \node[anchor=west,inner sep=0pt,font=\sffamily\bfseries\tiny,text=wfNavy]
+      at (12.35,-10.64) {RUN MODE};
+    \node[anchor=west,inner sep=0pt,font=\sffamily\tiny,text=wfInk!78]
+      at (13.80,-10.64)
+      {interactive pauses; autopilot proceeds};
+    \node[
+      anchor=west,
+      font=\sffamily\tiny,
+      text=wfInk!62,
+      align=left
+    ] at (12.35,-11.14)
+      {Both modes enforce coverage, budgets,\\and accepted-copy verification.};
+
+    \coordinate (routingentry) at (11.55,-8.72);
+  \end{scope}
+
+  \draw[retryflow] (aggregateretry.south) -- ++(0,-0.25) -| (routingentry);
+\end{tikzpicture}
