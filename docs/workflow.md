@@ -89,8 +89,7 @@ Repair follows a hierarchy from the narrowest proof artifact to the theorem
 contract:
 
 ```text
-proof assembly -> proof step or dependency -> proof sketch
-                                            -> idea and formal setting
+proof assembly -> proof step or dependency -> proof sketch -> idea and formal setting
 ```
 
 The global diagnostic sits alongside this hierarchy: it may be revised under
