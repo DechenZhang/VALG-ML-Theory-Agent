@@ -23,8 +23,6 @@ formulation rather than a local derivation or proof structure, it creates an
 explicitly related variant or relaxation, allowing the problem setup to be
 revised while preserving its mathematical relationship to the source problem.
 A run may return zero, one, or several workflow-accepted theorem candidates.
-Here, `workflow-accepted` means that a branch passed the configured artifact,
-provenance, assembly, and reviewer gates.
 
 <p align="center">
   🔥 <strong>Source-relative refinement</strong> ·
