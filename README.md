@@ -322,7 +322,6 @@ budgets by themselves. Exact defaults and controlled status values live in
 |-- assets/                         # workflow and revision-loop figures
 |-- scripts/                         # repository validation
 |-- .github/workflows/               # continuous validation
-|-- CITATION.bib
 |-- CONTRIBUTING.md
 |-- THIRD_PARTY_NOTICES.md
 `-- LICENSE
@@ -357,7 +356,16 @@ and evaluations. See [Reproducibility](docs/reproducibility.md).
 
 ## Citation
 
-Use the BibTeX entry in [`CITATION.bib`](CITATION.bib).
+If you use VALG-ML-Theory-Agent in your research, please cite:
+
+```
+@article{zhang2026valg,
+  title={VALG: An Agentic System for ML Theory Research},
+  author={Zhang, Dechen and Tang, Xuan and Yin, Xinxiang and Chen, Xingwu and Qian, Jian and Zou, Difan},
+  journal={arXiv preprint arXiv:2608.13060},
+  year={2026}
+}
+```
 
 ## Contributing
 
