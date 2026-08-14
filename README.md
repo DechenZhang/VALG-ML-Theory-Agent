@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Platform: Codex](https://img.shields.io/badge/platform-Codex-111827) ![Skills: 17](https://img.shields.io/badge/skills-17-0f766e) ![Case studies: 22 candidates](https://img.shields.io/badge/case%20studies-22%20candidates-7c3aed) [![License: MIT](https://img.shields.io/badge/license-MIT-4b5563)](LICENSE)
+[![Technical Report](https://img.shields.io/badge/Technical%20Report-arXiv%3A2608.13060-b31b1b?style=flat&logo=arxiv)](https://arxiv.org/abs/2608.13060) ![Platform: Codex](https://img.shields.io/badge/platform-Codex-111827) ![Skills: 17](https://img.shields.io/badge/skills-17-0f766e) ![Case studies: 22 candidates](https://img.shields.io/badge/case%20studies-22%20candidates-7c3aed) [![License: MIT](https://img.shields.io/badge/license-MIT-4b5563)](LICENSE)
 
 [🚀 Quick Start](#quick-start) | [🔥 Why It Matters](#why-valg-ml-theory-agent) | [⚙️ Workflow](#how-valg-ml-theory-agent-works) | [🧪 Case Studies](#colt-2026-case-studies) | [📚 Documentation](#documentation) | [📝 Citation](#citation)
 
