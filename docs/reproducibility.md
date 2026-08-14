@@ -64,7 +64,7 @@ referenced scratch files are not part of the published corpus.
 
 ## Citation And Archival Use
 
-Use [`CITATION.cff`](../CITATION.cff) for the repository and cite the relevant
+Use [`CITATION.bib`](../CITATION.bib) for the repository and cite the relevant
 original open-problem paper separately. For an archival research record, retain
 the repository revision, source brief, preserved workflow record, accepted
 bundle, compiled output, and independent evaluation together.

@@ -322,7 +322,7 @@ budgets by themselves. Exact defaults and controlled status values live in
 |-- assets/                         # workflow and revision-loop figures
 |-- scripts/                         # repository validation
 |-- .github/workflows/               # continuous validation
-|-- CITATION.cff
+|-- CITATION.bib
 |-- CONTRIBUTING.md
 |-- THIRD_PARTY_NOTICES.md
 `-- LICENSE
@@ -357,8 +357,7 @@ and evaluations. See [Reproducibility](docs/reproducibility.md).
 
 ## Citation
 
-Use the metadata in [`CITATION.cff`](CITATION.cff). GitHub also exposes it
-through **Cite this repository** on the repository page.
+Use the BibTeX entry in [`CITATION.bib`](CITATION.bib).
 
 ## Contributing
 
