@@ -70,7 +70,7 @@ direction that should remain stable across the run. Start from the reusable
 Open Codex in the run root and send:
 
 ```text
-$ml-theory-research-agent "your ML theory research direction"
+$ml-theory-research-agent "research direction" with workers using gpt-5.6-sol max and RUN_MODE=interactive
 ```
 
 > [!TIP]

@@ -79,7 +79,7 @@ file is a reusable starting point.
 Open Codex in the run root and send a request such as:
 
 ```text
-$ml-theory-research-agent "last-iterate convergence of clipped SGD under a Polyak-Lojasiewicz condition"
+$ml-theory-research-agent "research direction" with workers using gpt-5.6-sol max and RUN_MODE=interactive
 ```
 
 If `RESEARCH_BRIEF.md` exists, it refines or overrides the prompt where the two
